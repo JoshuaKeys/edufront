@@ -1,4 +1,5 @@
 export * from './shell/shell.component';
+export * from './school-profile-page/school-profile-page.component';
 export * from './name-page/name-page.component';
 export * from './address-page/address-page.component';
 export * from './contact-details-page/contact-details-page.component';

@@ -5,6 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppService } from '../services/app/app.service';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './store/reducers/app.reducers';
+
 
 @NgModule({
   declarations: [],
@@ -12,10 +15,12 @@ import { AppService } from '../services/app/app.service';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
+    StoreModule.forRoot(appReducers),
   ],
   providers: [
     AppService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+
   ]
 })
 export class CoreModule { }
