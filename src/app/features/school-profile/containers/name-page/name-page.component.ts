@@ -24,4 +24,8 @@ export class NamePageComponent implements OnInit {
     this.router.navigate([`../${this.navBlock['next']}`], {relativeTo: this.route});
   }
 
+  onPrevious() {
+    this.router.navigate([`../${this.navBlock['previous']}`], {relativeTo: this.route});
+  }
+
 }

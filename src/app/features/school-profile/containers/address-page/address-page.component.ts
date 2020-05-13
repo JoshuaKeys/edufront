@@ -13,6 +13,7 @@ export class AddressPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    console.log('name');
     this.route.data.subscribe(res => {
       this.navBlock = res;
     })
