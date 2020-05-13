@@ -6,6 +6,9 @@ const routes: Routes = [
   {
     path: 'school-profile',
     loadChildren: () => import('./features/school-profile/school-profile.module').then(m => m.SchoolProfileModule)
+  }, {
+    path: 'classes-and-groups',
+    loadChildren: () => import('./features/classes-and-groups/classes-and-groups.module').then(m => m.ClassesAndGroupsModule)
   }
 ];
 

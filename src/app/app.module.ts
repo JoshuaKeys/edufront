@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './features/auth/auth.module';
 import { ConfigService } from './core/services/config/config.service';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export function ConfigLoader(configService: ConfigService) {
   return () => configService.fetchConfig();
@@ -19,7 +21,9 @@ export function ConfigLoader(configService: ConfigService) {
     BrowserModule,
     CoreModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: ConfigLoader, deps: [ConfigService], multi: true },
