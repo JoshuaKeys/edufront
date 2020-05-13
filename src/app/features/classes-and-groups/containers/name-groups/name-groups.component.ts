@@ -1,19 +1,19 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { tap, debounceTime, take } from 'rxjs/operators'
-import { Store } from '@ngrx/store';
-import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
-import { SetInputError, SetGroupOfClassesQty } from '../../ngrx/actions';
+import { FormControl, FormGroup } from '@angular/forms';
 import { selectNumOfGroups } from '../../ngrx/selectors';
 import { Observable } from 'rxjs';
+import { SetGroupOfClassesQty, SetInputError } from '../../ngrx/actions';
+import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 @Component({
-  selector: 'edu-classes-and-group',
-  templateUrl: './classes-and-group.component.html',
-  styleUrls: ['./classes-and-group.component.scss'],
+  selector: 'edu-name-groups',
+  templateUrl: './name-groups.component.html',
+  styleUrls: ['./name-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ClassesAndGroupComponent implements OnInit {
+export class NameGroupsComponent implements OnInit {
 
   activatedRouteData = this.activatedRoute.snapshot.data;
   numOfGroups: Observable<number>;

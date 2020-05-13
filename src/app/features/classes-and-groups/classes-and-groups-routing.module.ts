@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { ClassesAndGroupComponent } from './containers';
+
 
 import { RouterModule, Routes } from '@angular/router';
 import { routeToComponentGenerator } from './route-config/utilities';
+import { navigation, routeToComponentMap } from './route-config/route-config';
+import { ClassesAndGroupsShellComponent } from './containers';
 
 const classesAndGroupRoutes: Routes = [{
   path: '',
-  component: ClassesAndGroupComponent,
-  children: routeToComponentGenerator(),
+  component: ClassesAndGroupsShellComponent,
+  children: routeToComponentGenerator(routeToComponentMap, navigation),
 }]
 
 @NgModule({

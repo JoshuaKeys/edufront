@@ -1,23 +1,10 @@
-<nav class="nav">
-  <img class="nav__home-icon" src="" alt="" />
-  <span class="nav__active-module"
-    ><img
-      class="nav__active-module-img"
-      src="../../../assets/icon-schoolprofile.svg"
-      alt=""
-    />
-    <span>Class & Groups</span>
-  </span>
-  <img class="nav__user-icon" src="" alt="" />
-</nav>
-
 <main>
   <section class="section">
-    <button class="section__back-btn">
+    <button class="section__back-btn" (click)="goBack()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
 
-    <div class="form">
+    <form class="form" [formGroup]="classesAndGroupsForm" (ngSubmit)="setQty()">
       <h2 class="form__title">
         How many Groups of Classes do you need?
       </h2>
@@ -30,35 +17,18 @@
           class="form__input"
           placeholder=""
           pattern="(/w)"
-          value="4"
+          formControlName="numOfGroups"
         />
         <button class="form__icon-btn">
           <img src="../../../assets/iconfinder_chevron-up.svg" alt="" />
         </button>
         <label class="form__input-label" for="schoolName">Number</label>
       </div>
-    </div>
+    </form>
   </section>
   <aside class="aside">
     <h5 class="aside__title">Preview</h5>
-    <div class="card">
-      <h5 class="card__title">Class Groups</h5>
-      <p class="card__desc">4</p>
-    </div>
-    <div class="card">
-      <h5 class="card__title">School Classes</h5>
-      <p class="card__content flex-wrap">
-        <span class="round-badge">1</span>
-        <span class="round-badge">2</span>
-        <span class="round-badge">3</span>
-        <span class="round-badge">4</span>
-        <span class="round-badge">5</span>
-        <span class="round-badge">6</span>
-        <span class="round-badge">7</span>
-        <span class="round-badge">8</span>
-        <span class="round-badge">9</span>
-        <span class="round-badge">10</span>
-      </p>
-    </div>
+    <edu-class-card [groupsOfClassesQty]="numOfGroups | async"></edu-class-card>
+    <edu-school-classes-card></edu-school-classes-card>
   </aside>
 </main>

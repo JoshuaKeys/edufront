@@ -1,14 +1,14 @@
-import * as fromContainers from '../containers';
+import * as fromContainers from '../containers'
 
 export const navigation = {
-  // 'wellcome': {
-  //   next: 'name',
-  //   previous: null,
-  // },
-  // 'name': {
-  //   next: 'address',
-  //   previous: 'wellcome',
-  // },
+  'classes-and-groups': {
+    next: 'name-groups',
+    previous: '/school-profile/contact-details',
+  },
+  'name-groups': {
+    // next: 'address',
+    previous: 'classes-and-groups',
+  },
   // 'address': {
   //   next: 'contact-details',
   //   previous: 'name',
@@ -32,8 +32,8 @@ export const navigation = {
 };
 
 export const routeToComponentMap = {
-  // 'wellcome': fromContainers.SchoolProfilePageComponent,
-  // 'name': fromContainers.NamePageComponent,
+  'classes-and-groups': fromContainers.ClassesAndGroupComponent,
+  'name-groups': fromContainers.NameGroupsComponent,
   // 'address': fromContainers.AddressPageComponent,
   // 'contact-details': fromContainers.ContactDetailsPageComponent,
   // 'logo-question': fromContainers.LogoQuestionPageComponent,

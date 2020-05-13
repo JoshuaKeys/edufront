@@ -8,6 +8,7 @@ import { AuthModule } from './features/auth/auth.module';
 import { ConfigService } from './core/services/config/config.service';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ClassesAndGroupsModule } from './features/classes-and-groups/classes-and-groups.module';
 
 export function ConfigLoader(configService: ConfigService) {
   return () => configService.fetchConfig();
@@ -21,6 +22,7 @@ export function ConfigLoader(configService: ConfigService) {
     BrowserModule,
     CoreModule,
     AuthModule,
+    ClassesAndGroupsModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument()
