@@ -9,6 +9,8 @@ import { ConfigService } from './core/services/config/config.service';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ClassesAndGroupsModule } from './features/classes-and-groups/classes-and-groups.module';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
 export function ConfigLoader(configService: ConfigService) {
   return () => configService.fetchConfig();
@@ -25,10 +27,12 @@ export function ConfigLoader(configService: ConfigService) {
     ClassesAndGroupsModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    EffectsModule.forRoot([])
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: ConfigLoader, deps: [ConfigService], multi: true },
+    AuthenticatedGuard
   ],
   bootstrap: [AppComponent]
 })
