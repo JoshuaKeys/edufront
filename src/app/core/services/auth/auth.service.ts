@@ -108,7 +108,6 @@ export class AuthService extends RestService {
     SessionService.deleteSession();
   }
   login() {
-    console.log('tokennnnnnnn')
     let headers: HttpHeaders;
     return this.jso.getToken()
       .then((token: KeycloakTokenDTO) => {
@@ -117,15 +116,16 @@ export class AuthService extends RestService {
         return this.http.get('auth/api/v1/domain', { headers }).toPromise();
       })
       .then((domains: Domain[]) => {
-        console.log(domains)
-        this.http.get(`auth/api/v1/domain/${domains[0].domainId}/token`, { headers }).toPromise()
+        return this.http.get(`auth/api/v1/domain/${domains[0].domainId}/token`, { headers }).toPromise()
       })
       .then((res: TokenDTO) => {
+        console.log(res);
         this.setupToken(res.token);
         this.setupFirstLogin();
         SessionService.userId = this.tokenData.userId;
       });
   }
+
   private setupToken(token: string) {
     console.log(token);
     localStorage.setItem("token", token);

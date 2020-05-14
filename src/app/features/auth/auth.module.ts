@@ -6,12 +6,18 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigService } from 'src/app/core/services/config/config.service';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './ngrx/reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './ngrx/effects';
 
 @NgModule({
   imports: [
     AuthRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forFeature('auth', authReducer),
+    EffectsModule.forFeature([AuthEffects])
   ],
   declarations: [
     SignInComponent,
@@ -22,7 +28,7 @@ import { ConfigService } from 'src/app/core/services/config/config.service';
   ],
   providers: [
     AuthService,
-    ConfigService
+    ConfigService,
   ]
 })
 export class AuthModule {
