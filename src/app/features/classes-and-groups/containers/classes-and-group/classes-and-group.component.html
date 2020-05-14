@@ -1,0 +1,34 @@
+<main>
+  <section class="section">
+    <button class="section__back-btn" (click)="goBack()">
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <form class="form" [formGroup]="classesAndGroupsForm" (ngSubmit)="setQty()">
+      <h2 class="form__title">
+        How many Groups of Classes do you need?
+      </h2>
+      <p class="form__desc">Eg: Primary, Middle, Secondary etc</p>
+
+      <div class="form__input-wrapper">
+        <input
+          id="schoolName"
+          type="text"
+          class="form__input"
+          placeholder=""
+          pattern="(/w)"
+          formControlName="numOfGroups"
+        />
+        <button class="form__icon-btn">
+          <img src="../../../assets/iconfinder_chevron-up.svg" alt="" />
+        </button>
+        <label class="form__input-label" for="schoolName">Number</label>
+      </div>
+    </form>
+  </section>
+  <aside class="aside">
+    <h5 class="aside__title">Preview</h5>
+    <edu-class-card [groupsOfClassesQty]="numOfGroups | async"></edu-class-card>
+    <edu-school-classes-card></edu-school-classes-card>
+  </aside>
+</main>

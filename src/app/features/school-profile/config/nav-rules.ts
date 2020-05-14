@@ -1,13 +1,9 @@
 import * as fromContainers from '../containers';
 
 export const navigation = {
-  'wellcome': {
-    next: 'name',
-    previous: null,
-  },
   'name': {
     next: 'address',
-    previous: 'wellcome',
+    previous: null,
   },
   'address': {
     next: 'contact-details',
@@ -32,7 +28,6 @@ export const navigation = {
 };
 
 export const routeToComponentMap = {
-  'wellcome': fromContainers.SchoolProfilePageComponent,
   'name': fromContainers.NamePageComponent,
   'address': fromContainers.AddressPageComponent,
   'contact-details': fromContainers.ContactDetailsPageComponent,

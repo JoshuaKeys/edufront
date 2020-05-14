@@ -1,0 +1,55 @@
+<main>
+  <section class="section">
+    <button class="section__back-btn" (click)="goBack()">
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <div class="form">
+      <h2 class="form__title">
+        Please name your groups and allocated their classes
+      </h2>
+      <p class="form__desc">Drag and drop in in the relevant group</p>
+
+      <div class="form__badges round-badges flex-wrap">
+        <span class="form__badge round-badge draggable">1</span>
+        <span class="form__badge round-badge draggable">2</span>
+        <span class="form__badge round-badge draggable">3</span>
+        <span class="form__badge round-badge draggable">4</span>
+        <span class="form__badge round-badge draggable">5</span>
+        <span class="form__badge round-badge draggable">6</span>
+        <span class="form__badge round-badge draggable">7</span>
+        <span class="form__badge round-badge draggable">8</span>
+        <span class="form__badge round-badge draggable">9</span>
+        <span class="form__badge round-badge draggable">10</span>
+        <span class="form__badge round-badge draggable">11</span>
+        <span class="form__badge round-badge draggable">12</span>
+      </div>
+
+      <div class="drop-zones">
+        <div class="drop-zone">
+          <h5 class="drop-zone__title">Name 1</h5>
+          <div class="drop-zone__body"></div>
+        </div>
+        <div class="drop-zone">
+          <h5 class="drop-zone__title">Name 2</h5>
+          <div class="drop-zone__body"></div>
+        </div>
+        <div class="drop-zone">
+          <h5 class="drop-zone__title">Name 3</h5>
+          <div class="drop-zone__body"></div>
+        </div>
+        <div class="drop-zone">
+          <h5 class="drop-zone__title">Name 4</h5>
+          <div class="drop-zone__body"></div>
+        </div>
+      </div>
+
+      <button class="form__btn" disabled>Continue</button>
+    </div>
+  </section>
+  <aside class="aside">
+    <h5 class="aside__title">Preview</h5>
+    <edu-class-card [groupsOfClassesQty]="numOfGroups | async"></edu-class-card>
+    <edu-school-classes-card></edu-school-classes-card>
+  </aside>
+</main>

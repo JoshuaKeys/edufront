@@ -1,3 +1,23 @@
-<p>name-page works!</p>
-<button (click)="onNext()">Next</button>
-<button (click)="onPrevious()">Previous</button>
+<!--<p>name-page works!</p>-->
+<!--<button (click)="onNext()">Next</button>-->
+
+<section class="section">
+  <button class="section__back-btn">
+    <img src="../../../assets/chevron-left.svg" alt="" /> Back
+  </button>
+  <div class="form">
+    <h2 class="form__title">What is your school address?</h2>
+    <div class="form__input-wrapper">
+      <input
+        id="schoolName"
+        type="text"
+        class="form__input"
+        placeholder=""
+        pattern="(/w)"
+      />
+      <label class="form__input-label" for="schoolName"
+      >Enter school name</label
+      >
+    </div>
+  </div>
+</section>
