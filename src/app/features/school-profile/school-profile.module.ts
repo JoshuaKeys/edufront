@@ -5,6 +5,9 @@ import { SchoolProfileRoutingModule } from './school-profile-routing.module';
 
 import * as fromContainers from './containers';
 import * as fromComponents from './components';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { schoolProfileReducer } from '../../core/store/reducers/school-profile.reducer';
 
 const components = [
   fromContainers.ShellComponent,
@@ -20,7 +23,9 @@ const components = [
   declarations: components,
   imports: [
     CommonModule,
-    SchoolProfileRoutingModule
+    SchoolProfileRoutingModule,
+    ReactiveFormsModule,
+    //StoreModule.forFeature('schoolProfile', schoolProfileReducer)
   ]
 })
 export class SchoolProfileModule { }
