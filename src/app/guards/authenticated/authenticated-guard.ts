@@ -20,10 +20,8 @@ export class AuthenticatedGuard implements CanActivate {
     return this.store.select(selectAuthToken).pipe(
       take(1),
       map(authToken => {
-
         return authToken ? true : false
-      }),
-
+      })
     )
   }
   constructor(

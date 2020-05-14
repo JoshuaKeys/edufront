@@ -13,7 +13,6 @@ const routes: Routes = [
     path: 'classes-and-groups',
     canLoad: [AuthenticatedGuard],
     loadChildren: () => import('./features/classes-and-groups/classes-and-groups.module').then(m => m.ClassesAndGroupsModule),
-    // loadChildren: './features/classes-and-groups/classes-and-groups.module'
   }
 ];
 
