@@ -16,17 +16,13 @@ export class AuthenticatedGuard implements CanActivate {
       })
     )
   }
-  canLoad(route: Route, segments: UrlSegment[]): boolean {
-    console.log('*********')
-    // return this.store.select(selectAuthToken).pipe(
-    //   take(1),
-    //   map(authToken => {
-
-    //     return authToken ? true : false
-    //   }),
-
-    // )
-    return false;
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
+    return this.store.select(selectAuthToken).pipe(
+      take(1),
+      map(authToken => {
+        return authToken ? true : false
+      })
+    )
   }
   constructor(
     private store: Store<AuthStateModel>,
