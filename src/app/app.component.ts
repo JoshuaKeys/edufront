@@ -28,8 +28,7 @@ export class AppComponent implements OnInit {
   private setupAuth() {
     this.authService.initialize();
     if (this.authService.hasTokenExpired) {
-      this.authService.deleteSessionToken();
-      // this.router.navigate(['sign-in'])
+      this.router.navigate(['sign-in'])
     } else {
       this.authService.setupTokenRefresh();
     }

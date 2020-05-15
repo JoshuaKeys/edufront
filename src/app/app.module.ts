@@ -24,7 +24,6 @@ export function ConfigLoader(configService: ConfigService) {
     BrowserModule,
     CoreModule,
     AuthModule,
-    ClassesAndGroupsModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),

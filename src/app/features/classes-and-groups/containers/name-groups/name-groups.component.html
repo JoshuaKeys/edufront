@@ -1,6 +1,9 @@
 <main>
   <section class="section">
-    <button class="section__back-btn" (click)="goBack()">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
 
@@ -50,6 +53,8 @@
   <aside class="aside">
     <h5 class="aside__title">Preview</h5>
     <edu-class-card [groupsOfClassesQty]="numOfGroups | async"></edu-class-card>
-    <edu-school-classes-card></edu-school-classes-card>
+    <edu-school-classes-card
+      [selectedClasses]="selectedClasses"
+    ></edu-school-classes-card>
   </aside>
 </main>

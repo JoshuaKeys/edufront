@@ -1,15 +1,8 @@
 <div class="card">
   <h5 class="card__title">School Classes</h5>
   <p class="card__content flex-wrap">
-    <span class="round-badge">1</span>
-    <span class="round-badge">2</span>
-    <span class="round-badge">3</span>
-    <span class="round-badge">4</span>
-    <span class="round-badge">5</span>
-    <span class="round-badge">6</span>
-    <span class="round-badge">7</span>
-    <span class="round-badge">8</span>
-    <span class="round-badge">9</span>
-    <span class="round-badge">10</span>
+    <span class="round-badge" *ngFor="let class of selectedClasses | async">{{
+      class.name
+    }}</span>
   </p>
 </div>

@@ -1,0 +1,39 @@
+<main>
+  <section class="section">
+    <button class="section__back-btn">
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <div class="form">
+      <h2 class="form__title">
+        What classes are taught in your School?
+      </h2>
+      <edu-classes
+        [classes]="classes"
+        (classClicked)="onClassClick($event)"
+      ></edu-classes>
+      <button
+        class="form__btn"
+        [routerLink]="['../', activatedRoute.snapshot.data.next]"
+        [disabled]="!(selectedClasses | async).length"
+      >
+        Continue
+      </button>
+    </div>
+  </section>
+  <aside class="aside">
+    <h5 class="aside__title">Preview</h5>
+
+    <edu-school-classes-card
+      [selectedClasses]="selectedClasses"
+    ></edu-school-classes-card>
+  </aside>
+</main>
+<edu-modal
+  *ngIf="(modalState | async).startModal"
+  description="The first step is to enter the basic details of your school, just answer the questions on your screen"
+  btnText="GOT IT"
+  header="Classes And Groups"
+  icon="assets/icon-classandgroup.svg"
+  (btnClicked)="onModalBtnClicked()"
+></edu-modal>

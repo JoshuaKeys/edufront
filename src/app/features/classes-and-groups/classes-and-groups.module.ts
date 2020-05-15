@@ -9,9 +9,16 @@ import { classesAndGroupsReducer } from './ngrx/reducers';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CLASSES_AND_GROUPS } from './ngrx/selectors';
 import { ClassesAndGroupComponent } from './containers/classes-and-group/classes-and-group.component';
-import { ClassesAndGroupsShellComponent, NameGroupsComponent } from './containers';
-
-
+import { ClassesAndGroupsShellComponent, NameGroupsComponent, ClassesInSchoolComponent } from './containers';
+import { ClassesComponent } from './components/classes/classes.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { ClassesAndGroupsEffects } from './ngrx/effects';
+import { ClassesAndGroupsService } from './services/classes-and-groups.service';
+import { CoreModule } from 'src/app/core/core.module';
+import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CreateGroupsQuestionComponent } from './containers/create-groups-question/create-groups-question.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +27,23 @@ import { ClassesAndGroupsShellComponent, NameGroupsComponent } from './container
     ClassCardComponent,
     SchoolClassesCardComponent,
     ClassesAndGroupsShellComponent,
-    NameGroupsComponent
+    NameGroupsComponent,
+    ClassesInSchoolComponent,
+    CreateGroupsQuestionComponent,
+    ClassesComponent
   ],
   imports: [
     CommonModule,
     ClassesAndGroupsRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forFeature(CLASSES_AND_GROUPS, classesAndGroupsReducer)
+    HttpClientModule,
+    SharedModule,
+    StoreModule.forFeature(CLASSES_AND_GROUPS, classesAndGroupsReducer),
+    EffectsModule.forFeature([ClassesAndGroupsEffects])
+  ],
+  providers: [
+    ClassesAndGroupsService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
 })
 export class ClassesAndGroupsModule { }

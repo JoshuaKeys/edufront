@@ -7,6 +7,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
 import { SessionService } from '../session/session.service';
 import { UserType } from '../../auth.constants';
+import { Store } from '@ngrx/store';
+import { AuthStateModel } from 'src/app/features/auth/models/auth-state.model';
+import { retrieveTokenRequest } from 'src/app/features/auth/ngrx/actions';
+import { Router } from '@angular/router';
 
 export interface UserData {
   expiresAt: moment.Moment;
@@ -49,7 +53,7 @@ export class AuthService extends RestService {
 
   private firstLogin = false;
 
-  constructor(http: HttpClient, configService: ConfigService) {
+  constructor(http: HttpClient, configService: ConfigService, private router: Router, private store: Store<AuthStateModel>) {
     super(http, configService);
     this.loggedIn$.next(this.isLoggedIn)
   } get isStudent(): boolean {
@@ -108,7 +112,6 @@ export class AuthService extends RestService {
     SessionService.deleteSession();
   }
   login() {
-    console.log('tokennnnnnnn')
     let headers: HttpHeaders;
     return this.jso.getToken()
       .then((token: KeycloakTokenDTO) => {
@@ -124,12 +127,13 @@ export class AuthService extends RestService {
         this.setupToken(res.token);
         this.setupFirstLogin();
         SessionService.userId = this.tokenData.userId;
+        this.router.navigateByUrl('/');
       });
   }
   private setupToken(token: string) {
     console.log(token);
     localStorage.setItem("token", token);
-
+    this.store.dispatch(retrieveTokenRequest())
     SessionService.token = token;
     SessionService.tokenData = SessionService.decodeToken(token);
 

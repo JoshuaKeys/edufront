@@ -1,42 +1,27 @@
 import * as fromContainers from '../containers'
 
 export const navigation = {
-  'classes-and-groups': {
-    next: 'name-groups',
+  'classes-in-school': {
+    next: 'create-group-question',
     previous: '/school-profile/contact-details',
+  },
+  'create-group-question': {
+    next: 'classes-with-groups',
+    previous: 'classes-in-school'
+  },
+  'classes-with-groups': {
+    next: 'name-groups',
+    previous: 'create-group-question'
   },
   'name-groups': {
     // next: 'address',
-    previous: 'classes-and-groups',
+    previous: 'classes-with-groups',
   },
-  // 'address': {
-  //   next: 'contact-details',
-  //   previous: 'name',
-  // },
-  // 'contact-details' : {
-  //   next: 'logo-question',
-  //   previous: 'address',
-  // },
-  // 'logo-question': {
-  //   next: 'upload-logo',
-  //   previous: 'contact-details',
-  // },
-  // 'upload-logo': {
-  //   next: 'confirmation',
-  //   previous: 'logo-question',
-  // },
-  // confirmation: {
-  //   next: 'contact-details',
-  //   previous: null,
-  // }
 };
 
 export const routeToComponentMap = {
-  'classes-and-groups': fromContainers.ClassesAndGroupComponent,
-  'name-groups': fromContainers.NameGroupsComponent,
-  // 'address': fromContainers.AddressPageComponent,
-  // 'contact-details': fromContainers.ContactDetailsPageComponent,
-  // 'logo-question': fromContainers.LogoQuestionPageComponent,
-  // 'upload-logo': fromContainers.LogoUploadPageComponent,
-  // 'confirmation': fromContainers.ConfirmationPageComponent
+  'classes-in-school': fromContainers.ClassesInSchoolComponent,
+  'create-group-question': fromContainers.CreateGroupsQuestionComponent,
+  'classes-with-groups': fromContainers.ClassesAndGroupComponent,
+  'name-groups': fromContainers.NameGroupsComponent
 }
