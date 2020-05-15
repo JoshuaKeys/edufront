@@ -1,4 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { GetClassesResponseModel } from '../../models/get-classes-response.model';
+import { Observable } from 'rxjs';
+import { ClassModel } from '../../models/class.model';
 
 @Component({
   selector: 'edu-school-classes-card',
@@ -7,10 +10,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchoolClassesCardComponent implements OnInit {
-
+  @Input() selectedClasses: Observable<ClassModel[]>;
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

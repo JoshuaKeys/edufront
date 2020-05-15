@@ -12,6 +12,7 @@ export class NotAuthenticatedGuard implements CanActivate {
     return this.store.select(selectAuthToken).pipe(
       map(authToken => {
         return !authToken ? true : this.router.createUrlTree(['/'])
+        return false;
       })
     )
   }

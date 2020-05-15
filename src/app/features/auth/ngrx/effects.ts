@@ -10,7 +10,7 @@ export class AuthEffects {
     ofType(retrieveTokenRequest),
     map(_ => {
       const token = localStorage.getItem('token');
-      return token.length > 0 ? retrieveTokenSuccess({ token }) : retrieveTokenFailure();
+      return token && token.length > 0 ? retrieveTokenSuccess({ token }) : retrieveTokenFailure();
     })
   ))
   retrieveTokenFailure$ = createEffect(() => this.actions$.pipe(

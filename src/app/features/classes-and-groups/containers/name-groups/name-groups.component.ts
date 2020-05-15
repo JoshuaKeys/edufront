@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { selectNumOfGroups } from '../../ngrx/selectors';
+import { selectNumOfGroups, selectSelectedClasses } from '../../ngrx/selectors';
 import { Observable } from 'rxjs';
-import { SetGroupOfClassesQty, SetInputError } from '../../ngrx/actions';
 import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { setInputError, setGroupOfClassesQty } from '../../ngrx/actions';
+import { ClassModel } from '../../models/class.model';
 
 @Component({
   selector: 'edu-name-groups',
@@ -18,8 +19,9 @@ export class NameGroupsComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   numOfGroups: Observable<number>;
   classesAndGroupsForm: FormGroup;
-
+  selectedClasses: Observable<ClassModel[]>
   ngOnInit(): void {
+    this.selectedClasses = this.store.select(selectSelectedClasses);
     this.numOfGroups = this.store.select(selectNumOfGroups);
     this.numOfGroups.subscribe((numOfGroups) => {
       this.classesAndGroupsForm = new FormGroup({
@@ -35,10 +37,10 @@ export class NameGroupsComponent implements OnInit {
     const valToNum = +val;
 
     if (valToNum !== 0 && !valToNum) {
-      this.store.dispatch(SetInputError({ error: 'Invalid Input entered', value: val }));
+      this.store.dispatch(setInputError({ error: 'Invalid Input entered', value: val }));
       return;
     } console.log('holla')
-    this.store.dispatch(SetGroupOfClassesQty({ qty: valToNum }))
+    this.store.dispatch(setGroupOfClassesQty({ qty: valToNum }))
     this.goForward();
   }
   goForward() {

@@ -25,20 +25,19 @@ export class SignInComponent implements OnInit {
     this.authService.login()
       .then(() => {
         if (this.authService.isLoggedIn) {
-          // return this.redirectUser();
-          console.log('Hello Worlddddddddddd')
+          console.log(true)
+          return this.redirectUser();
         }
       });
   }
   private redirectUser() {
-    console.log('Holaa')
     const userType = this.authService.userType;
 
     let route: string;
-
     switch (userType) {
       case UserType.ADMIN:
-        route = '/admin/';
+        // route = '/admin/';
+        route = '/'
         break;
       case UserType.TEACHER:
         route = '/teacher/landing-page';

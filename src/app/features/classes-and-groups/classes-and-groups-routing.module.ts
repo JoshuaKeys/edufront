@@ -9,7 +9,6 @@ import { AuthenticatedGuard } from 'src/app/guards/authenticated/authenticated-g
 
 const classesAndGroupRoutes: Routes = [{
   path: '',
-  canActivate: [AuthenticatedGuard],
   component: ClassesAndGroupsShellComponent,
   children: routeToComponentGenerator(routeToComponentMap, navigation),
 }]
@@ -19,9 +18,6 @@ const classesAndGroupRoutes: Routes = [{
     RouterModule.forChild(classesAndGroupRoutes)
   ],
   exports: [RouterModule],
-  providers: [
-    AuthenticatedGuard
-  ]
 })
 export class ClassesAndGroupsRoutingModule {
 

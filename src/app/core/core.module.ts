@@ -7,6 +7,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppService } from '../services/app/app.service';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from './store/reducers/app.reducers';
+import { AuthService } from './services/auth/auth.service';
+import { ConfigService } from './services/config/config.service';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -15,12 +18,11 @@ import { appReducers } from './store/reducers/app.reducers';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
-    StoreModule.forRoot(appReducers),
   ],
   providers: [
     AppService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-
+    AuthService,
+    ConfigService,
   ]
 })
 export class CoreModule { }

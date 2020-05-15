@@ -1,0 +1,49 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <div class="form">
+      <h2 class="form__title">
+        Do you want to create any groups?
+      </h2>
+      <p class="form__desc">
+        Groups are used to speed up any set up. We recommend that classes
+        with<br />
+        similar time structures be grouped together.
+      </p>
+      <div class="form__btn-wrapper">
+        <button
+          class="form__btn--round"
+          [routerLink]="['../', activatedRouteData.next]"
+        >
+          Yes
+        </button>
+        <button class="form__btn--round" (click)="openModal()">No</button>
+      </div>
+    </div>
+  </section>
+  <aside class="aside">
+    <h5 class="aside__title">Preview</h5>
+
+    <edu-school-classes-card
+      [selectedClasses]="selectedClasses"
+    ></edu-school-classes-card>
+  </aside>
+</main>
+<edu-modal
+  *ngIf="(modalState | async).endModal"
+  description="The first step is to enter the basic details of your school, just answer the questions on your screen"
+  btnText="GOT IT"
+  header="Classes And Groups"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO DASHBOARD"
+  rightBtn="TAKE ME TO SUBJECTS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToSubjects()"
+></edu-modal>
