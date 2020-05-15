@@ -20,6 +20,7 @@
         <edu-draggable-class
           *ngFor="let class of selectedClasses | async"
           [class]="class"
+          [appDraggable]="{ data: 'Hello Guys', zones: [] }"
         ></edu-draggable-class>
       </div>
 

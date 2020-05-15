@@ -11,8 +11,7 @@ export class GroupBoxComponent implements OnInit {
   constructor() { }
   onDrop(ev: DragEvent) {
     ev.preventDefault();
-    console.log(ev.defaultPrevented)
-    console.log(ev.dataTransfer.items)
+    console.log(ev.dataTransfer.getData('Text'))
   }
   onDragOver(ev: DragEvent) {
     ev.preventDefault();

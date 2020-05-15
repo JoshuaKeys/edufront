@@ -21,6 +21,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateGroupsQuestionComponent } from './containers/create-groups-question/create-groups-question.component';
 import { GroupBoxComponent } from './components/group-box/group-box.component';
 import { DraggableClassComponent } from './components/draggable-class/draggable-class.component';
+import { DraggableDirective } from './directives/draggable.directive';
+import { DragService } from './services/drag.service';
+import { DroppableDirective } from './directives/droppable.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { DraggableClassComponent } from './components/draggable-class/draggable-
     CreateGroupsQuestionComponent,
     ClassesComponent,
     GroupBoxComponent,
-    DraggableClassComponent
+    DraggableClassComponent,
+    DraggableDirective,
+    DroppableDirective
   ],
   imports: [
     CommonModule,
@@ -46,6 +51,7 @@ import { DraggableClassComponent } from './components/draggable-class/draggable-
     EffectsModule.forFeature([ClassesAndGroupsEffects])
   ],
   providers: [
+    DragService,
     ClassesAndGroupsService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
