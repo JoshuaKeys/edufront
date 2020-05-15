@@ -1,0 +1,23 @@
+.form__badge {
+  width: 44px;
+  height: 44px;
+  font-size: 14px;
+  line-height: 22px;
+}
+.round-badge {
+  background: #69a9f2;
+  color: white;
+  border-radius: 50%;
+  margin: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  font-family: 'Roboto', sans-serif;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+}
+
+.draggable {
+  cursor: pointer;
+}

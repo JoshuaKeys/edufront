@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { setInputError, setGroupOfClassesQty } from '../../ngrx/actions';
 import { ClassModel } from '../../models/class.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-name-groups',
@@ -18,11 +19,17 @@ export class NameGroupsComponent implements OnInit {
 
   activatedRouteData = this.activatedRoute.snapshot.data;
   numOfGroups: Observable<number>;
+  numOfGroupsArr: Observable<number[]>;
   classesAndGroupsForm: FormGroup;
   selectedClasses: Observable<ClassModel[]>
   ngOnInit(): void {
     this.selectedClasses = this.store.select(selectSelectedClasses);
     this.numOfGroups = this.store.select(selectNumOfGroups);
+    this.numOfGroupsArr = this.numOfGroups.pipe(map(num => {
+      let newArray = new Array(+num);
+      console.log(newArray);
+      return newArray;
+    }))
     this.numOfGroups.subscribe((numOfGroups) => {
       this.classesAndGroupsForm = new FormGroup({
         numOfGroups: new FormControl(numOfGroups.toString())

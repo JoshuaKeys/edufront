@@ -19,6 +19,8 @@ import { CoreModule } from 'src/app/core/core.module';
 import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateGroupsQuestionComponent } from './containers/create-groups-question/create-groups-question.component';
+import { GroupBoxComponent } from './components/group-box/group-box.component';
+import { DraggableClassComponent } from './components/draggable-class/draggable-class.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { CreateGroupsQuestionComponent } from './containers/create-groups-questi
     NameGroupsComponent,
     ClassesInSchoolComponent,
     CreateGroupsQuestionComponent,
-    ClassesComponent
+    ClassesComponent,
+    GroupBoxComponent,
+    DraggableClassComponent
   ],
   imports: [
     CommonModule,
