@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { ClassModel } from '../../models/class.model';
+
 
 @Component({
   selector: 'edu-draggable-class',
@@ -9,11 +10,15 @@ import { ClassModel } from '../../models/class.model';
 })
 export class DraggableClassComponent implements OnInit {
   @Input() class: ClassModel;
+  @Input() draggable: boolean;
+  @Output() deselected = new EventEmitter<ClassModel>();
   constructor() { }
 
   ngOnInit(): void {
   }
-  onDrag(ev: DragEvent) {
-    ev.dataTransfer.setData('text/plain', JSON.stringify(this.class))
+  processClicks() {
+    if (!this.draggable) {
+      this.deselected.emit(this.class)
+    }
   }
 }

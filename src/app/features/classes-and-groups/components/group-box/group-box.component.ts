@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { ClassModel } from '../../models/class.model';
+import { GroupClassMapModel } from '../../models/group-class-map.model';
 
 @Component({
   selector: 'edu-group-box',
@@ -7,17 +9,33 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupBoxComponent implements OnInit {
-  @Input() groupName: string;
-  constructor() { }
+  @Output() deselected = new EventEmitter<{ class: ClassModel, groupName: string }>()
+  @Input() group: GroupClassMapModel;
+  @Output() onDropped = new EventEmitter<{ class: ClassModel, groupName: string }>()
+  @Output() groupNameChange = new EventEmitter<{ oldName: string, newName: string }>();
+  @Input() editable: boolean;
+  draggedOver: boolean;
   onDrop(ev: DragEvent) {
     ev.preventDefault();
-    console.log(ev.dataTransfer.getData('Text'))
+    this.draggedOver = false;
+    const _class: ClassModel = JSON.parse(ev.dataTransfer.getData('Text'))
+    this.onDropped.emit({ class: _class, groupName: this.group.groupName });
   }
   onDragOver(ev: DragEvent) {
     ev.preventDefault();
-    console.log('Helllooooo')
+    this.draggedOver = true;
   }
   ngOnInit(): void {
   }
-
+  onDeselected(classItem: ClassModel) {
+    this.deselected.emit({ class: classItem, groupName: this.group.groupName })
+  }
+  onDragLeave(ev: DragEvent) {
+    ev.preventDefault();
+    this.draggedOver = false;
+  }
+  onGroupNameChange(event: FocusEvent) {
+    this.groupNameChange.emit({ oldName: this.group.groupName, newName: event.target['value'] })
+  }
+  constructor() { }
 }

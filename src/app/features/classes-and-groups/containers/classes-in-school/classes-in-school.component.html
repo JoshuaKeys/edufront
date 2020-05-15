@@ -25,6 +25,7 @@
     <h5 class="aside__title">Preview</h5>
 
     <edu-school-classes-card
+      *ngIf="(selectedClasses | async).length"
       [selectedClasses]="selectedClasses"
     ></edu-school-classes-card>
   </aside>

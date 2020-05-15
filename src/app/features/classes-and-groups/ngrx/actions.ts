@@ -15,3 +15,19 @@ export const openClassesAndGroupsModal = createAction('[ClassesInSchoolComponent
 export const closeClassesAndGroupsModal = createAction('[ClassesInSchoolComponent] closeModal');
 export const openClassesAndGroupsEndModal = createAction('[CreateGroupsQuestionComponent] openClassesAndGroupsEndModal');
 export const closeClassesAndGroupsEndModal = createAction('[CreateGroupsQuestionComponent] closeClassesAndGroupsEndModal');
+
+
+// GroupClassMappings
+export const initializeGroupClassMap = createAction('[NameGroupsComponent] initializeGroupClassMap')
+export const setDroppedState = createAction('[NameGroupsComponent] setDroppedState', props<{ className: string }>())
+export const addClassToGroup = createAction(
+  '[NameGroupsComponent] addClassToGroup',
+  props<{ className: string, groupName: string }>()
+)
+export const removeDroppedState = createAction('[NameGroupsComponent] removeDroppedState', props<{ className: string }>())
+export const removeClassFromGroup = createAction(
+  '[NameGroupsComponent] removeClassFromGroup',
+  props<{ className: string, groupName: string }>()
+)
+
+export const changeGroupName = createAction('[GroupBoxComponent] changeGroupName', props<{ oldName: string, newName: string }>())

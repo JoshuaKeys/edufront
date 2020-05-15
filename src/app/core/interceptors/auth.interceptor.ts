@@ -20,29 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
     private authService: AuthService
   ) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const authService = this.injector.get(AuthService);
-    // const newRequest = authService.isLoggedIn
-    //   ? request.clone({ setHeaders: { [AUTH_HEADER]: `Bearer ${authService.sessionToken}` } })
-    //   : request.clone();
-    // if (newRequest.method === 'POST') {
-    //   this.appService.setLoadingStatus(true);
-    // }
-    // return next.handle(newRequest).pipe(
-    //   tap(event => {
-    //     if (event instanceof HttpResponse) {
-    //       const response = event as HttpResponse<any>;
-
-    //       if (response.status === 200) {
-    //         this.appService.setLoadingStatus(false);
-    //       }
-
-    //       if (response.status === 401) {
-    //         authService.deleteSessionToken();
-    //         this.router.navigate(['/sign-in']);
-    //       }
-    //     }
-    //   })
-    // )
     return this.store.select(selectAuthToken).pipe(
       mergeMap(authToken => {
         const newRequest = authToken
@@ -55,20 +32,18 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(newRequest).pipe(
           tap(event => {
 
-            // if (event instanceof HttpResponse) {
-            //   const response = event as HttpResponse<any>;
+            if (event instanceof HttpResponse) {
+              const response = event as HttpResponse<any>;
 
-            //   if (response.status === 200) {
-            //     this.appService.setLoadingStatus(false);
-            //   }
+              if (response.status === 200) {
+                this.appService.setLoadingStatus(false);
+              }
 
-            //   if (response.status === 401) {
-            //     this.authService.deleteSessionToken();
-            //     this.router.navigate(['/sign-in']);
-            //   }
-            // }
-            if (event) {
-              // console.log(event);
+              if (response.status === 401) {
+                console.log('TODO: investigate this')
+                this.authService.deleteSessionToken();
+                this.router.navigate(['/sign-in']);
+              }
             }
           })
         )

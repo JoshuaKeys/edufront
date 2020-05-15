@@ -22,8 +22,8 @@ import { CreateGroupsQuestionComponent } from './containers/create-groups-questi
 import { GroupBoxComponent } from './components/group-box/group-box.component';
 import { DraggableClassComponent } from './components/draggable-class/draggable-class.component';
 import { DraggableDirective } from './directives/draggable.directive';
-import { DragService } from './services/drag.service';
-import { DroppableDirective } from './directives/droppable.directive';
+import { ConfirmationComponent } from './containers/confirmation/confirmation.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { DroppableDirective } from './directives/droppable.directive';
     GroupBoxComponent,
     DraggableClassComponent,
     DraggableDirective,
-    DroppableDirective
+    ConfirmationComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +51,6 @@ import { DroppableDirective } from './directives/droppable.directive';
     EffectsModule.forFeature([ClassesAndGroupsEffects])
   ],
   providers: [
-    DragService,
     ClassesAndGroupsService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]

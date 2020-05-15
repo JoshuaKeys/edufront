@@ -19,3 +19,6 @@ export const selectSortedClasses = createSelector(featureSelector, featSel => {
 })
 export const selectSelectedClasses = createSelector(selectSortedClasses, featSel => featSel.filter((_class) => _class.selected))
 export const selectModalState = createSelector(featureSelector, featSel => featSel.modals)
+export const selectGroupsClassMap = createSelector(featureSelector, featSel => featSel.groupsClassesMap);
+
+export const selectAnUngroupedClass = createSelector(featureSelector, featSel => featSel.classes.find(_class => _class.selected && !_class.dragged))

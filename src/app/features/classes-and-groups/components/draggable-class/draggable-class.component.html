@@ -1,6 +1,6 @@
 <span
   class="form__badge round-badge draggable"
-  (drag)="onDrag($event)"
-  draggable="true"
+  [ngClass]="{ dragged: draggable && class.dragged }"
+  (click)="processClicks()"
   >{{ class.name }}</span
 >

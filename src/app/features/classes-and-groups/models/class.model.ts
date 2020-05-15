@@ -8,4 +8,5 @@ export interface ClassModel {
   teachers: TeacherModel[];
   subjects: SubjectModel[];
   selected?: boolean;
+  dragged?: boolean;
 }

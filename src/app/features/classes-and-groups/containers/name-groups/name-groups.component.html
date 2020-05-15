@@ -20,18 +20,31 @@
         <edu-draggable-class
           *ngFor="let class of selectedClasses | async"
           [class]="class"
-          [appDraggable]="{ data: 'Hello Guys', zones: [] }"
+          [appDraggable]="{ data: class }"
+          [draggable]="true"
         ></edu-draggable-class>
       </div>
 
       <div class="drop-zones">
         <edu-group-box
-          *ngFor="let group of numOfGroupsArr | async; let i = index"
-          groupName="Name {{ i + 1 }}"
+          *ngFor="let group of groupClassMap | async"
+          [group]="group"
+          (onDropped)="handleDropped($event)"
+          (deselected)="deselectClass($event)"
+          (groupNameChange)="onGroupNameChange($event)"
+          [editable]="true"
         ></edu-group-box>
       </div>
-
-      <button class="form__btn" disabled>Continue</button>
+      <button
+        class="form__btn"
+        [ngClass]="{
+          'form__btn--disabled': (hasUngroupedClass | async) ? true : false
+        }"
+        [disabled]="hasUngroupedClass | async"
+        [routerLink]="['../', activatedRouteData.next]"
+      >
+        Continue
+      </button>
     </div>
   </section>
   <aside class="aside">

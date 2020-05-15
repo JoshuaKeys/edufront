@@ -12,6 +12,7 @@ export class ClassesAndGroupsEffects {
       map(classes => getClassesSuccess({ classes }))
     ))
   ))
+
   constructor(
     private actions$: Actions,
     private classesAndGroupsService: ClassesAndGroupsService
