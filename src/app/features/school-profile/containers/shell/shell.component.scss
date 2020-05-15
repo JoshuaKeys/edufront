@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+h1,
+h2 {
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  letter-spacing: 1.02px;
+  opacity: 1;
+  line-height: 1.5;
+  color: #212121;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 34px;
+  letter-spacing: 1.02px;
+}
+
+h2 {
+  font: 600 26px/40px Quicksand;
+  letter-spacing: 0.78px;
+}
+
+p {
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  letter-spacing: 0.48px;
+  opacity: 1;
+  font-size: 16px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+p.small {
+  font: "Raleway", sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+  color: #212121;
+  letter-spacing: 0.48px;
+}
+
+.flex-wrap {
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.relative {
+  position: relative;
+}
+
+.draggable {
+  cursor: pointer;
+}
+
+.orangecolor {
+  color: #f2b269;
+}
+
+.ashcolor {
+  color: #a5aec7;
+  font-weight: 500;
+}
+
+.bluecolor {
+  color: #69a9f2;
+}
+
+.redcolor {
+  color: #ef5350;
+}
+
+* {
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body ::-webkit-scrollbar-track {
+  display: none;
+}
+
+body ::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+body ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: #e6e9f3 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  opacity: 1;
+}
+
+body ::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px;
+}
+
+body ::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 10px;
+}
+edu-preview {
+  width: 100%;
+}
+
+section,
+edu-name-page {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+aside {
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  padding: 30px 15px;
+
+  overflow-y: auto;
+  height: 100%;
+  width: 300px;
+  flex-shrink: 0;
+  background: #fafbfc;
+  border-left: 1px solid #e6e9f3;
+}
+
+.nav__active-module-img {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+}
+main {
+  height: calc(100vh - 53px);
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+

@@ -1,0 +1,51 @@
+.aside__title {
+  text-align: center;
+  font-size: 14px;
+  line-height: 22px;
+  font-family: "Raleway", sans-serif;
+  letter-spacing: 0.42px;
+  color: #c7ccdb;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.card {
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  background-color: white;
+  max-width: 100%;
+  width: 100%;
+  border-radius: 15px;
+  border: 1px solid #e6e9f3;
+  box-sizing: border-box;
+  padding: 40px 19px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+.card__title {
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.36px;
+  color: #212121;
+  margin: 0;
+  margin-bottom: 8px;
+  font-weight: 300;
+  font-weight: 500;
+}
+.card__desc {
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 0.48px;
+  font-weight: 600;
+  color: #212121;
+}
+p {
+  opacity: 1;
+  margin: 0 auto;
+}

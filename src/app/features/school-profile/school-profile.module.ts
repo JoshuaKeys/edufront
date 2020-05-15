@@ -8,6 +8,7 @@ import { SchoolProfileRoutingModule } from './school-profile-routing.module';
 import * as fromContainers from './containers';
 import * as fromComponents from './components';
 import { reducers } from './ngrx/reducers';
+import { SharedModule } from '../../shared/shared.module';
 
 const components = [
   fromContainers.ShellComponent,
@@ -25,6 +26,7 @@ const components = [
     CommonModule,
     SchoolProfileRoutingModule,
     ReactiveFormsModule,
+    SharedModule,
     StoreModule.forFeature('schoolProfile', reducers)
   ]
 })

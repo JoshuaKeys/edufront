@@ -1,4 +1,66 @@
-<p>address-page works!</p>
 
-<button (click)="onNext()">Next</button>
-<button (click)="onPrevious()">Previous</button>
+  <button class="section__back-btn">
+    <img src="/assets/chevron-left.svg" alt="" /> Back
+  </button>
+
+  <div class="form">
+    <h2 class="form__title">What is your school address?</h2>
+    <div class="form__input-wrapper">
+      <img
+        class="form__input-icon"
+        src="/assets/circle_flag_india.svg"
+        alt=""
+      />
+
+      <input
+        id="country"
+        type="text"
+        class="form__input"
+        placeholder=""
+        pattern="(/w)"
+      />
+      <label class="form__input-label" for="country">India</label>
+    </div>
+    <div class="form__input-wrapper">
+      <input
+        id="zipcode"
+        type="text"
+        class="form__input"
+        placeholder=""
+        pattern="(/w)"
+      />
+      <label class="form__input-label" for="zipcode">Zip Code</label>
+    </div>
+    <div class="form__input-wrapper">
+      <input
+        id="address"
+        type="text"
+        class="form__input"
+        placeholder=""
+        pattern="(/w)"
+      />
+      <label class="form__input-label" for="address">Address</label>
+    </div>
+    <div class="form__input-wrapper">
+      <input
+        id="state"
+        type="text"
+        class="form__input"
+        placeholder=""
+        pattern="(/w)"
+      />
+      <label class="form__input-label" for="state">State</label>
+    </div>
+    <div class="form__input-wrapper">
+      <input
+        id="city"
+        type="text"
+        class="form__input"
+        placeholder=""
+        pattern="(/w)"
+      />
+      <label class="form__input-label" for="city">City</label>
+    </div>
+  </div>
+
+  <button class="form__btn">continue</button>

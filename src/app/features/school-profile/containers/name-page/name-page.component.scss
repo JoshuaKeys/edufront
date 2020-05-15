@@ -1,0 +1,189 @@
+body {
+  display: relative;
+  background-color: white;
+}
+.section {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+.form {
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  top: 45%; }
+.form__title {
+  margin-bottom: 42px; }
+.form__btn {
+  background: unset;
+  border: none;
+  cursor: pointer;
+  width: 292px;
+  height: 52px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-family: "Raleway";
+  letter-spacing: 0.42px;
+  color: white;
+  background: #69a9f2;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 8px #3c4b9b26;
+  position: relative;
+  height: 52px;
+  width: 250px; }
+.form__btn:focus {
+  outline: none; }
+.form__btn:active {
+  top: 6px; }
+.form__round-btn {
+  background: unset;
+  border: none;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  border: 2px solid #e6e9f3;
+  position: relative;
+  background: white;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.48px;
+  color: #c7ccdb;
+  background: white; }
+.form__round-btn:focus {
+  outline: none; }
+.form__round-btn:active {
+  transform: scale(1.05); }
+.form__round-btn:hover {
+  background: #c7ccdb;
+  color: white; }
+.section__back-btn {
+  background: unset;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-family: "Raleway";
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  cursor: pointer;
+  position: absolute;
+  top: 31px;
+  left: 23px;
+  text-align: right;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.42px;
+  color: #c7ccdb;
+}
+.section__back-btn img {
+  height: 18px;
+  margin-right: 10px;
+}
+
+.form__title {
+  margin-bottom: 42px;
+}
+h2 {
+  font: 600 26px/40px Quicksand;
+  letter-spacing: 0.78px;
+  text-align: center;
+  opacity: 1;
+  color: #212121;
+  margin: 0 auto;
+}
+
+.form__input {
+  border: 0;
+  border-bottom: 2px solid #e6e9f3; }
+.form__input:focus {
+  outline: none; }
+.form__input-wrapper {
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  width: 100%;
+  max-width: 380px;
+  min-height: 43px;
+  margin-bottom: 30px;
+  position: relative; }
+.form__input-icon {
+  position: absolute;
+  left: 0;
+  top: 0; }
+.form__input-icon ~ .form__input {
+  padding-left: 30px; }
+.form__input-icon ~ .form__input-label {
+  padding-left: 30px; }
+.form__input-prefix {
+  position: absolute;
+  left: 0;
+  top: 0;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  display: flex; }
+.form__input-prefix > * {
+  position: relative; }
+.form__input-prefix > *:not(:last-child) {
+  margin-right: 10px; }
+.form__input-label {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: "Raleway", sans-serif;
+  letter-spacing: 0.48px;
+  white-space: nowrap; }
+.form__input-label--align-left {
+  text-align: left; }
+
+.form__input-prefix--countrycode ~ .form__input {
+  padding-left: 70px; }
+
+.form__input-prefix--countrycode ~ .form__input-label {
+  left: 70px; }
+
+.form__input[type="text"]:focus + label,
+.form__input[type="text"]:invalid + label {
+  transform: scale(0.8) translateY(-22px);
+  text-align: center; }
+.form__input[type="text"]:focus + label .ashcolor,
+.form__input[type="text"]:invalid + label .ashcolor {
+  font-size: 0; }
+
+.form__input[type="text"] {
+  padding-bottom: 10px;
+  font-size: 20px;
+  max-width: 377px;
+  width: 100%;
+  border: 0;
+  color: #212121;
+  border-bottom: 2px solid #e6e9f3;
+  text-align: center; }
+.form__input[type="text"]:focus {
+  outline: none;
+  border-color: #69a9f2; }
+
+.form__input[type="checkbox"]:checked + label {
+  transform: scale(0.8) translateY(-22px);
+  text-align: center; }
+.form__input[type="checkbox"]:checked + label .ashcolor {
+  font-size: 0; }
+
+.form__input[type="checkbox"]:checked ~ .form__input--select-dropdown {
+  display: block; }
+
+.form__input[type="checkbox"]:checked ~ .form__input--select-border {
+  border-color: #69a9f2; }
