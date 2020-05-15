@@ -3,9 +3,9 @@
 
 <section class="section">
   <button class="section__back-btn">
-    <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    <img src="/assets/chevron-left.svg" alt="" /> Back
   </button>
-  <div class="form">
+  <form class="form" [formGroup]="mForm">
     <h2 class="form__title">What is your school address?</h2>
     <div class="form__input-wrapper">
       <input
@@ -14,10 +14,12 @@
         class="form__input"
         placeholder=""
         pattern="(/w)"
+        formControlName="name"
+        (keyup.enter)="addName()"
       />
       <label class="form__input-label" for="schoolName"
       >Enter school name</label
       >
     </div>
-  </div>
+  </form>
 </section>

@@ -15,16 +15,3 @@ const reducer = createReducer(
 export function reducers(state: State | undefined, action: Action) {
   return reducer(state, action );
 }
-
-/**
-{
- schoolProfile: null,
- wellcomePopup: {
-    toched: false
-  },
- endPopup: {
-    toched: false,
-  },
- error: null
- };
- */
