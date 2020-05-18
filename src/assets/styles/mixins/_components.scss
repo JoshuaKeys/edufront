@@ -1,0 +1,631 @@
+@import "./buttons";
+@import "./forms";
+@import "./layouts";
+
+// @mixin select() {
+//   font-family: "Raleway", sans-serif;
+//   width: 194px;
+//   height: 54px;
+//   padding: 0 10px;
+//   background: #f8f9fa;
+//   border: 1px solid $grey-blue;
+//   border-radius: 8px;
+//   position: relative;
+//   font-size: 16px;
+//   line-height: 1.5;
+//   letter-spacing: 0.48px;
+//   color: $black;
+//   cursor: pointer;
+//   &:focus {
+//     outline: none;
+//   }
+
+//   &-icon {
+//     @include absoluteVertCenter();
+//     right: 10px;
+//   }
+//   &--active {
+//     font-size: 20px;
+//     .form__select-label {
+//       font-size: 14px;
+//       line-height: 20px;
+//       position: absolute;
+//       top: 6px;
+//       transform: translateX(-50%);
+//       left: 50%;
+//       color: $blue;
+//     }
+//   }
+// }
+@mixin modalComplete() {
+  .modal {
+    @include modal();
+
+    &--complete {
+      padding-top: 120px;
+      max-width: 989px;
+      width: 100%;
+    }
+
+    &__desc--complete {
+      max-width: 600px;
+      font: 400 16px/26px Raleway;
+      margin-bottom: 85px;
+      line-height: 26px;
+    }
+    &__btn--complete {
+      margin: 0 10px;
+      width: 288px;
+      height: 52px;
+    }
+  }
+}
+@mixin modalIntro() {
+  .modal {
+    @include modal();
+    &--intro {
+      padding: 50px;
+      max-width: 600px;
+    }
+
+    &__img--intro {
+      margin-bottom: 30px;
+    }
+    &__title--intro {
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    &__desc--intro {
+      margin-bottom: 30px;
+      font: 400 14px/22px Raleway;
+    }
+
+    &__btn--intro {
+      width: 95px;
+    }
+  }
+}
+@mixin modalForm() {
+  @include modal();
+  width: auto;
+  height: auto;
+  border: 0;
+  max-width: unset;
+  max-height: unset;
+  padding: 0;
+}
+
+@mixin modal() {
+  box-sizing: border-box;
+  width: 80%;
+  //   min-height: 80%;
+  max-width: 989px;
+  max-height: 651px;
+  background: white;
+  box-shadow: 0px 5px 10px #a6adce1a;
+  border: 1px solid $grey-blue;
+  border-radius: 15px;
+  opacity: 1;
+  padding: 44px 50px 53px 50px;
+  @include fixedCenter();
+  top: 45%;
+  @include displayFlex(space-between, center, column);
+
+  max-width: 600px;
+  min-height: 400px;
+  width: 80%;
+  padding: 50px;
+
+  &__overlay {
+    position: fixed;
+    z-index: 5;
+    width: 300vw;
+    height: 300vh;
+    left: -100vw;
+    top: -100vh;
+    background-color: rgba($color: white, $alpha: 0.5);
+  }
+
+  & > * {
+    flex-shrink: 0;
+  }
+
+  &__img {
+    margin-bottom: 30px;
+  }
+  &__title {
+    margin-bottom: 30px;
+    line-height: 1;
+  }
+
+  &__desc {
+    margin-bottom: 21px;
+    font-size: 14px;
+  }
+
+  &__btns {
+    display: flex;
+  }
+  &__btn {
+    @include button_default($blue, white);
+    font-weight: 600;
+    width: 95px;
+    // height: 40px;
+    // position: absolute;
+    // bottom: 53px;
+  }
+}
+
+@mixin card() {
+  @include displayFlex(flex-start, center, column);
+  background-color: white;
+  max-width: 270px;
+  width: 90%;
+  border-radius: 15px;
+  border: 1px solid $grey-blue;
+  box-sizing: border-box;
+  padding: 40px 19px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  &-img-wrapper {
+    width: 100px;
+    height: 100px;
+    border: 2px dashed $grey-blue;
+    border-radius: 50%;
+  }
+
+  &__title {
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.36px;
+    color: $black;
+    margin: 0;
+    margin-bottom: 8px;
+    font-weight: 300;
+    font-weight: 500;
+  }
+  &__desc {
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.48px;
+    font-weight: 600;
+    color: $black;
+  }
+
+  &--dash {
+    border: 1px dashed #c7ccdb;
+    background: transparent;
+    justify-content: center;
+  }
+  &__title--dash {
+    text-align: center;
+    font: 400 14px/20px Raleway;
+    letter-spacing: 0.42px;
+    color: #a5aec7;
+  }
+}
+
+@mixin popup() {
+  .popup {
+    &::before {
+      position: absolute;
+      top: 0;
+      content: "";
+      display: block;
+      background-color: white;
+      transform-origin: center;
+      transform: rotate(45deg) translate(4px, -13px);
+      border-top: 1px solid $blue;
+      border-left: 1px solid $blue;
+      width: 10px;
+      height: 10px;
+    }
+    bottom: -13px;
+    cursor: pointer;
+    max-width: 370px;
+    width: 100%;
+    position: absolute;
+    background: white;
+    z-index: 4;
+
+    left: 0;
+    transform: translateY(100%);
+    border: 1px solid $blue;
+    border-radius: 6px;
+    &--center {
+      left: 50%;
+      transform: translate(-50%, 100%);
+      &::before {
+        left: 50%;
+        transform: rotate(45deg) translate(-72%, -1px);
+      }
+    }
+    &--padded {
+      padding: 30px 15px;
+    }
+
+    &__entries {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0;
+      @include displayFlex(flex-start, stretch, column);
+    }
+
+    &__search {
+      &-icon {
+        width: 18px;
+        position: absolute;
+        left: 31px;
+        top: 50%;
+        transform: translate(-50%, -81%);
+      }
+
+      &-input {
+        border: 0;
+        width: 100%;
+        background: unset;
+        padding-bottom: 10px;
+        padding-left: 35px;
+
+        border-bottom: 1px solid $grey-blue;
+        &-wrapper {
+          position: relative;
+        }
+
+        &::placeholder {
+          color: $grey;
+          font: 14px;
+          font-family: "Raleway", sans-serif;
+        }
+        &:focus {
+          outline: none;
+          border-color: $blue;
+        }
+      }
+    }
+
+    &__entry {
+      @include displayFlex(flex-start);
+      position: relative;
+      height: 44px;
+      padding: 0 20px;
+      color: $black;
+
+      & > *:not(:last-child) {
+        margin-right: 10px;
+      }
+      span {
+        text-align: left;
+        font-size: 14px;
+        letter-spacing: 0.42px;
+        white-space: nowrap;
+        //
+      }
+      &--active > span {
+        color: $blue;
+      }
+      &:hover {
+        color: $blue;
+        background: $grey-white 0% 0% no-repeat padding-box;
+      }
+    }
+
+    // &__overlay {
+    // position: fixed;
+    // z-index: 4;
+    // width: 300vw;
+    // height: 300vh;
+    // left: -100vw;
+    // top: -100vh;
+    // background-color: rgba($color: white, $alpha: 0.5);
+
+    // }
+  }
+}
+
+@mixin dropZone() {
+  .drop-zone {
+    border: 2px dashed $grey-blue;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 232px;
+    width: 232px;
+    // @include displayFlex(flex-start, flex-start);
+    // flex-wrap: wrap;
+    // // padding-top: 70px;
+    position: relative;
+
+    &__wrapper {
+      border: 2px dashed $grey-blue;
+      border-radius: 12px;
+      .drop-zone {
+        border: none;
+      }
+    }
+
+    &__desc {
+      position: absolute;
+      top: 25px;
+    }
+    &__placeholder {
+      @include absoluteVertCenter();
+      color: $grey;
+    }
+
+    &--active {
+      border-color: $blue;
+    }
+
+    &__title {
+      text-align: center;
+      margin: 0;
+      font-weight: 500;
+      padding-bottom: 13px;
+      border-bottom: 1px solid $grey-blue;
+      width: 100%;
+    }
+
+    &__body {
+      padding: 5px;
+      padding-bottom: 0;
+      width: 100%;
+      height: auto;
+      min-height: 135px;
+    }
+  }
+}
+
+@mixin roundBadge($size: 32px, $background: $blue, $color: white) {
+  .badge {
+    width: $size;
+    height: $size;
+    background: $background;
+    color: $color;
+    border-radius: 50%;
+    margin: 4px;
+    font-size: 12px;
+    line-height: 20px;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0px 2px 6px #3c4b9b14;
+    @include displayFlex();
+    &--square {
+      border-radius: 8px;
+    }
+
+    &--inactive {
+      color: $grey;
+      background: white;
+      border: 2px solid $grey-blue;
+    }
+  }
+}
+
+@mixin chip() {
+  cursor: pointer;
+  padding: 6px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid $blue;
+  border-radius: 100px;
+  opacity: 5px 10px 5px 0;
+  margin: 10px;
+  @include displayFlex();
+  &__img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  &__img + &__text {
+    margin: 0 5px;
+    // margin-right: 10px;
+  }
+  &__text {
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.42px;
+    color: $blue;
+  }
+}
+
+@mixin search() {
+  .search {
+    @include displayFlex(flex-start);
+    &__wrapper {
+      position: relative;
+      width: 100%;
+      padding: 4px 15px;
+
+      @include displayFlex(center, flex-end);
+    }
+    &__icon {
+      width: 18px;
+      position: absolute;
+      left: 31px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &__icon-btns {
+      @include displayFlex();
+    }
+    &__icon-btn {
+      cursor: pointer;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      background: #ffffff;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      border: 1px solid $grey-blue;
+      position: relative;
+      margin: 0 5px;
+      & > img {
+        @include absoluteCenter();
+      }
+      &--active {
+        background: $blue;
+        border: 1px solid $blue;
+      }
+      &--hover {
+        border: 1px solid $blue;
+      }
+    }
+    &__input-wrapper + &__icon-btns {
+      margin-left: 24px;
+    }
+
+    &__btn {
+      color: $blue;
+      margin-left: 20px;
+      @include button_default(white, $blue);
+      width: 96px;
+      height: 36px;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      border: 1px dashed $blue;
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1;
+      position: relative;
+      > * {
+        @include absoluteCenter();
+      }
+    }
+    &__input {
+      border: 0;
+      width: 100%;
+      background: unset;
+      padding-bottom: 10px;
+      padding-left: 35px;
+
+      border-bottom: 1px solid $grey-blue;
+
+      &::placeholder {
+        color: $grey;
+        font: 14px;
+        font-family: "Raleway", sans-serif;
+      }
+      &:focus {
+        outline: none;
+        border-color: $blue;
+      }
+    }
+  }
+}
+@mixin groups($color: inherit) {
+  .groups {
+    &--split-layout {
+      width: 100%;
+      @include displayFlex(center, flex-start);
+    }
+    &--column-layout {
+      @include displayFlex(flex-start, center, column);
+    }
+  }
+}
+@mixin group($color: inherit) {
+  .group {
+    @include displayFlex(flex-start, flex-start, column);
+
+    &--row-layout {
+      @include displayFlex(flex-start);
+    }
+
+    &--scrollable {
+      height: 80%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding-bottom: $fixed-footer-height;
+    }
+
+    &--split-layout {
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+    }
+
+    &__title {
+      margin-top: 0;
+      font: 400 14px/22px Raleway;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      color: $color;
+
+      &--split-layout {
+        text-align: center;
+        font: 600 24px/55px Quicksand;
+        margin-bottom: 32px;
+      }
+    }
+
+    &__body {
+      color: $color;
+      @include displayFlex(flex-start, flex-start);
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@mixin tooltip() {
+  .tooltip {
+    min-width: 92px;
+    padding: 7px 11px;
+    font: 400 12px/16px Raleway;
+    letter-spacing: 0.36px;
+    color: #ffffff;
+    background: $purple;
+    position: absolute;
+    white-space: nowrap;
+    border-radius: 10px;
+    z-index: 2;
+    &--top {
+      left: 50%;
+      transform: translate(-50%, -100%);
+      top: -7px;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid $purple;
+
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 100%);
+      }
+    }
+    &--right {
+      right: -7px;
+      transform: translate(100%, -50%);
+      top: 50%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid $purple;
+
+        left: 0%;
+        top: 50%;
+        transform: translate(-100%, -50%);
+      }
+    }
+  }
+}
+
+@mixin emptyPesudoElement($position: absolute) {
+  content: "";
+  display: block;
+  position: $position;
+}

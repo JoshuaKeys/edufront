@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { setInputError, setGroupOfClassesQty, initializeGroupClassMap, setDroppedState, addClassToGroup, removeDroppedState, removeClassFromGroup, changeGroupName } from '../../ngrx/actions';
+import { setInputError, setGroupOfClassesQty, initializeGroupClassMap, setDroppedState, addClassToGroup, removeDroppedState, removeClassFromGroup, changeGroupName, requestGroupsClassMap } from '../../ngrx/actions';
 import { ClassModel } from '../../models/class.model';
 import { map } from 'rxjs/operators';
 import { GroupClassMapModel } from '../../models/group-class-map.model'
@@ -25,7 +25,7 @@ export class NameGroupsComponent implements OnInit {
   hasUngroupedClass: Observable<boolean>
   ngOnInit(): void {
 
-    this.store.dispatch(initializeGroupClassMap())
+    this.store.dispatch(requestGroupsClassMap())
 
     this.selectedClasses = this.store.select(selectSelectedClasses);
     this.numOfGroups = this.store.select(selectNumOfGroups);

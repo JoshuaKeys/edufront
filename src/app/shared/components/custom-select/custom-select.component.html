@@ -1,0 +1,46 @@
+<div class="form__input-wrapper form__input-wrapper--select">
+  <input
+    #formInputSelect
+    id="number"
+    type="checkbox"
+    class="form__input form__input--select"
+    placeholder=""
+    pattern="(/w)"
+    [checked]="isOpen"
+    (click)="toggleDropdown()"
+  />
+
+  <!-- <label class="form__input-label" for="number">Number</label> -->
+  <label class="form__input-label" for="number">{{
+    groupQty ? groupQty : 'Number'
+  }}</label>
+  <div class="form__input--select-border">
+    <input
+      type="text"
+      class="form__input form__input--select-sizeguide"
+      placeholder=""
+      pattern="(/w)"
+      value="-"
+      disabled
+    />
+  </div>
+
+  <div class="form__input--select-dropdown">
+    <div class="popup" *ngIf="isOpen">
+      <ul class="popup__entries">
+        <li class="popup__entry" (click)="setGroupQty(1)">
+          <span>1</span>
+        </li>
+        <li class="popup__entry" (click)="setGroupQty(2)">
+          <span>2</span>
+        </li>
+        <li class="popup__entry" (click)="setGroupQty(3)">
+          <span>3</span>
+        </li>
+        <li class="popup__entry " (click)="setGroupQty(4)">
+          <span>4</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+@import "./components";
+
+@mixin studentSummary() {
+  .student-summary {
+    color: $black;
+    @include displayFlex(flex-start, center, column);
+    padding: 30px 19px;
+    &__title {
+      font: 600 16px/24px Quicksand;
+      letter-spacing: 0.48px;
+      text-align: center;
+      margin: 0;
+    }
+
+    &__desc {
+      font: 700 18px/18px Roboto;
+      line-height: 1;
+      letter-spacing: -0.18px;
+      text-align: center;
+      margin: 0;
+      &--total {
+        font-size: 44px;
+        margin: 20px 0;
+        min-height: 74px;
+      }
+    }
+
+    &__footer {
+      align-self: stretch;
+      @include displayFlex(space-between);
+    }
+    &__group {
+      @include displayFlex(flex-start, center, column);
+      width: 100%;
+    }
+    &__icon {
+      margin-top: 5px;
+      width: 32px;
+      height: 32px;
+      background: #ffffff 0% 0% no-repeat padding-box;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      border: 2px solid #e6e9f3;
+      border-radius: 50%;
+    }
+  }
+}
+
+@mixin studentChips() {
+  .chip {
+    @include chip();
+    @include displayFlex();
+    transform: translateX(-5px);
+
+    font: 600 12px/22px Raleway;
+    padding: 9px 13px;
+    margin: 5px;
+    position: relative;
+
+    &:hover {
+      .chip__icon-btns {
+        display: flex;
+      }
+      .chip__desc {
+        color: transparent;
+        user-select: none;
+      }
+    }
+
+    &__icon-btns {
+      @include absoluteCenter();
+      @include displayFlex(center, center);
+
+      display: none;
+    }
+    &__icon-btn {
+      @include iconButton(16px);
+      padding: 0;
+      &:first-child {
+        margin-right: 30px;
+      }
+    }
+
+    &--blue {
+      color: $blue;
+      border-color: $blue;
+      &:hover {
+        background: $blue;
+      }
+    }
+    &--pink {
+      color: $pink;
+      border-color: $pink;
+      &:hover {
+        background: $pink;
+      }
+    }
+  }
+}
+
+@mixin addEditStudentForm() {
+  .form .tooltip {
+    width: 240px;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .form {
+    @include form();
+
+    padding: 40px;
+    padding-bottom: 110px;
+    max-width: 1150px;
+    width: 100vw;
+
+    &__round-btn {
+      @include roundButton(80px, $grey, white);
+
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 25px);
+      border: unset;
+      box-shadow: unset;
+      &:active {
+        transform: scale(1.1) translate(50%, 25px);
+      }
+      &:hover {
+        background: $grey;
+      }
+
+      &--active {
+        background: $blue;
+        &:hover {
+          background: $blue;
+        }
+      }
+    }
+  }
+
+  .form {
+    &__sub-title {
+      font: 500 20px/30px Quicksand;
+      color: $ash;
+    }
+    &__profile-pic {
+      @include absoluteCenter();
+
+      &-wrap {
+        border-radius: 50%;
+        width: 140px;
+        height: 140px;
+        border: 2px dashed $grey-blue;
+        position: relative;
+      }
+      &-wrap--hover {
+        border-color: $blue;
+      }
+    }
+  }
+
+  .group {
+    &--1 {
+      width: 140px;
+    }
+    &--2 {
+      width: 571px;
+    }
+    &--3 {
+      width: 275px;
+    }
+  }
+}

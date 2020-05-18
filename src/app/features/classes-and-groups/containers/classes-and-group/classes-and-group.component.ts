@@ -24,29 +24,12 @@ export class ClassesAndGroupComponent implements OnInit {
   ngOnInit(): void {
     this.selectedClasses = this.store.select(selectSelectedClasses);
     this.numOfGroups = this.store.select(selectNumOfGroups);
-    this.numOfGroups.subscribe((numOfGroups) => {
-      this.classesAndGroupsForm = new FormGroup({
-        numOfGroups: new FormControl(null, Validators.required)
-      })
-    });
   }
   goBack() {
     this.router.navigateByUrl(this.activatedRouteData.previous);
   }
-  computeNumOfGroupsInClasses() {
-    const qty = this.classesAndGroupsForm.controls.numOfGroups.value;
-    this.store.dispatch(setGroupOfClassesQty({ qty }))
-  }
-  setQty() {
-    const val = this.classesAndGroupsForm.value.numOfGroups;
-    const valToNum = +val;
-
-    if (valToNum !== 0 && !valToNum) {
-      this.store.dispatch(setInputError({ error: 'Invalid Input entered', value: val }));
-      return;
-    } console.log('holla')
-
-    this.goForward();
+  computeNumOfGroupsInClasses(event) {
+    this.store.dispatch(setGroupOfClassesQty({ qty: event }))
   }
   isDisabled() {
     console.log(this.classesAndGroupsForm.controls.numOfGroups.value)

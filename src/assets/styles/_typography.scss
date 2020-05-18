@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import "./colors";
+h1,
+h2 {
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  // font: SemiBold 34px/54px Quicksand;
+  letter-spacing: 1.02px;
+  opacity: 1;
+  line-height: 1.5;
+  color: $black;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 34px;
+  letter-spacing: 1.02px;
+}
+
+h2 {
+  font: 600 26px/40px Quicksand;
+  letter-spacing: 0.78px;
+}
+
+p {
+  font-family: "Raleway", sans-serif;
+
+  text-align: center;
+  letter-spacing: 0.48px;
+  opacity: 1;
+  font-size: 16px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+p.small {
+  font: "Raleway", sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+  color: $black;
+  letter-spacing: 0.48px;
+}

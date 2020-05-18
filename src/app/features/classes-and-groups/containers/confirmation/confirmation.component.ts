@@ -6,7 +6,7 @@ import { selectGroupsClassMap, selectModalState } from '../../ngrx/selectors';
 import { GroupClassMapModel } from '../../models/group-class-map.model';
 import { Observable } from 'rxjs';
 import { ModalModel } from '../../models/modal.model';
-import { openClassesAndGroupsEndModal } from '../../ngrx/actions';
+import { openClassesAndGroupsEndModal, sendClassesWithGroupsRequest } from '../../ngrx/actions';
 
 @Component({
   selector: 'edu-confirmation',
@@ -25,6 +25,9 @@ export class ConfirmationComponent implements OnInit {
   }
   onModalBtnClicked() {
     this.store.dispatch(openClassesAndGroupsEndModal())
+  }
+  submit() {
+    this.store.dispatch(sendClassesWithGroupsRequest())
   }
   completeProcess() {
 

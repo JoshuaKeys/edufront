@@ -1,6 +1,7 @@
 import { createReducer, createFeatureSelector, on } from "@ngrx/store";
 import { ClassesAndGroupsModel } from '../models/classes-and-group.model';
 import * as fromActions from './actions';
+import { ClassModel } from '../models/class.model';
 
 const initialState: ClassesAndGroupsModel = {
   groupsOfClassesNum: 0,
@@ -58,10 +59,17 @@ const _classesAndGroupsReducer = createReducer(initialState,
     }
   })),
   on(fromActions.initializeGroupClassMap, (state, action) => {
-    let groupsClassesMap = !state.groupsClassesMap ? createDefaultGroupsClassesMap(state) : state.groupsClassesMap
+    let groupsClassesMap = createDefaultGroupsClassesMap(state);
     return {
       ...state,
       groupsClassesMap
+    }
+  }),
+  on(fromActions.resetAllDraggedState, (state, action) => {
+    const resettedClasses = resetDraggedState(state.classes)
+    return {
+      ...state,
+      classes: resettedClasses
     }
   }),
   on(fromActions.setDroppedState, (state, action) => {
@@ -134,4 +142,15 @@ function createDefaultGroupsClassesMap(state) {
       })
   }
   return groupsClassesMap;
+}
+
+function resetDraggedState(classes: ClassModel[]) {
+  const classesCopy = [...classes];
+  console.log(Object.isFrozen(classesCopy[0]));
+  const resetedClassesCopy = classesCopy.map(classItem => {
+    const copiedClassItem = { ...classItem };
+    delete copiedClassItem.dragged;
+    return copiedClassItem;
+  })
+  return resetedClassesCopy;
 }

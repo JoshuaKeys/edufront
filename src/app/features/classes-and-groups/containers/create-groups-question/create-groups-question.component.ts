@@ -6,7 +6,7 @@ import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { selectSelectedClasses, selectModalState } from '../../ngrx/selectors';
 import { ActivatedRoute } from '@angular/router';
 import { ModalModel } from '../../models/modal.model';
-import { openClassesAndGroupsEndModal } from '../../ngrx/actions';
+import { openClassesAndGroupsEndModal, classesWithoutGroupsRequest } from '../../ngrx/actions';
 
 @Component({
   selector: 'edu-create-groups-question',
@@ -26,6 +26,10 @@ export class CreateGroupsQuestionComponent implements OnInit {
   }
   openModal() {
     this.store.dispatch(openClassesAndGroupsEndModal())
+  }
+  submitWithoutGroups() {
+    // this.openModal();
+    this.store.dispatch(classesWithoutGroupsRequest())
   }
   goToSubjects() {
 
