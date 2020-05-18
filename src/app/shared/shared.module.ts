@@ -10,24 +10,17 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 @NgModule({
   declarations: [
     ModalComponent,
-<<<<<<< HEAD
-    CustomSelectComponent
-=======
+    CustomSelectComponent,
     HeaderNavComponent
->>>>>>> c5a0643302043861ff177b6b5c1a6fe07fd75ebb
+
   ],
   imports: [
     CommonModule
   ],
   exports: [
     ModalComponent,
-<<<<<<< HEAD
-    CustomSelectComponent
-  ],
-
-=======
+    CustomSelectComponent,
     HeaderNavComponent
   ]
->>>>>>> c5a0643302043861ff177b6b5c1a6fe07fd75ebb
 })
 export class SharedModule { }
