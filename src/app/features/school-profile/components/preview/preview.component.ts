@@ -1,4 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { selectorSchoolName } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-preview',
@@ -7,10 +10,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewComponent implements OnInit {
-
-  constructor() { }
+  schoolName$;
+  constructor(public store: Store<Store>,) { }
 
   ngOnInit(): void {
+    this.schoolName$ = this.store.select(selectorSchoolName);
   }
 
 }
