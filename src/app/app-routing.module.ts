@@ -4,6 +4,13 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
 
 const routes: Routes = [
+  
+  
+  {
+    path: 'ui',
+    loadChildren: () => import('./features/ui-test/ui-test.module').then(m => m.uiTestModule),
+  },
+ 
   {
     path: 'school-profile',
     canLoad: [AuthenticatedGuard],
@@ -13,9 +20,12 @@ const routes: Routes = [
     path: 'classes-and-groups',
     canLoad: [AuthenticatedGuard],
     loadChildren: () => import('./features/classes-and-groups/classes-and-groups.module').then(m => m.ClassesAndGroupsModule),
-  },
+  }
+  
+  ,
   {
     path: '',
+    // redirectTo: '/ui',
     redirectTo: '/classes-and-groups/classes-in-school',
     pathMatch: 'full'
   }

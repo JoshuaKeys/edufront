@@ -20,9 +20,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setupAuth();
-    this.setupTheme();
-    this.store.dispatch(retrieveTokenRequest())
+    // this.setupAuth();
+    // this.setupTheme();
+    // this.store.dispatch(retrieveTokenRequest())
   }
 
   private setupAuth() {
