@@ -7,41 +7,23 @@
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
 
-    <form
-      class="form"
-      *ngIf="classesAndGroupsForm"
-      [formGroup]="classesAndGroupsForm"
-    >
+    <div class="form">
       <h2 class="form__title">
         How many Groups of Classes do you need?
       </h2>
       <p class="form__desc">Eg: Primary, Middle, Secondary etc</p>
-
-      <div class="form__input-wrapper">
-        <select
-          id="schoolName"
-          type="text"
-          class="form__input"
-          placeholder=""
-          formControlName="numOfGroups"
-          (change)="computeNumOfGroupsInClasses()"
-        >
-          <option *ngFor="let num of [0, 1, 2, 3, 4, 5]">{{ num }}</option>
-        </select>
-
-        <button class="form__icon-btn">
-          <img src="../../../assets/iconfinder_chevron-up.svg" alt="" />
-        </button>
-        <label class="form__input-label" for="schoolName">Number</label>
-      </div>
+      <edu-custom-select
+        (onQtyChange)="computeNumOfGroupsInClasses($event)"
+        [groupQty]="numOfGroups | async"
+      ></edu-custom-select>
       <button
         class="form__btn"
         [routerLink]="['../', activatedRouteData.next]"
         [disabled]="(numOfGroups | async) == 0"
       >
-        Continue {{ classesAndGroupsForm.value.numOfGroups }}
+        Continue
       </button>
-    </form>
+    </div>
   </section>
   <aside class="aside">
     <h5 class="aside__title">Preview</h5>

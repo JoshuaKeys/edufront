@@ -14,14 +14,19 @@ export const navigation = {
     previous: 'create-group-question'
   },
   'name-groups': {
-    // next: 'address',
+    next: 'confirmation',
     previous: 'classes-with-groups',
   },
+  'confirmation': {
+    next: null,
+    previous: 'name-groups'
+  }
 };
 
 export const routeToComponentMap = {
   'classes-in-school': fromContainers.ClassesInSchoolComponent,
   'create-group-question': fromContainers.CreateGroupsQuestionComponent,
   'classes-with-groups': fromContainers.ClassesAndGroupComponent,
-  'name-groups': fromContainers.NameGroupsComponent
+  'name-groups': fromContainers.NameGroupsComponent,
+  'confirmation': fromContainers.ConfirmationComponent
 }

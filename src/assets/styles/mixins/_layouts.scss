@@ -1,0 +1,577 @@
+$fixed-footer-height: 140px; //was 140 for the longest tinme // original value is 256px
+
+@mixin disableSectionScroll() {
+  .content {
+    padding-bottom: 0 !important;
+    overflow: hidden;
+  }
+}
+
+@mixin sectionScrollLayout() {
+  .section {
+    // @include customScroll();
+
+    overflow-y: auto;
+    margin-right: 12px;
+  }
+  .content {
+    overflow-y: auto;
+    max-height: 100%;
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: $fixed-footer-height !important;
+
+    &__btn {
+      bottom: 40px;
+      margin: 0 10px;
+      &:active {
+        top: unset;
+        bottom: 34px;
+      }
+    }
+    &__btn-wrapper {
+      align-items: flex-end;
+      max-height: unset;
+      height: $fixed-footer-height;
+      position: absolute;
+      bottom: 0;
+      width: 95%;
+      background: transparent
+        linear-gradient(180deg, #ffffff00 0%, #ffffff 61%, #ffffff 100%) 0% 0%
+        no-repeat padding-box;
+    }
+  }
+}
+
+@mixin customScroll() {
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+    background: #e6e9f3 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    opacity: 1;
+  }
+
+  ::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: $fixed-footer-height;
+  }
+
+  ::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 30px;
+  }
+}
+
+@mixin sectionLayout3() {
+  section {
+    height: calc(100vh - 53px);
+    padding-top: 20px;
+    @include displayFlex(flex-start, center, column);
+    position: relative;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .content {
+    @include displayFlex(center, center, column);
+    flex-grow: 1;
+    // @include absoluteCenter();
+    // top: 45%;
+
+    &__title {
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+    &__desc {
+      text-align: center;
+      font-weight: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $ash;
+      margin: 0;
+    }
+
+    &__btn {
+      @include button_default($blue, white);
+      &--white {
+        @include button_default(white, $blue);
+        border: 1px solid $blue;
+      }
+      &--inactive {
+        @include button_default($grey-blue, white);
+        border: 1px solid $grey-blue;
+      }
+    }
+    &__btn-wrapper {
+      min-height: 132px;
+      max-height: 18%;
+      height: 92px;
+      flex-shrink: 0;
+      @include displayFlex();
+    }
+  }
+
+  .section {
+    &__back-btn {
+      @include textButton();
+      @include displayFlex();
+      cursor: pointer;
+      position: absolute;
+      top: 31px;
+      left: 23px;
+      text-align: right;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.42px;
+      color: $grey;
+      img {
+        height: 18px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .btn--icon-text {
+    @include iconTextButton();
+  }
+}
+@mixin splitLayout3() {
+  @include sectionLayout3();
+
+  main {
+    height: calc(100vh - 53px);
+    @include displayFlex(center, flex-start);
+  }
+
+  aside {
+    overflow-y: auto;
+    height: 100%;
+    width: 300px;
+    flex-shrink: 0;
+    background: $grey-white;
+    border-left: 1px solid $grey-blue;
+  }
+
+  .aside {
+    @include displayFlex(flex-start, flex-start, column);
+    position: relative;
+    padding: 30px 15px;
+
+    & > * {
+      margin-bottom: 15px;
+    }
+
+    &__title {
+      align-self: center;
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $grey;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    &__placeholder {
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      max-width: 270px;
+      width: 100%;
+      color: $grey;
+      @include absoluteCenter();
+    }
+  }
+  .card {
+    @include card();
+    width: 100%;
+  }
+}
+
+@mixin sectionLayout2() {
+  section {
+    height: calc(100vh - 53px);
+    padding-top: 20px;
+    @include displayFlex(flex-start, center, column);
+    position: relative;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .content {
+    @include displayFlex(center, center, column);
+    flex-grow: 1;
+    // @include absoluteCenter();
+    // top: 45%;
+
+    &__title {
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+    &__desc {
+      text-align: center;
+      font-weight: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $ash;
+      margin: 0;
+    }
+
+    &__btn {
+      @include button_default($blue, white);
+      &--white {
+        @include button_default(white, $blue);
+        border: 1px solid $blue;
+      }
+      &--inactive {
+        @include button_default($grey-blue, white);
+        border: 1px solid $grey-blue;
+      }
+    }
+    &__btn-wrapper {
+      min-height: 132px;
+      max-height: 18%;
+      height: 92px;
+      flex-shrink: 0;
+      @include displayFlex();
+    }
+  }
+
+  .section {
+    &__back-btn {
+      @include textButton();
+      @include displayFlex();
+      cursor: pointer;
+      position: absolute;
+      top: 31px;
+      left: 23px;
+      text-align: right;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.42px;
+      color: $grey;
+      img {
+        height: 18px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .btn--icon-text {
+    @include iconTextButton();
+  }
+  @include forms();
+}
+@mixin splitLayout2() {
+  @include sectionLayout2();
+  @include roundBadge();
+  main {
+    height: calc(100vh - 53px);
+    @include displayFlex(center, flex-start);
+  }
+
+  aside {
+    overflow-y: auto;
+    height: 100%;
+    width: 300px;
+    flex-shrink: 0;
+    background: $grey-white;
+    border-left: 1px solid $grey-blue;
+  }
+
+  .aside {
+    @include displayFlex(flex-start, flex-start, column);
+    position: relative;
+    padding: 30px 15px;
+
+    & > * {
+      margin-bottom: 15px;
+    }
+
+    &__title {
+      align-self: center;
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $grey;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    &__placeholder {
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      max-width: 270px;
+      width: 100%;
+      color: $grey;
+      @include absoluteCenter();
+    }
+  }
+  .card {
+    @include card();
+    width: 100%;
+  }
+}
+
+@mixin sectionLayout() {
+  section {
+    height: calc(100vh - 53px);
+  }
+
+  .content {
+    @include displayFlex(center, center, column);
+    @include absoluteCenter();
+    top: 45%;
+    &__title {
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    &__desc {
+      text-align: center;
+      font-weight: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $ash;
+      margin: 0;
+    }
+
+    &__btn {
+      position: absolute;
+      bottom: -175px;
+    }
+  }
+
+  section {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .section {
+    &__back-btn {
+      @include textButton();
+      @include displayFlex();
+      cursor: pointer;
+      position: absolute;
+      top: 31px;
+      left: 23px;
+      text-align: right;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.42px;
+      color: $grey;
+      img {
+        height: 18px;
+        margin-right: 10px;
+      }
+    }
+  }
+  @include forms();
+}
+
+@mixin splitLayout() {
+  @include sectionLayout();
+  @include roundBadge();
+  main {
+    height: calc(100vh - 53px);
+    @include displayFlex(center, flex-start);
+  }
+
+  aside {
+    overflow-y: auto;
+    height: 100%;
+    width: 300px;
+    flex-shrink: 0;
+    background: $grey-white;
+    border-left: 1px solid $grey-blue;
+  }
+
+  .aside {
+    @include displayFlex(flex-start, center, column);
+    padding: 30px 15px;
+    & > * {
+      margin-bottom: 15px;
+    }
+
+    &__title {
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $grey;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+  }
+  .card {
+    @include card();
+    width: 100%;
+  }
+}
+
+@mixin stepsLayout() {
+  .steps {
+    @include displayFlex(flex-start, center, column);
+    padding: 60px 50px;
+    width: 100%;
+    box-sizing: border-box;
+    &__completion-gauge {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      border: 8px solid #f4f6fc;
+      color: $blue;
+      font-family: "Raleway", sans-serif;
+      position: relative;
+      margin-bottom: 40px;
+
+      &-value {
+        @include absoluteCenter();
+        font-weight: 600;
+      }
+      &-value-number {
+        font-size: 3em;
+        line-height: 1;
+        font-family: arial;
+      }
+      &-value-sign {
+        font-size: 0.9em;
+        position: absolute;
+        right: -17px;
+        bottom: 2px;
+      }
+    }
+
+    &__title {
+      margin-bottom: 20px;
+    }
+    &__desc {
+      color: $ash;
+      max-width: 706px;
+      &--small {
+        font-size: 14px;
+        margin-bottom: 67px;
+      }
+      &--grey {
+        color: $grey;
+      }
+    }
+
+    &__btn {
+      @include button_default($blue, white);
+      margin-top: 20px;
+      font-weight: 600;
+    }
+  }
+}
+
+@mixin timelineLayout() {
+  .timeline {
+    width: 100%;
+    max-width: 1180px;
+    list-style: none;
+    padding: 0;
+    @include displayFlex(space-between);
+    margin-bottom: 75px;
+    &__entry {
+      flex-shrink: 0;
+      position: relative;
+      @include displayFlex(flex-start, center, column);
+      min-width: 85px;
+
+      &--completed {
+        .timeline__entry-img-wrapper {
+          background: $green;
+          border-color: $green;
+        }
+        .timeline__entry-title {
+          color: $black;
+        }
+      }
+
+      &--active {
+        .timeline__entry {
+          &-img-wrapper {
+            background: $orange;
+            border: 1px solid $orange;
+            &::before {
+              width: 78px;
+              height: 78px;
+              border-radius: 50%;
+              border: 1px solid $orange;
+              display: block;
+              content: "";
+              @include absoluteCenter();
+            }
+          }
+
+          &-title {
+            color: $orange;
+          }
+        }
+      }
+
+      &-img-wrapper {
+        width: 64px;
+        height: 64px;
+        position: relative;
+        border: 2px solid $grey-blue;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+      &-title {
+        color: $grey;
+        font-family: "Raleway", sans-serif;
+        font-size: 14px;
+        text-align: center;
+        white-space: nowrap;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+      }
+      &-img {
+        @include absoluteCenter();
+      }
+    }
+
+    &__dash {
+      height: 2px;
+      border-radius: 100px;
+      background: #e9e9e9;
+      width: 100%;
+
+      // transform: translateY(-16px);
+      &--completed {
+        background: $green;
+      }
+    }
+  }
+}

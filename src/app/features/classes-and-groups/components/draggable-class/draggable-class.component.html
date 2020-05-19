@@ -1,0 +1,6 @@
+<span
+  class="form__badge round-badge draggable"
+  [ngClass]="{ dragged: draggable && class.dragged }"
+  (click)="processClicks()"
+  >{{ class.name }}</span
+>

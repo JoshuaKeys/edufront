@@ -1,0 +1,88 @@
+@mixin resetButton() {
+  background: unset;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin button_default($background: white, $color: black) {
+  @include resetButton();
+  cursor: pointer;
+  width: 292px;
+  height: 52px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-family: "Raleway";
+  letter-spacing: 0.42px;
+  color: $color;
+  background: $background;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 8px #3c4b9b26;
+  position: relative;
+
+  &:active {
+    top: 6px;
+  }
+}
+
+@mixin roundButton($width: 64px, $background: white, $color: $grey) {
+  @include resetButton();
+  cursor: pointer;
+  width: $width;
+  height: $width;
+  border-radius: 50%;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  border: 2px solid $grey-blue;
+  position: relative;
+  background: white;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.48px;
+  color: $color;
+  background: $background;
+
+  &:active {
+    transform: scale(1.05);
+  }
+  &:hover {
+    background: $color;
+    color: $background;
+  }
+}
+
+@mixin iconButton($size: auto) {
+  @include resetButton();
+  cursor: pointer;
+  width: $size;
+  height: $size;
+  position: relative;
+  &:active {
+    transform: translateY(6px);
+  }
+}
+
+@mixin iconTextButton($color: inherit) {
+  @include resetButton();
+  @include displayFlex(flex-start, flex-end);
+  cursor: pointer;
+  color: $color;
+  font: 500 14px/14px Raleway;
+
+  &:hover {
+    // text-decoration: underline;
+  }
+
+  img + span {
+    margin-left: 10px;
+  }
+}
+@mixin textButton($color: inherit) {
+  @include resetButton();
+  cursor: pointer;
+  color: $color;
+  font-family: "Raleway";
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

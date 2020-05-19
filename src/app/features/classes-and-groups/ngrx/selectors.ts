@@ -19,3 +19,13 @@ export const selectSortedClasses = createSelector(featureSelector, featSel => {
 })
 export const selectSelectedClasses = createSelector(selectSortedClasses, featSel => featSel.filter((_class) => _class.selected))
 export const selectModalState = createSelector(featureSelector, featSel => featSel.modals)
+export const selectGroupsClassMap = createSelector(featureSelector, featSel => featSel.groupsClassesMap);
+export const selectGCMapForSubmission = createSelector(featureSelector, featSel => {
+  return featSel.groupsClassesMap ? featSel.groupsClassesMap.map(group => {
+    const groupName = group.groupName;
+    const classIds = group.classes.map(classItem => classItem.id)
+    return { groupName, classIds }
+  }) : []
+})
+
+export const selectAnUngroupedClass = createSelector(featureSelector, featSel => featSel.classes.find(_class => _class.selected && !_class.dragged))

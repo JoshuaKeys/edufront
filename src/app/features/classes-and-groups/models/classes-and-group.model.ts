@@ -1,5 +1,7 @@
 import { GetClassesResponseModel } from './get-classes-response.model';
 import { ClassModel } from './class.model'
+import { GroupClassMapModel } from './group-class-map.model';
+
 export interface ClassesAndGroupsModel {
   groupsOfClassesNum?: number;
   inputError?: {
@@ -10,5 +12,6 @@ export interface ClassesAndGroupsModel {
   modals?: {
     startModal: boolean,
     endModal: boolean
-  }
+  },
+  groupsClassesMap?: GroupClassMapModel[]
 }

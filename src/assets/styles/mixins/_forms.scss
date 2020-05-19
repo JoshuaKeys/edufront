@@ -1,0 +1,384 @@
+@import './alignment';
+//START OF FORMSS
+@mixin labelOnFocus($scale: 0.8, $y: -22px) {
+  .form__input[type='text']:focus + label,
+  .form__input[type='text']:invalid + label {
+    // display: none;
+    transform: scale($scale) translateY($y);
+    text-align: center;
+    .ashcolor {
+      font-size: 0;
+    }
+  }
+}
+
+@mixin selectOnFocus($scale: 0.8, $y: -22px) {
+  .form__input[type='checkbox']:checked + label {
+    // display: none;
+    transform: scale($scale) translateY($y);
+    text-align: center;
+    .ashcolor {
+      font-size: 0;
+    }
+  }
+  .form__input[type='checkbox']:checked ~ .form__input--select-dropdown {
+    display: block;
+  }
+  .form__input[type='checkbox']:checked ~ .form__input--select-border {
+    border-color: $blue;
+    &:before {
+      background: url(/assets/iconfinder_chevron-up-blue.svg) no-repeat
+        no-repeat center center;
+    }
+    .form__input--select-sizeguide {
+      opacity: 1;
+    }
+  }
+}
+@mixin textInput() {
+  @include labelOnFocus();
+
+  .form__input {
+    &[type='text'] {
+      // background-color: red;
+      padding-bottom: 10px;
+      font-size: 20px;
+      max-width: 377px;
+      width: 100%;
+      border: 0;
+      color: $black;
+      border-bottom: 2px solid $grey-blue;
+      text-align: center;
+      &:focus {
+        outline: none;
+        border-color: $blue;
+      }
+    }
+  }
+}
+
+@mixin input() {
+  //general styling of form without elements
+  .form {
+    &__row {
+      width: 100%;
+      @include displayFlex();
+      & > *:not(:last-child) {
+        margin-right: 20px;
+      }
+      & > * {
+        width: 100%;
+      }
+    }
+
+    &__input {
+      border: 0;
+      border-bottom: 2px solid $grey-blue;
+      &:focus {
+        outline: none;
+      }
+
+      &-wrapper {
+        @include displayFlex();
+        width: 100%;
+        max-width: 380px;
+        min-height: 43px;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      &-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        & ~ .form__input {
+          padding-left: 30px;
+        }
+        & ~ .form__input-label--align-left {
+          //might need to see if there are breaking changes here
+          padding-left: 30px;
+        }
+      }
+      &-prefix {
+        // for things like country code
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include displayFlex(flex-start);
+        & > * {
+          position: relative;
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
+        }
+      }
+      &-label {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.5;
+        font-family: 'Raleway', sans-serif;
+        letter-spacing: 0.48px;
+        white-space: nowrap;
+        &--align-left {
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  //prefix settings
+  .form__input-prefix--countrycode {
+    & ~ .form__input {
+      padding-left: 70px;
+    }
+    & ~ .form__input-label--align-left {
+      left: 70px;
+    }
+  }
+}
+
+@mixin select() {
+  @include selectOnFocus();
+  @include popup();
+  .form {
+    &__input--select {
+      cursor: pointer;
+      z-index: 2;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      opacity: 0;
+    }
+    &__input--select-sizeguide {
+      background: unset;
+      border-color: transparent !important;
+      padding-top: 0px;
+      opacity: 0; //very hacky way , need to change to something when porting over to Angular
+    }
+    &__input--select-border {
+      height: 100%;
+      width: 100%;
+      font: 400 16px/24px Raleway;
+      color: transparent;
+      border-bottom: 2px solid $grey-blue;
+      &:before {
+        width: 16px;
+        height: 16px;
+        right: 12.5px;
+        @include emptyPesudoElement();
+        top: 0;
+        transform: translateY(50%);
+        background: url(/assets/iconfinder_chevron-up.svg) no-repeat no-repeat
+          center center;
+      }
+    }
+  }
+  .form__input--select-dropdown {
+    display: none;
+    // bottom: -15px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    @include popup();
+
+    .popup {
+      min-width: 100%;
+      width: auto;
+      max-width: unset;
+    }
+  }
+}
+
+@mixin form() {
+  //refactored form mixin >>> FOR ALL FORMS
+
+  @include input();
+  @include textInput();
+  @include select();
+}
+
+//END OF FORMS IGNORE BOTTOM
+
+@mixin forms() {
+  @include input();
+  @include textInput();
+  @include select();
+  .form {
+    @include displayFlex(flex-start, center, column);
+    @include absoluteCenter();
+    top: 45%;
+    &__title {
+      margin-bottom: 42px;
+    }
+
+    &__btn {
+      @include button_default($blue, white);
+      height: 52px;
+      width: 250px;
+    }
+    &__round-btn {
+      @include roundButton();
+    }
+  }
+}
+
+@mixin form1() {
+  max-width: 720px;
+  width: 100vw;
+  min-height: 420px;
+  position: relative;
+  transform: unset;
+  margin: 0;
+  top: unset;
+  left: unset;
+  &__row {
+    width: 100%;
+    @include displayFlex();
+    & > *:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+  &__select2 {
+    position: absolute;
+    top: 50%;
+    left: -36px;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  &__input-label {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: 0.48px;
+    &--aligin-left {
+      text-align: left;
+    }
+  }
+
+  &__input:focus,
+  &__input:invalid {
+    //need to fix tmr
+    .form__input-label .form--aligin-left {
+      text-align: center;
+    }
+  }
+
+  &__input {
+    &-icon {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+    &-icon-btn {
+      @include iconButton();
+      @include absoluteVertCenter();
+      right: 0;
+    }
+  }
+
+  &__split {
+    //used in the early days might have to be replaced with groups
+    @include displayFlex(space-around, stretch);
+    width: 100%;
+    &--left,
+    &--right {
+      max-width: 240px;
+      width: 100%;
+    }
+  }
+
+  &__input-wrapper {
+    @include labelOnFocus(0.7, -32px);
+    .form__input-label,
+    .form__input {
+      top: unset;
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+
+  &__input-wrapper--main {
+    @include labelOnFocus(0.7, -35px);
+
+    .form__input-icon {
+      left: -50px;
+    }
+    .form__input-label,
+    .form__input {
+      top: unset;
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  &__round-btn {
+    @include roundButton(80px, $grey, white);
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 25px);
+    border: unset;
+    box-shadow: unset;
+    &:active {
+      transform: scale(1.1) translate(50%, 25px);
+    }
+    &:hover {
+      background: $grey;
+    }
+
+    &--active {
+      background: $blue;
+      &:hover {
+        background: $blue;
+      }
+    }
+  }
+  &__input-wrapper--main {
+    @include labelOnFocus(0.7, -35px);
+
+    .form__input-icon {
+      left: -50px;
+    }
+    .form__input-label,
+    .form__input {
+      top: unset;
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  &__round-btn {
+    @include roundButton(80px, $grey, white);
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 25px);
+    border: unset;
+    box-shadow: unset;
+    &:active {
+      transform: scale(1.1) translate(50%, 25px);
+    }
+    &:hover {
+      background: $grey;
+    }
+
+    &--active {
+      background: $blue;
+      &:hover {
+        background: $blue;
+      }
+    }
+  }
+}

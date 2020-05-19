@@ -1,0 +1,25 @@
+<div
+  class="drop-zone"
+  [ngClass]="{ 'drop-zone--hover': draggedOver }"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  <h5 class="drop-zone__title">
+    <input
+      *ngIf="editable; else nonEditableTitle"
+      [value]="group.groupName"
+      (blur)="onGroupNameChange($event)"
+    />
+    <ng-template #nonEditableTitle>
+      {{ group.groupName }}
+    </ng-template>
+  </h5>
+  <div class="drop-zone__body">
+    <edu-draggable-class
+      *ngFor="let class of group.classes"
+      [class]="class"
+      (deselected)="onDeselected($event)"
+    ></edu-draggable-class>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { createReducer, createFeatureSelector, on } from "@ngrx/store";
 import { ClassesAndGroupsModel } from '../models/classes-and-group.model';
 import * as fromActions from './actions';
+import { ClassModel } from '../models/class.model';
 
 const initialState: ClassesAndGroupsModel = {
   groupsOfClassesNum: 0,
@@ -56,10 +57,100 @@ const _classesAndGroupsReducer = createReducer(initialState,
       ...state.modals,
       endModal: true
     }
-  }))
+  })),
+  on(fromActions.initializeGroupClassMap, (state, action) => {
+    let groupsClassesMap = createDefaultGroupsClassesMap(state);
+    return {
+      ...state,
+      groupsClassesMap
+    }
+  }),
+  on(fromActions.resetAllDraggedState, (state, action) => {
+    const resettedClasses = resetDraggedState(state.classes)
+    return {
+      ...state,
+      classes: resettedClasses
+    }
+  }),
+  on(fromActions.setDroppedState, (state, action) => {
+    const classIdx = state.classes.findIndex(classItem => classItem.name === action.className);
+    const classStateCopy = state.classes.map(_class => ({ ..._class }));
+    classStateCopy[classIdx].dragged = true;
+    return {
+      ...state,
+      classes: [...classStateCopy]
+    }
+  }),
+  on(fromActions.addClassToGroup, (state, action) => {
+    const groupIdx = state.groupsClassesMap.findIndex(item => item.groupName === action.groupName);
+    const classObj = state.classes.find(item => item.name === action.className);
+    const groupClassesMapCopy = state.groupsClassesMap.map(group => ({ ...group }));
+    groupClassesMapCopy[groupIdx] = {
+      ...groupClassesMapCopy[groupIdx],
+      classes: [...groupClassesMapCopy[groupIdx].classes, classObj]
+    }
+    return {
+      ...state,
+      groupsClassesMap: [...groupClassesMapCopy]
+    }
+  }),
+  on(fromActions.removeDroppedState, (state, action) => {
+    const classIdx = state.classes.findIndex(classItem => classItem.name === action.className);
+    const classStateCopy = state.classes.map(_class => ({ ..._class }));
+    classStateCopy[classIdx].dragged = false;
+    return {
+      ...state,
+      classes: [...classStateCopy]
+    }
+  }),
+  on(fromActions.removeClassFromGroup, (state, action) => {
+    const groupIdx = state.groupsClassesMap.findIndex(item => item.groupName === action.groupName);
+    const classIdx = state.groupsClassesMap[groupIdx].classes.findIndex(item => item.name === action.className);
+    const groupClassesMapCopy = state.groupsClassesMap.map(group => ({ ...group }));
+    const classesCopy = groupClassesMapCopy[groupIdx].classes.map(classItem => ({ ...classItem }))
+    classesCopy.splice(classIdx, 1);
+    groupClassesMapCopy[groupIdx].classes = classesCopy
+    return {
+      ...state,
+      groupsClassesMap: [...groupClassesMapCopy]
+    }
+  }),
+  on(fromActions.changeGroupName, (state, action) => {
+    const groupIdx = state.groupsClassesMap.findIndex(item => item.groupName === action.oldName);
+    const groupClassesMapCopy = state.groupsClassesMap.map(group => ({ ...group }));
+    groupClassesMapCopy[groupIdx].groupName = action.newName;
+    return {
+      ...state,
+      groupsClassesMap: [...groupClassesMapCopy]
+    }
+  })
 );
 
 export function classesAndGroupsReducer(state, action) {
   return _classesAndGroupsReducer(state, action);
 }
 
+function createDefaultGroupsClassesMap(state) {
+  const numOfGroups = state.groupsOfClassesNum;
+  const emptyArray = new Array(+numOfGroups)
+  let groupsClassesMap = []
+  for (let i = 0; i < emptyArray.length; i++) {
+    groupsClassesMap.push(
+      {
+        groupName: `Name ${i + 1}`,
+        classes: []
+      })
+  }
+  return groupsClassesMap;
+}
+
+function resetDraggedState(classes: ClassModel[]) {
+  const classesCopy = [...classes];
+  console.log(Object.isFrozen(classesCopy[0]));
+  const resetedClassesCopy = classesCopy.map(classItem => {
+    const copiedClassItem = { ...classItem };
+    delete copiedClassItem.dragged;
+    return copiedClassItem;
+  })
+  return resetedClassesCopy;
+}
