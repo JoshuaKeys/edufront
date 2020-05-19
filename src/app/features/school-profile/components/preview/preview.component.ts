@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { selectorSchoolAddress, selectorSchoolContacts, selectorSchoolName } from '../../ngrx/selectors';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'edu-preview',
@@ -14,12 +15,19 @@ export class PreviewComponent implements OnInit {
   schoolName$: Observable<any>;
   schoolAddress$: Observable<any>;
   schoolContacts$: Observable<any>;
-  constructor(public store: Store<Store>) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public store: Store<Store>) { }
 
   ngOnInit(): void {
     this.schoolName$ = this.store.select(selectorSchoolName);
     this.schoolAddress$ = this.store.select(selectorSchoolAddress);
     this.schoolContacts$ = this.store.select(selectorSchoolContacts);
+  }
+
+  moveto(path: string): void {
+    this.router.navigate([`/school-profile/${path}`]);
   }
 
 }

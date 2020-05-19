@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/school-profile/',
+    redirectTo: '/school-profile/name',
     pathMatch: 'full'
   }
 ];

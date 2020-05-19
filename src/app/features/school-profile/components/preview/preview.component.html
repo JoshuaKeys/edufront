@@ -1,14 +1,14 @@
 <!--<p>preview works!</p>-->
 
 <h5 class="aside__title">Preview</h5>
-  <div class="card" *ngIf="schoolContacts$ | async as contacts">
+  <div class="card" *ngIf="schoolContacts$ | async as contacts" (click)="moveto('contact-details')">
     <h5 class="card__title">School Contact</h5>
     <p class="card__desc">{{contacts.email}}</p>
     <p class="card__desc">{{contacts.phoneNo}}</p>
     <p class="card__desc">{{contacts.website}}</p>
   </div>
 
-  <div class="card" *ngIf="schoolAddress$ | async as address">
+  <div class="card" *ngIf="schoolAddress$ | async as address" (click)="moveto('address')">
     <h5 class="card__title">School Address</h5>
     <p class="card__desc">{{address.country }}</p>
     <p class="card__desc">{{address.zipcode }}</p>
@@ -17,7 +17,7 @@
     <p class="card__desc">{{address.city }}</p>
   </div>
 
-  <div class="card" *ngIf="schoolName$ | async as school">
+  <div class="card" *ngIf="schoolName$ | async as school" (click)="moveto('name')">
     <h5 class="card__title">School Name</h5>
     <p class="card__desc">{{school?.name}}</p>
   </div>

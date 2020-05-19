@@ -1,4 +1,16 @@
 import { routeToComponentMap, navigation } from './nav-rules';
+import { Routes } from '@angular/router';
+
+interface subRouter {
+  path: string;
+  component?: any;
+  redirectTo?: string;
+  pathMatch?: string;
+  data?: {
+    next: any;
+    previous: any;
+  }
+}
 
 export function routeToComponentGenerator() {
   const routesArr = Object.keys(routeToComponentMap);
@@ -13,6 +25,8 @@ export function routeToComponentGenerator() {
       }
     }
   });
-  arrRoute.unshift({ path: '', redirectTo: 'name', pathMatch: 'full'});
+  // arrRoute.push({ path: '', redirectTo: 'name'});
+
+  // console.log('@@', arrRoute);
   return arrRoute;
 }
