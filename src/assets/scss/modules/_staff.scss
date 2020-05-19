@@ -1,0 +1,143 @@
+@import "./students";
+
+@mixin staffSummary() {
+  @include studentSummary();
+  .student-summary__desc--total {
+    line-height: 52px;
+    min-height: unset;
+  }
+}
+
+@mixin staffChips() {
+  @include studentChips();
+}
+
+@mixin addEditStaffForm() {
+  .tooltip {
+    width: 240px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .form {
+    @include form();
+
+    padding: 40px;
+    padding-bottom: 110px;
+    max-width: 1150px;
+    width: 100vw;
+
+    position: relative;
+    transform: unset;
+    margin: 0;
+    top: unset;
+    left: unset;
+
+    &__round-btn {
+      @include roundButton(80px, $grey, white);
+
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 25px);
+      border: unset;
+      box-shadow: unset;
+      &:active {
+        transform: scale(1.1) translate(50%, 25px);
+      }
+      &:hover {
+        background: $grey;
+      }
+
+      &--active {
+        background: $blue;
+        &:hover {
+          background: $blue;
+        }
+      }
+    }
+  }
+
+  .form {
+    &__row {
+      margin-bottom: 20px;
+    }
+    &__sub-title {
+      font: 500 20px/30px Quicksand;
+      color: $ash;
+    }
+    &__profile-pic {
+      @include absoluteCenter();
+
+      &-wrap {
+        border-radius: 50%;
+        width: 140px;
+        height: 140px;
+        border: 2px dashed $grey-blue;
+        position: relative;
+      }
+      &-wrap--hover {
+        border-color: $blue;
+      }
+    }
+    .search__input {
+      border-width: 2px;
+      &-wrapper {
+        align-self: flex-end;
+      }
+      &::placeholder {
+        font: 400 14px/22px Raleway;
+      }
+    }
+  }
+
+  .group {
+    &--1 {
+      width: 140px;
+    }
+    &--2 {
+      width: 571px;
+    }
+    &--3 {
+      width: 275px;
+    }
+  }
+
+  @include roundBadge();
+
+  @include popup();
+  .popup {
+    min-width: unset;
+    width: auto;
+
+    .chip {
+      padding: 5px;
+    }
+    .chip__text {
+      font: 600 12px/22px Raleway;
+    }
+    .groups {
+      align-items: flex-start;
+    }
+    .group {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .badges {
+      @include displayFlex(flex-end);
+    }
+    // .round-badge {
+    //   color: $grey;
+    //   background: white;
+    //   border: 2px solid $grey-blue;
+    // }
+    .form__round-btn {
+      width: 44px;
+      height: 44px;
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

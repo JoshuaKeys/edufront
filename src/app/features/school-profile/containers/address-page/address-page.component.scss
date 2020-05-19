@@ -1,207 +1,159 @@
+@import "./../../../../../assets/scss/typography";
+@import "./../../../../../assets/scss/colors";
+@import "./../../../../../assets/scss/mixins/components";
+@import "./../../../../../assets/scss/mixins/alignment";
+@import "./../../../../../assets/scss/utils";
+@import "./../../../../../assets/scss/main";
+
 body {
   display: relative;
   background-color: white;
 }
-.section {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow-y: auto;
-}
+
+@include form();
+@include splitLayout3();
+@include modalIntro();
+@include modalComplete();
+
 .form {
-  justify-content: flex-start;
-  align-items: center;
+  height: 100%;
+  @include displayFlex(center, center, column);
+
+  &__title {
+    margin-bottom: 40px;
+  }
+
+  &__btn {
+    @include button_default($blue, white);
+
+    margin: 40px 0;
+  }
+  &__btn--round {
+    @include roundButton();
+    margin: 0 10px;
+  }
+  &__btn-wrapper {
+    @include displayFlex();
+  }
+}
+
+.content {
+  &__body--final {
+    @include displayFlex(space-between);
+    max-width: 1200px;
+    width: 90vw;
+
+    .card {
+      @include card();
+      min-width: 152px;
+      // margin: 0 72px;
+      border: 0;
+      padding: 0;
+      box-shadow: unset;
+    }
+  }
+  &__img-wrapper {
+    width: 180px;
+    height: 180px;
+    border: 2px dashed $grey-blue;
+    border-radius: 50%;
+    position: relative;
+    &--active {
+      border-color: $blue;
+    }
+    //margin-bottom: 175px;
+  }
+
+  &__img {
+    @include absoluteCenter();
+  }
+  &__btn {
+    @include button_default($blue, white);
+
+    margin: 40px 0;
+  }
+  &__img-editor {
+    width: 230px;
+    position: absolute;
+    bottom: -103px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &__img-editor-btns {
+    @include displayFlex();
+  }
+  &__img-editor-btn {
+    @include roundButton(44px, white, $blue);
+    border: 2px solid $blue;
+    font-size: 30px;
+    line-height: 1;
+    margin: 0 8px;
+  }
+  &__img-editor-descs {
+    @include displayFlex(space-between);
+  }
+  &__img-editor-text-button {
+    @include textButton($blue);
+  }
+
+  &__btn--white {
+    @include button_default(white, $blue);
+    border: 1px solid $blue;
+  }
+  &__btns {
+    button {
+      width: 200px;
+      margin: 40px 10px;
+    }
+  }
+}
+.section {
   flex-direction: column;
-  display: flex;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  top: 45%; }
-.form__title {
-  margin-bottom: 42px; }
-.form__btn {
-  background: unset;
-  border: none;
-  cursor: pointer;
-  width: 292px;
-  height: 52px;
-  border-radius: 100px;
-  font-weight: 700;
-  font-family: "Raleway";
-  letter-spacing: 0.42px;
-  color: white;
-  background: #69a9f2;
-  text-transform: uppercase;
-  box-shadow: 0px 4px 8px #3c4b9b26;
-  position: relative;
-  height: 52px;
-  width: 250px; }
-.form__btn:focus {
-  outline: none; }
-.form__btn:active {
-  top: 6px; }
-.form__round-btn {
-  background: unset;
-  border: none;
-  cursor: pointer;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  box-shadow: 0px 2px 6px #3c4b9b14;
-  border: 2px solid #e6e9f3;
-  position: relative;
-  background: white;
-  font-family: "Roboto", sans-serif;
-  letter-spacing: 0.48px;
-  color: #c7ccdb;
-  background: white; }
-.form__round-btn:focus {
-  outline: none; }
-.form__round-btn:active {
-  transform: scale(1.05); }
-.form__round-btn:hover {
-  background: #c7ccdb;
-  color: white; }
-.section__back-btn {
-  background: unset;
-  border: none;
-  cursor: pointer;
-  color: inherit;
-  font-family: "Raleway";
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  display: flex;
-  cursor: pointer;
-  position: absolute;
-  top: 31px;
-  left: 23px;
-  text-align: right;
-  font-size: 14px;
-  line-height: 22px;
-  letter-spacing: 0.42px;
-  color: #c7ccdb;
-}
-.section__back-btn img {
-  height: 18px;
-  margin-right: 10px;
-}
-
-.form__title {
-  margin-bottom: 42px;
-}
-h2 {
-  font: 600 26px/40px Quicksand;
-  letter-spacing: 0.78px;
-  text-align: center;
-  opacity: 1;
-  color: #212121;
-  margin: 0 auto;
-}
-
-.form__input {
-  border: 0;
-  border-bottom: 2px solid #e6e9f3; }
-.form__input:focus {
-  outline: none; }
-.form__input-wrapper {
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  display: flex;
-  width: 100%;
-  max-width: 380px;
-  min-height: 43px;
-  margin-bottom: 30px;
-  position: relative; }
-.form__input-icon {
-  position: absolute;
-  left: 0;
-  top: 0; }
-.form__input-icon ~ .form__input {
-  padding-left: 30px; }
-.form__input-icon ~ .form__input-label {
-  padding-left: 30px; }
-.form__input-prefix {
-  position: absolute;
-  left: 0;
-  top: 0;
   justify-content: flex-start;
   align-items: center;
-  flex-direction: row;
-  display: flex; }
-.form__input-prefix > * {
-  position: relative; }
-.form__input-prefix > *:not(:last-child) {
-  margin-right: 10px; }
-.form__input-label {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  cursor: pointer;
-  text-align: center;
-  font-size: 16px;
-  line-height: 1.5;
-  font-family: "Raleway", sans-serif;
-  letter-spacing: 0.48px;
-  white-space: nowrap; }
-.form__input-label--align-left {
-  text-align: left; }
+}
 
-.form__input-prefix--countrycode ~ .form__input {
-  padding-left: 70px; }
+.modal {
+  &--inital-screen {
+    max-width: 989px;
+    width: 100vw;
+  }
 
-.form__input-prefix--countrycode ~ .form__input-label {
-  left: 70px; }
+  & > * {
+    flex-shrink: 0;
+  }
 
-.form__input[type="text"]:focus + label,
-.form__input[type="text"]:invalid + label {
-  transform: scale(0.8) translateY(-22px);
-  text-align: center; }
-.form__input[type="text"]:focus + label .ashcolor,
-.form__input[type="text"]:invalid + label .ashcolor {
-  font-size: 0; }
+  &__img--initial-screen {
+    margin-bottom: 60px;
+  }
+  &__title--initial-screen {
+    margin-bottom: 41px;
+  }
 
-.form__input[type="text"] {
-  padding-bottom: 10px;
-  font-size: 20px;
-  max-width: 377px;
-  width: 100%;
-  border: 0;
-  color: #212121;
-  border-bottom: 2px solid #e6e9f3;
-  text-align: center; }
-.form__input[type="text"]:focus {
-  outline: none;
-  border-color: #69a9f2; }
+  &__desc--initial-screen {
+    margin: 0.75em 0;
+    &:last-child {
+      margin-bottom: 3em;
+    }
+  }
 
-.form__input[type="checkbox"]:checked + label {
-  transform: scale(0.8) translateY(-22px);
-  text-align: center; }
-.form__input[type="checkbox"]:checked + label .ashcolor {
-  font-size: 0; }
+  &__btn--initial-screen {
+    @include button_default($blue, white);
+    margin-top: 30px;
+    font-weight: 600;
+    width: 292px;
+    // position: absolute;
+    // bottom: 53px;
+  }
+}
 
-.form__input[type="checkbox"]:checked ~ .form__input--select-dropdown {
-  display: block; }
+.aside {
+  .card-img-wrapper {
+    @include displayFlex();
 
-.form__input[type="checkbox"]:checked ~ .form__input--select-border {
-  border-color: #69a9f2; }
-
-.form__btn {
-  background: unset;
-  border: none;
-  cursor: pointer;
-  width: 292px;
-  height: 52px;
-  border-radius: 100px;
-  font-weight: 700;
-  font-family: "Raleway";
-  letter-spacing: 0.42px;
-  color: white;
-  background: #69a9f2;
-  text-transform: uppercase;
-  box-shadow: 0px 4px 8px #3c4b9b26;
-  position: relative;
-  margin: 40px 0;
+    img {
+      align-self: center;
+      width: 40px;
+    }
+  }
 }

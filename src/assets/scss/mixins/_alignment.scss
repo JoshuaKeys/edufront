@@ -1,0 +1,27 @@
+@mixin absoluteCenter() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fixedCenter() {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absoluteVertCenter() {
+  position: absolute;
+
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin displayFlex($justify: center, $align: center, $direction: row) {
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  display: flex;
+}

@@ -1,0 +1,301 @@
+
+//modal used for end of module
+@mixin modalComplete() {
+  .modal {
+    @include modal();
+
+    //modal  is the base modal class
+    &--complete.modal{
+      padding-top: 120px;
+      max-width: 989px;
+      width: 100%;
+    }
+    //modal__desc is the description for entire modal
+    &__desc--complete.modal__desc {
+      max-width: 600px;
+      font: 400 16px/26px Raleway;
+      margin-bottom: 85px;
+      line-height: 26px;
+    }
+      //modal__btn is the btn for the modal
+    &__btn--complete.modal__btn {
+      margin: 0 10px;
+      width: 288px;
+      height: 52px;
+    }
+  }
+}
+
+//modal used for start of module
+@mixin modalIntro() {
+  .modal {
+    @include modal();
+       //modal  is the base modal class
+    &--intro.modal  {
+      padding: 50px;
+      max-width: 600px;
+    }
+    //modal__img is the img in the modal
+    &__img--intro.modal__img {
+      margin-bottom: 30px;
+    }
+    //modal__title is the title in the modal
+    &__title--intro.modal__title {
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    //modal__desc is the desc in the modal
+    &__desc--intro.modal__desc {
+      margin-bottom: 30px;
+      font: 400 14px/22px Raleway;
+    }
+
+    &__btn--intro.modal__btn {
+      width: 95px;
+    }
+  }
+}
+
+//modal used for form, it basically takes the dimension of the nested form
+@mixin modalForm() {
+  .modal {
+    @include modal();
+    //cleans up existing presets in .modal to allow it to be a container for the nested form
+    &--form.modal {
+      width: auto;
+      height: auto;
+      border: 0;
+      max-width: unset;
+      max-height: unset;
+      padding: 0;
+    }
+  }
+}
+
+//base modal class used 
+@mixin modal() {
+  box-sizing: border-box;
+  width: 80%;
+  //   min-height: 80%;
+  max-width: 989px;
+  max-height: 651px;
+  background: white;
+  box-shadow: 0px 5px 10px #a6adce1a;
+  border: 1px solid $grey-blue;
+  border-radius: 15px;
+  opacity: 1;
+  padding: 44px 50px 53px 50px;
+  @include fixedCenter();
+  top: 45%;
+  @include displayFlex(space-between, center, column);
+
+  max-width: 600px;
+  min-height: 400px;
+  width: 80%;
+  padding: 50px;
+
+  &__overlay {
+    position: fixed;
+    z-index: 5;
+    width: 300vw;
+    height: 300vh;
+    left: -100vw;
+    top: -100vh;
+    background-color: rgba($color: white, $alpha: 0.5);
+  }
+
+  & > * {
+    flex-shrink: 0;
+  }
+
+  &__img {
+    margin-bottom: 30px;
+  }
+  &__title {
+    margin-bottom: 30px;
+    line-height: 1;
+  }
+
+  &__desc {
+    margin-bottom: 21px;
+    font-size: 14px;
+  }
+
+  &__btns {
+    display: flex;
+  }
+  &__btn {
+    @include button_default($blue, white);
+    font-weight: 600;
+    width: 95px;
+    // height: 40px;
+    // position: absolute;
+    // bottom: 53px;
+  }
+}
+
+//card 
+@mixin card() {
+  @include displayFlex(flex-start, center, column);
+  background-color: white;
+  max-width: 270px;
+  width: 90%;
+  border-radius: 15px;
+  border: 1px solid $grey-blue;
+  box-sizing: border-box;
+  padding: 40px 19px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  //card-img-wrapper used only in School Profile module  
+  &-img-wrapper {
+    width: 100px;
+    height: 100px;
+    border: 2px dashed $grey-blue;
+    border-radius: 50%;
+  }
+//card_title is the  title for card
+  &__title {
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.36px;
+    color: $black;
+    margin: 0;
+    margin-bottom: 8px;
+    font-weight: 300;
+    font-weight: 500;
+  }
+  //card_desc basic desc for card
+  &__desc {
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.48px;
+    font-weight: 600;
+    color: $black;
+  }
+
+  //card--dash are cards with a dashed border
+  &--dash {
+    border: 1px dashed #c7ccdb;
+    background: transparent;
+    justify-content: center;
+  }
+   //card__title--dash atitlee for cards  with dashed boroder
+  &__title--dash {
+    text-align: center;
+    font: 400 14px/20px Raleway;
+    letter-spacing: 0.42px;
+    color: #a5aec7;
+  }
+}
+
+@mixin dropZone() {
+  .drop-zone {
+    border: 2px dashed $grey-blue;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 232px;
+    width: 232px;
+    // @include displayFlex(flex-start, flex-start);
+    // flex-wrap: wrap;
+    // // padding-top: 70px;
+    position: relative;
+
+    &__wrapper {
+      border: 2px dashed $grey-blue;
+      border-radius: 12px;
+      .drop-zone {
+        border: none;
+      }
+    }
+
+    &__desc {
+      position: absolute;
+      top: 25px;
+    }
+    &__placeholder {
+      @include absoluteVertCenter();
+      color: $grey;
+    }
+
+    &--active {
+      border-color: $blue;
+    }
+
+    &__title {
+      text-align: center;
+      margin: 0;
+      font-weight: 500;
+      padding-bottom: 13px;
+      border-bottom: 1px solid $grey-blue;
+      width: 100%;
+    }
+
+    &__body {
+      padding: 5px;
+      padding-bottom: 0;
+      width: 100%;
+      height: auto;
+      min-height: 135px;
+    }
+  }
+}
+
+@mixin groups($color: inherit) {
+  .groups {
+    &--split-layout {
+      width: 100%;
+      @include displayFlex(center, flex-start);
+    }
+    &--column-layout {
+      @include displayFlex(flex-start, center, column);
+    }
+  }
+}
+@mixin group($color: inherit) {
+  .group { //defaults to column layout
+    @include displayFlex(flex-start, flex-start, column);
+
+    &--row-layout {
+      @include displayFlex(flex-start);
+    }
+
+    &--scrollable {
+      height: 100%;
+      // max-height: 85vh;
+      overflow-y: auto;
+      // padding-bottom: $fixed-footer-height;
+    }
+
+    &--split-layout {
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+    }
+
+    &__title {
+      margin-top: 0;
+      font: 400 14px/22px Raleway;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      color: $color;
+
+      &--split-layout {
+        text-align: center;
+        font: 600 24px/55px Quicksand;
+        margin-bottom: 32px;
+      }
+    }
+
+    &__body {
+      color: $color;
+      @include displayFlex(flex-start, flex-start);
+      flex-wrap: wrap;
+    }
+  }
+}

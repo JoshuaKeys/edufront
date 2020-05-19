@@ -1,159 +1,164 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
-h1,
-h2 {
-  text-align: center;
-  font-family: "Quicksand", sans-serif;
-  letter-spacing: 1.02px;
-  opacity: 1;
-  line-height: 1.5;
-  color: #212121;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 34px;
-  letter-spacing: 1.02px;
-}
-
-h2 {
-  font: 600 26px/40px Quicksand;
-  letter-spacing: 0.78px;
-}
-
-p {
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-  letter-spacing: 0.48px;
-  opacity: 1;
-  font-size: 16px;
-  margin: 0 auto;
-  line-height: 1.5;
-}
-
-p.small {
-  font: "Raleway", sans-serif;
-  font-size: 14px;
-  text-align: center;
-}
+@import "./../../../../../assets/scss/typography";
+@import "./../../../../../assets/scss/colors";
+@import "./../../../../../assets/scss/mixins/components";
+@import "./../../../../../assets/scss/mixins/alignment";
+@import "./../../../../../assets/scss/utils";
+@import "./../../../../../assets/scss/main";
 
 body {
-  font-family: "Raleway", sans-serif;
-  line-height: 1.5;
-  font-size: 16px;
-  color: #212121;
-  letter-spacing: 0.48px;
+  display: relative;
+  background-color: white;
 }
 
-.flex-wrap {
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  display: flex;
-  flex-wrap: wrap;
-}
+@include form();
+@include splitLayout3();
+@include modalIntro();
+@include modalComplete();
 
-.flex-grow-1 {
-  flex-grow: 1;
-}
-
-.relative {
-  position: relative;
-}
-
-.draggable {
-  cursor: pointer;
-}
-
-.orangecolor {
-  color: #f2b269;
-}
-
-.ashcolor {
-  color: #a5aec7;
-  font-weight: 500;
-}
-
-.bluecolor {
-  color: #69a9f2;
-}
-
-.redcolor {
-  color: #ef5350;
-}
-
-* {
-  transition: all 0.3s;
-  box-sizing: border-box;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-}
-
-body ::-webkit-scrollbar-track {
-  display: none;
-}
-
-body ::-webkit-scrollbar {
-  width: 6px;
-  background-color: transparent;
-}
-
-body ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background: #e6e9f3 0% 0% no-repeat padding-box;
-  border-radius: 8px;
-  opacity: 1;
-}
-
-body ::-webkit-scrollbar-track-piece:end {
-  background: transparent;
-  margin-bottom: 10px;
-}
-
-body ::-webkit-scrollbar-track-piece:start {
-  background: transparent;
-  margin-top: 10px;
-}
-edu-preview {
-  width: 100%;
-}
-
-section,
-edu-name-page {
-  position: relative;
+.form {
   height: 100%;
-  width: 100%;
-  overflow-y: auto;
+  @include displayFlex(center, center, column);
+
+  &__title {
+    margin-bottom: 40px;
+  }
+
+  &__btn {
+    @include button_default($blue, white);
+
+    margin: 40px 0;
+  }
+  &__btn--round {
+    @include roundButton();
+    margin: 0 10px;
+  }
+  &__btn-wrapper {
+    @include displayFlex();
+  }
 }
 
-aside {
+.content {
+  &__body--final {
+    @include displayFlex(space-between);
+    max-width: 1200px;
+    width: 90vw;
+
+    .card {
+      @include card();
+      min-width: 152px;
+      // margin: 0 72px;
+      border: 0;
+      padding: 0;
+      box-shadow: unset;
+    }
+  }
+  &__img-wrapper {
+    width: 180px;
+    height: 180px;
+    border: 2px dashed $grey-blue;
+    border-radius: 50%;
+    position: relative;
+    &--active {
+      border-color: $blue;
+    }
+    //margin-bottom: 175px;
+  }
+
+  &__img {
+    @include absoluteCenter();
+  }
+  &__btn {
+    @include button_default($blue, white);
+
+    margin: 40px 0;
+  }
+  &__img-editor {
+    width: 230px;
+    position: absolute;
+    bottom: -103px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &__img-editor-btns {
+    @include displayFlex();
+  }
+  &__img-editor-btn {
+    @include roundButton(44px, white, $blue);
+    border: 2px solid $blue;
+    font-size: 30px;
+    line-height: 1;
+    margin: 0 8px;
+  }
+  &__img-editor-descs {
+    @include displayFlex(space-between);
+  }
+  &__img-editor-text-button {
+    @include textButton($blue);
+  }
+
+  &__btn--white {
+    @include button_default(white, $blue);
+    border: 1px solid $blue;
+  }
+  &__btns {
+    button {
+      width: 200px;
+      margin: 40px 10px;
+    }
+  }
+}
+.section {
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  flex-direction: column;
-  display: flex;
-  padding: 30px 15px;
-
-  overflow-y: auto;
-  height: 100%;
-  width: 300px;
-  flex-shrink: 0;
-  background: #fafbfc;
-  border-left: 1px solid #e6e9f3;
 }
 
-.nav__active-module-img {
-  margin-right: 8px;
-  width: 18px;
-  height: 18px;
+.modal {
+  &--inital-screen {
+    max-width: 989px;
+    width: 100vw;
+  }
+
+  & > * {
+    flex-shrink: 0;
+  }
+
+  &__img--initial-screen {
+    margin-bottom: 60px;
+  }
+  &__title--initial-screen {
+    margin-bottom: 41px;
+  }
+
+  &__desc--initial-screen {
+    margin: 0.75em 0;
+    &:last-child {
+      margin-bottom: 3em;
+    }
+  }
+
+  &__btn--initial-screen {
+    @include button_default($blue, white);
+    margin-top: 30px;
+    font-weight: 600;
+    width: 292px;
+    // position: absolute;
+    // bottom: 53px;
+  }
 }
-main {
-  height: calc(100vh - 53px);
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: row;
-  display: flex;
+
+.aside {
+  .card-img-wrapper {
+    @include displayFlex();
+
+    img {
+      align-self: center;
+      width: 40px;
+    }
+  }
+}
+
+edu-preview{
+  width: 100%;
 }
 

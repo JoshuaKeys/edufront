@@ -7,6 +7,11 @@ import { routeToComponentGenerator } from './config/utilities';
 
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'browse',
+  //   pathMatch: 'full'
+  // },
   {
     path: '',
     component: ShellComponent,

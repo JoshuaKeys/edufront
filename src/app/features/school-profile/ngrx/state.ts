@@ -1,4 +1,4 @@
-import { SchoolProfile } from '../../../core/models/school-profile.interface';
+import { SchoolProfile } from '../models/school-profile.interface';
 
 
 export interface State {
@@ -13,7 +13,17 @@ export interface State {
 }
 
 export const initialSchoolProfileState: State = {
-  schoolProfile: null,
+  // schoolProfile: {
+  //   name: null,
+  //   addressDto: {
+  //     country: null,
+  //     zipcode: null,
+  //     address: null,
+  //     state: null,
+  //     city: null
+  //   }
+  // },
+  schoolProfile: {},
   wellcomePopup: {
     toched: false
   },

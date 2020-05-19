@@ -1,0 +1,354 @@
+@import "./alignment";
+@import "./utils";
+
+
+
+//START OF FORMS
+
+
+//generic input scss styling
+@mixin input() {
+  //general styling of form without elements
+  .form {
+    //form__row defines a single row in the form
+    &__row {
+      width: 100%;
+      @include displayFlex();
+      & > *:not(:last-child) {
+        margin-right: 20px;
+      }
+      & > * {
+        width: 100%;
+      }
+    }
+
+    //form__input defines default behaviour for elements
+    &__input {
+      border: 0;
+      border-bottom: 2px solid $grey-blue;
+      &:focus {
+        outline: none;
+      }
+
+      //form__input-wrapper is the basic wrapper for the entire form element, each element will be wrapped in one of these
+      &-wrapper {
+        @include displayFlex();
+        width: 100%;
+        max-width: 380px;
+        min-height: 43px;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      //form__input-icon is attached to the left of the input element
+      &-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        //sets padding for input so it doesnt overlap
+        & ~ .form__input {
+          padding-left: 30px;
+        }
+        & ~ .form__input-label--align-left {
+            padding-left: 30px;
+        }
+      }
+      //form__input-icon for things like country code
+      &-prefix {
+
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include displayFlex(flex-start);
+        & > * {
+          position: relative;
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
+        }
+      }
+      //form__label for all form elements
+      &-label {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.5;
+        font-family: "Raleway", sans-serif;
+        letter-spacing: 0.48px;
+        white-space: nowrap;
+        &--align-left {
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  //form__input-prefix settings which will styles the sibling input elements
+  .form__input-prefix--countrycode {
+    & ~ .form__input {
+      padding-left: 70px;
+    }
+    & ~ .form__input-label--align-left {
+      left: 70px;
+    }
+  }
+}
+
+// FORM ELEMENTS   [textInput, select,iconSelect,date]
+@mixin textInput() {
+  @include labelOnFocus();
+
+  .form__input {
+    &[type="text"] {
+      @include resetTextInput();
+
+    }
+  }
+}
+
+
+
+@mixin select() {
+  @include selectOnFocus();
+  @include popup();
+  .form {
+    //form__input--select is a checkbox used to toggle "select" element
+    &__input--select {
+      cursor: pointer;
+      z-index: 2;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      opacity: 0;
+    }
+    //form__input--select-sizeguide is the empty input text element used to determine
+    //(1)size of element  (2) text displayed when selected by element
+    &__input--select-sizeguide {
+      background: unset;
+      border-color: transparent !important;
+      padding-top: 0px;
+      opacity: 0; //very hacky way , need to change to something when porting over to Angular
+    }
+
+    //wrapper for __input--select-sizeguide, and also main way to display borders
+    &__input--select-border {
+      height: 100%;
+      width: 100%;
+      font: 400 16px/24px Raleway;
+      color: transparent;
+      border-bottom: 2px solid $grey-blue;
+      &:before {
+        width: 16px;
+        height: 16px;
+        right: 12.5px;
+        @include emptyPesudoElement();
+        top: 0;
+        transform: translateY(50%);
+        background: url(/assets/iconfinder_chevron-up.svg) no-repeat no-repeat
+          center center;
+      }
+    }
+  }
+
+  //drop down for select
+  .form__input--select-dropdown {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    @include popup();
+
+    .popup {
+      min-width: 100%;
+      width: auto;
+      max-width: unset;
+    }
+  }
+}
+
+// like select but without text, can be used as country code drop down.
+@mixin iconSelect() {
+  .form__icon-select-wrapper {
+    z-index: 2;
+    transition: none;
+    left: 0;
+    display: flex;
+    //main image used
+    img {
+      border-radius: 50%;
+    }
+    //active state of element
+    .form__input-icon--active {
+      border: 1px solid $blue;
+      border-radius: 50%;
+    }
+
+    //checkbox used to toggle select element
+    input[type="checkbox"] {
+      cursor: pointer;
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    //popup that drops down when element is selected
+    .popup {
+      width: auto;
+      position: absolute;
+      bottom: -10px;
+      transform: translateX(-50%) translateY(100%);
+      left: 50%;
+      display: none;
+    }
+
+    //sate toggling when checkbox is checked
+    input[type="checkbox"]:checked ~ .popup {
+      display: block;
+    }
+    input[type="checkbox"]:checked ~ img {
+      border: 1px solid $blue;
+    }
+  }
+
+
+  .form__input-wrapper--button-select {
+    padding: 0;
+    .popup {
+      min-width: 247px;
+    }
+    .form__input--select-dropdown {
+      bottom: 0;
+    }
+
+    .form__input--select-border {
+      border: 1px solid $grey-blue;
+      border-radius: 8px;
+      background: #f8f9fa;
+      padding: 0;
+      &::before {
+        transform: translateY(-50%);
+        background: url(/assets/iconfinder_chevron-up-black.svg) no-repeat
+          no-repeat center center;
+        top: 50%;
+      }
+    }
+    label {
+      top: 32%;
+      color: $black;
+    }
+    input[type="text"] {
+      padding: 20px 0 10px 0;
+    }
+
+    input[type="checkbox"]:checked ~ div {
+      input[type="text"] {
+        opacity: 1;
+      }
+      label {
+        color: $blue;
+        transform: scale(0.8) translateY(-22px);
+      }
+      .form__input--select-dropdown {
+        display: block;
+      }
+    }
+  }
+}
+
+//work in progress -- only used from calendar module onwards
+@mixin date(){
+  .form__date{
+    @include resetTextInput();
+
+    &::placeholder{
+      color: $black;
+      text-align: center;
+      font: 400 16px/24px Raleway;
+    }
+
+    &-wrapper{
+      position: relative;
+    }
+
+    &-icon{
+      position: absolute;
+      right: 0;
+      bottom: $inputBottomPadding;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    &-popup{
+      display: none;
+    }
+  }
+}
+
+
+// actual mixin for export for all forms
+@mixin form() {
+
+
+  @include input();
+  @include textInput();
+  @include select();
+  @include date();
+  @include iconSelect();
+}
+
+
+//generic helper functions used in the other mixins
+$inputBottomPadding:10px;
+@mixin labelOnFocus($scale: 0.8, $y: -22px) {
+  .form__input[type="text"]:focus + label,
+  .form__input[type="text"]:invalid + label {
+    // display: none;
+    transform: scale($scale) translateY($y);
+    text-align: center;
+    .ashcolor {
+      font-size: 0;
+    }
+  }
+}
+@mixin selectOnFocus($scale: 0.8, $y: -22px) {
+  .form__input[type="checkbox"]:checked + label {
+    // display: none;
+    transform: scale($scale) translateY($y);
+    text-align: center;
+    .ashcolor {
+      font-size: 0;
+    }
+  }
+  .form__input[type="checkbox"]:checked ~ .form__input--select-dropdown {
+    display: block;
+  }
+  .form__input[type="checkbox"]:checked ~ .form__input--select-border {
+    border-color: $blue;
+    &:before {
+      background: url(/assets/iconfinder_chevron-up-blue.svg) no-repeat
+        no-repeat center center;
+    }
+    .form__input--select-sizeguide {
+      opacity: 1;
+    }
+  }
+}
+@mixin resetTextInput(){
+  padding-bottom: $inputBottomPadding;
+  font-size: 20px;
+  max-width: 377px;
+  width: 100%;
+  border: 0;
+  color: $black;
+  border-bottom: 2px solid $grey-blue;
+  text-align: center;
+  &:focus {
+    outline: none;
+    border-color: $blue;
+  }
+}

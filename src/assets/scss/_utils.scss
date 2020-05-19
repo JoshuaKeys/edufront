@@ -1,0 +1,40 @@
+@import "./mixins/alignment";
+@import "./mixins/components";
+.flex-wrap {
+  @include displayFlex();
+  flex-wrap: wrap;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.relative {
+  position: relative;
+}
+
+.draggable {
+  cursor: pointer;
+}
+
+.orangecolor {
+  color: $orange;
+}
+
+.ashcolor {
+  color: $ash;
+  font-weight: 500;
+}
+
+.bluecolor {
+  color: #69a9f2;
+}
+
+.redcolor {
+  color: #ef5350;
+}
+
+.hide{
+  opacity: 0;
+  
+}

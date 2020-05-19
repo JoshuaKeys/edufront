@@ -9,6 +9,9 @@ import * as fromContainers from './containers';
 import * as fromComponents from './components';
 import { reducers } from './ngrx/reducers';
 import { SharedModule } from '../../shared/shared.module';
+import { IdownloadDirective } from './components/idownload.directive';
+import { EffectsModule } from '@ngrx/effects';
+import { SchoolProfileEffects } from './ngrx/effects';
 
 const components = [
   fromContainers.ShellComponent,
@@ -17,7 +20,8 @@ const components = [
   fromContainers.ConfirmationPageComponent,
   fromContainers.ContactDetailsPageComponent,
   fromContainers.LogoQuestionPageComponent,
-  fromComponents.PreviewComponent
+  fromComponents.PreviewComponent,
+  IdownloadDirective
 ];
 
 @NgModule({
@@ -27,7 +31,11 @@ const components = [
     SchoolProfileRoutingModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forFeature('schoolProfile', reducers)
+    StoreModule.forFeature('schoolProfile', reducers),
+   // EffectsModule.forFeature([SchoolProfileEffects])
+  ],
+  exports: [
+    IdownloadDirective
   ]
 })
 export class SchoolProfileModule { }

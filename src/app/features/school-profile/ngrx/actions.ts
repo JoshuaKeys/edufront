@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { SchoolProfile } from '../../../core/models/school-profile.interface';
+import { SchoolProfile } from '../models/school-profile.interface';
+import { addressModel } from '../models/adress.model';
 
 export const showWellcomePopup = createAction(
   '[School-Profile Page] show popup',
@@ -13,17 +14,22 @@ export const setName = createAction(
 
 export const setAddress = createAction(
   '[School-Profile Page] set Address',
-  props<{value: any}>()
+  props<{value: addressModel}>()
 );
 
 export const setContacts = createAction(
-  '[School-Profile Page] set Address',
+  '[School-Profile Page] set Contacts',
   props<{value: any}>()
 );
 
 export const setSchoolLogo = createAction(
   '[School-Profile Page] set school Logo',
   props<{value: any, error: string}>()
+);
+
+export const uploadSchoolLogo = createAction('[School-Profile Page] upload school Logo');
+export const uploadSuccess = createAction('[School-Profile Page] upload school Logo succsess',
+  props<{value: string}>()
 );
 
 export const saveSchoolProfile = createAction(
