@@ -11,12 +11,9 @@ import { CLASSES_AND_GROUPS } from './ngrx/selectors';
 import { ClassesAndGroupComponent } from './containers/classes-and-group/classes-and-group.component';
 import { ClassesAndGroupsShellComponent, NameGroupsComponent, ClassesInSchoolComponent } from './containers';
 import { ClassesComponent } from './components/classes/classes.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { ClassesAndGroupsEffects } from './ngrx/effects';
 import { ClassesAndGroupsService } from './services/classes-and-groups.service';
-import { CoreModule } from 'src/app/core/core.module';
-import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateGroupsQuestionComponent } from './containers/create-groups-question/create-groups-question.component';
 import { GroupBoxComponent } from './components/group-box/group-box.component';
@@ -45,14 +42,12 @@ import { ConfirmationComponent } from './containers/confirmation/confirmation.co
     CommonModule,
     ClassesAndGroupsRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
     SharedModule,
     StoreModule.forFeature(CLASSES_AND_GROUPS, classesAndGroupsReducer),
     EffectsModule.forFeature([ClassesAndGroupsEffects])
   ],
   providers: [
-    ClassesAndGroupsService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    ClassesAndGroupsService
   ]
 })
 export class ClassesAndGroupsModule { }
