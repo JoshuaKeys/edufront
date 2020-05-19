@@ -27,7 +27,10 @@ export const setSchoolLogo = createAction(
   props<{value: any, error: string}>()
 );
 
-export const uploadSchoolLogo = createAction('[School-Profile Page] upload school Logo');
+export const uploadSchoolLogo = createAction(
+  '[School-Profile Page] upload school Logo',
+  props<{value: any}>()
+);
 export const uploadSuccess = createAction('[School-Profile Page] upload school Logo succsess',
   props<{value: string}>()
 );

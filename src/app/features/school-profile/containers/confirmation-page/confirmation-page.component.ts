@@ -31,13 +31,20 @@ export class ConfirmationPageComponent implements OnInit, OnDestroy {
     this.subscription.add(this.route.data.subscribe(res => this.navBlock = res));
   }
 
-
   onNext() {
     this.router.navigate([`../${this.navBlock['next']}`], {relativeTo: this.route});
   }
 
   onPrevious() {
     this.router.navigate([`../${this.navBlock['previous']}`], {relativeTo: this.route});
+  }
+
+  moveto(path: string): void {
+    this.router.navigate([`/school-profile/${path}`]);
+  }
+
+  saveSchool() {
+    console.log('save');
   }
 
   ngOnDestroy() {

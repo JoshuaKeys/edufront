@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '../../ngrx/state';
 import { setName } from '../../ngrx/actions';
+import { selectorSchoolName } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-name-page',
@@ -36,6 +37,11 @@ export class NamePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscription.add(this.store.select(selectorSchoolName)
+      .pipe(distinctUntilChanged())
+      .subscribe(
+      school => this.mForm.get('name').setValue(school.name)
+    ));
     this.subscription.add(this.route.data.subscribe(res => this.navBlock = res));
   }
 

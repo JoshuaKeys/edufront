@@ -3,6 +3,9 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchoolProfileService } from '../../school-profile.service';
+import { State } from '../../ngrx/state';
+import { Store } from '@ngrx/store';
+import { uploadSchoolLogo } from '../../ngrx/actions';
 
 @Component({
   selector: 'edu-logo-upload-page',
@@ -18,6 +21,7 @@ export class LogoUploadPageComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private cdRef: ChangeDetectorRef,
               private spf: SchoolProfileService,
+              public store: Store<State>,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -46,6 +50,8 @@ export class LogoUploadPageComponent implements OnInit, OnDestroy {
         this.previewUrl = reader.result;
         this.file = fileInput[0];
         this.spf.postImage(fileInput[0]).subscribe(x => console.log('POST',x));
+        // uploadSchoolLogo
+        // this.store.dispatch(uploadSchoolLogo({value: fileInput[0]}));
       }
     }
     console.log('Fil', fileInput[0]);

@@ -5,4 +5,5 @@ export interface addressModel {
   address: string;
   state: string;
   city: string;
+  countryId?: string;
 }

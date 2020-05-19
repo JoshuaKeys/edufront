@@ -2,11 +2,13 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { setAddress, setContacts } from '../../ngrx/actions';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
+import { setContacts } from '../../ngrx/actions';
 import { addressModel } from '../../models/adress.model';
 import { Store } from '@ngrx/store';
 import { State } from '../../ngrx/state';
+import { selectorSchoolContacts } from '../../ngrx/selectors';
+import { schoolDetail } from '../../models/school-profile.interface';
 
 @Component({
   selector: 'edu-contact-details-page',
@@ -38,6 +40,18 @@ export class ContactDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.subscription.add(this.store.select(selectorSchoolContacts)
+      .pipe(first())
+      .subscribe(
+        (contacts: schoolDetail) => {
+          if (contacts) {
+            this.mForm.get('phoneNo').setValue(contacts.phoneNo);
+            this.mForm.get('email').setValue(contacts.email);
+            this.mForm.get('website').setValue(contacts.website);
+          }
+        }));
+
     this.subscription.add(this.route.data.subscribe(res => this.navBlock = res));
   }
 

@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import { State } from '../../ngrx/state';
 import { setAddress } from '../../ngrx/actions';
 import { addressModel } from '../../models/adress.model';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
+import { selectorSchoolAddress } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-address-page',
@@ -23,6 +24,7 @@ export class AddressPageComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private router: Router,
               public store: Store<State>) {
+
     this.mForm = this.fb.group({
       country: ['', Validators.required],
       zipcode: ['', Validators.required],
@@ -41,9 +43,19 @@ export class AddressPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.route.data.subscribe(res => {
-      this.navBlock = res;
+    this.subscription.add(this.store.select(selectorSchoolAddress)
+      .pipe(first())
+      .subscribe(
+      (address: addressModel) => {
+        if (address) {
+          this.mForm.get('country').setValue(address.country);
+          this.mForm.get('zipcode').setValue(address.zipcode);
+          this.mForm.get('address').setValue(address.address);
+          this.mForm.get('state').setValue(address.state);
+          this.mForm.get('city').setValue(address.city);
+        }
     }));
+    this.subscription.add(this.route.data.subscribe(res => this.navBlock = res));
   }
 
   onNext() {

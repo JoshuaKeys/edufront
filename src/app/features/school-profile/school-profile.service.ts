@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { SchoolProfile } from './models/school-profile.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +13,9 @@ export class SchoolProfileService {
     const formData = new FormData();
     formData.append('file', file);
     return this.httpClient.post('/api/v1/upload/image', formData);
+  }
+
+  createSchool(school: SchoolProfile) {
+    return this.httpClient.post('/api/v1/school', school);
   }
 }
