@@ -1,3 +1,5 @@
+import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +20,7 @@ import { ConfigService } from './services/config/config.service';
     AppService,
     AuthService,
     ConfigService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
 })
 export class CoreModule { }

@@ -10,7 +10,11 @@ import { ClassesWithoutGroupsRequestModel } from '../models/classes-without-grou
 import { ClassesWithGroupsResponseModel } from '../models/classes-with-group-response.model';
 import { ClassesWithGroupsRequestModel } from '../models/classes-with-groups-request.model';
 
-@Injectable()
+@Injectable(
+  {
+    providedIn: 'root'
+  }
+)
 export class ClassesAndGroupsService {
   getClasses(): Observable<GetClassesResponseModel[]> {
     return this.httpClient.get<GetClassesResponseModel[]>(`/api/v1/class/systemClasses`);

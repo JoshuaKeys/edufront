@@ -45,14 +45,13 @@ import { ConfirmationComponent } from './containers/confirmation/confirmation.co
     CommonModule,
     ClassesAndGroupsRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
     SharedModule,
     StoreModule.forFeature(CLASSES_AND_GROUPS, classesAndGroupsReducer),
     EffectsModule.forFeature([ClassesAndGroupsEffects])
   ],
   providers: [
     ClassesAndGroupsService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+
   ]
 })
 export class ClassesAndGroupsModule { }

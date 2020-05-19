@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/classes-and-groups/classes-in-school',
+    redirectTo: '/classes-and-groups',
     pathMatch: 'full'
   }
 ];
