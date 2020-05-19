@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetClassesResponseModel } from '../classes-and-groups/models/get-classes-response.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

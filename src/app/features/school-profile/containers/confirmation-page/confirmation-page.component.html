@@ -1,1 +1,48 @@
-<p>confirmation-page works!</p>
+
+  <button class="section__back-btn" (click)="onPrevious()">
+    <img src="/assets/chevron-left.svg" alt="" /> Back
+  </button>
+
+  <div class="content content--final">
+    <h2 class="content__title">
+      Are these correct?
+    </h2>
+    <div class="content__body content__body--final">
+
+      <div class="card" *ngIf="schoolName$ | async as school">
+        <h5 class="card__title">School Name</h5>
+        <p class="card__desc">{{school?.name}}</p>
+      </div>
+
+      <div class="card" *ngIf="schoolAddress$ | async as address">
+        <h5 class="card__title">School Address</h5>
+        <p class="card__desc">{{address.country }}</p>
+        <p class="card__desc">{{address.zipcode }}</p>
+        <p class="card__desc">{{address.address }}</p>
+        <p class="card__desc">{{address.state }}</p>
+        <p class="card__desc">{{address.city }}</p>
+      </div>
+
+      <div class="card" *ngIf="schoolContacts$ | async as contacts">
+        <h5 class="card__title">School Contact</h5>
+        <p class="card__desc">{{contacts.email}}</p>
+        <p class="card__desc">{{contacts.phoneNo}}</p>
+        <p class="card__desc">{{contacts.website}}</p>
+      </div>
+
+      <div class="card">
+        <h5 class="card__title">School Logo</h5>
+        <div class="card__img-wrapper">
+          <img
+            src="/assets/school-logo-aside-edited.png"
+            alt=""
+            class="card__img"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content__btns">
+    <button class="content__btn content__btn--white" (click)="onPrevious()">Back</button>
+    <button class="content__btn">Confirm</button>
+  </div>

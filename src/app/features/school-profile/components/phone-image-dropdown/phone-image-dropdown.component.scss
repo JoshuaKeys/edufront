@@ -1,0 +1,139 @@
+@import "./../../../../../assets/scss/typography";
+@import "./../../../../../assets/scss/colors";
+@import "./../../../../../assets/scss/mixins/components";
+@import "./../../../../../assets/scss/mixins/alignment";
+@import "./../../../../../assets/scss/utils";
+@import "./../../../../../assets/scss/main";
+@import "./../../../../../assets/scss/modules/students";
+@import "./../../../../../assets/scss/mixins/utils";
+
+@include splitLayout3();
+@include search();
+
+// @include form();
+
+@include modalIntro();
+@include modalForm();
+@include modalComplete();
+@include tooltip();
+@include groups();
+@include group($ash);
+$opactityHeight: 100px;
+@include opacityFooter($opactityHeight);
+
+@include studentSummary();
+@include studentChips();
+@include addEditStudentForm();
+
+.form {
+  @include displayFlex(center, center, column);
+  margin: 0;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+}
+
+.content {
+  width: 100%;
+  overflow-y: auto;
+  justify-content: flex-start;
+  align-items: space-around;
+  padding: 0 40px;
+  padding-bottom: $opactityHeight;
+
+  & > * {
+    margin-bottom: 30px;
+  }
+  &__title {
+    margin-bottom: 20px;
+  }
+  &__desc {
+    max-width: 556px;
+
+    margin-bottom: 40px;
+  }
+  &__img {
+    @include absoluteCenter();
+  }
+  &__btn-wrapper {
+    height: unset;
+    min-height: unset;
+  }
+  &__btn {
+    @include button_default($blue, white);
+
+    margin: 40px 0;
+    margin-top: 10px;
+  }
+  &__btn--white {
+    @include button_default(white, $blue);
+    border: 1px solid $blue;
+  }
+
+  &__btns {
+    button {
+      width: 200px;
+      margin: 10px 10px 40px 10px;
+    }
+  }
+}
+//css block here to ensure sort by gender has inner scroll
+.content.content--sort-gender {
+  padding-bottom: 0;
+  .groups.groups--split-layout {
+    overflow-y: hidden;
+  }
+  .group--scrollable {
+    padding-bottom: $opactityHeight;
+    max-width: 580px;
+  }
+}
+
+.search {
+  &__wrapper {
+    justify-content: flex-start;
+
+    .tooltip {
+      opacity: 0;
+      width: 0;
+    }
+  }
+  &__btn {
+    position: absolute;
+    right: 0;
+  }
+  &__icon-btn {
+    cursor: pointer;
+    img {
+      width: 16px;
+    }
+  }
+}
+
+$search-icons: 1, 2, 3, 4;
+@each $index in $search-icons {
+  .search__icon-btn:nth-child(#{$index}):not(.search__icon-btn--active):hover {
+    border-color: $blue;
+    img {
+      content: url("/assets/subject-search-icon-#{$index}-hover.svg");
+    }
+    .tooltip {
+      opacity: 1;
+      width: auto;
+    }
+  }
+
+  .search__icon-btn--active:nth-child(#{$index}) img {
+    content: url("/assets/subject-search-icon-#{$index}-active.svg");
+  }
+}
+
+.chips {
+  justify-content: flex-start;
+}
+
+.group__body {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}

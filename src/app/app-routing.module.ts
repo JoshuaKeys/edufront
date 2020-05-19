@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/school-profile/upload-logo',
+    redirectTo: '/school-profile/name',
     pathMatch: 'full'
   }
 ];

@@ -30,6 +30,7 @@ export class AddressPageComponent implements OnInit, OnDestroy {
       state: ['', Validators.required],
       city: ['', Validators.required]
     });
+    this.mForm.controls['country'].setValue('India',{onlySelf: true});
 
     this.subscription.add(
       this.mForm.valueChanges.pipe(

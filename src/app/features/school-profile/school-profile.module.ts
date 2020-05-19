@@ -12,6 +12,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { IdownloadDirective } from './components/idownload.directive';
 import { EffectsModule } from '@ngrx/effects';
 import { SchoolProfileEffects } from './ngrx/effects';
+import { SchoolProfileService } from './school-profile.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../../core/interceptors/auth.interceptor';
 
 const components = [
   fromContainers.ShellComponent,
@@ -33,6 +36,10 @@ const components = [
     SharedModule,
     StoreModule.forFeature('schoolProfile', reducers),
    // EffectsModule.forFeature([SchoolProfileEffects])
+  ],
+  providers: [
+    SchoolProfileService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   exports: [
     IdownloadDirective
