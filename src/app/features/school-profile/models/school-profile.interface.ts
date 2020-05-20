@@ -4,6 +4,7 @@ export interface SchoolProfile {
   phoneNo?: string;
   website?: string;
   logo?: string;
+  image64?: string;
   addressDto?: {
     country?: string;
     zipcode?: number;
@@ -14,12 +15,8 @@ export interface SchoolProfile {
   }
 }
 
-
 export interface schoolDetail {
   phoneNo: string;
   email: string;
   website: string
 }
-
-
-//{file: "075adbea-dc74-4f2e-bf1c-a7ef9ec4317d.jpg"}

@@ -1,11 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SchoolProfileService } from '../../school-profile.service';
 import { State } from '../../ngrx/state';
 import { Store } from '@ngrx/store';
-import { uploadSchoolLogo } from '../../ngrx/actions';
+import { setSchoolLogo, uploadSchoolLogo } from '../../ngrx/actions';
 
 @Component({
   selector: 'edu-logo-upload-page',
@@ -49,12 +48,9 @@ export class LogoUploadPageComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
         this.previewUrl = reader.result;
         this.file = fileInput[0];
-        this.spf.postImage(fileInput[0]).subscribe(x => console.log('POST',x));
-        // uploadSchoolLogo
-        // this.store.dispatch(uploadSchoolLogo({value: fileInput[0]}));
+        this.store.dispatch(setSchoolLogo({value: reader.result}));
       }
     }
-    console.log('Fil', fileInput[0]);
   }
 
   deleteFile() {
@@ -63,6 +59,7 @@ export class LogoUploadPageComponent implements OnInit, OnDestroy {
   }
 
   onNext() {
+    this.store.dispatch(uploadSchoolLogo());
     this.router.navigate([`../${this.navBlock['next']}`], {relativeTo: this.route});
   }
 

@@ -20,3 +20,4 @@ export const selectorSchoolContacts = createSelector(featureSelector, state => {
     null;
 });
 
+export const selectorSchoolLogo = createSelector(featureSelector, state => state['schoolProfile'].image64);

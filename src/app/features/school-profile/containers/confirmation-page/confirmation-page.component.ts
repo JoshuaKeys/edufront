@@ -3,7 +3,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { State } from '../../ngrx/state';
-import { selectorSchoolAddress, selectorSchoolContacts, selectorSchoolName } from '../../ngrx/selectors';
+import { selectorSchoolAddress, selectorSchoolContacts, selectorSchoolLogo, selectorSchoolName } from '../../ngrx/selectors';
+import { saveSchoolProfile } from '../../ngrx/actions';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ConfirmationPageComponent implements OnInit, OnDestroy {
   schoolName$: Observable<any>;
   schoolAddress$: Observable<any>;
   schoolContacts$: Observable<any>;
+  schoolLogo$: Observable<any>;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -27,7 +29,7 @@ export class ConfirmationPageComponent implements OnInit, OnDestroy {
     this.schoolName$ = this.store.select(selectorSchoolName);
     this.schoolAddress$ = this.store.select(selectorSchoolAddress);
     this.schoolContacts$ = this.store.select(selectorSchoolContacts);
-
+    this.schoolLogo$ = this.store.select(selectorSchoolLogo);
     this.subscription.add(this.route.data.subscribe(res => this.navBlock = res));
   }
 
@@ -44,7 +46,7 @@ export class ConfirmationPageComponent implements OnInit, OnDestroy {
   }
 
   saveSchool() {
-    console.log('save');
+    this.store.dispatch(saveSchoolProfile());
   }
 
   ngOnDestroy() {

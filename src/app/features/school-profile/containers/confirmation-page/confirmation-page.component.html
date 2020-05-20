@@ -30,16 +30,14 @@
         <p class="card__desc">{{contacts.website}}</p>
       </div>
 
-      <div class="card">
+
+      <div class="card" *ngIf="schoolLogo$ | async as logo" (click)="moveto('upload-logo')">
         <h5 class="card__title">School Logo</h5>
-        <div class="card__img-wrapper">
-          <img
-            src="/assets/school-logo-aside-edited.png"
-            alt=""
-            class="card__img"
-          />
+        <div class="card-img-wrapper">
+          <img src="" alt="" class="" [src]="logo" class="schoolLogo"/>
         </div>
       </div>
+
     </div>
   </div>
   <div class="content__btns">

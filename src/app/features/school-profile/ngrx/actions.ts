@@ -24,18 +24,13 @@ export const setContacts = createAction(
 
 export const setSchoolLogo = createAction(
   '[School-Profile Page] set school Logo',
-  props<{value: any, error: string}>()
-);
-
-export const uploadSchoolLogo = createAction(
-  '[School-Profile Page] upload school Logo',
   props<{value: any}>()
 );
+
+export const uploadSchoolLogo = createAction('[School-Profile Page] upload school Logo');
+
 export const uploadSuccess = createAction('[School-Profile Page] upload school Logo succsess',
   props<{value: string}>()
 );
 
-export const saveSchoolProfile = createAction(
-  '[School-Profile Page] save school profile',
-  props<{value: SchoolProfile, error: string}>()
-);
+export const saveSchoolProfile = createAction('[School-Profile Page] save school profile');

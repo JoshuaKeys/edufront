@@ -35,7 +35,7 @@ const components = [
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forFeature('schoolProfile', reducers),
-   // EffectsModule.forFeature([SchoolProfileEffects])
+    EffectsModule.forFeature([SchoolProfileEffects])
   ],
   providers: [
     SchoolProfileService,
