@@ -15,5 +15,7 @@ export class OptionsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  onClick(classId) {
+    this.clicked.emit(classId);
+  }
 }

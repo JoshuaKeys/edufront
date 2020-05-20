@@ -19,9 +19,11 @@ import { SubjectsService } from './services/subjects.services';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
-import { AssignSubjectsQuestionComponent } from './containers';
+import { AssignSubjectsQuestionComponent, ConfirmationComponent } from './containers';
 import { OptionsComponent } from './components/options/options.component';
 import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.component';
+import { SubjectSummaryBoxComponent } from './components/subject-summary-box/subject-summary-box.component';
+import { AddSubjectModalComponent } from './components/add-subject-modal/add-subject-modal.component';
 
 
 @NgModule({
@@ -36,7 +38,10 @@ import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.com
     SubjectsListComponent,
     AssignSubjectsQuestionComponent,
     OptionsComponent,
-    SubjectsBoxComponent
+    SubjectsBoxComponent,
+    ConfirmationComponent,
+    SubjectSummaryBoxComponent,
+    AddSubjectModalComponent
   ],
   imports: [
     CommonModule,

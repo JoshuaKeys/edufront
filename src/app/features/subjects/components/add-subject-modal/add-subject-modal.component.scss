@@ -1,7 +1,8 @@
 @import '../../../../../assets/styles/modules/section-module';
-.chip {
-  @include chip();
+.modal {
+  @include modal();
 }
-:host {
-  display: inline-block;
+
+main {
+  @include splitLayout();
 }

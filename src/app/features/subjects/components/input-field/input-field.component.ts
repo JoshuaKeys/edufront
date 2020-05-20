@@ -12,7 +12,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ]
 })
 export class InputFieldComponent implements OnInit, ControlValueAccessor {
-  @Input() index: boolean;
+  @Input() index: number;
   @Input() last: boolean;
   @Input() text: string;
   @Input() idPrefix: string;

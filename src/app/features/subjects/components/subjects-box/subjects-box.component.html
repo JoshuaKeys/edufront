@@ -1,5 +1,14 @@
 <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-  <p class="drop-zone__text drop-zone__placeholder">
-    No <b class="orangecolor">class</b> selected
-  </p>
+  <ng-template #noClassSelected>
+    <p class="drop-zone__text drop-zone__placeholder">
+      No <b class="orangecolor">class</b> selected
+    </p>
+  </ng-template>
+
+  <ng-container *ngIf="(subjects | async).length">
+    <edu-icon-button
+      *ngFor="let subject of subjects | async"
+      [subject]="subject"
+    ></edu-icon-button>
+  </ng-container>
 </div>

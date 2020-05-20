@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { SubjectModel } from '../models/subject.model';
 import { CreateSubjModel } from '../models/create-subject.model';
 import { SubjectCreationSuccessModel } from '../models/subject-creation-success.model';
+import { PostClassSubjectModel } from '../models/post-class-subject.model';
+import { PostClassSubjectResponseModel } from '../models/post-class-subject-response.model';
 
 @Injectable()
 export class SubjectsService {
@@ -12,6 +14,9 @@ export class SubjectsService {
   }
   createSubject(subject: CreateSubjModel): Observable<SubjectCreationSuccessModel> {
     return this.httpClient.post<SubjectCreationSuccessModel>('/api/v1/subject', subject);
+  }
+  postClassSubjects(classSubject: PostClassSubjectModel[]): Observable<PostClassSubjectResponseModel[]> {
+    return this.httpClient.post<PostClassSubjectResponseModel[]>('/api/v1/class/updateAll', classSubject)
   }
   constructor(private httpClient: HttpClient) { }
 }

@@ -1,8 +1,10 @@
 <div class="drop-zone__options">
   <div
     class="option badge"
+    (click)="onClick(class.id)"
     [ngClass]="{
-      'option--all': class.name.toLocaleLowerCase() === 'all'
+      'option--all': class.name.toLocaleLowerCase() === 'all',
+      'option--selected': class.selected
     }"
     *ngFor="let class of classes | async"
   >

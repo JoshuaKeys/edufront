@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { SubjectModel } from '../../models/subject.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'edu-subjects-box',
@@ -9,6 +10,7 @@ import { SubjectModel } from '../../models/subject.model';
 })
 export class SubjectsBoxComponent implements OnInit {
   @Output() onDropped = new EventEmitter<SubjectModel>();
+  @Input() subjects: Observable<SubjectModel[]>;
   constructor() { }
   onDragOver(event) {
     event.preventDefault();

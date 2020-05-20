@@ -5,10 +5,15 @@
   background: white;
   color: #c7ccdb;
   border: 1px solid #c7ccdb;
+  cursor: pointer;
 }
 .option--all {
   margin-left: 10%;
   margin-right: 10%;
+}
+.option--selected {
+  background: #69a9f2;
+  color: #fff;
 }
 .badge {
   border-radius: 50%;

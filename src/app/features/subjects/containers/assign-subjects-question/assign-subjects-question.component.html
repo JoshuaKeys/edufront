@@ -6,7 +6,6 @@
     >
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
-
     <div class="content">
       <h2 class="content__title">
         Assign subjects to your class
@@ -15,28 +14,45 @@
         Now please assign subjects to classes by selecting one or multiple
         classes on the left and selecting/dropping the subjects from the right
       </p>
-
       <div class="drop-zone__wrapper">
         <div class="drop-zone__options">
           <edu-options
+            (clicked)="updateSelectedState($event)"
             [classes]="classes"
-            (clicked)="onClassClick($event)"
           ></edu-options>
         </div>
-
         <edu-subjects-box
           appDroppable
+          [subjects]="subjectsInterception"
           (onDropped)="onDrop($event)"
         ></edu-subjects-box>
       </div>
     </div>
-
     <div class="content__btn-wrapper">
-      <button class="content__btn">Continue</button>
+      <button
+        class="content__btn"
+        [routerLink]="['../', activatedRouteData.next]"
+      >
+        Continue
+      </button>
     </div>
   </section>
   <aside class="aside">
-    <div *ngIf="allSubjects | async as allSubjects; else noSubjects">
+    <div class="search__wrapper">
+      <div class="search__input-wrapper">
+        <img class="search__icon" src="../../../assets/search.svg" alt="" />
+        <input
+          class="search__input"
+          (input)="updateFilter($event)"
+          type="text"
+          placeholder="Search"
+        />
+      </div>
+      <button class="search__btn" (click)="openFormModal()">
+        <span>+</span>
+      </button>
+    </div>
+    <div *ngIf="filteredSubjects | async as allSubjects; else noSubjects">
       <edu-subjects-list [allSubjects]="allSubjects"></edu-subjects-list>
     </div>
     <ng-template #noSubjects>
@@ -46,136 +62,9 @@
       </p>
     </ng-template>
   </aside>
-  <!-- <aside class="aside">
-    <div class="search__wrapper">
-      <div class="search__input-wrapper">
-        <img class="search__icon" src="../../../assets/search.svg" alt="" />
-        <input class="search__input" type="text" placeholder="Search" />
-      </div>
-      <button class="search__btn"><span>+</span></button>
-    </div>
-
-    <div class="chips flex-wrap">
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Algebra</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Hindi</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">English</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Physics</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">General Science</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Algebra</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Hindi</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">English</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Physics</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">General Science</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Algebra</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Hindi</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">English</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">Physics</span>
-      </div>
-      <div class="chip">
-        <img
-          class="chip__img"
-          src="../../../assets/pill-blue-icon.svg"
-          alt=""
-        />
-        <span class="chip__text">General Science</span>
-      </div>
-    </div>
-  </aside> -->
 </main>
+<edu-add-subject-modal
+  (createSubject)="createSubject($event)"
+  *ngIf="(modalState | async).formModal"
+>
+</edu-add-subject-modal>

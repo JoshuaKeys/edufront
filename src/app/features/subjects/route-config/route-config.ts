@@ -7,11 +7,16 @@ export const navigation = {
   },
   'assign-subjects': {
     previous: 'subjects-taught',
+    next: 'confirmation'
+  },
+  'confirmation': {
+    previous: 'assign-subjects',
     next: null
   }
 };
 
 export const routeToComponentMap = {
   'subjects-taught': fromContainers.SubjectsTaughtQuestionComponent,
-  'assign-subjects': fromContainers.AssignSubjectsQuestionComponent
+  'assign-subjects': fromContainers.AssignSubjectsQuestionComponent,
+  'confirmation': fromContainers.ConfirmationComponent
 }
