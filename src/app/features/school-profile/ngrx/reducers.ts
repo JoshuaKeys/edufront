@@ -4,6 +4,10 @@ import * as formActions from './actions';
 
 const reducer = createReducer(
   initialSchoolProfileState,
+  on(formActions.loadCountries, (state,action) =>({
+    ...state,
+    counties: action.value
+  })),
   on(formActions.setName, (state, action) =>({
     ...state,
     schoolProfile: {

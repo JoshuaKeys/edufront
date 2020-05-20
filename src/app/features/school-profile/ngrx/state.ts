@@ -8,7 +8,8 @@ export interface State {
   endPopup: {
     toched: boolean;
   }
-  error: string;
+  error?: error;
+  counties?: any;
 }
 
 export const initialSchoolProfileState: State = {
@@ -19,5 +20,12 @@ export const initialSchoolProfileState: State = {
   endPopup: {
     toched: false,
   },
-  error: null
+  error: {},
+  counties: {}
 };
+
+
+export interface error {
+  code?: number;
+  message?: string;
+}

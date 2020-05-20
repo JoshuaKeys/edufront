@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { SchoolProfile } from '../models/school-profile.interface';
 import { addressModel } from '../models/adress.model';
+import { error } from './state';
 
 export const showWellcomePopup = createAction(
   '[School-Profile Page] show popup',
@@ -27,10 +27,22 @@ export const setSchoolLogo = createAction(
   props<{value: any}>()
 );
 
+export const getCountries = createAction('[School-Profile Page] load countries');
+export const loadCountries = createAction('[School-Profile Page] load countries to store',
+  props<{value: any}>()
+);
+export const getCountriesError = createAction('[School-Profile Page] load countries Error',
+  props<{value: error}>()
+);
+
 export const uploadSchoolLogo = createAction('[School-Profile Page] upload school Logo');
 
 export const uploadSuccess = createAction('[School-Profile Page] upload school Logo succsess',
   props<{value: string}>()
+);
+
+export const uploadFail = createAction('[School-Profile Page] upload school Logo fail',
+  props<{value: error}>()
 );
 
 export const saveSchoolProfile = createAction('[School-Profile Page] save school profile');

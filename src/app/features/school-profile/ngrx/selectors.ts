@@ -6,6 +6,7 @@ import { State } from './state';
 const featureSelector = createFeatureSelector<SchoolProfile>('schoolProfile');
 export const selectorSchoolName = createSelector(featureSelector,
     state => state['schoolProfile']);
+export const selectCountries = createSelector(featureSelector, state => state['counties'].content);
 
 export const selectorSchoolAddress = createSelector(featureSelector, state => state['schoolProfile'].addressDto);
 

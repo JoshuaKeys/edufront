@@ -7,7 +7,8 @@ import { State } from '../../ngrx/state';
 import { setAddress } from '../../ngrx/actions';
 import { addressModel } from '../../models/adress.model';
 import { debounceTime, distinctUntilChanged, first } from 'rxjs/operators';
-import { selectorSchoolAddress } from '../../ngrx/selectors';
+import { selectCountries, selectorSchoolAddress } from '../../ngrx/selectors';
+import { countryType } from '../../models/countries';
 
 @Component({
   selector: 'edu-address-page',
@@ -18,6 +19,7 @@ import { selectorSchoolAddress } from '../../ngrx/selectors';
 export class AddressPageComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   mForm: FormGroup;
+  countries: countryType[] = [];
   navBlock: object;
 
   constructor(private route: ActivatedRoute,
@@ -30,10 +32,19 @@ export class AddressPageComponent implements OnInit, OnDestroy {
       zipcode: ['', Validators.required],
       address: ['', Validators.required],
       state: ['', Validators.required],
-      city: ['', Validators.required]
+      city: ['', Validators.required],
+      countryId: ['']
     });
-    this.mForm.controls['country'].setValue('India',{onlySelf: true});
 
+    this.subscription.add(this.store.select(selectCountries).subscribe(countries => {
+      for (let k in countries) {
+        if (countries[k].countryName === 'India') {
+          this.countries.push(countries[k]);
+          this.mForm.controls['country'].setValue('India',{onlySelf: true});
+          this.mForm.controls['countryId'].setValue(countries[k].id,{onlySelf: true});
+        }
+      }
+    }));
     this.subscription.add(
       this.mForm.valueChanges.pipe(
         debounceTime(200),

@@ -18,4 +18,8 @@ export class SchoolProfileService {
   createSchool(school: SchoolProfile) {
     return this.httpClient.post('/api/v1/school', school);
   }
+
+  getCountries() {
+    return this.httpClient.get('api/v1/country');
+  }
 }
