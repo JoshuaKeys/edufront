@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { ClassesAndGroupsModel, } from '../models/classes-and-group.model';
-import { GetClassesResponseModel } from '../models/get-classes-response.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -9,6 +8,7 @@ import { ClassesWithoutGroupResponseModel } from '../models/classes-without-grou
 import { ClassesWithoutGroupsRequestModel } from '../models/classes-without-groups-request.model';
 import { ClassesWithGroupsResponseModel } from '../models/classes-with-group-response.model';
 import { ClassesWithGroupsRequestModel } from '../models/classes-with-groups-request.model';
+import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 
 @Injectable(
   {

@@ -6,9 +6,10 @@ import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { setInputError, setGroupOfClassesQty, initializeGroupClassMap, setDroppedState, addClassToGroup, removeDroppedState, removeClassFromGroup, changeGroupName, requestGroupsClassMap } from '../../ngrx/actions';
-import { ClassModel } from '../../models/class.model';
+
 import { map } from 'rxjs/operators';
 import { GroupClassMapModel } from '../../models/group-class-map.model'
+import { ClassModel } from 'src/app/shared/models/class.model';
 @Component({
   selector: 'edu-name-groups',
   templateUrl: './name-groups.component.html',

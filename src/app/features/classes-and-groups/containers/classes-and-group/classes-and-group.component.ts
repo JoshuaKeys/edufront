@@ -7,7 +7,7 @@ import { selectNumOfGroups, selectSelectedClasses } from '../../ngrx/selectors';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { setGroupOfClassesQty, setInputError } from '../../ngrx/actions';
-import { ClassModel } from '../../models/class.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 @Component({
   selector: 'edu-classes-and-group',
   templateUrl: './classes-and-group.component.html',

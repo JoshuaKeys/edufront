@@ -35,7 +35,7 @@
           [editable]="true"
         ></edu-group-box>
       </div>
-      <button
+      <!-- <button
         class="form__btn"
         [ngClass]="{
           'form__btn--disabled': (hasUngroupedClass | async) ? true : false
@@ -43,6 +43,9 @@
         [disabled]="hasUngroupedClass | async"
         [routerLink]="['../', activatedRouteData.next]"
       >
+        Continue
+      </button> -->
+      <button class="form__btn" [routerLink]="['../', activatedRouteData.next]">
         Continue
       </button>
     </div>

@@ -41,4 +41,6 @@
   [completeModal]="true"
   leftBtn="TAKE ME TO DASHBOARD"
   rightBtn="TAKE ME TO SUBJECTS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToSubjects()"
 ></edu-modal>

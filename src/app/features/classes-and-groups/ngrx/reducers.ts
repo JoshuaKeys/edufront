@@ -1,7 +1,8 @@
 import { createReducer, createFeatureSelector, on } from "@ngrx/store";
 import { ClassesAndGroupsModel } from '../models/classes-and-group.model';
 import * as fromActions from './actions';
-import { ClassModel } from '../models/class.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
+
 
 const initialState: ClassesAndGroupsModel = {
   groupsOfClassesNum: 0,

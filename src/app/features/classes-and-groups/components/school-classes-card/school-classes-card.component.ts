@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { GetClassesResponseModel } from '../../models/get-classes-response.model';
 import { Observable } from 'rxjs';
-import { ClassModel } from '../../models/class.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 @Component({
   selector: 'edu-school-classes-card',
