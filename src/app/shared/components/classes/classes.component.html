@@ -1,0 +1,9 @@
+<div class="form__badges round-badges flex-wrap">
+  <span
+    class="form__badge  round-badge draggable"
+    [ngClass]="{ 'form__badge--empty': !class.selected }"
+    *ngFor="let class of classes | async"
+    (click)="processClicked(class.name)"
+    >{{ class.name }}</span
+  >
+</div>

@@ -1,0 +1,36 @@
+<div class="form__input-wrapper">
+  <img
+    src="../../../assets/iconfinder_subject_plus-blue.svg"
+    alt=""
+    class="form__input-icon"
+    *ngIf="index"
+    (click)="add(type, index)"
+  />
+  <input
+    id="{{ idPrefix }}-{{ index }}"
+    type="text"
+    class="form__input"
+    placeholder=""
+    [value]="inputValue"
+    #subSubjectValue
+    (change)="onTextChange($event)"
+    pattern="(/w)"
+  />
+  <label
+    class="form__input-label"
+    for="{{ idPrefix }}-{{ index }}"
+    *ngIf="!index; else subsequentItems"
+    >{{ text }} <span class="ashcolor">(Optional)</span></label
+  >
+  <ng-template #subsequentItems>
+    <label class="form__input-label" for="{{ idPrefix }}-{{ index }}"
+      ><span class="ashcolor"> {{ text }} </span></label
+    >
+  </ng-template>
+  <span
+    (click)="remove(type, index)"
+    *ngIf="index && !last"
+    class="form__input-icon form__input-icon--right"
+    >-</span
+  >
+</div>

@@ -1,0 +1,11 @@
+<div class="drop-zone__options">
+  <div
+    class="option badge"
+    [ngClass]="{
+      'option--all': class.name.toLocaleLowerCase() === 'all'
+    }"
+    *ngFor="let class of classes | async"
+  >
+    {{ class.name }}
+  </div>
+</div>

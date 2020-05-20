@@ -1,5 +1,5 @@
-import { TeacherModel } from './teacher.model';
-import { SubjectModel } from './subject.model';
+import { TeacherModel } from 'src/app/shared/models/teacher.model';
+import { SubjectModel } from 'src/app/shared/models/subject.model';
 
 export interface ClassesWithoutGroupResponseModel {
   name: string;

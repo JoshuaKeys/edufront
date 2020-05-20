@@ -15,6 +15,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/classes-and-groups/classes-and-groups.module').then(m => m.ClassesAndGroupsModule),
   },
   {
+    path: 'subjects',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () => import('./features/subjects/subjects.module').then(m => m.SubjectsModule)
+  },
+  {
     path: '',
     redirectTo: '/classes-and-groups/classes-in-school',
     pathMatch: 'full'

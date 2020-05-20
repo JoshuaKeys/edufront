@@ -1,0 +1,4 @@
+@import '../../../../../assets/styles/modules/section-module';
+.chip {
+  @include chip();
+}

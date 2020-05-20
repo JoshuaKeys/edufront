@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { GetClassesResponseModel } from '../models/get-classes-response.model';
 import { ClassesWithoutGroupsRequestModel } from '../models/classes-without-groups-request.model';
 import { ClassesWithoutGroupResponseModel } from '../models/classes-without-groups-response.model';
 import { ClassesWithGroupsResponseModel } from '../models/classes-with-group-response.model';
+import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 
 export const setGroupOfClassesQty = createAction('[ClassesAndGroupComponent] setGroupOfClassesQty', props<{ qty: number }>())
 export const preserveGroupOfClassesQty = createAction('[ClassesAndGroupsEffects] preserveGroupOfClassesQty')

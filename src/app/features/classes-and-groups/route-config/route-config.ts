@@ -18,7 +18,7 @@ export const navigation = {
     previous: 'classes-with-groups',
   },
   'confirmation': {
-    next: null,
+    next: '/subjects/subjects-taught',
     previous: 'name-groups'
   }
 };

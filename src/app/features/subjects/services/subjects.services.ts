@@ -1,0 +1,18 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SubjectModel } from '../models/subject.model';
+import { CreateSubjModel } from '../models/create-subject.model';
+import { SubjectCreationSuccessModel } from '../models/subject-creation-success.model';
+
+@Injectable()
+export class SubjectsService {
+  getAllSubjects(): Observable<SubjectModel[]> {
+    return this.httpClient.get<SubjectModel[]>('/api/v1/subject');
+  }
+  createSubject(subject: CreateSubjModel): Observable<SubjectCreationSuccessModel> {
+    return this.httpClient.post<SubjectCreationSuccessModel>('/api/v1/subject', subject);
+  }
+  constructor(private httpClient: HttpClient) { }
+}
+

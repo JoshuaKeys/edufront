@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { Store } from '@ngrx/store';
 import { selectGroupsClassMap, selectModalState } from '../../ngrx/selectors';
@@ -29,11 +29,18 @@ export class ConfirmationComponent implements OnInit {
   submit() {
     this.store.dispatch(sendClassesWithGroupsRequest())
   }
+  goToSubjects() {
+    this.router.navigateByUrl('/subjects/subjects-taught')
+  }
+  goToDashboard() {
+
+  }
   completeProcess() {
 
   }
   constructor(
     public store: Store<ClassesAndGroupsModel>,
     private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 }
