@@ -37,7 +37,6 @@ export const assignToSelectedClassesFailure = createAction(
 )
 export const postClassesSubjectsRequest = createAction(
   '[ConfirmationComponent] postClassesSubjects',
-  props<{ classesSubject: PostClassSubjectModel[] }>()
 )
 export const postClassesSubjectsSuccess = createAction(
   '[SubjectsEffects] postClassesSubjectsSuccess',
@@ -45,4 +44,7 @@ export const postClassesSubjectsSuccess = createAction(
 )
 export const toggleFormModal = createAction(
   '[AssignSubjectsQuestionComponent] toggleFormModal'
+)
+export const toggleEndModal = createAction(
+  '[ConfirmationComponent] toggleEndModal'
 )

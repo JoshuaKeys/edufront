@@ -14,11 +14,11 @@ export class SubjectsFormComponent implements OnInit {
   addSubjForm = this.fb.group({
     subjectName: ['', Validators.required],
     subSubjects: this.fb.array([
-      this.fb.control(''),
+      // this.fb.control(''),
       this.fb.control('')
     ]),
     activities: this.fb.array([
-      this.fb.control(''),
+      // this.fb.control(''),
       this.fb.control('')
     ])
   })

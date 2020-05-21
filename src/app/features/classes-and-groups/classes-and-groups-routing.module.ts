@@ -8,9 +8,13 @@ import { ClassesAndGroupsShellComponent } from './containers';
 import { AuthenticatedGuard } from 'src/app/guards/authenticated/authenticated-guard';
 
 const classesAndGroupRoutes: Routes = [{
-  path: '',
+  path: 'classes-in-school',
   component: ClassesAndGroupsShellComponent,
   children: routeToComponentGenerator(routeToComponentMap, navigation),
+}, {
+  path: '',
+  redirectTo: '/classes-and-groups/classes-in-school',
+  pathMatch: 'full'
 }]
 
 @NgModule({
