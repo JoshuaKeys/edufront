@@ -816,3 +816,15 @@
     </div>
   </section>
 </main>
+<edu-modal
+  *ngIf="(modalState | async).endModal"
+  [description]="description"
+  btnText="GOT IT"
+  header="Subjects Set Up Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO DASHBOARD"
+  rightBtn="TAKE ME TO STUDENTS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToStudents()"
+></edu-modal>
