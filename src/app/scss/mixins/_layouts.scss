@@ -1,0 +1,325 @@
+//main section used to hold all data, it is included in modules often via @mixin splitLayout3();
+@mixin sectionLayout3() {
+  
+
+  .section {
+    height: calc(100vh - 53px);
+    padding-top: 20px;
+    @include displayFlex(flex-start, center, column);
+    position: relative;
+    width: 100%;
+    overflow-y: auto;
+    //styling for the back button
+    &__back-btn {
+      @include textButton();
+      @include displayFlex();
+      cursor: pointer;
+      position: absolute;
+      top: 31px;
+      left: 23px;
+      text-align: right;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.42px;
+      color: $grey;
+      img {
+        height: 18px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  //content is the main body of the section
+  .content {
+    @include displayFlex(center, center, column);
+    flex-grow: 1;
+ 
+
+    //content__title is the title of the section
+    &__title {
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+    //content__dsec is the desc of the section
+    &__desc {
+      text-align: center;
+      font-weight: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $ash;
+      margin: 0;
+    }
+
+    //content__btn is usually the buttons at the bottom of the section
+    &__btn {
+      @include button_default($blue, white);
+      &--white {
+        @include button_default(white, $blue);
+        border: 1px solid $blue;
+      }
+      &--inactive {
+        @include button_default($grey-blue, white);
+        border: 1px solid $grey-blue;
+      }
+    }
+    //content__btn-wrapper is the wrapper for the button
+    &__btn-wrapper {
+      min-height: 132px;
+      max-height: 18%;
+      height: 92px;
+      flex-shrink: 0;
+      @include displayFlex();
+    }
+  }
+
+  // basic text button without border and background
+  .btn--text {
+    @include textButton();
+  }
+}
+
+//main mixin included in all elements 
+@mixin splitLayout3() {
+  @include sectionLayout3();
+
+  //styling for main element
+  main {
+    height: calc(100vh - 53px);
+    @include displayFlex(center, flex-start);
+  }
+
+  //styling for aside element
+  aside {
+    overflow-y: auto;
+    height: 100%;
+    width: 300px;
+    flex-shrink: 0;
+    background: $grey-white;
+    border-left: 1px solid $grey-blue;
+  }
+
+  .aside {
+    @include displayFlex(flex-start, flex-start, column);
+    position: relative;
+    padding: 30px 15px;
+
+      //default margin for all children
+    & > * {
+      margin-bottom: 15px;
+    }
+
+    //aside__title 
+    &__title {
+      align-self: center;
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.42px;
+      color: $grey;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    //aside__palceholder, can be used when aside element is empty
+    &__placeholder {
+      text-align: center;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: "Raleway", sans-serif;
+      max-width: 270px;
+      width: 100%;
+      color: $grey;
+      @include absoluteCenter();
+    }
+
+    //aside__table, to be used in a card to allow for a grid styling  
+    &__table{
+      margin-top: 7px;
+      tr{
+        vertical-align: top;
+      }
+      td.divider{
+        padding: 0;
+        position: relative;
+        &::before{
+          @include emptyPesudoElement();
+          height: 80%;
+          width: 1px;
+          @include absoluteCenter();
+          background: $black;
+        }
+      }
+      td{
+        padding-left: 13px;
+      }
+      td:first-child {
+        padding-right: 30px;
+       
+      }
+    }
+  }
+
+  //basic card used inside aside, should be overwritten in individual module
+  .card {
+    @include card();
+    width: 100%;
+  }
+}
+
+//contains styling for the completion gauge, , button, text 
+@mixin stepsLayout() {
+  .steps {
+    @include displayFlex(flex-start, center, column);
+    padding: 60px 50px;
+    width: 100%;
+    box-sizing: border-box;
+    //steps__completion-gauge  is the completion gauge located at the top 
+    &__completion-gauge {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      border: 8px solid #f4f6fc;
+      color: $blue;
+      font-family: "Raleway", sans-serif;
+      position: relative;
+      margin-bottom: 40px;
+//steps__completion-gauge-value  is the general wrapper for the Numeric value and percentage sign
+      &-value {
+        @include absoluteCenter();
+        font-weight: 600;
+      }
+      //steps__completion-gauge-value-number  is the actual number
+      &-value-number {
+        font-size: 3em;
+        line-height: 1;
+        font-family: arial;
+      }
+      //steps__completion-gauge-value  is the  percentage sign
+      &-value-sign {
+        font-size: 0.9em;
+        position: absolute;
+        right: -17px;
+        bottom: 2px;
+      }
+    }
+
+    //steps__title is the main title for the page
+    &__title {
+      margin-bottom: 20px;
+    }
+      //steps__title is the main desc for the page
+    &__desc {
+      color: $ash;
+      max-width: 706px;
+      &--small {
+        font-size: 14px;
+        margin-bottom: 67px;
+      }
+      &--grey {
+        color: $grey;
+      }
+    }
+  //steps__title is the main button for the page
+    &__btn {
+      @include button_default($blue, white);
+      margin-top: 20px;
+      font-weight: 600;
+    }
+  }
+}
+
+//line of processes/modules 
+@mixin timelineLayout() {
+  
+  .timeline {
+    width: 100%;
+    max-width: 1180px;
+    list-style: none;
+    padding: 0;
+    @include displayFlex(space-between);
+    margin-bottom: 75px;
+
+    //timeline__entry refers to each entry in the timeline, or in our case module
+    &__entry {
+      flex-shrink: 0;
+      position: relative;
+      @include displayFlex(flex-start, center, column);
+      min-width: 85px;
+      //timeline__entry--completed completed state for each entry
+      &--completed {
+        .timeline__entry-img-wrapper {
+          background: $green;
+          border-color: $green;
+        }
+        .timeline__entry-title {
+          color: $black;
+        }
+      }
+
+      //timeline__entry--active is the active state for the active entry (onn in orange)
+      &--active {
+        .timeline__entry {
+          &-img-wrapper {
+            background: $orange;
+            border: 1px solid $orange;
+            &::before {
+              width: 78px;
+              height: 78px;
+              border-radius: 50%;
+              border: 1px solid $orange;
+              display: block;
+              content: "";
+              @include absoluteCenter();
+            }
+          }
+
+          &-title {
+            color: $orange;
+          }
+        }
+      }
+
+      
+    //timeline__entry-img-wrapper is the wrapper for the entry
+      &-img-wrapper {
+        width: 64px;
+        height: 64px;
+        position: relative;
+        border: 2px solid $grey-blue;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+       //timeline__entry-title is the title for each entry
+      &-title {
+        color: $grey;
+        font-family: "Raleway", sans-serif;
+        font-size: 14px;
+        text-align: center;
+        white-space: nowrap;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+      }
+       //timeline__entry-img-wrapper is the img for each entry
+      &-img {
+        @include absoluteCenter();
+      }
+    }
+ //timeline__dash is the dash between entries
+    &__dash {
+      height: 2px;
+      border-radius: 100px;
+      background: #e9e9e9;
+      width: 100%;
+
+      // transform: translateY(-16px);
+      &--completed {
+        background: $green;
+      }
+    }
+  }
+}

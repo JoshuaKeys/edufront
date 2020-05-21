@@ -1,0 +1,31 @@
+@mixin emptyPesudoElement($position: absolute) {
+  content: "";
+  display: block;
+  position: $position;
+}
+
+$defaultBg: transparent
+  linear-gradient(180deg, #ffffff09 0%, #ffffff 41%, #ffffff 100%) 0% 0%
+  no-repeat padding-box;
+@mixin opacityFooter($height: 100%, $bg: $defaultBg) {
+  .opacity {
+    width: 100%;
+    @include displayFlex();
+    position: relative;
+    &-overlay {
+      background: $bg;
+      opacity: 0.5;
+      width: 100%;
+      height: $height;
+      position: absolute;
+      top: 0;
+      transform: translateY(-100%);
+    }
+  }
+}
+
+
+@mixin wh($size:inherit){
+  width: $size;
+  height: $size;
+}

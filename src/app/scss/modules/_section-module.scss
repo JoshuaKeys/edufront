@@ -1,0 +1,66 @@
+@import "../typography";
+@import "../colors";
+@import "../mixins/components";
+@import "../mixins/alignment";
+@import "../main";
+@import "../utils";
+
+@include dropZone();
+@mixin sectionDropZone {
+  .drop-zones {
+    @include displayFlex(flex-start, stretch);
+    width: 100%;
+    overflow: hidden;
+    // min-height: 100%;
+    height: auto;
+    & > *:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
+  .drop-zone {
+    @include displayFlex(flex-start, center, column);
+    padding: 0 20px 10px 20px;
+    &__title {
+      font: 400 14px/44px Raleway;
+      letter-spacing: 0.42px;
+      color: $black;
+      max-width: 250px;
+      width: 100%;
+      border-bottom: 1px solid $grey;
+      padding-bottom: 0;
+      margin-bottom: 20px;
+    }
+    &__group {
+      max-width: 500px;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-content: space-between;
+    }
+    &--create {
+      cursor: pointer;
+      padding: 0 12px;
+      min-width: unset;
+      max-width: 50px;
+      position: relative;
+      .drop-zone__icon {
+        @include absoluteCenter;
+      }
+      img {
+        width: 24px;
+        height: 24px;
+      }
+      &:hover {
+        border-color: $blue;
+      }
+    }
+    &--small {
+      max-width: 200px;
+      align-self: flex-start;
+      height: 30%;
+    }
+    .chips {
+      justify-content: center;
+      overflow-y: auto;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+//general form settings, gg export to a seperate partial
+.form {
+   
+    //form__input defines default behaviour for elements 
+    &__input {
+      border: 0;
+      border-bottom: 2px solid $grey-blue;
+      &:focus {
+        outline: none;
+      }
+
+      //form__input-wrapper is the basic wrapper for the entire form element, each element will be wrapped in one of these
+      &-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 380px;
+        min-height: 43px;
+        // margin-bottom: 30px;
+        position: relative;
+
+       
+      }
+      //form__input-icon is attached to the left of the input element 
+      &-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        //sets padding for input so it doesnt overlap
+        & ~ .form__input {
+          padding-left: 30px;
+        }
+        & ~ .form__input-label--align-left {
+            padding-left: 30px;
+        }
+      }
+      //form__input-icon for things like country code
+      &-prefix {
+       
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        & > * {
+          position: relative;
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
+        }
+      }
+      
+    }
+    //form__label for all form elements
+    &__label {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.5;
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0.48px;
+      white-space: nowrap;
+      &--align-left {
+        text-align: left;
+      }
+    }
+  }
