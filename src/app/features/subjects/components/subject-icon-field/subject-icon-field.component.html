@@ -1,0 +1,210 @@
+<div class="form__input-wrapper form__input-wrapper--main">
+  <div class="form__icon-select-wrapper">
+    <input type="checkbox" class="form__icon-select" />
+    <img
+      class="form__icon"
+      src="../../../assets/icon_subject-badge.svg"
+      alt=""
+    />
+    <div class="popup popup--center">
+      <ul class="popup__entries">
+        <li class="popup__entry popup__search-wrapper">
+          <img
+            class="popup__search-icon"
+            src="../../../assets/search.svg"
+            alt=""
+          />
+          <input
+            class="popup__search-input"
+            type="text"
+            placeholder="Search icons"
+          />
+        </li>
+      </ul>
+      <div class="popup__content">
+        <div class="icons flex-wrap">
+          <div class="icon icon--active">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-active.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+          <div class="icon">
+            <img
+              class="icon__img"
+              src="../../../assets/subject_icon-inactive.svg"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input
+    id="subjectName"
+    type="text"
+    class="form__input"
+    placeholder=""
+    [value]="value"
+    (input)="onTextChange($event)"
+    #subjectName
+    pattern="(/w)"
+  />
+
+  <label class="form__input-label" for="subjectName">Subject Name</label>
+</div>

@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { ClassesAndGroupsModel } from '../../models/classes-and-group.model';
 import { selectSortedClasses, selectSelectedClasses, selectModalState } from '../../ngrx/selectors';
 import { toggleClass, closeClassesAndGroupsModal } from '../../ngrx/actions';
-import { ClassModel } from '../../models/class.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalModel } from '../../models/modal.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 @Component({
   styleUrls: ['./classes-in-school.component.scss'],

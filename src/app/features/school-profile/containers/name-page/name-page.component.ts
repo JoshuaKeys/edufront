@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '../../ngrx/state';
 import { setName } from '../../ngrx/actions';
+import { selectorSchoolName } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-name-page',
@@ -13,7 +15,7 @@ import { setName } from '../../ngrx/actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NamePageComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  private subscription: Subscription = new Subscription();
   mForm: FormGroup;
   navBlock: object;
 
@@ -26,15 +28,29 @@ export class NamePageComponent implements OnInit, OnDestroy {
     this.mForm = this.fb.group({
       name: ['', Validators.required]
     });
+    this.subscription.add(this.mForm.get('name').valueChanges
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+      ).subscribe(name=> this.store.dispatch(setName({value: name})) )
+    );
   }
 
   ngOnInit(): void {
-    this.subscription = this.route.data.subscribe(res => this.navBlock = res);
+    this.subscription.add(this.store.select(selectorSchoolName)
+      .pipe(distinctUntilChanged())
+      .subscribe(
+      school => this.mForm.get('name').setValue(school.name)
+    ));
+    this.subscription.add(this.route.data.subscribe(res => this.navBlock = res));
   }
 
   addName(): void {
-    this.store.dispatch(setName({value: this.mForm.value.name}));
     this.router.navigate([`../${this.navBlock['next']}`], {relativeTo: this.route});
+  }
+
+  onPrevious() {
+    this.router.navigate([`../${this.navBlock['previous']}`], {relativeTo: this.route});
   }
 
   ngOnDestroy() {

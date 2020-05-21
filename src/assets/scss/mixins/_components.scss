@@ -1,0 +1,366 @@
+@import "./buttons";
+@import "./forms";
+@import "./layouts";
+@import "./containers";
+
+
+ 
+@mixin popup() {
+  //popup elements currently have the following variations
+  // .popup--padded , creates padding around the popup  
+  // .popup--center, ensures popup is centered to the the parent and the pointer is also centered
+
+
+  .popup {
+    //basic styling for the pointer
+    &::before {
+      position: absolute;
+      top: 0;
+      content: "";
+      display: block;
+      background-color: white;
+      transform-origin: center;
+      transform: rotate(45deg) translate(4px, -13px);
+      border-top: 1px solid $blue;
+      border-left: 1px solid $blue;
+      width: 10px;
+      height: 10px;
+    }
+    bottom: -13px;
+    cursor: pointer;
+    max-width: 370px;
+    width: 100%;
+    position: absolute;
+    background: white;
+    z-index: 4;
+
+    left: 0;
+    transform: translateY(100%);
+    border: 1px solid $blue;
+    border-radius: 6px;
+
+    //popup--center styling for popup to be centered 
+    &--center {
+      left: 50%;
+      transform: translate(-50%, 100%);
+      &::before {
+        left: 50%;
+        transform: rotate(45deg) translate(-72%, -1px);
+      }
+    }
+
+    //popup--padded styling for popup to be padded 
+    &--padded {
+      padding: 30px 15px;
+    }
+    //popup__entries styling for entry element wrapper in the form of a <ul>
+    &__entries {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0;
+      @include displayFlex(flex-start, stretch, column);
+    }
+
+
+    //popup__entry styling for individual entry elements in the form of a <li>
+    &__entry {
+      @include displayFlex(flex-start);
+      position: relative;
+      height: 44px;
+      padding: 0 20px;
+      color: $black;
+
+      & > *:not(:last-child) {
+        margin-right: 10px;
+      }
+      span {
+        text-align: left;
+        font-size: 14px;
+        letter-spacing: 0.42px;
+        white-space: nowrap;
+        //
+      }
+      &--active > span {
+        color: $blue;
+      }
+      &:hover {
+        color: $blue;
+        background: $grey-white 0% 0% no-repeat padding-box;
+      }
+    }
+
+    //popup__search styling for the search element along inside the popup
+    &__search {
+      &-icon {
+        width: 18px;
+        position: absolute;
+        left: 31px;
+        top: 50%;
+        transform: translate(-50%, -81%);
+      }
+
+      &-input {
+        border: 0;
+        width: 100%;
+        background: unset;
+        padding-bottom: 10px;
+        padding-left: 35px;
+
+        border-bottom: 1px solid $grey-blue;
+        &-wrapper {
+          position: relative;
+        }
+
+        &::placeholder {
+          color: $grey;
+          font: 14px;
+          font-family: "Raleway", sans-serif;
+        }
+        &:focus {
+          outline: none;
+          border-color: $blue;
+        }
+      }
+    }
+
+
+ 
+  }
+}
+
+
+@mixin roundBadge($size: 32px, $background: $blue, $color: white) {
+    //badge elements currently have the following variations
+  // .badge--square , slightly square badges  
+  // .badge--inactive, inactive state of badges 
+  //if you require an inactive square abdge use the following class .badge.badge--square.badge--inactive
+
+  //main base class for the badge
+  .badge {
+    width: $size;
+    height: $size;
+    background: $background;
+    color: $color;
+    border-radius: 50%;
+    margin: 4px;
+    font-size: 12px;
+    line-height: 20px;
+    font-family: "Roboto", sans-serif;
+    box-shadow: 0px 2px 6px #3c4b9b14;
+    @include displayFlex();
+
+    //badge--square, change of border-radius to allow badge to be squarish
+    &--square {
+      border-radius: 8px;
+    }
+    //badge--inactive, change of border-color, color and background for inactive state
+    &--inactive {
+      color: $grey;
+      background: white;
+      border: 2px solid $grey-blue;
+    }
+  }
+}
+
+ //basic chip element, need to include chip @mixin inside a .chip class
+@mixin chip() {
+ 
+  //basic chip  styling
+  cursor: pointer;
+  padding: 6px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid $blue;
+  border-radius: 100px;
+  opacity: 5px 10px 5px 0;
+  margin: 10px;
+  @include displayFlex();
+    //chip__img is the img/icon of the chip
+  &__img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+     //chip__text is the text  of the chip
+  &__text {
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.42px;
+    color: $blue;
+  }
+
+  //affects styling of chip__text if there is a chip__img sibling before it
+  &__img + &__text {
+    margin: 0 5px;
+    // margin-right: 10px;
+  }
+}
+
+
+  @mixin tooltip() {
+  //tooltip elements must be placed inside a RELATIVE positioned parent and currently have the following variations
+  // .tooltip--right , creates tooltip to the right of parent
+  // .tooltip--top, creates tooltip to the top of parent
+  //usage, a tooltip placed on the top of the parent requries the following classes. ".tooltip.tooltip--top"
+
+  //base tooltip class
+  .tooltip {
+    min-width: 92px;
+    padding: 7px 11px;
+    font: 400 12px/16px Raleway;
+    letter-spacing: 0.36px;
+    color: #ffffff;
+    background: $purple;
+    position: absolute;
+    white-space: nowrap;
+    border-radius: 10px;
+    z-index: 2;
+
+    //tooltip--top styles pointer and position of the tooltip relative to the parent
+    &--top {
+      left: 50%;
+      transform: translate(-50%, -100%);
+      top: -7px;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid $purple;
+
+        left: 50%;
+        bottom: 1px;
+        transform: translate(-50%, 100%);
+      }
+    }
+
+    //tooltip--right styles pointer and position of the tooltip relative to the parent
+    &--right {
+      right: -7px;
+      transform: translate(100%, -50%);
+      top: 50%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid $purple;
+
+        left: 0%;
+        top: 50%;
+        transform: translate(-100%, -50%);
+      }
+    }
+  }
+}
+
+
+
+//entire search element
+@mixin search() {
+
+  //base class of search element
+  .search {
+    @include displayFlex(flex-start);
+
+    //search__wrapper of search element
+    &__wrapper {
+      position: relative;
+      width: 100%;
+      padding: 4px 15px;
+
+      @include displayFlex(center, flex-end);
+    }
+    //search__icon is the magnifying glass
+    &__icon {
+      position: absolute;
+
+      left: 16px;
+      top: 10px;
+      transform: translate(0, -50%);
+    }
+
+
+       //search__icon-btns is the wrapper for icon-btns, can refer to stundent module
+    &__icon-btns {
+      @include displayFlex();
+    }
+    //search__icon-btnare the icon buttons used in the student module
+    &__icon-btn {
+      cursor: pointer;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      background: #ffffff;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      border: 1px solid $grey-blue;
+      position: relative;
+      margin: 0 5px;
+      & > img {
+        @include absoluteCenter();
+      }
+      &--active {
+        background: $blue;
+        border: 1px solid $blue;
+      }
+      &--hover {
+        border: 1px solid $blue;
+      }
+    }
+  
+    &__input-wrapper + &__icon-btns {
+      margin-left: 24px;
+    }
+
+    //search__btn is the actual serch button with the "+"
+    &__btn {
+      color: $blue;
+      margin-left: 20px;
+      @include button_default(white, $blue);
+      width: 96px;
+      height: 36px;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      border: 1px dashed $blue;
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1;
+      position: relative;
+      > * {
+        @include absoluteCenter();
+      }
+    }
+
+    //search__input styling of text input wrapperinside search
+    &__input-wrapper {
+      position: relative;
+    }
+    //search__input styling of text input inside search
+    &__input {
+      border: 0;
+      width: 100%;
+      background: unset;
+      padding-bottom: 10px;
+      padding-left: 42px;
+
+      border-bottom: 1px solid $grey-blue;
+
+      &::placeholder {
+        color: $grey;
+        font: 14px;
+        font-family: "Raleway", sans-serif;
+      }
+      &:focus {
+        outline: none;
+        border-color: $blue;
+      }
+    }
+  }
+}
+

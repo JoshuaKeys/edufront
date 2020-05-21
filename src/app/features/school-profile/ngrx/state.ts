@@ -1,39 +1,31 @@
-import { SchoolProfile } from '../../../core/models/school-profile.interface';
-
+import { SchoolProfile } from '../models/school-profile.interface';
 
 export interface State {
   schoolProfile: SchoolProfile;
   wellcomePopup:{
-    toched: false;
+    toched: boolean;
   }
   endPopup: {
-    toched: false;
+    toched: boolean;
   }
-  error: any
+  error?: error;
+  counties?: any;
 }
 
 export const initialSchoolProfileState: State = {
-  schoolProfile: null,
+  schoolProfile: {},
   wellcomePopup: {
     toched: false
   },
   endPopup: {
     toched: false,
   },
-  error: null
+  error: {},
+  counties: {}
 };
-/*
-export interface SchoolProfile {
-  name?: string;
-  email?: string;
-  phoneNo?: string;
-  website?: string;
-  logo?: string;
-  addressDto?: {
-    country?: string;
-    zipcode?: number;
-    address?: string;
-    state?: string;
-    city?: string;
-  }
-} */
+
+
+export interface error {
+  code?: number;
+  message?: string;
+}

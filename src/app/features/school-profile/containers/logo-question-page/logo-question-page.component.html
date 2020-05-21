@@ -1,1 +1,13 @@
-<p>logo-question-page works!</p>
+<button class="section__back-btn" (click)="onPrevious()">
+  <img src="/assets/chevron-left.svg" alt="" /> Back
+</button>
+
+<div class="form">
+  <h2 class="form__title">
+    Do you have a school logo?
+  </h2>
+  <div class="form__btn-wrapper">
+    <button class="form__btn--round" (click)="onNext()">Yes</button>
+    <button class="form__btn--round">No</button>
+  </div>
+</div>

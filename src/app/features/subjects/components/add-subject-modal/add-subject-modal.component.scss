@@ -1,0 +1,8 @@
+@import '../../../../../assets/styles/modules/section-module';
+.modal {
+  @include modal();
+}
+
+main {
+  @include splitLayout();
+}

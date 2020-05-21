@@ -1,6 +1,5 @@
-import { GetClassesResponseModel } from './get-classes-response.model';
-import { ClassModel } from './class.model'
 import { GroupClassMapModel } from './group-class-map.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 export interface ClassesAndGroupsModel {
   groupsOfClassesNum?: number;

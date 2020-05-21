@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderNavComponent } from './header-nav/header-nav.component';
+import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 
+// import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { CustomSelectComponent } from './components/custom-select/custom-select.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DraggableDirective } from './directives/draggable.directive';
+import { ClassesComponent } from './components/classes/classes.component';
+import { ClassesService } from './services/classes.service';
+import { DroppableDirective } from './directives/droppable.directive';
 
 import { SelectModule } from "./components/select/select.module"
 import {datePickerModule} from "./components/datepicker/datepicker.module";
@@ -13,8 +18,10 @@ import {datePickerModule} from "./components/datepicker/datepicker.module";
   declarations: [
     ModalComponent,
     CustomSelectComponent,
-    HeaderNavComponent
-   
+     HeaderNavComponent,
+    DraggableDirective,
+    DroppableDirective,
+    ClassesComponent
   ],
   imports: [
     CommonModule,
@@ -26,8 +33,13 @@ import {datePickerModule} from "./components/datepicker/datepicker.module";
     CustomSelectComponent,
     HeaderNavComponent,
     datePickerModule,
-    SelectModule
-    
+    SelectModule,
+    DraggableDirective,
+    DroppableDirective,
+    ClassesComponent
+  ],
+  providers: [
+    ClassesService
   ]
 })
 export class SharedModule { }

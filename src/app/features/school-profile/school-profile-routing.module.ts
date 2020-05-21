@@ -1,8 +1,6 @@
-import { routeToComponentMap } from './config/nav-rules';
-import { ShellComponent } from './containers/shell/shell.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import * as fromContainers from './containers';
+import { ShellComponent } from './containers/shell/shell.component';
 import { routeToComponentGenerator } from './config/utilities';
 
 

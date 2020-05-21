@@ -6,6 +6,7 @@
 @import 'assets/styles/mixins/alignment';
 @import 'assets/styles/main';
 @import 'assets/styles/utils';
+
 body {
   margin: 0;
   padding: 0;
@@ -105,4 +106,21 @@ body {
 
  .label--active .optional{
   display: none;
+}
+/*school profile components*/
+
+edu-name-page{
+  height: 100%;
+}
+
+edu-address-page,
+edu-contact-details-page,
+edu-logo-question-page,
+edu-logo-upload-page,
+edu-confirmation-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
 }

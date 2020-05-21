@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SchoolProfileService } from '../../school-profile.service';
+import { State } from '../../ngrx/state';
+import { Store } from '@ngrx/store';
+import { setSchoolLogo, uploadSchoolLogo } from '../../ngrx/actions';
 
 @Component({
   selector: 'edu-logo-upload-page',
@@ -6,11 +12,64 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./logo-upload-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LogoUploadPageComponent implements OnInit {
-
-  constructor() { }
+export class LogoUploadPageComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+  file: File = null;
+  previewUrl:any = null;
+  navBlock: object;
+  constructor(private route: ActivatedRoute,
+              private cdRef: ChangeDetectorRef,
+              private spf: SchoolProfileService,
+              public store: Store<State>,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.subscription.add(this.route.data.subscribe(res => {
+      this.navBlock = res;
+    }));
   }
 
+  /**
+   * on file drop handler
+   */
+  onFileDropped($event) {
+    console.log('Ev', $event);
+  }
+
+  /**
+   * handle file from browsing
+   */
+  fileBrowseHandler(fileInput) {
+    if (fileInput && fileInput[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(fileInput[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.cdRef.markForCheck();
+        this.previewUrl = reader.result;
+        this.file = fileInput[0];
+        this.store.dispatch(setSchoolLogo({value: reader.result}));
+      }
+    }
+  }
+
+  deleteFile() {
+    this.file = null;
+    this.previewUrl = null;
+  }
+
+  onNext() {
+    this.store.dispatch(uploadSchoolLogo());
+    this.router.navigate([`../${this.navBlock['next']}`], {relativeTo: this.route});
+  }
+
+  onPrevious() {
+    this.router.navigate([`../${this.navBlock['previous']}`], {relativeTo: this.route});
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

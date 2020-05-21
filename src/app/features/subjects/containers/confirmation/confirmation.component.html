@@ -1,0 +1,818 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <div class="content content--final">
+      <h2 class="content__title">
+        Are these correct?
+      </h2>
+      <div class="cards flex-wrap content__body--final">
+        <edu-subject-summary-box
+          *ngFor="let class of classes | async"
+          [class]="class"
+        ></edu-subject-summary-box>
+        <!-- <div class="card--borderless card">
+          <div class="option badge option--active">
+            1
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            2
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            3
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            4
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            5
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            6
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            7
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            8
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div>
+        <div class="card--borderless card">
+          <div class="option badge option--active">
+            9
+          </div>
+          <div class="card__content flex-wrap">
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Algebra</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Hindi</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">English</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">Physics</span>
+            </div>
+            <div class="chip">
+              <img
+                class="chip__img"
+                src="../../../assets/pill-blue-icon.svg"
+                alt=""
+              />
+              <span class="chip__text">General Science</span>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="content__btns opacity">
+      <div class="opacity-overlay"></div>
+      <button
+        class="content__btn content__btn--white"
+        [routerLink]="['../', activatedRouteData.previous]"
+      >
+        Back
+      </button>
+      <button class="content__btn" (click)="saveSubjects()">Continue</button>
+    </div>
+  </section>
+</main>

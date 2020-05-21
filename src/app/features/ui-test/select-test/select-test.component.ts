@@ -13,7 +13,7 @@ export class SelectTestComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private cd : ChangeDetectorRef) { }
  
 
-
+  modelTest;
   ngOnInit(): void {
 
     this.loginForm  =  this.formBuilder.group({

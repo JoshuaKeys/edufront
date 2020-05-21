@@ -1,0 +1,45 @@
+<form [formGroup]="addSubjForm" (ngSubmit)="onSubmit()" class="card form">
+  <edu-subject-icon-field
+    formControlName="subjectName"
+  ></edu-subject-icon-field>
+  <div class="groups groups--split-layout">
+    <div class="group">
+      <div class="form__array" formArrayName="subSubjects">
+        <edu-input-field
+          text="Sub subject"
+          idPrefix="subSubject"
+          type="subject"
+          *ngFor="let subSubject of subSubjects.controls; let i = index"
+          [index]="i"
+          [formControlName]="i"
+          [last]="subSubjects.controls.length === 2"
+          (insertItem)="insertItem($event)"
+          (removeItem)="removeItem($event)"
+        ></edu-input-field>
+      </div>
+    </div>
+    <div class="group">
+      <div class="form__array" formArrayName="activities">
+        <edu-input-field
+          text="Activity"
+          idPrefix="activity"
+          type="activity"
+          *ngFor="let activity of activities.controls; let i = index"
+          [index]="i"
+          [formControlName]="i"
+          [last]="activities.controls.length === 2"
+          (insertItem)="insertItem($event)"
+          (removeItem)="removeItem($event)"
+        ></edu-input-field>
+      </div>
+    </div>
+
+    <button
+      class="form__round-btn"
+      [ngClass]="{ 'form__round-btn--submit': addSubjForm.valid }"
+      [disabled]="addSubjForm.invalid"
+    >
+      <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
+    </button>
+  </div>
+</form>

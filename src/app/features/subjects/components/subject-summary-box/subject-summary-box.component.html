@@ -1,0 +1,11 @@
+<div class="card--borderless card">
+  <div class="option badge option--active">
+    {{ class.name }}
+  </div>
+  <div class="card__content flex-wrap">
+    <edu-icon-button
+      *ngFor="let subject of subjects"
+      [subject]="subject"
+    ></edu-icon-button>
+  </div>
+</div>

@@ -19,35 +19,42 @@ export class AuthInterceptor implements HttpInterceptor {
     private store: Store<AuthStateModel>,
     private authService: AuthService
   ) { }
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.store.select(selectAuthToken).pipe(
-      mergeMap(authToken => {
-        const newRequest = authToken
-          ? request.clone({ setHeaders: { [AUTH_HEADER]: `Bearer ${authToken}` } })
-          : request.clone();
-        if (newRequest.method === 'POST') {
-          this.appService.setLoadingStatus(true);
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    // add authorization header with basic auth credentials if available
+    let token = localStorage.getItem("token");
+
+    // request = request.clone({
+    //   setHeaders: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    // });
+
+    const newRequest = token
+    ? request.clone({ setHeaders: { [AUTH_HEADER]: `Bearer ${token}` } })
+    : request.clone();
+
+    this.appService.setLoadingStatus(true);
+
+    return next.handle(newRequest).pipe(
+      tap(event => {
+
+        if (event instanceof HttpResponse) {
+          const response = event as HttpResponse<any>;
+
+          if (response.status === 200) {
+            this.appService.setLoadingStatus(false);
+          }
+
+          if (response.status === 401) {
+            console.log('TODO: investigate this');
+            this.authService.deleteSessionToken();
+            this.router.navigate(['/sign-in']);
+          }
         }
-
-        return next.handle(newRequest).pipe(
-          tap(event => {
-
-            if (event instanceof HttpResponse) {
-              const response = event as HttpResponse<any>;
-
-              if (response.status === 200) {
-                this.appService.setLoadingStatus(false);
-              }
-
-              if (response.status === 401) {
-                console.log('TODO: investigate this')
-                this.authService.deleteSessionToken();
-                this.router.navigate(['/sign-in']);
-              }
-            }
-          })
-        )
       })
     )
-  }
+}
 }

@@ -24,9 +24,13 @@ const routes: Routes = [
   
   ,
   {
+    path: 'subjects',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () => import('./features/subjects/subjects.module').then(m => m.SubjectsModule)
+  },
+  {
     path: '',
-    // redirectTo: '/ui',
-    redirectTo: '/classes-and-groups/classes-in-school',
+    redirectTo: '/school-profile/name',
     pathMatch: 'full'
   }
 ];

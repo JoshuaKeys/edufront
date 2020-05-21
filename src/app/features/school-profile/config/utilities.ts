@@ -12,5 +12,5 @@ export function routeToComponentGenerator() {
         previous: navigation[route].previous
       }
     }
-  })
+  });
 }

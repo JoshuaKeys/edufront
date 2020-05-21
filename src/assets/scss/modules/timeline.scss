@@ -1,0 +1,9 @@
+@import "../colors";
+@import "../typography";
+@import "../mixins/layouts";
+@import "../mixins/alignment";
+@import "../mixins/components";
+@import "../main";
+
+@include stepsLayout();
+@include timelineLayout();

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { ClassModel } from '../../models/class.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 
 @Component({
