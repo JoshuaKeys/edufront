@@ -1,0 +1,23 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+    <div class="content">
+      <h2 class="content__title">
+        Upload your school logo
+      </h2>
+      <form [formGroup]="uploadForm">
+        <edu-image-upload formControlName="image"></edu-image-upload>
+      </form>
+      <div class="content__btn-wrapper">
+        <button class="content__btn">
+          Continue
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

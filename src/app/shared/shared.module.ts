@@ -10,6 +10,7 @@ import { DraggableDirective } from './directives/draggable.directive';
 import { ClassesComponent } from './components/classes/classes.component';
 import { ClassesService } from './services/classes.service';
 import { DroppableDirective } from './directives/droppable.directive';
+import { PreviewComponent } from './components/preview/preview.component';
 
 import { SelectModule } from "./components/select/select.module"
 import {datePickerModule} from "./components/datepicker/datepicker.module";
@@ -21,7 +22,8 @@ import {datePickerModule} from "./components/datepicker/datepicker.module";
      HeaderNavComponent,
     DraggableDirective,
     DroppableDirective,
-    ClassesComponent
+    ClassesComponent,
+    PreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import {datePickerModule} from "./components/datepicker/datepicker.module";
     SelectModule,
     DraggableDirective,
     DroppableDirective,
-    ClassesComponent
+    ClassesComponent,
+    PreviewComponent
   ],
   providers: [
     ClassesService

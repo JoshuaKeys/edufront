@@ -1,0 +1,44 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+    <div class="content">
+      <h2 class="content__title">
+        What are your school's contact details?
+      </h2>
+      <form [formGroup]="contactForm">
+        <edu-phone-icon-field
+          formControlName="phone"
+          fieldName="Phone"
+          [icons]="countryIconMap"
+          (valueChanged)="updatePhone($event)"
+        ></edu-phone-icon-field>
+        <edu-input-field
+          idPrefix="email"
+          text="Email(Optional)"
+          formControlName="email"
+          (onChange)="updateFormField($event)"
+        ></edu-input-field>
+        <edu-input-field
+          idPrefix="website"
+          text="Website(Optional)"
+          formControlName="website"
+          (onChange)="updateFormField($event)"
+        ></edu-input-field>
+      </form>
+      <div class="content__btn-wrapper">
+        <button
+          class="content__btn"
+          [routerLink]="['../', activatedRouteData.next]"
+          [disabled]="contactForm.invalid"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

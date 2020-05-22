@@ -1,0 +1,57 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+    <div class="content">
+      <h2 class="content__title">
+        What is your school address?
+      </h2>
+      <form [formGroup]="schoolAddressForm">
+        <edu-icon-field
+          formControlName="country"
+          [fieldName]="'Country'"
+          [icons]="countryIconMap"
+          (valueChanged)="updateCountry($event)"
+          mode="select"
+        ></edu-icon-field>
+        <edu-input-field
+          idPrefix="zipCode"
+          text="Zip Code"
+          formControlName="zipCode"
+          (onChange)="updateFormField($event)"
+        ></edu-input-field>
+        <edu-input-field
+          idPrefix="address"
+          text="Address"
+          formControlName="address"
+          (onChange)="updateFormField($event)"
+        ></edu-input-field>
+        <edu-input-field
+          idPrefix="state"
+          text="State"
+          formControlName="state"
+          (onChange)="updateFormField($event)"
+        ></edu-input-field>
+        <edu-input-field
+          idPrefix="city"
+          text="City"
+          formControlName="city"
+          (onChange)="updateFormField($event)"
+        ></edu-input-field>
+      </form>
+      <div class="content__btn-wrapper">
+        <button
+          class="content__btn"
+          [routerLink]="['../', activatedRouteData.next]"
+          [disabled]="schoolAddressForm.invalid"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

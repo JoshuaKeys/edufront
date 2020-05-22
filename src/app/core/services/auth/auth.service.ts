@@ -115,12 +115,10 @@ export class AuthService extends RestService {
     let headers: HttpHeaders;
     return this.jso.getToken()
       .then((token: KeycloakTokenDTO) => {
-        console.log(token);
         headers = new HttpHeaders().set('Authorization', `Bearer ${token.access_token}`);
         return this.http.get('auth/api/v1/domain', { headers }).toPromise();
       })
       .then((domains: Domain[]) => {
-        console.log(domains);
         return this.http.get(`auth/api/v1/domain/${domains[0].domainId}/token`, { headers }).toPromise()
       })
       .then((res: TokenDTO) => {

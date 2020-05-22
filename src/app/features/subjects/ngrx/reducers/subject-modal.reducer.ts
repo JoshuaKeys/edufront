@@ -1,6 +1,6 @@
 import { SubjectModalStateModel } from "../../models/subject-modal-state.model";
 import { createReducer, on } from '@ngrx/store';
-import { closeSubjectsStartModal, toggleFormModal } from '../actions';
+import { closeSubjectsStartModal, toggleFormModal, toggleEndModal } from '../actions';
 
 const initialState: SubjectModalStateModel = {
   startModal: true,
@@ -18,7 +18,13 @@ const _modalReducer = createReducer(initialState, on(
     ...state,
     formModal: !state.formModal
   }
-}))
+}),
+  on(toggleEndModal, (state, action) => {
+    return {
+      ...state,
+      endModal: !state.endModal
+    }
+  }))
 
 export function modalReducer(state, action) {
   return _modalReducer(state, action);

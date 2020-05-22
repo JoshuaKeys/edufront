@@ -14,9 +14,10 @@ const routes: Routes = [
   {
     path: 'school-profile',
     canLoad: [AuthenticatedGuard],
-    loadChildren: () => import('./features/school-profile/school-profile.module').then(m => m.SchoolProfileModule),
+    loadChildren: () => import('./features/school-profile-v2/school-profile-v2.module').then(m => m.SchoolProfileV2Module),
 
-  }, {
+  },
+  {
     path: 'classes-and-groups',
     canLoad: [AuthenticatedGuard],
     loadChildren: () => import('./features/classes-and-groups/classes-and-groups.module').then(m => m.ClassesAndGroupsModule),
@@ -30,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/school-profile/name',
+    redirectTo: '/school-profile',
     pathMatch: 'full'
   }
 ];

@@ -7,9 +7,10 @@ import {
   createSubjectRequest,
   createSubjectSuccess,
   assignToSelectedClasses,
-  postClassesSubjectsSuccess
+  postClassesSubjectsSuccess,
+  toggleEndModal
 } from './actions';
-import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { SubjectsService } from '../services/subjects.services';
 import * as fromSubjectActions from './actions/index'
 import { ClassesService } from 'src/app/shared/services/classes.service';
@@ -49,9 +50,18 @@ export class SubjectsEffects {
   ));
   postsClassesSubjectRequest$ = createEffect(() => this.actions$.pipe(
     ofType(postClassesSubjectsRequest),
-    mergeMap(action => this.subjectsService.postClassSubjects(action.classesSubject).pipe(
-      map(classesSubjects => postClassesSubjectsSuccess({ classesSubjects }))
-    ))
+    withLatestFrom(this.store.select(getAllSelectedClasses)),
+    mergeMap(([action, selectedClasses]) => {
+      const requestData = selectedClasses.map(classItem => {
+        return {
+          classId: classItem.id,
+          subjectIds: classItem.subjects.map(subject => subject.id)
+        }
+      })
+      return this.subjectsService.postClassSubjects(requestData).pipe(
+        switchMap(classesSubjects => [postClassesSubjectsSuccess({ classesSubjects }), toggleEndModal()])
+      )
+    })
   ));
   constructor(
     private actions$: Actions,

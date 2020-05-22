@@ -1,0 +1,15 @@
+<div class="form__input-wrapper">
+  <input
+    id="{{ idPrefix }}-{{ index }}"
+    type="text"
+    class="form__input"
+    placeholder=""
+    [value]="inputValue"
+    #inputField
+    (input)="onTextChange($event)"
+    pattern="(/w)"
+  />
+  <label class="form__input-label" for="{{ idPrefix }}-{{ index }}">{{
+    text
+  }}</label>
+</div>

@@ -15,6 +15,8 @@ import { SchoolProfileEffects } from './ngrx/effects';
 import { SchoolProfileService } from './school-profile.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../../core/interceptors/auth.interceptor';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { LogoUploadPageComponent } from './containers';
 
 const components = [
   fromContainers.ShellComponent,
@@ -24,7 +26,9 @@ const components = [
   fromContainers.ContactDetailsPageComponent,
   fromContainers.LogoQuestionPageComponent,
   fromComponents.PreviewComponent,
-  IdownloadDirective
+  IdownloadDirective,
+  ImageUploadComponent,
+  LogoUploadPageComponent
 ];
 
 @NgModule({
