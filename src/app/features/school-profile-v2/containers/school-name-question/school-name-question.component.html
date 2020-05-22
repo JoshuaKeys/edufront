@@ -1,0 +1,49 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+    <div class="content">
+      <h2 class="content__title">
+        What is your school name?
+      </h2>
+      <form [formGroup]="schoolNameForm">
+        <div class="form__input-wrapper">
+          <input
+            id="schoolName"
+            type="text"
+            class="form__input"
+            placeholder=""
+            pattern="(/w)"
+            (input)="updateSchoolName($event)"
+            formControlName="schoolName"
+          />
+          <label class="form__input-label" for="schoolName"
+            >Enter school name</label
+          >
+        </div>
+      </form>
+
+      <div class="content__btn-wrapper">
+        <button
+          class="content__btn"
+          [routerLink]="['../', activatedRouteData.next]"
+          [disabled]="!validity"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- <edu-modal
+  *ngIf="(modalState | async).startModal"
+  [description]="getDescription()"
+  btnText="GOT IT"
+  header="Teaching Subjects"
+  icon="assets/subjects_modal.svg"
+  (btnClicked)="onModalBtnClicked()"
+></edu-modal> -->

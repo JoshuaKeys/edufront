@@ -1,0 +1,22 @@
+<div class="shell">
+  <edu-header-nav>
+    <ng-template #selectedTemplate>
+      <img
+        class="nav__active-module-img"
+        src="assets/icon-schoolprofile.svg"
+        alt=""
+      />
+      <span>School Profile</span>
+    </ng-template>
+  </edu-header-nav>
+  <main class="main">
+    <div class="main__main-content">
+      <router-outlet></router-outlet>
+    </div>
+    <aside class="side-bar">
+      <h1 class="side-bar__heading">Preview</h1>
+
+      <edu-preview [previewState]="previewState"></edu-preview>
+    </aside>
+  </main>
+</div>

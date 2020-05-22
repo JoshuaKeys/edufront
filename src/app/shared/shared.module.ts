@@ -8,6 +8,7 @@ import { DraggableDirective } from './directives/draggable.directive';
 import { ClassesComponent } from './components/classes/classes.component';
 import { ClassesService } from './services/classes.service';
 import { DroppableDirective } from './directives/droppable.directive';
+import { PreviewComponent } from './components/preview/preview.component';
 
 
 
@@ -18,7 +19,8 @@ import { DroppableDirective } from './directives/droppable.directive';
     HeaderNavComponent,
     DraggableDirective,
     DroppableDirective,
-    ClassesComponent
+    ClassesComponent,
+    PreviewComponent,
   ],
   imports: [
     CommonModule
@@ -29,7 +31,8 @@ import { DroppableDirective } from './directives/droppable.directive';
     HeaderNavComponent,
     DraggableDirective,
     DroppableDirective,
-    ClassesComponent
+    ClassesComponent,
+    PreviewComponent
   ],
   providers: [
     ClassesService

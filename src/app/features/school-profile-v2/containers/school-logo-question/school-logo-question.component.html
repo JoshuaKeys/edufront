@@ -1,0 +1,39 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+    <div class="content">
+      <div class="form">
+        <h2 class="content__title">
+          Do you have a school logo?
+        </h2>
+        <div class="form__btn-wrapper">
+          <button
+            class="form__btn--round"
+            [routerLink]="['../', activatedRouteData.next]"
+          >
+            Yes
+          </button>
+          <button
+            class="form__btn--round"
+            [routerLink]="['../', 'school-profile-confirmation']"
+          >
+            No
+          </button>
+        </div>
+      </div>
+      <div class="content__btn-wrapper">
+        <button
+          class="content__btn"
+          [routerLink]="['../', activatedRouteData.next]"
+        >
+          Continue {{ activatedRouteData.next.next }}
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

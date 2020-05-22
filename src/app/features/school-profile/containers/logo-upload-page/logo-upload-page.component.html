@@ -1,4 +1,3 @@
-
 <button class="section__back-btn" (click)="onPrevious()">
   <img src="/assets/chevron-left.svg" alt="" /> Back
 </button>
@@ -8,7 +7,7 @@
     Upload your school logo
   </h2>
 
-  <div class="content__img-wrapper" appIdownload (fileDropped)="onFileDropped($event)">
+  <!-- <div class="content__img-wrapper" appIdownload (fileDropped)="onFileDropped($event)">
     <img class="content__img" [src]="previewUrl" alt="" width="350px" height="242px" >
 
     <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target.files)" />
@@ -28,5 +27,7 @@
       </div>
     </div>
   </div>
+</div> -->
+  <edu-image-upload></edu-image-upload>
+  <button class="content__btn" (click)="onNext()">Continue</button>
 </div>
-<button class="content__btn" (click)="onNext()">Continue</button>

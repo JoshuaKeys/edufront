@@ -1,0 +1,9 @@
+<div
+  class="profile-select-preview"
+  *ngFor="let block of previewState | async as preview"
+>
+  <div class="selected-heading">{{ block.label }}</div>
+  <div class="selected-data" *ngFor="let field of block.values">
+    <span class="info">{{ field.value }}</span>
+  </div>
+</div>

@@ -17,6 +17,7 @@ export class AuthenticatedGuard implements CanActivate {
     )
   }
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
+
     return this.store.select(selectAuthToken).pipe(
       take(1),
       map(authToken => {
