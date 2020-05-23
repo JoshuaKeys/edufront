@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy , Input, ContentChild, TemplateRef, HostListener, Host} from '@angular/core';
 import {SpecialPeriod, Day, TimetableModel, Time } from "../timetable.interface";
+
+// import { } from "@angular/core"
 @Component({
   selector: 'edu-timetable',
   templateUrl: './timetable.component.html',
@@ -10,32 +12,26 @@ export class TimetableComponent implements OnInit {
 
 
 
-  @HostListener("onTemplateChange") onChange(value){
-    console.log("onchange")
-  }
-
-  @HostListener("valueChange",["$event"]) onValueChange($event){
-    console.log("valueChange")
-  }
-
+ 
 
   templateOnChangeEvent(){
     console.log("onchange1")
   }
   @Input() model: TimetableModel;
   @Input() time:Time[]; //has to be defined in ascending order
-  @Input() days : Day[];
   @Input() specialPeriods:SpecialPeriod[];
+
   @ContentChild('template',{static: false}) periodTemplate: TemplateRef<any>;
   constructor() { }
   
   timeClasses = [];
+  days = [];
   calendar = {}; // basically the value object
 
   ngOnInit(): void {
     this.timeClasses =  new Array(this.time.length).fill([]); 
 
-
+    this.setDays();
     this.setTimeFormatting(); //needs to be first
     this.initSpecialPeriods();
     // this.generateModel();
@@ -44,7 +40,11 @@ export class TimetableComponent implements OnInit {
   }
 
  
+setDays(){
+    this.days = [...Object.keys( this.model)];
+    console.log(this.days)
 
+}
 
   setTimeFormatting(){  
     let classToAdd = 'single-row'; 

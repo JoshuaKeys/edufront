@@ -18,22 +18,22 @@ export class CalendarTestComponent implements OnInit {
  
 
   time=[ {value:"7:45", isSingleRow:true},{value:"8:00"},{value:"9:00"},{value:"9:45", isSingleRow:true},{value:"10:00"},{value:"11:00"},{value:"11:45", isSingleRow:true},{value:"12:00"}  ];
-  days=["mon","tue","wed","thu","fri","sat","sun"]
   specialPeriods:SpecialPeriod[]=[ 
-    // must be declared in ascending order, earliest first and latest last  , 
-    //all breaks with   changeTimeToSingle set to TRUE must be delcared first as well
+    //time has to be exactly the same as the time declared above as the main comp determines placing by matching the strings
+    
+  
     {
    
-      time:"7:45",  
-      text:"Assembly",
+      time:"9:45",
+      text:"break",
       color: "#69a9f2",
       start:Day.mon,
       end:Day.sun,
     },
     {
    
-      time:"9:45",
-      text:"break",
+      time:"7:45",  
+      text:"Assembly",
       color: "#69a9f2",
       start:Day.mon,
       end:Day.sun,
@@ -75,6 +75,8 @@ export class CalendarTestComponent implements OnInit {
 
   ];
   model:TimetableModel = {
+    //must be decalred from Mon to Sun, not all days are compulsory. will appear in same order as array
+    //trying to use this as the ngModel object that gets ouputted, but having issues letting ng-tempalte communicated with <edu-timetable> Component
     mon:[{key:"m1", value:"0"}, {key:"m2", value:"0"}, {key:"m3", value:"0"},{key:"m4", value:"0"},{key:"m5", value:"0"}],
     tue:[{key:"t1", value:"0"}, {key:"t2", value:"0"}, {key:"t3", value:"0"},{key:"t4", value:"0"},{key:"t5", value:"0"}],
     wed:[{key:"w1", value:"0"}, {key:"w2", value:"0"}, {key:"w3", value:"0"},{key:"w4", value:"0"},{key:"w5", value:"0"}],
