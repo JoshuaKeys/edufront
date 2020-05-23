@@ -14,6 +14,8 @@ import { PreviewComponent } from './components/preview/preview.component';
 
 import { SelectModule } from "./components/select/select.module"
 import {datePickerModule} from "./components/datepicker/datepicker.module";
+import { TimetableModule } from "./components/timetable/timetable.module";
+
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {datePickerModule} from "./components/datepicker/datepicker.module";
   imports: [
     CommonModule,
     datePickerModule,
-    SelectModule
+    SelectModule,
+    TimetableModule
   ],
   exports: [
     ModalComponent,
@@ -39,7 +42,8 @@ import {datePickerModule} from "./components/datepicker/datepicker.module";
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
-    PreviewComponent
+    PreviewComponent,
+    TimetableModule
   ],
   providers: [
     ClassesService

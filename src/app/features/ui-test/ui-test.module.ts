@@ -5,10 +5,13 @@ import { DatepickerTestComponent } from "./datepicker-test/datepicker-test.compo
 import { SelectTestComponent } from "./select-test/select-test.component"
 import { uiTestRoutingModule } from './ui-test-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { CalendarTestComponent } from "./calendar-test/calendar-test.component"
 
 const components = [
   DatepickerTestComponent,
-  SelectTestComponent
+  SelectTestComponent,
+  CalendarTestComponent
+
 ];
 
 @NgModule({
