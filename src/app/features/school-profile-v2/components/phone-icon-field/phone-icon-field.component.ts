@@ -37,10 +37,11 @@ export class PhoneIconFieldComponent implements OnInit {
   }
   writeValue(val: PhoneIconModel) {
     if (val === null) {
-      setTimeout(() => { this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', ''); }, 0)
+      // setTimeout(() => { this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', ''); }, 0)
       this.activeIcon = this.icons[0].icon;
       this.phonePrefix = this.icons[0].phonePrefix
       this.item = this.icons[0].item;
+      this.value = '';
       return;
     }
     this.value = val.phoneNum;
@@ -53,6 +54,7 @@ export class PhoneIconFieldComponent implements OnInit {
     iconCopy.phoneNum = this.value;
     this.onValueChange(iconCopy)
     this.valueChanged.emit(iconCopy)
+
     this.toggleDropdown();
   }
   registerOnChange(fn: any) {
@@ -74,6 +76,7 @@ export class PhoneIconFieldComponent implements OnInit {
     this.valueChanged.emit(this.getEventData(this.activeIcon))
   }
   getEventData(icon): PhoneIconModel {
+    console.log(this.fieldNameEl.nativeElement.value)
     return {
       icon,
       phonePrefix: this.phonePrefix,

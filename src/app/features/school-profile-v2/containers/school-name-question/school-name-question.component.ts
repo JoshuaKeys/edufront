@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalModel } from 'src/app/shared/models/modal.model';
 import { Observable } from 'rxjs';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
@@ -43,8 +43,15 @@ export class SchoolNameQuestionComponent implements OnInit {
     const schoolName = event.target['value'];
     this.store.dispatch(setSchoolName({ schoolName }))
   }
+  onKeyPress(event) {
+    if (event.key.toLowerCase() === 'enter') {
+
+      this.router.navigate(['../', this.activatedRouteData.next], { relativeTo: this.activatedRoute })
+    }
+  }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<PreviewModel>
+    private store: Store<PreviewModel>,
+    private router: Router
   ) { }
 }

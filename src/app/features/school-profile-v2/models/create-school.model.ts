@@ -1,0 +1,17 @@
+import { SchoolAddressModel } from './school-address.model'
+
+export interface CreateSchoolModel {
+  name: string;
+  email: string;
+  phoneNo: string;
+  website: string;
+  logo: string;
+  addressDto: {
+    address: string;
+    city: string;
+    countryId: string;
+    id?: string;
+    state: string;
+    zipcode: number;
+  }
+}

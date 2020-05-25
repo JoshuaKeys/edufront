@@ -6,15 +6,21 @@
     >
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
-    <div class="content">
+    <div class="content" *ngIf="uploadForm">
       <h2 class="content__title">
         Upload your school logo
       </h2>
       <form [formGroup]="uploadForm">
-        <edu-image-upload formControlName="image"></edu-image-upload>
+        <edu-image-upload
+          (uploadimagedata)="onImageUpload($event)"
+          formControlName="image"
+        ></edu-image-upload>
       </form>
       <div class="content__btn-wrapper">
-        <button class="content__btn">
+        <button
+          class="content__btn"
+          [routerLink]="['../', activatedRouteData.next]"
+        >
           Continue
         </button>
       </div>

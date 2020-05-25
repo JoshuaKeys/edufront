@@ -14,18 +14,18 @@
       class="fa fa-plus"
       [style.color]="
         dragging
-          ? imageSrc.length > 0
+          ? imageSrc
             ? overlayColor
             : activeColor
-          : imageSrc.length > 0
+          : imageSrc
           ? overlayColor
           : baseColor
       "
     ></i>
 
     <img
-      [style.width.px]="count"
-      [style.height.px]="count"
+      [style.width.%]="100"
+      [style.height.%]="100"
       [src]="imageSrc"
       (load)="handleImageLoad()"
       [class.loaded]="imageLoaded"

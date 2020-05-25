@@ -7,8 +7,13 @@ import { PreviewModel } from 'src/app/features/school-profile-v2/models/preview.
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent {
+export class PreviewComponent implements OnInit {
+  @Input() styleMode: string;
   @Input() previewState: Observable<PreviewModel>;
 
-  constructor() { }
+  ngOnInit() {
+    console.log(this.styleMode);
+  }
+  constructor() {
+  }
 }

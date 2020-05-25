@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { setContactsData } from '../../ngrx/actions';
+import { setContactsData, setPhoneData } from '../../ngrx/actions';
 import { PhoneIconModel } from '../../components/phone-icon-field/phone-icon-field.component';
+import { selectSchoolContact } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-contact-details-question',
@@ -42,14 +43,37 @@ export class ContactDetailsQuestionComponent implements OnInit {
     }
   ]
   ngOnInit(): void {
-    this.contactForm = new FormGroup({
-      phone: new FormControl(null, Validators.required),
-      email: new FormControl(''),
-      website: new FormControl('')
+    this.store.select(selectSchoolContact).subscribe((schoolContacts) => {
+      let contacts: any = {};
+      if (!schoolContacts) {
+        contacts.email = '';
+        contacts.phone = null;
+        contacts.website = '';
+      } else {
+        contacts.email = schoolContacts.email;
+        contacts.website = schoolContacts.website;
+        const phoneIdx = this.countryIconMap.findIndex(countryItem =>
+          // `(${countryItem.phonePrefix})${countryItem.phoneNum}` === schoolContacts.phone
+          countryItem.phonePrefix === schoolContacts.countryCode
+        );
+        if (schoolContacts.phone) {
+          contacts.phone = {
+            ...this.countryIconMap[phoneIdx],
+            phoneNum: schoolContacts.phone
+          }
+        } else {
+          contacts.phone = null;
+        }
+      }
+      this.contactForm = new FormGroup({
+        phone: new FormControl(contacts.phone, Validators.required),
+        email: new FormControl(contacts.email),
+        website: new FormControl(contacts.website)
+      })
     })
+
   }
   updateFormField(event: { name: string, value: string }) {
-    console.log(event);
     this.contactForm.patchValue({
       [event.name]: event.value
     })
@@ -62,11 +86,14 @@ export class ContactDetailsQuestionComponent implements OnInit {
     this.contactForm.patchValue({
       phone: event
     });
-    console.log(event);
+    this.store.dispatch(setPhoneData({
+      field: 'phone',
+      prefix: event.phonePrefix,
+      phoneNum: event.phoneNum
+    }))
     this.store.dispatch(setContactsData({
       field: 'phone',
-      value: `(${event.phonePrefix})${event.phoneNum}`,
-
+      value: `${event.phoneNum}`,
     }))
   }
   constructor(

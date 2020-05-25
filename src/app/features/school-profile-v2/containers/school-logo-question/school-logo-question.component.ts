@@ -22,7 +22,7 @@ export class SchoolLogoQuestionComponent implements OnInit {
     private store: Store<PreviewModel>) { }
 
   ngOnInit(): void {
-    console.log(this.activatedRouteData.next.next)
+    console.log(this.activatedRouteData.next.next);
   }
 
   ngOnDestroy() {

@@ -9,6 +9,7 @@ import { ClassesComponent } from './components/classes/classes.component';
 import { ClassesService } from './services/classes.service';
 import { DroppableDirective } from './directives/droppable.directive';
 import { PreviewComponent } from './components/preview/preview.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -23,7 +24,8 @@ import { PreviewComponent } from './components/preview/preview.component';
     PreviewComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     ModalComponent,

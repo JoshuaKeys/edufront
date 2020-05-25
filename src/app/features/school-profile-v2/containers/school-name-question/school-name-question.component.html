@@ -19,6 +19,7 @@
             placeholder=""
             pattern="(/w)"
             (input)="updateSchoolName($event)"
+            (keypress)="onKeyPress($event)"
             formControlName="schoolName"
           />
           <label class="form__input-label" for="schoolName"
@@ -27,7 +28,7 @@
         </div>
       </form>
 
-      <div class="content__btn-wrapper">
+      <!-- <div class="content__btn-wrapper">
         <button
           class="content__btn"
           [routerLink]="['../', activatedRouteData.next]"
@@ -35,7 +36,7 @@
         >
           Continue
         </button>
-      </div>
+      </div> -->
     </div>
   </section>
 </main>

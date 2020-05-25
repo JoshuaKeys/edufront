@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export interface IconModel {
   item: string;
   icon: string;
+  id: string;
 }
 @Component({
   selector: 'edu-icon-field',
@@ -43,7 +44,7 @@ export class IconFieldComponent implements OnInit, ControlValueAccessor {
     this.value = val.item;
     this.activeIcon = val.icon;
   }
-  changeItem(icon: { item: string, icon: string }) {
+  changeItem(icon: { item: string, icon: string, id: string }) {
     this.onValueChange(icon)
     this.valueChanged.emit(icon)
     this.toggleDropdown();
