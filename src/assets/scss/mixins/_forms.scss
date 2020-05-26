@@ -560,7 +560,7 @@
         @include emptyPesudoElement();
         top: 0;
         transform: translateY(50%);
-        background: url( /assets/iconfinder_chevron-up.svg) no-repeat no-repeat
+        background: url(/assets/iconfinder_chevron-up.svg) no-repeat no-repeat
           center center;
       }
     }
@@ -646,7 +646,7 @@
       padding: 0;
       &::before {
         transform: translateY(-50%);
-        background: url( /assets/iconfinder_chevron-up-black.svg) no-repeat
+        background: url(/assets/iconfinder_chevron-up-black.svg) no-repeat
           no-repeat center center;
         top: 50%;
       }
@@ -739,7 +739,7 @@ $inputBottomPadding: 10px;
   .form__input[type='checkbox']:checked ~ .form__input--select-border {
     border-color: $blue;
     &:before {
-      background: url(  /assets/iconfinder_chevron-up-blue.svg) no-repeat
+      background: url(/assets/iconfinder_chevron-up-blue.svg) no-repeat
         no-repeat center center;
     }
     .form__input--select-sizeguide {

@@ -1,0 +1,125 @@
+// .group {
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   flex-direction: column;
+//   display: flex;
+// }
+// .group--3 {
+//   flex-shrink: 0;
+// }
+// .form__sub-title {
+//   font: 500 20px/30px Quicksand;
+//   color: #a5aec7;
+// }
+// .form__row {
+//   width: 100%;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   display: flex;
+// }
+// .form__input-wrapper {
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   display: flex;
+//   width: 100%;
+//   max-width: 380px;
+//   min-height: 43px;
+//   margin-bottom: 30px;
+//   position: relative;
+// }
+// .search__input-wrapper {
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   flex-direction: row;
+//   display: flex;
+//   position: relative;
+// }
+// .search__icon {
+//   position: absolute;
+//   left: 16px;
+//   top: 10px;
+//   transform: translate(0, -50%);
+// }
+// .search__input {
+//   border: 0;
+//   width: 100%;
+//   background: unset;
+//   padding-bottom: 10px;
+//   padding-left: 42px;
+//   border-bottom: 1px solid #e6e9f3;
+// }
+// .popup {
+//   bottom: -13px;
+//   cursor: pointer;
+//   max-width: 370px;
+//   width: 100%;
+//   position: absolute;
+//   background: white;
+//   z-index: 4;
+//   left: 0;
+//   transform: translateY(100%);
+//   border: 1px solid #69a9f2;
+//   border-radius: 6px;
+// }
+// .popup--padded {
+//   padding: 30px 15px;
+// }
+// .popup {
+//   min-width: unset;
+//   width: auto;
+// }
+// .popup::before {
+//   position: absolute;
+//   top: 0;
+//   content: '';
+//   display: block;
+//   background-color: white;
+//   transform-origin: center;
+//   transform: rotate(45deg) translate(4px, -13px);
+//   border-top: 1px solid #69a9f2;
+//   border-left: 1px solid #69a9f2;
+//   width: 10px;
+//   height: 10px;
+// }
+// .groups--column-layout {
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   flex-direction: column;
+//   display: flex;
+// }
+// .chip {
+//   cursor: pointer;
+//   padding: 6px;
+//   height: 36px;
+//   background: #ffffff;
+//   border: 1px solid #69a9f2;
+//   border-radius: 100px;
+//   opacity: 5px 10px 5px 0;
+//   margin: 10px;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   display: flex;
+//   transform: translateX(-5px);
+//   font: 600 12px/22px Raleway;
+//   padding: 9px 13px;
+//   margin: 5px;
+//   position: relative;
+// }
+// .badges {
+//   justify-content: flex-end;
+//   align-items: center;
+//   flex-direction: row;
+//   display: flex;
+// }
+@import '../../../../../assets/scss/modules/staff';
+@include staffSearchSelect();
+@include staffSearchSelectPopupChip();
+@include staffSearchSelectBadges();
+@include staffSearchRoundBtn();

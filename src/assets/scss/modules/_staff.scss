@@ -184,8 +184,7 @@
 }
 @mixin staffSearchSelect() {
   @include popup();
-
-  @include popup();
+  @include search();
   .popup {
     min-width: unset;
     width: auto;
