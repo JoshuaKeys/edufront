@@ -60,7 +60,9 @@
           </div>
         </div>
 
-        <button class="search__btn"><span>+</span></button>
+        <button class="search__btn" (click)="onAddOrEdit()">
+          <span>+</span>
+        </button>
       </div>
       <div class="group">
         <div class="group__body">
@@ -73,4 +75,4 @@
     </div>
   </section>
 </main>
-<edu-staff-form></edu-staff-form>
+<edu-staff-form *ngIf="(staffsModalsState | async).editModal"></edu-staff-form>

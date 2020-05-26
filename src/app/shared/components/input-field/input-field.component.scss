@@ -31,3 +31,6 @@ aside {
   width: 100%;
 }
 @include form();
+.form__input-label {
+  text-align: unset;
+}

@@ -14,13 +14,15 @@ import { StaffsEffects } from './ngrx/effects'
 import { StaffFormComponent } from './components/staff-form/staff-form.component';
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SubjectsAreaComponent } from './components/subjects-area/subjects-area.component';
 @NgModule({
   declarations: [
     StaffsShellComponent,
     StaffsCreationComponent,
     StaffChipComponent,
     StaffFormComponent,
-    ImgUploadV2Component
+    ImgUploadV2Component,
+    SubjectsAreaComponent
   ],
   imports: [
     CommonModule,

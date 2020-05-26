@@ -80,7 +80,7 @@ main {
 .modal {
   max-width: unset;
   padding: unset;
-  top: 30%;
+  top: 45%;
 }
 .modal__title {
   margin: 40px 0 0;
@@ -97,4 +97,48 @@ main {
 }
 .modal__content-header {
   color: #a5aec7;
+}
+.modal__content-second-row,
+.modal__content-third-row,
+.modal__content-first-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.modal__content-third-row,
+.modal__content-first-row {
+  edu-input-field {
+    width: 30%;
+  }
+}
+.modal__content-second-row {
+  edu-input-field {
+    width: 48%;
+  }
+}
+button.form__round-btn.form__round-btn--active {
+  background: unset;
+  border: none;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  border: 2px solid #e6e9f3;
+  position: relative;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.48px;
+  color: white;
+  background: #c7ccdb;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translate(50%, 25px);
+  border: unset;
+  box-shadow: unset;
+  background: #69a9f2;
+}
+.modal__content-subject-area {
+  width: 275px;
 }

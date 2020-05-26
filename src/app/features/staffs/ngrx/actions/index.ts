@@ -8,3 +8,6 @@ export const fetchStaffsSuccess = createAction(
   '[StaffEffects] fetchStaffsSuccess',
   props<{ staffs: GetStaffResponseModel[] }>()
 )
+export const toggleAddEditModal = createAction(
+  '[StaffsCreationComponent] toggleAddEditModal'
+)

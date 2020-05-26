@@ -1,19 +1,8 @@
-import { createReducer, on } from "@ngrx/store";
-import { fetchStaffsSuccess } from '../actions';
-import { createEntityAdapter } from '@ngrx/entity';
-import { StaffModel } from '../../models/staff.model';
+import { combineReducers } from "@ngrx/store";
+import { staffsListReducer } from './staffs-list.reducer';
+import staffsModalReducer from './staffs-modals.reducer';
 
-const staffsAdapter = createEntityAdapter<StaffModel>();
-
-const initialState = staffsAdapter.getInitialState();
-const _staffsReducer = createReducer(initialState,
-  on(fetchStaffsSuccess, (state, action) => {
-    return staffsAdapter.addAll(action.staffs, state);
-  })
-);
-
-export function staffsReducer(state, action) {
-  return _staffsReducer(state, action);
-}
-
-export const { selectAll } = staffsAdapter.getSelectors();
+export const staffsReducer = combineReducers({
+  staffsList: staffsListReducer,
+  staffsModal: staffsModalReducer
+})

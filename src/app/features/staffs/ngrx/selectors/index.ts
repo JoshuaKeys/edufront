@@ -1,8 +1,12 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { EntityState } from '@ngrx/entity';
 import { StaffModel } from '../../models/staff.model'
-import { selectAll } from '../reducers';
+import { selectAll } from '../reducers/staffs-list.reducer';
+import { StaffsStateModel } from '../../models/staff-state.model';
 
-const staffsFeature = createFeatureSelector<EntityState<StaffModel>>('staffs');
+const staffsFeature = createFeatureSelector<StaffsStateModel>('staffs');
 
-export const selectAllStaffs = createSelector(staffsFeature, selectAll);
+const staffsList = createSelector(staffsFeature, feat => feat.staffsList)
+export const selectAllStaffs = createSelector(staffsList, selectAll);
+
+export const selectStaffsModalsState = createSelector(staffsFeature, feat => feat.staffsModal)
