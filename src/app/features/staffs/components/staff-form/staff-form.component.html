@@ -1,0 +1,28 @@
+<main>
+  <div class="modal__overlay">
+    <div class="modal">
+      <h2 class="modal__title">
+        Add/Edit Staff
+      </h2>
+      <form [formGroup]="addEditForm" class="modal__content">
+        <div class="modal__content-profile">
+          <h3 class="modal__content-header">Profile Picture</h3>
+          <edu-img-upload-v2
+            formControlName="profilePic"
+            (uploadimagedata)="handleImgUpload($event)"
+          ></edu-img-upload-v2>
+        </div>
+        <div class="modal__content-staff-details">
+          <h3 class="modal__content-header">Staff Details</h3>
+          <edu-input-field
+            formControlName="firstName"
+            text="First Name"
+          ></edu-input-field>
+        </div>
+        <div class="modal__content-subject-area">
+          <h3 class="modal__content-header">Subject Area</h3>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

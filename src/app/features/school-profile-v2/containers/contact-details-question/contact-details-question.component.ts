@@ -4,7 +4,7 @@ import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { setContactsData, setPhoneData } from '../../ngrx/actions';
-import { PhoneIconModel } from '../../components/phone-icon-field/phone-icon-field.component';
+import { PhoneIconModel } from '../../../../shared/components/phone-icon-field/phone-icon-field.component';
 import { selectSchoolContact } from '../../ngrx/selectors';
 
 @Component({

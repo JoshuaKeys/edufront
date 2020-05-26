@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IconModel } from '../../components/icon-field/icon-field.component';
+import { IconModel } from '../../../../shared/components/icon-field/icon-field.component';
 import { setAddressData, setCountryIdData } from '../../ngrx/actions';
 import { SchoolProfileService } from '../../services/school-profile.service';
 import { selectSchoolAddress } from '../../ngrx/selectors';
