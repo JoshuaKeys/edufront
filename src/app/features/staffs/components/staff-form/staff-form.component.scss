@@ -1,0 +1,144 @@
+@import '../../../../../assets/styles/modules/section-module';
+.modal {
+  @include modal();
+  padding: 110px 50px 60px 50px;
+  & > * {
+    flex-shrink: 0;
+  }
+
+  &__img {
+    margin-bottom: 40px;
+  }
+  &__title {
+    margin-bottom: 40px;
+  }
+  &__desc {
+    margin-bottom: 118px;
+  }
+  &__btn {
+    @include button_default($blue, white);
+    width: 244px;
+    margin: 0 10px;
+  }
+}
+
+main {
+  @include splitLayout();
+  .form {
+    @include displayFlex(flex-start, center, column);
+    width: 90vw;
+    max-width: 1080px;
+
+    &__title {
+      margin-bottom: 32px;
+    }
+
+    &__badge {
+      width: 44px;
+      height: 44px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    &__btns {
+      display: flex;
+    }
+    &__btn {
+      background: $blue;
+      margin: 0 10px;
+      width: 200px;
+      bottom: -180px;
+      transform: translateY(-100%);
+
+      &:first-child {
+        color: $blue;
+        background-color: white;
+        border: 1px solid $blue;
+      }
+
+      &:active {
+        top: unset;
+        bottom: -186px;
+      }
+    }
+  }
+  .round-badges {
+    margin-bottom: 30px;
+  }
+}
+.modal__overlay {
+  z-index: 20;
+}
+.drop-zones {
+  @include displayFlex(space-between);
+  max-width: 1000px;
+  width: 95%;
+}
+@include dropZone();
+.drop-zone {
+  @include displayFlex(flex-start, center, column);
+}
+.modal {
+  max-width: unset;
+  padding: unset;
+  top: 45%;
+}
+.modal__title {
+  margin: 40px 0 0;
+}
+.modal__content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 40px 110px;
+}
+.modal__content-staff-details {
+  width: 571px;
+  margin-right: 40px;
+}
+.modal__content-header {
+  color: #a5aec7;
+}
+.modal__content-second-row,
+.modal__content-third-row,
+.modal__content-first-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.modal__content-third-row,
+.modal__content-first-row {
+  edu-input-field {
+    width: 30%;
+  }
+}
+.modal__content-second-row {
+  edu-input-field {
+    width: 48%;
+  }
+}
+button.form__round-btn.form__round-btn--active {
+  background: unset;
+  border: none;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  border: 2px solid #e6e9f3;
+  position: relative;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.48px;
+  color: white;
+  background: #c7ccdb;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translate(50%, 25px);
+  border: unset;
+  box-shadow: unset;
+  background: #69a9f2;
+}
+.modal__content-subject-area {
+  width: 275px;
+}

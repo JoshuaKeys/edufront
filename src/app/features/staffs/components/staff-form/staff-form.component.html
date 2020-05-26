@@ -1,0 +1,98 @@
+<main>
+  <div class="modal__overlay">
+    <div class="modal">
+      <h2 class="modal__title">
+        Add/Edit Staff
+      </h2>
+      <form [formGroup]="addEditForm" class="modal__content">
+        <div class="modal__content-profile">
+          <h3 class="modal__content-header">Profile Picture</h3>
+          <edu-img-upload-v2
+            formControlName="profilePic"
+            (uploadimagedata)="handleImgUpload($event)"
+          ></edu-img-upload-v2>
+        </div>
+        <div class="modal__content-staff-details">
+          <h3 class="modal__content-header">Staff Details</h3>
+          <div class="modal__content-first-row">
+            <edu-input-field
+              idPrefix="firstName"
+              formControlName="firstName"
+              text="First Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="middleName"
+              formControlName="middleName"
+              text="Middle Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="familyName"
+              formControlName="familyName"
+              text="Family Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="dateOfBirth"
+              formControlName="dateOfBirth"
+              text="Date of Birth"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="sex"
+              formControlName="sex"
+              text="Sex"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="id"
+              formControlName="id"
+              text="ID - Auto Generated"
+            ></edu-input-field>
+          </div>
+          <div class="modal__content-second-row">
+            <edu-input-field
+              idPrefix="firstName"
+              formControlName="firstName"
+              text="First Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="middleName"
+              formControlName="middleName"
+              text="Middle Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="firstName"
+              formControlName="firstName"
+              text="First Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="middleName"
+              formControlName="middleName"
+              text="Middle Name"
+            ></edu-input-field>
+          </div>
+          <div class="modal__content-third-row">
+            <edu-input-field
+              idPrefix="firstName"
+              formControlName="firstName"
+              text="First Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="middleName"
+              formControlName="middleName"
+              text="Middle Name"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="firstName"
+              formControlName="firstName"
+              text="First Name"
+            ></edu-input-field>
+          </div>
+        </div>
+        <div class="modal__content-subject-area">
+          <h3 class="modal__content-header">Subject Area</h3>
+        </div>
+      </form>
+      <button class="form__round-btn form__round-btn--active">
+        <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</main>

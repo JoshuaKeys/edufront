@@ -6,7 +6,7 @@
 @import 'assets/styles/mixins/alignment';
 @import 'assets/styles/main';
 @import 'assets/styles/utils';
-
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
 body {
   margin: 0;
   padding: 0;
@@ -100,16 +100,9 @@ body {
 
 /*Frm*/
 
-
-
-
-
- .label--active .optional{
-  display: none;
-}
 /*school profile components*/
 
-edu-name-page{
+edu-name-page {
   height: 100%;
 }
 

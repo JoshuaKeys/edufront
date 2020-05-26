@@ -1,0 +1,26 @@
+.shell {
+  height: 100vh;
+}
+.side-bar {
+  width: 20%;
+  background: #fafbfc;
+  padding: 20px;
+  border-left: 1px solid #eee;
+  height: 100%;
+  &__heading {
+    color: #c7ccdb;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+main {
+  height: calc(100vh - 53px);
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+.main__main-content {
+  width: 80%;
+}

@@ -1,0 +1,79 @@
+@import '../../../../assets/styles/modules/section-module';
+.modal {
+  @include modal();
+  padding: 110px 50px 60px 50px;
+  & > * {
+    flex-shrink: 0;
+  }
+
+  &__img {
+    margin-bottom: 40px;
+  }
+  &__title {
+    margin-bottom: 40px;
+  }
+  &__desc {
+    margin-bottom: 118px;
+  }
+  &__btn {
+    @include button_default($blue, white);
+    width: 244px;
+    margin: 0 10px;
+  }
+}
+
+main {
+  @include splitLayout();
+  .form {
+    @include displayFlex(flex-start, center, column);
+    width: 90vw;
+    max-width: 1080px;
+
+    &__title {
+      margin-bottom: 32px;
+    }
+
+    &__badge {
+      width: 44px;
+      height: 44px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    &__btns {
+      display: flex;
+    }
+    &__btn {
+      background: $blue;
+      margin: 0 10px;
+      width: 200px;
+      bottom: -180px;
+      transform: translateY(-100%);
+
+      &:first-child {
+        color: $blue;
+        background-color: white;
+        border: 1px solid $blue;
+      }
+
+      &:active {
+        top: unset;
+        bottom: -186px;
+      }
+    }
+  }
+  .round-badges {
+    margin-bottom: 30px;
+  }
+}
+.modal__overlay {
+  z-index: 20;
+}
+.drop-zones {
+  @include displayFlex(space-between);
+  max-width: 1000px;
+  width: 95%;
+}
+@include dropZone();
+.drop-zone {
+  @include displayFlex(flex-start, center, column);
+}

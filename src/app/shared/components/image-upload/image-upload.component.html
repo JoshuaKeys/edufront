@@ -1,0 +1,58 @@
+<div [class.frame]="loaded">
+  <label
+    class="uploader position-relative"
+    ondragover="return false;"
+    [style.width.px]="count"
+    [style.height.px]="count"
+    [class.loaded]="loaded"
+    [style.borderColor]="dragging ? activeColor : baseColor"
+    (dragenter)="handleDragEnter()"
+    (dragleave)="handleDragLeave()"
+    (drop)="handleDrop($event)"
+  >
+    <i
+      class="fa fa-plus"
+      [style.color]="
+        dragging
+          ? imageSrc
+            ? overlayColor
+            : activeColor
+          : imageSrc
+          ? overlayColor
+          : baseColor
+      "
+    ></i>
+
+    <img
+      [style.width.%]="100"
+      [style.height.%]="100"
+      [src]="imageSrc"
+      (load)="handleImageLoad()"
+      [class.loaded]="imageLoaded"
+    />
+
+    <input
+      type="file"
+      name="file"
+      accept="image/*"
+      (change)="handleInputChange($event)"
+    />
+  </label>
+</div>
+
+<div *ngIf="loaded" class="row justify-content-center align-items-center mb-2">
+  <div class="col-5">
+    <div class="button-content">
+      <a class="fa fa-minus" (click)="decrement()"><i></i></a>
+      <a class="fa fa-plus" (click)="increment()"></a>
+    </div>
+  </div>
+</div>
+<div *ngIf="loaded" class="row justify-content-center align-items-center mb-2">
+  <div class="col-12">
+    <div class="buttons-confirm-delete">
+      <a (click)="deleteImg()">Delete</a>
+      <a (click)="confirmImg()">Confirm</a>
+    </div>
+  </div>
+</div>

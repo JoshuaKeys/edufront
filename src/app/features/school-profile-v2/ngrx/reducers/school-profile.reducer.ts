@@ -1,11 +1,33 @@
 import { createReducer, on } from "@ngrx/store";
 import { ProfileModel } from '../../models/profile.model';
-import { setSchoolName, setAddressData, setContactsData } from '../actions';
+import { setSchoolName, setAddressData, setContactsData, setSchoolLogo, setCountryIdData, setPhoneData } from '../actions';
 const initialState: ProfileModel = {
   schoolName: null,
+  schoolLogo: null
 };
 export const profileReducer = createReducer(initialState,
   on(setSchoolName, (state, { schoolName }) => ({ ...state, schoolName })),
+  on(setCountryIdData, (state, action) => {
+    let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
+    return {
+      ...stateCopy,
+      address: {
+        ...stateCopy.address,
+        countryId: action.countryId
+      }
+    }
+  }),
+  on(setPhoneData, (state, action) => {
+    let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
+    return {
+      ...stateCopy,
+      contact: {
+        ...stateCopy.contact,
+        countryCode: action.prefix,
+        phone: action.phoneNum
+      }
+    }
+  }),
   on(setAddressData, (state, action) => {
     let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
     return {
@@ -18,7 +40,6 @@ export const profileReducer = createReducer(initialState,
   }),
   on(setContactsData, (state, action) => {
     let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
-    console.log(stateCopy);
     return {
       ...stateCopy,
       contact: {
@@ -26,5 +47,10 @@ export const profileReducer = createReducer(initialState,
         [action.field]: action.value
       }
     }
+  }),
+  on(setSchoolLogo, (state, action) => {
+    let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
+    stateCopy.schoolLogo = action.logo;
+    return stateCopy;
   })
 );

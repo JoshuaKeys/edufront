@@ -1,0 +1,78 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+    <div class="content">
+      <h2 class="content__title">
+        Add or upload staff
+      </h2>
+      <div class="search__wrapper">
+        <div class="search__input-wrapper">
+          <img class="search__icon" src="../../../assets/search.svg" alt="" />
+
+          <input class="search__input" type="text" placeholder="Search" />
+        </div>
+
+        <div class="search__icon-btns">
+          <div class="search__icon-btn">
+            <img
+              src="../../../assets/subject-search-icon-1.svg"
+              alt=""
+              class="icon-img"
+            />
+            <div class="tooltip tooltip--top">
+              Sort Alphabetical
+            </div>
+          </div>
+          <div class="search__icon-btn">
+            <img
+              src="../../../assets/subject-search-icon-2.svg"
+              alt=""
+              class="icon-img"
+            />
+            <div class="tooltip tooltip--top">
+              Sort by Classes
+            </div>
+          </div>
+          <div class="search__icon-btn">
+            <img
+              src="../../../assets/subject-search-icon-3.svg"
+              alt=""
+              class="icon-img"
+            />
+            <div class="tooltip tooltip--top">
+              Sort by Sex
+            </div>
+          </div>
+          <div class="search__icon-btn">
+            <img
+              src="../../../assets/subject-search-icon-4.svg"
+              alt=""
+              class="icon-img"
+            />
+            <div class="tooltip tooltip--top">
+              Sort by ID
+            </div>
+          </div>
+        </div>
+
+        <button class="search__btn" (click)="onAddOrEdit()">
+          <span>+</span>
+        </button>
+      </div>
+      <div class="group">
+        <div class="group__body">
+          <edu-staff-chip
+            *ngFor="let staff of staffs | async"
+            [staff]="staff"
+          ></edu-staff-chip>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<edu-staff-form *ngIf="(staffsModalsState | async).editModal"></edu-staff-form>

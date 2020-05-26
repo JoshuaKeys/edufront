@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalModel } from 'src/app/shared/models/modal.model';
 import { Observable } from 'rxjs';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
 import { setSchoolName } from '../../ngrx/actions';
 import { selectSchoolName } from '../../ngrx/selectors/'
+import { selectProfileModal } from '../../ngrx/selectors/modal-selectors';
 
 @Component({
   selector: 'edu-school-name-question',
@@ -26,6 +27,8 @@ export class SchoolNameQuestionComponent implements OnInit {
   ngOnInit(): void {
     this.selectedSchoolName = this.store.select(selectSchoolName)
     this.selectedSchoolName.subscribe(console.log)
+    this.modalState = this.store.select(selectProfileModal);
+    this.modalState.subscribe(modal => console.log('hello', modal));
     this.selectedSchoolName.subscribe(schoolName => {
       this.schoolNameForm = new FormGroup({
         schoolName: new FormControl(schoolName, Validators.required)
@@ -43,8 +46,15 @@ export class SchoolNameQuestionComponent implements OnInit {
     const schoolName = event.target['value'];
     this.store.dispatch(setSchoolName({ schoolName }))
   }
+  onKeyPress(event) {
+    if (event.key.toLowerCase() === 'enter') {
+
+      this.router.navigate(['../', this.activatedRouteData.next], { relativeTo: this.activatedRoute })
+    }
+  }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<PreviewModel>
+    private store: Store<PreviewModel>,
+    private router: Router
   ) { }
 }

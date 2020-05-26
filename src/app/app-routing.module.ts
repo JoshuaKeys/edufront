@@ -30,6 +30,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/subjects/subjects.module').then(m => m.SubjectsModule)
   },
   {
+    path: 'staffs',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () => import('./features/staffs/staffs.module').then(m => m.StaffsModule)
+  },
+  {
     path: '',
     redirectTo: '/school-profile',
     pathMatch: 'full'

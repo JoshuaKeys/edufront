@@ -1,6 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { ProfileModel } from '../../models/profile.model';
+import { setSchoolLogo, uploadSchoolLogoRequest } from '../../ngrx/actions';
+import { uploadSchoolLogo } from 'src/app/features/school-profile/ngrx/actions';
+import { selectSchoolLogo, selectLogoPreview } from '../../ngrx/selectors';
+import { withLatestFrom, first, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-school-logo-upload',
@@ -13,9 +19,27 @@ export class SchoolLogoUploadComponent implements OnInit {
   uploadForm: FormGroup;
 
   ngOnInit(): void {
-    this.uploadForm = new FormGroup({
-      image: new FormControl(null)
+    this.store.select(selectSchoolLogo).pipe(
+      withLatestFrom(this.store.select(selectLogoPreview)),
+    ).subscribe(([image, logoPreview]) => {
+      let schoolLogo;
+      if (image) {
+        schoolLogo = { base64: logoPreview };
+      } else {
+        schoolLogo = null;
+      }
+      this.uploadForm = new FormGroup({
+        image: new FormControl(schoolLogo, Validators.required)
+      })
     })
   }
-  constructor(private activatedRoute: ActivatedRoute) { }
+  onImageUpload(img: { base64: string, imageUrl: string, acceptedFile: File }) {
+    this.uploadForm.patchValue({
+      image: img
+    })
+    this.store.dispatch(uploadSchoolLogoRequest({ logo: img.acceptedFile, preview: img.base64 }))
+  }
+  constructor(
+    private store: Store<ProfileModel>,
+    private activatedRoute: ActivatedRoute) { }
 }

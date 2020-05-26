@@ -1,6 +1,13 @@
-@import "./students";
+@import '../typography';
+@import '../colors';
+@import '../utils';
+@import '../main';
+@import '../mixins/components';
+@import '../mixins/alignment';
+@import '../../scss/mixins/forms';
+@import './students';
 
-@mixin staffSummary() {
+@mixin staffBigCardOnAside() {
   @include studentSummary();
   .student-summary__desc--total {
     line-height: 52px;
@@ -9,18 +16,25 @@
 }
 
 @mixin staffChips() {
+  @include groups();
+  @include group($ash);
   @include studentChips();
 }
 
-@mixin addEditStaffForm() {
-  .tooltip {
-    width: 240px;
-    white-space: normal;
-    text-align: center;
-  }
-
+@mixin staffFormLayout() {
+  @include groups();
+  @include group($ash);
+  @include modalForm();
+  @include formLayout();
   .form {
-    @include form();
+    // max-width: unset;
+    &__row {
+      margin-bottom: 20px;
+    }
+    &__sub-title {
+      font: 500 20px/30px Quicksand;
+      color: $ash;
+    }
 
     padding: 40px;
     padding-bottom: 110px;
@@ -32,6 +46,170 @@
     margin: 0;
     top: unset;
     left: unset;
+  }
+  .group {
+    &--1 {
+      flex-shrink: 0;
+      width: 140px;
+    }
+    &--2 {
+      flex-shrink: 0;
+      width: 571px;
+    }
+    &--3 {
+      flex-shrink: 0;
+      width: 275px;
+    }
+  }
+}
+@mixin staffInputs() {
+  @include basicInput();
+  @include textInput();
+}
+
+@mixin staffCountryCodePrefix() {
+  @include iconSelect();
+  .form__input-prefix--countrycode {
+    & ~ .form__input {
+      padding-left: 70px;
+    }
+    & ~ .form__input-label--align-left {
+      left: 70px;
+    }
+  }
+}
+@mixin staffSelect() {
+  @include basicInput();
+  // @include popup();
+  @include select();
+}
+@mixin staffProfilePic() {
+  .form__profile-pic {
+    @include absoluteCenter();
+
+    &-wrap {
+      border-radius: 50%;
+      width: 140px;
+      height: 140px;
+      border: 2px dashed $grey-blue;
+      position: relative;
+    }
+    &-wrap--hover {
+      border-color: $blue;
+    }
+  }
+}
+@mixin staffFormRoundBtn() {
+  .form {
+    &__round-btn {
+      @include roundButton(80px, $grey, white);
+
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 25px);
+      border: unset;
+      box-shadow: unset;
+      &:active {
+        transform: scale(1.1) translate(50%, 25px);
+      }
+      &:hover {
+        background: $grey;
+      }
+
+      &--active {
+        background: $blue;
+        &:hover {
+          background: $blue;
+        }
+      }
+    }
+  }
+}
+
+@mixin staffSearchSelectBadges() {
+  @include roundBadge();
+
+  .badges {
+    @include displayFlex(flex-end);
+  }
+  .round-badge {
+    color: $grey;
+    background: white;
+    border: 2px solid $grey-blue;
+  }
+}
+
+@mixin staffSearchSelectPopupChip() {
+  @include staffChips();
+  .popup {
+    .chip {
+      padding: 5px;
+    }
+    .chip__text {
+      font: 600 12px/22px Raleway;
+    }
+  }
+}
+@mixin staffSearchRoundBtn() {
+  .popup {
+    .form__round-btn {
+      @include roundButton(44px, $grey, white);
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 25px);
+      // width: 44px;
+      // height: 44px;
+      img {
+        width: 16px;
+        height: 16px;
+      }
+
+      &:active {
+        transform: scale(1.1) translate(50%, 25px);
+      }
+      &:hover {
+        background: $grey;
+      }
+
+      &--active {
+        background: $blue;
+        &:hover {
+          background: $blue;
+        }
+      }
+    }
+  }
+}
+@mixin staffSearchSelect() {
+  @include popup();
+
+  @include popup();
+  .popup {
+    min-width: unset;
+    width: auto;
+
+    //main layout for the various
+    .groups {
+      align-items: flex-start;
+    }
+    .group {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
+
+@mixin addEditStaffForm() {
+  .tooltip {
+    width: 240px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .form {
+    // @include form();
 
     &__round-btn {
       @include roundButton(80px, $grey, white);
@@ -58,86 +236,228 @@
     }
   }
 
-  .form {
-    &__row {
+  // .form {
+  //   &__row {
+  //     margin-bottom: 20px;
+  //   }
+  //   &__sub-title {
+  //     font: 500 20px/30px Quicksand;
+  //     color: $ash;
+  //   }
+  //   &__profile-pic {
+  //     @include absoluteCenter();
+
+  //     &-wrap {
+  //       border-radius: 50%;
+  //       width: 140px;
+  //       height: 140px;
+  //       border: 2px dashed $grey-blue;
+  //       position: relative;
+  //     }
+  //     &-wrap--hover {
+  //       border-color: $blue;
+  //     }
+  //   }
+  //   .search__input {
+  //     border-width: 2px;
+  //     &-wrapper {
+  //       align-self: flex-end;
+  //     }
+  //     &::placeholder {
+  //       font: 400 14px/22px Raleway;
+  //     }
+  //   }
+  // }
+
+  // @include roundBadge();
+
+  // @include popup();
+  // .popup {
+  //   min-width: unset;
+  //   width: auto;
+
+  //   .chip {
+  //     padding: 5px;
+  //   }
+  //   .chip__text {
+  //     font: 600 12px/22px Raleway;
+  //   }
+  //   .groups {
+  //     align-items: flex-start;
+  //   }
+  //   .group {
+  //     width: 100%;
+  //     justify-content: space-between;
+  //   }
+  //   .badges {
+  //     @include displayFlex(flex-end);
+  //   }
+  //   // .round-badge {
+  //   //   color: $grey;
+  //   //   background: white;
+  //   //   border: 2px solid $grey-blue;
+  //   // }
+  //   .form__round-btn {
+  //     width: 44px;
+  //     height: 44px;
+  //     img {
+  //       width: 16px;
+  //       height: 16px;
+  //     }
+  //   }
+
+  // }
+}
+
+@mixin staffModuleLayout() {
+  @include splitLayout3();
+
+  .content {
+    width: 100%;
+    padding: 0 40px;
+    & > * {
+      margin-bottom: 30px;
+    }
+
+    &__title {
       margin-bottom: 20px;
     }
-    &__sub-title {
-      font: 500 20px/30px Quicksand;
-      color: $ash;
+    &__desc {
+      width: 560px;
+      margin-bottom: 40px;
     }
-    &__profile-pic {
-      @include absoluteCenter();
+    justify-content: flex-start;
+  }
+}
 
-      &-wrap {
-        border-radius: 50%;
-        width: 140px;
-        height: 140px;
-        border: 2px dashed $grey-blue;
-        position: relative;
+@mixin searchWrapper() {
+  .search__wrapper {
+    position: relative;
+    width: 100%;
+    padding: 4px 15px;
+
+    @include displayFlex(flex-start, flex-start);
+  }
+}
+
+@mixin searchbar() {
+  .search {
+    &__icon {
+      position: absolute;
+
+      left: 16px;
+      top: 10px;
+      transform: translate(0, -50%);
+    }
+
+    &__input-wrapper {
+      @include displayFlex(flex-start, flex-start);
+      position: relative;
+    }
+    //search__input styling of text input inside search
+    &__input {
+      border: 0;
+      width: 100%;
+      background: unset;
+      padding-bottom: 10px;
+      padding-left: 42px;
+
+      border-bottom: 1px solid $grey-blue;
+
+      &::placeholder {
+        color: $grey;
+        font: 14px;
+        font-family: 'Raleway', sans-serif;
       }
-      &-wrap--hover {
+      &:focus {
+        outline: none;
         border-color: $blue;
       }
     }
-    .search__input {
-      border-width: 2px;
-      &-wrapper {
-        align-self: flex-end;
-      }
-      &::placeholder {
-        font: 400 14px/22px Raleway;
-      }
+  }
+}
+
+@mixin searchBtn() {
+  // @include search();
+  .search__btn {
+    color: $blue;
+    margin-left: 20px;
+    @include button_default(white, $blue);
+    width: 96px;
+    height: 36px;
+    box-shadow: 0px 2px 6px #3c4b9b14;
+    border: 1px dashed $blue;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1;
+    position: absolute;
+    right: 0;
+    > * {
+      @include absoluteCenter();
     }
   }
+}
 
-  .group {
-    &--1 {
-      width: 140px;
+@mixin searchIcons() {
+  @include tooltip();
+  .search {
+    &__icon-btns {
+      @include displayFlex();
     }
-    &--2 {
-      width: 571px;
-    }
-    &--3 {
-      width: 275px;
-    }
-  }
+    //search__icon-btnare the icon buttons used in the student module
+    &__icon-btn {
+      cursor: pointer;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      background: #ffffff;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      border: 1px solid $grey-blue;
+      position: relative;
+      margin: 0 5px;
 
-  @include roundBadge();
-
-  @include popup();
-  .popup {
-    min-width: unset;
-    width: auto;
-
-    .chip {
-      padding: 5px;
-    }
-    .chip__text {
-      font: 600 12px/22px Raleway;
-    }
-    .groups {
-      align-items: flex-start;
-    }
-    .group {
-      width: 100%;
-      justify-content: space-between;
-    }
-    .badges {
-      @include displayFlex(flex-end);
-    }
-    // .round-badge {
-    //   color: $grey;
-    //   background: white;
-    //   border: 2px solid $grey-blue;
-    // }
-    .form__round-btn {
-      width: 44px;
-      height: 44px;
+      .tooltip {
+        //default tooltip styling
+        width: 0;
+        opacity: 0;
+      }
+      cursor: pointer;
       img {
         width: 16px;
-        height: 16px;
       }
+      & > img {
+        @include absoluteCenter();
+      }
+      &--active {
+        background: $blue;
+        border: 1px solid $blue;
+      }
+      &--hover {
+        border: 1px solid $blue;
+      }
+    }
+
+    &__input-wrapper + &__icon-btns {
+      margin-left: 24px;
+    }
+  }
+
+  $search-icons: 1, 2, 3, 4;
+  //hover for icons
+  @each $index in $search-icons {
+    .search__icon-btn:nth-child(#{$index}):not(.search__icon-btn--active):hover {
+      border-color: $blue;
+      img {
+        content: url('../assets/subject-search-icon-#{$index}-hover.svg');
+      }
+      .tooltip {
+        opacity: 1;
+        width: auto;
+      }
+    }
+
+    .search__icon-btn--active:nth-child(#{$index}) img {
+      content: url('../assets/subject-search-icon-#{$index}-active.svg');
     }
   }
 }

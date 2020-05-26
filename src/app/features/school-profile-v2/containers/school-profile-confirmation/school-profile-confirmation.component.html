@@ -1,1 +1,45 @@
-<p>school-profile-confirmation works!</p>
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <div class="form">
+      <h2 class="form__title">
+        Are these correct?
+      </h2>
+      <div class="confirmation-box" *ngIf="previewState | async as preview">
+        <edu-preview
+          [styleMode]="'horizontal'"
+          [previewState]="previewState"
+        ></edu-preview>
+      </div>
+      <div class="form__btns">
+        <button
+          class="form__btn form__btn--white"
+          [routerLink]="['../', activatedRouteData.previous]"
+        >
+          Back
+        </button>
+        <button class="form__btn" (click)="submit()">
+          Continue
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+<edu-modal
+  *ngIf="(modalState | async).endModal"
+  [description]="getModalBody()"
+  btnText="GOT IT"
+  header="School Profile Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO DASHBOARD"
+  rightBtn="GO TO CLASS CREATION"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToClassCreation()"
+></edu-modal>

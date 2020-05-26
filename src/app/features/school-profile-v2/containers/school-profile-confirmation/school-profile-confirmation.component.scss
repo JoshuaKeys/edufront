@@ -1,0 +1,59 @@
+@import '../../../../../assets/styles/modules/section-module';
+body {
+  display: relative;
+  background-color: white;
+}
+
+main {
+  height: calc(100vh - 53px);
+}
+@include splitLayout();
+
+.form {
+  @include displayFlex(flex-start, center, column);
+  width: 90vw;
+  max-width: 1080px;
+
+  &__title {
+    margin-bottom: 32px;
+  }
+
+  &__badge {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  &__btn {
+    background: $blue;
+    margin: 0 10px;
+    width: 200px;
+    bottom: -180px;
+    transform: translateY(-100%);
+
+    &:first-child {
+      color: $blue;
+      background-color: white;
+      border: 1px solid $blue;
+    }
+
+    &:active {
+      top: unset;
+      bottom: -186px;
+    }
+  }
+}
+.round-badges {
+  margin-bottom: 30px;
+}
+
+.drop-zones {
+  @include displayFlex(space-between);
+  max-width: 1000px;
+  width: 95%;
+}
+@include dropZone();
+.drop-zone {
+  @include displayFlex(flex-start, center, column);
+}
