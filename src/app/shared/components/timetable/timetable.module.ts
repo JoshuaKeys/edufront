@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TimetableComponent } from "./timetable/timetable.component"
+import { TimetableComponent } from "./timetable/timetable.component";
+import { ContentOnChangeDirective } from './content-on-change.directive';
+import { TimetableService } from "./timetable.service"
 // import { TimetablePeriodComponent } from "./timetable-period/timetable-period.component"
 
-
+import {  FormsModule  } from "@angular/forms"
 
 @NgModule({
-  declarations: [TimetableComponent ],
+  declarations: [TimetableComponent, ContentOnChangeDirective ],
+  providers : [TimetableService],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports:[
     TimetableComponent,
+    ContentOnChangeDirective
+    
     // TimetablePeriodComponent // not in use for now
   ]
 })

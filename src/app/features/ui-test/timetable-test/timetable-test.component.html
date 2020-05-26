@@ -1,0 +1,32 @@
+ 
+
+ 
+<edu-timetable [time]="time"  [specialPeriods] = "specialPeriods" [model] = "model">
+  
+    
+        <!-- template used to to populate timetable -->
+         <ng-template     #periodTemplate  let-key="key" let-value = "value"     >
+          
+            <div   class = "templateContainer">
+                <h6> key: {{key}}     </h6>
+                <!-- contentOnChange = {{key}} is requried to identify block in the model -->
+                <!-- template must output a onChange event to update the model object -->
+                <edu-cb  contentOnChange  = "{{key}}" [initialValue] = "value" [id] = "key" ></edu-cb>
+               
+            </div>
+            
+        </ng-template> 
+
+</edu-timetable>
+
+<h5> model object</h5>
+<p  > {{prettyPrint(model.mon)}}</p>
+<p  > {{prettyPrint(model.tue)}}</p>
+<p  > {{prettyPrint(model.wed)}}</p>
+<p  > {{prettyPrint(model.thu)}}</p>
+<p  > {{prettyPrint(model.fri)}}</p>
+<p  > {{prettyPrint(model.sat)}}</p>
+<p  > {{prettyPrint(model.sun)}}</p>
+ 
+
+ 

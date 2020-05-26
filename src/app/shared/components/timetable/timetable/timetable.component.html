@@ -9,17 +9,21 @@
 
     <!-- defining lesson for mon - sun -->
 
-    <div class="c1 dual-row" *ngFor="let mPeriod of model.mon">
-       
-        <ng-container
-        (onTemplateChange) = "templateOnChangeEvent()"
-        *ngIf="periodTemplate"
-        [ngTemplateOutlet]="periodTemplate"
-         >
-        </ng-container>
+    <ng-container *ngFor="let day of days; index as i">
+        <div  ngClass="c{{i +1}}" class=" dual-row" *ngFor="let period of model[day]">
+         
+            <ng-container
+            *ngTemplateOutlet="periodTemplate;context:{key:period.key, value:period.value, onChange:onChange}"
+             >
+            </ng-container>
+    
 
-    </div>
-    <div class="c2 dual-row" *ngFor="let tPeriod of model.tue"> 
+          
+        </div>
+    </ng-container>
+
+
+    <!-- <div class="c2 dual-row" *ngFor="let tPeriod of model.tue"> 
         <ng-container
         (onTemplateChange) = "templateOnChangeEvent()"
         *ngIf="periodTemplate"
@@ -66,6 +70,9 @@
         [ngTemplateOutlet]="periodTemplate"
          >
         </ng-container>
-    </div>
+    </div> -->
 
 </div>
+
+ 
+

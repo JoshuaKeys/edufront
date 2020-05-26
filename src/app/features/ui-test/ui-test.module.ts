@@ -5,12 +5,15 @@ import { DatepickerTestComponent } from "./datepicker-test/datepicker-test.compo
 import { SelectTestComponent } from "./select-test/select-test.component"
 import { uiTestRoutingModule } from './ui-test-routing.module';
 import { SharedModule } from '../../shared/shared.module';
-import { CalendarTestComponent } from "./calendar-test/calendar-test.component"
+import { TimeTableTestComponent } from "./timetable-test/timetable-test.component"
+import { CbComponent} from "./timetable-test/cb/cb.component"
+
 
 const components = [
   DatepickerTestComponent,
   SelectTestComponent,
-  CalendarTestComponent
+  TimeTableTestComponent,
+  CbComponent
 
 ];
 

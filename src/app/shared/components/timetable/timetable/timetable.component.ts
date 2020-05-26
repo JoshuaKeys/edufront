@@ -1,7 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy , Input, ContentChild, TemplateRef, HostListener, Host} from '@angular/core';
-import {SpecialPeriod, Day, TimetableModel, Time } from "../timetable.interface";
+import { Component, OnInit,  ChangeDetectionStrategy , Input, ContentChild,   TemplateRef} from '@angular/core';
+import {SpecialPeriod, Day, TimetableModel, Time , } from "../timetable.interface";
+import { TimetableService } from "../timetable.service";
+import { skip } from "rxjs/operators"
 
-// import { } from "@angular/core"
+ 
+ 
 @Component({
   selector: 'edu-timetable',
   templateUrl: './timetable.component.html',
@@ -9,24 +12,22 @@ import {SpecialPeriod, Day, TimetableModel, Time } from "../timetable.interface"
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetableComponent implements OnInit {
-
-
-
  
-
-  templateOnChangeEvent(){
-    console.log("onchange1")
-  }
   @Input() model: TimetableModel;
   @Input() time:Time[]; //has to be defined in ascending order
   @Input() specialPeriods:SpecialPeriod[];
 
-  @ContentChild('template',{static: false}) periodTemplate: TemplateRef<any>;
-  constructor() { }
+  
+ 
+
+  @ContentChild('periodTemplate' ) periodTemplate: TemplateRef<any>;
+  constructor(private timeTableService:TimetableService) { }
   
   timeClasses = [];
   days = [];
   calendar = {}; // basically the value object
+
+  value = {}
 
   ngOnInit(): void {
     this.timeClasses =  new Array(this.time.length).fill([]); 
@@ -34,12 +35,42 @@ export class TimetableComponent implements OnInit {
     this.setDays();
     this.setTimeFormatting(); //needs to be first
     this.initSpecialPeriods();
-    // this.generateModel();
-    
+   
+  
+    this.value = JSON.parse(JSON.stringify(this.model));
 
-  }
+
+    this.timeTableService.$model
+    .pipe(skip(1))
+    .subscribe(({key,value})=>{
+
+      console.log(`k ${key}, v ${value}`)
+      this.updateModel(key,value);
+      console.log(this.model);
+    })
+   }
 
  
+
+   updateModel(k,v){
+    Object.keys(this.model).forEach((day)=>{
+      this.model[day].forEach((period, index)=>{
+          if(period.key == k){
+            this.model[day][index].value = v;
+            return;
+          }
+      })
+
+    })
+
+   }
+
+ 
+  onChange(key,value){
+    console.log(`key ${key} - value ${value}`);
+    // console.log(`key ${key} - value ${value} - parentScope ${this.parentContextVar}`);
+  }
+
 setDays(){
     this.days = [...Object.keys( this.model)];
     console.log(this.days)
