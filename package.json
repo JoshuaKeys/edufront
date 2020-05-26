@@ -25,13 +25,9 @@
     "@ngrx/entity": "^9.1.2",
     "@ngrx/router-store": "^9.1.2",
     "@ngrx/store": "^9.1.2",
-<<<<<<< HEAD
     "angular-mydatepicker": "^0.6.0",
     "core-js": "^2.5.3",
-=======
-    "core-js": "^2.5.3",
     "font-awesome": "^4.7.0",
->>>>>>> ff955c62b5ed77825f9c901160282c88482184f9
     "jso": "^4.1.1",
     "moment": "^2.25.3",
     "rxjs": "~6.5.4",
