@@ -124,6 +124,23 @@
 @include staffSearchSelectBadges();
 @include staffSearchRoundBtn();
 
+
+:host ::ng-deep  .chip__text{
+  white-space: nowrap;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host ::ng-deep  .form__badges {
+  .form__badge  {
+  width: 32px;
+  height: 32px;
+  margin: 5px;
+  font: 400 12px/20px Roboto;
+}
+}
+  
 .search__icon {
   width: 16px;
 }
