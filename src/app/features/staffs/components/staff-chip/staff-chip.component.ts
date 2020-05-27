@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { StaffModel } from '../../models/staff.model';
 
 @Component({
@@ -10,9 +10,12 @@ import { StaffModel } from '../../models/staff.model';
 export class StaffChipComponent implements OnInit {
   @Input() gender: string;
   @Input() staff: StaffModel;
-  constructor() { }
 
+  @Output() edit = new EventEmitter<StaffModel>();
+  constructor() { }
   ngOnInit(): void {
   }
-
+  onEdit(staff: StaffModel) {
+    this.edit.emit(staff);
+  }
 }

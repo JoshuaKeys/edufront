@@ -1,13 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Renderer2, EventEmitter, ElementRef, Output, ViewChild, forwardRef } from '@angular/core';
-import { IconModel } from '../icon-field/icon-field.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-export interface PhoneIconModel {
-  item: string;
-  icon: string;
-  phonePrefix: string;
-  phoneNum: string;
-  name: string;
-}
+import { PhoneIconModel } from '../../models/phone-icon.model';
+
 @Component({
   selector: 'edu-phone-icon-field',
   templateUrl: './phone-icon-field.component.html',
@@ -36,7 +30,7 @@ export class PhoneIconFieldComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
   writeValue(val: PhoneIconModel) {
-    if (val === null) {
+    if (val === null || val == undefined) {
       // setTimeout(() => { this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', ''); }, 0)
       this.activeIcon = this.icons[0].icon;
       this.phonePrefix = this.icons[0].phonePrefix
@@ -44,7 +38,7 @@ export class PhoneIconFieldComponent implements OnInit {
       this.value = '';
       return;
     }
-    this.value = val.phoneNum;
+    this.value = val.phoneNum ? val.phoneNum : '';
     this.phonePrefix = val.phonePrefix;
     this.activeIcon = val.icon;
     this.item = val.item;

@@ -4,8 +4,9 @@ import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { setContactsData, setPhoneData } from '../../ngrx/actions';
-import { PhoneIconModel } from '../../../../shared/components/phone-icon-field/phone-icon-field.component';
+
 import { selectSchoolContact } from '../../ngrx/selectors';
+import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
 
 @Component({
   selector: 'edu-contact-details-question',

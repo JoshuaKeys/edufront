@@ -97,6 +97,7 @@ main {
 }
 .modal__content-header {
   color: #a5aec7;
+  font: 500 20px/30px Quicksand;
 }
 .modal__content-second-row,
 .modal__content-third-row,
@@ -112,10 +113,13 @@ main {
   }
 }
 .modal__content-second-row {
-  edu-input-field {
+  edu-country-field,
+  edu-input-field,
+  edu-phone-field {
     width: 48%;
   }
 }
+
 button.form__round-btn.form__round-btn--active {
   background: unset;
   border: none;

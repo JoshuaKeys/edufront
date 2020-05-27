@@ -11,12 +11,13 @@ import {
   toggleEndModal
 } from './actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
-import { SubjectsService } from '../services/subjects.services';
+
 import * as fromSubjectActions from './actions/index'
 import { ClassesService } from 'src/app/shared/services/classes.service';
 import { getAllSelectedClasses } from './selectors';
 import { Store } from '@ngrx/store';
 import { SubjectsStateModel } from '../models/subjects-state.model';
+import { SubjectsService } from 'src/app/shared/services/subjects.service';
 
 @Injectable()
 export class SubjectsEffects {

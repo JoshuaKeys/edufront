@@ -8,7 +8,7 @@ import { selectAllClasses, selectSortedClasses, selectAllSubjects, getCommonClas
 import { SubjectModel } from '../../models/subject.model';
 import { assignToSelectedClassesRequest, toggleClass, toggleFormModal, createSubjectRequest } from '../../ngrx/actions';
 import { SubjectModalStateModel } from '../../models/subject-modal-state.model';
-import { CreateSubjModel } from '../../models/create-subject.model';
+import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 import { filter, map } from 'rxjs/operators';
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { CreateSubjModel } from '../../models/create-subject.model';
+import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 
 @Component({
   selector: 'edu-add-subject-modal',

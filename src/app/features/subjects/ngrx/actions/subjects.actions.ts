@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { SubjectModel } from '../../models/subject.model'
-import { CreateSubjModel } from '../../models/create-subject.model';
-import { SubjectCreationSuccessModel } from '../../models/subject-creation-success.model';
+import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
+import { SubjectCreationSuccessModel } from '../../../../shared/models/subject-creation-success.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { PostClassSubjectModel } from '../../models/post-class-subject.model';
-import { PostClassSubjectResponseModel } from '../../models/post-class-subject-response.model';
+import { PostClassSubjectModel } from '../../../../shared/models/post-class-subject.model';
+import { PostClassSubjectResponseModel } from '../../../../shared/models/post-class-subject-response.model';
 export const closeSubjectsStartModal = createAction(
   '[SubjectsTaughtQuestionComponent] closeSubjectsStartModal'
 );

@@ -123,3 +123,19 @@
 @include staffSearchSelectPopupChip();
 @include staffSearchSelectBadges();
 @include staffSearchRoundBtn();
+
+.search__icon {
+  width: 16px;
+}
+.subjects__container {
+  display: flex;
+}
+// .subjects-area {
+//   display: flex;
+// }
+
+.classes {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 152px;
+}

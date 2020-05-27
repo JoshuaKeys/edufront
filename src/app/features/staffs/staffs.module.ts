@@ -15,6 +15,9 @@ import { StaffFormComponent } from './components/staff-form/staff-form.component
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SubjectsAreaComponent } from './components/subjects-area/subjects-area.component';
+import { TotalStaffComponent } from './components/total-staff/total-staff.component';
+import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
+import { CountryFieldComponent } from './components/country-field/country-field.component';
 @NgModule({
   declarations: [
     StaffsShellComponent,
@@ -22,7 +25,10 @@ import { SubjectsAreaComponent } from './components/subjects-area/subjects-area.
     StaffChipComponent,
     StaffFormComponent,
     ImgUploadV2Component,
-    SubjectsAreaComponent
+    SubjectsAreaComponent,
+    TotalStaffComponent,
+    PhoneFieldComponent,
+    CountryFieldComponent
   ],
   imports: [
     CommonModule,

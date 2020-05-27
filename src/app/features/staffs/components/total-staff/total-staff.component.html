@@ -1,0 +1,9 @@
+<div class="total-staff">
+  <h1 class="total-staff__title">Total Staff</h1>
+  <p class="total-staff__qty" *ngIf="numOfStaffs | async; else noStaff">
+    {{ numOfStaffs | async }}
+  </p>
+  <ng-template #noStaff>
+    <p class="total-staff__qty">-</p>
+  </ng-template>
+</div>

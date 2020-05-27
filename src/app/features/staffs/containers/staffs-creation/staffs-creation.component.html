@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <button class="search__btn" (click)="onAddOrEdit()">
+        <button class="search__btn" (click)="onAddStaff()">
           <span>+</span>
         </button>
       </div>
@@ -69,10 +69,15 @@
           <edu-staff-chip
             *ngFor="let staff of staffs | async"
             [staff]="staff"
+            (edit)="onEditStaff($event)"
           ></edu-staff-chip>
         </div>
       </div>
     </div>
   </section>
 </main>
-<edu-staff-form *ngIf="!(staffsModalsState | async).editModal"></edu-staff-form>
+<edu-staff-form
+  *ngIf="(staffsModalsState | async).editModal"
+  [subjects]="subjects"
+  [classes]="classes"
+></edu-staff-form>

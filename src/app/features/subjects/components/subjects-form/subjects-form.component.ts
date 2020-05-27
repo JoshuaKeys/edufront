@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, forwardRef, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CreateSubjModel } from '../../models/create-subject.model';
-import { SubSubjectModel } from '../../models/sub-subject.model';
+import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
+import { SubSubjectModel } from '../../../../shared/models/sub-subject.model';
 
 @Component({
   selector: 'edu-subjects-form',

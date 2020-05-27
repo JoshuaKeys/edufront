@@ -47,48 +47,54 @@
             ></edu-input-field>
           </div>
           <div class="modal__content-second-row">
+            <edu-phone-field
+              formControlName="phone"
+              [icons]="countryIconMap"
+              fieldName="Phone"
+              (valueChanged)="updatePhone($event)"
+            ></edu-phone-field>
             <edu-input-field
-              idPrefix="firstName"
-              formControlName="firstName"
-              text="First Name"
+              idPrefix="email"
+              formControlName="email"
+              text="Email(Optional)"
             ></edu-input-field>
+            <edu-country-field
+              formControlName="country"
+              [fieldName]="'Country'"
+              [icons]="countryIconMap"
+              (valueChanged)="updateCountry($event)"
+              mode="select"
+            ></edu-country-field>
             <edu-input-field
-              idPrefix="middleName"
-              formControlName="middleName"
-              text="Middle Name"
-            ></edu-input-field>
-            <edu-input-field
-              idPrefix="firstName"
-              formControlName="firstName"
-              text="First Name"
-            ></edu-input-field>
-            <edu-input-field
-              idPrefix="middleName"
-              formControlName="middleName"
-              text="Middle Name"
+              idPrefix="address"
+              formControlName="address"
+              text="Address"
             ></edu-input-field>
           </div>
           <div class="modal__content-third-row">
             <edu-input-field
-              idPrefix="firstName"
-              formControlName="firstName"
-              text="First Name"
+              idPrefix="city"
+              formControlName="city"
+              text="City"
             ></edu-input-field>
             <edu-input-field
-              idPrefix="middleName"
-              formControlName="middleName"
-              text="Middle Name"
+              idPrefix="state"
+              formControlName="state"
+              text="State"
             ></edu-input-field>
             <edu-input-field
-              idPrefix="firstName"
-              formControlName="firstName"
-              text="First Name"
+              idPrefix="zip"
+              formControlName="zip"
+              text="Zip Code"
             ></edu-input-field>
           </div>
         </div>
         <div class="modal__content-subject-area">
           <h3 class="modal__content-header">Subject Area</h3>
-          <edu-subjects-area></edu-subjects-area>
+          <edu-subjects-area
+            [classes]="classes"
+            [subjects]="subjects"
+          ></edu-subjects-area>
         </div>
       </form>
       <button class="form__round-btn form__round-btn--active">

@@ -15,9 +15,7 @@ import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { SubjectResolver } from './resolvers/subject.resolver';
 import { EffectsModule } from '@ngrx/effects';
 import { SubjectsEffects } from './ngrx/effects';
-import { SubjectsService } from './services/subjects.services';
 import { InputFieldComponent } from './components/input-field/input-field.component';
-import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
 import { AssignSubjectsQuestionComponent, ConfirmationComponent } from './containers';
 import { OptionsComponent } from './components/options/options.component';
@@ -34,7 +32,6 @@ import { AddSubjectModalComponent } from './components/add-subject-modal/add-sub
     SubjectIconFieldComponent,
     IconPopupComponent,
     InputFieldComponent,
-    IconButtonComponent,
     SubjectsListComponent,
     AssignSubjectsQuestionComponent,
     OptionsComponent,
@@ -54,7 +51,6 @@ import { AddSubjectModalComponent } from './components/add-subject-modal/add-sub
   ],
   providers: [
     SubjectResolver,
-    SubjectsService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
 })

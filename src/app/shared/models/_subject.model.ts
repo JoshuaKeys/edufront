@@ -1,4 +1,4 @@
-import { SubSubjectModel } from '../../../shared/models/sub-subject.model';
+import { SubSubjectModel } from './sub-subject.model';
 
 export interface SubjectModel {
   title: string;

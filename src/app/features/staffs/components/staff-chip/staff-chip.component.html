@@ -9,7 +9,11 @@
     >C1 - {{ staff.firstName }} {{ staff.lastName }}
     <span class="chip__icon-btns">
       <button class="chip__icon-btn">
-        <img src="assets/subject-chip-edit.svg" alt="" />
+        <img
+          src="assets/subject-chip-edit.svg"
+          (click)="onEdit(staff)"
+          alt=""
+        />
       </button>
       <button class="chip__icon-btn">
         <img src="assets/subject-chip-delete.svg" alt="" />

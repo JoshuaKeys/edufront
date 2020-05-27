@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { SubjectModel } from '../../models/subject.model';
+import { SubjectModel } from '../../models/_subject.model';
 
 @Component({
   selector: 'edu-icon-button',

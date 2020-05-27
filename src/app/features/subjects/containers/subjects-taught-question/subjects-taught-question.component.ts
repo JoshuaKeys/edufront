@@ -6,7 +6,7 @@ import { SubjectsStateModel } from '../../models/subjects-state.model';
 import { selectSubjectModalState, selectAllSubjects } from './../../ngrx/selectors';
 import { closeSubjectsStartModal, createSubjectRequest } from '../../ngrx/actions';
 import { SubjectModel } from '../../models/subject.model';
-import { CreateSubjModel } from '../../models/create-subject.model';
+import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'edu-subjects-taught-question',

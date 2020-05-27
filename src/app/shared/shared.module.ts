@@ -19,8 +19,10 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
 
 import { SelectModule } from "./components/select/select.module"
-import {datePickerModule} from "./components/datepicker/datepicker.module";
+import { datePickerModule } from "./components/datepicker/datepicker.module";
 import { TimetableModule } from "./components/timetable/timetable.module";
+import { SubjectsService } from './services/subjects.service';
+import { IconButtonComponent } from './components/icon-button/icon-button.component';
 
 
 @NgModule({
@@ -28,7 +30,7 @@ import { TimetableModule } from "./components/timetable/timetable.module";
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
-     HeaderNavComponent,
+    HeaderNavComponent,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
@@ -37,7 +39,8 @@ import { TimetableModule } from "./components/timetable/timetable.module";
     IconFieldComponent,
     PhoneIconFieldComponent,
     InputFieldComponent,
-    CustomPlainSelectComponent
+    CustomPlainSelectComponent,
+    IconButtonComponent
   ],
   imports: [
     CommonModule,
@@ -62,10 +65,12 @@ import { TimetableModule } from "./components/timetable/timetable.module";
     IconFieldComponent,
     PhoneIconFieldComponent,
     InputFieldComponent,
-    CustomPlainSelectComponent
+    CustomPlainSelectComponent,
+    IconButtonComponent
   ],
   providers: [
-    ClassesService
+    ClassesService,
+    SubjectsService
   ]
 })
 export class SharedModule { }
