@@ -2,13 +2,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
-
 const routes: Routes = [
   
   
   {
     path: 'ui',
     loadChildren: () => import('./features/ui-test/ui-test.module').then(m => m.uiTestModule),
+  },
+  
+  {
+    path: 'registration',
+    loadChildren: () => import('./features/register-and-login/register-and-login.module').then(m => m.RegisterAndLoginModule),
   },
  
   {

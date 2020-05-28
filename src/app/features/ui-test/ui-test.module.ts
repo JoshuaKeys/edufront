@@ -7,13 +7,19 @@ import { uiTestRoutingModule } from './ui-test-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { TimeTableTestComponent } from "./timetable-test/timetable-test.component"
 import { CbComponent} from "./timetable-test/cb/cb.component"
+import { InputTestComponent} from "./input-test/input-test.component"
+import { CbTestComponent } from "./input-test/cb-test/cb-test.component" // test component used in input test
+import {  InputPrefixTestComponent} from "./input-test/input-prefix-test/input-prefix-test.component"
 
 
 const components = [
   DatepickerTestComponent,
   SelectTestComponent,
   TimeTableTestComponent,
-  CbComponent
+  InputTestComponent,
+  CbComponent,
+  CbTestComponent,
+  InputPrefixTestComponent
 
 ];
 

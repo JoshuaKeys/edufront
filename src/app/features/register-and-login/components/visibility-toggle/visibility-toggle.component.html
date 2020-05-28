@@ -1,0 +1,8 @@
+<button type="button" >
+ 
+<img *ngIf="isVisible; else notVisible" src="/assets/registration/eye-close.svg" alt="">
+<ng-template #notVisible>
+    <img src="/assets/registration/eye.svg" alt="">
+</ng-template>
+
+</button>

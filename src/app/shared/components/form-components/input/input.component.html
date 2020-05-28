@@ -1,0 +1,38 @@
+<div [ngClass]="{disabled: disabled, 'input-wrapper-border--active' : inputElIsFocus, 'input-wrapper-border--error' : config.hasError  }" class="form__input-wrapper   ">
+     
+  <!-- main wrapper for input + label so they stay together -->
+    <div class = "group">
+      <input
+       class="form__input  "
+        [value]="value"
+        [id] = "elementId"
+        #inputEl
+        class = {{alignment}}
+        [ngClass] ="{'input--active' : inputElIsFocus , 'input__border--active' : inputIsActive }"
+        type="{{config.isPassword ? 'password' : 'text'}}" 
+       
+        [disabled] = "disabled"
+        (focus) = "focusInput()"
+        (blur) = "blurInput()"
+        (input) = "inputFn($event.target.value)"
+      />
+       {{config.prefixValue}}
+      <label class = {{alignment}}  [ngClass]="{'label--active': isLabelActive() }" class="form__label " [for]="elementId">
+         <ng-content select=".edu-label"></ng-content>  
+      </label>
+    </div>
+
+      <div #prefix class="prefix">
+        <ng-content select=".edu-input--prefix"></ng-content>
+      </div>
+
+      <div #prefix class="suffix">
+        <ng-content select=".edu-input--suffix"></ng-content>
+      </div>
+    
+        
+    </div>
+    
+    
+    
+    

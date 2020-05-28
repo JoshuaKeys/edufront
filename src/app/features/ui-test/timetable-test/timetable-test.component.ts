@@ -94,7 +94,7 @@ export class TimeTableTestComponent implements OnInit {
   model:TimetableModel = {
     //must be decalred from Mon to Sun, not all days are compulsory. will appear in same order as array
     //trying to use this as the ngModel object that gets ouputted, but having issues letting ng-tempalte communicated with <edu-timetable> Component
-    mon:[{key:"m1", value:123}, {key:"m2", value:"0"}, {key:"m3", value:"0"},{key:"m4", value:"0"},{key:"m5", value:"0"}],
+    mon:[{key:"m1", value:"start"}, {key:"m2", value:"0"}, {key:"m3", value:"0"},{key:"m4", value:"0"},{key:"m5", value:"0"}],
     tue:[{key:"t1", value:"0"}, {key:"t2", value:"0"}, {key:"t3", value:"0"},{key:"t4", value:"0"},{key:"t5", value:"0"}],
     wed:[{key:"w1", value:"0"}, {key:"w2", value:"0"}, {key:"w3", value:"0"},{key:"w4", value:"0"},{key:"w5", value:"0"}],
     thu:[{key:"th1", value:"0"}, {key:"th2", value:"0"}, {key:"th3", value:"0"},{key:"th4", value:"0"},{key:"th5", value:"0"}],

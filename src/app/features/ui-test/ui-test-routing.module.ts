@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DatepickerTestComponent } from './datepicker-test/datepicker-test.component';
 import { SelectTestComponent } from "./select-test/select-test.component" 
+import { InputTestComponent } from "./input-test/input-test.component" 
 import { TimeTableTestComponent } from "./timetable-test/timetable-test.component" 
 
 const routes: Routes = [
@@ -17,6 +18,11 @@ const routes: Routes = [
   {
     path: 'select',
     component: SelectTestComponent
+  }
+   ,
+  {
+    path: 'input',
+    component: InputTestComponent
   }
 ];
 

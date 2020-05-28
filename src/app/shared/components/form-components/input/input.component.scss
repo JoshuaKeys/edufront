@@ -1,0 +1,120 @@
+@import "src/assets/styles/colors";
+@import "src/assets/styles/form-general";
+@import "src/assets/styles/mixins/components";
+
+:host{
+  display:block;
+}  
+.form{
+  
+
+  &__input{
+   border:none;
+   width: 100%;
+   text-align: center;
+   font: 400 20px/24px Raleway;
+   margin-bottom: 10px;
+
+   &.left{
+   text-align: left;
+  }
+  &.right{
+   text-align: right;
+  }
+
+  }
+
+  &__label{
+    // transition:  font-size 0s, line-height 0s, all 0.3s;
+    // transition-delay: 0s;
+   font: 400 16px/19px Raleway;
+    height: 100%;
+    position: absolute;
+    top: unset;
+    padding-bottom: 17px;
+    bottom: 0;
+    @include displayFlex(center,flex-end);
+
+      &.left{
+        justify-content: flex-start;
+      }
+      &.right{
+        justify-content: flex-end;
+      }
+
+  }
+  &__input-wrapper{
+    margin: auto;
+    height: 54px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1px solid #e6e9f3;
+  }
+ }
+
+ :host ::ng-deep.left.form__label > *{
+   transform-origin: left top;
+ }
+ :host ::ng-deep.right.form__label > *{
+   transform-origin: right top;
+ }
+ :host ::ng-deep   .label--active  > *{
+   transform: scale(0.8) ;
+ 
+ }
+
+.label--active{
+  transform: translateY(-17px) ;
+ 
+
+ 
+  text-align: center;
+  .ashcolor {
+    font-size: 0;
+  }
+
+}
+
+ 
+.input--active{
+  color: $black;
+  &::placeholder{
+    color: $black;
+  }
+      // opacity: 1;
+}
+
+.input-wrapper-border--active{
+  border-color: $blue;
+}
+
+.input-wrapper-border--error{
+  border-color: $red;
+}
+
+
+//disabled state 
+.disabled{
+  input, input::placeholder, label{
+    color: $ash;
+  }
+  
+}
+
+.group{ //main wrapper for both input and label
+  position: relative;
+  flex-grow: 1;
+}
+
+.prefix,.suffix{
+  margin-bottom: 17px;
+  display: flex;
+}
+.prefix{
+  order:-1;
+}
+
+.suffiix{
+  order:2;
+}

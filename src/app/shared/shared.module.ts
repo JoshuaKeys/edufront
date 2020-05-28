@@ -12,9 +12,11 @@ import { ClassesService } from './services/classes.service';
 import { DroppableDirective } from './directives/droppable.directive';
 import { PreviewComponent } from './components/preview/preview.component';
 
-import { SelectModule } from "./components/select/select.module"
+
 import {datePickerModule} from "./components/datepicker/datepicker.module";
 import { TimetableModule } from "./components/timetable/timetable.module";
+
+import { FormComponentsModule } from "./components/form-components/form-component.module"
 
 
 @NgModule({
@@ -28,17 +30,17 @@ import { TimetableModule } from "./components/timetable/timetable.module";
     PreviewComponent,
   ],
   imports: [
+    FormComponentsModule,
     CommonModule,
     datePickerModule,
-    SelectModule,
     TimetableModule
   ],
   exports: [
+    FormComponentsModule,
     ModalComponent,
     CustomSelectComponent,
     HeaderNavComponent,
     datePickerModule,
-    SelectModule,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,

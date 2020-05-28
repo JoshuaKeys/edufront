@@ -1,0 +1,35 @@
+<main>
+    <section>
+        <img class ="content__brand" src="/assets/registration/logo.svg" alt="">
+
+        <div class="content">
+
+        <h1 class = "content__title">Create New Account</h1>
+        <p class = "content__desc">Already have an account? <a class = "bluecolor"  href="">Sign In</a></p>
+            <p>{{inputVal}}</p>
+        <form action=""  [formGroup]="registrationForm" (ngSubmit)="formSubmit()" >
+                
+                <edu-input    formControlName="username"    alignment = "left" elementId ="username"> 
+                    <span class = "edu-label"> User Name </span>
+                    <img  class="edu-input--suffix" InputAffix src="/assets/registration/user-tick-grey.svg" alt="">    
+                </edu-input>
+                <edu-input  isPassword = "true" alignment = "left" elementId="pw"> 
+                     <visibility-toggle  class="edu-input--suffix" InputAffix ></visibility-toggle>    
+                    <span class = "edu-label"> Password </span>
+                </edu-input>
+                <edu-input  isPassword = "true" alignment = "left" elementId = "cfmPw"> 
+                    <visibility-toggle  class="edu-input--suffix" InputAffix ></visibility-toggle>
+                    <span class = "edu-label"> Confirm Password </span>
+                </edu-input>
+
+
+                <button class = "form__btn"> create account </button>
+
+        </form>
+ 
+        <p class="content__footer-text">By signing up, you agree to our <a href="" class="bluecolor">Terms of Services</a> and <a href="" class="bluecolor">Privacy Policy</a>.</p>
+
+     </div>
+
+    </section>
+</main>

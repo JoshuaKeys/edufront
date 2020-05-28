@@ -1,0 +1,41 @@
+ 
+ <h1>form.get('f1').value : {{testForm.get('f1').value}}</h1>
+ <!-- <h1> onchangeValue event: {{updatedValue}}  </h1> -->
+ 
+ <h1> touched : {{testForm.get('f1').touched}}</h1>
+ <h1> dirty : {{testForm.get('f1').dirty}}</h1>
+ <h1> disabled : {{testForm.get('f1').disabled}}</h1>
+
+
+
+
+ <form  [formGroup]="testForm" (ngSubmit)="formSubmit()">
+<!-- (onValueChange) = "updateValue($event)" -->
+<edu-input   alignment="left"    formControlName="f1"     >
+    <span class = "edu-label"> input 1    </span>
+</edu-input>
+
+ 
+ 
+</form>
+
+<br>
+<h1> ngmodel input2:   {{modelTest}}</h1>
+<edu-input [(ngModel)]="modelTest" alignment="center" elementId = "'test132'"       >
+    <span class = "edu-label"> input 2  </span>
+    <edu-cb-test  class="edu-input--suffix" InputAffix ></edu-cb-test>
+
+</edu-input>
+
+
+
+<h1> ngmodel input3:   {{modelTest2}}</h1>
+<edu-input [(ngModel)]="modelTest2" alignment="center" elementId = "'test132123'"       >
+    <span class = "edu-label">phone number</span>
+    <!-- <edu-input-prefix-test   ></edu-input-prefix-test> -->
+    <edu-input-prefix-test class="edu-input--prefix" InputAffix ></edu-input-prefix-test>
+
+</edu-input>
+
+
+ 
