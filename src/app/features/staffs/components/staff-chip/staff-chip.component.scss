@@ -59,7 +59,9 @@
   display: flex;
   display: none;
 }
-
+.chip__desc {
+  white-space: nowrap;
+}
 .chip__icon-btn {
   background: unset;
   border: none;

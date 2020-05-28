@@ -35,11 +35,16 @@
               formControlName="dateOfBirth"
               text="Date of Birth"
             ></edu-input-field>
-            <edu-input-field
+            <!-- <edu-input-field
               idPrefix="sex"
               formControlName="sex"
               text="Sex"
-            ></edu-input-field>
+            ></edu-input-field> -->
+            <edu-select formControlName="sex">
+              <edu-option OptionValue="male"> Male </edu-option>
+              <edu-option OptionValue="female">Female</edu-option>
+              <edu-option OptionValue=""> clear all </edu-option>
+            </edu-select>
             <edu-input-field
               idPrefix="id"
               formControlName="id"

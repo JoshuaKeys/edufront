@@ -27,12 +27,16 @@ export class StaffsCreationComponent implements OnInit {
   classes: Observable<ClassModel[]>;
   currentlySelectedSubject: string;
   subjectClassesAssociation: Observable<SubjectClassesAssociation[]>
+  sort = '';
   ngOnInit(): void {
     this.staffs = this.store.select(selectAllStaffs);
     this.staffsModalsState = this.store.select(selectStaffsModalsState);
     this.subjects = this.store.select(selectAllSubjects);
     this.classes = this.store.select(selectAllClasses);
     this.subjectClassesAssociation = this.store.select(classesAndSubjectsAssoc);
+  }
+  changeSort(sort) {
+    this.sort = sort;
   }
   refreshClasses() {
     this.classes = this.store.select(selectAllClasses).pipe(

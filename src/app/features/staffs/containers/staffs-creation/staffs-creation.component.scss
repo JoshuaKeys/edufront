@@ -174,169 +174,6 @@ body {
   align-self: flex-end;
 }
 
-// .search__input::placeholder {
-//   font: 400 14px/22px Raleway;
-// }
-// .search__input-wrapper + .search__icon-btns {
-//   margin-left: 24px;
-// }
-
-// .search__btn {
-//   color: #69a9f2;
-//   margin-left: 20px;
-//   background: unset;
-//   border: none;
-//   cursor: pointer;
-//   width: 292px;
-//   height: 52px;
-//   border-radius: 100px;
-//   font-weight: 700;
-//   font-family: 'Raleway';
-//   letter-spacing: 0.42px;
-//   color: #69a9f2;
-//   background: white;
-//   text-transform: uppercase;
-//   box-shadow: 0px 4px 8px #3c4b9b26;
-//   position: relative;
-//   width: 96px;
-//   height: 36px;
-//   box-shadow: 0px 2px 6px #3c4b9b14;
-//   border: 1px dashed #69a9f2;
-//   font-size: 36px;
-//   font-weight: 500;
-//   line-height: 1;
-//   position: relative;
-// }
-
-// .search__btn:focus {
-//   outline: none;
-// }
-
-// .search__btn:active {
-//   top: 6px;
-// }
-
-// .search__btn > * {
-//   position: absolute;
-//   left: 50%;
-//   top: 50%;
-//   transform: translate(-50%, -50%);
-// }
-
-// .search__input-wrapper {
-//   position: relative;
-// }
-
-// .search__input {
-//   border: 0;
-//   width: 100%;
-//   background: unset;
-//   padding-bottom: 10px;
-//   padding-left: 42px;
-//   border-bottom: 1px solid #e6e9f3;
-// }
-
-// .search__input::placeholder {
-//   color: #c7ccdb;
-//   font: 14px;
-//   font-family: 'Raleway', sans-serif;
-// }
-
-// .search__input:focus {
-//   outline: none;
-//   border-color: #69a9f2;
-// }
-
-// .search__wrapper {
-//   justify-content: flex-start;
-// }
-
-// .search__wrapper .tooltip {
-//   opacity: 0;
-//   width: 0;
-// }
-
-// .search__btn {
-//   position: absolute;
-//   right: 0;
-// }
-
-// .search__icon-btn {
-//   cursor: pointer;
-// }
-
-// .search__icon-btn img {
-//   width: 16px;
-// }
-
-// .search__icon-btn:nth-child(1):not(.search__icon-btn--active):hover {
-//   border-color: #69a9f2;
-// }
-
-// // .search__icon-btn:nth-child(1):not(.search__icon-btn--active):hover img {
-// //   content: url('../../../../../assets/subject-search-icon-1-hover.svg');
-// // }
-
-// .search__icon-btn:nth-child(1):not(.search__icon-btn--active):hover .tooltip {
-//   opacity: 1;
-//   width: auto;
-// }
-
-// // .search__icon-btn--active:nth-child(1) img {
-// //   content: url('../../../../../assets/subject-search-icon-1-active.svg');
-// // }
-
-// .search__icon-btn:nth-child(2):not(.search__icon-btn--active):hover {
-//   border-color: #69a9f2;
-// }
-
-// // .search__icon-btn:nth-child(2):not(.search__icon-btn--active):hover img {
-// //   content: url('../../../../../assets/subject-search-icon-2-hover.svg');
-// // }
-
-// .search__icon-btn:nth-child(2):not(.search__icon-btn--active):hover .tooltip {
-//   opacity: 1;
-//   width: auto;
-// }
-
-// // .search__icon-btn--active:nth-child(2) img {
-// //   content: url('../../../../../assets/subject-search-icon-2-active.svg');
-// // }
-
-// .search__icon-btn:nth-child(3):not(.search__icon-btn--active):hover {
-//   border-color: #69a9f2;
-// }
-
-// // .search__icon-btn:nth-child(3):not(.search__icon-btn--active):hover img {
-// //   content: url('../../../../../assets/subject-search-icon-3-hover.svg');
-// // }
-
-// .search__icon-btn:nth-child(3):not(.search__icon-btn--active):hover .tooltip {
-//   opacity: 1;
-//   width: auto;
-// }
-
-// // .search__icon-btn--active:nth-child(3) img {
-// //   content: url('../../../../../assets/subject-search-icon-3-active.svg');
-// // }
-
-// .search__icon-btn:nth-child(4):not(.search__icon-btn--active):hover {
-//   border-color: #69a9f2;
-// }
-
-// // .search__icon-btn:nth-child(4):not(.search__icon-btn--active):hover img {
-// //   content: url('../../../../../assets/subject-search-icon-4-hover.svg');
-// // }
-
-// .search__icon-btn:nth-child(4):not(.search__icon-btn--active):hover .tooltip {
-//   opacity: 1;
-//   width: auto;
-// }
-
-// // .search__icon-btn--active:nth-child(4) img {
-// //   content: url('../../../../../assets/subject-search-icon-4-active.svg');
-// // }
-
 .search__wrapper {
   position: relative;
   width: 100%;
@@ -484,5 +321,18 @@ body {
 .search__btn:focus {
   outline: none;
 }
-
-// @import '../../../../../assets/scss/modules/staff';
+.group.group--alphabetically {
+  width: 100%;
+  .group__body {
+    width: 100%;
+  }
+}
+.group.group-gender {
+  width: 100%;
+  .group__body {
+    width: 100%;
+  }
+}
+.group {
+  width: 100%;
+}

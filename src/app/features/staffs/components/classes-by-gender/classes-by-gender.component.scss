@@ -1,0 +1,17 @@
+.sort-by-gender {
+  display: flex;
+  justify-content: space-between;
+  &__female {
+    width: 40%;
+  }
+  &__male {
+    width: 40%;
+  }
+}
+:host {
+  width: 100%;
+}
+.edu-staff-chips {
+  display: flex;
+  flex-wrap: wrap;
+}

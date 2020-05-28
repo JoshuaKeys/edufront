@@ -20,6 +20,8 @@ import { PhoneFieldComponent } from './components/phone-field/phone-field.compon
 import { CountryFieldComponent } from './components/country-field/country-field.component';
 import { SubjectClassesComponent } from './components/classes/subject-classes.component';
 import { ClassesSubjectIconComponent } from './components/classes-subject-icon/classes-subject-icon.component';
+import { ClassesAlphabeticallyComponent } from './components/classes-alphabetically/classes-alphabetically.component';
+import { ClassesByGenderComponent } from './components/classes-by-gender/classes-by-gender.component';
 @NgModule({
   declarations: [
     StaffsShellComponent,
@@ -32,7 +34,9 @@ import { ClassesSubjectIconComponent } from './components/classes-subject-icon/c
     PhoneFieldComponent,
     CountryFieldComponent,
     SubjectClassesComponent,
-    ClassesSubjectIconComponent
+    ClassesSubjectIconComponent,
+    ClassesAlphabeticallyComponent,
+    ClassesByGenderComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,14 @@
+<div>
+  <div *ngFor="let alphabet of alphabetObj | async" class="edu-staff-chip">
+    <h1 class="edu-staff-chip__header">
+      {{ alphabet.alphabet.toUpperCase() }}
+    </h1>
+    <div class="edu-staff-chips">
+      <edu-staff-chip
+        *ngFor="let staff of alphabet.items"
+        [staff]="staff"
+      ></edu-staff-chip>
+    </div>
+  </div>
+</div>
+<!-- (edit)="onEditStaff($event)" -->

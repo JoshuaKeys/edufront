@@ -23,6 +23,7 @@
               src="../../../assets/subject-search-icon-1.svg"
               alt=""
               class="icon-img"
+              (click)="changeSort('alphabetically')"
             />
             <div class="tooltip tooltip--top">
               Sort Alphabetical
@@ -30,32 +31,13 @@
           </div>
           <div class="search__icon-btn">
             <img
-              src="../../../assets/subject-search-icon-2.svg"
-              alt=""
-              class="icon-img"
-            />
-            <div class="tooltip tooltip--top">
-              Sort by Classes
-            </div>
-          </div>
-          <div class="search__icon-btn">
-            <img
               src="../../../assets/subject-search-icon-3.svg"
               alt=""
               class="icon-img"
+              (click)="changeSort('gender')"
             />
             <div class="tooltip tooltip--top">
               Sort by Sex
-            </div>
-          </div>
-          <div class="search__icon-btn">
-            <img
-              src="../../../assets/subject-search-icon-4.svg"
-              alt=""
-              class="icon-img"
-            />
-            <div class="tooltip tooltip--top">
-              Sort by ID
             </div>
           </div>
         </div>
@@ -65,12 +47,24 @@
         </button>
       </div>
       <div class="group">
-        <div class="group__body">
+        <div class="group__body" *ngIf="sort === ''">
           <edu-staff-chip
             *ngFor="let staff of staffs | async"
             [staff]="staff"
             (edit)="onEditStaff($event)"
           ></edu-staff-chip>
+        </div>
+      </div>
+      <div class="group group--alphabetically">
+        <div class="group__body" *ngIf="sort === 'alphabetically'">
+          <edu-classes-alphabetically
+            [staffs]="staffs"
+          ></edu-classes-alphabetically>
+        </div>
+      </div>
+      <div class="group group-gender">
+        <div class="group__body" *ngIf="sort === 'gender'">
+          <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
         </div>
       </div>
     </div>
