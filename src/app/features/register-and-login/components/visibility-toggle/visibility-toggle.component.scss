@@ -3,3 +3,13 @@ button{
 @include resetButton();
 display: flex;
 }
+
+img{
+    transition:width 0s, all 0.3s
+}
+
+img.hide{
+    height: 0;
+    width: 0;
+    opacity: 0;
+}

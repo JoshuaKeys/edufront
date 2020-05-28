@@ -10,32 +10,56 @@
 
 
  <form  [formGroup]="testForm" (ngSubmit)="formSubmit()">
-<!-- (onValueChange) = "updateValue($event)" -->
-<edu-input   alignment="left"    formControlName="f1"     >
+<!-- 
+    <input type="text"  formControlName="f1">
+    
+
+    <ul  *ngIf="testForm.controls['f1'].touched " >
+
+                <li  *ngIf="testForm.controls['f1'].errors.required"  >  Name is required.  </li>
+                <li  *ngIf="testForm.controls['f1'].errors.minlength">Name must be at least 4 characters long</li>
+           
+            
+            </ul> -->
+<!-- (onValueChange) = "updateValue($event) "" -->
+<p>
+    {{prettifyJSON(testForm.controls['f1'].errors)}}
+</p>
+<edu-input   alignment="left"  name = "name"     formControlName="f1"   >
     <span class = "edu-label"> input 1    </span>
+
+    <ul class = "edu-input__validators--right"   >
+ 
+        <li  *ngIf="testForm.controls['f1'].errors.required"  >  Name is required.  </li>
+        <li *ngIf="testForm.controls.f1.errors.minlength">Name must be at least 4 characters long</li>
+        <li *ngIf="testForm.controls['f1'].errors.pattern">numbers only</li>
+ 
+    
+    </ul>
+
 </edu-input>
 
- 
- 
+
 </form>
 
 <br>
-<h1> ngmodel input2:   {{modelTest}}</h1>
-<edu-input [(ngModel)]="modelTest" alignment="center" elementId = "'test132'"       >
-    <span class = "edu-label"> input 2  </span>
-    <edu-cb-test  class="edu-input--suffix" InputAffix ></edu-cb-test>
+<h1> ngmodel suffix test:   {{modelTest}}</h1>
+<edu-input   [(ngModel)]="modelTest" alignment="right" elementId = "'test132'"       >
+    <span class = "edu-label"> suffix test  </span>
+    <edu-cb-test  class="edu-input__suffix" InputAffix ></edu-cb-test>
 
 </edu-input>
 
 
 
-<h1> ngmodel input3:   {{modelTest2}}</h1>
-<edu-input [(ngModel)]="modelTest2" alignment="center" elementId = "'test132123'"       >
-    <span class = "edu-label">phone number</span>
+<h1> ngmodel prefix test:   {{modelTest2}}</h1>
+<edu-input  alignment="center" elementId = "'test132123'"       >
+    <span class = "edu-label">prefix test - phone number</span>
     <!-- <edu-input-prefix-test   ></edu-input-prefix-test> -->
-    <edu-input-prefix-test class="edu-input--prefix" InputAffix ></edu-input-prefix-test>
+    <edu-input-prefix-test class="edu-input__prefix" InputAffix ></edu-input-prefix-test>
 
 </edu-input>
 
+ 
 
  

@@ -4,7 +4,7 @@
     <div class = "group">
       <input
        class="form__input  "
-        [value]="value"
+        [(ngModel)] = "val"
         [id] = "elementId"
         #inputEl
         class = {{alignment}}
@@ -16,21 +16,41 @@
         (blur) = "blurInput()"
         (input) = "inputFn($event.target.value)"
       />
-       {{config.prefixValue}}
+     
       <label class = {{alignment}}  [ngClass]="{'label--active': isLabelActive() }" class="form__label " [for]="elementId">
          <ng-content select=".edu-label"></ng-content>  
       </label>
     </div>
 
-      <div #prefix class="prefix">
-        <ng-content select=".edu-input--prefix"></ng-content>
+      <div  class="prefix">
+        <ng-content select=".edu-input__prefix"></ng-content>
       </div>
 
-      <div #prefix class="suffix">
-        <ng-content select=".edu-input--suffix"></ng-content>
+      <div  class="suffix">
+        <ng-content select=".edu-input__suffix"></ng-content>
       </div>
     
-        
+      <!-- val{{val.length}} isLabelActive{{isLabelActive()}}  inputElIsFocus{{inputElIsFocus}} -->
+      
+    
+      
+      <div class="edu-input__validators--right">
+        <ng-content  select = ".edu-input__validators--right"></ng-content>
+      </div>
+      <div class="edu-input__validators--left">
+        <ng-content  select = ".edu-input__validators--left"></ng-content>
+      </div>
+ 
+ 
+      <div class=" edu-input__validators--bottom">
+        <ng-content  select = ".edu-input__validators--bottom"></ng-content>
+      </div>
+      
+
+      <!-- <ng-content class="edu-input--validators-left"></ng-content>
+      <ng-content class="edu-input--validators-top"></ng-content>
+      <ng-content class="edu-input--validators-right"></ng-content>
+      <ng-content class="edu-input--validators edu-input--validators-bottom"></ng-content> -->
     </div>
     
     

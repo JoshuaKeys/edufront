@@ -12,12 +12,12 @@ export class InputTestComponent implements OnInit {
   constructor(private formBuilder:FormBuilder ) { }
 
  
-  modelTest = "";
+  modelTest = "1";
   modelTest2 = "";
   ngOnInit(): void {
 
     this.testForm  =  this.formBuilder.group({
-      f1: ['', Validators.required]
+      f1: ['', [Validators.required,  Validators.minLength(4),   Validators.pattern(".*[A-Z].*")]]
     
     });
  
@@ -25,6 +25,10 @@ export class InputTestComponent implements OnInit {
   }
 
   f1model;
+
+  prettifyJSON(obj){
+    return JSON.stringify(obj,null,2)
+  }
 
   get formControls() { return this.testForm.controls; }
   testForm: FormGroup;

@@ -24,6 +24,7 @@ export class InputComponent implements OnInit, AfterContentInit,  ControlValueAc
   ngOnInit(): void { 
     this.initConfig();
     this.setElementID();
+ 
    }
 
   ngAfterContentInit(){
@@ -32,14 +33,19 @@ export class InputComponent implements OnInit, AfterContentInit,  ControlValueAc
       dir.setConfig.subscribe((val)=>{
         console.log(`el [${this.elementId}] updateds`)
         this.config[val.key] = val.value
+     
         this.cd.markForCheck();
         
       })
     })
+    console.log(this.value)
+    this.cd.markForCheck();
   }
   config;  
   inputElIsFocus = false;
   inputIsActive:boolean = false;
+  disabled:boolean; //for ControlValueAccessor implmentation
+ 
 
   @Output() onValueChange = new EventEmitter<any>();
  
@@ -74,33 +80,40 @@ setElementID(){
   blurInput(){
     this.inputElIsFocus = false;
     this.onTouched();
+    this.onChange(this.val);
   }
   inputFn(val){
-    this.onChange(val);
     this.value = val;
+
+    this.onChange(val);
   }
   // onChange($event.target.value)
 
   isLabelActive(){
-    return this.inputElIsFocus  ||  this.value != "";
+    return this.inputElIsFocus  ||  this.val != "";
   }
  
 
 
-
-  
+  // value = ""; //for ControlValueAccessor implmentation
+  val = "";
+  set value(val){  // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    this.val = val
+    this.onChange(val)
+    // this.onTouched(val)
+    }
   //Control value accessor implementation 
 
 
  
-  disabled:boolean;
-  value="";
+
  
   onChange: any = () => {};
   onTouched: any = () => {};
 
   writeValue(value: any){ 
     this.value = value;
+  
   }
 
   registerOnChange(fn: any){

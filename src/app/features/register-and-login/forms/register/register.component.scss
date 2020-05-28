@@ -37,29 +37,36 @@ section{
     }
 }
 
-form{
+form{ //generic layout for form
 
     @include displayFlex(flex-start,center, column);
-    &>*{
-        margin-bottom: 20px;
 
-      
-    }
-
-    edu-input{
-        max-width: 377px;
-        width: 80%;
-    }
-    
     .form__btn{
         @include button_default($blue,white);
         max-width: 377px;
         width: 80%;
         margin: 20px 10px 40px 10px;
     }
+
+    &>*{
+        margin-bottom: 20px;
+        max-width: 377px;
+        width: 80%;
+    }
+
+ 
+    
+
 }
 
 a{
     font: 600 16px/24px Raleway;
     text-decoration: none;
+}
+
+.validator{
+    padding: 0;
+    padding-left: 20px;
+    margin: 0;
+    font: 400 12px/18px Raleway;
 }

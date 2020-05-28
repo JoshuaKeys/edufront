@@ -12,7 +12,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm  =  this.formBuilder.group({
-      username: ['test123', Validators.required]
+      username: ['', Validators.required],
+      pw:   ['', [ Validators.required, Validators.minLength(8),   Validators.pattern("(.*[A-Z].*[0-9].*|.*[0-9].*[A-Z].*)")]]  ,
+      cfmPw: ['', Validators.required]
    
     });
   }

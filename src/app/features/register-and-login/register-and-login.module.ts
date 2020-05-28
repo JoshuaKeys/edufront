@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { RegisterAndLoginRoutingModule } from "./register-and-login-routing.module"
 import { SharedModule } from "../../shared/shared.module"
 
-import { RegisterComponent } from "./components/register/register.component"
+import { RegisterComponent } from "./forms/register/register.component"
+import { LoginComponent } from "./forms/login/login.component"
 import {VisibilityToggleComponent}  from "./components/visibility-toggle/visibility-toggle.component"
 
-let components = [VisibilityToggleComponent, RegisterComponent];
+let components = [VisibilityToggleComponent, RegisterComponent, LoginComponent];
 
 @NgModule({
   declarations: [...components],

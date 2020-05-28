@@ -92,7 +92,45 @@
 .input-wrapper-border--error{
   border-color: $red;
 }
+.edu-input__validators {
+  &--right,&--left,&--top,&--bottom,&{
+    color: red;
+    position: absolute;
+  }
+ 
+  &--right{
+    top:50%;
+    right: 0;
+    transform: translate(100%, -50%);
+  }
+  &--left{
+    top:50%;
+    left: 0;
+    transform: translate(-100% ,-50%);
+  }
+  &--bottom{
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+  }
+}
 
+// .edu-input--validators{
+//   &-right,&-left,&-top,&-bottom,&{
+//     color: red;
+//     position: absolute;
+//   }
+//   &-right{
+//     color: red;
+//     position: absolute;
+//     right: 0;
+//     transform: translateX(100%);
+//   }
+//   &-left{
+//     left: 0;
+//     transform: translateX(-100%);
+//   }
+// }
 
 //disabled state 
 .disabled{
