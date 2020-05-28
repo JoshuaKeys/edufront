@@ -6,8 +6,8 @@ import {SelectModule} from "./select/select.module"
 
 import { InputComponent } from "./input/input.component";
 import { InputAffixDirective } from './input/input-affix.directive'
-
-let components = [InputComponent, InputAffixDirective]
+import { CheckboxComponent } from "./checkbox/checkbox.component"
+let components = [InputComponent, InputAffixDirective,CheckboxComponent]
 
 @NgModule({
   declarations: [...components],

@@ -9,11 +9,13 @@
            
         <form action=""  [formGroup]="registrationForm" (ngSubmit)="formSubmit()" >
                 
-                <edu-input    formControlName="username"    alignment = "left" elementId ="username"> 
+                <edu-input    formControlName="username"    alignment = "left"  > 
                     <span class = "edu-label"> User Name </span>
-                    <img  *ngIf="registrationForm.controls.username.invalid" class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-grey.svg" alt="">    
-                    <img  *ngIf="registrationForm.controls.username.valid" class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-green.svg" alt="">    
                 </edu-input>
+                <edu-input    formControlName="email"    alignment = "left"  > 
+                    <span class = "edu-label">Email</span>
+                </edu-input>
+
 
                 <edu-input  isPassword = "true" alignment = "left" formControlName="pw"> 
                     <visibility-toggle  class="edu-input__suffix" InputAffix ></visibility-toggle>    

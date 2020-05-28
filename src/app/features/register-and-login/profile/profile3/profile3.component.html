@@ -1,0 +1,41 @@
+<edu-nav></edu-nav>
+<main>
+    <div class="content">
+        <h2 class="content__title">Set Up Your Profile</h2>
+        <div class="stepper">
+            <div  [ngClass]="step.state" *ngFor="let step of stepper; index as i" class="stepper__step">             
+                    <div class = "stepper__badge" >
+                        <span *ngIf="isNotComplete(step.state)">{{i+1}}</span>
+                    </div>  
+                    <span class ="stepper__text">{{step.text}}</span>
+                
+            </div>
+        </div>
+        
+        <form class = "flex-grow-1 form" action=""  [formGroup]="addressForm" (ngSubmit)="formSubmit()" >
+                
+            <div class="group">
+                <edu-input     formControlName="address"    alignment = "left"> 
+                    <span class = "edu-label"> Address </span>    
+                </edu-input>
+                <edu-input     formControlName="country"    alignment = "left"> 
+                    <span class = "edu-label">Country</span>    
+                </edu-input>
+                <edu-input     formControlName="zip"    alignment = "left"> 
+                    <span class = "edu-label">Zip Code</span>    
+                </edu-input>
+                <edu-input     formControlName="State"    alignment = "left"> 
+                    <span class = "edu-label">State</span>    
+                </edu-input>
+                <edu-input     formControlName="City"    alignment = "left"> 
+                    <span class = "edu-label">City</span>    
+                </edu-input>
+            </div>
+       
+            <button type = "button" class ="btn form__btn"  disabled> NEXT </button>
+         </form>
+
+
+    </div>
+
+</main>

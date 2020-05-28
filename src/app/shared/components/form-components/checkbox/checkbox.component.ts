@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy , Input, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'edu-checkbox',
@@ -8,9 +8,23 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class CheckboxComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private el:ElementRef) { }
 
   ngOnInit(): void {
+    this.setElementID();
+ 
   }
 
+
+  setElementID(){
+    if(this.elementId == undefined && this.el.nativeElement.getAttribute("formcontrolname") !== undefined){
+      this.elementId = this.el.nativeElement.getAttribute("formcontrolname");
+    } 
+}
+
+  
+  @Input("elementId") elementId;
+  @Input("alignment") alignment =  "right";//top,bottom, left,right(default )
+  isChecked = false;
 }

@@ -11,7 +11,7 @@
                 
                 <edu-input    formControlName="username"    alignment = "left" elementId ="username"> 
                     <span class = "edu-label"> User Name </span>
-                    <img  class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-grey.svg" alt="">    
+                   
                 </edu-input>
 
                 <edu-input  isPassword = "true" alignment = "left" formControlName="pw"> 
@@ -23,11 +23,11 @@
 
 
                 <button class = "form__btn">sign in</button>
-                <div class="group--row-layout just-center">
-                    <div class="group--row-layout just-space-between input__wrapper--last">
-                        <span>123</span>
-                        <button class = "btn--text">Forgot Password?</button>
-                    </div> 
+                <div class="group--row-layout just-space-between ">
+                    <edu-checkbox alignment="right">
+                            <span class = "edu-label">Remember me</span>
+                    </edu-checkbox>
+                    <button class = "btn--text">Forgot Password?</button>
                 </div>
 
         </form>

@@ -1,0 +1,54 @@
+@import "src/assets/scss/colors";
+// src\assets\scss\_colors.scss
+@import "src/assets/scss/mixins/components";
+@import "src/assets/scss/mixins/alignment";
+.wrapper{
+    @include displayFlex(flex-start);
+}
+
+
+.checkbox-wrapper{
+  width: 36px;
+  height: 36px;
+  border: 1px solid #707070;
+  border-radius: 50%;
+  position: relative;
+  &.checked{
+      background: url(src/assets/registration/white-tick.svg) no-repeat no-repeat center center;
+      background-color: grey;
+  }
+}
+.checkbox{
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+
+.label{
+    margin: 10px;
+}
+
+.right .label  {
+    order : 1
+}
+.left  .label {
+    order : -1
+}
+.top{
+    flex-direction: column;
+    .label {
+        order : -1
+    }
+}
+
+.bottom{
+    flex-direction: column;
+    .label {
+        order :  1
+    }
+}
+
+
+
