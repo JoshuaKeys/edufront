@@ -18,6 +18,8 @@ import { SubjectsAreaComponent } from './components/subjects-area/subjects-area.
 import { TotalStaffComponent } from './components/total-staff/total-staff.component';
 import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
 import { CountryFieldComponent } from './components/country-field/country-field.component';
+import { SubjectClassesComponent } from './components/classes/subject-classes.component';
+import { ClassesSubjectIconComponent } from './components/classes-subject-icon/classes-subject-icon.component';
 @NgModule({
   declarations: [
     StaffsShellComponent,
@@ -28,7 +30,9 @@ import { CountryFieldComponent } from './components/country-field/country-field.
     SubjectsAreaComponent,
     TotalStaffComponent,
     PhoneFieldComponent,
-    CountryFieldComponent
+    CountryFieldComponent,
+    SubjectClassesComponent,
+    ClassesSubjectIconComponent
   ],
   imports: [
     CommonModule,

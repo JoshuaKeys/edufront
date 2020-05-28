@@ -1,4 +1,9 @@
-<div class="chip" [appDraggable]="{ data: subject }">
+<div
+  class="chip"
+  [appDraggable]="{ data: subject }"
+  (click)="handleClick()"
+  [ngClass]="{ 'chip--active': subject.selected }"
+>
   <img class="chip__img" src="assets/pill-blue-icon.svg" alt="" />
   <span class="chip__text">{{ subject.title }}</span>
 </div>

@@ -80,4 +80,8 @@
   *ngIf="(staffsModalsState | async).editModal"
   [subjects]="subjects"
   [classes]="classes"
+  (selectSubject)="onSelectSubject($event)"
+  (unSelectSubject)="onUnselectSubject($event)"
+  (classClicked)="onClassClicked($event)"
+  [classesAndSubjects]="subjectClassesAssociation"
 ></edu-staff-form>

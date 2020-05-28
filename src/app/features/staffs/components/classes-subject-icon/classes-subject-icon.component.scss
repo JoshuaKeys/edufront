@@ -1,4 +1,4 @@
-@import '../../../../assets/styles/modules/section-module';
+@import '../../../../../assets/styles/modules/section-module';
 .chip {
   @include chip();
 }
@@ -7,7 +7,7 @@
 }
 .chip--active {
   background-color: #69a9f2;
-  .chip__text {
-    color: #fff;
-  }
+}
+.chip__text {
+  max-width: unset;
 }

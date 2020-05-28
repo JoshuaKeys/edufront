@@ -1,0 +1,6 @@
+<div class="chip" (click)="handleClick()" *ngIf="subject | async as subject">
+  <img class="chip__img" src="assets/pill-blue-icon.svg" alt="" />
+  <span class="chip__text"
+    >{{ subject.title }}, Class {{ subject.classes.join(' | ') }}</span
+  >
+</div>

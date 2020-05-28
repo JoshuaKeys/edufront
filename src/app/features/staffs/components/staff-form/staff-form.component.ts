@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ProfilePicModel } from './../../models/profile-pic.model';
@@ -7,6 +7,8 @@ import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
 import { Observable } from 'rxjs';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
+import { SelectableSubjectModel } from 'src/app/shared/models/selectable-subject.model';
+import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
 
 interface AddEditFormFieldsModel {
   profilePic: ProfilePicModel;
@@ -15,7 +17,7 @@ interface AddEditFormFieldsModel {
   selector: 'edu-staff-form',
   templateUrl: './staff-form.component.html',
   styleUrls: ['./staff-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StaffFormComponent implements OnInit {
   countryIconMap = [
@@ -44,8 +46,13 @@ export class StaffFormComponent implements OnInit {
       phonePrefix: '+44'
     }
   ]
+
   @Input() classes: Observable<ClassModel[]>;
   @Input() subjects: Observable<SubjectModel[]>;
+  @Input() classesAndSubjects: SubjectClassesAssociation[];
+  @Output() selectSubject = new EventEmitter<string>();
+  @Output() unSelectSubject = new EventEmitter<string>();
+  @Output() classClicked = new EventEmitter<ClassModel>();
   addEditForm: FormGroup;
   constructor() { }
 
@@ -87,5 +94,14 @@ export class StaffFormComponent implements OnInit {
         country: this.countryIconMap[idx]
       })
     }
+  }
+  onSelectSubject(subjectId: string) {
+    this.selectSubject.emit(subjectId)
+  }
+  onUnSelectSubject(subjectId: string) {
+    this.unSelectSubject.emit(subjectId)
+  }
+  onClassClicked(classItem: ClassModel) {
+    this.classClicked.emit(classItem);
   }
 }

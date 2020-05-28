@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { SubjectModel } from '../../models/_subject.model';
+import { SelectableSubjectModel } from '../../models/selectable-subject.model';
 
 @Component({
   selector: 'edu-icon-button',
@@ -8,14 +9,22 @@ import { SubjectModel } from '../../models/_subject.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconButtonComponent implements OnInit {
-  @Input() subject: SubjectModel;
+  @Input() subject: SelectableSubjectModel;
+  @Input() mode: string;
+  @Output() onClick = new EventEmitter<SelectableSubjectModel>();
+
   constructor() { }
   onDragOver(event) {
     event.preventDefault();
   }
   onDrop(event) {
     event.preventDefault();
-    console.log(event.dataTransfer);
+  }
+  handleClick() {
+    if (this.mode !== 'select') {
+      return;
+    }
+    this.onClick.emit(this.subject)
   }
   ngOnInit(): void {
   }

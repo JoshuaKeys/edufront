@@ -94,6 +94,10 @@
           <edu-subjects-area
             [classes]="classes"
             [subjects]="subjects"
+            (selectSubject)="onSelectSubject($event)"
+            (unSelectSubject)="onUnSelectSubject($event)"
+            (classClicked)="onClassClicked($event)"
+            [classesAndSubject]="classesAndSubjects"
           ></edu-subjects-area>
         </div>
       </form>
