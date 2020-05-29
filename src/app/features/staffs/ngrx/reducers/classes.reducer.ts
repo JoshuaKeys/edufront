@@ -7,7 +7,6 @@ const classesAdapter = createEntityAdapter<ClassModel>();
 const initialState = classesAdapter.getInitialState();
 export const classesReducer = createReducer(initialState,
   on(fetchClassesSuccess, (state, action) => {
-    console.log(action.classes)
     return classesAdapter.addAll(action.classes, state)
   })
 )

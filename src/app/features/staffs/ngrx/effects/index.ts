@@ -9,7 +9,12 @@ import {
   fetchSubjectSuccess,
   addClassToSubjectRequest,
   toggleClassInSubject,
-  doNothing
+  doNothing,
+  createStaffResponse,
+  createStaffRequest,
+  toggleAddEditModal,
+  deleteStaffRequest,
+  deleteStaffSuccess
 } from '../actions';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { StaffsService } from '../../services/staffs.service';
@@ -17,7 +22,10 @@ import { SubjectsService } from 'src/app/shared/services/subjects.service';
 import { ClassesService } from 'src/app/shared/services/classes.service';
 import { Store } from '@ngrx/store';
 import { StaffsStateModel } from '../../models/staff-state.model';
-import { selectSelectedSubject } from '../selectors';
+import { selectSelectedSubject, classesAndSubjectsAssoc } from '../selectors';
+import { StaffFormModel } from '../../models/staff-form.model';
+import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
+import { CreateStaffRequestModel } from '../../models/create-staff-request.model';
 
 @Injectable()
 export class StaffsEffects {
@@ -46,13 +54,64 @@ export class StaffsEffects {
       if (!selectedSubject) {
         return doNothing();
       }
-
       return toggleClassInSubject({
         subjectId: selectedSubject.id,
         class: action.class
       })
     })
-  ))
+  ));
+  createStaffRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(createStaffRequest),
+    withLatestFrom(this.store.select(classesAndSubjectsAssoc)),
+    mergeMap(([action, subjectsAssociation]) => {
+      return this.staffsService.uploadLogo(action.staff.profilePic.acceptedFile).pipe(
+        mergeMap(res => {
+          const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, res.file)
+          return this.staffsService.createStaff(createStaffRequestObj).pipe(
+            mergeMap(response => [createStaffResponse({ staff: response }), toggleAddEditModal()])
+          );
+        })
+      )
+    })
+  ));
+  deleteStaffReqest$ = createEffect(() => this.actions$.pipe(
+    ofType(deleteStaffRequest),
+    mergeMap(action => this.staffsService.deleteStaff(action.staff.id).pipe(
+      map(resp => deleteStaffSuccess({ staff: action.staff }))
+    ))
+  ));
+  composeCreateStaffData(staffData: StaffFormModel, subjectData: SubjectClassesAssociation[], profilePic: string): CreateStaffRequestModel {
+    let createStaffObj: CreateStaffRequestModel = {
+      subjectClasses: null,
+      profileDto: null
+    };
+
+    createStaffObj['subjectClasses'] = subjectData.map(item => {
+      let classIds = item.classes.map(classItem => classItem.id)
+      return {
+        subjectId: item.subjectId,
+        classes: classIds
+      }
+    })
+
+    createStaffObj['profileDto'] = {
+      classId: null,
+      contexts: ['TEACHER'],
+      dob: staffData.dob,
+      email: staffData.email,
+      firstName: staffData.firstName,
+      gender: staffData.sex,
+      lastName: staffData.familyName,
+      middleName: staffData.middleName,
+      countryId: staffData.country.id,
+      address: staffData.address,
+      city: staffData.city,
+      state: staffData.state,
+      zipcode: staffData.zip,
+      phone: staffData.phone.phoneNum
+    }
+    return createStaffObj;
+  }
   constructor(
     private actions$: Actions,
     private staffsService: StaffsService,

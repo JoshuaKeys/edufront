@@ -1,23 +1,47 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { StaffsService } from '../../services/staffs.service';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EntityState } from '@ngrx/entity';
 import { StaffModel } from '../../models/staff.model';
-import { selectAllStaffs, selectStaffsModalsState, selectAllSubjects, selectAllClasses, selectClassesOfSubject, classesAndSubjectsAssoc } from '../../ngrx/selectors';
+import {
+  selectAllStaffs,
+  selectStaffsModalsState,
+  selectAllSubjects,
+  selectAllClasses,
+  selectClassesOfSubject,
+  classesAndSubjectsAssoc,
+  selectSortingData
+} from '../../ngrx/selectors';
 import { Observable } from 'rxjs';
 import { StaffsModalsModel } from '../../models/staffs-modal.model';
-import { toggleAddEditModal, setSelectedState, unSetSelectedState, addClassToSubjectRequest } from '../../ngrx/actions';
+import {
+  toggleAddEditModal,
+  setSelectedState,
+  unSetSelectedState,
+  addClassToSubjectRequest,
+  createStaffRequest,
+  toggleSortByGender,
+  toggleSortByAlphabet,
+  deleteStaffRequest,
+  toggleEndModal,
+  toggleStartModal
+} from '../../ngrx/actions';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { withLatestFrom, map } from 'rxjs/operators';
+import { withLatestFrom, map, filter, tap } from 'rxjs/operators';
 import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
+import { StaffFormModel } from '../../models/staff-form.model'
+import { SortingModel } from '../../models/sorting-state.model';
+import { StaffsCommunicatorService } from '../../services/staffs-communication.service';
 
 @Component({
   selector: 'edu-staffs-creation',
   templateUrl: './staffs-creation.component.html',
   styleUrls: ['./staffs-creation.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    StaffsCommunicatorService
+  ]
 })
 export class StaffsCreationComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
@@ -27,17 +51,47 @@ export class StaffsCreationComponent implements OnInit {
   classes: Observable<ClassModel[]>;
   currentlySelectedSubject: string;
   subjectClassesAssociation: Observable<SubjectClassesAssociation[]>
-  sort = '';
+  sortingState: Observable<SortingModel>;
+  @ViewChild('searchInput') searchInput;
+
   ngOnInit(): void {
     this.staffs = this.store.select(selectAllStaffs);
     this.staffsModalsState = this.store.select(selectStaffsModalsState);
     this.subjects = this.store.select(selectAllSubjects);
     this.classes = this.store.select(selectAllClasses);
     this.subjectClassesAssociation = this.store.select(classesAndSubjectsAssoc);
+    this.sortingState = this.store.select(selectSortingData)
+    this.staffsCommunicator.staffEdition$.subscribe(staff => this.onEditStaff(staff))
+    this.staffsCommunicator.staffRemoval$.subscribe(staff => this.onRemoveStaff(staff))
   }
-  changeSort(sort) {
-    this.sort = sort;
+
+  onTextChange(event) {
+    const searchField = event.target.value;
+    this.staffs = this.store.select(selectAllStaffs).pipe(
+      map(staffs => staffs.filter(staff => this.matchByAllNameTypes(staff, searchField)))
+    )
   }
+
+  matchByAllNameTypes(staff: StaffModel, searchField) {
+    const firstNameMatch = staff.firstName ? staff.firstName.toLowerCase().match(searchField.toLowerCase()) : null;
+    const middleNameMatch = staff.middleName ? staff.middleName.toLowerCase().match(searchField.toLowerCase()) : null;
+    const lastNameMatch = staff.lastName ? staff.lastName.toLowerCase().match(searchField.toLowerCase()) : null;
+
+    return firstNameMatch || middleNameMatch || lastNameMatch
+  }
+
+  createStaff(staff: StaffFormModel) {
+    this.store.dispatch(createStaffRequest({ staff }))
+  }
+
+  onSortByGender() {
+    this.store.dispatch(toggleSortByGender())
+  }
+
+  onSortByAlphabet() {
+    this.store.dispatch(toggleSortByAlphabet())
+  }
+
   refreshClasses() {
     this.classes = this.store.select(selectAllClasses).pipe(
       withLatestFrom(this.store.select(selectClassesOfSubject, { subjectId: this.currentlySelectedSubject })),
@@ -46,16 +100,25 @@ export class StaffsCreationComponent implements OnInit {
       })
     )
   }
+
   onEditStaff(staff: StaffModel) {
     this.store.dispatch(toggleAddEditModal());
   }
+  onRemoveStaff(staff: StaffModel) {
+    this.store.dispatch(deleteStaffRequest({ staff }))
+  }
+
   onAddStaff() {
     this.store.dispatch(toggleAddEditModal());
   }
+
   onSelectSubject(subjectId: string) {
     this.store.dispatch(setSelectedState({ subjectId }))
     this.currentlySelectedSubject = subjectId;
     this.refreshClasses();
+  }
+  onFinish() {
+    this.store.dispatch(toggleEndModal())
   }
   transformClasses(allClasses, classesOfSubjects) {
     if (!classesOfSubjects) {
@@ -69,7 +132,6 @@ export class StaffsCreationComponent implements OnInit {
           matched = true;
         }
       }
-      console.log(matched);
       if (!matched) {
         return classItem;
       }
@@ -78,12 +140,39 @@ export class StaffsCreationComponent implements OnInit {
       return classItemCopy;
     });
   }
+
   onClassClicked(classItem: ClassModel) {
     this.store.dispatch(addClassToSubjectRequest({ class: classItem }))
     this.refreshClasses()
   }
+  onStart() {
+    this.store.dispatch(toggleStartModal())
+  }
+
   onUnselectSubject(subjectId: string) {
     this.store.dispatch(unSetSelectedState({ subjectId }))
   }
-  constructor(private store: Store<EntityState<StaffModel>>, private activatedRoute: ActivatedRoute) { }
+  get startDescription() {
+    return `You will now create the <span class="yellow-text">Staff profiles</span>. same as the last step. The only
+    difference is that we will ask you what subject the staff is able to teach,
+    and at what level. This will help timetabling and organise courses.`
+  }
+  get endDescription() {
+    return `
+      You are done with profile uploads, we promise! Now we can start putting
+      things together. Whenever you are ready, go to the next step where we will
+      organ your sections
+    `;
+  }
+  goToDashboard() {
+
+  }
+  goToStudents() {
+
+  }
+  constructor(
+    private store: Store<EntityState<StaffModel>>,
+    private activatedRoute: ActivatedRoute,
+    private staffsCommunicator: StaffsCommunicatorService
+  ) { }
 }

@@ -7,6 +7,12 @@
   &__male {
     width: 40%;
   }
+  &__header {
+    color: #a5aec7;
+    text-align: center;
+    font: 600 24px/55px Quicksand;
+    margin-bottom: 32px;
+  }
 }
 :host {
   width: 100%;

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'edu-modal',
+  selector: 'edu-modal-v2',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })

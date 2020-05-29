@@ -14,27 +14,43 @@
         <div class="search__input-wrapper">
           <img class="search__icon" src="../../../assets/search.svg" alt="" />
 
-          <input class="search__input" type="text" placeholder="Search" />
+          <input
+            class="search__input"
+            type="text"
+            #searchInput
+            placeholder="Search"
+            (input)="onTextChange($event)"
+          />
         </div>
 
         <div class="search__icon-btns">
-          <div class="search__icon-btn">
+          <div
+            class="search__icon-btn"
+            [ngClass]="{
+              active: (sortingState | async).alphabetical
+            }"
+          >
             <img
               src="../../../assets/subject-search-icon-1.svg"
               alt=""
               class="icon-img"
-              (click)="changeSort('alphabetically')"
+              (click)="onSortByAlphabet()"
             />
             <div class="tooltip tooltip--top">
               Sort Alphabetical
             </div>
           </div>
-          <div class="search__icon-btn">
+          <div
+            class="search__icon-btn"
+            [ngClass]="{
+              active: (sortingState | async).byGender
+            }"
+          >
             <img
               src="../../../assets/subject-search-icon-3.svg"
               alt=""
               class="icon-img"
-              (click)="changeSort('gender')"
+              (click)="onSortByGender()"
             />
             <div class="tooltip tooltip--top">
               Sort by Sex
@@ -47,25 +63,34 @@
         </button>
       </div>
       <div class="group">
-        <div class="group__body" *ngIf="sort === ''">
+        <div
+          class="group__body"
+          *ngIf="
+            (sortingState | async).alphabetical === false &&
+            (sortingState | async).byGender === false
+          "
+        >
           <edu-staff-chip
             *ngFor="let staff of staffs | async"
             [staff]="staff"
-            (edit)="onEditStaff($event)"
           ></edu-staff-chip>
         </div>
       </div>
       <div class="group group--alphabetically">
-        <div class="group__body" *ngIf="sort === 'alphabetically'">
+        <div class="group__body" *ngIf="(sortingState | async).alphabetical">
           <edu-classes-alphabetically
             [staffs]="staffs"
           ></edu-classes-alphabetically>
         </div>
       </div>
       <div class="group group-gender">
-        <div class="group__body" *ngIf="sort === 'gender'">
+        <div class="group__body" *ngIf="(sortingState | async).byGender">
           <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
         </div>
+      </div>
+      <div class="content__btns opacity">
+        <div class="opacity-overlay"></div>
+        <button class="content__btn" (click)="onFinish()">Continue</button>
       </div>
     </div>
   </section>
@@ -78,4 +103,35 @@
   (unSelectSubject)="onUnselectSubject($event)"
   (classClicked)="onClassClicked($event)"
   [classesAndSubjects]="subjectClassesAssociation"
+  (onCreateStaff)="createStaff($event)"
 ></edu-staff-form>
+<edu-modal-v2
+  *ngIf="(staffsModalsState | async).endModal"
+  btnText="GOT IT"
+  header="Staffs Set Up Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO
+  DASHBOARD"
+  rightBtn="TAKE ME TO STUDENTS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToStudents()"
+>
+  You are done with profile uploads, we promise! Now we can start putting things
+  together. Whenever you are ready, go to the next step where we will organ your
+  sections
+</edu-modal-v2>
+
+<edu-modal-v2
+  *ngIf="(staffsModalsState | async).startModal"
+  btnText="GOT IT"
+  header="Staff Creation"
+  icon="assets/students-intro.svg"
+  (btnClicked)="onStart()"
+>
+  You will now create the Staff profiles. same as the last step. The only
+  difference is that we will ask you what <b class="orangeColor">subject</b> the
+  staff is <b class="orangeColor">able</b> to teach, and at what
+  <b class="orangeColor">level</b>. This will help timetabling and organise
+  courses.</edu-modal-v2
+>

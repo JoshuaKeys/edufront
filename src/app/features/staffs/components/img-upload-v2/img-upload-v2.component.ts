@@ -42,7 +42,6 @@ export class ImgUploadV2Component implements OnInit {
   loaded = false;
   imageLoaded = false;
 
-
   count = 140;
 
   handleDragEnter() {
@@ -83,6 +82,7 @@ export class ImgUploadV2Component implements OnInit {
     this.imageSrc = reader.result;
     this.loaded = true;
     this.cdRef.detectChanges();
+    console.log(this.acceptedFile)
     this.uploadimagedata.emit({ base64: this.imageSrc, imageUrl: '', acceptedFile: this.acceptedFile });
   }
 

@@ -1,6 +1,6 @@
 <div class="sort-by-gender">
   <div class="sort-by-gender__male">
-    <h1>Male</h1>
+    <h1 class="sort-by-gender__header">Male</h1>
     <div class="edu-staff-chips">
       <edu-staff-chip
         *ngFor="let staff of males | async"
@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="sort-by-gender__female">
-    <h1>Female</h1>
+    <h1 class="sort-by-gender__header">Female</h1>
     <div class="edu-staff-chips">
       <edu-staff-chip
         *ngFor="let staff of females | async"

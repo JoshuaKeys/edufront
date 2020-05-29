@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { CreateSchoolModel } from '../models/create-school.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { LogoUploadResponseModel } from '../models/logo-upload-response.model';
+import { LogoUploadResponseModel } from '../../../shared/models/logo-upload-response.model';
 import { CountryModel } from '../models/country.model';
 
 @Injectable()

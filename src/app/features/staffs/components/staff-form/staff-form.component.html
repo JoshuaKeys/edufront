@@ -4,7 +4,12 @@
       <h2 class="modal__title">
         Add/Edit Staff
       </h2>
-      <form [formGroup]="addEditForm" class="modal__content">
+      <form
+        id="addEditForm"
+        [formGroup]="addEditForm"
+        (ngSubmit)="createStaff()"
+        class="modal__content"
+      >
         <div class="modal__content-profile">
           <h3 class="modal__content-header">Profile Picture</h3>
           <edu-img-upload-v2
@@ -20,31 +25,32 @@
               formControlName="firstName"
               text="First Name"
             ></edu-input-field>
+
             <edu-input-field
               idPrefix="middleName"
               formControlName="middleName"
               text="Middle Name"
             ></edu-input-field>
+
             <edu-input-field
               idPrefix="familyName"
               formControlName="familyName"
               text="Family Name"
             ></edu-input-field>
+
             <edu-input-field
               idPrefix="dateOfBirth"
-              formControlName="dateOfBirth"
+              formControlName="dob"
               text="Date of Birth"
             ></edu-input-field>
-            <!-- <edu-input-field
-              idPrefix="sex"
-              formControlName="sex"
-              text="Sex"
-            ></edu-input-field> -->
+
             <edu-select formControlName="sex">
+              <span class="edu-label"> Sex </span>
               <edu-option OptionValue="male"> Male </edu-option>
               <edu-option OptionValue="female">Female</edu-option>
               <edu-option OptionValue=""> clear all </edu-option>
             </edu-select>
+
             <edu-input-field
               idPrefix="id"
               formControlName="id"
@@ -106,7 +112,11 @@
           ></edu-subjects-area>
         </div>
       </form>
-      <button class="form__round-btn form__round-btn--active">
+      <button
+        form="addEditForm"
+        class="form__round-btn form__round-btn--active"
+        type="submit"
+      >
         <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
       </button>
     </div>

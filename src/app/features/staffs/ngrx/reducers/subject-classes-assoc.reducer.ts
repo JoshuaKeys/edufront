@@ -16,7 +16,7 @@ export const subjectClassesAssociationReducer = createReducer(initialState,
     }
 
     const isClassPresentAlready = stateCopy[itemIdx] ? stateCopy[itemIdx].classes.findIndex(item => item.id === action.class.id) : -1;
-    console.log(isClassPresentAlready);
+
     if (isClassPresentAlready > -1) {
       stateCopy[itemIdx].classes.splice(isClassPresentAlready, 1)
     } else {

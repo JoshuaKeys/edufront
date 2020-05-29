@@ -29,7 +29,6 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
       this.value = '';
       return;
     }
-    console.log(val);
     this.value = val.phoneNum ? val.phoneNum : '';
     this.phonePrefix = val.phonePrefix;
     this.activeIcon = val.icon;
@@ -48,7 +47,6 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
     const iconCopy = { ...icon };
     iconCopy.phoneNum = this.value;
     this.valueChanged.emit(iconCopy)
-    console.log(this.valueChanged)
     this.toggleDropdown();
   }
   processClick() {

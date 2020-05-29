@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { StaffModel } from '../../models/staff.model';
 import { map } from 'rxjs/operators';
@@ -17,6 +23,16 @@ export class ClassesAlphabeticallyComponent implements OnInit {
   ngOnInit(): void {
     this.alphabetObj = this.staffs.pipe(
       map(staff => {
+        return this.sortByAlphabet(staff);
+      })
+    )
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.staffs.firstChange) {
+      return;
+    }
+    this.alphabetObj = changes.staffs.currentValue.pipe(
+      map((staff: StaffModel[]) => {
         return this.sortByAlphabet(staff);
       })
     )

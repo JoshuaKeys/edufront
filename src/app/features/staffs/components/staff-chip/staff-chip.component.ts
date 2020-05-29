@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { StaffModel } from '../../models/staff.model';
+import { StaffsCommunicatorService } from '../../services/staffs-communication.service';
 
 @Component({
   selector: 'edu-staff-chip',
@@ -7,15 +8,20 @@ import { StaffModel } from '../../models/staff.model';
   styleUrls: ['./staff-chip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StaffChipComponent implements OnInit {
+export class StaffChipComponent implements OnInit, OnChanges {
   @Input() gender: string;
   @Input() staff: StaffModel;
 
-  @Output() edit = new EventEmitter<StaffModel>();
-  constructor() { }
+  constructor(private staffsCommunicator: StaffsCommunicatorService) { }
   ngOnInit(): void {
   }
+  ngOnChanges(changes: SimpleChanges) {
+    this.staff = changes.staff.currentValue;
+  }
   onEdit(staff: StaffModel) {
-    this.edit.emit(staff);
+    this.staffsCommunicator.editStaff(staff)
+  }
+  onDelete(staff: StaffModel) {
+    this.staffsCommunicator.removeStaff(staff)
   }
 }

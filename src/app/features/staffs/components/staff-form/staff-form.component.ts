@@ -53,16 +53,19 @@ export class StaffFormComponent implements OnInit {
   @Output() selectSubject = new EventEmitter<string>();
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
+  @Output() onCreateStaff = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
-
+  createStaff() {
+    this.onCreateStaff.emit(this.addEditForm.value)
+  }
   ngOnInit(): void {
     this.addEditForm = new FormGroup({
       profilePic: new FormControl(null),
       firstName: new FormControl(''),
       middleName: new FormControl(''),
       familyName: new FormControl(''),
-      dateOfBirth: new FormControl(''),
+      dob: new FormControl(''),
       sex: new FormControl(''),
       id: new FormControl(''),
       phone: new FormControl(this.countryIconMap[0]),
@@ -75,6 +78,7 @@ export class StaffFormComponent implements OnInit {
     })
   }
   handleImgUpload(event: ProfilePicModel) {
+    console.log(event);
     this.addEditForm.patchValue({
       profilePic: event
     })

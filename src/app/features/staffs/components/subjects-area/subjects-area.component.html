@@ -9,6 +9,7 @@
           class="search__input"
           (focus)="toggleSubjectClassesBox()"
           type="text"
+          (input)="onSearch($event)"
           placeholder="Search"
         />
         <ng-template #subjectClasses>
@@ -27,7 +28,7 @@
             <div class="subjects__container">
               <div class="subjects">
                 <edu-icon-button
-                  *ngFor="let subject of subjects | async"
+                  *ngFor="let subject of subjectsData | async"
                   [subject]="subject"
                   mode="select"
                   (onClick)="toggleSubject($event)"

@@ -2,6 +2,10 @@ import { createAction, props } from '@ngrx/store';
 import { GetStaffResponseModel } from '../../models/get-staff-response.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { SelectableSubjectModel } from 'src/app/shared/models/selectable-subject.model';
+import { CreateStaffRequestModel } from '../../models/create-staff-request.model';
+import { CreateStaffResponseModel } from '../../models/create-staff-response.model';
+import { StaffFormModel } from '../../models/staff-form.model';
+import { StaffModel } from '../../models/staff.model';
 
 export const fetchStaffsRequest = createAction(
   '[StaffShellComponent] fetchStaffsRequest'
@@ -46,4 +50,32 @@ export const toggleClassInSubject = createAction(
 )
 export const doNothing = createAction(
   '[StaffEffects] doNothing'
+)
+export const createStaffRequest = createAction(
+  '[StaffsCreationComponent] createStaffRequest',
+  props<{ staff: StaffFormModel }>()
+)
+export const createStaffResponse = createAction(
+  '[StaffsEffect] createStaffResponse',
+  props<{ staff: CreateStaffResponseModel }>()
+)
+export const toggleSortByGender = createAction(
+  '[StaffsCreationComponent] toggleSortByGender'
+)
+export const toggleSortByAlphabet = createAction(
+  '[StaffsCreationComponent] toggleSortByAlphabet'
+)
+export const deleteStaffRequest = createAction(
+  '[StaffCreationComponent] deleteStaffRequest',
+  props<{ staff: StaffModel }>()
+)
+export const deleteStaffSuccess = createAction(
+  '[StaffEffects] delteStaffSuccess',
+  props<{ staff: StaffModel }>()
+)
+export const toggleEndModal = createAction(
+  '[StaffsCreationComponent] toggleEndModal'
+)
+export const toggleStartModal = createAction(
+  '[StaffsCreationComponent] toggleStartModal'
 )

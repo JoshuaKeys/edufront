@@ -35,3 +35,7 @@ export const selectClassesOfSubject = createSelector(
   classesAndSubjectsAssoc,
   (assoc, props: { subjectId: string }) => assoc ? assoc.find(item => props.subjectId === item.subjectId) as SubjectClassesAssociation : []
 )
+
+export const selectSortingData = createSelector(
+  staffsFeature, feat => feat.sorting
+)

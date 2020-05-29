@@ -12,7 +12,7 @@ import { IconModel } from 'src/app/shared/components/icon-field/icon-field.compo
     { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => CountryFieldComponent) }
   ]
 })
-export class CountryFieldComponent implements OnInit {
+export class CountryFieldComponent {
   @Input() fieldName: string;
   @Input() icons: IconModel[]
   @Input() mode: string;
@@ -23,17 +23,12 @@ export class CountryFieldComponent implements OnInit {
   @Output() valueChanged = new EventEmitter<IconModel>();
   @ViewChild('fieldNameEl') fieldNameEl: ElementRef<HTMLInputElement>;
   onValueChange: (any) => any;
-  ngOnInit(): void {
-    console.log(this.fieldName)
-    console.log(this.icons)
-  }
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
   writeValue(val: IconModel) {
     console.log('called');
     if (val === null) {
-      console.log('true')
       setTimeout(() => { this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', ''); }, 0)
 
       this.activeIcon = this.icons[0].icon;
@@ -58,7 +53,6 @@ export class CountryFieldComponent implements OnInit {
     }
   }
   onTextChange(event) {
-    // this.onValueChange(event.target.value);
     if (this.mode === 'select') {
       this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', this.value);
       return;
