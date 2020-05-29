@@ -1,10 +1,10 @@
 export interface ProfileDTOModel {
-  classId: string;
   contexts: string[];
   dob: string;
   email: string;
   firstName: string;
   gender: string;
+  profileImage: string;
   lastName: string;
   middleName: string;
   countryId: string;
@@ -12,5 +12,6 @@ export interface ProfileDTOModel {
   city: string;
   state: string;
   zipcode: string;
+  createdCode: boolean;
   phone: string;
 }

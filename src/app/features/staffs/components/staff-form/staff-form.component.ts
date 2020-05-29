@@ -87,7 +87,7 @@ export class StaffFormComponent implements OnInit {
     const idx = this.countryIconMap.findIndex(iconMap => iconMap.id === event.id);
     if (idx > -1) {
       this.addEditForm.patchValue({
-        phone: this.countryIconMap[idx]
+        phone: { ...this.countryIconMap[idx], phoneNum: event.phoneNum }
       })
     }
   }

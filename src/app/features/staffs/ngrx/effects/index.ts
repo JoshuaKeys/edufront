@@ -90,12 +90,11 @@ export class StaffsEffects {
       let classIds = item.classes.map(classItem => classItem.id)
       return {
         subjectId: item.subjectId,
-        classes: classIds
+        classids: classIds
       }
     })
 
     createStaffObj['profileDto'] = {
-      classId: null,
       contexts: ['TEACHER'],
       dob: staffData.dob,
       email: staffData.email,
@@ -103,12 +102,14 @@ export class StaffsEffects {
       gender: staffData.sex,
       lastName: staffData.familyName,
       middleName: staffData.middleName,
+      profileImage: profilePic,
       countryId: staffData.country.id,
       address: staffData.address,
       city: staffData.city,
       state: staffData.state,
       zipcode: staffData.zip,
-      phone: staffData.phone.phoneNum
+      createdCode: false,
+      phone: staffData.phone.phoneNum,
     }
     return createStaffObj;
   }

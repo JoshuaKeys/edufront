@@ -20,6 +20,7 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
   activeIcon: string;
   value: string;
   item: string;
+  icon: PhoneIconModel;
   @Output() valueChanged = new EventEmitter<PhoneIconModel>()
   writeValue(val: PhoneIconModel) {
     if (val === null || val == undefined) {
@@ -27,8 +28,10 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
       this.phonePrefix = this.icons[0].phonePrefix
       this.item = this.icons[0].item;
       this.value = '';
+      this.icon = val;
       return;
     }
+    this.icon = val;
     this.value = val.phoneNum ? val.phoneNum : '';
     this.phonePrefix = val.phonePrefix;
     this.activeIcon = val.icon;
@@ -43,17 +46,20 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
-  changeItem(icon) {
-    const iconCopy = { ...icon };
+  changeItem(icon: PhoneIconModel) {
+    const iconCopy = { ...this.icon, ...icon };
     iconCopy.phoneNum = this.value;
-    this.valueChanged.emit(iconCopy)
+    this.icon = iconCopy;
+    this.valueChanged.emit(this.icon)
     this.toggleDropdown();
   }
   processClick() {
 
   }
   onTextChange(event) {
-
+    const iconCopy: PhoneIconModel = { ...this.icon, phoneNum: event.target.value };
+    this.icon = iconCopy;
+    this.valueChanged.emit(this.icon)
   }
   ngOnInit(): void {
   }
