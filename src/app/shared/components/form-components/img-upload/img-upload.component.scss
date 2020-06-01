@@ -1,0 +1,28 @@
+@import "src/assets/styles/colors";
+@import "src/assets/styles/mixins/containers";
+@import "src/assets/styles/mixins/buttons";
+@include group();
+
+.drop-zone{
+    position: relative;
+}
+
+
+.file{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+}
+
+.btns{
+    margin-top: 40px;
+    max-width: 231px;
+    justify-content: space-between;
+}
+.btn--text{
+    @include textButton( $blue);
+    font: 500 16px/24px Raleway;
+
+}

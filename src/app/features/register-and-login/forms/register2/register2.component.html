@@ -20,7 +20,7 @@
                 <edu-input  isPassword = "true" alignment = "left" formControlName="pw"> 
                     <visibility-toggle  class="edu-input__suffix" InputAffix ></visibility-toggle>    
                     <span class = "edu-label"> Password </span>
-                    <ul class = "validator edu-input__validators--right"  *ngIf="registrationForm.controls.pw.invalid && registrationForm.controls.pw.touched" >
+                    <ul class = "validator" Validator alignment = "right"  *ngIf="registrationForm.controls.pw.invalid && registrationForm.controls.pw.touched" >
                         <li *ngIf="registrationForm.controls.pw.errors.minlength||registrationForm.controls.pw.errors.required">8 Characters Long</li>
                         <li *ngIf="registrationForm.controls.pw.errors.pattern" >Contain one Capital</li>
                         <li *ngIf="registrationForm.controls.pw.errors.pattern">Contain one Numeral</li>

@@ -5,12 +5,15 @@ import { FormsModule } from "@angular/forms";
 import {SelectModule} from "./select/select.module"
 
 import { InputComponent } from "./input/input.component";
-import { InputAffixDirective } from './input/input-affix.directive'
-import { CheckboxComponent } from "./checkbox/checkbox.component"
-let components = [InputComponent, InputAffixDirective,CheckboxComponent]
+import { InputAffixDirective } from './input/directives/input-affix.directive'
+import { ValidatorDirective } from './input/directives/validator.directive'
+
+import { CheckboxComponent } from "./checkbox/checkbox.component";
+import { ImgUploadComponent } from "./img-upload/img-upload.component";
+let components = [InputComponent, InputAffixDirective,CheckboxComponent, ValidatorDirective, ImgUploadComponent];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components ],
   imports: [
     SelectModule,
     FormsModule,

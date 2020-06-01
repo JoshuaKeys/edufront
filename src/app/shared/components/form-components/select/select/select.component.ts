@@ -1,4 +1,4 @@
-import { Component, OnInit,  Output, EventEmitter , ChangeDetectionStrategy, forwardRef, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit,  Output,  Input,EventEmitter , ChangeDetectionStrategy, forwardRef, ChangeDetectorRef  } from '@angular/core';
 import { Renderer2, ElementRef } from "@angular/core"
 import { SelectService } from "../select.service"
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -21,6 +21,9 @@ import { delay } from "rxjs/operators";
 })
 export class SelectComponent  implements OnInit,  ControlValueAccessor  {
  @Output() onValueChange = new EventEmitter<any>();
+  @Input("alignment") alignment = "center"; //left right center
+
+  state = "inactive"; // inactive, focus , error >> set
 
   value;
   elementId;

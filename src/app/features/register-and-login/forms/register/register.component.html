@@ -13,17 +13,20 @@
                     <span class = "edu-label"> User Name </span>
                     <img  *ngIf="registrationForm.controls.username.invalid" class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-grey.svg" alt="">    
                     <img  *ngIf="registrationForm.controls.username.valid" class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-green.svg" alt="">    
+               
                 </edu-input>
 
                 <edu-input  isPassword = "true" alignment = "left" formControlName="pw"> 
                     <visibility-toggle  class="edu-input__suffix" InputAffix ></visibility-toggle>    
                     <span class = "edu-label"> Password </span>
-                    <ul class = "validator edu-input__validators--right"  *ngIf="registrationForm.controls.pw.invalid && registrationForm.controls.pw.touched" >
-                        <li *ngIf="registrationForm.controls.pw.errors.minlength||registrationForm.controls.pw.errors.required">8 Characters Long</li>
+                    <!-- class validator is for stylign only, only[Validator] and [alignment] is required and  -->
+                    <ul class = "validator" Validator  alignment = "right"  *ngIf="registrationForm.controls.pw.invalid && registrationForm.controls.pw.touched" >
+                        <li  *ngIf="registrationForm.controls.pw.errors.minlength||registrationForm.controls.pw.errors.required">8 Characters Long</li>
                         <li *ngIf="registrationForm.controls.pw.errors.pattern" >Contain one Capital</li>
                         <li *ngIf="registrationForm.controls.pw.errors.pattern">Contain one Numeral</li>
                     </ul>
-                                 </edu-input>
+                </edu-input>
+
                 <edu-input  isPassword = "true" alignment = "left" formControlName = "cfmPw"> 
                     <visibility-toggle  class="edu-input__suffix" InputAffix ></visibility-toggle>
                     <span class = "edu-label"> Confirm Password </span>

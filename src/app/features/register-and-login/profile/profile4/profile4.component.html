@@ -1,1 +1,55 @@
-<p>profile4 works!</p>
+<edu-nav></edu-nav>
+<main>
+    <div class="content">
+        <h2 class="content__title">Set Up Your Profile</h2>
+        <div class="stepper">
+            <div  [ngClass]="step.state" *ngFor="let step of stepper; index as i" class="stepper__step">             
+                    <div class = "stepper__badge" >
+                        <span *ngIf="isNotComplete(step.state)">{{i+1}}</span>
+                    </div>  
+                    <span class ="stepper__text">{{step.text}}</span>
+                
+            </div>
+        </div>
+        
+        <form class = "flex-grow-1 form" action=""  [formGroup]="addressForm" (ngSubmit)="formSubmit()" >
+                
+            <div class="group profile4">
+                 <div class="group--column-layout">  
+                    <edu-select     formControlName="question1"    alignment = "left"> 
+                        <span class = "edu-label">Select Security Question</span>   
+                        <edu-option  OptionValue='one'>one</edu-option>    
+                        <edu-option  OptionValue='two'>two</edu-option>    
+                        <edu-option  OptionValue='three'>three</edu-option>    
+                        <edu-option  OptionValue='four'>four</edu-option>    
+                        <edu-option  OptionValue='five'>five</edu-option>    
+                    </edu-select>
+                    <edu-input     formControlName="answer1"    alignment = "left"> 
+                        <span class = "edu-label">Type Answer</span>
+                    </edu-input>
+                </div>
+                 <div class="group--column-layout">  
+                    <edu-select     formControlName="question2"    alignment = "left"> 
+                        <span class = "edu-label">Select Security Question</span>   
+                        <edu-option  OptionValue='one'>one</edu-option>    
+                        <edu-option  OptionValue='two'>two</edu-option>    
+                        <edu-option  OptionValue='three'>three</edu-option>    
+                        <edu-option  OptionValue='four'>four</edu-option>    
+                        <edu-option  OptionValue='five'>five</edu-option>    
+                    </edu-select>
+                    <edu-input     formControlName="answer2"    alignment = "left"> 
+                        <span class = "edu-label">Type Answer</span>
+                    </edu-input>
+                </div>
+
+               
+     
+            </div>
+       
+            <button type = "button" class ="btn form__btn"  disabled> NEXT </button>
+         </form>
+
+
+    </div>
+
+</main>

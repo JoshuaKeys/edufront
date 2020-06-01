@@ -14,8 +14,9 @@
   border-radius: 50%;
   position: relative;
   &.checked{
-      background: url(src/assets/registration/white-tick.svg) no-repeat no-repeat center center;
-      background-color: grey;
+    //   background: url(src/assets/registration/white-tick.svg) no-repeat no-repeat center center;
+      background-color: $blue;
+      border: 1px solid $blue;
   }
 }
 .checkbox{

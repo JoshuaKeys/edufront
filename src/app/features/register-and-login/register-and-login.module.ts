@@ -11,13 +11,13 @@ import { RecoverPasswordComponent } from "./forms/recover-password/recover-passw
 import { SecurityQuestionComponent} from "./forms/security-question/security-question.component"
 import { SetPasswordComponent} from "./forms/set-password/set-password.component"
 import { Register2Component} from "./forms/register2/register2.component"
-
 import { NavComponent, Profile1Component, Profile2Component, Profile3Component, Profile4Component } from "./profile"
 
-import {  AccountCreatedMessageComponent } from "./messages/account-created/account-created-message.component"
-import {  EmailMessageComponent } from "./messages/email/email-message.component";
+import { ConfirmationMessageComponent } from "./messages/confirmation-message/confirmation-message.component";
+import { AccountCreatedMessageComponent, EmailMessageComponent, PasswordChangedMessageComponent, ProfileCompleteComponent} from "./messages"
+let messageTemplates = [AccountCreatedMessageComponent, EmailMessageComponent, PasswordChangedMessageComponent, ProfileCompleteComponent];
 let profilComponents = [NavComponent, Profile1Component, Profile2Component, Profile3Component, Profile4Component]
-let components = [...profilComponents, VisibilityToggleComponent, RegisterComponent,RecoverPasswordComponent, LoginComponent, AccountCreatedMessageComponent, EmailMessageComponent,SecurityQuestionComponent,SetPasswordComponent,Register2Component];
+let components = [...profilComponents, ...messageTemplates, ConfirmationMessageComponent,  VisibilityToggleComponent, RegisterComponent,RecoverPasswordComponent, LoginComponent,  SecurityQuestionComponent,SetPasswordComponent,Register2Component];
 
 @NgModule({
   declarations: [...components],

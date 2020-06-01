@@ -7,7 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
  import { SecurityQuestionComponent} from "./forms/security-question/security-question.component"
 import { SetPasswordComponent} from "./forms/set-password/set-password.component"
 import { Register2Component} from "./forms/register2/register2.component"
-
+import { ConfirmationMessageComponent } from "./messages/confirmation-message/confirmation-message.component"
 
  import { ProfileCompleteComponent } from "./messages/profile-complete/profile-complete-message.component"
  import { PasswordChangedMessageComponent } from "./messages/password-changed/password-changed-message.component"
@@ -18,6 +18,10 @@ import { Register2Component} from "./forms/register2/register2.component"
  import { NavComponent, Profile1Component, Profile2Component, Profile3Component, Profile4Component } from "./profile"
 
 const routes: Routes = [
+  {
+    path : 'message',
+    component:ConfirmationMessageComponent
+  },
   {
     path: 'profile1',
     component: Profile1Component

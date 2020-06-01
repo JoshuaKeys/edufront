@@ -5,11 +5,18 @@
 :host{
 display: block;
 color: $black;
+transition: none;
 &:hover {
     color: $blue;
     background: $grey-white 0% 0% no-repeat padding-box;
  }
 }
+
+
+.active.option__wrapper{
+   color: $blue !important;
+}
+
  .option{
 
    &__wrapper{

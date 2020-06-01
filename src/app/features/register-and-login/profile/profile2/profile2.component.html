@@ -1,1 +1,38 @@
-<p>profile2 works!</p>
+<edu-nav></edu-nav>
+<main>
+    <div class="content">
+        <h2 class="content__title">Set Up Your Profile</h2>
+        <div class="stepper">
+            <div  [ngClass]="step.state" *ngFor="let step of stepper; index as i" class="stepper__step">             
+                    <div class = "stepper__badge" >
+                        <span *ngIf="isNotComplete(step.state)">{{i+1}}</span>
+                    </div>  
+                    <span class ="stepper__text">{{step.text}}</span>
+                
+            </div>
+        </div>
+        
+        <form class = "flex-grow-1 form" action=""  [formGroup]="bioForm" (ngSubmit)="formSubmit()" >
+                
+            <div class="group">
+                <edu-input     formControlName="fName"    alignment = "left"> 
+                    <span class = "edu-label"> First Name </span>    
+                </edu-input>
+                <edu-input     formControlName="lName"    alignment = "left"> 
+                    <span class = "edu-label"> Last Name </span>    
+                </edu-input>
+                <edu-input     formControlName="phone"    alignment = "left"> 
+                    <span class = "edu-label">Phone Number</span>    
+                </edu-input>
+                <edu-input     formControlName="sceenName"    alignment = "left"> 
+                    <span class = "edu-label"> Screen Name (Optional)</span>    
+                </edu-input>
+            </div>
+       
+            <button type = "button" class ="btn form__btn"  disabled> NEXT </button>
+         </form>
+
+
+    </div>
+
+</main>

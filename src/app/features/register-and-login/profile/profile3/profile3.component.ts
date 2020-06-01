@@ -1,23 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators, FormGroup} from "@angular/forms";
 @Component({
   selector: 'edu-profile3',
   templateUrl: './profile3.component.html',
-  styleUrls: ['./profile3.component.scss'],
+  styleUrls: ['./profile3.component.scss', './file-upload.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Profile3Component implements OnInit {
 
-  constructor(private formBuilder:FormBuilder,) { }
+  constructor(private formBuilder:FormBuilder, private cd :ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.addressForm  =  this.formBuilder.group({
-      address: ['', Validators.required],
-      country:   ['',  Validators.required]  ,
-      zip:   ['',  Validators.required]  ,
-      state:   ['',  Validators.required]  ,
-      city:   ['',  Validators.required]  ,
-      
+   
    
     });
   }
@@ -26,6 +21,7 @@ export class Profile3Component implements OnInit {
   addressForm: FormGroup;
 
   formSubmit(){}
+
 
   //state >> inactive(default, so you can just leave it blank), active, completed
 

@@ -1,5 +1,5 @@
 @import "src/assets/styles/colors";
-@import "src/assets/styles/form-general";
+@import "src/assets/styles/form-general"; //remove dependency on this soon
 @import "src/assets/styles/mixins/components";
 
 @include popup();
@@ -8,7 +8,10 @@
 
   .select {
     //form__input--select is a checkbox used to toggle "select" element
-
+    &__wrapper.active:before {
+      background: url("/assets/iconfinder_chevron-up-blue.svg") no-repeat no-repeat  center center;
+       
+    }
     &__wrapper{
       &:before {
         width: 16px;
@@ -17,10 +20,12 @@
         content:"";
         display: block;
         position: absolute;
-        top: 0;
-        transform: translateY(50%);
+        top: 50%;
+        transform: translateY(-50%);
         background: url("/assets/iconfinder_chevron-up.svg") no-repeat no-repeat  center center;
+       
       }
+      
     }
     &__checkbox {
       cursor: pointer;
@@ -35,13 +40,14 @@
     //(1)size of element  (2) text displayed when selected by element
     &__input{
       background: unset;
-      padding-bottom: 5px;
-      padding-top: 0px;
+      // padding-bottom: 5px;
+      // padding-top: 0px;
       text-align: center;
       height: 100%;
       width: 100%;
-      font: 400 16px/24px Raleway;      
-      border-bottom: 2px solid $grey-blue;
+      // font: 400 16px/24px Raleway;      
+      border: none;
+      // border-bottom: 1px solid $grey-blue;
 
       color: transparent;
 
@@ -63,7 +69,12 @@
       // border: none;
 
       .popup{
-        // position: relative;
+        &__content-wrapper{ // to prevent overflow of edges
+          border-radius: 6px;
+          overflow: hidden;
+        }
+
+       
       
       }
     }
@@ -81,14 +92,6 @@
   // height: auto;
 }
 
-.label--active{
-
-  transform: scale(0.8) translateY(-22px);
-  text-align: center;
-  .ashcolor {
-    font-size: 0;
-  }
-}
 
  
 .input--active{
@@ -99,9 +102,7 @@
       // opacity: 1;
 }
 
-.input__border--active{
-  border-color: $blue;
-}
+ 
 
 
 
@@ -111,4 +112,59 @@
     color: $ash;
   }
   
+}
+
+
+//form wrapper overwrite
+.form__label{
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.label--active{
+  top: 0;
+  transform: scale(0.8) ;
+  text-align: center;
+  .ashcolor {
+    font-size: 0;
+  }
+}
+
+
+.form__input-wrapper{
+  min-height: 54px;
+  border-bottom: 1px solid $grey-blue;
+
+  &.active{
+    border-color: $blue;
+  }
+}
+
+input{
+  border:  none;
+  align-self: flex-end;
+  margin-bottom: 10px;
+  font: 400 20px/24px Raleway;
+  padding: 0;
+ 
+}
+
+
+.left{
+  label, input{
+    text-align: left;
+  }
+  label{
+    transform-origin: left top;
+  }  
+
+}
+.right{
+  label, input{
+    text-align: right;
+  }
+  label{
+    transform-origin: right top;
+  }  
+
 }

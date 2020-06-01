@@ -1,58 +1,47 @@
 <div [ngClass]="{disabled: disabled, 'input-wrapper-border--active' : inputElIsFocus, 'input-wrapper-border--error' : config.hasError  }" class="form__input-wrapper   ">
      
-  <!-- main wrapper for input + label so they stay together -->
-    <div class = "group">
-      <input
-       class="form__input  "
-        [(ngModel)] = "val"
-        [id] = "elementId"
-        #inputEl
-        class = {{alignment}}
-        [ngClass] ="{'input--active' : inputElIsFocus , 'input__border--active' : inputIsActive }"
-        type="{{config.isPassword ? 'password' : 'text'}}" 
-       
-        [disabled] = "disabled"
-        (focus) = "focusInput()"
-        (blur) = "blurInput()"
-        (input) = "inputFn($event.target.value)"
-      />
-     
-      <label class = {{alignment}}  [ngClass]="{'label--active': isLabelActive() }" class="form__label " [for]="elementId">
-         <ng-content select=".edu-label"></ng-content>  
-      </label>
-    </div>
 
-      <div  class="prefix">
-        <ng-content select=".edu-input__prefix"></ng-content>
-      </div>
+  
+        <!-- main group for label and actual input El -->
+        <div class = "label-input__wrapper">
+          <input
+          class="form__input  "
+            [(ngModel)] = "val"
+            [id] = "elementId"
+            #inputEl
+            class = {{alignment}}
+            [ngClass] ="{'input--active' : inputElIsFocus , 'input__border--active' : inputIsActive }"
+            type="{{config.isPassword ? 'password' : 'text'}}" 
+          
+            [disabled] = "disabled"
+            (focus) = "focusInput()"
+            (blur) = "blurInput()"
+            (input) = "inputFn($event.target.value)"
+          />
+        
+          <label class = {{alignment}}  [ngClass]="{'label--active': isLabelActive() , 'label--focus' : inputElIsFocus }" class="form__label " [for]="elementId">
+            <ng-content select=".edu-label"></ng-content>  
+          </label>
+        </div>
 
-      <div  class="suffix">
-        <ng-content select=".edu-input__suffix"></ng-content>
-      </div>
-    
-      <!-- val{{val.length}} isLabelActive{{isLabelActive()}}  inputElIsFocus{{inputElIsFocus}} -->
-      
-    
-      
-      <div class="edu-input__validators--right">
-        <ng-content  select = ".edu-input__validators--right"></ng-content>
-      </div>
-      <div class="edu-input__validators--left">
-        <ng-content  select = ".edu-input__validators--left"></ng-content>
-      </div>
+        <div  class="prefix">
+          <ng-content select=".edu-input__prefix"></ng-content>
+        </div>
+
+        <div  class="suffix">
+          <ng-content select=".edu-input__suffix"></ng-content>
+        </div>
+   
+  
+   
+
+
  
- 
-      <div class=" edu-input__validators--bottom">
-        <ng-content  select = ".edu-input__validators--bottom"></ng-content>
-      </div>
-      
 
-      <!-- <ng-content class="edu-input--validators-left"></ng-content>
-      <ng-content class="edu-input--validators-top"></ng-content>
-      <ng-content class="edu-input--validators-right"></ng-content>
-      <ng-content class="edu-input--validators edu-input--validators-bottom"></ng-content> -->
+  
     </div>
     
-    
-    
-    
+    <div #validator class="validator">
+      <ng-content  select = "[Validator]"></ng-content>
+    </div>
+ 

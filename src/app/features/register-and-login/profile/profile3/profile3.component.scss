@@ -19,7 +19,7 @@ padding:60px 0  ;
 $disabled-btn-grey:#E0E0E0;
 .form{
     @include displayFlex(center,center,column);
-    edu-input  {
+    edu-input,edu-select  {
       width: 100%;
       margin: 10px 0;
     }

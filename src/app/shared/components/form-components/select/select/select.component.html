@@ -1,4 +1,4 @@
-<div [ngClass]="{disabled: disabled}" class="form__input-wrapper  select__wrapper">
+<div [ngClass]="{disabled: disabled, active: selectIsActive }"   class="{{alignment}} form__input-wrapper  select__wrapper">
 <!-- <input type="text" class = "temp123" (focus)="isFocus()" (blur) ="isBlur()"> -->
  
 <input
@@ -21,7 +21,7 @@
     [(ngModel)]="value"
     name = "{{elementId}}-input"
     #input
-    [ngClass] ="{'input--active' : isLabelActive() , 'input__border--active' : selectIsActive }"
+    [ngClass] ="{'input--active' : isLabelActive()  }"
     type="text" 
     placeholder="{{selectPlaceholder}}"
     [disabled] = "disabled"
@@ -34,7 +34,9 @@
 
   <div  [ngClass]="{'dropdown--active': selectIsActive }" class="select__dropdown ">
       <div class="popup">
-           <ng-content select="edu-option"></ng-content>
+        <div class ="popup__content-wrapper">
+          <ng-content select="edu-option"></ng-content>
+        </div>
       </div>
   </div>
  

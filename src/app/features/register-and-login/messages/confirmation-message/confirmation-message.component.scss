@@ -1,14 +1,17 @@
 @import "src/assets/styles/mixins/alignment";
+// @import "src/assets/styles/mixins/";
  @import "src/assets/styles/typography";
  @import "src/assets/styles/mixins/buttons"; //for buttons only
-@import "src/assets/styles/mixins/containers"; // for groups
+@import "src/assets/styles/mixins/containers";
 
 
 //shared 
 @include group();
 
 :host{
-    width: 100vw;
+    // width: 100vw;
+    flex-grow: 1;
+    display: flex;
 }
 section{
     min-height: 100vh;
@@ -29,6 +32,9 @@ section{
          margin-bottom: 20px;
        
         // width: 171px;
+    }
+    &__img{
+        margin-bottom: 20px;
     }
 
     &__title{
@@ -68,10 +74,28 @@ a{
     text-decoration: none;
 }
 
-
-
-
-//only for login page
+.btn{
+    @include button_default($blue,white);
+    &--white{
+        @include button_default(white, $blue);
+        border: 1px solid $blue;
+    }
+}
 .btn--text{
     @include textButton($blue)
 }
+
+//only for messages
+
+.message{
+    max-width: 500px;
+    width: 90%;
+}
+
+.btns{
+    .btn{
+        width: 164px;
+        margin: 0 10px;
+    }
+}
+

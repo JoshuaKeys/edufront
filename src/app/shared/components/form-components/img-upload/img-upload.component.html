@@ -1,0 +1,28 @@
+ 
+<ng-container *ngIf="!imgURL; else loadedImgScreen">
+<div class="drop-zone"     
+(dragenter)="handleDragEnter()"
+(dragleave)="handleDragLeave()"
+(drop)="handleDrop($event)">
+    <input class = "file" #file type="file" accept='image/*' name="" id="{{elementId}}" (change)="previewImg(file.files)" >
+    <ng-content select=".edu-img-upload__dropzone"></ng-content>
+</div>
+
+<label for="{{elementId}}">
+    <ng-content select=".edu-label"></ng-content>
+</label>
+</ng-container>
+
+<ng-template #loadedImgScreen>
+    <img [src]="imgURL" height="200" *ngIf="imgURL">
+
+    <div class="group--row-layout btns">
+        <button class="btn--text" (click) = "deleteImg()">Delete</button>
+        <button class="btn--text">Confirm</button>
+    </div>
+</ng-template>
+
+
+<!-- </ng-template> -->
+
+ 

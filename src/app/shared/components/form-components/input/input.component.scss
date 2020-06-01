@@ -4,7 +4,11 @@
 
 :host{
   display:block;
+  position: relative;
+  margin: auto;
+  max-width: 380px;
 }  
+ 
 .form{
   
 
@@ -25,7 +29,7 @@
   }
 
   &__label{
-    // transition:  font-size 0s, line-height 0s, all 0.3s;
+    transition:  color 0s ,font-size 0s, line-height 0s, all 0.3s;
     // transition-delay: 0s;
    font: 400 16px/19px Raleway;
     height: 100%;
@@ -47,6 +51,7 @@
     margin: auto;
     height: 54px;
     position: relative;
+    // @include displayFlex(flex-end, flex-start,column);
     display: flex;
     align-items: flex-end;
     border-bottom: 1px solid #e6e9f3;
@@ -67,15 +72,15 @@
 .label--active{
   transform: translateY(-17px) ;
  
-
- 
   text-align: center;
   .ashcolor {
     font-size: 0;
   }
 
 }
-
+.label--focus{
+  color: $blue;
+}
  
 .input--active{
   color: $black;
@@ -92,46 +97,52 @@
 .input-wrapper-border--error{
   border-color: $red;
 }
-.edu-input__validators {
-  &--right,&--left,&--top,&--bottom,&{
-    color: red;
-    position: absolute;
+
+//temp container for all form elements 
+// .form__input-wrapper{
+//   // flex-direction: column;
+// }
+// .group__wrapper-2{
+//   @include displayFlex();
+//   align-self: stretch;
+// }
+
+
+//validators
+
+.validator{
+  transition: none;
+  color: red;
+
+  &.bottom-flow{
+  
   }
+
+  //for absolute positioned validators
+  &.left,&.right,&.bottom{
+  
+    position: absolute;
+  
+  }
+
  
-  &--right{
+  &.right{
     top:50%;
     right: 0;
     transform: translate(100%, -50%);
   }
-  &--left{
+  &.left{
     top:50%;
     left: 0;
     transform: translate(-100% ,-50%);
   }
-  &--bottom{
+  &.bottom{
     bottom: 0;
     left: 0;
     transform: translateY(100%);
   }
 }
-
-// .edu-input--validators{
-//   &-right,&-left,&-top,&-bottom,&{
-//     color: red;
-//     position: absolute;
-//   }
-//   &-right{
-//     color: red;
-//     position: absolute;
-//     right: 0;
-//     transform: translateX(100%);
-//   }
-//   &-left{
-//     left: 0;
-//     transform: translateX(-100%);
-//   }
-// }
-
+ 
 //disabled state 
 .disabled{
   input, input::placeholder, label{
@@ -140,7 +151,14 @@
   
 }
 
-.group{ //main wrapper for both input and label
+
+.label-input-affix__wrapper{
+  display: flex;
+  flex-direction: row;
+  align-self: stretch;
+}
+
+.label-input__wrapper{ //main wrapper for both input and label
   position: relative;
   flex-grow: 1;
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, Input,EventEmitter, Output , forwardRef, ViewChild, ElementRef, ContentChildren, QueryList, ChangeDetectorRef} from '@angular/core';
-import { InputAffixDirective} from "./input-affix.directive"
+import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, Input,EventEmitter, Output , forwardRef, ViewChild, ElementRef, ContentChildren, QueryList, ChangeDetectorRef, Host, HostListener} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { InputAffixDirective} from "./directives/input-affix.directive"
+import { InputService } from "./input.service"
 
 @Component({
   selector: 'edu-input',
@@ -13,60 +13,77 @@ import { first } from 'rxjs/operators';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: forwardRef(() => InputComponent),
-    }
+    },
+    InputService
   ]
 })
 export class InputComponent implements OnInit, AfterContentInit,  ControlValueAccessor{
 
   
-  constructor(private cd :ChangeDetectorRef, private el:ElementRef) { }
+  constructor(private cd :ChangeDetectorRef, private el:ElementRef, private inputService:InputService) { }
 
   ngOnInit(): void { 
-    this.initConfig();
-    this.setElementID();
- 
+      this.initConfig();
+      this.setElementID();
+      this.registerHasErrorEvent();
+      this.registerValidatorPosition();
    }
 
   ngAfterContentInit(){
-    console.log("after view init - " + this.InputAffixDirectives.length)
-    this.InputAffixDirectives.forEach((dir,index)=>{
-      dir.setConfig.subscribe((val)=>{
-        console.log(`el [${this.elementId}] updateds`)
-        this.config[val.key] = val.value
-     
-        this.cd.markForCheck();
-        
-      })
-    })
-    console.log(this.value)
-    this.cd.markForCheck();
+    this.subscribeToAffixDirectives();
   }
   config;  
   inputElIsFocus = false;
   inputIsActive:boolean = false;
   disabled:boolean; //for ControlValueAccessor implmentation
- 
 
   @Output() onValueChange = new EventEmitter<any>();
- 
-
-   
+    
   @Input("elementId") elementId;
   @Input("alignment") alignment =  "center";//center (default ),left,right
   @Input("isPassword") isPassword =  false;
 
   
   @ContentChildren(InputAffixDirective) InputAffixDirectives:QueryList<InputAffixDirective>
- 
- 
-setElementID(){
-  if(this.elementId == undefined && this.el.nativeElement.getAttribute("formcontrolname") !== undefined){
-    this.elementId = this.el.nativeElement.getAttribute("formcontrolname");
-  } 
+  @ViewChild("validator") validator:ElementRef;
+  
 
+  setElementID(){
+    if(this.elementId == undefined && this.el.nativeElement.getAttribute("formcontrolname") !== undefined){
+      this.elementId = this.el.nativeElement.getAttribute("formcontrolname");
+    } 
+
+  }
+
+  subscribeToAffixDirectives(){
+    this.InputAffixDirectives.forEach((dir,index)=>{
+      dir.setConfig.subscribe((val)=>{
+
+        this.config[val.key] = val.value
+        this.cd.markForCheck();
+        
+      })
+    })
+
+    
+    this.cd.markForCheck();
+  }
+
+registerHasErrorEvent(){
+  this.inputService.inputHasError.subscribe((hasError)=>this.config.hasError = hasError)
+}
+  
+registerValidatorPosition(){
+  let possiblePositions = ["left","right","bottom","bottom-flow"]
+  this.inputService.validatorPosition.subscribe((position)=>{
+    if(possiblePositions.indexOf(position) != -1 && this.validator && !this.validator.nativeElement.classList.contains(position)){
+      this.validator.nativeElement.classList.add(position);
+      console.log("validator POS!!" + position );
+      console.log(this.validator)
+    }
+  })
 }
 
-  
   initConfig(){
    this.config = {
      isPassword : this.isPassword,
@@ -87,7 +104,6 @@ setElementID(){
 
     this.onChange(val);
   }
-  // onChange($event.target.value)
 
   isLabelActive(){
     return this.inputElIsFocus  ||  this.val != "";

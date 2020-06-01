@@ -17,7 +17,7 @@ export class InputTestComponent implements OnInit {
   ngOnInit(): void {
 
     this.testForm  =  this.formBuilder.group({
-      f1: ['', [Validators.required,  Validators.minLength(4),   Validators.pattern(".*[A-Z].*")]]
+      f1: ['', [Validators.required,  Validators.minLength(4),   Validators.pattern(".*[0-9].*")]]
     
     });
  

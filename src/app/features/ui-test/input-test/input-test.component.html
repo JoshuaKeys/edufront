@@ -28,13 +28,13 @@
 <edu-input   alignment="left"  name = "name"     formControlName="f1"   >
     <span class = "edu-label"> input 1    </span>
 
-    <ul class = "edu-input__validators--right"   >
- 
+        <!-- for validation only need [Validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->
+        <!-- bottom-flow is basically for validation to flow as part of the flow and not be absolutely positioned -->
+    <ul Validator alignment = "right"   *ngIf="testForm.controls['f1'].invalid && testForm.controls.f1.touched"> 
         <li  *ngIf="testForm.controls['f1'].errors.required"  >  Name is required.  </li>
         <li *ngIf="testForm.controls.f1.errors.minlength">Name must be at least 4 characters long</li>
         <li *ngIf="testForm.controls['f1'].errors.pattern">numbers only</li>
- 
-    
+   
     </ul>
 
 </edu-input>
