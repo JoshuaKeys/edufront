@@ -1,0 +1,151 @@
+
+@import "src/assets/styles/mixins/containers";
+@import "src/assets/styles/mixins/alignment";
+@import "src/assets/styles/colors";
+
+$x-padding:16px;
+$y-padding:6px;
+$spaceFromParentElement:-4px;
+:host{
+    cursor: pointer;
+    position: absolute;
+    background: white;
+    z-index: 4;
+   
+    border: 1px solid $blue;
+    border-radius: 6px;
+
+    white-space: nowrap;
+    padding: $y-padding $x-padding;
+    text-align: left;
+    border-color: $blue;
+}
+
+.pointer{
+    position: absolute;
+
+    &::before ,&::after { //triangle ??
+        // position: absolute;
+        content: "";
+        display: block;
+        width: 0; 
+        height: 0; 
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;   
+        border-bottom: 5px solid $blue;
+
+        
+      }
+     &::after { //triangle ??
+        position: absolute;
+        top: 1.5px;
+        left: 1px;
+        border-bottom: 4px solid white;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;   
+      }
+}
+
+.popover-wrapper{
+    // position: fixed;
+    // z-index: 5;
+    // width: 100vw;
+    // height: 100vh;
+    // left: 0;
+    // top: 0;
+    // background-color: rgba($color: white, $alpha: 0.5);
+}
+ 
+ //alignment and pointerAlignment styling 
+
+ :host.bottom,:host.top{
+    // transform: translateY(-100%);
+    bottom: $spaceFromParentElement;
+    transform: translateY(100%);
+
+    &.pointer-right{
+        right: 0;
+    }
+    &.pointer-left{
+        left: 0;
+    }
+    &.pointer-center{
+        left: 50%;
+        transform: translateY(100%) translateX(-50%);
+    }
+     .pointer{
+        top: 0 ;
+        transform: translateY(-100%);
+     }
+
+ 
+    .pointer.left{
+        left: $x-padding;
+     
+    }
+    .pointer.right{
+        right: $x-padding;
+    }
+    .pointer.center{
+        left: 50%;
+        transform:translateY(-100%) translateX(-50%);
+    }
+ 
+}
+ 
+:host.top{
+    // transform: translateY(-100%);
+    bottom: unset;
+    top: $spaceFromParentElement;
+    transform: translateY(-100%);
+    &.pointer-center{
+        left: 50%;
+        transform: translateY(-100%) translateX(-50%);
+    }
+
+    .pointer{
+        top: unset;
+        bottom: 0;
+        transform: translateY(100%) rotate(180deg);
+    }
+
+    .pointer.center{
+        left: 50%;
+        transform:translateY(100%) translateX(-50%) rotate(180deg);
+    }
+}
+
+
+
+:host.left{
+    // transform: translateY(-100%);
+    left: $spaceFromParentElement;
+    transform: translateX(-100%);
+
+
+
+     .pointer{
+        right: 2px ;
+        top: 50%;
+        transform: translate(100%, -50%) rotate(90deg);
+     }
+ 
+ 
+}
+ 
+:host.right{
+    // transform: translateY(-100%);
+    right: $spaceFromParentElement;
+    transform: translateX(100%);
+
+
+
+     .pointer{
+        left: 2px ;
+        top: 50%;
+        transform: translate(-100%, -50%) rotate(270deg);
+     }
+ 
+ 
+}
+ 

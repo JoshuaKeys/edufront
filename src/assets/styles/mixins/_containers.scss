@@ -258,9 +258,11 @@
 }
 @mixin group($color: inherit) {
   .group { //defaults to column layout
-    @include displayFlex(flex-start, flex-start, column);
+    &--column,&{
+      @include displayFlex(flex-start, flex-start, column);
+    }
 
-    &--row-layout {
+    &--row-layout, &--row {
       @include displayFlex(flex-start);
     }
 

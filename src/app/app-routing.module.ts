@@ -11,6 +11,11 @@ const routes: Routes = [
   },
   
   {
+    path: 'user-settings',
+    loadChildren: () => import('./features/user-settings/user-settings.module').then(m => m.UserSettingsModule),
+  },
+  
+  {
     path: 'registration',
     loadChildren: () => import('./features/register-and-login/register-and-login.module').then(m => m.RegisterAndLoginModule),
   },

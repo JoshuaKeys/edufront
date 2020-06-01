@@ -11,12 +11,13 @@ import { ClassesComponent } from './components/classes/classes.component';
 import { ClassesService } from './services/classes.service';
 import { DroppableDirective } from './directives/droppable.directive';
 import { PreviewComponent } from './components/preview/preview.component';
-
+import { ButtonComponent } from "./components/button/button.component"
+import { PopoverComponent } from "./components/popover/popover.component"
 
 import {datePickerModule} from "./components/datepicker/datepicker.module";
 import { TimetableModule } from "./components/timetable/timetable.module";
 
-import { FormComponentsModule } from "./components/form-components/form-component.module"
+import { FormComponentsModule } from "./components/form-components/form-component.module";
 
 
 @NgModule({
@@ -28,6 +29,8 @@ import { FormComponentsModule } from "./components/form-components/form-componen
     DroppableDirective,
     ClassesComponent,
     PreviewComponent,
+    ButtonComponent,
+    PopoverComponent
   ],
   imports: [
     FormComponentsModule,
@@ -40,12 +43,14 @@ import { FormComponentsModule } from "./components/form-components/form-componen
     ModalComponent,
     CustomSelectComponent,
     HeaderNavComponent,
+    ButtonComponent,
     datePickerModule,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
     PreviewComponent,
-    TimetableModule
+    TimetableModule,
+    PopoverComponent
   ],
   providers: [
     ClassesService

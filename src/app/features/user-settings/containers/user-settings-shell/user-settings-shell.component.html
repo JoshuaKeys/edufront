@@ -1,0 +1,45 @@
+<nav class = "side-nav"> 
+    <button class = "side-nav__brand-logo" ButtonType = "blank" > <img src="assets/user-settings/side-nav_logo.svg" alt="" > </button>
+
+    <div class="group--column side-nav__options">
+         <button *ngFor="let option of sideMenuOptions" 
+         (click) = "setActiveOption(option)"  
+         [ngClass]="{active: isActiveOption(option) }" 
+         class = "side-nav__option {{option.value}} "   
+         ButtonType = "blank">  
+            <img src="assets/user-settings/side-nav_{{option.value}}.svg" alt=""> 
+            <span>{{option.text}} </span>    
+
+        </button>
+       
+    </div>
+    
+</nav>
+<div class="top-nav-and-content">
+
+    <nav class="top-nav group--row just-between ">
+        <div class="top-nav--left group--row just-start">
+            <button class = "top-nav__burger" ButtonType = "blank" > <img src="assets/user-settings/top-nav_burger.svg" alt="" > </button>
+               
+                <button class = "top-nav__active-option" ButtonType = "blank" > {{activeSideMenuOption.text}} 
+                     <edu-popover>
+                          <div>my profile setting</div> 
+                          <div> school settigns</div> 
+                          <div> logout </div> 
+                    </edu-popover></button>
+        </div>
+        <div class="top-nav--right group--row just-end">
+            <div class = "search">
+                <img src="assets/user-settings/search.svg" alt="">
+                <input type="text" placeholder = "Search">
+            </div>
+            <button ButtonType = "fab">
+                <img src="assets/user-settings/top-nav_plus.svg" alt="" srcset="">
+            </button>
+            <button ButtonType = "fab" class = "profile">
+                <div class="notification"></div>
+            </button>
+        </div>
+    </nav>
+
+</div>
