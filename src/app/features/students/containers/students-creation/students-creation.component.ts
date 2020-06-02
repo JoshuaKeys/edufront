@@ -71,7 +71,7 @@ export class StudentsCreationComponent implements OnInit {
     // this.store.dispatch(toggleEditModal())
     this.studentsService.getStudentById(student).subscribe(console.log)
   }
-  processSubmit() {
+  processSubmit(event) {
     this.onAddStudent();
   }
   onRemoveStudent(student: StudentModel) {
