@@ -279,12 +279,16 @@ body {
 }
 
 .search__icon-btn:nth-child(1):not(.search__icon-btn--active).active,
-.search__icon-btn:nth-child(2):not(.search__icon-btn--active).active {
+.search__icon-btn:nth-child(2):not(.search__icon-btn--active).active,
+.search__icon-btn:nth-child(3):not(.search__icon-btn--active).active {
   border-color: #69a9f2;
   .tooltip {
     opacity: 1;
     width: auto;
   }
+}
+.search__icon-btn:nth-child(3):not(.search__icon-btn--active).active img {
+  content: url(../../../../../assets/subject-search-icon-3-hover.svg);
 }
 .search__icon-btn:nth-child(2):not(.search__icon-btn--active).active img {
   content: url(../../../../../assets/subject-search-icon-2-hover.svg);
@@ -321,7 +325,7 @@ body {
   content: url(../../../../../assets/subject-search-icon-3-hover.svg);
 }
 .search__icon-btn:nth-child(2):not(.search__icon-btn--active):hover img {
-  content: url(../../../../../assets/subject-search-icon-3-hover.svg);
+  content: url(../../../../../assets/subject-search-icon-2-hover.svg);
 }
 .search__icon-btn:nth-child(1):not(.search__icon-btn--active):hover img {
   content: url(../../../../../assets/subject-search-icon-1-hover.svg);

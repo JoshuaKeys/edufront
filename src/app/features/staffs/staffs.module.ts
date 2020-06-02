@@ -12,12 +12,9 @@ import { staffsReducer } from './ngrx/reducers'
 import { EffectsModule } from '@ngrx/effects';
 import { StaffsEffects } from './ngrx/effects'
 import { StaffFormComponent } from './components/staff-form/staff-form.component';
-import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SubjectsAreaComponent } from './components/subjects-area/subjects-area.component';
 import { TotalStaffComponent } from './components/total-staff/total-staff.component';
-import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
-import { CountryFieldComponent } from './components/country-field/country-field.component';
 import { SubjectClassesComponent } from './components/classes/subject-classes.component';
 import { ClassesSubjectIconComponent } from './components/classes-subject-icon/classes-subject-icon.component';
 import { ClassesAlphabeticallyComponent } from './components/classes-alphabetically/classes-alphabetically.component';
@@ -28,11 +25,8 @@ import { ClassesByGenderComponent } from './components/classes-by-gender/classes
     StaffsCreationComponent,
     StaffChipComponent,
     StaffFormComponent,
-    ImgUploadV2Component,
     SubjectsAreaComponent,
     TotalStaffComponent,
-    PhoneFieldComponent,
-    CountryFieldComponent,
     SubjectClassesComponent,
     ClassesSubjectIconComponent,
     ClassesAlphabeticallyComponent,

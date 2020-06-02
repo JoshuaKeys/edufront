@@ -23,6 +23,9 @@ import { datePickerModule } from "./components/datepicker/datepicker.module";
 import { TimetableModule } from "./components/timetable/timetable.module";
 import { SubjectsService } from './services/subjects.service';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
+import { CountryFieldComponent } from './components/country-field/country-field.component';
+import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
+import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import { IconButtonComponent } from './components/icon-button/icon-button.compon
     PhoneIconFieldComponent,
     InputFieldComponent,
     CustomPlainSelectComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    CountryFieldComponent,
+    ImgUploadV2Component,
+    PhoneFieldComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +72,10 @@ import { IconButtonComponent } from './components/icon-button/icon-button.compon
     PhoneIconFieldComponent,
     InputFieldComponent,
     CustomPlainSelectComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    ImgUploadV2Component,
+    CountryFieldComponent,
+    PhoneFieldComponent
   ],
   providers: [
     ClassesService,

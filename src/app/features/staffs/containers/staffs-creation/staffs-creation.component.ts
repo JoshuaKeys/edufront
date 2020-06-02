@@ -153,9 +153,7 @@ export class StaffsCreationComponent implements OnInit {
     this.store.dispatch(unSetSelectedState({ subjectId }))
   }
   get startDescription() {
-    return `You will now create the <span class="yellow-text">Staff profiles</span>. same as the last step. The only
-    difference is that we will ask you what subject the staff is able to teach,
-    and at what level. This will help timetabling and organise courses.`
+    return ``
   }
   get endDescription() {
     return `

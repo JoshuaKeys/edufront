@@ -4,13 +4,12 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
 
 const routes: Routes = [
-  
-  
+
+
   {
     path: 'ui',
     loadChildren: () => import('./features/ui-test/ui-test.module').then(m => m.uiTestModule),
   },
- 
   {
     path: 'school-profile',
     canLoad: [AuthenticatedGuard],
@@ -21,9 +20,7 @@ const routes: Routes = [
     path: 'classes-and-groups',
     canLoad: [AuthenticatedGuard],
     loadChildren: () => import('./features/classes-and-groups/classes-and-groups.module').then(m => m.ClassesAndGroupsModule),
-  }
-  
-  ,
+  },
   {
     path: 'subjects',
     canLoad: [AuthenticatedGuard],
@@ -35,8 +32,13 @@ const routes: Routes = [
     loadChildren: () => import('./features/staffs/staffs.module').then(m => m.StaffsModule)
   },
   {
+    path: 'students',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () => import('./features/students/students.module').then(m => m.StudentsModule)
+  },
+  {
     path: '',
-    redirectTo: '/school-profile',
+    redirectTo: '/students/students-creation',
     pathMatch: 'full'
   }
 ];

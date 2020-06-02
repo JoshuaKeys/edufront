@@ -1,0 +1,24 @@
+<div
+  class="chip"
+  [ngClass]="{
+    'chip--blue': student.gender.toLowerCase() === 'male',
+    'chip--pink': student.gender.toLowerCase() === 'female'
+  }"
+>
+  <span class="chip__desc"
+    >{{ 'C' + student.className }} - {{ student.firstName }}
+    {{ student.lastName }}
+    <span class="chip__icon-btns">
+      <button class="chip__icon-btn">
+        <img
+          src="assets/subject-chip-edit.svg"
+          (click)="onEdit(student)"
+          alt=""
+        />
+      </button>
+      <button class="chip__icon-btn" (click)="onDelete(student)">
+        <img src="assets/subject-chip-delete.svg" alt="" />
+      </button>
+    </span>
+  </span>
+</div>

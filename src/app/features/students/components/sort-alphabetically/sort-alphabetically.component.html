@@ -4,10 +4,10 @@
       {{ alphabet.alphabet.toUpperCase() }}
     </h1>
     <div class="edu-staff-chips">
-      <edu-staff-chip
-        *ngFor="let staff of alphabet.items"
-        [staff]="staff"
-      ></edu-staff-chip>
+      <edu-student-chip
+        *ngFor="let student of alphabet.items"
+        [student]="student"
+      ></edu-student-chip>
     </div>
   </div>
 </div>

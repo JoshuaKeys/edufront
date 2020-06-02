@@ -1,0 +1,16 @@
+<div>
+  <div
+    *ngFor="let studentsXClasses of classesObject | async"
+    class="edu-staff-chip"
+  >
+    <h1 class="edu-staff-chip__header">
+      {{ 'C' + studentsXClasses.class }}
+    </h1>
+    <div class="edu-staff-chips">
+      <edu-student-chip
+        *ngFor="let student of studentsXClasses.items"
+        [student]="student"
+      ></edu-student-chip>
+    </div>
+  </div>
+</div>

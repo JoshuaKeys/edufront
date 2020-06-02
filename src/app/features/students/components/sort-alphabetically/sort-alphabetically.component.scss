@@ -1,0 +1,14 @@
+.edu-staff-chips {
+  display: flex;
+}
+:host {
+  width: 100%;
+}
+.edu-staff-chip {
+  margin-bottom: 25px;
+}
+.edu-staff-chip__header {
+  text-align: start;
+  font-size: 16px;
+  color: #a5aec7;
+}

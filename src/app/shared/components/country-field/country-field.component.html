@@ -34,7 +34,7 @@
     </div>
   </div>
   <input
-    id="fieldName"
+    [id]="fieldName"
     type="text"
     class="form__input"
     placeholder=""
@@ -45,5 +45,5 @@
     pattern="(/w)"
   />
 
-  <label class="form__input-label" for="fieldName">{{ fieldName }}</label>
+  <label class="form__input-label" [for]="fieldName">{{ fieldName }}</label>
 </div>

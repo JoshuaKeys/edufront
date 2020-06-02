@@ -1,0 +1,23 @@
+.sort-by-gender {
+  display: flex;
+  justify-content: space-between;
+  &__female {
+    width: 40%;
+  }
+  &__male {
+    width: 40%;
+  }
+  &__header {
+    color: #a5aec7;
+    text-align: center;
+    font: 600 24px/55px Quicksand;
+    margin-bottom: 32px;
+  }
+}
+:host {
+  width: 100%;
+}
+.edu-staff-chips {
+  display: flex;
+  flex-wrap: wrap;
+}

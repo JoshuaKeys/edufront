@@ -1,0 +1,20 @@
+<div class="sort-by-gender">
+  <div class="sort-by-gender__male">
+    <h1 class="sort-by-gender__header">Male</h1>
+    <div class="edu-staff-chips">
+      <edu-student-chip
+        *ngFor="let student of males | async"
+        [student]="student"
+      ></edu-student-chip>
+    </div>
+  </div>
+  <div class="sort-by-gender__female">
+    <h1 class="sort-by-gender__header">Female</h1>
+    <div class="edu-staff-chips">
+      <edu-student-chip
+        *ngFor="let student of females | async"
+        [student]="student"
+      ></edu-student-chip>
+    </div>
+  </div>
+</div>

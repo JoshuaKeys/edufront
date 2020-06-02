@@ -1,0 +1,25 @@
+<div class="total-staff">
+  <h1 class="total-staff__title">Total Students</h1>
+  <div
+    class="total-staff__summary"
+    *ngIf="studentsXClasses | async; else noStudents"
+  >
+    <p class="total-staff__qty">
+      {{ (studentsXClasses | async).length }}
+    </p>
+
+    <div class="student-summary__footer">
+      <div
+        class="student-summary__group"
+        *ngFor="let classesObj of classesObject | async"
+      >
+        <p class="student-summary__desc">{{ classesObj.items.length }}</p>
+        <div class="student-summary__icon">{{ 'C' + classesObj.class }}</div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noStudents>
+    <p class="total-staff__qty">-</p>
+  </ng-template>
+</div>

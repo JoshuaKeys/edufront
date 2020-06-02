@@ -1,13 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
-import { ProfilePicModel } from './../../models/profile-pic.model';
-import { IconModel } from 'src/app/shared/components/icon-field/icon-field.component';
+import { ProfilePicModel } from '../../../../shared/models/profile-pic.model';
 import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
 import { Observable } from 'rxjs';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
-import { SelectableSubjectModel } from 'src/app/shared/models/selectable-subject.model';
 import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
 
 interface AddEditFormFieldsModel {

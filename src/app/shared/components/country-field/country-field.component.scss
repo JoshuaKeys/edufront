@@ -1,4 +1,4 @@
-@import '../../../../../assets/styles/modules/section-module';
+@import '../../../../assets/styles/modules/section-module';
 
 @include splitLayout2();
 
@@ -25,7 +25,7 @@ aside {
 
 // TODO: Refactor to own file
 .form__input-wrapper--main .form__icon-select-wrapper {
-  z-index: unset;
+  z-index: 2;
   position: absolute;
   left: 0;
   // transform: translateX(-150%);
@@ -90,8 +90,7 @@ aside {
 
 .form__input {
   width: 100%;
-  line-height: unset !important;
-  padding-bottom: 0 !important;
+  padding-bottom: unset !important;
 }
 // Popup
 .popup {
@@ -128,7 +127,7 @@ aside {
 .icon__phone-prefix {
   position: absolute;
   left: 40px;
-  top: -2px;
+  top: 3px;
   color: grey;
 }
 .popup {
@@ -138,6 +137,5 @@ aside {
 .form__input-label {
   text-align: unset;
   font-size: 14px !important;
-  padding-left: 70px;
-  line-height: unset !important;
+  padding-left: 66px;
 }

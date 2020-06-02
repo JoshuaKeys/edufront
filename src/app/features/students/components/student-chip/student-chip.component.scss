@@ -1,0 +1,103 @@
+.chip {
+  cursor: pointer;
+  padding: 6px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid #69a9f2;
+  border-radius: 100px;
+  opacity: 5px 10px 5px 0;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  transform: translateX(-5px);
+  font: 600 12px/22px Raleway;
+  padding: 9px 13px;
+  margin: 5px;
+  position: relative;
+}
+
+.chip__img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.chip__text {
+  text-align: left;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.42px;
+  color: #69a9f2;
+}
+
+.chip__img + .chip__text {
+  margin: 0 5px;
+}
+
+.chip:hover .chip__icon-btns {
+  display: flex;
+}
+
+.chip:hover .chip__desc {
+  color: transparent;
+}
+
+.chip__icon-btns {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  display: none;
+}
+.chip__desc {
+  white-space: nowrap;
+}
+.chip__icon-btn {
+  background: unset;
+  border: none;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  padding: 0;
+}
+
+.chip__icon-btn:focus {
+  outline: none;
+}
+
+.chip__icon-btn:active {
+  transform: translateY(6px);
+}
+
+.chip__icon-btn:first-child {
+  margin-right: 30px;
+}
+
+.chip--blue {
+  color: #69a9f2;
+  border-color: #69a9f2;
+}
+
+.chip--blue:hover {
+  background: #69a9f2;
+}
+
+.chip--pink {
+  color: #fd7fc2;
+  border-color: #fd7fc2;
+}
+
+.chip--pink:hover {
+  background: #fd7fc2;
+}
