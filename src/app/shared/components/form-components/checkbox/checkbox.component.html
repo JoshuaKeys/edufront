@@ -1,9 +1,19 @@
-<div class ="wrapper"  [ngClass]="alignment">
-    <div class = "checkbox-wrapper" [ngClass]="{checked: isChecked}" >
-        <input [(ngModel)]="isChecked"  class = "checkbox" type="checkbox" name="" [id]="elementId">
-    </div>
- 
-    <label [for] = "elementId" class="label">
-        <ng-content select=".edu-label"></ng-content>
-    </label>
+<div class="wrapper" [ngClass]="alignment">
+  <div
+    class="checkbox-wrapper"
+    [ngClass]="{ checked: isChecked }"
+    [ngStyle]="sizeStyle"
+  >
+    <input
+      [(ngModel)]="isChecked"
+      class="checkbox"
+      type="checkbox"
+      name=""
+      [id]="elementId"
+    />
+  </div>
+
+  <label [for]="elementId" class="label">
+    <ng-content select=".edu-label"></ng-content>
+  </label>
 </div>

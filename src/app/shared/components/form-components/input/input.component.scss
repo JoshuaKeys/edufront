@@ -1,176 +1,152 @@
-@import "src/assets/styles/colors";
-@import "src/assets/styles/form-general";
-@import "src/assets/styles/mixins/components";
+@import 'src/assets/styles/colors';
+// @import "src/assets/styles/form-general";
+@import 'src/assets/styles/mixins/alignment';
 
-:host{
-  display:block;
+:host {
+  display: block;
   position: relative;
   margin: auto;
   max-width: 380px;
-}  
- 
-.form{
-  
+  cursor: text;
+  height: 54px;
+  // @include displayFlex(center, center, column);
+}
 
-  &__input{
-   border:none;
-   width: 100%;
-   text-align: center;
-   font: 400 20px/24px Raleway;
-   margin-bottom: 10px;
+input:focus {
+  outline: none;
+}
+
+.form {
+  &__input {
+    border: none;
+    height: 0;
+    width: 100%;
+    text-align: center;
+    font: 400 20px/24px Raleway;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
     background: transparent;
-   &.left{
-   text-align: left;
-  }
-  &.right{
-   text-align: right;
+    &.left {
+      text-align: left;
+    }
+    &.right {
+      text-align: right;
+    }
   }
 
+  &__label {
+    order: -1;
+    & > * {
+      transition: none;
+    }
+    line-height: 1.5;
+
+    padding: 0;
+    margin: 0;
+
+    &.left {
+      align-self: flex-start;
+    }
+    &.center {
+      align-self: center;
+    }
+    &.right {
+      align-self: flex-end;
+    }
   }
-
-  &__label{
-    transition:  color 0s ,font-size 0s, line-height 0s, all 0.3s;
-    // transition-delay: 0s;
-   font: 400 16px/19px Raleway;
-    height: 100%;
-    position: absolute;
-    top: unset;
-    padding-bottom: 17px;
-    bottom: 0;
-    @include displayFlex(center,flex-end);
-
-      &.left{
-        justify-content: flex-start;
-      }
-      &.right{
-        justify-content: flex-end;
-      }
-
-  }
-  &__input-wrapper{
+  &__input-wrapper {
     margin: auto;
-    height: 54px;
-    position: relative;
-    // @include displayFlex(flex-end, flex-start,column);
-    display: flex;
-    align-items: flex-end;
+    height: 100%;
+    @include displayFlex(flex-start, center, row);
     border-bottom: 1px solid #e6e9f3;
   }
- }
-
- :host ::ng-deep.left.form__label > *{
-   transform-origin: left top;
- }
- :host ::ng-deep.right.form__label > *{
-   transform-origin: right top;
- }
- :host ::ng-deep   .label--active  > *{
-   transform: scale(0.8) ;
- 
- }
-
-.label--active{
-  transform: translateY(-17px) ;
- 
-  text-align: center;
-  .ashcolor {
-    font-size: 0;
-  }
-
 }
-.label--focus{
+
+.label--focus {
   color: $blue;
 }
- 
-.input--active{
-  color: $black;
-  &::placeholder{
-    color: $black;
-  }
-      // opacity: 1;
+
+.input--active {
+  height: auto;
 }
 
-.input-wrapper-border--active{
+.input-wrapper-border--active {
   border-color: $blue;
 }
 
-.input-wrapper-border--error{
+.input-wrapper-border--error {
   border-color: $red;
-}
-
-//temp container for all form elements 
-// .form__input-wrapper{
-//   // flex-direction: column;
-// }
-// .group__wrapper-2{
-//   @include displayFlex();
-//   align-self: stretch;
-// }
-
-
-//validators
-
-.validator{
-  transition: none;
-  color: red;
-
-  &.bottom-flow{
-  
-  }
-
-  //for absolute positioned validators
-  &.left,&.right,&.bottom{
-  
-    position: absolute;
-  
-  }
-
- 
-  &.right{
-    top:50%;
-    right: 0;
-    transform: translate(100%, -50%);
-  }
-  &.left{
-    top:50%;
-    left: 0;
-    transform: translate(-100% ,-50%);
-  }
-  &.bottom{
-    bottom: 0;
-    left: 0;
-    transform: translateY(100%);
+  label {
+    color: $red;
   }
 }
- 
-//disabled state 
-.disabled{
-  input, input::placeholder, label{
-    color: $ash;
-  }
-  
-}
 
-
-.label-input-affix__wrapper{
+.label-input-affix__wrapper {
   display: flex;
   flex-direction: row;
   align-self: stretch;
 }
 
-.label-input__wrapper{ //main wrapper for both input and label
+.label-input__wrapper {
+  //main wrapper for both input and label
   position: relative;
   flex-grow: 1;
+  @include displayFlex(center, center, column);
+  height: 100%;
 }
 
-.prefix,.suffix{
+//validators
+
+.validator {
+  transition: none;
+  color: $red;
+
+  &.bottom-flow {
+  }
+
+  //for absolute positioned validators
+  &.left,
+  &.right,
+  &.bottom {
+    position: absolute;
+  }
+
+  &.right {
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+  }
+  &.left {
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+  }
+  &.bottom {
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+  }
+}
+
+//disabled state
+.disabled {
+  input,
+  input::placeholder,
+  label {
+    color: $ash;
+  }
+}
+
+.prefix,
+.suffix {
   margin-bottom: 17px;
   display: flex;
 }
-.prefix{
-  order:-1;
+.prefix {
+  order: -1;
 }
 
-.suffiix{
-  order:2;
+.suffiix {
+  order: 2;
 }

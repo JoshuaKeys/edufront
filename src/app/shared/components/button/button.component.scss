@@ -36,9 +36,8 @@
     width: 292px;
     height: 52px;
     border-radius: 100px;
-    font-weight: 700;
-    font-family: "Raleway";
-    letter-spacing: 0.42px;
+    font: 700 12px/20px Raleway;
+  
     color: white;
     background: $blue;
     text-transform: uppercase;
@@ -46,8 +45,15 @@
     position: relative;
 }
 
-.stroked{
-    
+:host.outline{
+    width: 292px;
+    height: 52px;
+    border-radius: 100px;
+    font: 700 12px/20px Raleway;
+    text-transform: uppercase;
+    border: 2px solid $blue;
+    color: $blue;
+    background: transparent;
 }
 
 .text{

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterContentInit ,Input, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'edu-img-upload',
@@ -8,17 +8,30 @@ import { Component, OnInit, Input, ElementRef, ChangeDetectionStrategy, ChangeDe
 })
 export class ImgUploadComponent implements OnInit {
 
+
   constructor(private cd :ChangeDetectorRef, private el:ElementRef) { }
 
   ngOnInit(): void {
     this.setElementID();
   }
+
+ 
+ 
   dragging;
   message;
   imagePath;
   imgURL = null;
   @Input("elementId") elementId:string = "temp123"
+  @Input("showInputControls") showInputControls:boolean = true;
+ 
 
+  getType(param){
+    return typeof param;
+  }
+
+  validImgUrl(){
+    return this.imgURL != null;
+  }
   previewImg(files){
  
       if (files.length === 0)

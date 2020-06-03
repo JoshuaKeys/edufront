@@ -13,6 +13,7 @@ import { DroppableDirective } from './directives/droppable.directive';
 import { PreviewComponent } from './components/preview/preview.component';
 import { ButtonComponent } from "./components/button/button.component"
 import { PopoverComponent } from "./components/popover/popover.component"
+import { PopoverOptionDirective } from "./components/popover/popover-option.directive"
 
 import {datePickerModule} from "./components/datepicker/datepicker.module";
 import { TimetableModule } from "./components/timetable/timetable.module";
@@ -30,7 +31,8 @@ import { FormComponentsModule } from "./components/form-components/form-componen
     ClassesComponent,
     PreviewComponent,
     ButtonComponent,
-    PopoverComponent
+    PopoverComponent,
+    PopoverOptionDirective
   ],
   imports: [
     FormComponentsModule,

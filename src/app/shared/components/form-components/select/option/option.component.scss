@@ -12,6 +12,11 @@ transition: none;
  }
 }
 
+:host.selected{
+   color: $blue;
+   background: $grey-white 0% 0% no-repeat padding-box;
+}
+
 
 .active.option__wrapper{
    color: $blue !important;

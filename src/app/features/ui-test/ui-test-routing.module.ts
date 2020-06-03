@@ -5,11 +5,16 @@ import { DatepickerTestComponent } from './datepicker-test/datepicker-test.compo
 import { SelectTestComponent } from "./select-test/select-test.component" 
 import { InputTestComponent } from "./input-test/input-test.component" 
 import { TimeTableTestComponent } from "./timetable-test/timetable-test.component" 
+import { PopoverTestComponent} from "./popover-test/popover-test.component";
 
 const routes: Routes = [
   {
     path: 'date',
     component: DatepickerTestComponent
+  },
+  {
+    path: 'popover',
+    component: PopoverTestComponent
   },
   {
     path: 'timetable',

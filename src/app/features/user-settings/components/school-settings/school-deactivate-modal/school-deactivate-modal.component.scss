@@ -1,0 +1,109 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+@include group();
+
+:host {
+  max-width: 377px;
+  width: 100%;
+  padding: 30px;
+  @include displayFlex(flex-start, center, column);
+}
+
+.modal {
+  &__icon {
+    margin-bottom: 20px;
+  }
+  &__title {
+    color: $red;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  &__desc {
+    color: $ash;
+    margin: 0;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    font: 400 14px/24px Raleway;
+    &--step1,
+    &--step3 {
+      max-width: 280px;
+    }
+    &--step2 {
+      white-space: nowrap;
+    }
+  }
+}
+
+edu-input,
+edu-select {
+  width: 317px;
+  margin-bottom: 20px;
+}
+
+.edu-label {
+  font-weight: 400;
+  color: $black;
+}
+.btns {
+  min-width: 317px;
+  width: 100%;
+}
+button[ButtonType='basic'] {
+  width: 144px;
+  height: 40px;
+}
+button[ButtonType='outline'] {
+  height: 40px;
+  width: 155px;
+  border-color: $red;
+  color: $red;
+}
+
+//step 2
+.search {
+  width: 317px;
+  height: 44px;
+  position: relative;
+  @include displayFlex(center, center, row);
+  // padding: 0 13px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e6e9f3;
+  // border-radius: 100px ;
+  img {
+    margin: 0 10px;
+    margin-left: 0;
+  }
+
+  input {
+    color: $ash;
+    width: 100%;
+    border: 0;
+    font: 400 14px/14px Raleway;
+    &:focus {
+      outline-width: 0;
+    }
+    &::placeholder {
+      color: $ash;
+      font: Regular 14px/22px Raleway;
+    }
+  }
+}
+
+//error styling here
+.error {
+  margin-bottom: 14px;
+  border: 1px solid $red;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .edu-label {
+    color: $red;
+  }
+}
+
+.error ::ng-deep .form__input-wrapper {
+  border: none !important;
+}

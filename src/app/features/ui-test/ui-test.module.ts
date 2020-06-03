@@ -10,7 +10,7 @@ import { CbComponent} from "./timetable-test/cb/cb.component"
 import { InputTestComponent} from "./input-test/input-test.component"
 import { CbTestComponent } from "./input-test/cb-test/cb-test.component" // test component used in input test
 import {  InputPrefixTestComponent} from "./input-test/input-prefix-test/input-prefix-test.component"
-
+import { PopoverTestComponent} from "./popover-test/popover-test.component";
 
 const components = [
   DatepickerTestComponent,
@@ -19,7 +19,8 @@ const components = [
   InputTestComponent,
   CbComponent,
   CbTestComponent,
-  InputPrefixTestComponent
+  InputPrefixTestComponent,
+  PopoverTestComponent
 
 ];
 

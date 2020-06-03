@@ -17,7 +17,7 @@ export class ButtonComponent implements OnInit {
     // this.el.nativeElement.classList.add()
   }
 
-    //[text , stroked , icon, fab/icon-circle, basic, blank]
+    //[text , outline , icon,  basic, blank, fab/icon-circle ]
   @Input() ButtonType = "basic";
 
 }
