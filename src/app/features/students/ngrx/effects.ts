@@ -129,11 +129,18 @@ export class StudentsEffects {
     ))
   ))
   composeCreateStudentData(studentData: StudentModel, profilePic: string) {
+    console.log(studentData);
     let createStudentReqObj: StudentModel = {
-      guardianDetailsDto: studentData.guardianDetailsDto,
+      guardianDetailsDto: {
+        ...studentData.guardianDetailsDto,
+        phone: studentData.guardianDetailsDto.phone['phoneNum'],
+      },
       profileDto: {
         ...studentData.profileDto,
-        profileImage: profilePic
+        countryId: studentData.profileDto['country'].id,
+        profileImage: profilePic,
+        profileImgObj: undefined,
+        lastName: studentData.profileDto['familyName']
       }
     };
 

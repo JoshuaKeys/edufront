@@ -112,7 +112,7 @@ export class StudentsFormComponent implements OnInit {
         rollNumber: new FormControl(''),
 
       }),
-      guardianDto: new FormGroup({
+      guardianDetailsDto: new FormGroup({
         email: new FormControl(''),
         familyName: new FormControl(''),
         firstName: new FormControl(''),
@@ -131,7 +131,7 @@ export class StudentsFormComponent implements OnInit {
   updatePhone(event: PhoneIconModel) {
     const idx = this.countryIconMap.findIndex(iconMap => iconMap.id === event.id);
     if (idx > -1) {
-      this.addEditForm.controls.guardianDto.patchValue({
+      this.addEditForm.controls.guardianDetailsDto.patchValue({
         phone: { ...this.countryIconMap[idx], phoneNum: event.phoneNum }
       })
     }
