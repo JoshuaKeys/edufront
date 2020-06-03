@@ -22,7 +22,8 @@ export class ImgUploadV2Component implements OnInit {
     if (val === null) {
       return;
     }
-    this.imageSrc = val.base64;
+
+    this.imageSrc = val.base64 ? val.base64 : val.imageUrl;
   }
   registerOnChange(fn: any) {
     // this.onUpload = fn;

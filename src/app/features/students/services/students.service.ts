@@ -5,6 +5,7 @@ import { ProfileDTOModel } from '../models/profile-dto.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { StudentsXClassesModel } from '../models/students-x-classes.model';
 import { StudentModel } from '../models/student.model';
+import { LogoUploadResponseModel } from 'src/app/shared/models/logo-upload-response.model';
 
 @Injectable()
 export class StudentsService {
@@ -22,6 +23,20 @@ export class StudentsService {
   }
   getStudentById(student: StudentModel): Observable<StudentModel> {
     return this.httpClient.get<StudentModel>(`/api/v1/profile/completeProfile/${student.profileDto.id}`)
+  }
+  uploadLogo(file: File): Observable<LogoUploadResponseModel> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post<LogoUploadResponseModel>('/api/v1/upload/image', formData);
+  }
+  uploadExcellSheet(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post('/api/v1/profiles', formData);
+  }
+  editStudent(student: StudentModel): Observable<StudentModel> {
+    console.log(student);
+    return this.httpClient.put<StudentModel>(`/api/v1/profile/completeProfile/${student.profileDto.id}`, student)
   }
   constructor(private httpClient: HttpClient) { }
 }

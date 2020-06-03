@@ -16,8 +16,7 @@ import { SortAlphabeticallyComponent } from './components/sort-alphabetically/so
 import { SortByGenderComponent } from './components/sort-by-gender/sort-by-gender.component';
 import { SortByClassesComponent } from './components/sort-by-classes/sort-by-classes.component';
 import { TotalStudentsComponent } from './components/total-students/total-students.component';
-
-
+import { EditStudentsFormComponent } from './components/edit-students-form/edit-students-form.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,8 @@ import { TotalStudentsComponent } from './components/total-students/total-studen
     SortAlphabeticallyComponent,
     SortByGenderComponent,
     SortByClassesComponent,
-    TotalStudentsComponent
+    TotalStudentsComponent,
+    EditStudentsFormComponent
   ],
   imports: [
     CommonModule,

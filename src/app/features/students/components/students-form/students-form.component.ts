@@ -47,8 +47,8 @@ export class StudentsFormComponent implements OnInit {
   constructor() { }
   createStaff() {
     const formValue = this.addEditForm.value;
-    formValue.profileDto.profileImage = formValue.profilePic.profileImage
-    delete formValue.profilePic;
+    console.log(formValue);
+    formValue.profileDto.profileImgObj = formValue.profilePic.profileImage
     this.onSubmit.emit(formValue)
   }
   ngOnInit(): void {

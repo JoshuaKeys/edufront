@@ -158,5 +158,28 @@
 <edu-students-form
   *ngIf="(studentsModalState | async).editModal"
   [studentsXClasses]="studentsXClasses"
-  (onSubmit)="processSubmit($event)"
+  (onSubmit)="createStudent($event)"
 ></edu-students-form>
+<edu-edit-students-form
+  [student]="student"
+  [studentsXClasses]="studentsXClasses"
+  *ngIf="selectStudentsEdit | async as student"
+  (onSubmit)="editStudentRequest($event)"
+>
+</edu-edit-students-form>
+<edu-modal-v2
+  *ngIf="(studentsModalState | async).endModal"
+  btnText="GOT IT"
+  header="Staffs Set Up Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO
+  DASHBOARD"
+  rightBtn="TAKE ME TO STUDENTS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToSection()"
+>
+  You are done with profile uploads, we promise! Now we can start putting things
+  together. Whenever you are ready, go to the next step where we will organ your
+  sections
+</edu-modal-v2>

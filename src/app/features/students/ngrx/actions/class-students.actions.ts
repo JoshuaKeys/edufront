@@ -39,6 +39,10 @@ export const editStudentRequest = createAction(
   '[StudentsCreationComponent] editStudentRequest',
   props<{ student: StudentModel }>()
 );
+export const editStudentSuccess = createAction(
+  '[StudentsEffects] editStudentSuccess',
+  props<{ student: StudentModel }>()
+);
 export const fetchStudentByIdRequest = createAction(
   '[StudentsCreationComponent] fetchStudentByIdRequest',
   props<{ student: StudentModel }>()
@@ -47,3 +51,10 @@ export const fetchStudentByIdResponse = createAction(
   '[StudentsEffect] fetchStudentByIdResponse',
   props<{ student: StudentModel }>()
 );
+export const uploadExcelSheets = createAction(
+  '[StudentsShellComponent] uploadExcellSheets',
+  props<{ file: File }>()
+);
+export const uploadExcelSheetsSuccess = createAction(
+  '[StudentsEffects] uploadExcellSheetsSuccess'
+)

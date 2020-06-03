@@ -1,3 +1,5 @@
+import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
+
 export interface ProfileDTOModel {
   address?: string[],
   city?: string[],
@@ -10,6 +12,7 @@ export interface ProfileDTOModel {
   firstName: string;
   lastName: string;
   middleName: string;
+  profileImgObj?: ProfilePicModel;
   gender: string;
   id: string;
   login?: boolean;

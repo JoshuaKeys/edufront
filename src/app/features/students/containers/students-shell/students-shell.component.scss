@@ -24,3 +24,10 @@ main {
 .main__main-content {
   width: 80%;
 }
+.card {
+  margin-right: unset;
+  max-width: unset;
+}
+.card--active {
+  border-color: #69a9f2;
+}

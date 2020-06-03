@@ -14,10 +14,25 @@
       <router-outlet></router-outlet>
     </div>
     <aside class="side-bar">
-      <!-- <h1 class="side-bar__heading">Preview</h1> -->
-      <!-- <edu-preview></edu-preview> -->
-      <!-- <edu-total-staff [numOfStaffs]="allStaffs"></edu-total-staff> -->
       <edu-total-students></edu-total-students>
+      <div
+        class="card card--dash"
+        [ngClass]="classList"
+        (drop)="handleDrop($event)"
+        (dragover)="handleDragOver($event)"
+        (dragleave)="handleDragLeave($event)"
+      >
+        <h5 class="card__title--dash">Drag and drop excel files here</h5>
+      </div>
+
+      <div class="btn--text">
+        <img src="../../../assets/bluedownload.svg" alt="" />
+        <span class="bluecolor">Download Excel Template</span>
+      </div>
+      <div class="btn--text">
+        <img src="../../../assets/reddownload.svg" alt="" />
+        <span class="redcolor">Download failed records</span>
+      </div>
     </aside>
   </main>
 </div>

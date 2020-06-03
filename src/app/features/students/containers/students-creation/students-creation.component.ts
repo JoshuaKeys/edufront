@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { StudentsModalModel } from '../../models/students-modal.model';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../../models/students-state.model';
-import { selectModalState, selectSortingState, selectStudentsAndClasses } from '../../ngrx/selectors'
+import { selectModalState, selectSortingState, selectStudentsAndClasses, selectStudentEdit } from '../../ngrx/selectors'
 import { toggleStartModal, toggleAddModal } from '../../ngrx/actions/students-modal.actions';
 import { ActivatedRoute } from '@angular/router';
 import { StudentsService } from '../../services/students.service';
@@ -13,7 +13,7 @@ import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { map } from 'rxjs/operators';
 import { StudentModel } from '../../models/student.model';
-import { createStudentRequest, deleteStudentRequest } from '../../ngrx/actions/class-students.actions';
+import { createStudentRequest, deleteStudentRequest, editStudentRequest, fetchStudentByIdRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 @Component({
   selector: 'edu-students-creation',
@@ -27,13 +27,14 @@ export class StudentsCreationComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   sortingState: Observable<StudentsSortingModel>;
   studentsXClasses: Observable<StudentsXClassesModel[]>;
-
+  selectStudentsEdit: Observable<StudentModel>;
   ngOnInit(): void {
     this.studentsModalState = this.store.select(selectModalState);
-    this.sortingState = this.store.select(selectSortingState)
+    this.sortingState = this.store.select(selectSortingState);
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
-    this.studentCommunication.studentEdition$.subscribe(student => this.onEditStudent(student))
-    this.studentCommunication.studentRemoval$.subscribe(student => this.onRemoveStudent(student))
+    this.studentCommunication.studentEdition$.subscribe(student => this.onEditStudent(student));
+    this.studentCommunication.studentRemoval$.subscribe(student => this.onRemoveStudent(student));
+    this.selectStudentsEdit = this.store.select(selectStudentEdit);
   }
   onStart() {
     this.store.dispatch(toggleStartModal())
@@ -67,12 +68,11 @@ export class StudentsCreationComponent implements OnInit {
     this.store.dispatch(toggleAddModal())
   }
   onEditStudent(student: StudentModel) {
-    // this.store.dispatch(editSt)
-    // this.store.dispatch(toggleEditModal())
-    this.studentsService.getStudentById(student).subscribe(console.log)
+    this.store.dispatch(fetchStudentByIdRequest({ student }));
   }
-  processSubmit() {
-    this.onAddStudent();
+  editStudentRequest(student: StudentModel) {
+    console.log(student);
+    this.store.dispatch(editStudentRequest({ student }))
   }
   onRemoveStudent(student: StudentModel) {
     console.log(student);
@@ -80,6 +80,12 @@ export class StudentsCreationComponent implements OnInit {
   }
   onFinish() {
     this.store.dispatch(toggleEndModal())
+  }
+  goToDashboard() {
+
+  }
+  goToSection() {
+
   }
 
   constructor(private store: Store<StudentsStateModel>,
