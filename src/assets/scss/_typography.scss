@@ -19,6 +19,10 @@ h2 {
   font: 600 26px/40px Quicksand;
   letter-spacing: 0.78px;
 }
+h3 {
+  font: 600 20px/30px Quicksand;
+  letter-spacing: 0.78px;
+}
 
 p {
   font-family: 'Raleway', sans-serif;
@@ -43,4 +47,9 @@ body {
   font-size: 16px;
   color: $black;
   letter-spacing: 0.48px;
+}
+
+
+a{
+  text-decoration: none;
 }

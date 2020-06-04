@@ -3,15 +3,15 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 
 @Component({
-  selector: 'edu-input-field',
+  selector: 'edu-array-input-field',
   templateUrl: './input-field.component.html',
   styleUrls: ['./input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => InputFieldComponent), multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ArrayInputFieldComponent), multi: true }
   ]
 })
-export class InputFieldComponent implements OnInit, ControlValueAccessor {
+export class ArrayInputFieldComponent implements OnInit, ControlValueAccessor {
   @Input() index: number;
   @Input() last: boolean;
   @Input() text: string;

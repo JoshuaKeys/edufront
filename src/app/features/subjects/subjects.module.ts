@@ -15,13 +15,13 @@ import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { SubjectResolver } from './resolvers/subject.resolver';
 import { EffectsModule } from '@ngrx/effects';
 import { SubjectsEffects } from './ngrx/effects';
-import { InputFieldComponent } from './components/input-field/input-field.component';
 import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
 import { AssignSubjectsQuestionComponent, ConfirmationComponent } from './containers';
 import { OptionsComponent } from './components/options/options.component';
 import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.component';
 import { SubjectSummaryBoxComponent } from './components/subject-summary-box/subject-summary-box.component';
 import { AddSubjectModalComponent } from './components/add-subject-modal/add-subject-modal.component';
+import { ArrayInputFieldComponent } from './components/input-field/input-field.component';
 
 
 @NgModule({
@@ -31,9 +31,9 @@ import { AddSubjectModalComponent } from './components/add-subject-modal/add-sub
     SubjectsFormComponent,
     SubjectIconFieldComponent,
     IconPopupComponent,
-    InputFieldComponent,
     SubjectsListComponent,
     AssignSubjectsQuestionComponent,
+    ArrayInputFieldComponent,
     OptionsComponent,
     SubjectsBoxComponent,
     ConfirmationComponent,

@@ -1,0 +1,32 @@
+<main>
+    <section>
+        <img class ="content__brand" src="/assets/registration/logo.svg" alt="">
+
+        <div class="content">
+
+        <h1 class = "content__title">Security Question</h1>
+        <p class = "content__desc">Please answer the following question to recover your password</p>
+           
+        <form action=""  [formGroup]="registrationForm" (ngSubmit)="formSubmit()" >
+                
+                <edu-input    formControlName="question"    alignment = "left"   > 
+                    <span class = "edu-label">Question 1</span>
+                
+                </edu-input>
+                <edu-input    formControlName="answer"    alignment = "left"   > 
+                    <span class = "edu-label">Answer</span>
+                
+                </edu-input>
+
+      
+
+
+                <button class = "form__btn"> Recover password </button>
+
+        </form>
+ 
+
+     </div>
+
+    </section>
+</main>

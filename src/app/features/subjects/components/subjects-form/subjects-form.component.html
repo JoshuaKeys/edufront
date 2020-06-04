@@ -5,7 +5,7 @@
   <div class="groups groups--split-layout">
     <div class="group">
       <div class="form__array" formArrayName="subSubjects">
-        <edu-input-field
+        <edu-array-input-field
           text="Sub subject"
           idPrefix="subSubject"
           type="subject"
@@ -15,12 +15,12 @@
           [last]="subSubjects.controls.length === 2"
           (insertItem)="insertItem($event)"
           (removeItem)="removeItem($event)"
-        ></edu-input-field>
+        ></edu-array-input-field>
       </div>
     </div>
     <div class="group">
       <div class="form__array" formArrayName="activities">
-        <edu-input-field
+        <edu-array-input-field
           text="Activity"
           idPrefix="activity"
           type="activity"
@@ -30,7 +30,7 @@
           [last]="activities.controls.length === 2"
           (insertItem)="insertItem($event)"
           (removeItem)="removeItem($event)"
-        ></edu-input-field>
+        ></edu-array-input-field>
       </div>
     </div>
 

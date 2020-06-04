@@ -1,0 +1,44 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+@include group();
+
+:host {
+  max-width: 740px;
+  min-height: 510px;
+  width: 100%;
+  margin: auto;
+
+  height: 100%;
+}
+.security-settings {
+  @include displayFlex(flex-start, stretch, column);
+}
+.security-setting {
+  margin-bottom: 40px;
+  &__icon {
+    margin-right: 18px;
+  }
+
+  &__title {
+    color: $ash;
+    margin: 0;
+    font-weight: 400;
+  }
+  &__desc {
+    margin: 0;
+    color: $black;
+    font: 400 14px/24px Raleway;
+  }
+
+  &__btn {
+    color: $blue;
+    text-align: right;
+    font: 600 14px/20px Raleway;
+  }
+}
+
+edu-input {
+  margin: 0;
+  margin-bottom: 20px;
+}

@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProfileModel } from '../../models/profile.model';
 import { setSchoolLogo, uploadSchoolLogoRequest } from '../../ngrx/actions';
-import { uploadSchoolLogo } from 'src/app/features/school-profile/ngrx/actions';
+// import { uploadSchoolLogoRe } from 'src/app/features/school-profile/ngrx/actions';
 import { selectSchoolLogo, selectLogoPreview } from '../../ngrx/selectors';
 import { withLatestFrom, first, tap } from 'rxjs/operators';
 

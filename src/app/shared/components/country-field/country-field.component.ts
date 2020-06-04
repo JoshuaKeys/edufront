@@ -12,10 +12,12 @@ import { IconModel } from 'src/app/shared/components/icon-field/icon-field.compo
     { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => CountryFieldComponent) }
   ]
 })
-export class CountryFieldComponent {
+export class CountryFieldComponent implements OnInit {
   @Input() fieldName: string;
   @Input() icons: IconModel[]
   @Input() mode: string;
+  filteredIcons: IconModel[];
+  filter: string;
   isOpen = false;
   constructor(private renderer: Renderer2) { }
   value: string;
@@ -23,6 +25,13 @@ export class CountryFieldComponent {
   @Output() valueChanged = new EventEmitter<IconModel>();
   @ViewChild('fieldNameEl') fieldNameEl: ElementRef<HTMLInputElement>;
   onValueChange: (any) => any;
+
+  ngOnInit() {
+    this.filteredIcons = this.filterIcons(this.icons, this.filter);
+  }
+  filterIcons(icons: IconModel[], filter: string) {
+    return icons.filter(icon => icon.item.match(filter))
+  }
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
@@ -36,6 +45,10 @@ export class CountryFieldComponent {
     }
     this.value = val.item;
     this.activeIcon = val.icon;
+  }
+  onCountrySearch(input) {
+    this.filter = input.target.value;
+    this.filteredIcons = this.filterIcons(this.icons, this.filter);
   }
   changeItem(icon: { item: string, icon: string, id: string }) {
     this.onValueChange(icon)

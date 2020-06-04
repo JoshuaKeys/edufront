@@ -1,0 +1,84 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+@include group();
+.profile-main {
+  @include displayFlex(flex-start, stretch, column);
+  flex-grow: 1;
+  width: 100%;
+}
+
+.profile__close-btn {
+  position: relative;
+  z-index: 10;
+}
+
+//modal
+.modal {
+  @include modal();
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+
+  top: 50%;
+  border-radius: 15px;
+  padding: 16px 0px;
+  overflow: hidden;
+  &__overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.title-and-close {
+  font: 600 16px/20px Quicksand;
+  margin-bottom: 8px;
+  padding: 0 20px;
+}
+
+.menu {
+  ul {
+    @include displayFlex(flex-start);
+    list-style: none;
+    margin: 0;
+    padding: 0 20px;
+
+    padding-bottom: 12px;
+    border-bottom: 1px solid $grey-blue;
+  }
+  li {
+    cursor: pointer;
+    position: relative;
+    margin: 0 15px;
+    padding: 0;
+    color: $ash;
+    font: 500 12px/14px Raleway;
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+  li.active {
+    color: $blue;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: -14px;
+      height: 2px;
+      width: 100%;
+      background: $blue;
+    }
+  }
+}
+
+.content {
+  @include displayFlex(center, center, column);
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 30px;
+}
+
+// edu-popover {
+//   padding: 16px;
+// }

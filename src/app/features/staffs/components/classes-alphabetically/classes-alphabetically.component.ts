@@ -54,6 +54,9 @@ export class ClassesAlphabeticallyComponent implements OnInit {
       console.log(idx);
       alphabetObj[idx].items.push(item)
     })
-    return alphabetObj;
+
+    return alphabetObj.sort((obj1, obj2) => {
+      return obj1.alphabet < obj2.alphabet ? - 1 : 1;
+    })
   }
 }

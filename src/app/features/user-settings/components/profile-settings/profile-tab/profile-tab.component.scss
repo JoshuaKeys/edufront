@@ -1,0 +1,73 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+@include group();
+
+:host {
+  max-width: 510px;
+  width: 80%;
+  @include displayFlex(flex-start, stretch, column);
+  height: 100%;
+
+  //  max-height: 790px;
+  height: calc(90vh - 202px);
+}
+form > *:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+.sub-title {
+  color: $orange;
+  font: 600 16px/24px Quicksand;
+  margin: 0;
+}
+
+.edu-img-upload__dropzone {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  color: white;
+  background-color: $blue;
+  @include displayFlex();
+}
+.edu-label {
+  color: $ash;
+}
+
+edu-input,
+edu-select {
+  margin: 0 15px;
+  max-width: unset;
+  width: 50%;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.about-me,
+.address {
+  width: 100%;
+  margin: 0;
+}
+.countryPicker {
+  &__img {
+    margin-right: 12px;
+  }
+}
+
+.deactive__modal-wrapper {
+  padding: 0;
+}
+button[ButtonType='text'] {
+  font: 600 16px/20px Raleway;
+}
+
+button[ButtonType='basic'] {
+  margin-top: 16px;
+  width: 144px;
+  height: 40px;
+  font: 700 12px/20px Raleway;
+}

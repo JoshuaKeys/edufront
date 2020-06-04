@@ -1,0 +1,13 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/buttons';
+@include group();
+
+form {
+}
+
+.edu-img-upload__dropzone {
+  border-radius: 50%;
+  background: $blue;
+  @include displayFlex();
+}

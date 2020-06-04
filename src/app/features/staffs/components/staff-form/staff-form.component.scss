@@ -108,7 +108,8 @@ main {
 }
 .modal__content-third-row,
 .modal__content-first-row {
-  edu-input-field {
+  edu-input-field,
+  edu-select {
     width: 30%;
   }
 }

@@ -18,14 +18,20 @@ import { PhoneIconFieldComponent } from './components/phone-icon-field/phone-ico
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
 
-import { SelectModule } from "./components/select/select.module"
 import { datePickerModule } from "./components/datepicker/datepicker.module";
+import { ButtonComponent } from "./components/button/button.component"
+import { PopoverComponent } from "./components/popover/popover.component"
+import { PopoverOptionDirective } from "./components/popover/popover-option.directive"
+
 import { TimetableModule } from "./components/timetable/timetable.module";
 import { SubjectsService } from './services/subjects.service';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { CountryFieldComponent } from './components/country-field/country-field.component';
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
+
+import { FormComponentsModule } from "./components/form-components/form-component.module";
+import { SelectModule } from './components/form-components/select/select.module';
 
 
 @NgModule({
@@ -46,9 +52,13 @@ import { PhoneFieldComponent } from './components/phone-field/phone-field.compon
     IconButtonComponent,
     CountryFieldComponent,
     ImgUploadV2Component,
-    PhoneFieldComponent
+    PhoneFieldComponent,
+    ButtonComponent,
+    PopoverComponent,
+    PopoverOptionDirective
   ],
   imports: [
+    FormComponentsModule,
     CommonModule,
     datePickerModule,
     SelectModule,
@@ -56,12 +66,13 @@ import { PhoneFieldComponent } from './components/phone-field/phone-field.compon
     RouterModule
   ],
   exports: [
+    FormComponentsModule,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
     HeaderNavComponent,
+    ButtonComponent,
     datePickerModule,
-    SelectModule,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
@@ -75,7 +86,8 @@ import { PhoneFieldComponent } from './components/phone-field/phone-field.compon
     IconButtonComponent,
     ImgUploadV2Component,
     CountryFieldComponent,
-    PhoneFieldComponent
+    PhoneFieldComponent,
+    PopoverComponent
   ],
   providers: [
     ClassesService,

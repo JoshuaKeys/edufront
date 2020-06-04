@@ -1,0 +1,45 @@
+<main>
+    <section>
+        <img class ="content__brand" src="/assets/registration/logo.svg" alt="">
+
+        <div class="content">
+
+        <h1 class = "content__title">Create New Account</h1>
+        <p class = "content__desc">Already have an account? <a class = "bluecolor"  href="">Sign In</a></p>
+           
+        <form action=""  [formGroup]="registrationForm" (ngSubmit)="formSubmit()" >
+                
+                <edu-input    formControlName="username"    alignment = "left" elementId ="username"> 
+                    <span class = "edu-label"> User Name </span>
+                    <img  *ngIf="registrationForm.controls.username.invalid" class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-grey.svg" alt="">    
+                    <img  *ngIf="registrationForm.controls.username.valid" class="edu-input__suffix" InputAffix src="/assets/registration/user-tick-green.svg" alt="">    
+               
+                </edu-input>
+
+                <edu-input  isPassword = "true" alignment = "left" formControlName="pw"> 
+                    <visibility-toggle  class="edu-input__suffix" InputAffix ></visibility-toggle>    
+                    <span class = "edu-label"> Password </span>
+                    <!-- class validator is for stylign only, only[Validator] and [alignment] is required and  -->
+                    <ul class = "validator" Validator  alignment = "right"  *ngIf="registrationForm.controls.pw.invalid && registrationForm.controls.pw.touched" >
+                        <li  *ngIf="registrationForm.controls.pw.errors.minlength||registrationForm.controls.pw.errors.required">8 Characters Long</li>
+                        <li *ngIf="registrationForm.controls.pw.errors.pattern" >Contain one Capital</li>
+                        <li *ngIf="registrationForm.controls.pw.errors.pattern">Contain one Numeral</li>
+                    </ul>
+                </edu-input>
+
+                <edu-input  isPassword = "true" alignment = "left" formControlName = "cfmPw"> 
+                    <visibility-toggle  class="edu-input__suffix" InputAffix ></visibility-toggle>
+                    <span class = "edu-label"> Confirm Password </span>
+                </edu-input>
+
+
+                <button class = "form__btn"> create account </button>
+
+        </form>
+ 
+        <p class="content__footer-text">By signing up, you agree to our <a href="" class="bluecolor">Terms of Services</a> and <a href="" class="bluecolor">Privacy Policy</a>.</p>
+
+     </div>
+
+    </section>
+</main>

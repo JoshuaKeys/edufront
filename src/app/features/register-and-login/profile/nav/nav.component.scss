@@ -1,0 +1,7 @@
+@import "src/assets/styles/mixins/alignment";
+nav{
+    box-shadow: 0px 2px 6px #3C4B9B1A;
+    height: 52px;
+    @include displayFlex(flex-start);
+    padding: 0 29px
+}

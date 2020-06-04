@@ -1,3 +1,7 @@
+@import "src/assets/styles/mixins/containers";
+
+@include group();
+
 :host{
     position: relative;
     width: 100vw;

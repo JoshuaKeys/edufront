@@ -19,12 +19,14 @@ import { SubjectClassesComponent } from './components/classes/subject-classes.co
 import { ClassesSubjectIconComponent } from './components/classes-subject-icon/classes-subject-icon.component';
 import { ClassesAlphabeticallyComponent } from './components/classes-alphabetically/classes-alphabetically.component';
 import { ClassesByGenderComponent } from './components/classes-by-gender/classes-by-gender.component';
+import { StaffEditFormComponent } from './components/staff-edit-form/staff-edit-form.component';
 @NgModule({
   declarations: [
     StaffsShellComponent,
     StaffsCreationComponent,
     StaffChipComponent,
     StaffFormComponent,
+    StaffEditFormComponent,
     SubjectsAreaComponent,
     TotalStaffComponent,
     SubjectClassesComponent,
