@@ -37,13 +37,12 @@
   height: 0;
 }
 
-.input-box-container {
-  position: relative;
-}
-
 :host ::ng-deep {
   .myDpSelector {
     border-color: $blue;
+    top: unset !important;
+    bottom: -10px;
+    transform: translateY(100%);
   }
 
   //button styling
