@@ -1,36 +1,100 @@
-import { Component, OnInit } from '@angular/core';
- 
-import {IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
+import { Component, OnInit, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
 @Component({
-  selector: 'datepicker',
+  selector: 'edu-datepicker',
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.scss']
+  styleUrls: ['./datepicker.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => DatepickerComponent)
+    }
+  ]
 })
-export class DatepickerComponent implements OnInit {
+export class DatepickerComponent implements OnInit, ControlValueAccessor {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  model: IMyDateModel = null;
+
+  onInputBlur() {
+    this.updateDatePickerModel();
   }
 
- 
-  model: IMyDateModel = null;
+  updateDatePickerModel() {
+    this.value = this.val;
+    let day = parseInt(this.val.substring(0, 2));
+    let month = parseInt(this.val.substring(3, 5));
+    let year = parseInt(this.val.substring(6, 8));
+    year = year < 50 ? year + 2000 : year + 1900;
+
+    let model: IMyDateModel = {
+      isRange: false,
+      singleDate: {
+        jsDate: new Date(),
+        date: { year, month, day }
+      },
+      dateRange: null
+    };
+    this.model = model;
+    console.log(this.model);
+  }
+
   onDateChanged(event: IMyDateModel): void {
     // date selected
+    let dateObj = event.singleDate.date;
+    console.log(event);
+    this.value = `${this.formatDayMonth(dateObj.day)}/${this.formatDayMonth(
+      dateObj.month
+    )}/${this.formatYear(dateObj.year)}`;
   }
 
+  val;
+  set value(val) {
+    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    this.val = val;
+    this.onChange(val);
+    this.onTouched();
+    // this.onTouched(val)
+  }
+
+  formatDayMonth(param) {
+    return param < 10 ? `0${param}` : `${param}`;
+  }
+  formatYear(param) {
+    return param.toString().substring(2, 4);
+  }
 
   myDatePickerOptions: IAngularMyDpOptions = {
-    selectorWidth:'286px',
-    selectorHeight:'280px',
-    dateFormat:'dd/mm/yyyy',
-    sunHighlight:false,
-    satHighlight:false,
+    selectorWidth: '286px',
+    selectorHeight: '280px',
+    dateFormat: 'dd/mm/yyyy',
+    markCurrentDay: false,
+    markCurrentMonth: false,
+    markCurrentYear: false,
+    sunHighlight: false,
+    satHighlight: false,
     showMonthNumber: false,
-    monthLabels: { 1: 'January ', 2: 'February ', 3: 'March ', 4: 'April ', 5: 'May', 6: 'June ', 7: 'July ', 8: 'August ', 9: 'September', 10: 'October', 11: 'November', 12: 'December' },
+    monthLabels: {
+      1: 'January ',
+      2: 'February ',
+      3: 'March ',
+      4: 'April ',
+      5: 'May',
+      6: 'June ',
+      7: 'July ',
+      8: 'August ',
+      9: 'September',
+      10: 'October',
+      11: 'November',
+      12: 'December'
+    },
     stylesData: {
-        styles: `
+      styles: `
             
             
             .myDpSelectorArrowLeft:after, .myDpSelectorArrowLeft:before{
@@ -88,6 +152,7 @@ export class DatepickerComponent implements OnInit {
           
             .myDpDaycell:focus, .myDpMonthcell:focus, .myDpYearcell:focus {
               box-shadow: unset;
+              outline-width: 0;
            }
             
             .myDpSelectedDay span, .myDpMarkCurrDay, .myDpMarkCurrMonth, .myDpMarkCurrYear { 
@@ -104,13 +169,9 @@ export class DatepickerComponent implements OnInit {
               align-items: center;
         
             }
-            .myDpTableSingleDay:hover, .myDpTableSingleMonth:hover, .myDpTableSingleYear:hover {
-              background-color: unset;
-            }
+        
 
-            .myDpTableSingleDay:hover span, .myDpTableSingleMonth:hover span, .myDpTableSingleYear:hover span {
-              background-color: #ddd;
-            }
+        
 
             .myDpDaycell {
               border-radius: 50%;
@@ -138,5 +199,24 @@ export class DatepickerComponent implements OnInit {
         `
     }
     // other options here
-}
+  };
+
+  onChange: any = () => {};
+  onTouched: any = () => {};
+  disabled: boolean = false;
+  writeValue(value: any) {
+    this.value = value;
+    this.updateDatePickerModel();
+  }
+
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 }

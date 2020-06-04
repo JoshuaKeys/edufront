@@ -1,106 +1,107 @@
- 
- <h1>form.get('f1').value : {{loginForm.get('f1').value}}</h1>
- <h1> onchangeValue event: {{updatedValue}}  </h1>
- <h1> ngmodel:   {{modelTest}}</h1>
- 
- <h1> touched : {{loginForm.get('f1').touched}}</h1>
- <h1> dirty : {{loginForm.get('f1').dirty}}</h1>
- <h1> disabled : {{loginForm.get('f1').disabled}}</h1>
+<h1>form.get('f1').value : {{ loginForm.get('f1').value }}</h1>
+<h1>onchangeValue event: {{ updatedValue }}</h1>
+<h1>ngmodel: {{ modelTest }}</h1>
 
-    <input type="text" name="" id="">
+<h1>touched : {{ loginForm.get('f1').touched }}</h1>
+<h1>dirty : {{ loginForm.get('f1').dirty }}</h1>
+<h1>disabled : {{ loginForm.get('f1').disabled }}</h1>
 
- <form  [formGroup]="loginForm" (ngSubmit)="formSubmit()">
+<input type="text" name="" id="" />
 
-<edu-select  [(ngModel)]="modelTest" formControlName="f1"   (onValueChange) = "updateValue($event)"  >
-    <div class="edu-select__prefix" InputAffix  > <img src="assets/user-settings/modal_india.svg" alt="" srcset=""> </div>
-    <span class ="edu-label"> numbers <span class ="ashcolor optional">123</span> </span>
-    <edu-option OptionValue='1' > one  </edu-option>
-    <edu-option OptionValue='2' > two </edu-option>
-    <edu-option OptionValue='3' > three </edu-option>
-    <edu-option OptionValue='4' > four </edu-option>
-    <edu-option OptionValue='5' > five </edu-option>
-    <edu-option OptionValue='6' > six </edu-option>
-</edu-select>
-<br>
- <edu-select   formControlName="f2"   (onValueChange) = "updateValue($event)"  >
-    <span class ="edu-label"> numbers <span class ="ashcolor optional">123</span> </span>
-    <edu-option OptionValue='1' > 1 </edu-option>
-    <edu-option OptionValue='2' > 2 </edu-option>
-    <edu-option OptionValue='3' > 3 </edu-option>
-    <edu-option OptionValue='4' > 4 </edu-option>
-    <edu-option OptionValue='5' > 5 </edu-option>
-    <edu-option OptionValue='6' > 6 </edu-option>
-</edu-select>  
+<form [formGroup]="loginForm" (ngSubmit)="formSubmit()">
+  <edu-select
+    [(ngModel)]="modelTest"
+    formControlName="f1"
+    (onValueChange)="updateValue($event)"
+  >
+    <div class="edu-select__prefix" InputAffix>
+      <img src="assets/user-settings/modal_india.svg" alt="" srcset="" />
+    </div>
+    <span class="edu-label">
+      numbers <span class="ashcolor optional">123</span>
+    </span>
+    <edu-option OptionValue="1123123"> o89798ne </edu-option>
+    <edu-option OptionValue="2"> two </edu-option>
+    <edu-option OptionValue="3"> three </edu-option>
+    <edu-option OptionValue="4"> four </edu-option>
+    <edu-option OptionValue="5"> five </edu-option>
+    <edu-option OptionValue="6"> six </edu-option>
+  </edu-select>
+  <br />
+  <edu-select formControlName="f2" (onValueChange)="updateValue($event)">
+    <span class="edu-label">
+      numbers <span class="ashcolor optional">123</span>
+    </span>
+    <edu-option OptionValue="1"> 1 </edu-option>
+    <edu-option OptionValue="2"> 2 </edu-option>
+    <edu-option OptionValue="3"> 3 </edu-option>
+    <edu-option OptionValue="4"> 4 </edu-option>
+    <edu-option OptionValue="5"> 5 </edu-option>
+    <edu-option OptionValue="6"> 6 </edu-option>
+  </edu-select>
 
+  <br />
 
- 
- <br>
- 
-<br>
-<!-- <button (click)="toggleF1()">{{loginForm.get('f1').disabled  ? 'enable' : 'disable'}}  select</button> -->
+  <br />
+  <!-- <button (click)="toggleF1()">{{loginForm.get('f1').disabled  ? 'enable' : 'disable'}}  select</button> -->
 </form>
 
-
-<br>
+<br />
 <div class="group-row just-space">
-    
-<ul role = "listbox">
+  <ul role="listbox">
     <li role="option">1</li>
     <li role="option">2</li>
     <li role="option">3</li>
     <li role="option">4</li>
-</ul>
+  </ul>
 
-    <select name="" id="">
-    
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
-    <select name="" id="">
-        <option value="">input <input type="text" name="" id=""></option>
-         <option value="1">apple</option>
-        <option value="2">orange</option>
-        <option value="3">pear</option>
-        <option value="durain">durain</option>
-         <option value="apple">apple</option>
-        <option value="orange">orange</option>
-        <option value="pear">pear</option>
-        <option value="durain">durain</option>
-         <option value="apple">apple</option>
-        <option value="orange">orange</option>
-        <option value="pear">pear</option>
-        <option value="durain">durain</option>
-         <option value="apple">apple</option>
-        <option value="orange">orange</option>
-        <option value="pear">pear</option>
-        <option value="durain">durain</option>
-         <option value="apple">apple</option>
-        <option value="orange">orange</option>
-        <option value="pear">pear</option>
-        <option value="durain">durain</option>
-         <option value="apple">apple</option>
-        <option value="orange">orange</option>
-        <option value="pear">pear</option>
-        <option value="durain">durain</option>
-         <option value="apple">apple</option>
-        <option value="orange">orange</option>
-        <option value="pear">pear</option>
-        <option value="durain">durain</option>
-    </select>
-    <select name="" id="">
-    
-      <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
-    <select name="" id="">
-    
-      <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
+  <select name="" id="">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  <select name="" id="">
+    <option value="">input <input type="text" name="" id=""/></option>
+    <option value="1">apple</option>
+    <option value="2">orange</option>
+    <option value="3">pear</option>
+    <option value="durain">durain</option>
+    <option value="apple">apple</option>
+    <option value="orange">orange</option>
+    <option value="pear">pear</option>
+    <option value="durain">durain</option>
+    <option value="apple">apple</option>
+    <option value="orange">orange</option>
+    <option value="pear">pear</option>
+    <option value="durain">durain</option>
+    <option value="apple">apple</option>
+    <option value="orange">orange</option>
+    <option value="pear">pear</option>
+    <option value="durain">durain</option>
+    <option value="apple">apple</option>
+    <option value="orange">orange</option>
+    <option value="pear">pear</option>
+    <option value="durain">durain</option>
+    <option value="apple">apple</option>
+    <option value="orange">orange</option>
+    <option value="pear">pear</option>
+    <option value="durain">durain</option>
+    <option value="apple">apple</option>
+    <option value="orange">orange</option>
+    <option value="pear">pear</option>
+    <option value="durain">durain</option>
+  </select>
+  <select name="" id="">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  <select name="" id="">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
 </div>

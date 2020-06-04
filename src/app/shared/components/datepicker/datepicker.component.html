@@ -1,8 +1,29 @@
+<input
+  #exposedInput
+  class="exposedInput"
+  type="text"
+  [(ngModel)]="val"
+  (blur)="onInputBlur()"
+  placeholder="dd/mm/yy"
+/>
+<button class="datepicker__btn">
+  <img src="assets/date-picker-calender.svg" alt="" srcset="" />
+  <label class="hiddenLabel" for="datepicker"></label>
+</button>
 
- 
 <div class="input-box-container">
-    <input class="input-box" placeholder="Click to select a date" 
-      angular-mydatepicker name="mydate" (click)="dp.toggleCalendar()" 
-      [(ngModel)]="model" [options]="myDatePickerOptions" 
-      #dp="angular-mydatepicker" (dateChanged)="onDateChanged($event)"/>
-  </div>
+  <input
+    #hiddenInput
+    id="datepicker"
+    tabindex="-1"
+    class="input-box hiddenInput"
+    placeholder="Click to select a date"
+    angular-mydatepicker
+    name="mydate"
+    (click)="dp.toggleCalendar()"
+    [(ngModel)]="model"
+    [options]="myDatePickerOptions"
+    #dp="angular-mydatepicker"
+    (dateChanged)="onDateChanged($event)"
+  />
+</div>
