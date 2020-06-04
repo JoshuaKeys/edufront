@@ -36,7 +36,7 @@ export class UserSettingsShellComponent implements OnInit {
   ];
 
   modalOptions = { none: 'none', profile: 'profile', school: 'school' };
-  activeModalOption = this.modalOptions.school;
+  activeModalOption = this.modalOptions.none;
 
   setActiveOption(option) {
     this.activeSideMenuOption = option;

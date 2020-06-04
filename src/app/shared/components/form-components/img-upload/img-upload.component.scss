@@ -1,54 +1,71 @@
-@import "src/assets/styles/colors";
-@import "src/assets/styles/mixins/containers";
-@import "src/assets/styles/mixins/buttons";
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/buttons';
 @include group();
 
-.drop-zone{
-    position: relative;
+.drop-zone {
+  position: relative;
 }
 
+.file {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+}
 
-.file{
+.btns {
+  margin-top: 40px;
+  max-width: 231px;
+  justify-content: space-between;
+}
+.btn--text {
+  @include textButton($blue);
+  font: 500 16px/24px Raleway;
+}
+
+.displayNone {
+  display: none;
+}
+
+.hidden {
+  opacity: 0;
+  position: relative;
+  z-index: -1;
+  width: 0;
+  height: 0;
+}
+
+.img-wrapper {
+  position: relative;
+  &__label {
     position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    z-index: 2;
+  }
 }
 
-.btns{
-    margin-top: 40px;
-    max-width: 231px;
-    justify-content: space-between;
-}
-.btn--text{
-    @include textButton( $blue);
-    font: 500 16px/24px Raleway;
-
+.mouseOverText {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  @include displayFlex();
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
 }
 
-.displayNone{
-    display: none;
+::ng-deep .edu-img-upload__dropzone {
+  width: 200px;
+  height: 200px;
 }
-
-
-.hidden{
-    opacity: 0;
-    position: relative;
-    z-index: -1;
-    width: 0;
-    height: 0;
-}
-
-.img-wrapper{
-    position: relative;
-    &__label{
-        position: absolute;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-    }
-
+:host ::ng-deep .edu-label {
+  margin-top: 20px;
+  display: block;
+  text-align: center;
+  width: 100%;
+  text-align: center;
 }

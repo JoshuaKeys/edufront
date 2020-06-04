@@ -1,231 +1,239 @@
-@import "src/assets/styles/colors";
-@import "src/assets/styles/form-general"; //remove dependency on this soon
-@import "src/assets/styles/mixins/components";
+@import 'src/assets/styles/colors';
+// @import "src/assets/styles/form-general"; //remove dependency on this soon
+@import 'src/assets/styles/mixins/components';
 
- 
 //default color >> $grey-blue
-  
- //popup style
-  .popup{
-   
-      transition: none;
-  
-      cursor: pointer;
-      position: absolute;
-      background: white;
-      z-index: 4;
-     
-      border: 1px solid $blue;
-      border-radius: 6px;
-  
-      white-space: nowrap;
-      // padding: $y-padding $x-padding;
-      text-align: left;
-      border-color: $blue;
-  
-      //hiding popover
+
+:host {
+  display: block;
+  position: relative;
+  margin: auto;
+  width: 380px;
+  cursor: pointer;
+  height: 44px;
+}
+
+//popup style
+.popup {
+  transition: none;
+
+  cursor: pointer;
+  position: absolute;
+  background: white;
+  z-index: 4;
+
+  border: 1px solid $blue;
+  border-radius: 6px;
+
+  white-space: nowrap;
+  // padding: $y-padding $x-padding;
+  text-align: left;
+  border-color: $blue;
+
+  //hiding popover
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  bottom: -8px;
+  left: 0;
+  top: unset;
+  position: absolute;
+  transform: translate(0, 100%);
+
+  &.active {
+    min-width: 100%;
+    width: auto;
+    height: auto;
+    overflow: unset;
+    opacity: 1;
+  }
+
+  .pointer {
+    position: absolute;
+    top: 0;
+    transform: translateY(-100%);
+    left: 10px;
+
+    &::before,
+    &::after {
+      //triangle ??
+      // position: absolute;
+      content: '';
+      display: block;
       width: 0;
       height: 0;
-      overflow: hidden;
-      opacity: 0;
-      bottom: -8px;
-      left: 0;
-      top: unset;
-      position: absolute;
-      transform: translate(0, 100%);
-  
-  &.active{
-    min-width: 100%;
-      width: auto;
-      height: auto;
-      overflow: unset;
-      opacity: 1;
-  }
-
-
-
-    .pointer{
-      position: absolute;
-      top: 0;
-      transform: translateY(-100%);
-      left: 10px;
-
-  
-      &::before ,&::after { //triangle ??
-          // position: absolute;
-          content: "";
-          display: block;
-          width: 0; 
-          height: 0; 
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;   
-          border-bottom: 7px solid $blue;
-  
-          
-        }
-       &::after { //triangle ??
-          position: absolute;
-          top: 1.5px;
-          left: 1px;
-          border-bottom: 6px solid white;
-          border-left: 4px solid transparent;
-          border-right: 4px solid transparent;   
-        }
-  }
-  }
- 
-  .popup__content-wrapper{ // to prevent overflow of edges
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-
-  .select {
-    //form__input--select is a checkbox used to toggle "select" element
- 
-    &__wrapper{
-      flex-direction: row;
-      &:before {
-        width: 16px;
-        height: 16px;
-        right: 12.5px;
-        content:"";
-        display: block;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: url("/assets/iconfinder_chevron-up.svg") no-repeat no-repeat  center center;
-       
-      }
-      
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 7px solid $blue;
     }
-    &__checkbox {
-      cursor: pointer;
-      z-index: 2;
-      width: 100%;
+    &::after {
+      //triangle ??
       position: absolute;
-      height: 100%;
-      opacity: 0;
-    
-    }
-    //form__input--select-sizeguide is the empty input text element used to determine 
-    //(1)size of element  (2) text displayed when selected by element
-    &__input{
-      background: unset;
-      line-height: 1;
-      text-align: center;
-      height: 100%;
-      width: 100%;
-      border: none;
-      // border-bottom: 1px solid $grey-blue;
+      top: 0px;
+      left: 0px;
 
+      border-bottom: 7px solid white;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      transform-origin: center bottom;
+      transform: scale(0.8);
+    }
+  }
+}
+
+.popup__content-wrapper {
+  // to prevent overflow of edges
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.select {
+  //form__input--select is a checkbox used to toggle "select" element
+
+  &__wrapper {
+    @include displayFlex();
+    position: relative;
+    border-bottom: 1px solid $grey-blue;
+    height: 100%;
+    width: 100%;
+    &.active {
+      border-color: $blue;
+    }
+    &:before {
+      width: 16px;
+      height: 16px;
+      right: 12.5px;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: url('/assets/iconfinder_chevron-up.svg') no-repeat no-repeat
+        center center;
+    }
+  }
+  &__checkbox {
+    cursor: pointer;
+    z-index: 2;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+  }
+
+  &__label {
+    font-family: Raleway;
+    font-size: 14px;
+    line-height: 1.45;
+    order: -1;
+  }
+  //(1) text displayed when selected by element
+  &__input {
+    background: unset;
+    line-height: 1;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-family: Raleway;
+    font-size: 14px;
+    line-height: 1.45;
+    height: 0;
+    // border-bottom: 1px solid $grey-blue;
+
+    color: transparent;
+
+    &::placeholder {
       color: transparent;
-
-      &::placeholder{
-        color: transparent;
-      }
     }
-  
   }
+}
 
- 
-.input--active{
+.input--active {
+  height: auto;
   color: $black;
-  &::placeholder{
+  &::placeholder {
     color: $black;
   }
 }
 
- .input-and-label{ //wrapper for both input and label
+.input-label {
+  //wrapper for both input and label
   // position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include displayFlex(center, center, column);
   position: relative;
   flex-grow: 1;
   align-self: stretch;
-    input{
-      margin: 0;
-    }
- }
-
-.prefix{
-  order:-1;
+  input {
+    margin: 0;
+  }
 }
- 
 
-.focus,.active{
+.prefix {
+  order: -1;
+}
+
+.focus,
+.active {
   &.select__wrapper:before {
-    background: url("/assets/iconfinder_chevron-up-blue.svg") no-repeat no-repeat  center center;
-     
+    background: url('/assets/iconfinder_chevron-up-blue.svg') no-repeat
+      no-repeat center center;
   }
-  &.select__wrapper{
-    border-color: $blue ;
-  }
-}
-
-
-
-//disabled state 
-.disabled{
-  input, input::placeholder, label{
-    color: $ash;
-  }
-  
-}
-
-
-//form wrapper overwrite
-.form__label{
-  line-height: 1;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.label--active{
-  top: 0;
-  transform: scale(0.8) ;
-  text-align: center;
-  .ashcolor {
-    font-size: 0;
-  }
-}
-
-
-.form__input-wrapper{
-  min-height: 54px;
-  border-bottom: 1px solid $grey-blue;
-
-  &.active{
+  &.select__wrapper {
     border-color: $blue;
   }
 }
 
-input{
-  border:  none;
+//disabled state
+.disabled {
+  input,
+  input::placeholder,
+  label {
+    color: $ash;
+  }
+}
+
+//form wrapper overwrite
+
+.label--active {
+  top: 0;
+  // transform: scale(0.8);
+  text-align: center;
+  .optional {
+    font-size: 0;
+  }
+  .label__shrink-wrap {
+    font-size: 0.85em;
+  }
+}
+
+input {
+  border: none;
   align-self: flex-end;
   margin-bottom: 10px;
   font: 400 20px/24px Raleway;
   padding: 0;
- 
 }
-
-
-.left{
-  label, input{
+.center {
+  label,
+  input {
+    text-align: center;
+  }
+}
+.left {
+  label {
+    align-self: flex-start;
+  }
+  input {
     text-align: left;
   }
-  label{
-    transform-origin: left top;
-  }  
-
 }
-.right{
-  label, input{
+.right {
+  label {
+    align-self: flex-end;
+  }
+  input {
     text-align: right;
   }
-  label{
-    transform-origin: right top;
-  }  
-
 }

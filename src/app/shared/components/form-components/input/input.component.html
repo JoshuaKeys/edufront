@@ -4,7 +4,7 @@
     'input-wrapper-border--active': inputElIsFocus,
     'input-wrapper-border--error': config.hasError
   }"
-  class="form__input-wrapper   wrapper"
+  class="      wrapper"
 >
   <!-- main group for label and actual input El -->
   <div class="label-input__wrapper">
@@ -33,8 +33,9 @@
       }"
       class="form__label "
       [for]="elementId"
-    >
-      <ng-content select=".edu-label"></ng-content>
+      ><div class="label__shrink-wrapper">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
     </label>
   </div>
 

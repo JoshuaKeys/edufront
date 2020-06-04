@@ -6,9 +6,9 @@
   display: block;
   position: relative;
   margin: auto;
-  max-width: 380px;
+  width: 380px;
   cursor: text;
-  height: 54px;
+  height: 44px;
   // @include displayFlex(center, center, column);
 }
 
@@ -16,53 +16,61 @@ input:focus {
   outline: none;
 }
 
-.form {
-  &__input {
-    border: none;
-    height: 0;
-    width: 100%;
-    text-align: center;
-    font: 400 20px/24px Raleway;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    &.left {
-      text-align: left;
-    }
-    &.right {
-      text-align: right;
-    }
+.wrapper {
+  margin: auto;
+  height: 100%;
+  @include displayFlex(flex-start, center, row);
+  border-bottom: 1px solid #e6e9f3;
+}
+
+input {
+  border: none;
+  height: 0;
+  width: 100%;
+  text-align: center;
+  // font: 400 20px/24px Raleway;
+  font-family: Raleway;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  &.left {
+    text-align: left;
   }
-
-  &__label {
-    order: -1;
-    & > * {
-      transition: none;
-    }
-    line-height: 1.5;
-
-    padding: 0;
-    margin: 0;
-
-    &.left {
-      align-self: flex-start;
-    }
-    &.center {
-      align-self: center;
-    }
-    &.right {
-      align-self: flex-end;
-    }
-  }
-  &__input-wrapper {
-    margin: auto;
-    height: 100%;
-    @include displayFlex(flex-start, center, row);
-    border-bottom: 1px solid #e6e9f3;
+  &.right {
+    text-align: right;
   }
 }
 
+label {
+  font-family: Raleway;
+  font-size: 14px;
+  line-height: 1.45;
+  order: -1;
+  & > * {
+    transition: none;
+  }
+  line-height: 1.45;
+
+  padding: 0;
+  margin: 0;
+
+  &.left {
+    align-self: flex-start;
+  }
+  &.center {
+    align-self: center;
+  }
+  &.right {
+    align-self: flex-end;
+  }
+}
+.label--active {
+  .label__shrink-wrapper {
+    font-size: 0.85em;
+  }
+}
 .label--focus {
   color: $blue;
 }

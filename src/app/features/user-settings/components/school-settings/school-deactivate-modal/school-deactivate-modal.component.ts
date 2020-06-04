@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 @Component({
   selector: 'edu-school-deactivate-modal',
@@ -8,7 +14,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class SchoolDeactivateModalComponent implements OnInit {
   constructor() {}
-
   ngOnInit(): void {}
 
   activeStep = 1; //theres 1 - 2 for the different pages check the ngfor

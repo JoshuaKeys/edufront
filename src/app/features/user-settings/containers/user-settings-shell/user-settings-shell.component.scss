@@ -73,7 +73,7 @@ $border-color: $grey-white;
   position: relative;
   color: $black;
   &__setting {
-    padding: 0 16px;
+    // padding: 0 16px;
     font: 400 14px/44px Raleway;
     height: 44px;
     min-width: 166px;
@@ -155,7 +155,7 @@ $side-menu-options: (
 }
 
 edu-popover {
-  padding: 6 16px;
+  right: -7px !important;
 }
 
 // //modal

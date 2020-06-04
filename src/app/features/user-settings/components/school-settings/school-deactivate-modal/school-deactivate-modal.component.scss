@@ -37,6 +37,13 @@
   }
 }
 
+edu-input ::ng-deep,
+edu-select ::ng-deep {
+  .wrapper {
+    padding: 0 15px;
+  }
+}
+
 edu-input,
 edu-select {
   width: 317px;

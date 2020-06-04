@@ -24,7 +24,7 @@ export class ResetPasswordComponent implements OnInit {
   formSubmit() {}
 
   //valid [1,2,3]
-  activeSteps = 3;
+  activeSteps = 1;
   isActiveStep(param) {
     return this.activeSteps === param;
   }

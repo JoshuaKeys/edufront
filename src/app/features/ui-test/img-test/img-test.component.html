@@ -1,0 +1,28 @@
+<p>img-test works!</p>
+<h1>form.get('f1').value : {{ testForm.get('f1').value }}</h1>
+<!-- <h1> onchangeValue event: {{updatedValue}}  </h1> -->
+
+<h1>touched : {{ testForm.get('f1').touched }}</h1>
+<h1>dirty : {{ testForm.get('f1').dirty }}</h1>
+<h1>disabled : {{ testForm.get('f1').disabled }}</h1>
+<h1>confirm event : {{ confirmEventResults }}</h1>
+<br /><br />
+
+<p>
+  <b>notes</b>: placeholder image for dropzone is customisable and has to be
+  provided with selector .edu-img-upload__dropzone "
+</p>
+<br /><br />
+<br /><br />
+<form [formGroup]="testForm" (ngSubmit)="formSubmit()">
+  <div class="group--row just-center">
+    <!-- <edu-img-upload class="f1" formControl="f1" [showInputControls]="false"> -->
+    <edu-img-upload formControlName="f1" (confirm)="onConfirm($event)">
+      <div class="edu-img-upload__dropzone ">
+        <img src="assets/user-settings/modal_plus-18.svg" alt="" />
+      </div>
+
+      <span class="edu-label">test label 123 </span>
+    </edu-img-upload>
+  </div>
+</form>

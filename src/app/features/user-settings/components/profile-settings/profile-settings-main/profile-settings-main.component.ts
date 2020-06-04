@@ -29,7 +29,6 @@ export class ProfileSettingsMainComponent implements OnInit {
   }
 
   closeModal() {
-    console.log('CLOSIN!');
     this.closeModalEvent.emit();
   }
 }

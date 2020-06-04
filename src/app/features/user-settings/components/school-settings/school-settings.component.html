@@ -18,7 +18,10 @@
         <form [formGroup]="userDetailForm" (ngSubmit)="formSubmit()">
           <h5 class="sub-title">School Details</h5>
           <div class="group--row just-center">
-            <edu-img-upload [showInputControls]="false">
+            <edu-img-upload
+              [showInputControls]="false"
+              formControlName="schLogo"
+            >
               <div class="edu-img-upload__dropzone ">
                 <img src="assets/user-settings/modal_plus-18.svg" alt="" />
               </div>

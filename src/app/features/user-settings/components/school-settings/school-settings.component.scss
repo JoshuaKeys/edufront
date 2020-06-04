@@ -119,6 +119,13 @@ form > *:not(:last-child) {
   color: $ash;
 }
 
+edu-input ::ng-deep,
+edu-select ::ng-deep {
+  .wrapper {
+    padding: 0 15px;
+  }
+}
+
 edu-input,
 edu-select {
   margin: 0 15px;

@@ -7,26 +7,13 @@ $y-padding: 6px;
 $spaceFromParentElement: -8px; //was -4
 
 :host {
-  // z-index: ;
-  // position: absolute;
-  // left: 0 ;
-  // top: 0;
-  // width: 100% ;
-  // height: 100%;
-  // background-color: red;
-}
-
-:host {
-  padding: 0;
-  // padding: $y-padding $x-padding;
+  padding: $y-padding $x-padding;
   display: block;
   position: relative;
   z-index: 0;
-}
-.popover {
+
   transition: none;
-  padding: 0;
-  cursor: pointer;
+  cursor: default;
   position: absolute;
   background: white;
   z-index: 4;
@@ -46,7 +33,7 @@ $spaceFromParentElement: -8px; //was -4
   opacity: 0;
 }
 
-.popover.active {
+:host.active {
   width: auto;
   height: auto;
   overflow: unset;
@@ -80,8 +67,8 @@ $spaceFromParentElement: -8px; //was -4
 
 //alignment and pointerAlignment styling
 
-.popover.bottom,
-.popover.top {
+:host.bottom,
+:host.top {
   // transform: translateY(-100%);
   bottom: $spaceFromParentElement;
   transform: translateY(100%);
@@ -113,7 +100,7 @@ $spaceFromParentElement: -8px; //was -4
   }
 }
 
-.popover.top {
+:host.top {
   // transform: translateY(-100%);
   bottom: unset;
   top: $spaceFromParentElement;
@@ -135,7 +122,7 @@ $spaceFromParentElement: -8px; //was -4
   }
 }
 
-.popover.left {
+:host.left {
   // transform: translateY(-100%);
   left: $spaceFromParentElement;
   top: 50%;
@@ -148,7 +135,7 @@ $spaceFromParentElement: -8px; //was -4
   }
 }
 
-.popover.right {
+:host.right {
   // transform: translateY(-100%);
   right: $spaceFromParentElement;
   top: 50%;

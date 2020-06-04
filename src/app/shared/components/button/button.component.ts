@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy , Input, Renderer2, ElementRef} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Renderer2,
+  ElementRef
+} from '@angular/core';
 
 @Component({
   selector: '[ButtonType]',
@@ -7,9 +14,8 @@ import { Component, OnInit, ChangeDetectionStrategy , Input, Renderer2, ElementR
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent implements OnInit {
-
-  constructor(private el:ElementRef, private renderer:Renderer2) { 
-    console.log("button1" + this.ButtonType)
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+    // console.log("button1" + this.ButtonType)
   }
 
   ngOnInit(): void {
@@ -17,7 +23,6 @@ export class ButtonComponent implements OnInit {
     // this.el.nativeElement.classList.add()
   }
 
-    //[text , outline , icon,  basic, blank, fab/icon-circle ]
-  @Input() ButtonType = "basic";
-
+  //[text , outline , icon,  basic, blank, fab/icon-circle ]
+  @Input() ButtonType = 'basic';
 }
