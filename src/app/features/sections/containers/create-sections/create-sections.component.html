@@ -1,0 +1,85 @@
+<main>
+  <section class="section">
+    <button
+      class="section__back-btn"
+      [routerLink]="['../', activatedRouteData.previous]"
+    >
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
+
+    <div class="content">
+      <div class="content__body groups groups--split-layout">
+        <div class="group group--row-layout badges flex-wrap">
+          <div class="badge badge--inactive">
+            1
+          </div>
+          <div class="badge badge--inactive">
+            2
+          </div>
+          <div class="badge badge--inactive">
+            3
+          </div>
+          <div class="badge badge--inactive">
+            4
+          </div>
+          <div class="badge badge--inactive">
+            5
+          </div>
+          <div class="badge badge--inactive">
+            6
+          </div>
+          <div class="badge badge--inactive">
+            7
+          </div>
+          <div class="badge badge--inactive">
+            8
+          </div>
+          <div class="badge badge--inactive">
+            9
+          </div>
+          <div class="badge badge--inactive">
+            10
+          </div>
+          <div class="badge badge--inactive">
+            11
+          </div>
+          <div class="badge badge--inactive">
+            12
+          </div>
+        </div>
+
+        <div class="groups groups--column-layout relative flex-grow-1">
+          <h2 class="content__title">Add or upload staff</h2>
+          <div class="placeholder">
+            <span
+              >Select a class on the <b class="orangecolor">left</b> to manage
+              section</span
+            >
+          </div>
+          <div class="content__btn-wrapper">
+            <button class="content__btn content__btn--inactive" disabled>
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="aside"></aside>
+</main>
+<edu-modal-v2
+  *ngIf="(sectionsModalState | async).startModal"
+  header="Creating Sections"
+  icon="assets/sections-intro.svg"
+  btnText="GOT IT!"
+  (btnClicked)="onContinue()"
+>
+  In this step, you will create <b class="orangeColor">sections</b> and
+  <b class="orangeColor">assign</b> students to them.<br />Simply select the
+  Class you want to modify, add and name its sections.<br />
+  Once done, simply select the section and click (or drag) the available<br />student
+  tags on the right side of the screen to assign.<br />
+  If you have no preference about what student goes into which section,<br />use
+  the <b class="orangeColor">random function</b>!
+</edu-modal-v2>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { PreviewModel } from 'src/app/features/school-profile-v2/models/preview.model';
+import { PreviewModel } from 'src/app/features/school-profile/models/preview.model';
 import { Observable } from 'rxjs';
-import { SchoolProfileModel } from 'src/app/features/school-profile-v2/models/school-profile.model';
+import { SchoolProfileModel } from 'src/app/features/school-profile/models/school-profile.model';
 import { Store } from '@ngrx/store';
 import { fetchStaffsRequest, fetchClassesRequest, fetchSubjectsRequest } from '../../ngrx/actions';
 import { selectAllStaffs } from '../../ngrx/selectors';

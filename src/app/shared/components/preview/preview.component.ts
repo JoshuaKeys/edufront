@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
-import { PreviewModel } from 'src/app/features/school-profile-v2/models/preview.model';
+import { PreviewModel } from 'src/app/features/school-profile/models/preview.model';
 
 @Component({
   selector: 'edu-preview',

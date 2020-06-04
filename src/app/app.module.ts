@@ -11,7 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ClassesAndGroupsModule } from './features/classes-and-groups/classes-and-groups.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
-import { SchoolProfileV2Module } from './features/school-profile-v2/school-profile-v2.module';
+import { SchoolProfileV2Module } from './features/school-profile/school-profile-v2.module';
 
 export function ConfigLoader(configService: ConfigService) {
   return () => configService.fetchConfig();

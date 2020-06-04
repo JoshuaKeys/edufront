@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'school-profile',
     canLoad: [AuthenticatedGuard],
-    loadChildren: () => import('./features/school-profile-v2/school-profile-v2.module').then(m => m.SchoolProfileV2Module),
+    loadChildren: () => import('./features/school-profile/school-profile-v2.module').then(m => m.SchoolProfileV2Module),
 
   },
   {
@@ -37,8 +37,13 @@ const routes: Routes = [
     loadChildren: () => import('./features/students/students.module').then(m => m.StudentsModule)
   },
   {
+    path: 'sections',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () => import('./features/sections/sections.module').then(m => m.SectionsModule)
+  },
+  {
     path: '',
-    redirectTo: '/students/students-creation',
+    redirectTo: '/sections/create-sections',
     pathMatch: 'full'
   }
 ];
