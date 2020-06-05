@@ -3,8 +3,9 @@
 }
 .side-bar {
   width: 20%;
+  max-width: 300px;
   background: #fafbfc;
-  padding: 20px;
+  padding: 15px;
   border-left: 1px solid #eee;
   height: 100%;
   &__heading {

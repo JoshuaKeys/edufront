@@ -1,5 +1,5 @@
-@import "./mixins/alignment";
-@import "./mixins/components";
+@import './mixins/alignment';
+@import './mixins/components';
 .flex-wrap {
   @include displayFlex();
   flex-wrap: wrap;
@@ -34,24 +34,43 @@
   color: #ef5350;
 }
 
-
-.label--active .optional{
+.label--active .optional {
   display: none;
 }
 
-.just-center{
+.just-center {
   justify-content: center !important;
 }
-.just-space-between, .just-between{
+.just-space-between,
+.just-between {
   justify-content: space-between !important;
 }
-.justify-start	{justify-content: flex-start;}
-.justify-end	{justify-content: flex-end;}
-.justify-around	{justify-content: space-around;}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-around {
+  justify-content: space-around;
+}
 
+.static {
+  position: static;
+}
+.fixed {
+  position: fixed;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.sticky {
+  position: sticky;
+}
 
-.static{	position: static;}
-.fixed{	position: fixed;}
-.absolute{	position: absolute;}
-.relative{	position: relative;}
-.sticky{	position: sticky;}
+.p-0 {
+  padding: 0;
+}
