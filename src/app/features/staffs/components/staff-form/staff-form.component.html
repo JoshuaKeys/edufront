@@ -23,8 +23,14 @@
             <edu-input alignment="left" formControlName="firstName">
               <span class="edu-label">First Name</span>
             </edu-input>
-            <edu-input alignment="left" formControlName="middleName">
-              <span class="edu-label">Middle Name</span>
+            <edu-input
+              class="p-0 middleName"
+              alignment="left"
+              formControlName="middleName"
+            >
+              <span class="edu-label"
+                >Middle Name <b class="ashcolor">(Optional)</b></span
+              >
             </edu-input>
             <edu-input alignment="left" formControlName="familyName">
               <span class="edu-label">Last Name</span>
@@ -55,7 +61,7 @@
             ></edu-phone-icon-field>
             <edu-input alignment="left" formControlName="email"
               ><span class="edu-label">
-                Email Address (Optional)
+                Email Address <b class="ashcolor">(Optional)</b>
               </span>
             </edu-input>
           </div>

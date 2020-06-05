@@ -2,30 +2,43 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/containers';
 @include group();
-
 .group--row.form--row {
   margin-bottom: 20px;
+  edu-input.middleName {
+    max-width: 173px;
+    .edu-label {
+      white-space: nowrap;
+    }
+  }
   edu-input.p-0 ::ng-deep .wrapper {
     padding: 0;
   }
 
-  edu-input ::ng-deep,
-  edu-select ::ng-deep {
-    height: 54px;
-    width: 100%;
-    .wrapper {
-      padding: 0 15px;
-    }
-
-    label,
-    input {
-      font: 400 16px/24px Raleway;
-    }
-
-    // &:not(:last-child) {
+  edu-input,
+  edu-select {
     margin: 0 10px;
-    // }
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+
+    ::ng-deep {
+      height: 54px;
+      width: 100%;
+      .wrapper {
+        padding: 0 15px;
+      }
+      label,
+      input {
+        font: 400 16px/24px Raleway;
+      }
+    }
   }
+}
+.modal__content-profile {
+  margin-right: 40px;
 }
 .edu-label {
   white-space: nowrap;
@@ -33,10 +46,10 @@
 
 edu-phone-icon-field ::ng-deep,
 edu-icon-field ::ng-deep {
-  width: calc(50% - 20px) !important;
+  width: calc(50% - 10px) !important;
   display: flex;
   height: 54px;
-  margin: 0 10px;
+  margin-right: 10px;
   .form__input-wrapper.form__input-wrapper--main {
     margin: 0;
     width: 100%;
