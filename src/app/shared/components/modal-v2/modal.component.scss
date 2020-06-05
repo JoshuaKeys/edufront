@@ -1,4 +1,47 @@
 @import '../../../../assets/styles/modules/section-module';
+
+:host.intro .modal {
+  max-width: 600px;
+  width: 80%;
+  padding: 50px;
+
+  &__img,
+  &__title {
+    margin-bottom: 30px;
+  }
+  &__desc {
+    font: 400 14px/22px Raleway;
+    margin-bottom: 22px;
+  }
+
+  &__btn {
+    width: 96px;
+    height: 40px;
+  }
+}
+
+:host.complete .modal {
+  max-width: 989px;
+  width: 80%;
+  padding: 120px 60px 60px 60px;
+  &__title {
+    font: 600 34px/54px Quicksand;
+  }
+  &__img,
+  &__title {
+    margin-bottom: 40px;
+  }
+  &__desc {
+    font: 400 16px/26px Raleway;
+    margin-bottom: 118px;
+  }
+
+  &__btn {
+    width: 224px;
+    height: 52px;
+  }
+}
+
 .modal {
   @include modal();
   padding: 110px 50px 60px 50px;

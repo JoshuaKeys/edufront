@@ -105,12 +105,14 @@
   [classesAndSubjects]="subjectClassesAssociation"
   (onCreateStaff)="createStaff($event)"
 ></edu-staff-form>
+
 <edu-modal-v2
   *ngIf="(staffsModalsState | async).endModal"
   btnText="GOT IT"
   header="Staffs Set Up Complete"
   icon="assets/icon-complete.svg"
   [completeModal]="true"
+  class="complete"
   leftBtn="TAKE ME TO
   DASHBOARD"
   rightBtn="TAKE ME TO STUDENTS"
@@ -126,6 +128,7 @@
   *ngIf="(staffsModalsState | async).startModal"
   btnText="GOT IT"
   header="Staff Creation"
+  class="intro"
   icon="assets/students-intro.svg"
   (btnClicked)="onStart()"
 >

@@ -29,11 +29,12 @@
     ></edu-school-classes-card>
   </aside>
 </main>
-<edu-modal
+<edu-modal-v2
+  class="intro"
   *ngIf="(modalState | async).startModal"
   description="The first step is to enter the basic details of your school, just answer the questions on your screen"
   btnText="GOT IT"
   header="Classes And Groups"
   icon="assets/icon-classandgroup.svg"
   (btnClicked)="onModalBtnClicked()"
-></edu-modal>
+></edu-modal-v2>

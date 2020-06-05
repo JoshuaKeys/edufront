@@ -7,6 +7,7 @@
 >
   <h5 class="drop-zone__title">
     <input
+      class="drop-zone__input"
       *ngIf="editable; else nonEditableTitle"
       [value]="group.groupName"
       (blur)="onGroupNameChange($event)"

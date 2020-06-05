@@ -1,3 +1,6 @@
+.modal__text--complete {
+  max-width: 600px;
+}
 // h1,
 // h2 {
 //   text-align: center;
@@ -584,7 +587,7 @@ main {
 }
 
 .drop-zones {
-  @include displayFlex(space-between);
+  @include displayFlex();
   max-width: 1000px;
   width: 95%;
 }

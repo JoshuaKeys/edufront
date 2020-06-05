@@ -32,9 +32,9 @@
     </div>
   </section>
 </main>
-<edu-modal
+<edu-modal-v2
   *ngIf="(modalState | async).endModal"
-  description="The first step is to enter the basic details of your school, just answer the questions on your screen"
+  class="complete"
   btnText="GOT IT"
   header="Classes And Groups Setup Complete"
   icon="assets/icon-complete.svg"
@@ -43,4 +43,9 @@
   rightBtn="TAKE ME TO SUBJECTS"
   (leftBtnClicked)="goToDashboard()"
   (rightBtnClicked)="goToSubjects()"
-></edu-modal>
+>
+  <div class="modal__text--complete">
+    Nicely Done! Now you can either move on to telling us all about what
+    subjects are taught, or return to the dashboard.
+  </div>
+</edu-modal-v2>
