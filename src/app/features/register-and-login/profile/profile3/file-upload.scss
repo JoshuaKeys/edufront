@@ -1,0 +1,25 @@
+edu-img-upload{
+  
+    .edu-img-upload__dropzone{
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        border: 2px dashed #E9E9E9;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .edu-img-upload__dropzone > img{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+ 
+}
+
+.img-upload__desc{
+    margin-top: 43px;
+    text-align: center;
+}

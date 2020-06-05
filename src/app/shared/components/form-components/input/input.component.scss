@@ -1,0 +1,160 @@
+@import 'src/assets/styles/colors';
+// @import "src/assets/styles/form-general";
+@import 'src/assets/styles/mixins/alignment';
+
+:host {
+  display: block;
+  position: relative;
+  margin: auto;
+  width: 380px;
+  cursor: text;
+  height: 44px;
+  // @include displayFlex(center, center, column);
+}
+
+input:focus {
+  outline: none;
+}
+
+.wrapper {
+  margin: auto;
+  height: 100%;
+  @include displayFlex(flex-start, center, row);
+  border-bottom: 1px solid #e6e9f3;
+}
+
+input {
+  border: none;
+  height: 0;
+  width: 100%;
+  text-align: center;
+  // font: 400 20px/24px Raleway;
+  font-family: Raleway;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  &.left {
+    text-align: left;
+  }
+  &.right {
+    text-align: right;
+  }
+}
+
+label {
+  font-family: Raleway;
+  font-size: 14px;
+  line-height: 1.45;
+  order: -1;
+  & > * {
+    transition: none;
+  }
+  line-height: 1.45;
+
+  padding: 0;
+  margin: 0;
+
+  &.left {
+    align-self: flex-start;
+  }
+  &.center {
+    align-self: center;
+  }
+  &.right {
+    align-self: flex-end;
+  }
+}
+.label--active {
+  .label__shrink-wrapper {
+    font-size: 0.85em;
+  }
+}
+.label--focus {
+  color: $blue;
+}
+
+.input--active {
+  height: auto;
+}
+
+.input-wrapper-border--active {
+  border-color: $blue;
+}
+
+.input-wrapper-border--error {
+  border-color: $red;
+  label {
+    color: $red;
+  }
+}
+
+.label-input-affix__wrapper {
+  display: flex;
+  flex-direction: row;
+  align-self: stretch;
+}
+
+.label-input__wrapper {
+  //main wrapper for both input and label
+  position: relative;
+  flex-grow: 1;
+  @include displayFlex(center, center, column);
+  height: 100%;
+}
+
+//validators
+
+.validator {
+  transition: none;
+  color: $red;
+
+  &.bottom-flow {
+  }
+
+  //for absolute positioned validators
+  &.left,
+  &.right,
+  &.bottom {
+    position: absolute;
+  }
+
+  &.right {
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+  }
+  &.left {
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+  }
+  &.bottom {
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+  }
+}
+
+//disabled state
+.disabled {
+  input,
+  input::placeholder,
+  label {
+    color: $ash;
+  }
+}
+
+.prefix,
+.suffix {
+  margin-bottom: 17px;
+  display: flex;
+}
+.prefix {
+  order: -1;
+}
+
+.suffiix {
+  order: 2;
+}

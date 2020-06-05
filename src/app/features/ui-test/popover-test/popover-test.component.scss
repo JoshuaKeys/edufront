@@ -1,0 +1,22 @@
+.content{
+    padding: 0 50px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    button{
+        margin: 20px;
+        position: relative;
+    
+    }
+}
+
+edu-popover p {
+    max-width: 200px;
+    white-space: pre-wrap;
+    color: black;
+}

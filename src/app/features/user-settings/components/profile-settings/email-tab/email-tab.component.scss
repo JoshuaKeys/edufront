@@ -1,0 +1,40 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+@include group();
+
+:host {
+  max-width: 740px;
+  //   min-height: 530px;
+  width: 100%;
+  margin: auto;
+  min-height: 510px;
+  @include displayFlex(space-between, flex-start, column);
+  flex-grow: 1;
+}
+
+.email-setting {
+  margin-bottom: 40px;
+  &__title {
+    color: $orange;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+}
+
+edu-checkbox {
+  margin-bottom: 20px;
+  .edu-label {
+    font: Regular 14px/24px Raleway;
+    color: $black;
+  }
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+button[ButtonType='basic'] {
+  width: 144px;
+  height: 40px;
+  align-self: center;
+}

@@ -1,1 +1,12 @@
-<datepicker></datepicker>
+<h1>form.get('f1').value : {{ testForm.get('f1').value }}</h1>
+<!-- <h1> onchangeValue event: {{updatedValue}}  </h1> -->
+
+<h1>touched : {{ testForm.get('f1').touched }}</h1>
+<h1>dirty : {{ testForm.get('f1').dirty }}</h1>
+<h1>disabled : {{ testForm.get('f1').disabled }}</h1>
+<!-- <h1>confirm event : {{ confirmEventResults }}</h1> -->
+<br /><br />
+
+<form action="" [formGroup]="testForm" (ngSubmit)="formSubmit()">
+  <edu-datepicker formControlName="f1"></edu-datepicker>
+</form>

@@ -1,0 +1,101 @@
+@import "src/assets/styles/mixins/alignment";
+// @import "src/assets/styles/mixins/";
+ @import "src/assets/styles/typography";
+ @import "src/assets/styles/mixins/buttons"; //for buttons only
+@import "src/assets/styles/mixins/containers";
+
+
+//shared 
+@include group();
+
+:host{
+    // width: 100vw;
+    flex-grow: 1;
+    display: flex;
+}
+section{
+    min-height: 100vh;
+    height: 100%;
+    padding: 30px;
+    @include displayFlex(flex-start,unset, column);
+    
+}
+.content{
+    width: 100%;
+    @include displayFlex(center,unset, column);
+    padding-bottom: 5em;
+    flex-grow: 1;
+    margin: auto;
+    &__brand{
+        display: block;
+        margin: auto;
+         margin-bottom: 20px;
+       
+        // width: 171px;
+    }
+    &__img{
+        margin-bottom: 20px;
+    }
+
+    &__title{
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    &__desc{
+        margin-bottom: 40px;
+    }
+}
+
+form{ //generic layout for form
+
+    @include displayFlex(flex-start,center, column);
+
+    .form__btn{
+        @include button_default($blue,white);
+        max-width: 377px;
+        width: 80%;
+        margin: 20px 10px 40px 10px;
+    }
+
+    &>*{
+        margin-bottom: 20px;
+        max-width: 377px;
+        width: 80%;
+    }
+
+ 
+    
+
+}
+
+a{
+    font: 600 16px/24px Raleway;
+    text-decoration: none;
+}
+
+.btn{
+    @include button_default($blue,white);
+    &--white{
+        @include button_default(white, $blue);
+        border: 1px solid $blue;
+    }
+}
+.btn--text{
+    @include textButton($blue)
+}
+
+//only for messages
+
+.message{
+    max-width: 500px;
+    width: 90%;
+}
+
+.btns{
+    .btn{
+        width: 164px;
+        margin: 0 10px;
+    }
+}
+

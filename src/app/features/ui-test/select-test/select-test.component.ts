@@ -17,7 +17,8 @@ export class SelectTestComponent implements OnInit {
   ngOnInit(): void {
 
     this.loginForm  =  this.formBuilder.group({
-      f1: ['test123', Validators.required]
+      f1: ['', Validators.required],
+      f2: [4, Validators.required]
    
     });
  
@@ -30,6 +31,10 @@ export class SelectTestComponent implements OnInit {
   isSubmitted  =  false;
   updatedValue;
 
+
+
+
+  
   toggleF1(){
     if(this.formControls.f1.disabled){
       this.formControls.f1.enable();

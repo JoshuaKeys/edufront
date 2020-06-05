@@ -66,9 +66,7 @@
   color: $color;
   font-family: "Raleway";
 
-  &:hover {
-    // text-decoration: underline;
-  }
+ 
   img + span {
     margin-left: 10px;
   }
@@ -83,9 +81,7 @@
   color: $color;
   font: 500 14px/14px Raleway;
 
-  &:hover {
-    // text-decoration: underline;
-  }
+  
 
 
 }

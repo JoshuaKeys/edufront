@@ -38,3 +38,20 @@
 .label--active .optional{
   display: none;
 }
+
+.just-center{
+  justify-content: center !important;
+}
+.just-space-between, .just-between{
+  justify-content: space-between !important;
+}
+.justify-start	{justify-content: flex-start;}
+.justify-end	{justify-content: flex-end;}
+.justify-around	{justify-content: space-around;}
+
+
+.static{	position: static;}
+.fixed{	position: fixed;}
+.absolute{	position: absolute;}
+.relative{	position: relative;}
+.sticky{	position: sticky;}

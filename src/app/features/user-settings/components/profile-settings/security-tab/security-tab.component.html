@@ -1,0 +1,46 @@
+<div class="security-settings" *ngIf="isSecuritySetting('none')">
+  <div class="group--row security-setting  ">
+    <div class="security-setting__icon">
+      <img src="assets/user-settings/modal_lock.svg" alt="" class="" />
+    </div>
+    <div class="group--column security-setting__icon flex-grow-1">
+      <h5 class="security-setting__title">Password</h5>
+      <p class="security-setting__desc">Change the password for your account</p>
+    </div>
+    <button
+      class="security-setting__btn"
+      (click)="setSecuritySetting('password')"
+      ButtonType="text"
+    >
+      Change password
+    </button>
+  </div>
+
+  <div class="group--row security-setting  ">
+    <div class="security-setting__icon">
+      <img src="assets/user-settings/modal_shield.svg" alt="" class="" />
+    </div>
+    <div class="group--column security-setting__icon flex-grow-1">
+      <h5 class="security-setting__title">Security Question</h5>
+      <p class="security-setting__desc">
+        Change the security question for you account
+      </p>
+    </div>
+    <button
+      class="security-setting__btn"
+      (click)="setSecuritySetting('question')"
+      ButtonType="text"
+    >
+      Change security question
+    </button>
+  </div>
+</div>
+
+<edu-security-tab-password
+  *ngIf="isSecuritySetting('password')"
+  (backButtonClicked)="resetActiveSecuritySetting()"
+></edu-security-tab-password>
+<edu-security-tab-question
+  *ngIf="isSecuritySetting('question')"
+  (backButtonClicked)="resetActiveSecuritySetting()"
+></edu-security-tab-question>

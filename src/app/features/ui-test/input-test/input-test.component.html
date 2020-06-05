@@ -1,0 +1,58 @@
+<h1>form.get('f1').value : {{ testForm.get('f1').value }}</h1>
+<!-- <h1> onchangeValue event: {{updatedValue}}  </h1> -->
+
+<h1>touched : {{ testForm.get('f1').touched }}</h1>
+<h1>dirty : {{ testForm.get('f1').dirty }}</h1>
+<h1>disabled : {{ testForm.get('f1').disabled }}</h1>
+
+<form [formGroup]="testForm" (ngSubmit)="formSubmit()">
+  <!-- 
+    <input type="text"  formControlName="f1">
+    
+
+    <ul  *ngIf="testForm.controls['f1'].touched " >
+
+                <li  *ngIf="testForm.controls['f1'].errors.required"  >  Name is required.  </li>
+                <li  *ngIf="testForm.controls['f1'].errors.minlength">Name must be at least 4 characters long</li>
+           
+            
+            </ul> -->
+  <!-- (onValueChange) = "updateValue($event) "" -->
+  <p>
+    {{ prettifyJSON(testForm.controls['f1'].errors) }}
+  </p>
+  <edu-input class="f1" alignment="center" name="name" formControlName="f1">
+    <span class="edu-label"> input 1 </span>
+
+    <!-- for validation only need [Validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->
+    <!-- bottom-flow is basically for validation to flow as part of the flow and not be absolutely positioned -->
+    <ul
+      Validator
+      alignment="bottom-flow"
+      *ngIf="testForm.controls['f1'].invalid && testForm.controls.f1.touched"
+    >
+      <li *ngIf="testForm.controls['f1'].errors.required">Name is required.</li>
+      <li *ngIf="testForm.controls.f1.errors.minlength">
+        Name must be at least 4 characters long
+      </li>
+      <li *ngIf="testForm.controls['f1'].errors.pattern">numbers only</li>
+    </ul>
+  </edu-input>
+</form>
+
+<br />
+<h1>ngmodel suffix test: {{ modelTest }}</h1>
+<edu-input [(ngModel)]="modelTest" alignment="left" elementId="'test132'">
+  <span class="edu-label"> suffix test </span>
+  <!-- <edu-cb-test class="edu-input__suffix" InputAffix></edu-cb-test> -->
+</edu-input>
+
+<h1>ngmodel prefix test: {{ modelTest2 }}</h1>
+<edu-input alignment="right" elementId="test132123">
+  <span class="edu-label">prefix test - phone number</span>
+  <!-- <edu-input-prefix-test   ></edu-input-prefix-test> -->
+  <!-- <edu-input-prefix-test
+    class="edu-input__prefix"
+    InputAffix
+  ></edu-input-prefix-test> -->
+</edu-input>

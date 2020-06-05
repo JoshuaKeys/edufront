@@ -1,0 +1,67 @@
+<img class = "modal__icon"src="assets/user-settings/modal_deactivate.svg" alt="">
+<h3 class = "modal__title">Deactivate Account</h3>
+<!-- step 1  -->
+<ng-container *ngIf="isActiveStep(1)">
+  
+    <p class="modal__desc modal__desc--step1">
+        Answer your security question and enter password to deactivate account
+    </p>
+
+    <edu-input alignment= "left" elementId = "pw">
+        <span class="edu-label">Enter Your Password</span>
+    </edu-input>
+    <edu-select alignment= "left" elementId = "petname">
+        <span class="edu-label">What is your pet name?</span>
+        <edu-option OptionValue = "amy">amy</edu-option>
+        <edu-option OptionValue = "amy1">amy1</edu-option>
+        <edu-option OptionValue = "amy2">amy2</edu-option>
+        <edu-option OptionValue = "amy3">amy3</edu-option>
+        <edu-option OptionValue = "amy4">amy4</edu-option>
+    </edu-select>
+    <edu-input alignment= "left" elementId = "answer">
+        <span class="edu-label">Type security answer</span>
+    </edu-input>
+    
+    
+
+    <div class="group--row btns just-between">
+        <button ButtonType="basic"> Cancel</button>
+        <button ButtonType="outline" (click) = "setActiveStep(2)" > Yes, Deactivate! </button>
+    </div>
+</ng-container>
+
+<!-- step 2  -->
+<ng-container *ngIf="isActiveStep(2)">
+      
+    <p class="modal__desc modal__desc--step2">
+        Nominate the next School Master Administrator
+    </p>
+
+    <div class = "search">
+        <img src="assets/user-settings/search.svg" alt="">
+        <input [(ngModel)]="user" type="text" placeholder = "Search">
+    </div>
+
+    
+    <div class="group--row btns just-between">
+        <button ButtonType="basic" (click) = "setActiveStep(1)"> Cancel</button>
+        <button ButtonType="outline" (click) = "setActiveStep(3)" >Continue </button>
+    </div>
+</ng-container>
+
+
+<!-- step3  -->
+<ng-container *ngIf="isActiveStep(3)">
+      
+    <p class="modal__desc modal__desc--step3">
+        The next Administrator will be: <b class="bluecolor">{{user}}</b> Are you sure you want to deactivate your account?
+    </p>
+
+ 
+
+    
+    <div class="group--row btns just-between">
+        <button ButtonType="basic" (click) = "setActiveStep(2)"> Cancel</button>
+        <button ButtonType="outline"    >Yes, Deactivate! </button>
+    </div>
+</ng-container>

@@ -1,0 +1,41 @@
+<edu-nav></edu-nav>
+<main>
+    <div class="content">
+        <h2 class="content__title">Set Up Your Profile</h2>
+        <div class="stepper">
+            <div  [ngClass]="step.state" *ngFor="let step of stepper; index as i" class="stepper__step">             
+                    <div class = "stepper__badge" >
+                        <span *ngIf="isNotComplete(step.state)">{{i+1}}</span>
+                    </div>  
+                    <span class ="stepper__text">{{step.text}}</span>
+                
+            </div>
+        </div>
+        
+        <form class = "flex-grow-1 form" action=""  [formGroup]="addressForm" (ngSubmit)="formSubmit()" >
+                
+            <div class="group">
+                <!-- styling of placeholder image and label done in component in which it is applied -->
+                <edu-img-upload>
+                    <div class ="edu-img-upload__dropzone ">
+                        <img src="/assets/registration/profile-step2-placeholder.svg" alt="">
+                    </div>
+                  
+                    <div class="edu-label  img-upload__desc">
+                        Drag and drop or click on the image <br>
+                        above to upload your picture
+                    </div>
+
+                </edu-img-upload>
+
+        
+              
+            </div>
+       
+            <button type = "button" class ="btn form__btn"  disabled> NEXT </button>
+         </form>
+
+
+    </div>
+
+</main>
