@@ -1,7 +1,7 @@
 <edu-input
   #inputEl
   [(ngModel)]="value"
-  elementId="fieldName"
+  [elementId]="fieldName"
   #fieldNameEl
   (input)="onTextChange($event)"
 >

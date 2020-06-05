@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
 import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
@@ -39,28 +46,27 @@ export class StudentsFormComponent implements OnInit {
       icon: 'assets/images/flags/flg-uk.svg',
       phonePrefix: '+44'
     }
-  ]
-  @Input() studentsXClasses: Observable<StudentsXClassesModel[]>
+  ];
+  @Input() studentsXClasses: Observable<StudentsXClassesModel[]>;
   @Input() students: StudentModel;
   @Output() onSubmit = new EventEmitter<StudentsStateModel>();
   addEditForm: FormGroup;
-  constructor() { }
+  constructor() {}
   createStaff() {
     const formValue = this.addEditForm.value;
-    formValue.profileDto.profileImage = formValue.profilePic.profileImage
+    formValue.profileDto.profileImage = formValue.profilePic.profileImage;
     delete formValue.profilePic;
-    this.onSubmit.emit(formValue)
+    this.onSubmit.emit(formValue);
   }
   ngOnInit(): void {
     if (!this.students) {
       this.addEditForm = this.setupCreateMode();
     }
-
   }
   setupEditMode() {
     return new FormGroup({
       profilePic: new FormGroup({
-        profileImage: new FormControl(null),
+        profileImage: new FormControl(null)
       }),
       profileDto: new FormGroup({
         firstName: new FormControl(''),
@@ -76,8 +82,7 @@ export class StudentsFormComponent implements OnInit {
         address: new FormControl(''),
         contexts: new FormControl(['STUDENT']),
         classId: new FormControl(''),
-        rollNumber: new FormControl(''),
-
+        rollNumber: new FormControl('')
       }),
       guardianDto: new FormGroup({
         email: new FormControl(''),
@@ -88,12 +93,12 @@ export class StudentsFormComponent implements OnInit {
         phone: new FormControl(this.countryIconMap[0]),
         profileId: new FormControl('')
       })
-    })
+    });
   }
   setupCreateMode() {
     return new FormGroup({
       profilePic: new FormGroup({
-        profileImage: new FormControl(null),
+        profileImage: new FormControl(null)
       }),
       profileDto: new FormGroup({
         firstName: new FormControl(''),
@@ -109,8 +114,7 @@ export class StudentsFormComponent implements OnInit {
         address: new FormControl(''),
         contexts: new FormControl(['STUDENT']),
         classId: new FormControl(''),
-        rollNumber: new FormControl(''),
-
+        rollNumber: new FormControl('')
       }),
       guardianDto: new FormGroup({
         email: new FormControl(''),
@@ -121,27 +125,31 @@ export class StudentsFormComponent implements OnInit {
         phone: new FormControl(this.countryIconMap[0]),
         profileId: new FormControl('')
       })
-    })
+    });
   }
   handleImgUpload(event: ProfilePicModel) {
     this.addEditForm.controls.profilePic.patchValue({
       profileImage: event
-    })
+    });
   }
   updatePhone(event: PhoneIconModel) {
-    const idx = this.countryIconMap.findIndex(iconMap => iconMap.id === event.id);
+    const idx = this.countryIconMap.findIndex(
+      iconMap => iconMap.id === event.id
+    );
     if (idx > -1) {
       this.addEditForm.controls.guardianDto.patchValue({
         phone: { ...this.countryIconMap[idx], phoneNum: event.phoneNum }
-      })
+      });
     }
   }
   updateCountry(event: PhoneIconModel) {
-    const idx = this.countryIconMap.findIndex(iconMap => iconMap.id === event.id);
+    const idx = this.countryIconMap.findIndex(
+      iconMap => iconMap.id === event.id
+    );
     if (idx > -1) {
       this.addEditForm.controls.profileDto.patchValue({
         country: this.countryIconMap[idx]
-      })
+      });
     }
   }
 }
