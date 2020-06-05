@@ -11,6 +11,20 @@
         Upload your school logo
       </h2>
       <form [formGroup]="uploadForm">
+        <!-- <edu-img-upload
+          class=""
+          formControlName="image"
+          (confirm)="onImageUpload($event)"
+        >
+          <div class="edu-img-upload__dropzone content__img-wrapper">
+            <img
+              class="content__img"
+              src="/assets/iconfinder_plus.svg"
+              alt=""
+            />
+          </div>
+        </edu-img-upload> -->
+
         <edu-image-upload
           (uploadimagedata)="onImageUpload($event)"
           formControlName="image"

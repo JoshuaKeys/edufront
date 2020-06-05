@@ -1,4 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Renderer2, EventEmitter, ElementRef, Output, ViewChild, forwardRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Renderer2,
+  EventEmitter,
+  ElementRef,
+  Output,
+  ViewChild,
+  forwardRef
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PhoneIconModel } from '../../models/phone-icon.model';
 
@@ -8,24 +19,28 @@ import { PhoneIconModel } from '../../models/phone-icon.model';
   styleUrls: ['./phone-icon-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => PhoneIconFieldComponent) }
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => PhoneIconFieldComponent)
+    }
   ]
 })
 export class PhoneIconFieldComponent implements OnInit {
   @Input() fieldName: string;
-  @Input() icons: PhoneIconModel[]
+  @Input() icons: PhoneIconModel[];
   @Input() mode: string;
   isOpen = false;
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {}
   value: string;
   activeIcon: string;
   phonePrefix: string;
   item: string;
+  popOverIsOpened = false;
   @Output() valueChanged = new EventEmitter<PhoneIconModel>();
   @ViewChild('fieldNameEl') fieldNameEl: ElementRef<HTMLInputElement>;
   onValueChange: (any) => any;
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
@@ -33,7 +48,7 @@ export class PhoneIconFieldComponent implements OnInit {
     if (val === null || val == undefined) {
       // setTimeout(() => { this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', ''); }, 0)
       this.activeIcon = this.icons[0].icon;
-      this.phonePrefix = this.icons[0].phonePrefix
+      this.phonePrefix = this.icons[0].phonePrefix;
       this.item = this.icons[0].item;
       this.value = '';
       return;
@@ -46,35 +61,40 @@ export class PhoneIconFieldComponent implements OnInit {
   changeItem(icon: PhoneIconModel) {
     const iconCopy = { ...icon };
     iconCopy.phoneNum = this.value;
-    this.onValueChange(iconCopy)
-    this.valueChanged.emit(iconCopy)
-
-    this.toggleDropdown();
+    this.onValueChange(iconCopy);
+    this.valueChanged.emit(iconCopy);
+    this.popOverIsOpened = !this.popOverIsOpened;
+    // this.toggleDropdown();
   }
   registerOnChange(fn: any) {
     this.onValueChange = fn;
   }
-  registerOnTouched(fn: any) { }
+  registerOnTouched(fn: any) {}
 
   processClick() {
     if (this.mode === 'select') {
-      this.toggleDropdown()
+      this.toggleDropdown();
     }
   }
   onTextChange(event) {
     if (this.mode === 'select') {
-      this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', this.value);
+      this.renderer.setProperty(
+        this.fieldNameEl.nativeElement,
+        'value',
+        this.value
+      );
       return;
     }
-    this.onValueChange(this.getEventData(this.activeIcon))
-    this.valueChanged.emit(this.getEventData(this.activeIcon))
+    this.onValueChange(this.getEventData(this.activeIcon));
+    this.valueChanged.emit(this.getEventData(this.activeIcon));
   }
   getEventData(icon): PhoneIconModel {
-    console.log(this.fieldNameEl.nativeElement.value)
+    // console.log(this.fieldNameEl.nativeElement.value);
     return {
       icon,
       phonePrefix: this.phonePrefix,
-      phoneNum: this.fieldNameEl.nativeElement.value,
+      // phoneNum: this.fieldNameEl.nativeElement.value,
+      phoneNum: this.value,
       item: this.item,
       name: this.fieldName.toLowerCase()
     };

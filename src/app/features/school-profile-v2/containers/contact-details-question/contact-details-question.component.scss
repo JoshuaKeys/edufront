@@ -14,6 +14,17 @@ body {
 @include splitLayout3();
 @include modalIntro();
 @include modalComplete();
+edu-phone-icon-field ::ng-deep,
+edu-input ::ng-deep {
+  width: 377px;
+  height: 54px;
+  input,
+  label {
+    font-size: 16px;
+  }
+
+  margin-bottom: 20px;
+}
 
 .form {
   height: 100%;

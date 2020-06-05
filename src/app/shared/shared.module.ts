@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 
 // import { HeaderNavComponent } from './components/header-nav/header-nav.component';
@@ -13,6 +14,7 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponentV2 } from './components/modal-v2/modal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+// import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { PhoneIconFieldComponent } from './components/phone-icon-field/phone-icon-field.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
@@ -60,6 +62,7 @@ import { FormComponentsModule } from './components/form-components/form-componen
     datePickerModule,
     TimetableModule,
     RouterModule,
+    FormsModule,
     TimetableModule
   ],
   exports: [
@@ -84,6 +87,7 @@ import { FormComponentsModule } from './components/form-components/form-componen
     IconButtonComponent,
     ImgUploadV2Component,
     CountryFieldComponent,
+    PopoverComponent,
     PhoneFieldComponent
   ],
   providers: [ClassesService, SubjectsService]

@@ -10,6 +10,7 @@
       <h2 class="content__title">
         What is your school address?
       </h2>
+
       <form class="content__form" [formGroup]="schoolAddressForm">
         <edu-icon-field
           formControlName="country"
@@ -18,13 +19,44 @@
           (valueChanged)="updateCountry($event)"
           mode="select"
         ></edu-icon-field>
+
+        <edu-input
+          alignment="center"
+          (input)="returnFormFieldFormat('zipCode', $event)"
+          [formControl]="schoolAddressForm.controls['zipCode']"
+        >
+          <span class="edu-label"> Zip Code</span>
+        </edu-input>
+        <edu-input
+          alignment="center"
+          (input)="returnFormFieldFormat('address', $event)"
+          [formControl]="schoolAddressForm.controls['address']"
+        >
+          <span class="edu-label"> Address</span>
+        </edu-input>
+        <edu-input
+          alignment="center"
+          (input)="returnFormFieldFormat('state', $event)"
+          [formControl]="schoolAddressForm.controls['state']"
+        >
+          <span class="edu-label"> State</span>
+        </edu-input>
+        <edu-input
+          alignment="center"
+          (input)="returnFormFieldFormat('city', $event)"
+          [formControl]="schoolAddressForm.controls['city']"
+        >
+          <span class="edu-label"> City</span>
+        </edu-input>
+
+        <!--       
         <edu-input-field
           idPrefix="zipCode"
           text="Zip Code"
           formControlName="zipCode"
           (onChange)="updateFormField($event)"
-        ></edu-input-field>
-        <edu-input-field
+        ></edu-input-field> -->
+        <!-- <edu-input-field
           idPrefix="address"
           text="Address"
           formControlName="address"
@@ -41,7 +73,7 @@
           text="City"
           formControlName="city"
           (onChange)="updateFormField($event)"
-        ></edu-input-field>
+        ></edu-input-field> -->
       </form>
       <div class="content__btn-wrapper">
         <button

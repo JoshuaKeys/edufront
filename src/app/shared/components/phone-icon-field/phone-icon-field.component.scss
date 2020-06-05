@@ -2,6 +2,54 @@
 
 @include splitLayout2();
 
+.wrapper {
+  // z-index: 1;
+}
+edu-input {
+  height: 100%;
+}
+.edu-input__prefix {
+  position: absolute;
+}
+.icon__phone-prefix {
+  font: 400 16px/24px Raleway;
+  color: $ash;
+}
+:host {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.icon__img {
+  width: 22px !important;
+  height: 22px !important;
+}
+.popup__search {
+  position: relative;
+  min-height: 44px;
+  @include displayFlex(flex-start);
+
+  &-icon {
+    left: 19px !important;
+  }
+}
+.popup__search-input::placeholder {
+  font: 400 14px/22px Raleway;
+  color: #c7ccdb;
+}
+.icon__content {
+  @include displayFlex(flex-start);
+  min-width: 333px;
+  min-height: 44px;
+}
+.icon__text {
+  font: 400 14px/22px Raleway;
+  color: $black;
+}
+
+//prev
+
 .content__title {
   width: 560px;
 }

@@ -9,6 +9,10 @@ main {
 }
 @include splitLayout();
 
+edu-preview ::ng-deep .profile-select-preview {
+  border: 0px;
+}
+
 .form {
   @include displayFlex(flex-start, center, column);
   width: 90vw;

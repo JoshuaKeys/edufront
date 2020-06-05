@@ -49,7 +49,8 @@ export class PopoverComponent implements OnInit, AfterContentInit {
     this.popoverOptionDir.forEach(dir => {
       dir.closePopoverEvent.subscribe(close => {
         this.renderer.removeClass(this.el.nativeElement, 'active');
-        // this.cd.markForCheck();
+        // console.log('close?');
+        this.cd.markForCheck();
       });
     });
   }
@@ -70,18 +71,9 @@ export class PopoverComponent implements OnInit, AfterContentInit {
   @HostListener('click', ['$event']) onClick($event) {
     //stops propagation on lower layers
     // $event.preventDefault();
-    console.log(this.popoverOptionDir);
+    // console.log(this.popoverOptionDir);
     $event.stopPropagation();
   }
-
-  @HostListener('close', ['$event']) onClose($event) {
-    //stops propagation on lower layers
-    // $event.preventDefault();
-    // $event.stopPropagation();
-    console.log('CLOSE POPOVER');
-  }
-
-  popoverIsOpened: boolean = false;
 
   togglePopoverState() {
     let hasActiveClass = this.el.nativeElement.classList.contains('active');
@@ -90,6 +82,5 @@ export class PopoverComponent implements OnInit, AfterContentInit {
     } else {
       this.renderer.addClass(this.el.nativeElement, 'active');
     }
-    // this.popoverIsOpened = !this.popoverIsOpened;
   }
 }

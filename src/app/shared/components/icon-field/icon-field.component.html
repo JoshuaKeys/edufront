@@ -1,4 +1,39 @@
-<div class="form__input-wrapper form__input-wrapper--main">
+<edu-input #inputEl [(ngModel)]="value" elementId="fieldName">
+  <div class="form__icon-select-wrapper  edu-input__prefix" InputAffix>
+    <img class="form__icon icon__img" [src]="activeIcon" alt="" />
+    <edu-popover alignment="bottom" pointerAlignment="left">
+      <div class=" " [ClosePopover]="popOverIsOpened">
+        <div class="popup__search">
+          <img
+            class="popup__search-icon"
+            src="/assets/search-icon.svg"
+            alt=""
+          />
+          <input class="popup__search-input" type="text" placeholder="Search" />
+        </div>
+        <div class="popup__content">
+          <div class="icons">
+            <div
+              class="icon"
+              *ngFor="let icon of icons"
+              (click)="changeItem(icon)"
+            >
+              <div class="icon__content">
+                <img class="icon__img" [src]="icon.icon" alt="" />
+                <div class="icon__text">{{ icon.item }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </edu-popover>
+  </div>
+
+  <span class="edu-label" for="fieldName">{{ fieldName }}</span>
+</edu-input>
+
+<!-- 
+<div class="wrapper form__input-wrapper form__input-wrapper--main">
   <div class="form__icon-select-wrapper">
     <input
       type="checkbox"
@@ -10,15 +45,13 @@
     <div class="popup popup--center">
       <ul class="popup__entries">
         <li class="popup__entry popup__search-wrapper">
-          <img class="popup__search-icon" src="assets/search.svg" alt="" />
+          <img class="popup__search-icon" src="assets/search-icon.svg" alt="" />
           <input class="popup__search-input" type="text" placeholder="Search" />
         </li>
       </ul>
       <div class="popup__content">
         <div class="icons">
-          <!-- <div class="icon icon--active">
-            <img class="icon__img" src="assets/india-flag.svg" alt="" />
-          </div> -->
+  
           <div
             class="icon"
             *ngFor="let icon of icons"
@@ -46,4 +79,4 @@
   />
 
   <label class="form__input-label" for="fieldName">{{ fieldName }}</label>
-</div>
+</div> -->

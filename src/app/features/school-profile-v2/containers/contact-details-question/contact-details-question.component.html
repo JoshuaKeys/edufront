@@ -17,6 +17,24 @@
           [icons]="countryIconMap"
           (valueChanged)="updatePhone($event)"
         ></edu-phone-icon-field>
+
+        <edu-input
+          alignment="center"
+          (input)="returnFormFieldFormat('email', $event)"
+          [formControl]="contactForm.controls['email']"
+        >
+          <span class="edu-label"> Email(Optional)</span>
+        </edu-input>
+        <edu-input
+          class="content__img-editor"
+          alignment="center"
+          (input)="returnFormFieldFormat('website', $event)"
+          [formControl]="contactForm.controls['website']"
+        >
+          <span class="edu-label"> Website(Optional)</span>
+        </edu-input>
+
+        <!-- 
         <edu-input-field
           idPrefix="email"
           text="Email(Optional)"
@@ -28,7 +46,7 @@
           text="Website(Optional)"
           formControlName="website"
           (onChange)="updateFormField($event)"
-        ></edu-input-field>
+        ></edu-input-field> -->
       </form>
       <div class="content__btn-wrapper">
         <button
