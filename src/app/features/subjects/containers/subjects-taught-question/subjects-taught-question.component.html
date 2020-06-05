@@ -36,11 +36,17 @@
     </ng-template>
   </aside>
 </main>
-<edu-modal
+<edu-modal-v2
+  class="intro"
   *ngIf="(modalState | async).startModal"
-  [description]="getDescription()"
   btnText="GOT IT"
   header="Teaching Subjects"
   icon="assets/subjects_modal.svg"
   (btnClicked)="onModalBtnClicked()"
-></edu-modal>
+>
+  We now need to know what subjects are taught in your school. Just create a
+  <b class="orangecolor">tag</b> for each one and fill in the details. After you
+  have created all the tags, <b class="orangecolor">assign</b> them to the
+  relevant classes. This will speed up timetable and course management
+  tremendously.
+</edu-modal-v2>

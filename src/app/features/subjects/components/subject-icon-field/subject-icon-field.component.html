@@ -11,7 +11,7 @@
         <li class="popup__entry popup__search-wrapper">
           <img
             class="popup__search-icon"
-            src="../../../assets/search.svg"
+            src="../../../assets/search-icon.svg"
             alt=""
           />
           <input
@@ -195,7 +195,17 @@
       </div>
     </div>
   </div>
-  <input
+
+  <edu-input
+    elementId="subjectName"
+    [(ngModel)]="value"
+    (input)="onTextChange($event)"
+    #subjectName
+  >
+    <span class="edu-label">Subject Name</span>
+  </edu-input>
+
+  <!-- <input
     id="subjectName"
     type="text"
     class="form__input"
@@ -206,5 +216,5 @@
     pattern="(/w)"
   />
 
-  <label class="form__input-label" for="subjectName">Subject Name</label>
+  <label class="form__input-label" for="subjectName">Subject Name</label> -->
 </div>

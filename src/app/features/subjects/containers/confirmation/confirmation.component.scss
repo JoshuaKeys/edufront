@@ -2,6 +2,13 @@
 
 @include splitLayout2();
 
+edu-modal-v2.complete ::ng-deep {
+  .modal__desc {
+    max-width: 600px;
+    margin-bottom: 65px !important;
+  }
+}
+
 .content__title {
   width: 560px;
 }

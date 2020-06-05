@@ -31,9 +31,9 @@
     </div>
   </section>
 </main>
-<edu-modal
+<edu-modal-v2
   *ngIf="(modalState | async).endModal"
-  [description]="description"
+  class="complete"
   btnText="GOT IT"
   header="Subjects Set Up Complete"
   icon="assets/icon-complete.svg"
@@ -42,4 +42,8 @@
   rightBtn="TAKE ME TO STUDENTS"
   (leftBtnClicked)="goToDashboard()"
   (rightBtnClicked)="goToStudents()"
-></edu-modal>
+>
+  You made it! Now that we know what is taught in the school, we can move on to
+  creating the users and profiles. This can be a lot of data entry, so don’t
+  hesitate to take a break now if you need it…
+</edu-modal-v2>

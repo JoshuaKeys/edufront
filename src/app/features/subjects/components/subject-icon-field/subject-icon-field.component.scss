@@ -2,6 +2,18 @@
 
 @include splitLayout2();
 
+.popup__search-input {
+  border-width: 2px;
+  font: 400 14px/22px Raleway;
+  color: $black;
+  &::placeholder {
+    font: 400 14px/22px Raleway;
+    color: #c7ccdb;
+  }
+  &:focus {
+    outline: none;
+  }
+}
 .content__title {
   width: 560px;
 }
@@ -75,7 +87,7 @@ aside {
   .form__icon-select-wrapper
   input[type='checkbox']:checked
   ~ img {
-  border: 1px solid #69a9f2;
+  // border: 1px solid #69a9f2;
 }
 
 .form__input-wrapper--main input:invalid ~ label,
