@@ -11,21 +11,20 @@ import { ClassesComponent } from './components/classes/classes.component';
 import { ClassesService } from './services/classes.service';
 import { DroppableDirective } from './directives/droppable.directive';
 import { PreviewComponent } from './components/preview/preview.component';
-import { ButtonComponent } from "./components/button/button.component"
-import { PopoverComponent } from "./components/popover/popover.component"
-import { PopoverOptionDirective } from "./components/popover/popover-option.directive"
+import { ButtonComponent } from './components/button/button.component';
+import { PopoverComponent } from './components/popover/popover.component';
+import { PopoverOptionDirective } from './components/popover/popover-option.directive';
 
-import {datePickerModule} from "./components/datepicker/datepicker.module";
-import { TimetableModule } from "./components/timetable/timetable.module";
+import { datePickerModule } from './components/datepicker/datepicker.module';
+import { TimetableModule } from './components/timetable/timetable.module';
 
-import { FormComponentsModule } from "./components/form-components/form-component.module";
-
+import { FormComponentsModule } from './components/form-components/form-component.module';
 
 @NgModule({
   declarations: [
     ModalComponent,
     CustomSelectComponent,
-     HeaderNavComponent,
+    HeaderNavComponent,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
@@ -42,6 +41,7 @@ import { FormComponentsModule } from "./components/form-components/form-componen
   ],
   exports: [
     FormComponentsModule,
+    PopoverOptionDirective,
     ModalComponent,
     CustomSelectComponent,
     HeaderNavComponent,
@@ -54,8 +54,6 @@ import { FormComponentsModule } from "./components/form-components/form-componen
     TimetableModule,
     PopoverComponent
   ],
-  providers: [
-    ClassesService
-  ]
+  providers: [ClassesService]
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,52 +1,78 @@
-<div class = "content">
-<button ButtonType= "basic">
+<div class="content">
+  <button ButtonType="basic">
     popover top left
 
-    <edu-popover alignment = "top" pointerAlignment = "left"><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "top" pointerAlignment = "center"><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
+    <edu-popover alignment="top" pointerAlignment="left">
+      <button (click)="toggleBtn()" [ClosePopover]="btnTest">
+        test {{ btnTest }}
+      </button>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="top" pointerAlignment="center"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
     popover top center
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "top" pointerAlignment = "right"><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="top" pointerAlignment="right"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
     popover top right
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "bottom" pointerAlignment = "left"><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="bottom" pointerAlignment="left"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
     popover bottom left
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "bottom" pointerAlignment = "center"><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="bottom" pointerAlignment="center"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
     popover bottom center
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "bottom" pointerAlignment = "right"><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="bottom" pointerAlignment="right"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
     popover bottom right
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "left"  ><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
-    popover left 
-</button>
-<button ButtonType= "basic">
-    <edu-popover alignment = "right"  ><p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione pariatur iusto, enim corporis, 
-    </p></edu-popover>
-    popover  right
-</button>
-
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="left"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
+    popover left
+  </button>
+  <button ButtonType="basic">
+    <edu-popover alignment="right"
+      ><p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
+        pariatur iusto, enim corporis,
+      </p></edu-popover
+    >
+    popover right
+  </button>
 </div>
