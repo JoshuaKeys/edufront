@@ -4,6 +4,13 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
 const routes: Routes = [
   {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module').then(
+        m => m.DashboardModule
+      )
+  },
+  {
     path: 'ui',
     loadChildren: () =>
       import('./features/ui-test/ui-test.module').then(m => m.uiTestModule)

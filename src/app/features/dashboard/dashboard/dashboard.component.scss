@@ -1,0 +1,150 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/mixins/buttons';
+@include group();
+
+:host {
+  padding: 60px 0;
+  height: 100%;
+  min-height: calc(100vh - 53px);
+  @include displayFlex(space-between, center, column);
+}
+//header
+
+.header {
+  @include displayFlex(center, center, column);
+  .radial {
+    color: $blue;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    margin-bottom: 48px;
+    font-size: 95px;
+    font-weight: 700;
+  }
+  .nav__title {
+    margin: 0;
+    min-height: 33px;
+    margin-bottom: 22px;
+    color: $black;
+  }
+  .nav__desc {
+    width: 706px;
+    text-align: center;
+    margin: 0;
+    color: #a5aec7;
+  }
+}
+
+//stepper
+.onboard_nav {
+  width: 100%;
+  height: 100%;
+}
+
+ul {
+  margin: auto;
+  list-style: none;
+  @include displayFlex(center, center, row);
+  max-width: 1173px;
+  width: 100%;
+}
+
+li {
+  width: 100%;
+  @include displayFlex(center, center, row);
+}
+
+.dash {
+  margin: 0 10px;
+  background: #e6e9f3;
+  width: 100%;
+  height: 2px;
+  &.i7 {
+    display: none;
+  }
+}
+
+.tracker {
+  @include displayFlex(flex-start, center, row);
+  width: 100%;
+  padding-bottom: 31px;
+  position: relative;
+
+  .icon {
+    flex-shrink: 0;
+
+    width: 64px;
+    height: 64px;
+    border: 2px solid #e6e9f3;
+    border-radius: 50%;
+    position: relative;
+    img {
+      @include absoluteCenter();
+    }
+  }
+  .label {
+    position: absolute;
+    left: 50%;
+    bottom: -33px;
+    text-align: center;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    color: #c7ccdb;
+  }
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+.tracker.complete {
+  .icon {
+    background: #66bb6a;
+    border-color: #66bb6a;
+  }
+  .label {
+    color: $black;
+  }
+}
+
+.tracker.active {
+  .icon {
+    background: #f2b269;
+    border-color: #f2b269;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 78px;
+      border: 1px solid #f2b269;
+    }
+  }
+  .label {
+    color: #f2b269;
+  }
+}
+
+//footer
+.footer {
+  @include displayFlex(center, center, column);
+  color: #c7ccdb;
+  font: 400 16px/24px Raleway;
+
+  p {
+    margin: 20px 0;
+  }
+
+  button {
+    width: 262px;
+    height: 52px;
+    font: 700 14px/22px Raleway;
+  }
+}

@@ -26,6 +26,7 @@
     "@ngrx/router-store": "^9.1.2",
     "@ngrx/store": "^9.1.2",
     "angular-mydatepicker": "^0.6.1",
+    "compass-mixins": "^0.12.10",
     "core-js": "^2.5.3",
     "font-awesome": "^4.7.0",
     "jso": "^4.1.1",
