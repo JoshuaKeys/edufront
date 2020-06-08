@@ -63,16 +63,11 @@ import { SelectModule } from './components/form-components/select/select.module'
     FormComponentsModule,
     CommonModule,
     datePickerModule,
-<<<<<<< HEAD
     SelectModule,
-    TimetableModule,
-    RouterModule
-=======
     TimetableModule,
     RouterModule,
     FormsModule,
-    TimetableModule
->>>>>>> ctkm-uifix
+
   ],
   exports: [
     FormComponentsModule,

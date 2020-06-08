@@ -35,8 +35,8 @@ const routes: Routes = [
     path: 'school-profile',
     canLoad: [AuthenticatedGuard],
     loadChildren: () =>
-      import('./features/school-profile/school-profile.module').then(
-        m => m.SchoolProfileModule
+      import('./features/school-profile/school-profile-v2.module').then(
+        m => m.SchoolProfileV2Module
       )
   },
   {
