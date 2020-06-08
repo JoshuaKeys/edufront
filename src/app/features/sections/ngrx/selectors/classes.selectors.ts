@@ -25,16 +25,16 @@ export const selectSortedClasses = createSelector(selectAllClasses, classes => {
     return 0;
 
   }) : []
-})
+});
 export const selectSelectedClass = createSelector(selectAllClasses, classes => {
   return classes.find(classItem => classItem.class.selected);
-})
+});
 export const selectDraggedStudents = createSelector(selectAllClasses, classes => {
   const selectedClass = selectSelectedClass(selectAllClasses);
   const classNeeded = classes.findIndex(classItem => classItem.class.id === selectedClass.class.id);
 
   return classes[classNeeded].students.filter(student => student.dragged);
-})
+});
 export const selectNotDraggedStudents = createSelector(selectAllClasses, classes => {
 
   const selectedClass = classes.find(classItem => classItem.class.selected);
@@ -43,9 +43,30 @@ export const selectNotDraggedStudents = createSelector(selectAllClasses, classes
   }
   const classNeeded = classes.findIndex(classItem => classItem.class && classItem.class.id === selectedClass.class.id);
   return classes[classNeeded].students ? classes[classNeeded].students.filter(student => !student.dragged) : [];
-})
+});
 export const selectSections = createSelector(featureSelector, selectAllClasses, (feat, classes) => {
   const selectedClass = classes.find(classItem => classItem.class.selected);
   const sectionIdx = feat.sections.findIndex(section => section.classId === selectedClass.class.id);
   return sectionIdx > -1 ? feat.sections[sectionIdx] : null;
+});
+export const selectAllSections = createSelector(featureSelector, feat => {
+  return feat.sections;
+});
+export const selectCreateSectionData = createSelector(selectAllSections, sections => {
+  const mappedSections = sections.map(sectionItem => {
+    const classId = sectionItem.classId;
+    let sectionName = '';
+    let studentIds = []
+    const sections = sectionItem.sections.forEach(section => {
+      sectionName = section.sectionName;
+      const _studentIds = section.subjects.map(student => student.id)
+      studentIds = _studentIds
+    })
+    return { classId, sectionName, students: studentIds }
+  })
+  return mappedSections;
+})
+export const selectAggregate = createSelector(featureSelector, feat => {
+
+  return feat.aggregate ? feat.aggregate : []
 })

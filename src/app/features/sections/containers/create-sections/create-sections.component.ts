@@ -5,7 +5,7 @@ import { toggleModal } from '../../ngrx/actions/sections-modal.actions';
 import { Observable } from 'rxjs';
 import { SectionsModalState } from '../../models/sections-modal-state.model';
 import { selectModalState } from '../../ngrx/selectors';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { getAllClassesRequest, toggleSelectedState, toggleStudentsDraggedState } from '../../ngrx/actions/classes.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections } from '../../ngrx/selectors/classes.selectors';
@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { SectionModel } from '../../models/section.model';
-import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest } from '../../ngrx/actions/sections.actions';
+import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest, getAggregatedResult } from '../../ngrx/actions/sections.actions';
 
 @Component({
   selector: 'edu-create-sections',
@@ -57,6 +57,9 @@ export class CreateSectionsComponent implements OnInit {
   processAddSection(classId: string) {
     this.store.dispatch(addNewSection({ classId }))
   }
+  goToConfirmation() {
+    this.router.navigate(['../', this.activatedRouteData.next], { relativeTo: this.activatedRoute })
+  }
   onAssign(classId: string) {
     // this.store.dispatch(assignStudentsRandomly())
     this.store.dispatch(assignStudentsRequest({ classId }))
@@ -65,5 +68,5 @@ export class CreateSectionsComponent implements OnInit {
     console.log(classGrade);
     this.store.dispatch(toggleSelectedState({ classGrade }))
   }
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<SectionsStateModel>) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private store: Store<SectionsStateModel>) { }
 }

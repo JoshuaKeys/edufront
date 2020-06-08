@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SectionsRoutingModule } from './sections-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CreateSectionsComponent } from './containers';
+import { CreateSectionsComponent, ConfirmationComponent } from './containers';
 import { CreateSectionsShellComponent } from './containers/create-sections-shell/create-sections-shell.component';
 import { StoreModule } from '@ngrx/store';
 import { sectionsReducer } from './ngrx/reducers';
@@ -23,6 +23,7 @@ import { SectionsEffects } from './ngrx/effects/sections.effects';
     SectionDropBoxComponent,
     CreateSectionsShellComponent,
     SectionAsideComponent,
+    ConfirmationComponent
   ],
   imports: [
     CommonModule,
