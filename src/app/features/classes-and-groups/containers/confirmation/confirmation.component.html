@@ -8,27 +8,33 @@
     </button>
 
     <div class="form">
-      <h2 class="form__title">
-        Are these correct?
-      </h2>
+      <div class="form__content-wrapper">
+        <h2 class="form__title">
+          Are these correct?
+        </h2>
 
-      <div class="drop-zones">
-        <edu-group-box
-          *ngFor="let group of groupClassMap | async"
-          [group]="group"
-        ></edu-group-box>
+        <div class="drop-zones">
+          <edu-group-box
+            *ngFor="let group of groupClassMap | async"
+            [group]="group"
+          ></edu-group-box>
+        </div>
       </div>
-      <div class="form__btns">
-        <button
-          class="form__btn form__btn--white"
-          [routerLink]="['../', activatedRouteData.previous]"
-        >
-          Back
-        </button>
-        <button class="form__btn" (click)="submit()">
-          Continue
-        </button>
-      </div>
+    </div>
+    <div class="form__btns">
+      <button
+        ButtonType="outline"
+        class="form__button form__button--white"
+        [routerLink]="['../', activatedRouteData.previous]"
+      >
+        Back
+      </button>
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <button ButtonType="basic" class="form__button" (click)="submit()">
+        Continue
+      </button>
     </div>
   </section>
 </main>

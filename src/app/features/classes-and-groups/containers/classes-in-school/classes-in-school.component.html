@@ -12,14 +12,15 @@
         [classes]="classes"
         (classClicked)="onClassClick($event)"
       ></edu-classes>
-      <button
-        class="form__btn"
-        [routerLink]="['../', activatedRoute.snapshot.data.next]"
-        [disabled]="!(selectedClasses | async).length"
-      >
-        Continue
-      </button>
     </div>
+    <button
+      ButtonType="basic"
+      class="form__button"
+      [routerLink]="['../', activatedRoute.snapshot.data.next]"
+      [disabled]="!(selectedClasses | async).length"
+    >
+      Continue
+    </button>
   </section>
   <aside class="aside">
     <h5 class="aside__title">Preview</h5>

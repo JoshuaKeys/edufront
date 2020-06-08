@@ -3,13 +3,12 @@
     popover top left
 
     <edu-popover alignment="top" pointerAlignment="left">
-      <button (click)="toggleBtn()" [ClosePopover]="btnTest">
-        test {{ btnTest }}
-      </button>
+      <button [ClosePopover]="btnTest">test {{ btnTest }}</button>
 
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
         pariatur iusto, enim corporis,
+        <button (click)="toggleBtn()">click</button>
       </p></edu-popover
     >
   </button>
