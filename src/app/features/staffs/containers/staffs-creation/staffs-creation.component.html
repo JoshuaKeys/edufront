@@ -7,94 +7,98 @@
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
-      <h2 class="content__title">
-        Add or upload staff
-      </h2>
-      <div class="search__wrapper">
-        <div class="search__input-wrapper">
-          <img
-            class="search__icon"
-            src="../../../assets/search-icon.svg"
-            alt=""
-          />
-
-          <input
-            class="search__input"
-            type="text"
-            #searchInput
-            placeholder="Search"
-            (input)="onTextChange($event)"
-          />
-        </div>
-
-        <div class="search__icon-btns">
-          <div
-            class="search__icon-btn"
-            [ngClass]="{
-              active: (sortingState | async).alphabetical
-            }"
-          >
+      <div class="content-wrapper">
+        <h2 class="content__title">
+          Add or upload staff
+        </h2>
+        <div class="search__wrapper">
+          <div class="search__input-wrapper">
             <img
-              src="../../../assets/subject-search-icon-1.svg"
+              class="search__icon"
+              src="../../../assets/search-icon.svg"
               alt=""
-              class="icon-img"
-              (click)="onSortByAlphabet()"
             />
-            <div class="tooltip tooltip--top">
-              Sort Alphabetical
+
+            <input
+              class="search__input"
+              type="text"
+              #searchInput
+              placeholder="Search"
+              (input)="onTextChange($event)"
+            />
+          </div>
+
+          <div class="search__icon-btns">
+            <div
+              class="search__icon-btn"
+              [ngClass]="{
+                active: (sortingState | async).alphabetical
+              }"
+            >
+              <img
+                src="../../../assets/subject-search-icon-1.svg"
+                alt=""
+                class="icon-img"
+                (click)="onSortByAlphabet()"
+              />
+              <div class="tooltip tooltip--top">
+                Sort Alphabetical
+              </div>
+            </div>
+            <div
+              class="search__icon-btn"
+              [ngClass]="{
+                active: (sortingState | async).byGender
+              }"
+            >
+              <img
+                src="../../../assets/subject-search-icon-3.svg"
+                alt=""
+                class="icon-img"
+                (click)="onSortByGender()"
+              />
+              <div class="tooltip tooltip--top">
+                Sort by Sex
+              </div>
             </div>
           </div>
+
+          <button class="search__btn" (click)="onAddStaff()">
+            <span>+</span>
+          </button>
+        </div>
+        <div class="group">
           <div
-            class="search__icon-btn"
-            [ngClass]="{
-              active: (sortingState | async).byGender
-            }"
+            class="group__body"
+            *ngIf="
+              (sortingState | async).alphabetical === false &&
+              (sortingState | async).byGender === false
+            "
           >
-            <img
-              src="../../../assets/subject-search-icon-3.svg"
-              alt=""
-              class="icon-img"
-              (click)="onSortByGender()"
-            />
-            <div class="tooltip tooltip--top">
-              Sort by Sex
-            </div>
+            <edu-staff-chip
+              *ngFor="let staff of staffs | async"
+              [staff]="staff"
+            ></edu-staff-chip>
           </div>
         </div>
-
-        <button class="search__btn" (click)="onAddStaff()">
-          <span>+</span>
+        <div class="group group--alphabetically">
+          <div class="group__body" *ngIf="(sortingState | async).alphabetical">
+            <edu-classes-alphabetically
+              [staffs]="staffs"
+            ></edu-classes-alphabetically>
+          </div>
+        </div>
+        <div class="group group-gender">
+          <div class="group__body" *ngIf="(sortingState | async).byGender">
+            <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
+          </div>
+        </div>
+      </div>
+      <div class="content__btns ">
+        <!-- <div class="opacity-overlay"></div> -->
+        <button class="content__button" ButtonType="basic" (click)="onFinish()">
+          Continue
         </button>
-      </div>
-      <div class="group">
-        <div
-          class="group__body"
-          *ngIf="
-            (sortingState | async).alphabetical === false &&
-            (sortingState | async).byGender === false
-          "
-        >
-          <edu-staff-chip
-            *ngFor="let staff of staffs | async"
-            [staff]="staff"
-          ></edu-staff-chip>
-        </div>
-      </div>
-      <div class="group group--alphabetically">
-        <div class="group__body" *ngIf="(sortingState | async).alphabetical">
-          <edu-classes-alphabetically
-            [staffs]="staffs"
-          ></edu-classes-alphabetically>
-        </div>
-      </div>
-      <div class="group group-gender">
-        <div class="group__body" *ngIf="(sortingState | async).byGender">
-          <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
-        </div>
-      </div>
-      <div class="content__btns opacity">
-        <div class="opacity-overlay"></div>
-        <button class="content__btn" (click)="onFinish()">Continue</button>
       </div>
     </div>
   </section>

@@ -126,6 +126,11 @@
 @include staffSearchSelectBadges();
 @include staffSearchRoundBtn();
 
+.popup .subjects {
+  max-height: 280px;
+  overflow-y: scroll;
+}
+
 .search {
   margin-top: 10px;
   height: 44px;
