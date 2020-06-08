@@ -1,3 +1,8 @@
+@import 'src/assets/styles/colors';
+
+:host {
+  margin: 0 8px;
+}
 h1,
 h2 {
   text-align: center;
@@ -453,7 +458,7 @@ aside {
 }
 
 .drop-zones {
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: row;
   display: flex;
@@ -468,6 +473,18 @@ aside {
   min-width: 232px;
   width: 232px;
   position: relative;
+}
+.drop-zone__input {
+  font: 400 14px/22px Raleway;
+  color: $black;
+  border: 0;
+  text-align: center;
+  &:focus {
+    outline: none !important;
+    border-color: #69a9f2;
+    border: 1px solid #69a9f2;
+    box-shadow: 0 0 4px #69a9f2;
+  }
 }
 .drop-zone.drop-zone--hover {
   border: 2px dashed #69a9f2;

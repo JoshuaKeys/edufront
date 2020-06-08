@@ -1,10 +1,10 @@
 <div class="group group--3 group--split-layout">
   <!-- <h3 class="form__sub-title">Subject Area</h3> -->
-  <div class="form__row">
-    <div class="form__input-wrapper">
-      <div class="search__input-wrapper">
-        <img class="search__icon" src="assets/search.svg" alt="" />
 
+  <div class="group--row">
+    <div class="search__input-wrapper">
+      <div class="search">
+        <img class="search__icon" src="assets/search-icon.svg" alt="" />
         <input
           class="search__input"
           (focus)="toggleSubjectClassesBox()"
@@ -12,43 +12,44 @@
           (input)="onSearch($event)"
           placeholder="Search"
         />
-        <ng-template #subjectClasses>
-          <div class="subjects-classes">
-            <edu-classes-subject-icon
-              [association]="unit"
-              [subjects]="subjects"
-              *ngFor="let unit of classesAndSubject | async"
-            >
-            </edu-classes-subject-icon>
-          </div>
-        </ng-template>
+      </div>
 
-        <div class="popup popup--padded" *ngIf="isOpen; else subjectClasses">
-          <div class="groups subjects-area">
-            <div class="subjects__container">
-              <div class="subjects">
-                <edu-icon-button
-                  *ngFor="let subject of subjectsData | async"
-                  [subject]="subject"
-                  mode="select"
-                  (onClick)="toggleSubject($event)"
-                ></edu-icon-button>
-              </div>
-              <div class="classes">
-                <edu-subject-classes
-                  (classClicked)="onClassClicked($event)"
-                  [classes]="classes"
-                ></edu-subject-classes>
-              </div>
+      <ng-template #subjectClasses>
+        <div class="subjects-classes">
+          <edu-classes-subject-icon
+            [association]="unit"
+            [subjects]="subjects"
+            *ngFor="let unit of classesAndSubject | async"
+          >
+          </edu-classes-subject-icon>
+        </div>
+      </ng-template>
+
+      <div class="popup popup--padded" *ngIf="isOpen; else subjectClasses">
+        <div class="groups subjects-area">
+          <div class="subjects__container">
+            <div class="subjects">
+              <edu-icon-button
+                *ngFor="let subject of subjectsData | async"
+                [subject]="subject"
+                mode="select"
+                (onClick)="toggleSubject($event)"
+              ></edu-icon-button>
+            </div>
+            <div class="classes">
+              <edu-subject-classes
+                (classClicked)="onClassClicked($event)"
+                [classes]="classes"
+              ></edu-subject-classes>
             </div>
           </div>
-          <button
-            class="form__round-btn form__round-btn--active"
-            (click)="commitItems()"
-          >
-            <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
-          </button>
         </div>
+        <button
+          class="form__round-btn form__round-btn--active"
+          (click)="commitItems()"
+        >
+          <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
+        </button>
       </div>
     </div>
   </div>

@@ -1,17 +1,26 @@
-import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
+import {
+  Directive,
+  HostListener,
+  Output,
+  EventEmitter,
+  Input
+} from '@angular/core';
 
 @Directive({
-  selector: '[PopoverOption]'
+  selector: '[ClosePopover]'
 })
 export class PopoverOptionDirective {
+  constructor() {}
 
-  constructor() { }
-
-  @Output("closePopover") closePopover = new EventEmitter();
-
-  @HostListener("close") onClose(){
-    console.log("close on dir")
+  _ClosePopover: boolean;
+  get ClosePopover() {
+    return this._ClosePopover;
+  }
+  @Input('ClosePopover') set ClosePopover(param) {
+    this._ClosePopover = param;
+    this.closePopoverEvent.emit();
+    // console.log('should close stuff');
   }
 
-
+  @Output('closePopover') closePopoverEvent = new EventEmitter();
 }

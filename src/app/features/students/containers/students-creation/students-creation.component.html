@@ -28,7 +28,11 @@
       </div> -->
       <div class="search__wrapper">
         <div class="search__input-wrapper">
-          <img class="search__icon" src="../../../assets/search.svg" alt="" />
+          <img
+            class="search__icon"
+            src="../../../assets/search-icon.svg"
+            alt=""
+          />
 
           <input
             class="search__input"
@@ -146,6 +150,7 @@
 <edu-modal-v2
   *ngIf="(studentsModalState | async).startModal"
   btnText="GOT IT"
+  class="intro"
   header="Students Creation"
   icon="assets/students-intro.svg"
   (btnClicked)="onStart()"

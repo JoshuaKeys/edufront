@@ -8,26 +8,29 @@
     </button>
 
     <div class="form">
-      <h2 class="form__title">
-        Are these correct?
-      </h2>
-      <div class="confirmation-box" *ngIf="previewState | async as preview">
-        <edu-preview
-          [styleMode]="'horizontal'"
-          [previewState]="previewState"
-        ></edu-preview>
+      <div class="content-wrapper">
+        <h2 class="form__title">
+          Are these correct?
+        </h2>
+        <div class="confirmation-box" *ngIf="previewState | async as preview">
+          <edu-preview
+            [styleMode]="'horizontal'"
+            [previewState]="previewState"
+          ></edu-preview>
+        </div>
       </div>
-      <div class="form__btns">
-        <button
-          class="form__btn form__btn--white"
-          [routerLink]="['../', activatedRouteData.previous]"
-        >
-          Back
-        </button>
-        <button class="form__btn" (click)="submit()">
-          Continue
-        </button>
-      </div>
+    </div>
+    <div class="form__btns">
+      <button
+        ButtonType="outline"
+        class="form__button form__button--white"
+        [routerLink]="['../', activatedRouteData.previous]"
+      >
+        Back
+      </button>
+      <button ButtonType="basic" class="form__button" (click)="submit()">
+        Continue
+      </button>
     </div>
   </section>
 </main>

@@ -1,3 +1,37 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+
+section {
+  padding-top: 46px;
+  @include displayFlex(unset, unset, column);
+}
+.form {
+  position: relative;
+  top: unset;
+  left: unset;
+  transform: unset;
+  // height: 100%;
+  flex-grow: 1;
+  @include displayFlex(flex-start, center, column);
+  width: calc(100vw - 312px);
+  max-width: 1080px;
+}
+.form__content-wrapper {
+  flex-grow: 1;
+  @include displayFlex(center, center, column);
+}
+.form__button {
+  position: relative;
+  background: $blue;
+  margin: auto;
+  margin: 40px auto;
+  flex-shrink: 0;
+}
+
+edu-group-box ::ng-deep .drop-zone {
+  margin: 16px 8px;
+}
+
 h1,
 h2 {
   text-align: center;
@@ -203,17 +237,6 @@ section {
   transform: scale(0.8) translateY(-22px);
 }
 
-.form {
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  top: 45%;
-}
 .form__title {
   margin-bottom: 42px;
 }
@@ -421,20 +444,20 @@ aside {
   color: #a5aec7;
 }
 
-.form {
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-  max-width: 1080px;
-  width: 100%;
-}
+// .form {
+//   justify-content: flex-start;
+//   align-items: center;
+//   flex-direction: column;
+//   display: flex;
+//   max-width: 1080px;
+//   width: 100%;
+// }
 .form__title {
   margin-bottom: 20px;
 }
 .form__desc {
   color: #a5aec7;
-  margin-bottom: 36px;
+  margin-bottom: 30px;
   font-size: 14px;
   line-height: 22px;
 }
@@ -453,15 +476,17 @@ aside {
 }
 
 .drop-zones {
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: row;
   display: flex;
+  flex-wrap: wrap;
   max-width: 1000px;
   width: 100%;
 }
 
 .drop-zone {
+  margin: 8px;
   border: 2px dashed #e6e9f3;
   border-radius: 12px;
   padding: 20px;

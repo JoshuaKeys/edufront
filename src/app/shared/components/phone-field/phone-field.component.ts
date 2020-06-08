@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, forwardRef, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  forwardRef,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { IconModel } from 'src/app/shared/components/icon-field/icon-field.component';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
@@ -9,7 +17,11 @@ import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
   styleUrls: ['./phone-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => PhoneFieldComponent) }
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => PhoneFieldComponent)
+    }
   ]
 })
 export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
@@ -21,11 +33,11 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
   value: string;
   item: string;
   icon: PhoneIconModel;
-  @Output() valueChanged = new EventEmitter<PhoneIconModel>()
+  @Output() valueChanged = new EventEmitter<PhoneIconModel>();
   writeValue(val: PhoneIconModel) {
     if (val === null || val == undefined) {
       this.activeIcon = this.icons[0].icon;
-      this.phonePrefix = this.icons[0].phonePrefix
+      this.phonePrefix = this.icons[0].phonePrefix;
       this.item = this.icons[0].item;
       this.value = '';
       this.icon = val;
@@ -37,12 +49,8 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
     this.activeIcon = val.icon;
     this.item = val.item;
   }
-  registerOnChange() {
-
-  }
-  registerOnTouched() {
-
-  }
+  registerOnChange() {}
+  registerOnTouched() {}
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
@@ -50,18 +58,18 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
     const iconCopy = { ...this.icon, ...icon };
     iconCopy.phoneNum = this.value;
     this.icon = iconCopy;
-    this.valueChanged.emit(this.icon)
+    this.valueChanged.emit(this.icon);
     this.toggleDropdown();
   }
-  processClick() {
-
-  }
+  processClick() {}
   onTextChange(event) {
-    const iconCopy: PhoneIconModel = { ...this.icon, phoneNum: event.target.value };
+    const iconCopy: PhoneIconModel = {
+      ...this.icon,
+      phoneNum: event.target.value
+    };
     this.icon = iconCopy;
-    this.valueChanged.emit(this.icon)
+    this.valueChanged.emit(this.icon);
   }
-  ngOnInit(): void {
-  }
-  constructor() { }
+  ngOnInit(): void {}
+  constructor() {}
 }

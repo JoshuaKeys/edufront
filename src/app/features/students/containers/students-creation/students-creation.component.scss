@@ -168,6 +168,12 @@ body {
 
 .search__input {
   border-width: 2px;
+  font: 400 14px/22px Raleway;
+  color: $black;
+  &::placeholder {
+    font: 400 14px/22px Raleway;
+    color: #c7ccdb;
+  }
 }
 
 .search__input-wrapper {

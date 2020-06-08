@@ -12,7 +12,16 @@
       </h2>
       <form [formGroup]="schoolNameForm">
         <div class="form__input-wrapper">
-          <input
+          <edu-input
+            alignment="center"
+            (keypress)="onKeyPress($event)"
+            (input)="updateSchoolName($event)"
+            [formControl]="schoolNameForm.controls['schoolName']"
+          >
+            <span class="edu-label"> Enter school name</span>
+          </edu-input>
+
+          <!-- <input
             id="schoolName"
             type="text"
             class="form__input"
@@ -24,7 +33,7 @@
           />
           <label class="form__input-label" for="schoolName"
             >Enter school name</label
-          >
+          > -->
         </div>
       </form>
     </div>

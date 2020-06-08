@@ -8,21 +8,23 @@ import { SubjectsRoutingModule } from './subjects-routing.module';
 import { SubjectIconFieldComponent } from './components/subject-icon-field/subject-icon-field.component';
 import { IconPopupComponent } from './components/icon-popup/icon-popup.component';
 import { StoreModule } from '@ngrx/store';
-import { subjectsReducer } from './ngrx/reducers'
-import { ReactiveFormsModule } from '@angular/forms';
+import { subjectsReducer } from './ngrx/reducers';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { SubjectResolver } from './resolvers/subject.resolver';
 import { EffectsModule } from '@ngrx/effects';
 import { SubjectsEffects } from './ngrx/effects';
 import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
-import { AssignSubjectsQuestionComponent, ConfirmationComponent } from './containers';
+import {
+  AssignSubjectsQuestionComponent,
+  ConfirmationComponent
+} from './containers';
 import { OptionsComponent } from './components/options/options.component';
 import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.component';
 import { SubjectSummaryBoxComponent } from './components/subject-summary-box/subject-summary-box.component';
 import { AddSubjectModalComponent } from './components/add-subject-modal/add-subject-modal.component';
 import { ArrayInputFieldComponent } from './components/input-field/input-field.component';
-
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { ArrayInputFieldComponent } from './components/input-field/input-field.c
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
     SubjectsRoutingModule,
     HttpClientModule,
     StoreModule.forFeature('subjects', subjectsReducer),
@@ -51,7 +54,7 @@ import { ArrayInputFieldComponent } from './components/input-field/input-field.c
   ],
   providers: [
     SubjectResolver,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
-export class SubjectsModule { }
+export class SubjectsModule {}

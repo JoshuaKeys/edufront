@@ -119,28 +119,42 @@
 //   display: flex;
 // }
 @import '../../../../../assets/scss/modules/staff';
+@import 'src/assets/styles/mixins/containers';
+@include group();
 @include staffSearchSelect();
 @include staffSearchSelectPopupChip();
 @include staffSearchSelectBadges();
 @include staffSearchRoundBtn();
 
-
-:host ::ng-deep  .chip__text{
+.search {
+  margin-top: 10px;
+  height: 44px;
+  position: relative;
+  display: flex;
+  img {
+    top: 20px;
+  }
+  input {
+    align-self: flex-end;
+    border-width: 1px;
+  }
+}
+:host ::ng-deep .chip__text {
   white-space: nowrap;
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-:host ::ng-deep  .form__badges {
-  .form__badge  {
-  width: 32px;
-  height: 32px;
-  margin: 5px;
-  font: 400 12px/20px Roboto;
+:host ::ng-deep .form__badges {
+  .form__badge {
+    width: 32px;
+    height: 32px;
+    margin: 5px;
+    font: 400 12px/20px Roboto;
+  }
 }
-}
-  
+
 .search__icon {
   width: 16px;
 }
@@ -151,4 +165,36 @@
   display: flex;
   flex-wrap: wrap;
   min-width: 152px;
+}
+
+.search__input {
+  border-width: 2px;
+  font: 400 14px/22px Raleway;
+  color: $black;
+  &::placeholder {
+    font: 400 14px/22px Raleway;
+    color: #c7ccdb;
+  }
+}
+.subjects-classes {
+  margin-top: 10px;
+}
+edu-icon-button ::ng-deep {
+  margin: 5px;
+  .chip.app-draggable {
+    margin: 0;
+    border: 1px solid #e6e9f3;
+    padding: 5px;
+  }
+  .chip__text {
+    font: 600 12px/22px Raleway;
+  }
+}
+
+edu-classes-subject-icon ::ng-deep .chip {
+  margin: 5px;
+}
+
+edu-subject-classes ::ng-deep .form__badge.round-badge.draggable {
+  border: 2px solid #e6e9f3;
 }

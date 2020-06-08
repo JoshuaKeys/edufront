@@ -1,4 +1,19 @@
 @import '../../../../../assets/styles/modules/section-module';
+@import '../../scss-fixes.scss';
+.form__btns {
+  margin: auto;
+}
+.form__btns .form__button {
+  width: 200px;
+  margin: 40px 10px;
+
+  &--white {
+    background-color: white;
+    color: $blue;
+    border-color: $blue;
+  }
+}
+
 body {
   display: relative;
   background-color: white;
@@ -8,6 +23,10 @@ main {
   height: calc(100vh - 53px);
 }
 @include splitLayout();
+
+edu-preview ::ng-deep .profile-select-preview {
+  border: 0px;
+}
 
 .form {
   @include displayFlex(flex-start, center, column);

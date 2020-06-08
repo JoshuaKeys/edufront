@@ -6,6 +6,11 @@
 
 @include groups();
 @include form();
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .content__title {
   width: 560px;
 }

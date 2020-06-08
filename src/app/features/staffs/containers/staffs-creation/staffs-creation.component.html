@@ -12,7 +12,11 @@
       </h2>
       <div class="search__wrapper">
         <div class="search__input-wrapper">
-          <img class="search__icon" src="../../../assets/search.svg" alt="" />
+          <img
+            class="search__icon"
+            src="../../../assets/search-icon.svg"
+            alt=""
+          />
 
           <input
             class="search__input"
@@ -105,12 +109,14 @@
   [classesAndSubjects]="subjectClassesAssociation"
   (onCreateStaff)="createStaff($event)"
 ></edu-staff-form>
+
 <edu-modal-v2
   *ngIf="(staffsModalsState | async).endModal"
   btnText="GOT IT"
   header="Staffs Set Up Complete"
   icon="assets/icon-complete.svg"
   [completeModal]="true"
+  class="complete"
   leftBtn="TAKE ME TO
   DASHBOARD"
   rightBtn="TAKE ME TO STUDENTS"
@@ -126,7 +132,8 @@
   *ngIf="(staffsModalsState | async).startModal"
   btnText="GOT IT"
   header="Staff Creation"
-  icon="assets/students-intro.svg"
+  class="intro"
+  icon="assets/staff-modal.svg"
   (btnClicked)="onStart()"
 >
   You will now create the Staff profiles. same as the last step. The only

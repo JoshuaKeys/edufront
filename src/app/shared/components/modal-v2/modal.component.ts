@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  ElementRef,
+  Renderer2
+} from '@angular/core';
 
 @Component({
   selector: 'edu-modal-v2',
@@ -6,22 +14,24 @@ import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponentV2 implements OnInit {
-
   @Input() icon: string;
   @Input() header: string;
   @Input() description: string;
   @Input() btnText: string;
   @Input() completeModal: boolean;
   @Input() leftBtn: string;
-  @Input() rightBtn: string
+  @Input() rightBtn: string;
+  @Input() modalType: string; //[intro,complete,form]
 
   @Output() btnClicked = new EventEmitter();
   @Output() leftBtnClicked = new EventEmitter();
   @Output() rightBtnClicked = new EventEmitter();
 
-
   onBtnClick() {
     this.btnClicked.emit();
+  }
+  onModalClick($event) {
+    $event.stopPropagation();
   }
   onLeftBtnClicked() {
     this.leftBtnClicked.emit();
@@ -29,9 +39,14 @@ export class ModalComponentV2 implements OnInit {
   onRightBtnClicked() {
     this.rightBtnClicked.emit();
   }
-
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
   ngOnInit() {
-    this.validateInputFields()
+    console.log('?? startg');
+    this.validateInputFields();
+    if (this.modalType === 'intro') {
+      this.renderer.addClass(this.el.nativeElement, 'intro');
+      console.log('?? intro');
+    }
   }
   validateInputFields() {
     if (this.completeModal && !this.validateCompleteModalBtns()) {
@@ -39,8 +54,8 @@ export class ModalComponentV2 implements OnInit {
         Invalid usage of ModalComponent:
         When you set completeModal to true, you must provide both
         leftBtn and rightBtn properties.
-      `
-      throw Error(errMsg.trim())
+      `;
+      throw Error(errMsg.trim());
     }
   }
   validateCompleteModalBtns() {

@@ -8,33 +8,39 @@
     </button>
 
     <div class="form">
-      <h2 class="form__title">
-        Are these correct?
-      </h2>
+      <div class="form__content-wrapper">
+        <h2 class="form__title">
+          Are these correct?
+        </h2>
 
-      <div class="drop-zones">
-        <edu-group-box
-          *ngFor="let group of groupClassMap | async"
-          [group]="group"
-        ></edu-group-box>
+        <div class="drop-zones">
+          <edu-group-box
+            *ngFor="let group of groupClassMap | async"
+            [group]="group"
+          ></edu-group-box>
+        </div>
       </div>
-      <div class="form__btns">
-        <button
-          class="form__btn form__btn--white"
-          [routerLink]="['../', activatedRouteData.previous]"
-        >
-          Back
-        </button>
-        <button class="form__btn" (click)="submit()">
-          Continue
-        </button>
-      </div>
+    </div>
+    <div class="form__btns">
+      <button
+        ButtonType="outline"
+        class="form__button form__button--white"
+        [routerLink]="['../', activatedRouteData.previous]"
+      >
+        Back
+      </button>
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <button ButtonType="basic" class="form__button" (click)="submit()">
+        Continue
+      </button>
     </div>
   </section>
 </main>
-<edu-modal
+<edu-modal-v2
   *ngIf="(modalState | async).endModal"
-  description="The first step is to enter the basic details of your school, just answer the questions on your screen"
+  class="complete"
   btnText="GOT IT"
   header="Classes And Groups Setup Complete"
   icon="assets/icon-complete.svg"
@@ -43,4 +49,9 @@
   rightBtn="TAKE ME TO SUBJECTS"
   (leftBtnClicked)="goToDashboard()"
   (rightBtnClicked)="goToSubjects()"
-></edu-modal>
+>
+  <div class="modal__text--complete">
+    Nicely Done! Now you can either move on to telling us all about what
+    subjects are taught, or return to the dashboard.
+  </div>
+</edu-modal-v2>

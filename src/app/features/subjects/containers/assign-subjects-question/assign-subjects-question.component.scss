@@ -1,6 +1,19 @@
 @import '../../../../../assets/styles/modules/section-module';
+@import '../../scss_fixes.scss';
 
 @include splitLayout2();
+.search__input {
+  border-width: 2px;
+  font: 400 14px/22px Raleway;
+  color: $black;
+  &::placeholder {
+    font: 400 14px/22px Raleway;
+    color: #c7ccdb;
+  }
+  &:focus {
+    outline: none;
+  }
+}
 
 .content__title {
   width: 560px;
@@ -15,7 +28,9 @@
 }
 
 aside {
-  width: 400px;
+  max-width: 400px;
+  min-width: 300px;
+  width: 25vw;
 }
 .chips {
   @include displayFlex(flex-start);
@@ -34,8 +49,9 @@ aside {
   margin-bottom: 40px;
 }
 .drop-zone__wrapper {
+  width: 100%;
+  // min-width: 700px;
   max-width: 906px;
-  width: 100vw;
   min-height: 416px;
   justify-content: flex-start;
   align-items: stretch;
