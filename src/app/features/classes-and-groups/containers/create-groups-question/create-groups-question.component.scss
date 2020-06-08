@@ -6,6 +6,10 @@ section {
   @include displayFlex(unset, unset, column);
 }
 
+.modal__text {
+  max-width: 600px;
+  display: block;
+}
 .form {
   position: relative;
   top: unset;
