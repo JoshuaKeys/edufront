@@ -5,6 +5,7 @@
 @import './../../../../../assets/styles/utils';
 @import './../../../../../assets/styles/main';
 
+@import '../../scss-fixes.scss';
 body {
   display: relative;
   background-color: white;
@@ -23,7 +24,7 @@ edu-input ::ng-deep {
   label {
     font-size: 16px;
   }
-
+  margin: auto;
   margin-bottom: 20px;
 }
 .content__title {

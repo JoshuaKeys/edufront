@@ -1,68 +1,72 @@
+<button class="section__back-btn" (click)="onPrevious()">
+  <img src="/assets/chevron-left.svg" alt="" /> Back
+</button>
 
-  <button class="section__back-btn" (click)="onPrevious()">
-    <img src="/assets/chevron-left.svg" alt="" /> Back
-  </button>
+<form class="form" [formGroup]="mForm">
+  <h2 class="form__title">What is your school address?</h2>
+  <div class="form__input-wrapper">
+    <img class="form__input-icon" src="/assets/circle_flag_india.svg" alt="" />
 
-  <form class="form" [formGroup]="mForm">
-    <h2 class="form__title">What is your school address?</h2>
-    <div class="form__input-wrapper">
-      <img class="form__input-icon" src="/assets/circle_flag_india.svg" alt="" />
+    <input
+      id="country"
+      type="text"
+      class="form__input"
+      placeholder=""
+      pattern="(/w)"
+      formControlName="country"
+    />
+    <label class="form__input-label" for="country">Country</label>
+  </div>
+  <div class="form__input-wrapper">
+    <input
+      id="zipcode"
+      type="text"
+      class="form__input"
+      placeholder=""
+      pattern="(/w)"
+      formControlName="zipcode"
+    />
+    <label class="form__input-label" for="zipcode">Zip Code</label>
+  </div>
+  <div class="form__input-wrapper">
+    <input
+      id="address"
+      type="text"
+      class="form__input"
+      placeholder=""
+      pattern="(/w)"
+      formControlName="address"
+    />
+    <label class="form__input-label" for="address">Address</label>
+  </div>
+  <div class="form__input-wrapper">
+    <input
+      id="state"
+      type="text"
+      class="form__input"
+      placeholder=""
+      pattern="(/w)"
+      formControlName="state"
+    />
+    <label class="form__input-label" for="state">State</label>
+  </div>
+  <div class="form__input-wrapper">
+    <input
+      id="city"
+      type="text"
+      class="form__input"
+      placeholder=""
+      pattern="(/w)"
+      formControlName="city"
+    />
+    <label class="form__input-label" for="city">City</label>
+  </div>
+  <input
+    id="countryId"
+    type="text"
+    formControlName="countryId"
+    class="hidden"
+  />
+</form>
 
-      <input
-        id="country"
-        type="text"
-        class="form__input"
-        placeholder=""
-        pattern="(/w)"
-        formControlName="country"
-      />
-      <label class="form__input-label" for="country">Country</label>
-    </div>
-    <div class="form__input-wrapper">
-      <input
-        id="zipcode"
-        type="text"
-        class="form__input"
-        placeholder=""
-        pattern="(/w)"
-        formControlName="zipcode"
-      />
-      <label class="form__input-label" for="zipcode">Zip Code</label>
-    </div>
-    <div class="form__input-wrapper">
-      <input
-        id="address"
-        type="text"
-        class="form__input"
-        placeholder=""
-        pattern="(/w)"
-        formControlName="address"
-      />
-      <label class="form__input-label" for="address">Address</label>
-    </div>
-    <div class="form__input-wrapper">
-      <input
-        id="state"
-        type="text"
-        class="form__input"
-        placeholder=""
-        pattern="(/w)"
-        formControlName="state"
-      />
-      <label class="form__input-label" for="state">State</label>
-    </div>
-    <div class="form__input-wrapper">
-      <input
-        id="city"
-        type="text"
-        class="form__input"
-        placeholder=""
-        pattern="(/w)"
-        formControlName="city"
-      />
-      <label class="form__input-label" for="city">City</label>
-    </div>
-    <input id="countryId" type="text" formControlName="countryId" class="hidden" />
-  </form>
-
-  <button class="form__btn" (click)="onNext()">continue</button>
+<button class="form__btn" (click)="onNext()">continue</button>
