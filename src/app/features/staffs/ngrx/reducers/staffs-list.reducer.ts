@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { fetchStaffsSuccess, deleteStaffSuccess } from '../actions';
 import { createEntityAdapter } from '@ngrx/entity';
-import { StaffModel } from '../../models/staff.model';
+import { StaffModel } from '../../../../shared/models/staff.model';
 
 const staffsAdapter = createEntityAdapter<StaffModel>();
 

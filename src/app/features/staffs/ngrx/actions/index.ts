@@ -5,7 +5,7 @@ import { SelectableSubjectModel } from 'src/app/shared/models/selectable-subject
 import { CreateStaffRequestModel } from '../../models/create-staff-request.model';
 import { CreateStaffResponseModel } from '../../models/create-staff-response.model';
 import { StaffFormModel } from '../../models/staff-form.model';
-import { StaffModel } from '../../models/staff.model';
+import { StaffModel } from '../../../../shared/models/staff.model';
 
 export const fetchStaffsRequest = createAction(
   '[StaffShellComponent] fetchStaffsRequest'

@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter } from '@ngrx/entity';
-import { StudentModel } from '../../models/student.model';
+import { StudentModel } from '../../../../shared/models/student.model';
 import { fetchedStudentsSuccess, createStudentSuccess, deleteStudentSuccess } from '../actions/class-students.actions';
-import { ProfileDTOModel } from '../../models/profile-dto.model';
+import { ProfileDTOModel } from '../../../../shared/models/profile-dto.model';
 
 const studentsAdapter = createEntityAdapter<StudentModel>({
   selectId: (student: StudentModel) => student.profileDto.id,

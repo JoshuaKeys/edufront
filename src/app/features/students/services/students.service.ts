@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ProfileDTOModel } from '../models/profile-dto.model';
+import { ProfileDTOModel } from '../../../shared/models/profile-dto.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { StudentsXClassesModel } from '../models/students-x-classes.model';
-import { StudentModel } from '../models/student.model';
+import { StudentModel } from '../../../shared/models/student.model';
 
 @Injectable()
 export class StudentsService {

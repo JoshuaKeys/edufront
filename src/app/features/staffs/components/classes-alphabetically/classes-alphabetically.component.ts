@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StaffModel } from '../../models/staff.model';
+import { StaffModel } from '../../../../shared/models/staff.model';
 import { map } from 'rxjs/operators';
 
 @Component({

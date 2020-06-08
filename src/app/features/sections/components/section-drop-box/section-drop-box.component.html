@@ -1,0 +1,55 @@
+<div
+  class="groups groups--column-layout relative flex-grow-1"
+  *ngIf="selectedClass | async; else notSelected"
+>
+  <h2 class="content__title">Create Sections</h2>
+
+  <div class="drop-zones flex-grow-1" *ngIf="sections | async as sections">
+    <div
+      *ngFor="let _section of sections.sections"
+      class="drop-zone flex-grow-1"
+      (drop)="onDrop($event, sections.classId, _section.sectionName)"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      [ngClass]="{ 'drop-zone--is-dragged': isDraggedOver }"
+    >
+      <h4 class="drop-zone__title">
+        {{ _section.sectionName }}
+      </h4>
+
+      <div
+        class="chip"
+        *ngFor="let student of _section.subjects"
+        (click)="onClick(sections.classId, _section.sectionName, student)"
+        [ngClass]="{
+          'chip--blue': student.gender.toLocaleLowerCase() === 'male',
+          'chip--pink': student.gender.toLocaleLowerCase() === 'female'
+        }"
+      >
+        {{ student.firstName }} {{ student.lastName }}
+      </div>
+    </div>
+    <div class="drop-zone drop-zone--create">
+      <div class="drop-zone__icon" (click)="addSection(sections.classId)">
+        <img src="../../../assets/iconfinder_plus_blue.svg" alt="" srcset="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="content__btn-wrapper">
+    <button class="content__btn content__btn--inactive" disabled>
+      Continue
+    </button>
+  </div> -->
+</div>
+<ng-template #notSelected>
+  <div class="groups groups--column-layout relative flex-grow-1">
+    <h2 class="content__title">Create Sections</h2>
+    <div class="placeholder">
+      <span
+        >Select a class on the <b class="orangecolor">left</b> to manage
+        section</span
+      >
+    </div>
+  </div>
+</ng-template>

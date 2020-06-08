@@ -1,0 +1,41 @@
+<!-- <aside class="aside"> -->
+<div class="search">
+  <div class="search__wrapper">
+    <img class="search__icon" src="../../../assets/search.svg" alt="" />
+    <input
+      class="search__input"
+      (input)="onTextChange($event)"
+      type="text"
+      placeholder="Search"
+    />
+  </div>
+  <button class="search__btn"><span>+</span></button>
+</div>
+
+<div class="group group--scrollable">
+  <div class="chips flex-wrap" *ngIf="fileredStudents | async as students">
+    <div
+      class="chip"
+      *ngFor="let student of students"
+      draggable="true"
+      [appDraggable]="{ data: student }"
+      [ngClass]="{
+        'chip--blue': student.gender.toLocaleLowerCase() === 'male',
+        'chip--pink': student.gender.toLocaleLowerCase() === 'female'
+      }"
+    >
+      {{ student.firstName }} {{ student.lastName }}
+    </div>
+  </div>
+</div>
+
+<div class="aside__btn-wrapper opacity">
+  <div
+    class="opacity-overlay
+       "
+  ></div>
+  <button class="aside__btn" (click)="assign()">
+    assign all
+  </button>
+</div>
+<!-- </aside> -->

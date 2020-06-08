@@ -1,0 +1,80 @@
+@import 'src/assets/scss/mixins/components';
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/modules/students';
+@include studentChips();
+$pink: #fd7fc2;
+$blue: #69a9f2;
+.chip:hover {
+  background-color: unset;
+}
+.chip.chip--pink:hover .chip__desc {
+  color: $pink;
+}
+.chip.chip--blue:hover .chip__desc {
+  color: $blue;
+}
+$sidebarOpacityHeight: 70px;
+:host {
+  .group.group--scrollable {
+    flex-grow: 1;
+    padding-bottom: $sidebarOpacityHeight;
+    margin: 0;
+  }
+  .aside__btn {
+    @include button_default(white, $blue);
+
+    border: 1px solid $blue;
+
+    width: 100%;
+  }
+}
+@include opacityFooter($sidebarOpacityHeight);
+// .aside {
+//   .group.group--scrollable {
+//     flex-grow: 1;
+//     padding-bottom: $sidebarOpacityHeight;
+//     margin: 0;
+//   }
+//   &__btn {
+//     @include button_default(white, $blue);
+
+//     border: 1px solid $blue;
+
+//     width: 100%;
+//   }
+// }
+.placeholder--center {
+  font: 400 16px/24px Raleway;
+  color: $ash;
+  text-align: center;
+  @include absoluteCenter();
+  width: 100%;
+  max-width: 206px;
+  height: auto;
+}
+.chips {
+  //this is just for the scroll bar
+  justify-content: flex-start;
+  ::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 30px;
+  }
+  ::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 30px;
+  }
+}
+
+@import 'src/assets/scss/mixins/components';
+@import 'src/assets/scss/colors';
+//------ search styling ------
+
+@include search();
+.search {
+  width: 100%;
+  flex-direction: column;
+  &__btn {
+    order: -1;
+    margin-bottom: 30px;
+  }
+}

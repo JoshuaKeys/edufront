@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
-import { StudentModel } from '../../models/student.model';
+import { StudentModel } from '../../../../shared/models/student.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { ProfileDTOModel } from '../../models/profile-dto.model';
+import { ProfileDTOModel } from '../../../../shared/models/profile-dto.model';
 
 export const initClassesAndStudentsRequest = createAction(
   '[StudentsShellComponent] initClassesAndStudentsRequest'

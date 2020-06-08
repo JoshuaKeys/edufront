@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EntityState } from '@ngrx/entity';
-import { StaffModel } from '../../models/staff.model';
+import { StaffModel } from '../../../../shared/models/staff.model';
 import {
   selectAllStaffs,
   selectStaffsModalsState,

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject, Observable } from 'rxjs';
-import { StaffModel } from '../models/staff.model';
+import { StaffModel } from '../../../shared/models/staff.model';
 
 @Injectable()
 export class StaffsCommunicatorService {

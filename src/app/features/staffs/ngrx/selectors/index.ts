@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { EntityState } from '@ngrx/entity';
-import { StaffModel } from '../../models/staff.model'
+import { StaffModel } from '../../../../shared/models/staff.model'
 import * as fromStaffsList from '../reducers/staffs-list.reducer';
 import * as fromClasses from '../reducers/classes.reducer';
 import * as fromSubjects from '../reducers/subjects.reducer';

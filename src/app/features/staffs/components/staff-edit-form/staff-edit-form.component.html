@@ -1,1 +1,123 @@
 <p>staff-edit-form works!</p>
+<main>
+  <div class="modal__overlay">
+    <div class="modal">
+      <h2 class="modal__title">
+        Add/Edit Staff
+      </h2>
+      <form
+        id="addEditForm"
+        [formGroup]="addEditForm"
+        (ngSubmit)="createStaff()"
+        class="modal__content"
+      >
+        <div class="modal__content-profile">
+          <h3 class="modal__content-header">Profile Picture</h3>
+          <edu-img-upload-v2
+            formControlName="profilePic"
+            (uploadimagedata)="handleImgUpload($event)"
+          ></edu-img-upload-v2>
+        </div>
+        <div class="modal__content-staff-details">
+          <h3 class="modal__content-header">Staff Details</h3>
+          <div class="modal__content-first-row">
+            <edu-input-field
+              idPrefix="firstName"
+              formControlName="firstName"
+              text="First Name"
+            ></edu-input-field>
+
+            <edu-input-field
+              idPrefix="middleName"
+              formControlName="middleName"
+              text="Middle Name"
+            ></edu-input-field>
+
+            <edu-input-field
+              idPrefix="familyName"
+              formControlName="familyName"
+              text="Family Name"
+            ></edu-input-field>
+
+            <edu-input-field
+              idPrefix="dateOfBirth"
+              formControlName="dob"
+              text="Date of Birth"
+            ></edu-input-field>
+
+            <edu-select formControlName="sex">
+              <span class="edu-label"> Sex </span>
+              <edu-option OptionValue="Male"> Male </edu-option>
+              <edu-option OptionValue="Female"> Female </edu-option>
+            </edu-select>
+            <edu-input-field
+              idPrefix="id"
+              formControlName="id"
+              text="ID - Auto Generated"
+            ></edu-input-field>
+          </div>
+          <div class="modal__content-second-row">
+            <edu-phone-field
+              formControlName="phone"
+              [icons]="countryIconMap"
+              fieldName="Phone"
+              (valueChanged)="updatePhone($event)"
+            ></edu-phone-field>
+            <edu-input-field
+              idPrefix="email"
+              formControlName="email"
+              text="Email(Optional)"
+            ></edu-input-field>
+            <edu-country-field
+              formControlName="country"
+              [fieldName]="'Country'"
+              [icons]="countryIconMap"
+              (valueChanged)="updateCountry($event)"
+              mode="select"
+            ></edu-country-field>
+            <edu-input-field
+              idPrefix="address"
+              formControlName="address"
+              text="Address"
+            ></edu-input-field>
+          </div>
+          <div class="modal__content-third-row">
+            <edu-input-field
+              idPrefix="city"
+              formControlName="city"
+              text="City"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="state"
+              formControlName="state"
+              text="State"
+            ></edu-input-field>
+            <edu-input-field
+              idPrefix="zip"
+              formControlName="zip"
+              text="Zip Code"
+            ></edu-input-field>
+          </div>
+        </div>
+        <div class="modal__content-subject-area">
+          <h3 class="modal__content-header">Subject Area</h3>
+          <edu-subjects-area
+            [classes]="classes"
+            [subjects]="subjects"
+            (selectSubject)="onSelectSubject($event)"
+            (unSelectSubject)="onUnSelectSubject($event)"
+            (classClicked)="onClassClicked($event)"
+            [classesAndSubject]="classesAndSubjects"
+          ></edu-subjects-area>
+        </div>
+      </form>
+      <button
+        form="addEditForm"
+        class="form__round-btn form__round-btn--active"
+        type="submit"
+      >
+        <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</main>

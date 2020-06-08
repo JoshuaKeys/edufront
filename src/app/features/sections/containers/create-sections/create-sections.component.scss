@@ -1,9 +1,9 @@
-@import './../../../../../assets/scss/typography';
-@import './../../../../../assets/scss/colors';
-@import './../../../../../assets/scss/mixins/components';
-@import './../../../../../assets/scss/mixins/alignment';
-@import './../../../../../assets/scss/utils';
-@import './../../../../../assets/scss/main';
+@import 'src/assets/scss/typography';
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/mixins/components';
+@import 'src/assets/scss/mixins/alignment';
+@import 'src/assets/scss/utils';
+@import 'src/assets/scss/main';
 
 body {
   display: relative;
@@ -279,3 +279,13 @@ body {
   flex-direction: column;
   display: flex;
 }
+
+.content__btn {
+  width: 200px;
+  margin: 10px 10px 40px 105px;
+}
+
+@import 'src/assets/scss/modules/students';
+@include studentChips();
+
+// ---------------- FOR DROP ZONE STYLING PAGE 60 62  63 START ----------------

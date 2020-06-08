@@ -12,7 +12,7 @@ import { StudentsSortingModel } from '../../models/students-sorting.model';
 import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '../../ngrx/actions/students-sorting.actions';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { map } from 'rxjs/operators';
-import { StudentModel } from '../../models/student.model';
+import { StudentModel } from '../../../../shared/models/student.model';
 import { createStudentRequest, deleteStudentRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 @Component({

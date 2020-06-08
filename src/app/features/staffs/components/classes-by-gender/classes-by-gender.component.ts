@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StaffModel } from 'src/app/features/staffs/models/staff.model';
+import { StaffModel } from 'src/app/shared/models/staff.model';
 
 @Component({
   selector: 'edu-classes-by-gender',

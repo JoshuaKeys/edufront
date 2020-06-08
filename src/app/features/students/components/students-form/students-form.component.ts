@@ -5,7 +5,7 @@ import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
 import { Observable } from 'rxjs';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { StudentsStateModel } from '../../models/students-state.model';
-import { StudentModel } from '../../models/student.model';
+import { StudentModel } from '../../../../shared/models/student.model';
 
 @Component({
   selector: 'edu-students-form',

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { StaffModel } from '../../models/staff.model';
+import { StaffModel } from '../../../../shared/models/staff.model';
 import { StaffsCommunicatorService } from '../../services/staffs-communication.service';
 
 @Component({
