@@ -1,4 +1,5 @@
 @import '../../../../../assets/styles/modules/section-module';
+@import '../../scss_fixes.scss';
 
 @include splitLayout2();
 .search__input {
@@ -27,7 +28,9 @@
 }
 
 aside {
-  width: 400px;
+  max-width: 400px;
+  min-width: 300px;
+  width: 25vw;
 }
 .chips {
   @include displayFlex(flex-start);
@@ -46,8 +49,9 @@ aside {
   margin-bottom: 40px;
 }
 .drop-zone__wrapper {
+  width: 100%;
+  // min-width: 700px;
   max-width: 906px;
-  width: 100vw;
   min-height: 416px;
   justify-content: flex-start;
   align-items: stretch;

@@ -2,6 +2,17 @@
 
 @include splitLayout2();
 
+edu-popover {
+  width: 272px !important;
+  padding: 0 !important;
+  .icon {
+    width: 32px;
+    height: 32px;
+    margin: 5px;
+    @include displayFlex();
+  }
+}
+
 .popup__search-input {
   border-width: 2px;
   font: 400 14px/22px Raleway;

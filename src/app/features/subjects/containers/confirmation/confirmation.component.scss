@@ -1,6 +1,20 @@
 @import '../../../../../assets/styles/modules/section-module';
-
+@import '../../scss_fixes.scss';
 @include splitLayout2();
+
+main .content.content--final {
+  width: 100vw;
+  max-width: unset;
+  overflow-y: auto;
+  justify-content: start;
+  .content-wrapper {
+    width: 100%;
+  }
+}
+
+.content {
+  width: 100%;
+}
 
 edu-modal-v2.complete ::ng-deep {
   .modal__desc {
@@ -21,7 +35,9 @@ edu-modal-v2.complete ::ng-deep {
 }
 
 aside {
-  width: 400px;
+  max-width: 400px;
+  min-width: 300px;
+  width: 25vw;
 }
 .chips {
   @include displayFlex(flex-start);
@@ -79,10 +95,6 @@ aside {
   margin-left: 5px;
   top: 50%;
   color: #c7ccdb;
-}
-.content--final {
-  overflow-y: auto;
-  justify-content: start;
 }
 
 .flex-wrap {

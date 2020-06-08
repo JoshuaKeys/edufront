@@ -7,30 +7,33 @@
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
-      <h2 class="content__title">
-        Assign subjects to your class
-      </h2>
-      <p class="content__desc">
-        Now please assign subjects to classes by selecting one or multiple
-        classes on the left and selecting/dropping the subjects from the right
-      </p>
-      <div class="drop-zone__wrapper">
-        <div class="drop-zone__options">
-          <edu-options
-            (clicked)="updateSelectedState($event)"
-            [classes]="classes"
-          ></edu-options>
+      <div class="content-wrapper">
+        <h2 class="content__title">
+          Assign subjects to your class
+        </h2>
+        <p class="content__desc">
+          Now please assign subjects to classes by selecting one or multiple
+          classes on the left and selecting/dropping the subjects from the right
+        </p>
+        <div class="drop-zone__wrapper">
+          <div class="drop-zone__options">
+            <edu-options
+              (clicked)="updateSelectedState($event)"
+              [classes]="classes"
+            ></edu-options>
+          </div>
+          <edu-subjects-box
+            appDroppable
+            [subjects]="subjectsInterception"
+            (onDropped)="onDrop($event)"
+          ></edu-subjects-box>
         </div>
-        <edu-subjects-box
-          appDroppable
-          [subjects]="subjectsInterception"
-          (onDropped)="onDrop($event)"
-        ></edu-subjects-box>
       </div>
     </div>
     <div class="content__btn-wrapper">
       <button
-        class="content__btn"
+        ButtonType="basic"
+        class="  form__button"
         [routerLink]="['../', activatedRouteData.next]"
       >
         Continue

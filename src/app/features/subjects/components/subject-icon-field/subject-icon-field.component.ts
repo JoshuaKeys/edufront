@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, forwardRef, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  forwardRef,
+  Renderer2,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -7,20 +15,24 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   styleUrls: ['./subject-icon-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => SubjectIconFieldComponent) }
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => SubjectIconFieldComponent)
+    }
   ]
 })
 export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
-
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {}
   value: string;
   @ViewChild('subjectName') subjectName: ElementRef<HTMLInputElement>;
   onValueChange: (text: string) => any;
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+
+  popoverToogle = false;
   writeValue(val: any) {
     if (val === null) {
-      this.renderer.setProperty(this.subjectName.nativeElement, 'value', '')
+      this.renderer.setProperty(this.subjectName.nativeElement, 'value', '');
       return;
     }
     this.value = val;
@@ -28,10 +40,13 @@ export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: any) {
     this.onValueChange = fn;
   }
-  registerOnTouched(fn: any) { }
-
+  registerOnTouched(fn: any) {}
 
   onTextChange(event) {
     this.onValueChange(event.target.value);
+  }
+
+  closePopover() {
+    this.popoverToogle = !this.popoverToogle;
   }
 }

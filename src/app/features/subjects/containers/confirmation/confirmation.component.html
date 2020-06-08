@@ -8,26 +8,35 @@
     </button>
 
     <div class="content content--final">
-      <h2 class="content__title">
-        Are these correct?
-      </h2>
-      <div class="cards flex-wrap content__body--final">
-        <edu-subject-summary-box
-          *ngFor="let class of classes | async"
-          [class]="class"
-        ></edu-subject-summary-box>
+      <div class="content-wrapper">
+        <h2 class="content__title">
+          Are these correct?
+        </h2>
+        <div class="cards flex-wrap content__body--final">
+          <edu-subject-summary-box
+            *ngFor="let class of classes | async"
+            [class]="class"
+          ></edu-subject-summary-box>
+        </div>
       </div>
     </div>
 
     <div class="content__btns opacity">
       <div class="opacity-overlay"></div>
       <button
-        class="content__btn content__btn--white"
+        ButtonType="outline"
+        class="content__button content__button--white"
         [routerLink]="['../', activatedRouteData.previous]"
       >
         Back
       </button>
-      <button class="content__btn" (click)="saveSubjects()">Continue</button>
+      <button
+        ButtonType="basic"
+        class="content__button"
+        (click)="saveSubjects()"
+      >
+        Continue
+      </button>
     </div>
   </section>
 </main>
