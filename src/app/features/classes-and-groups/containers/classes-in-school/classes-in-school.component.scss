@@ -5,6 +5,7 @@ section {
   @include displayFlex(unset, unset, column);
 }
 .form {
+  margin: auto;
   position: relative;
   top: unset;
   left: unset;

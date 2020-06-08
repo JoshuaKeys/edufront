@@ -1,7 +1,12 @@
 @import '../../../../../assets/styles/modules/section-module';
 
 @include splitLayout2();
-
+.isActive {
+  z-index: 100 !important;
+}
+.isStatic {
+  position: static;
+}
 edu-popover {
   width: 272px !important;
   padding: 0 !important;
@@ -50,8 +55,10 @@ aside {
 .form__input-wrapper--main .form__icon-select-wrapper {
   z-index: 2;
   position: absolute;
-  left: 0;
-  transform: translateX(-150%);
+  // left: 0;
+  // top: 0;
+  // transform: translateX(-100%);
+  transform: translate(-100%, -50%);
   display: flex;
 }
 
@@ -94,29 +101,13 @@ aside {
   opacity: 1;
 }
 
-.form__input-wrapper--main
-  .form__icon-select-wrapper
-  input[type='checkbox']:checked
-  ~ img {
-  // border: 1px solid #69a9f2;
-}
-
-.form__input-wrapper--main input:invalid ~ label,
-.form__input-wrapper--main input:focus ~ label {
-  top: -5px;
-}
-
-.form__input-wrapper--main label,
-.form__input-wrapper--main input {
-  font: 400 20px/30px Raleway;
-}
-
 .form__input {
   min-width: 377px;
   width: 100%;
 }
 // Popup
 .popup {
+  background: white;
   min-width: 272px;
   bottom: -10px;
   transform: translate(-50%, 100%);

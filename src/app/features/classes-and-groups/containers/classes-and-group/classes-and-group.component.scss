@@ -21,6 +21,7 @@ edu-select {
   transform: unset;
   height: 100%;
   @include displayFlex(center, center, column);
+  margin: auto;
   width: calc(100vw - 312px);
   max-width: 1080px;
 

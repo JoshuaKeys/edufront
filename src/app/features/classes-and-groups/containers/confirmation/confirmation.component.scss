@@ -16,7 +16,7 @@ section.section {
   flex-grow: 1;
   @include displayFlex(flex-start, center, column);
   width: calc(100vw);
-  max-width: 1080px;
+  // max-width: 1080px;
   margin: auto;
   top: unset;
   left: unset;
@@ -635,8 +635,8 @@ main {
 
 .drop-zones {
   @include displayFlex();
-  max-width: 1000px;
-  width: 95%;
+  // max-width: 1000px;
+  // width: 95%;
 }
 @include dropZone();
 .drop-zone {

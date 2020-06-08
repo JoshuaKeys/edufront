@@ -14,7 +14,7 @@ section {
   flex-grow: 1;
   @include displayFlex(flex-start, center, column);
   width: calc(100vw - 312px);
-  max-width: 1080px;
+  // max-width: 1080px;
 }
 .form__content-wrapper {
   flex-grow: 1;
@@ -481,7 +481,7 @@ aside {
   flex-direction: row;
   display: flex;
   flex-wrap: wrap;
-  max-width: 1000px;
+  // max-width: 1000px;
   width: 100%;
 }
 

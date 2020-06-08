@@ -172,6 +172,12 @@ aside {
   padding-left: 42px;
   border-bottom: 1px solid #e6e9f3;
 }
+
+.search__btn {
+  &:focus {
+    outline: none;
+  }
+}
 .content__btn {
   background: unset;
   border: none;

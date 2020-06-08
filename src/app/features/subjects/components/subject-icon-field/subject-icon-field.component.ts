@@ -28,7 +28,8 @@ export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
   @ViewChild('subjectName') subjectName: ElementRef<HTMLInputElement>;
   onValueChange: (text: string) => any;
   ngOnInit(): void {}
-
+  isChecked = false;
+  isFocused = false;
   popoverToogle = false;
   writeValue(val: any) {
     if (val === null) {
@@ -36,6 +37,13 @@ export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this.value = val;
+  }
+  focusSearch() {
+    this.isChecked = true;
+    // this.isFocused = true;
+  }
+  blurSearch() {
+    // this.isChecked = true;
   }
   registerOnChange(fn: any) {
     this.onValueChange = fn;
@@ -48,5 +56,6 @@ export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
 
   closePopover() {
     this.popoverToogle = !this.popoverToogle;
+    this.isChecked = false;
   }
 }

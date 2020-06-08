@@ -19,6 +19,7 @@ section {
   @include displayFlex(center, center, column);
   width: calc(100vw - 312px);
   max-width: 1080px;
+  margin: auto;
   &__title {
     margin-bottom: 20px;
   }

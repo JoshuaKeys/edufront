@@ -10,7 +10,8 @@ import {
   ElementRef,
   ContentChildren,
   QueryList,
-  ViewChildren
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { PopoverOptionDirective } from './popover-option.directive';
 @Component({
@@ -54,6 +55,7 @@ export class PopoverComponent implements OnInit, AfterContentInit {
       });
     });
   }
+  @Output('close') onClose = new EventEmitter();
   @ContentChildren(PopoverOptionDirective) popoverOptionDir: QueryList<
     PopoverOptionDirective
   >;
@@ -66,6 +68,7 @@ export class PopoverComponent implements OnInit, AfterContentInit {
     //close element when click is from outside
     if (!this.el.nativeElement.parentElement.contains($event.srcElement)) {
       this.renderer.removeClass(this.el.nativeElement, 'active');
+      this.onClose.emit();
     }
   }
   @HostListener('click', ['$event']) onClick($event) {
@@ -79,6 +82,7 @@ export class PopoverComponent implements OnInit, AfterContentInit {
     let hasActiveClass = this.el.nativeElement.classList.contains('active');
     if (hasActiveClass) {
       this.renderer.removeClass(this.el.nativeElement, 'active');
+      this.onClose.emit();
     } else {
       this.renderer.addClass(this.el.nativeElement, 'active');
     }

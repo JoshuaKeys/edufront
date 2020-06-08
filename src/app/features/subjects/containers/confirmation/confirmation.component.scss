@@ -2,8 +2,14 @@
 @import '../../scss_fixes.scss';
 @include splitLayout2();
 
+.cards.flex-wrap.content__body--final {
+  align-items: flex-start;
+}
+
 main .content.content--final {
-  width: 100vw;
+  // width: 100vw;
+  // align-items: flex-start;
+  width: 100%;
   max-width: unset;
   overflow-y: auto;
   justify-content: start;
