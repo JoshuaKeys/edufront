@@ -5,7 +5,7 @@
     </p>
   </ng-template>
 
-  <ng-container *ngIf="(subjects | async).length">
+  <ng-container *ngIf="(subjects | async).length; else noClassSelected">
     <edu-icon-button
       *ngFor="let subject of subjects | async"
       [subject]="subject"

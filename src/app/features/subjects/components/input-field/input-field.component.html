@@ -12,7 +12,7 @@
     placeholder=""
     [value]="inputValue"
     #subSubjectValue
-    (change)="onTextChange($event)"
+    (input)="onTextChange($event)"
     pattern="(/w)"
   />
   <label
@@ -28,7 +28,7 @@
   </ng-template>
   <span
     (click)="remove(type, index)"
-    *ngIf="index && !last"
+    *ngIf="!last"
     class="form__input-icon form__input-icon--right"
     >-</span
   >

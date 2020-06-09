@@ -45,6 +45,9 @@ export class ArrayInputFieldComponent implements OnInit, ControlValueAccessor {
     this.onValueChange(event.target.value);
   }
   add(type: string, pos: number) {
+    if (!this.subSubjectsValue.nativeElement.value) {
+      return;
+    }
     this.insertItem.emit({ type, pos })
   }
   remove(type: string, pos: number) {

@@ -35,6 +35,7 @@
         ButtonType="basic"
         class="  form__button"
         [routerLink]="['../', activatedRouteData.next]"
+        [disabled]="!(subjectsInterception | async).length"
       >
         Continue
       </button>
