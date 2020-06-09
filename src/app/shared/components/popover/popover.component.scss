@@ -7,6 +7,10 @@ $y-padding: 6px;
 $spaceFromParentElement: -8px; //was -4
 
 :host {
+  transition: none;
+  & * {
+    transition: none;
+  }
   padding: $y-padding $x-padding;
   display: block;
   position: relative;

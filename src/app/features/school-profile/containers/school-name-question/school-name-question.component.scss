@@ -5,6 +5,8 @@
 @import './../../../../../assets/scss/utils';
 @import './../../../../../assets/scss/main';
 
+@import '../../scss-fixes.scss';
+
 body {
   display: relative;
   background-color: white;

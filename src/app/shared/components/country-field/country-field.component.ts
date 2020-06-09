@@ -34,6 +34,7 @@ export class CountryFieldComponent implements OnInit {
   filteredIcons: IconModel[];
   filter: string;
   isOpen = false;
+  popOverIsOpened = false;
   constructor(private renderer: Renderer2) {}
   value: string;
   activeIcon: string;
@@ -70,6 +71,7 @@ export class CountryFieldComponent implements OnInit {
   changeItem(icon: { item: string; icon: string; id: string }) {
     this.onValueChange(icon);
     this.valueChanged.emit(icon);
+    this.popOverIsOpened = !this.popOverIsOpened;
     this.toggleDropdown();
   }
   registerOnChange(fn: any) {

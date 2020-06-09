@@ -15,7 +15,7 @@ body {
 @include splitLayout3();
 @include modalIntro();
 @include modalComplete();
-
+edu-country-field ::ng-deep,
 edu-icon-field ::ng-deep,
 edu-input ::ng-deep {
   width: 377px;
