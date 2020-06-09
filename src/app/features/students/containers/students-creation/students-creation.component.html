@@ -50,12 +50,12 @@
               [ngClass]="{
                 active: (sortingState | async).alphabetical
               }"
+              (click)="onSortByAlphabet()"
             >
               <img
                 src="../../../assets/subject-search-icon-1.svg"
                 alt=""
                 class="icon-img"
-                (click)="onSortByAlphabet()"
               />
               <div class="tooltip tooltip--top">
                 Sort Alphabetical
@@ -66,12 +66,12 @@
               [ngClass]="{
                 active: (sortingState | async).byClasses
               }"
+              (click)="onSortByClasses()"
             >
               <img
                 src="../../../assets/subject-search-icon-2.svg"
                 alt=""
                 class="icon-img"
-                (click)="onSortByClasses()"
               />
               <div class="tooltip tooltip--top">
                 Sort by Classes
@@ -82,12 +82,12 @@
               [ngClass]="{
                 active: (sortingState | async).byGender
               }"
+              (click)="onSortByGender()"
             >
               <img
                 src="../../../assets/subject-search-icon-3.svg"
                 alt=""
                 class="icon-img"
-                (click)="onSortByGender()"
               />
               <div class="tooltip tooltip--top">
                 Sort by Sex
