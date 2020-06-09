@@ -19,15 +19,15 @@ export class ContactDetailsQuestionComponent implements OnInit {
   contactForm: FormGroup;
   countryIconMap = [
     {
-      item: 'United States +1',
-      icon: 'assets/images/flags/flg-us.svg',
-      phonePrefix: '+1',
-      phoneNum: ''
-    },
-    {
       item: 'India +91',
       icon: 'assets/images/flags/flg-in.svg',
       phonePrefix: '+91',
+      phoneNum: ''
+    },
+    {
+      item: 'United States +1',
+      icon: 'assets/images/flags/flg-us.svg',
+      phonePrefix: '+1',
       phoneNum: ''
     },
     {
