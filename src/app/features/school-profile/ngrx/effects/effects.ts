@@ -41,7 +41,7 @@ export class SchoolProfileEffects {
       email: schoolProfile.contact.email,
       phoneNo: schoolProfile.contact.phone.phoneNum,
       website: schoolProfile.contact.website,
-      logo: schoolProfile.schoolLogo
+      logo: schoolProfile.schoolLogo ? schoolProfile.schoolLogo : undefined
     }
   }
   constructor(

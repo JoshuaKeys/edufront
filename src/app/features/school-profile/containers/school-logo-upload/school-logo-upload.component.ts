@@ -17,7 +17,9 @@ import { withLatestFrom, first, tap } from 'rxjs/operators';
 export class SchoolLogoUploadComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   uploadForm: FormGroup;
-
+  onCropImage($event) {
+    console.log($event);
+  }
   ngOnInit(): void {
     this.store.select(selectSchoolLogo).pipe(
       withLatestFrom(this.store.select(selectLogoPreview)),
