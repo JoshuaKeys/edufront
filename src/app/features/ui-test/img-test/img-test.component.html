@@ -16,7 +16,11 @@
 <form [formGroup]="testForm" (ngSubmit)="formSubmit()">
   <div class="group--row just-center">
     <!-- <edu-img-upload class="f1" formControl="f1" [showInputControls]="false"> -->
-    <edu-img-upload formControlName="f1" (confirm)="onConfirm($event)">
+    <edu-img-upload
+      formControlName="f1"
+      (confirm)="onConfirm($event)"
+      showInputControls="true"
+    >
       <div class="edu-img-upload__dropzone ">
         <img src="assets/user-settings/modal_plus-18.svg" alt="" />
       </div>

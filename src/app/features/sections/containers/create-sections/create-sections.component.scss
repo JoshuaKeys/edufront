@@ -18,6 +18,10 @@ body {
 
 edu-classes {
   flex-shrink: 0;
+  & ::ng-deep .form__badges.round-badges {
+    padding-top: 60px;
+    margin-bottom: unset;
+  }
 }
 
 .form {

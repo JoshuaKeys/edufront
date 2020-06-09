@@ -55,6 +55,7 @@
 }
 
 :host.basic:disabled {
+  border: none !important;
   background: #e6e9f3;
   color: white;
 }

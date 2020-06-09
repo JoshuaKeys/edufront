@@ -17,17 +17,29 @@
   display: flex;
   flex-wrap: wrap;
   overflow: scroll;
-  max-height: calc(100vh - 270px);
+  max-height: calc(100vh - 295px);
   .drop-zone {
     min-width: 250px;
     margin: 5px;
     min-height: 150px;
-    // flex-wrap: wrap;
-    // flex-direction: row;
+    position: relative;
+    padding-top: 81px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+  .drop-zone__title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 .drop-zone--create {
-  max-height: calc(100vh - 295px);
+  margin: 5px 0;
+  max-height: calc(100vh - 310px);
 }
 
 .groups--split-layout,

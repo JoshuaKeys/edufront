@@ -51,6 +51,7 @@
     <button
       class="form__button"
       ButtonType="basic"
+      [disabled]="hasUngroupedClass | async"
       [routerLink]="['../', activatedRouteData.next]"
     >
       Continue
