@@ -11,10 +11,13 @@
         Upload your school logo
       </h2>
       <form [formGroup]="uploadForm">
-        <edu-image-upload
+        <!-- <edu-image-upload
           (uploadimagedata)="onImageUpload($event)"
           formControlName="image"
-        ></edu-image-upload>
+        ></edu-image-upload> -->
+        <edu-image-upload-v3
+          (onImageCropped)="onCropImage($event)"
+        ></edu-image-upload-v3>
       </form>
       <div class="content__btn-wrapper">
         <button
