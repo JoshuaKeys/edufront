@@ -28,7 +28,9 @@ export class NameGroupsComponent implements OnInit {
 
     this.store.dispatch(requestGroupsClassMap())
 
-    this.selectedClasses = this.store.select(selectSelectedClasses);
+    this.selectedClasses = this.store.select(selectSelectedClasses).pipe(
+      map(selectedClasses => selectedClasses.sort((a, b) => a.grade - b.grade))
+    );
     this.numOfGroups = this.store.select(selectNumOfGroups);
     this.groupClassMap = this.store.select(selectGroupsClassMap);
     this.numOfGroups.subscribe((numOfGroups) => {
@@ -50,26 +52,26 @@ export class NameGroupsComponent implements OnInit {
     if (valToNum !== 0 && !valToNum) {
       this.store.dispatch(setInputError({ error: 'Invalid Input entered', value: val }));
       return;
-    } console.log('holla')
-    this.store.dispatch(setGroupOfClassesQty({ qty: valToNum }))
+    }
+    this.store.dispatch(setGroupOfClassesQty({ qty: valToNum }));
     this.goForward();
   }
   goForward() {
     this.router.navigateByUrl(this.activatedRouteData.next);
   }
   deselectClass(deselectData: { class: ClassModel, groupName: string }) {
-    this.store.dispatch(removeDroppedState({ className: deselectData.class.name }))
-    this.store.dispatch(removeClassFromGroup({ className: deselectData.class.name, groupName: deselectData.groupName }))
+    this.store.dispatch(removeDroppedState({ className: deselectData.class.name }));
+    this.store.dispatch(removeClassFromGroup({ className: deselectData.class.name, groupName: deselectData.groupName }));
   }
   handleDropped(dropData: { class: ClassModel, groupName: string }) {
     if (!dropData.class.dragged) {
-      this.store.dispatch(setDroppedState({ className: dropData.class.name }))
-      this.store.dispatch(addClassToGroup({ className: dropData.class.name, groupName: dropData.groupName }))
+      this.store.dispatch(setDroppedState({ className: dropData.class.name }));
+      this.store.dispatch(addClassToGroup({ className: dropData.class.name, groupName: dropData.groupName }));
     }
 
   }
   onGroupNameChange(nameChange: { oldName: string, newName: string }) {
-    this.store.dispatch(changeGroupName({ newName: nameChange.newName, oldName: nameChange.oldName }))
+    this.store.dispatch(changeGroupName({ newName: nameChange.newName, oldName: nameChange.oldName }));
   }
   constructor(
     public store: Store<ClassesAndGroupsModel>,
