@@ -4,10 +4,9 @@ import { StudentsModalModel } from '../../models/students-modal.model';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../../models/students-state.model';
 import { selectModalState, selectSortingState, selectStudentsAndClasses } from '../../ngrx/selectors'
-import { toggleStartModal, toggleAddModal } from '../../ngrx/actions/students-modal.actions';
+import { toggleStartModal, toggleAddModal, toggleEndModal } from '../../ngrx/actions/students-modal.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentsService } from '../../services/students.service';
-import { toggleEndModal } from 'src/app/features/subjects/ngrx/actions';
 import { StudentsSortingModel } from '../../models/students-sorting.model';
 import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '../../ngrx/actions/students-sorting.actions';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
@@ -15,6 +14,7 @@ import { map } from 'rxjs/operators';
 import { StudentModel } from '../../../../shared/models/student.model';
 import { createStudentRequest, deleteStudentRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
+import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 @Component({
   selector: 'edu-students-creation',
   templateUrl: './students-creation.component.html',
@@ -37,6 +37,9 @@ export class StudentsCreationComponent implements OnInit {
   }
   goToDashboard() {
     this.router.navigateByUrl('/dashboard')
+  }
+  goToStaffs() {
+
   }
   onStart() {
     this.store.dispatch(toggleStartModal())
@@ -79,11 +82,11 @@ export class StudentsCreationComponent implements OnInit {
   }
 
   onRemoveStudent(student: StudentModel) {
-    console.log(student);
     this.store.dispatch(deleteStudentRequest({ student }))
   }
   onFinish() {
     this.store.dispatch(toggleEndModal())
+    this.store.dispatch(incrementProgress())
   }
 
   constructor(private store: Store<StudentsStateModel>,

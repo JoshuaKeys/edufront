@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
@@ -23,10 +23,10 @@ export class SchoolProfileConfirmationComponent implements OnInit {
     this.modalState = this.store.select(selectProfileModal)
   }
   goToDashboard() {
-
+    this.router.navigateByUrl('/dashboard')
   }
   goToClassCreation() {
-
+    this.router.navigateByUrl('/classes-and-groups/classes-in-school')
   }
   getModalBody() {
     return `Well done on completeing the first step, you can either go back
@@ -35,6 +35,7 @@ export class SchoolProfileConfirmationComponent implements OnInit {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private store: Store<PreviewModel>
   ) { }
   submit() {

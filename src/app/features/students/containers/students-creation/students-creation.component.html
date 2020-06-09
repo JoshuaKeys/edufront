@@ -1,9 +1,6 @@
 <main>
   <section class="section">
-    <button
-      class="section__back-btn"
-      (click)="goToDashboard()"
-    >
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
@@ -155,6 +152,22 @@
   spreadsheets you can use. Otherwise, add them one at a time. Hang in there,
   <b class="orangeColor">you can do it!</b></edu-modal-v2
 >
+<edu-modal-v2
+  *ngIf="(studentsModalState | async).endModal"
+  btnText="GOT IT"
+  header="Students Set Up Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO
+  DASHBOARD"
+  rightBtn="TAKE ME TO STAFFS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToStaffs()"
+>
+  You are done with profile uploads, we promise! Now we can start putting things
+  together. Whenever you are ready, go to the next step where we will organ your
+  sections
+</edu-modal-v2>
 <edu-students-form
   *ngIf="(studentsModalState | async).editModal"
   [studentsXClasses]="studentsXClasses"

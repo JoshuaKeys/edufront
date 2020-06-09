@@ -11,13 +11,21 @@
         What is your school address?
       </h2>
       <form class="content__form" [formGroup]="schoolAddressForm">
-        <edu-icon-field
+        <!-- <edu-icon-field
           formControlName="country"
           [fieldName]="'Country'"
           [icons]="countryIconMap"
           (valueChanged)="updateCountry($event)"
           mode="select"
-        ></edu-icon-field>
+        ></edu-icon-field> -->
+        <edu-country-field
+          formControlName="country"
+          [fieldName]="'Country'"
+          [icons]="countryIconMap"
+          (valueChanged)="updateCountry($event)"
+          [mode]="'select'"
+        >
+        </edu-country-field>
         <edu-input-field
           idPrefix="zipCode"
           text="Zip Code"

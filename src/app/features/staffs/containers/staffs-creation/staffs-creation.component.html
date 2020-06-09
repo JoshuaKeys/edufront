@@ -1,9 +1,6 @@
 <main>
   <section class="section">
-    <button
-      class="section__back-btn"
-      (click)="goToDashboard()"
-    >
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
@@ -95,8 +92,18 @@
     </div>
   </section>
 </main>
-<edu-staff-form
+<edu-staff-edit-form
   *ngIf="(staffsModalsState | async).editModal"
+  [subjects]="subjects"
+  [classes]="classes"
+  (selectSubject)="onSelectSubject($event)"
+  (unSelectSubject)="onUnselectSubject($event)"
+  (classClicked)="onClassClicked($event)"
+  [classesAndSubjects]="subjectClassesAssociation"
+>
+</edu-staff-edit-form>
+<edu-staff-form
+  *ngIf="(staffsModalsState | async).addModal"
   [subjects]="subjects"
   [classes]="classes"
   (selectSubject)="onSelectSubject($event)"

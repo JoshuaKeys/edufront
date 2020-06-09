@@ -14,8 +14,11 @@ export const fetchStaffsSuccess = createAction(
   '[StaffEffects] fetchStaffsSuccess',
   props<{ staffs: GetStaffResponseModel[] }>()
 )
-export const toggleAddEditModal = createAction(
-  '[StaffsCreationComponent] toggleAddEditModal'
+export const toggleAddModal = createAction(
+  '[StaffsCreationComponent] toggleAddModal'
+)
+export const toggleEditModal = createAction(
+  '[StaffsCreationComponent] toggleEditModal'
 )
 export const fetchSubjectsRequest = createAction(
   '[StaffFormComponent] fetchSubjectsRequest'

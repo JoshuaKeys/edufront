@@ -51,7 +51,7 @@ export class StaffEditFormComponent implements OnInit {
   addEditForm: FormGroup;
   constructor() { }
   createStaff() {
-    this.onCreateStaff.emit(this.addEditForm.value)
+    this.onCreateStaff.emit(this.addEditForm.value);
   }
   ngOnInit(): void {
     this.addEditForm = new FormGroup({
@@ -68,8 +68,8 @@ export class StaffEditFormComponent implements OnInit {
       state: new FormControl(''),
       zip: new FormControl(''),
       email: new FormControl(''),
-      address: new FormControl('')
-    })
+      address: new FormControl(''),
+    });
   }
   handleImgUpload(event: ProfilePicModel) {
     console.log(event);

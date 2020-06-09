@@ -17,7 +17,7 @@ export const setCountryIdData = createAction(
 )
 export const setPhoneData = createAction(
   '[ContactDetailsQuestion] setPhoneData',
-  props<{ field: string, prefix: string, phoneNum: string }>()
+  props<{ field: string, prefix: string, phoneNum: string, icon?: string }>()
 )
 export const setContactsData = createAction(
   '[ContactDetailsQuestion] setContactData',
