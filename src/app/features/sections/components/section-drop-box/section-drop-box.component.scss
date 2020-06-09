@@ -4,6 +4,28 @@
 @import 'src/assets/scss/modules/students';
 @include studentChips();
 @include dropZone();
+@import '../../scss-fixes.scss';
+
+.main-wrapper {
+  align-items: stretch !important;
+}
+.drop-zones__wrapper {
+  flex-grow: 1;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
+  max-height: calc(100vh - 270px);
+  .drop-zone {
+    min-width: 250px;
+    margin: 5px;
+    min-height: 150px;
+    // flex-wrap: wrap;
+    // flex-direction: row;
+  }
+}
 
 .groups--split-layout,
 .groups--row-layout {
@@ -19,6 +41,8 @@
 }
 .content__title {
   margin-bottom: 20px;
+  padding-right: 130px;
+  // transform: translateX(-67.5px);
 }
 .badges {
   width: 100%;
@@ -67,6 +91,7 @@
   display: flex;
 }
 .placeholder {
+  padding-right: 130px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -75,7 +100,8 @@
   position: relative;
   font: 400 16px/24px Raleway;
   color: #a5aec7;
-  max-width: 80%;
+  text-align: center;
+  // max-width: 80%;
 }
 .relative {
   position: relative;

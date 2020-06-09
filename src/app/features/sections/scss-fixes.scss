@@ -2,7 +2,7 @@
 @import 'src/assets/styles/mixins/alignment';
 main {
   section {
-    padding: 5%;
+    padding: 3%;
     padding-top: 46px;
     padding-bottom: 0;
     @include displayFlex(unset, unset, column);
@@ -26,6 +26,7 @@ main {
     &__title {
       width: 100%;
       white-space: pre-wrap;
+      transform: translateX(-67.5px);
     }
   }
 
