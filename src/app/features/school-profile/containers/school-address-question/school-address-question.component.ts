@@ -1,9 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IconModel } from '../../../../shared/components/icon-field/icon-field.component';
+import { IconModel } from 'src/app/shared/components/icon-field/icon-field.component';
+// import { IconModel } from '../../../../shared/components/icon-field/icon-field.component';
 import { setAddressData, setCountryIdData } from '../../ngrx/actions';
 import { SchoolProfileService } from '../../services/school-profile.service';
 import { selectSchoolAddress } from '../../ngrx/selectors';
@@ -13,12 +19,13 @@ import { SchoolAddressModel } from '../../models/school-address.model';
 @Component({
   selector: 'edu-school-address-question',
   templateUrl: './school-address-question.component.html',
-  styleUrls: ['./school-address-question.component.scss'],
+  styleUrls: ['./school-address-question.component.scss']
 })
 export class SchoolAddressQuestionComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   schoolAddressForm: FormGroup;
   validity: boolean;
+
   countryIconMap = [
     {
       id: '1c1e29e4-642b-11ea-a762-9bcb0d229311',
@@ -40,11 +47,11 @@ export class SchoolAddressQuestionComponent implements OnInit {
       item: 'United Kingdom',
       icon: 'assets/images/flags/flg-uk.svg'
     }
-  ]
+  ];
   ngOnInit(): void {
     // this.schoolProfService.getCountries().subscribe(console.log)
     let country;
-    this.store.select(selectSchoolAddress).subscribe((address) => {
+    this.store.select(selectSchoolAddress).subscribe(address => {
       let formFields: any = {};
 
       if (!address) {
@@ -52,12 +59,14 @@ export class SchoolAddressQuestionComponent implements OnInit {
           zipCode: '',
           address: '',
           state: '',
-          city: '',
-        }
-        country = this.countryIconMap[0]
+          city: ''
+        };
+        country = this.countryIconMap[0];
       } else {
-        let countryIdx = this.countryIconMap.findIndex(iconItem => iconItem.item === address.country);
-        country = this.countryIconMap[countryIdx]
+        let countryIdx = this.countryIconMap.findIndex(
+          iconItem => iconItem.item === address.country
+        );
+        country = this.countryIconMap[countryIdx];
         formFields = address;
       }
       this.schoolAddressForm = new FormGroup({
@@ -69,26 +78,37 @@ export class SchoolAddressQuestionComponent implements OnInit {
       });
     });
 
-    this.store.dispatch(setAddressData({ field: 'country', value: country.item }))
-    this.store.dispatch(setCountryIdData({ countryId: country.id }))
+    this.store.dispatch(
+      setAddressData({ field: 'country', value: country.item })
+    );
+    this.store.dispatch(setCountryIdData({ countryId: country.id }));
   }
   updateCountry(value: IconModel) {
     this.schoolAddressForm.patchValue({
       country: value
-    })
-    this.store.dispatch(setAddressData({ field: 'country', value: value.item }))
-    this.store.dispatch(setCountryIdData({ countryId: value.id }))
+    });
+    this.store.dispatch(
+      setAddressData({ field: 'country', value: value.item })
+    );
+    this.store.dispatch(setCountryIdData({ countryId: value.id }));
   }
-  updateFormField(event: { name: string, value: string }) {
+
+  returnFormFieldFormat(name, el) {
+    let value = el.target.value;
+    return this.updateFormField({ name, value });
+  }
+  updateFormField(event: { name: string; value: string }) {
     this.schoolAddressForm.patchValue({
       [event.name]: event.value
-    })
-    this.store.dispatch(setAddressData({ field: event.name, value: event.value }))
+    });
+    this.store.dispatch(
+      setAddressData({ field: event.name, value: event.value })
+    );
   }
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<PreviewModel>,
     private schoolProfService: SchoolProfileService,
     private cdRef: ChangeDetectorRef
-  ) { }
+  ) {}
 }

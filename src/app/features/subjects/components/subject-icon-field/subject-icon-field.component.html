@@ -1,201 +1,230 @@
-<div class="form__input-wrapper form__input-wrapper--main">
-  <div class="form__icon-select-wrapper">
-    <input type="checkbox" class="form__icon-select" />
-    <img
-      class="form__icon"
-      src="../../../assets/icon_subject-badge.svg"
-      alt=""
-    />
-    <div class="popup popup--center">
-      <ul class="popup__entries">
-        <li class="popup__entry popup__search-wrapper">
+<div
+  [ngClass]="{ isStatic: isChecked }"
+  class="form__input-wrapper form__input-wrapper--main"
+>
+  <table>
+    <tr>
+      <td>
+        <div
+          class="form__icon-select-wrapper"
+          [ngClass]="{ isActive: isChecked }"
+        >
+          <input
+            type="checkbox"
+            [(ngModel)]="isChecked"
+            class="form__icon-select"
+          />
           <img
-            class="popup__search-icon"
-            src="../../../assets/search.svg"
+            class="form__icon"
+            src="../../../assets/icon_subject-badge.svg"
             alt=""
           />
-          <input
-            class="popup__search-input"
-            type="text"
-            placeholder="Search icons"
-          />
-        </li>
-      </ul>
-      <div class="popup__content">
-        <div class="icons flex-wrap">
-          <div class="icon icon--active">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-active.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
-          <div class="icon">
-            <img
-              class="icon__img"
-              src="../../../assets/subject_icon-inactive.svg"
-              alt=""
-            />
-          </div>
+          <edu-popover (close)="closePopover()" pointerAlignment="center">
+            <ul class="popup__entries" [ClosePopover]="popoverToogle">
+              <li class="popup__entry  popup__search-wrapper">
+                <img
+                  class="popup__search-icon"
+                  src="../../../assets/search-icon.svg"
+                  alt=""
+                />
+                <input
+                  (focus)="focusSearch()"
+                  (blur)="blurSearch()"
+                  class="popup__search-input"
+                  type="text"
+                  placeholder="Search icons"
+                />
+              </li>
+            </ul>
+            <div class="popup__content">
+              <div class="icons flex-wrap">
+                <div class="icon icon--active" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-active.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="icon" (click)="closePopover()">
+                  <img
+                    class="icon__img"
+                    src="../../../assets/subject_icon-inactive.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </edu-popover>
         </div>
-      </div>
-    </div>
-  </div>
-  <input
+      </td>
+      <td>
+        <edu-input
+          elementId="subjectName"
+          [(ngModel)]="value"
+          (input)="onTextChange($event)"
+          #subjectName
+        >
+          <span class="edu-label">Subject Name</span>
+        </edu-input>
+      </td>
+    </tr>
+  </table>
+
+  <!-- <input
     id="subjectName"
     type="text"
     class="form__input"
@@ -206,5 +235,5 @@
     pattern="(/w)"
   />
 
-  <label class="form__input-label" for="subjectName">Subject Name</label>
+  <label class="form__input-label" for="subjectName">Subject Name</label> -->
 </div>

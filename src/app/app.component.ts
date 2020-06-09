@@ -12,23 +12,24 @@ import { retrieveTokenRequest } from './features/auth/ngrx/actions';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public constructor(private authService: AuthService,
+  public constructor(
+    private authService: AuthService,
     private el: ElementRef,
     private config: ConfigService,
     private store: Store<AuthStateModel>,
-    private router: Router) {
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.setupAuth();
     // this.setupTheme();
-    this.store.dispatch(retrieveTokenRequest())
+    this.store.dispatch(retrieveTokenRequest());
   }
 
   private setupAuth() {
     this.authService.initialize();
     if (this.authService.hasTokenExpired) {
-      this.router.navigate(['sign-in'])
+      this.router.navigate(['sign-in']);
     } else {
       this.authService.setupTokenRefresh();
     }

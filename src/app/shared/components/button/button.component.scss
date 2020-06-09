@@ -1,61 +1,60 @@
-@import "src/assets/styles/colors";
-@import "src/assets/styles/mixins/alignment";
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
 
-:host{
-    background: unset;
-    border: none;
-    &:focus {
-      outline: none;
-    }
-    cursor: pointer;
+:host {
+  background: unset;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+  cursor: pointer;
 
-    @include displayFlex();
-    display:inline-flex;
-
+  @include displayFlex();
+  display: inline-flex;
 }
-:host ::ng-deep img + span{
-    margin-left: 20px;
-}
- 
-.blank{
-    
+:host ::ng-deep img + span {
+  margin-left: 20px;
 }
 
-:host.fab{
-
-    border-radius: 50%;
-    border: 2px solid $blue;
-    background: unset;
-    width: 30px;
-    height: 30px;
-    
-
+.blank {
 }
 
-:host.basic{  
-    width: 292px;
-    height: 52px;
-    border-radius: 100px;
-    font: 700 12px/20px Raleway;
-  
-    color: white;
-    background: $blue;
-    text-transform: uppercase;
-    box-shadow: 0px 4px 8px #3c4b9b26;
-    position: relative;
+:host.fab {
+  border-radius: 50%;
+  border: 2px solid $blue;
+  background: unset;
+  width: 30px;
+  height: 30px;
 }
 
-:host.outline{
-    width: 292px;
-    height: 52px;
-    border-radius: 100px;
-    font: 700 12px/20px Raleway;
-    text-transform: uppercase;
-    border: 2px solid $blue;
-    color: $blue;
-    background: transparent;
+:host.basic {
+  width: 292px;
+  height: 52px;
+  border-radius: 100px;
+  font: 700 12px/20px Raleway;
+
+  color: white;
+  background: $blue;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 8px #3c4b9b26;
+  position: relative;
 }
 
-.text{
+:host.outline {
+  width: 292px;
+  height: 52px;
+  border-radius: 100px;
+  font: 700 12px/20px Raleway;
+  text-transform: uppercase;
+  border: 2px solid $blue;
+  color: $blue;
+  background: transparent;
+}
 
+.text {
+}
+
+:host.basic:disabled {
+  background: #e6e9f3;
+  color: white;
 }

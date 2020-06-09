@@ -12,14 +12,15 @@
         [classes]="classes"
         (classClicked)="onClassClick($event)"
       ></edu-classes>
-      <button
-        class="form__btn"
-        [routerLink]="['../', activatedRoute.snapshot.data.next]"
-        [disabled]="!(selectedClasses | async).length"
-      >
-        Continue
-      </button>
     </div>
+    <button
+      ButtonType="basic"
+      class="form__button"
+      [routerLink]="['../', activatedRoute.snapshot.data.next]"
+      [disabled]="!(selectedClasses | async).length"
+    >
+      Continue
+    </button>
   </section>
   <aside class="aside">
     <h5 class="aside__title">Preview</h5>
@@ -29,11 +30,12 @@
     ></edu-school-classes-card>
   </aside>
 </main>
-<edu-modal
+<edu-modal-v2
+  class="intro"
   *ngIf="(modalState | async).startModal"
   description="The first step is to enter the basic details of your school, just answer the questions on your screen"
   btnText="GOT IT"
   header="Classes And Groups"
   icon="assets/icon-classandgroup.svg"
   (btnClicked)="onModalBtnClicked()"
-></edu-modal>
+></edu-modal-v2>

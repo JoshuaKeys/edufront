@@ -1,4 +1,74 @@
 @import '../../../../../assets/styles/modules/section-module';
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/containers';
+@include group();
+.group--row.form--row {
+  margin-bottom: 20px;
+  edu-input.middleName {
+    max-width: 173px;
+    .edu-label {
+      white-space: nowrap;
+    }
+  }
+  edu-input.p-0 ::ng-deep .wrapper {
+    padding: 0;
+  }
+
+  edu-input,
+  edu-select {
+    margin: 0 10px;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+
+    ::ng-deep {
+      height: 54px;
+      width: 100%;
+      .wrapper {
+        padding: 0 15px;
+      }
+      label,
+      input {
+        font: 400 16px/24px Raleway;
+      }
+    }
+  }
+}
+.modal__content-profile {
+  margin-right: 40px;
+}
+.edu-label {
+  white-space: nowrap;
+}
+
+edu-phone-icon-field ::ng-deep,
+edu-icon-field ::ng-deep {
+  width: calc(50% - 10px) !important;
+  display: flex;
+  height: 54px;
+  margin-right: 10px;
+  .form__input-wrapper.form__input-wrapper--main {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+  edu-input {
+    height: 100%;
+  }
+  .icon__img {
+    width: 22px;
+    height: 22px;
+  }
+
+  label,
+  input {
+    font: 400 16px/24px Raleway;
+  }
+}
+
 .modal {
   @include modal();
   padding: 110px 50px 60px 50px;
@@ -20,6 +90,12 @@
     width: 244px;
     margin: 0 10px;
   }
+}
+.modal {
+  //dimension overwrite
+  max-width: 1146px !important;
+  width: 95%;
+  min-width: 1050px;
 }
 
 main {

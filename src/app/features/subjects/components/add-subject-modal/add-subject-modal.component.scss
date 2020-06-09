@@ -6,3 +6,13 @@
 main {
   @include splitLayout();
 }
+
+.modal {
+  width: auto;
+  height: auto;
+  min-width: unset;
+  min-height: unset;
+  max-width: unset;
+  padding: 0;
+  max-height: unset;
+}
