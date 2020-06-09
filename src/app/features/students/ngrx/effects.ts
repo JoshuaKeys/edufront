@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StudentsService } from '../services/students.service';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess } from './actions/class-students.actions';
+import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess, fetchStudentByIdRequest, fetchStudentByIdResponse } from './actions/class-students.actions';
 import { toggleAddModal } from './actions/students-modal.actions';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../models/students-state.model';
@@ -32,6 +32,12 @@ export class StudentsEffects {
         ]
       })
     )),
+  ))
+  fetchStudentData$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchStudentByIdRequest),
+    mergeMap(action => this.studentsService.getStudentById(action.student).pipe(
+      map(student => fetchStudentByIdResponse({ student }))
+    ))
   ))
   refreshStudentsXClasses$ = createEffect(() => this.actions$.pipe(
     ofType(createStudentSuccess),

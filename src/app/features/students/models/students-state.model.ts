@@ -11,5 +11,6 @@ export interface StudentsStateModel {
   sorting: StudentsSortingModel,
   studentsAndClasses: EntityState<StudentsXClassesModel>,
   students: EntityState<StudentModel>,
-  classes: EntityState<ClassModel>
+  classes: EntityState<ClassModel>,
+  edit: StudentModel
 }

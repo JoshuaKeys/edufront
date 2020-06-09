@@ -39,3 +39,6 @@ export const selectClassesOfSubject = createSelector(
 export const selectSortingData = createSelector(
   staffsFeature, feat => feat.sorting
 )
+export const selectEditData = createSelector(
+  staffsFeature, feat => feat.edit
+)

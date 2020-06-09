@@ -14,9 +14,12 @@ import {
   createStaffRequest,
   toggleAddModal,
   deleteStaffRequest,
-  deleteStaffSuccess
+  deleteStaffSuccess,
+  fetchStaffById,
+  fetchStaffByIdSuccess,
+  toggleEditModal
 } from '../actions';
-import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { StaffsService } from '../../services/staffs.service';
 import { SubjectsService } from 'src/app/shared/services/subjects.service';
 import { ClassesService } from 'src/app/shared/services/classes.service';
@@ -80,12 +83,17 @@ export class StaffsEffects {
       map(resp => deleteStaffSuccess({ staff: action.staff }))
     ))
   ));
+  fetchStaffById$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchStaffById),
+    mergeMap(action => this.staffsService.fetchStaffById(action.staff).pipe(
+      switchMap(staff => [fetchStaffByIdSuccess({ staff }), toggleEditModal()])
+    ))
+  ))
   composeCreateStaffData(staffData: StaffFormModel, subjectData: SubjectClassesAssociation[], profilePic: string): CreateStaffRequestModel {
     let createStaffObj: CreateStaffRequestModel = {
       subjectClasses: null,
       profileDto: null
     };
-
     createStaffObj['subjectClasses'] = subjectData.map(item => {
       let classIds = item.classes.map(classItem => classItem.id)
       return {

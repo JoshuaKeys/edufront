@@ -4,7 +4,7 @@ import { StudentsModalModel } from '../../models/students-modal.model';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../../models/students-state.model';
 import { selectModalState, selectSortingState, selectStudentsAndClasses } from '../../ngrx/selectors'
-import { toggleStartModal, toggleAddModal, toggleEndModal } from '../../ngrx/actions/students-modal.actions';
+import { toggleStartModal, toggleAddModal, toggleEndModal, toggleEditModal } from '../../ngrx/actions/students-modal.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentsService } from '../../services/students.service';
 import { StudentsSortingModel } from '../../models/students-sorting.model';
@@ -12,7 +12,7 @@ import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { map } from 'rxjs/operators';
 import { StudentModel } from '../../../../shared/models/student.model';
-import { createStudentRequest, deleteStudentRequest } from '../../ngrx/actions/class-students.actions';
+import { createStudentRequest, deleteStudentRequest, fetchStudentByIdRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 @Component({
@@ -23,7 +23,8 @@ import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
   providers: [StudentsCommunicatorService]
 })
 export class StudentsCreationComponent implements OnInit {
-  studentsModalState: Observable<StudentsModalModel>
+  studentsModalState: Observable<StudentsModalModel>;
+
   activatedRouteData = this.activatedRoute.snapshot.data;
   sortingState: Observable<StudentsSortingModel>;
   studentsXClasses: Observable<StudentsXClassesModel[]>;
@@ -74,6 +75,7 @@ export class StudentsCreationComponent implements OnInit {
   }
   onEditStudent(student: StudentModel) {
     // this.store.dispatch(editSt)
+    this.store.dispatch(fetchStudentByIdRequest({ student }))
     // this.store.dispatch(toggleEditModal())
     this.studentsService.getStudentById(student).subscribe(console.log)
   }
