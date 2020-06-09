@@ -14,12 +14,8 @@
       [ngClass]="{ 'w-auto': isLast }"
       *ngFor="let item of dasboardNavConfig; index as i; last as isLast"
     >
-      <div
-        class="tracker"
-        [ngClass]="trackerState(i)"
-        [routerLink]="[item.route]"
-      >
-        <div class="icon">
+      <div class="tracker" [ngClass]="trackerState(i)">
+        <div class="icon" [routerLink]="[item.route]">
           <img src="assets/dashboard/{{ getIconPath(i) }}.svg" alt="" />
           <span class="label">{{ item.label }} </span>
         </div>

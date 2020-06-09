@@ -1,0 +1,18 @@
+<button class="section__back-btn" (click)="onPrevious()">
+  <img src="/assets/chevron-left.svg" alt="" /> Back
+</button>
+<form class="form" [formGroup]="mForm">
+  <h2 class="form__title">What is your school address?</h2>
+  <div class="form__input-wrapper">
+    <input
+      id="schoolName"
+      type="text"
+      class="form__input"
+      placeholder=""
+      pattern="(/w)"
+      formControlName="name"
+      (keyup.enter)="addName()"
+    />
+    <label class="form__input-label" for="schoolName">Enter school name</label>
+  </div>
+</form>

@@ -10,10 +10,23 @@ body {
   background-color: white;
 }
 
-@include form();
+// @include form();
 @include splitLayout3();
 @include modalIntro();
+
 @include modalComplete();
+
+edu-input ::ng-deep {
+  width: 377px;
+  height: 54px;
+  input,
+  label {
+    font-size: 16px;
+  }
+}
+.content__title {
+  margin-bottom: 30px;
+}
 
 .form {
   height: 100%;

@@ -13,6 +13,6 @@ export interface StaffModel {
   roles: {
     roleId: string;
     roleName: string;
-  }
+  };
   rollNumber: string;
 }

@@ -29,13 +29,11 @@
             (click)="onSortByAlphabet()"
           >
             <img
+              class="search__icon"
               src="../../../assets/subject-search-icon-1.svg"
               alt=""
               class="icon-img"
             />
-            <div class="tooltip tooltip--top">
-              Sort Alphabetical
-            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -53,11 +51,11 @@
               Sort by Sex
             </div>
           </div>
-        </div>
 
-        <button class="search__btn" (click)="onAddStaff()">
-          <span>+</span>
-        </button>
+          <button class="search__btn" (click)="onAddStaff()">
+            <span>+</span>
+          </button>
+        </div>
       </div>
       <div class="group">
         <div
@@ -85,9 +83,11 @@
           <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
         </div>
       </div>
-      <div class="content__btns opacity">
-        <div class="opacity-overlay"></div>
-        <button class="content__btn" (click)="onFinish()">Continue</button>
+      <div class="content__btns ">
+        <!-- <div class="opacity-overlay"></div> -->
+        <button class="content__button" ButtonType="basic" (click)="onFinish()">
+          Continue
+        </button>
       </div>
     </div>
   </section>
@@ -112,12 +112,14 @@
   [classesAndSubjects]="subjectClassesAssociation"
   (onCreateStaff)="createStaff($event)"
 ></edu-staff-form>
+
 <edu-modal-v2
   *ngIf="(staffsModalsState | async).endModal"
   btnText="GOT IT"
   header="Staffs Set Up Complete"
   icon="assets/icon-complete.svg"
   [completeModal]="true"
+  class="complete"
   leftBtn="TAKE ME TO
   DASHBOARD"
   rightBtn="TAKE ME TO STUDENTS"
@@ -133,7 +135,8 @@
   *ngIf="(staffsModalsState | async).startModal"
   btnText="GOT IT"
   header="Staff Creation"
-  icon="assets/students-intro.svg"
+  class="intro"
+  icon="assets/staff-modal.svg"
   (btnClicked)="onStart()"
 >
   You will now create the Staff profiles. same as the last step. The only

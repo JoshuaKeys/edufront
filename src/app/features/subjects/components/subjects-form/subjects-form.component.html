@@ -33,13 +33,12 @@
         ></edu-array-input-field>
       </div>
     </div>
-
-    <button
-      class="form__round-btn"
-      [ngClass]="{ 'form__round-btn--submit': addSubjForm.valid }"
-      [disabled]="addSubjForm.invalid"
-    >
-      <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
-    </button>
   </div>
+  <button
+    class="form__round-btn"
+    [ngClass]="{ 'form__round-btn--submit': addSubjForm.valid }"
+    [disabled]="addSubjForm.invalid"
+  >
+    <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
+  </button>
 </form>

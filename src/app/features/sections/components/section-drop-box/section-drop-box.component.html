@@ -1,39 +1,41 @@
 <div
-  class="groups groups--column-layout relative flex-grow-1"
+  class="groups groups--column-layout relative flex-grow-1 main-wrapper"
   *ngIf="selectedClass | async; else notSelected"
 >
   <h2 class="content__title">Create Sections</h2>
 
   <div class="drop-zones flex-grow-1" *ngIf="sections | async as sections">
-    <div
-      *ngFor="let _section of sections.sections"
-      class="drop-zone flex-grow-1"
-      (drop)="onDrop($event, sections.classId, _section.sectionName)"
-      (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave($event)"
-      [ngClass]="{ 'drop-zone--is-dragged': isDraggedOver }"
-    >
-      <h4 class="drop-zone__title">
-        <input
-          [value]="_section.sectionName"
-          (change)="
-            changeSectionName($event, _section.sectionName, sections.classId)
-          "
-        />
-      </h4>
-
+    <div class="drop-zones__wrapper">
       <div
-        class="chip"
-        *ngFor="let student of _section.subjects"
-        (click)="onClick(sections.classId, _section.sectionName, student)"
-        draggable="true"
-        [appDraggable]="{ data: student }"
-        [ngClass]="{
-          'chip--blue': student.gender.toLocaleLowerCase() === 'male',
-          'chip--pink': student.gender.toLocaleLowerCase() === 'female'
-        }"
+        *ngFor="let _section of sections.sections"
+        class="drop-zone flex-grow-1"
+        (drop)="onDrop($event, sections.classId, _section.sectionName)"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        [ngClass]="{ 'drop-zone--is-dragged': isDraggedOver }"
       >
-        {{ student.firstName }} {{ student.lastName }}
+        <h4 class="drop-zone__title">
+          <input
+            [value]="_section.sectionName"
+            (change)="
+              changeSectionName($event, _section.sectionName, sections.classId)
+            "
+          />
+        </h4>
+
+        <div
+          class="chip"
+          *ngFor="let student of _section.subjects"
+          (click)="onClick(sections.classId, _section.sectionName, student)"
+          draggable="true"
+          [appDraggable]="{ data: student }"
+          [ngClass]="{
+            'chip--blue': student.gender.toLocaleLowerCase() === 'male',
+            'chip--pink': student.gender.toLocaleLowerCase() === 'female'
+          }"
+        >
+          {{ student.firstName }} {{ student.lastName }}
+        </div>
       </div>
     </div>
     <div class="drop-zone drop-zone--create">

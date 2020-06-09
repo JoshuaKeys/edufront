@@ -13,7 +13,7 @@
   height: 52px;
   border-radius: 100px;
   font-weight: 700;
-  font-family: "Raleway";
+  font-family: 'Raleway';
   letter-spacing: 0.42px;
   color: $color;
   background: $background;
@@ -22,7 +22,7 @@
   position: relative;
 
   &:active {
-    top: 6px;
+    // top: 6px;
   }
 }
 
@@ -36,13 +36,13 @@
   border: 2px solid $grey-blue;
   position: relative;
   background: white;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   letter-spacing: 0.48px;
   color: $color;
   background: $background;
 
   &:active {
-    transform: scale(1.05);
+    // transform: scale(1.05);
   }
   &:hover {
     background: $color;
@@ -57,7 +57,7 @@
   height: $size;
   position: relative;
   &:active {
-    transform: translateY(6px);
+    // transform: translateY(6px);
   }
 }
 
@@ -80,7 +80,7 @@
   @include resetButton();
   cursor: pointer;
   color: $color;
-  font-family: "Raleway";
+  font-family: 'Raleway';
 
   &:hover {
     text-decoration: underline;

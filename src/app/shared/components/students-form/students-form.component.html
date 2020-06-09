@@ -21,71 +21,76 @@
           <h3 class="modal__content-header">
             Student Details
           </h3>
-          <div class="modal__content-first-row">
-            <edu-input-field
-              idPrefix="firstName"
-              formControlName="firstName"
-              text="First Name"
-            ></edu-input-field>
-
-            <edu-input-field
-              idPrefix="middleName"
+          <div class="group--row form--row">
+            <edu-input alignment="left" formControlName="firstName">
+              <span class="edu-label">First Name</span>
+            </edu-input>
+            <edu-input
+              class="p-0 middleName"
+              alignment="left"
               formControlName="middleName"
-              text="Middle Name"
-            ></edu-input-field>
-
-            <edu-input-field
-              idPrefix="familyName"
-              formControlName="familyName"
-              text="Family Name"
-            ></edu-input-field>
+            >
+              <span class="edu-label"
+                >Middle Name<b class="ashcolor">(Optional)</b></span
+              >
+            </edu-input>
+            <edu-input alignment="left" formControlName="familyName">
+              <span class="edu-label">Last Name</span>
+            </edu-input>
           </div>
-          <div class="modal__content-second-row">
-            <edu-input-field
+          <div class="group--row form--row">
+            <edu-input alignment="left" formControlName="dob">
+              <span class="edu lebel">Date of Birth</span>
+            </edu-input>
+            <!-- <edu-input-field
               idPrefix="dateOfBirth"
               formControlName="dob"
               text="Date of Birth"
-            ></edu-input-field>
+            ></edu-input-field> -->
             <!-- <edu-datepicker formControlName="dob"></edu-datepicker> -->
-            <edu-select formControlName="gender">
+            <edu-select formControlName="gender" alignment="left">
               <span class="edu-label"> Sex </span>
               <edu-option OptionValue="Male"> Male </edu-option>
               <edu-option OptionValue="Female"> Female </edu-option>
             </edu-select>
           </div>
-          <div class="modal__content-third-row">
-            <edu-country-field
+
+          <div class="group--row form--row">
+            <edu-icon-field
               formControlName="country"
               [fieldName]="'Country'"
               [icons]="countryIconMap"
               (valueChanged)="updateCountry($event)"
               mode="select"
-            ></edu-country-field>
-            <edu-input-field
-              idPrefix="address"
-              formControlName="address"
-              text="Address"
-            ></edu-input-field>
+            ></edu-icon-field>
+            <!-- <edu-country-field
+              formControlName="country"
+              [fieldName]="'Country'"
+              [icons]="countryIconMap"
+              (valueChanged)="updateCountry($event)"
+              mode="select"
+            ></edu-country-field> -->
+
+            <edu-input alignment="left" formControlName="address">
+              <span class="edu-label"> Address</span>
+            </edu-input>
           </div>
-          <div class="modal__content-fourth-row">
-            <edu-input-field
-              idPrefix="city"
-              formControlName="city"
-              text="City"
-            ></edu-input-field>
-            <edu-input-field
-              idPrefix="state"
-              formControlName="state"
-              text="State"
-            ></edu-input-field>
-            <edu-input-field
-              idPrefix="zip"
-              formControlName="zipcode"
-              text="Zip Code"
-            ></edu-input-field>
+
+          <div class="group--row form--row">
+            <edu-input alignment="left" formControlName="city">
+              <span class="edu-label"> City</span>
+            </edu-input>
+            <edu-input alignment="left" formControlName="state">
+              <span class="edu-label"> State</span>
+            </edu-input>
+
+            <edu-input alignment="left" formControlName="zipcode">
+              <span class="edu-label"> Zip Code</span>
+            </edu-input>
           </div>
-          <div class="modal__content-fifth-row">
-            <edu-select formControlName="classId">
+
+          <div class="group--row form--row">
+            <edu-select alignment="left" formControlName="classId">
               <span class="edu-label"> Class </span>
               <edu-option
                 *ngFor="let studentXClass of studentsXClasses | async"
@@ -93,44 +98,66 @@
                 >{{ studentXClass.className }}
               </edu-option>
             </edu-select>
-            <edu-input-field
-              idPrefix="id"
-              formControlName="id"
-              [disabled]="true"
-              text="ID - Auto Generated"
-            ></edu-input-field>
+
+            <edu-input alignment="left" formControlName="id" disabled="true">
+              <span class="edu-label ashcolor"> ID - Auto Generated</span>
+            </edu-input>
           </div>
         </div>
         <div class="modal__content-subject-area" formGroupName="guardianDto">
           <h3 class="modal__content-header">Guardian Details</h3>
-          <edu-input-field
-            idPrefix="guardianFirstName"
-            formControlName="firstName"
-            text="First Name"
-          ></edu-input-field>
-          <edu-input-field
-            idPrefix="guardianMiddleName"
-            formControlName="middleName"
-            text="Middle Name (Optional)"
-          >
-          </edu-input-field>
-          <edu-input-field
-            idPrefix="guardianFamilyName"
-            formControlName="familyName"
-            text="Family Name"
-          >
-          </edu-input-field>
-          <edu-phone-field
+          <div class="group--row form--row">
+            <edu-input
+              alignment="left"
+              formControlName="firstName"
+              elementId="firstName1"
+              ><span class="edu-label">
+                First Name
+              </span>
+            </edu-input>
+          </div>
+          <div class="group--row form--row">
+            <edu-input
+              alignment="left"
+              formControlName="middleName"
+              elementId="middleName1"
+              ><span class="edu-label">
+                Middle Name <b class="ashcolor">(Optional)</b>
+              </span>
+            </edu-input>
+          </div>
+          <div class="group--row form--row">
+            <edu-input
+              alignment="left"
+              formControlName="familyName"
+              elementId="familyName1"
+              ><span class="edu-label">
+                Family Name
+              </span>
+            </edu-input>
+          </div>
+
+          <!-- <edu-phone-field
             formControlName="phone"
             [icons]="countryIconMap"
             fieldName="Phone"
             (valueChanged)="updatePhone($event)"
-          ></edu-phone-field>
-          <edu-input-field
-            idPrefix="guardianEmail"
-            formControlName="email"
-            text="Email Address (Optional)"
-          ></edu-input-field>
+          ></edu-phone-field> -->
+          <div class="group--row form--row">
+            <edu-phone-icon-field
+              formControlName="phone"
+              fieldName="Phone"
+              [icons]="countryIconMap"
+              (valueChanged)="updatePhone($event)"
+            ></edu-phone-icon-field>
+          </div>
+          <div class="group--row form--row">
+            <edu-input alignment="left" formControlName="email"
+              ><span class="edu-label">
+                Email Address <b class="ashcolor">(Optional)</b>
+              </span>
+            </edu-input>
+          </div>
         </div>
       </form>
       <button
