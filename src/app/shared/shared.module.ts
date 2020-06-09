@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderNavComponent } from './components/header-nav/header-nav.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 // import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { CustomSelectComponent } from './components/custom-select/custom-select.component';
@@ -36,6 +36,7 @@ import { FormComponentsModule } from './components/form-components/form-componen
 import { SelectModule } from './components/form-components/select/select.module';
 import { StudentsFormComponent } from './components/students-form/students-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImageUploadV3Component } from './components/image-upload-v3/image-upload-v3.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ClassesComponent,
     PreviewComponent,
     ImageUploadComponent,
+    ImageUploadV3Component,
     IconFieldComponent,
     PhoneIconFieldComponent,
     InputFieldComponent,
@@ -62,6 +64,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     StudentsFormComponent
   ],
   imports: [
+    ImageCropperModule,
     FormComponentsModule,
     ReactiveFormsModule,
     FormsModule,
@@ -83,6 +86,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
+    ImageUploadV3Component,
     PreviewComponent,
     TimetableModule,
     ImageUploadComponent,

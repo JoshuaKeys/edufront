@@ -1,9 +1,6 @@
 <main>
   <section class="section">
-    <button
-      class="section__back-btn"
-      (click)="goToDashboard()"
-    >
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
@@ -39,11 +36,14 @@
     </div>
   </section>
 </main>
-<!-- <edu-modal
+<edu-modal-v2
   *ngIf="(modalState | async).startModal"
   [description]="getDescription()"
   btnText="GOT IT"
   header="Teaching Subjects"
   icon="assets/subjects_modal.svg"
   (btnClicked)="onModalBtnClicked()"
-></edu-modal> -->
+>
+  The first step is to enter the basic details of your school, just answer the
+  questions on the screen!
+</edu-modal-v2>
