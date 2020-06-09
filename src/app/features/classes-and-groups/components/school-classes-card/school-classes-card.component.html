@@ -1,8 +1,10 @@
 <div class="card">
   <h5 class="card__title">School Classes</h5>
   <p class="card__content flex-wrap">
-    <span class="round-badge" *ngFor="let class of selectedClasses | async">{{
-      class.name
-    }}</span>
+    <span
+      class="round-badge"
+      *ngFor="let class of sortedSelectedClasses | async"
+      >{{ class.name }}</span
+    >
   </p>
 </div>
