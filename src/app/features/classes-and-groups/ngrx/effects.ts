@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { ClassesAndGroupsModel } from '../models/classes-and-group.model';
 import { selectGroupsClassMap, selectNumOfGroups, selectSelectedClasses, selectGCMapForSubmission } from './selectors';
 import { EMPTY, of, Observable } from 'rxjs';
+import { incrementProgress } from '../../dashboard/ngrx/actions';
 
 @Injectable()
 export class ClassesAndGroupsEffects {
@@ -40,7 +41,7 @@ export class ClassesAndGroupsEffects {
       let copyOfSelectedClasses = selectedClasses.map(item => ({ grade: item.grade, name: +item.name }))
       return this.classesAndGroupsService.sendClassesWithoutGroups(copyOfSelectedClasses)
     }),
-    switchMap(response => [classesWithoutGroupsSuccess({ responseData: response }), openClassesAndGroupsEndModal()])
+    mergeMap(response => [classesWithoutGroupsSuccess({ responseData: response }), openClassesAndGroupsEndModal(), incrementProgress()])
   ))
 
   sendClassesWithGroups$ = createEffect(() => this.actions$.pipe(
@@ -50,7 +51,7 @@ export class ClassesAndGroupsEffects {
       console.log(selectedGroupClassMap)
     }),
     mergeMap(([action, selectedGroupClassesMap]) => this.classesAndGroupsService.sendClassesWithGroups(selectedGroupClassesMap)),
-    switchMap(response => [sendClassesWithGroupsSuccess({ responseData: response }), openClassesAndGroupsEndModal()])
+    mergeMap(response => [sendClassesWithGroupsSuccess({ responseData: response }), openClassesAndGroupsEndModal(), incrementProgress()])
   ))
 
   preserveGroupOfClassesQty$ = createEffect(() => this.actions$.pipe(

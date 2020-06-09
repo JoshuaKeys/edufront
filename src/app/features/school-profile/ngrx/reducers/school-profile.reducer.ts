@@ -19,14 +19,15 @@ export const profileReducer = createReducer(initialState,
   }),
   on(setPhoneData, (state, action) => {
     let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
-    return {
+    const retData: ProfileModel = {
       ...stateCopy,
       contact: {
         ...stateCopy.contact,
         countryCode: action.prefix,
-        phone: action.phoneNum
+        phone: { phoneNum: action.phoneNum, icon: action.icon, phonePrefix: action.prefix, }
       }
     }
+    return retData;
   }),
   on(setAddressData, (state, action) => {
     let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SubjectsStateModel } from '../../models/subjects-state.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -27,7 +27,7 @@ export class ConfirmationComponent implements OnInit {
     // this.store.dispatch(toggleEndModal())
   }
   goToStudents() {
-
+    this.router.navigate(['../', 'students/students-creation'], { relativeTo: this.activatedRoute })
   }
   get description() {
     return `You made it! Now that we know what is taught in the school, we can move
@@ -35,7 +35,11 @@ export class ConfirmationComponent implements OnInit {
     hesitate to take a break now if you need it.`
   }
   goToDashboard() {
-
+    this.router.navigateByUrl('/dashboard');
   }
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<SubjectsStateModel>) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private store: Store<SubjectsStateModel>,
+    private router: Router
+  ) { }
 }

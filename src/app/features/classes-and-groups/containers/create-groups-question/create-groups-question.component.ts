@@ -39,6 +39,6 @@ export class CreateGroupsQuestionComponent implements OnInit {
     this.router.navigate(['../', '/subjects/subjects-taught'], { relativeTo: this.activatedRoute })
   }
   goToDashboard() {
-
+    this.router.navigateByUrl('/dashboard')
   }
 }

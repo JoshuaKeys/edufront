@@ -18,6 +18,7 @@ import { getAllSelectedClasses } from './selectors';
 import { Store } from '@ngrx/store';
 import { SubjectsStateModel } from '../models/subjects-state.model';
 import { SubjectsService } from 'src/app/shared/services/subjects.service';
+import { incrementProgress } from '../../dashboard/ngrx/actions';
 
 @Injectable()
 export class SubjectsEffects {
@@ -60,7 +61,7 @@ export class SubjectsEffects {
         }
       })
       return this.subjectsService.postClassSubjects(requestData).pipe(
-        switchMap(classesSubjects => [postClassesSubjectsSuccess({ classesSubjects }), toggleEndModal()])
+        switchMap(classesSubjects => [postClassesSubjectsSuccess({ classesSubjects }), toggleEndModal(), incrementProgress()])
       )
     })
   ));

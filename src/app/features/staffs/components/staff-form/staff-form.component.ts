@@ -76,7 +76,6 @@ export class StaffFormComponent implements OnInit {
     })
   }
   handleImgUpload(event: ProfilePicModel) {
-    console.log(event);
     this.addEditForm.patchValue({
       profilePic: event
     })

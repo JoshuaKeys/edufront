@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { AggregateModel } from '../../models/aggregate.model';
 import { SectionsService } from '../../services/sections.service';
 import { toggleModal } from '../actions/sections-modal.actions';
+import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 
 @Injectable()
 export class SectionsEffects {
@@ -42,7 +43,7 @@ export class SectionsEffects {
     withLatestFrom(this.store.select(selectCreateSectionData)),
     mergeMap(([action, createSecData]) => {
       return this.sectionsService.createClassesWithStudents(createSecData).pipe(
-        switchMap(response => [createClassesWithStudentsSuccess({ response }), toggleModal({ modal: 'endModal' })])
+        switchMap(response => [createClassesWithStudentsSuccess({ response }), toggleModal({ modal: 'endModal' }), incrementProgress()])
       )
     })
   ))

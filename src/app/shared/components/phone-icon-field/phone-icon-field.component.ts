@@ -21,17 +21,19 @@ export class PhoneIconFieldComponent implements OnInit {
   activeIcon: string;
   phonePrefix: string;
   item: string;
+  filter = '';
+  filteredIcons: PhoneIconModel[]
   @Output() valueChanged = new EventEmitter<PhoneIconModel>();
   @ViewChild('fieldNameEl') fieldNameEl: ElementRef<HTMLInputElement>;
   onValueChange: (any) => any;
   ngOnInit(): void {
+    this.filteredIcons = this.filterIcons(this.icons, this.filter);
   }
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
   writeValue(val: PhoneIconModel) {
     if (val === null || val == undefined) {
-      // setTimeout(() => { this.renderer.setProperty(this.fieldNameEl.nativeElement, 'value', ''); }, 0)
       this.activeIcon = this.icons[0].icon;
       this.phonePrefix = this.icons[0].phonePrefix
       this.item = this.icons[0].item;
@@ -43,13 +45,17 @@ export class PhoneIconFieldComponent implements OnInit {
     this.activeIcon = val.icon;
     this.item = val.item;
   }
+  filterIcons(icons: PhoneIconModel[], filter: string) {
+    return icons.filter(icon => icon.item.match(filter))
+  }
+  onSearchItems(input) {
+    this.filteredIcons = this.filterIcons(this.icons, input.target.value)
+  }
   changeItem(icon: PhoneIconModel) {
-    console.log('holla')
     const iconCopy = { ...icon };
     iconCopy.phoneNum = this.value;
-    this.onValueChange(iconCopy)
-    this.valueChanged.emit(iconCopy)
-
+    this.onValueChange(iconCopy);
+    this.valueChanged.emit(iconCopy);
     this.toggleDropdown();
   }
   registerOnChange(fn: any) {
@@ -71,7 +77,6 @@ export class PhoneIconFieldComponent implements OnInit {
     this.valueChanged.emit(this.getEventData(this.activeIcon))
   }
   getEventData(icon): PhoneIconModel {
-    console.log(this.fieldNameEl.nativeElement.value)
     return {
       icon,
       phonePrefix: this.phonePrefix,

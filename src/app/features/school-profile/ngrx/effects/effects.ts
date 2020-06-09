@@ -8,6 +8,7 @@ import { SchoolProfileModel } from '../../models/school-profile.model';
 import { selectSchoolProfile } from '../selectors';
 import { CreateSchoolModel } from '../../models/create-school.model';
 import { ProfileModel } from '../../models/profile.model';
+import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 
 @Injectable()
 export class SchoolProfileEffects {
@@ -23,7 +24,7 @@ export class SchoolProfileEffects {
     mergeMap(([action, schoolProfile]) => {
       const schoolData = this.getSchoolReqData(schoolProfile);
       return this.schoolProfileService.createSchool(schoolData).pipe(
-        switchMap(res => [toggleProfileEndModal()])
+        switchMap(res => [toggleProfileEndModal(), incrementProgress()])
       )
     })
   ))
@@ -38,7 +39,7 @@ export class SchoolProfileEffects {
       },
       name: schoolProfile.schoolName,
       email: schoolProfile.contact.email,
-      phoneNo: schoolProfile.contact.phone,
+      phoneNo: schoolProfile.contact.phone.phoneNum,
       website: schoolProfile.contact.website,
       logo: schoolProfile.schoolLogo
     }

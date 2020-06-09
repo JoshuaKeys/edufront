@@ -22,6 +22,7 @@ export const studentsModalReducer = createReducer(initialState,
     }
   }),
   on(toggleEndModal, (state, action) => {
+    alert('hello')
     return {
       ...state,
       endModal: !state.endModal

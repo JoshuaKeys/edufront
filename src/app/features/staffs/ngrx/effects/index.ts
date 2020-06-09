@@ -12,7 +12,7 @@ import {
   doNothing,
   createStaffResponse,
   createStaffRequest,
-  toggleAddEditModal,
+  toggleAddModal,
   deleteStaffRequest,
   deleteStaffSuccess
 } from '../actions';
@@ -68,7 +68,7 @@ export class StaffsEffects {
         mergeMap(res => {
           const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, res.file)
           return this.staffsService.createStaff(createStaffRequestObj).pipe(
-            mergeMap(response => [createStaffResponse({ staff: response }), toggleAddEditModal()])
+            mergeMap(response => [createStaffResponse({ staff: response }), toggleAddModal()])
           );
         })
       )

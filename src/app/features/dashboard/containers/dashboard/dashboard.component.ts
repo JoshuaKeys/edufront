@@ -1,4 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { DashboardStateModel } from '../../models/dashboard-state.model';
+import { selectDashboardState } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-dashboard',
@@ -7,8 +11,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  activeNavIndex = 3;
-  progress = 30;
+
+  activeNavIndex: number;
+  progress: number;
+
   trackerState(index) {
     if (index > this.activeNavIndex) {
       return '';
@@ -69,7 +75,14 @@ export class DashboardComponent implements OnInit {
       route: '/timetable'
     }
   ];
-  constructor() {}
+  constructor(private store: Store<DashboardStateModel>) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select(selectDashboardState).subscribe(
+      dashboardState => {
+        this.activeNavIndex = dashboardState.activeNavIndex
+        this.progress = dashboardState.progress
+      }
+    )
+  }
 }

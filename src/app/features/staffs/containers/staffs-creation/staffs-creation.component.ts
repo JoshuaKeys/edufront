@@ -15,7 +15,7 @@ import {
 import { Observable } from 'rxjs';
 import { StaffsModalsModel } from '../../models/staffs-modal.model';
 import {
-  toggleAddEditModal,
+  toggleAddModal,
   setSelectedState,
   unSetSelectedState,
   addClassToSubjectRequest,
@@ -24,7 +24,8 @@ import {
   toggleSortByAlphabet,
   deleteStaffRequest,
   toggleEndModal,
-  toggleStartModal
+  toggleStartModal,
+  toggleEditModal
 } from '../../ngrx/actions';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -33,6 +34,7 @@ import { SubjectClassesAssociation } from '../../models/subject-classes-associat
 import { StaffFormModel } from '../../models/staff-form.model'
 import { SortingModel } from '../../models/sorting-state.model';
 import { StaffsCommunicatorService } from '../../services/staffs-communication.service';
+import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 
 @Component({
   selector: 'edu-staffs-creation',
@@ -102,14 +104,14 @@ export class StaffsCreationComponent implements OnInit {
   }
 
   onEditStaff(staff: StaffModel) {
-    this.store.dispatch(toggleAddEditModal());
+    this.store.dispatch(toggleEditModal());
   }
   onRemoveStaff(staff: StaffModel) {
     this.store.dispatch(deleteStaffRequest({ staff }))
   }
 
   onAddStaff() {
-    this.store.dispatch(toggleAddEditModal());
+    this.store.dispatch(toggleAddModal());
   }
 
   onSelectSubject(subjectId: string) {
@@ -119,6 +121,7 @@ export class StaffsCreationComponent implements OnInit {
   }
   onFinish() {
     this.store.dispatch(toggleEndModal())
+    this.store.dispatch(incrementProgress())
   }
   transformClasses(allClasses, classesOfSubjects) {
     if (!classesOfSubjects) {
