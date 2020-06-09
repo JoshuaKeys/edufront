@@ -26,6 +26,9 @@
     // flex-direction: row;
   }
 }
+.drop-zone--create {
+  max-height: calc(100vh - 285px);
+}
 
 .groups--split-layout,
 .groups--row-layout {
