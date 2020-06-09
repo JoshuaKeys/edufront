@@ -73,8 +73,11 @@ li {
   position: relative;
 
   .icon {
+    &:focus {
+      outline: none;
+    }
     flex-shrink: 0;
-
+    cursor: pointer;
     width: 64px;
     height: 64px;
     border: 2px solid #e6e9f3;
