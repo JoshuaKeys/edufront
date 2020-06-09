@@ -1,8 +1,28 @@
 @import '../../../../../assets/styles/modules/section-module';
 @include splitLayout();
+
+section {
+  padding-top: 46px;
+  @include displayFlex(unset, unset, column);
+}
+edu-select {
+  margin: unset;
+  width: 194px;
+  height: 54px;
+  &::ng-deep label,
+  &::ng-deep input {
+    font-size: 16px !important;
+  }
+}
 .form {
-  @include displayFlex(flex-start, center, column);
-  width: 90vw;
+  position: relative;
+  top: unset;
+  left: unset;
+  transform: unset;
+  height: 100%;
+  @include displayFlex(center, center, column);
+  margin: auto;
+  width: calc(100vw - 312px);
   max-width: 1080px;
 
   &__title {
@@ -29,14 +49,19 @@
     }
   }
 
-  &__btn {
+  &__button {
+    position: relative;
     background: $blue;
-    bottom: -206px;
-    transform: translateY(-100%);
-    &:active {
-      top: unset;
-      bottom: -212px;
-    }
+    margin: auto;
+    margin: 40px auto;
+    flex-shrink: 0;
+    // background: $blue;
+    // bottom: -206px;
+    // transform: translateY(-100%);
+    // &:active {
+    //   top: unset;
+    //   bottom: -212px;
+    // }
   }
 }
 .round-badges {

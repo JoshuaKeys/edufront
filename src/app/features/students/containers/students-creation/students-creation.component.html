@@ -49,9 +49,6 @@
               alt=""
               class="icon-img"
             />
-            <div class="tooltip tooltip--top">
-              Sort Alphabetical
-            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -61,13 +58,19 @@
             (click)="onSortByClasses()"
           >
             <img
-              src="../../../assets/subject-search-icon-2.svg"
+              class="search__icon"
+              src="../../../assets/search-icon.svg"
               alt=""
               class="icon-img"
             />
-            <div class="tooltip tooltip--top">
-              Sort by Classes
-            </div>
+
+            <input
+              class="search__input"
+              type="text"
+              #searchInput
+              placeholder="Search"
+              (input)="onTextChange($event)"
+            />
           </div>
           <div
             class="search__icon-btn"
@@ -85,64 +88,64 @@
               Sort by Sex
             </div>
           </div>
-        </div>
 
-        <button class="search__btn" (click)="onAddStudent()">
-          <span>+</span>
-        </button>
-      </div>
-      <div class="group">
-        <div
-          class="group__body"
-          *ngIf="
-            (sortingState | async).alphabetical === false &&
-            (sortingState | async).byGender === false &&
-            (sortingState | async).byClasses == false
-          "
-        >
-          <edu-student-chip
-            *ngFor="let student of studentsXClasses | async"
-            [student]="student"
-          ></edu-student-chip>
+          <button class="search__btn" (click)="onAddStudent()">
+            <span>+</span>
+          </button>
         </div>
-      </div>
-      <div class="group group--alphabetically">
-        <div class="group__body" *ngIf="(sortingState | async).alphabetical">
-          <edu-sort-alphabetically
-            [studentsXClasses]="studentsXClasses"
-          ></edu-sort-alphabetically>
+        <div class="group">
+          <div
+            class="group__body"
+            *ngIf="
+              (sortingState | async).alphabetical === false &&
+              (sortingState | async).byGender === false &&
+              (sortingState | async).byClasses == false
+            "
+          >
+            <edu-student-chip
+              *ngFor="let student of studentsXClasses | async"
+              [student]="student"
+            ></edu-student-chip>
+          </div>
         </div>
-      </div>
-      <div class="group group-gender">
-        <div class="group__body" *ngIf="(sortingState | async).byGender">
-          <edu-sort-by-gender
-            [students]="studentsXClasses"
-          ></edu-sort-by-gender>
+        <div class="group group--alphabetically">
+          <div class="group__body" *ngIf="(sortingState | async).alphabetical">
+            <edu-sort-alphabetically
+              [studentsXClasses]="studentsXClasses"
+            ></edu-sort-alphabetically>
+          </div>
         </div>
-      </div>
-      <div class="group group-gender">
-        <div class="group__body" *ngIf="(sortingState | async).byClasses">
-          <edu-sort-by-classes
-            [studentsXClasses]="studentsXClasses"
-          ></edu-sort-by-classes>
+        <div class="group group-gender">
+          <div class="group__body" *ngIf="(sortingState | async).byGender">
+            <edu-sort-by-gender
+              [students]="studentsXClasses"
+            ></edu-sort-by-gender>
+          </div>
         </div>
-      </div>
-      <div class="content__btns opacity">
-        <div class="opacity-overlay"></div>
-        <button class="content__btn" (click)="onFinish()">Continue</button>
-      </div>
-      <div class="content__btns opacity">
-        <div class="opacity-overlay"></div>
-        <button class="content__btn" type="button" (click)="onFinish()">
-          Continue
-        </button>
+        <div class="group group-gender">
+          <div class="group__body" *ngIf="(sortingState | async).byClasses">
+            <edu-sort-by-classes
+              [studentsXClasses]="studentsXClasses"
+            ></edu-sort-by-classes>
+          </div>
+        </div>
       </div>
     </div>
+
+    <button
+      ButtonType="basic"
+      class="content__button"
+      type="button"
+      (click)="onFinish()"
+    >
+      Continue
+    </button>
   </section>
 </main>
 <edu-modal-v2
   *ngIf="(studentsModalState | async).startModal"
   btnText="GOT IT"
+  class="intro"
   header="Students Creation"
   icon="assets/students-intro.svg"
   (btnClicked)="onStart()"

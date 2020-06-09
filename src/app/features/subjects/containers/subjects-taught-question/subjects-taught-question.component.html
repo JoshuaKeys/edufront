@@ -7,20 +7,23 @@
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
-      <h2 class="content__title">
-        What subjects are taught in your school?
-      </h2>
-      <edu-subjects-form
-        (createSubject)="createSubject($event)"
-      ></edu-subjects-form>
-      <div class="content__btn-wrapper">
-        <button
-          class="content__btn"
-          [routerLink]="['../', activatedRouteData.next]"
-        >
-          Continue
-        </button>
+      <div class="content-wrapper">
+        <h2 class="content__title">
+          What subjects are taught in your school?
+        </h2>
+        <edu-subjects-form
+          (createSubject)="createSubject($event)"
+        ></edu-subjects-form>
       </div>
+    </div>
+    <div class="content__btn-wrapper">
+      <button
+        ButtonType="basic"
+        class="  form__button"
+        [routerLink]="['../', activatedRouteData.next]"
+      >
+        Continue
+      </button>
     </div>
   </section>
 
@@ -36,11 +39,17 @@
     </ng-template>
   </aside>
 </main>
-<edu-modal
+<edu-modal-v2
+  class="intro"
   *ngIf="(modalState | async).startModal"
-  [description]="getDescription()"
   btnText="GOT IT"
   header="Teaching Subjects"
   icon="assets/subjects_modal.svg"
   (btnClicked)="onModalBtnClicked()"
-></edu-modal>
+>
+  We now need to know what subjects are taught in your school. Just create a
+  <b class="orangecolor">tag</b> for each one and fill in the details. After you
+  have created all the tags, <b class="orangecolor">assign</b> them to the
+  relevant classes. This will speed up timetable and course management
+  tremendously.
+</edu-modal-v2>

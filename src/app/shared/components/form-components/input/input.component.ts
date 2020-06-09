@@ -65,9 +65,11 @@ export class InputComponent
     InputAffixDirective
   >;
   @ViewChild('validator') validator: ElementRef;
+
   @HostListener('click') onclick() {
     this.inputEl.nativeElement.focus();
   }
+
   setElementID() {
     if (
       this.elementId == undefined &&
@@ -134,9 +136,14 @@ export class InputComponent
 
   // value = ""; //for ControlValueAccessor implmentation
   val = '';
+  // valLen;
   set value(val) {
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    if (val === null) {
+      val = '';
+    }
     this.val = val;
+    // this.valLen = this.val.length;
     this.onChange(val);
     // this.onTouched(val)
   }

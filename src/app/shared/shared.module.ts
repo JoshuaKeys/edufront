@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 
 // import { HeaderNavComponent } from './components/header-nav/header-nav.component';
@@ -13,28 +14,28 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponentV2 } from './components/modal-v2/modal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+// import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { PhoneIconFieldComponent } from './components/phone-icon-field/phone-icon-field.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
 
-import { datePickerModule } from "./components/datepicker/datepicker.module";
-import { ButtonComponent } from "./components/button/button.component"
-import { PopoverComponent } from "./components/popover/popover.component"
-import { PopoverOptionDirective } from "./components/popover/popover-option.directive"
+import { datePickerModule } from './components/datepicker/datepicker.module';
 
-import { TimetableModule } from "./components/timetable/timetable.module";
+import { TimetableModule } from './components/timetable/timetable.module';
 import { SubjectsService } from './services/subjects.service';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { CountryFieldComponent } from './components/country-field/country-field.component';
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
+import { ButtonComponent } from './components/button/button.component';
+import { PopoverComponent } from './components/popover/popover.component';
+import { PopoverOptionDirective } from './components/popover/popover-option.directive';
 
-import { FormComponentsModule } from "./components/form-components/form-component.module";
+import { FormComponentsModule } from './components/form-components/form-component.module';
 import { SelectModule } from './components/form-components/select/select.module';
 import { StudentsFormComponent } from './components/students-form/students-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     FormComponentsModule,
     ReactiveFormsModule,
+    FormsModule,
     CommonModule,
     datePickerModule,
     SelectModule,
@@ -71,6 +73,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     FormComponentsModule,
+    PopoverOptionDirective,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
@@ -94,9 +97,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     PopoverComponent,
     StudentsFormComponent
   ],
-  providers: [
-    ClassesService,
-    SubjectsService
-  ]
+  providers: [ClassesService, SubjectsService]
 })
-export class SharedModule { }
+export class SharedModule {}

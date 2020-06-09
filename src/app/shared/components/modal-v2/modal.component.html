@@ -1,6 +1,6 @@
 <main>
-  <div class="modal__overlay">
-    <div class="modal">
+  <div class="modal__overlay" (click)="onBtnClick()">
+    <div class="modal" (click)="onModalClick($event)">
       <img class="modal__img" [src]="icon" alt="" />
       <h2 class="modal__title">
         {{ header }}
@@ -12,15 +12,23 @@
         </p>
       </div>
       <div class="modal__btns" *ngIf="completeModal; else startModalBtn">
-        <button class="modal__btn" (click)="onLeftBtnClicked()">
+        <button
+          ButtonType="basic"
+          class="modal__button"
+          (click)="onLeftBtnClicked()"
+        >
           {{ leftBtn }}
         </button>
-        <button class="modal__btn" (click)="onRightBtnClicked()">
+        <button
+          ButtonType="basic"
+          class="modal__button"
+          (click)="onRightBtnClicked()"
+        >
           {{ rightBtn }}
         </button>
       </div>
       <ng-template #startModalBtn>
-        <button class="modal__btn" (click)="onBtnClick()">
+        <button ButtonType="basic" class="modal__button" (click)="onBtnClick()">
           {{ btnText }}
         </button>
       </ng-template>
