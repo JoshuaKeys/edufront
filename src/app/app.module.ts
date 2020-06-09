@@ -18,9 +18,7 @@ export function ConfigLoader(configService: ConfigService) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     CoreModule,
@@ -31,9 +29,14 @@ export function ConfigLoader(configService: ConfigService) {
     EffectsModule.forRoot([])
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: ConfigLoader, deps: [ConfigService], multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: ConfigLoader,
+      deps: [ConfigService],
+      multi: true
+    },
     AuthenticatedGuard
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
