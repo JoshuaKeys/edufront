@@ -62,7 +62,7 @@ export const selectCreateSectionData = createSelector(selectAllSections, section
       const _studentIds = section.subjects.map(student => student.id)
       studentIds = _studentIds
     })
-    return { classId, sectionName, students: studentIds }
+    return { classId, sectionName, studentIds }
   })
   return mappedSections;
 })

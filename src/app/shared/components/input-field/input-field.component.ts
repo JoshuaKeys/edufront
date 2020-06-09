@@ -16,6 +16,7 @@ export class InputFieldComponent implements OnInit, ControlValueAccessor {
   @Input() text: string;
   @Input() idPrefix: string;
   @Input() type: string;
+  @Input() disabled: boolean;
 
   @Output() onChange = new EventEmitter<{ name: string, value: string }>()
 

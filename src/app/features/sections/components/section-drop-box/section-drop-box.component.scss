@@ -121,6 +121,17 @@
     border-bottom: 1px solid $grey;
     padding-bottom: 0;
     margin-bottom: 20px;
+    line-height: 5px;
+    margin-top: 30px;
+    input {
+      border: none;
+      width: 100%;
+      text-align: center;
+      height: 30px;
+      &:focus {
+        outline: none;
+      }
+    }
   }
   &__group {
     max-width: 500px;

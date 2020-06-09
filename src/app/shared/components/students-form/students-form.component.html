@@ -46,7 +46,7 @@
               formControlName="dob"
               text="Date of Birth"
             ></edu-input-field>
-
+            <!-- <edu-datepicker formControlName="dob"></edu-datepicker> -->
             <edu-select formControlName="gender">
               <span class="edu-label"> Sex </span>
               <edu-option OptionValue="Male"> Male </edu-option>
@@ -96,6 +96,7 @@
             <edu-input-field
               idPrefix="id"
               formControlName="id"
+              [disabled]="true"
               text="ID - Auto Generated"
             ></edu-input-field>
           </div>

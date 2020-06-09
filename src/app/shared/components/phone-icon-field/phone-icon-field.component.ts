@@ -44,6 +44,7 @@ export class PhoneIconFieldComponent implements OnInit {
     this.item = val.item;
   }
   changeItem(icon: PhoneIconModel) {
+    console.log('holla')
     const iconCopy = { ...icon };
     iconCopy.phoneNum = this.value;
     this.onValueChange(iconCopy)

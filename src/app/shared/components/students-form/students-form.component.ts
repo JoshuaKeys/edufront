@@ -3,9 +3,11 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
 import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
 import { Observable } from 'rxjs';
-import { StudentsXClassesModel } from '../../models/students-x-classes.model';
-import { StudentsStateModel } from '../../models/students-state.model';
-import { StudentModel } from '../../../../shared/models/student.model';
+import { StudentsStateModel } from 'src/app/features/students/models/students-state.model';
+import { StudentsXClassesModel } from 'src/app/features/students/models/students-x-classes.model';
+import { StudentModel } from '../../models/student.model';
+
+
 
 @Component({
   selector: 'edu-students-form',
@@ -39,12 +41,16 @@ export class StudentsFormComponent implements OnInit {
       icon: 'assets/images/flags/flg-uk.svg',
       phonePrefix: '+44'
     }
-  ]
+  ];
+
   @Input() studentsXClasses: Observable<StudentsXClassesModel[]>
   @Input() students: StudentModel;
   @Output() onSubmit = new EventEmitter<StudentsStateModel>();
   addEditForm: FormGroup;
+  sortedStudentsXClasses: Observable<StudentsXClassesModel[]>;
+
   constructor() { }
+
   createStaff() {
     const formValue = this.addEditForm.value;
     formValue.profileDto.profileImage = formValue.profilePic.profileImage
@@ -99,7 +105,7 @@ export class StudentsFormComponent implements OnInit {
         firstName: new FormControl(''),
         middleName: new FormControl(''),
         familyName: new FormControl(''),
-        dob: new FormControl(''),
+        dob: new FormControl('01/02/20'),
         gender: new FormControl(''),
         id: new FormControl(''),
         country: new FormControl(this.countryIconMap[0]),

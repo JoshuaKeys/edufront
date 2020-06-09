@@ -1,4 +1,4 @@
-@import '../../../../../assets/styles/modules/section-module';
+@import 'src/assets/styles/modules/section-module';
 .modal {
   @include modal();
   padding: 110px 50px 60px 50px;

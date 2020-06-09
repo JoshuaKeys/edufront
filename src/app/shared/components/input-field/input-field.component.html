@@ -8,6 +8,7 @@
     #inputField
     (input)="onTextChange($event)"
     pattern="(/w)"
+    [disabled]="disabled"
   />
   <label class="form__input-label" for="{{ idPrefix }}-{{ index }}">{{
     text

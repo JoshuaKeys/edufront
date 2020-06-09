@@ -11,6 +11,4 @@ export class DroppableDirective implements OnInit {
     this.renderer.setProperty(this.elementRef.nativeElement, 'draggable', true);
     this.renderer.addClass(this.elementRef.nativeElement, 'app-draggable');
   }
-
-
 }

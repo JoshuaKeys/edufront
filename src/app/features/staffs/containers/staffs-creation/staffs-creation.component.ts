@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EntityState } from '@ngrx/entity';
 import { StaffModel } from '../../../../shared/models/staff.model';
@@ -163,13 +163,14 @@ export class StaffsCreationComponent implements OnInit {
     `;
   }
   goToDashboard() {
-
+    this.router.navigateByUrl('/dashboard')
   }
   goToStudents() {
 
   }
   constructor(
     private store: Store<EntityState<StaffModel>>,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private staffsCommunicator: StaffsCommunicatorService
   ) { }

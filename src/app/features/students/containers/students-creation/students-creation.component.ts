@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../../models/students-state.model';
 import { selectModalState, selectSortingState, selectStudentsAndClasses } from '../../ngrx/selectors'
 import { toggleStartModal, toggleAddModal } from '../../ngrx/actions/students-modal.actions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentsService } from '../../services/students.service';
 import { toggleEndModal } from 'src/app/features/subjects/ngrx/actions';
 import { StudentsSortingModel } from '../../models/students-sorting.model';
@@ -34,6 +34,9 @@ export class StudentsCreationComponent implements OnInit {
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
     this.studentCommunication.studentEdition$.subscribe(student => this.onEditStudent(student))
     this.studentCommunication.studentRemoval$.subscribe(student => this.onRemoveStudent(student))
+  }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
   }
   onStart() {
     this.store.dispatch(toggleStartModal())
@@ -74,6 +77,7 @@ export class StudentsCreationComponent implements OnInit {
   processSubmit(event) {
     this.onAddStudent();
   }
+
   onRemoveStudent(student: StudentModel) {
     console.log(student);
     this.store.dispatch(deleteStudentRequest({ student }))
@@ -85,6 +89,7 @@ export class StudentsCreationComponent implements OnInit {
   constructor(private store: Store<StudentsStateModel>,
     private activatedRoute: ActivatedRoute,
     private studentCommunication: StudentsCommunicatorService,
-    private studentsService: StudentsService
+    private studentsService: StudentsService,
+    private router: Router
   ) { }
 }

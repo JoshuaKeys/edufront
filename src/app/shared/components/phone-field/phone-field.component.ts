@@ -21,6 +21,8 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
   value: string;
   item: string;
   icon: PhoneIconModel;
+  filteredIcons: PhoneIconModel[];
+  filter = ''
   @Output() valueChanged = new EventEmitter<PhoneIconModel>()
   writeValue(val: PhoneIconModel) {
     if (val === null || val == undefined) {
@@ -36,6 +38,9 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
     this.phonePrefix = val.phonePrefix;
     this.activeIcon = val.icon;
     this.item = val.item;
+  }
+  onSearchInputChange(input: InputEvent) {
+    this.filteredIcons = this.filterIcons(this.icons, input.target['value'])
   }
   registerOnChange() {
 
@@ -62,6 +67,10 @@ export class PhoneFieldComponent implements OnInit, ControlValueAccessor {
     this.valueChanged.emit(this.icon)
   }
   ngOnInit(): void {
+    this.filteredIcons = this.filterIcons(this.icons, this.filter)
+  }
+  filterIcons(icons: PhoneIconModel[], filter: string) {
+    return icons.filter(icon => icon.item.match(filter))
   }
   constructor() { }
 }

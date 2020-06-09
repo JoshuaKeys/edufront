@@ -32,6 +32,8 @@ import { PhoneFieldComponent } from './components/phone-field/phone-field.compon
 
 import { FormComponentsModule } from "./components/form-components/form-component.module";
 import { SelectModule } from './components/form-components/select/select.module';
+import { StudentsFormComponent } from './components/students-form/students-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -55,10 +57,12 @@ import { SelectModule } from './components/form-components/select/select.module'
     PhoneFieldComponent,
     ButtonComponent,
     PopoverComponent,
-    PopoverOptionDirective
+    PopoverOptionDirective,
+    StudentsFormComponent
   ],
   imports: [
     FormComponentsModule,
+    ReactiveFormsModule,
     CommonModule,
     datePickerModule,
     SelectModule,
@@ -87,7 +91,8 @@ import { SelectModule } from './components/form-components/select/select.module'
     ImgUploadV2Component,
     CountryFieldComponent,
     PhoneFieldComponent,
-    PopoverComponent
+    PopoverComponent,
+    StudentsFormComponent
   ],
   providers: [
     ClassesService,

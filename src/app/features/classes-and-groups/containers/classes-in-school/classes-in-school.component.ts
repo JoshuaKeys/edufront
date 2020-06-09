@@ -21,6 +21,9 @@ export class ClassesInSchoolComponent implements OnInit {
     this.selectedClasses = this.store.select(selectSelectedClasses);
     this.modalState = this.store.select(selectModalState);
   }
+    goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   onClassClick(name: string) {
     this.store.dispatch(toggleClass({ name }))
   }

@@ -25,11 +25,16 @@ export class SectionDropBoxComponent implements OnInit {
     classId: string;
     sectionName: string;
   }>()
+  @Output() onChangeSectionName = new EventEmitter<{ classId: string; oldName: string; newName: string }>()
   @Input() sections: Observable<SectionModel>;
   isDraggedOver = false;
   constructor() { }
   addSection(classId: string) {
-    this.onAddSection.emit(classId)
+    this.
+      onAddSection.emit(classId)
+  }
+  changeSectionName(inputEvt, oldName, classId) {
+    this.onChangeSectionName.emit({ newName: inputEvt.target.value, oldName, classId })
   }
   onDrop(event: DragEvent, classId: string, sectionName: string) {
     event.preventDefault();

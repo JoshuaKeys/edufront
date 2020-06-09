@@ -42,6 +42,9 @@ export class SchoolNameQuestionComponent implements OnInit {
   getDescription() {
 
   }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   updateSchoolName(event: InputEvent) {
     const schoolName = event.target['value'];
     this.store.dispatch(setSchoolName({ schoolName }))
@@ -54,7 +57,7 @@ export class SchoolNameQuestionComponent implements OnInit {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private store: Store<PreviewModel>,
-    private router: Router
   ) { }
 }

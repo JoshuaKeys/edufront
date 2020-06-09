@@ -45,7 +45,10 @@
             </div>
           </div>
           <div class="content__btn-wrapper">
-            <button class="content__btn content__btn--white">
+            <button
+              class="content__btn content__btn--white"
+              [routerLink]="['../', activatedRouteData.previous]"
+            >
               Back
             </button>
             <button class="content__btn" (click)="create()">
@@ -57,3 +60,15 @@
     </div>
   </section>
 </main>
+<edu-modal-v2
+  *ngIf="(sectionsModalState | async).endModal"
+  header="Creating Sections"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO DASHBOARD"
+  rightBtn="CONTINUE TO CALENDER"
+  (leftBtnClicked)="goToDashboard()"
+>
+  <b class="orangeColor">You are almost there!</b> All that is left is to set up
+  your Calender and Timetable
+</edu-modal-v2>

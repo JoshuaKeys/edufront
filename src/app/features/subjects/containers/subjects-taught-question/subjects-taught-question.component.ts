@@ -7,7 +7,7 @@ import { selectSubjectModalState, selectAllSubjects } from './../../ngrx/selecto
 import { closeSubjectsStartModal, createSubjectRequest } from '../../ngrx/actions';
 import { SubjectModel } from '../../models/subject.model';
 import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'edu-subjects-taught-question',
   templateUrl: './subjects-taught-question.component.html',
@@ -29,6 +29,9 @@ export class SubjectsTaughtQuestionComponent implements OnInit {
   createSubject(subject: CreateSubjModel) {
     this.store.dispatch(createSubjectRequest({ subject }))
   }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   getDescription() {
     return `
       We now need to know what subjects are taught in your school. Just
@@ -39,6 +42,7 @@ export class SubjectsTaughtQuestionComponent implements OnInit {
   }
   constructor(
     private store: Store<SubjectsStateModel>,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) { }
 }

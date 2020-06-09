@@ -3,7 +3,7 @@ import * as fromContainers from '../containers'
 export const navigation = {
   'school-name-question': {
     next: 'school-address-question',
-    previous: '/school-profile/contact-details',
+    previous: '/dashboard',
   },
   'school-address-question': {
     next: 'contact-details-question',

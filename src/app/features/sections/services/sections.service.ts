@@ -14,7 +14,7 @@ export class SectionsService {
     return this.httpClient.get<ProfileDTOModel[]>(`/api/v1/profile/classId/${classId}`);
   }
   createClassesWithStudents(data: ClassesWithStudentsModel[]) {
-    return this.httpClient.post<ClassesWithStudentsModel[]>(`/api/v1/classSection`, data)
+    return this.httpClient.post<ClassesWithStudentsModel[]>(`/api/v1/classSection/createSectionList`, data)
   }
   constructor(private httpClient: HttpClient) { }
 }

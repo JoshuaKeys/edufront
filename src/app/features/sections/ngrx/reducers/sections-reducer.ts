@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { SectionModel } from '../../models/section.model';
-import { initFirstSection, addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly } from '../actions/sections.actions';
+import { initFirstSection, addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, changeSectionNameRequest } from '../actions/sections.actions';
 import { StudentModel } from 'src/app/shared/models/student.model';
 
 const initialState: SectionModel[] = [];
@@ -50,6 +50,15 @@ export const sectionsReducer = createReducer(initialState,
     stateCopy[sectionId].sections.push({ sectionName: (sectionLength + 1).toString(), subjects: [] })
 
     return stateCopy;
+  }),
+  on(changeSectionNameRequest, (state, action) => {
+    const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
+
+    const classIdx = stateCopy.findIndex(section => section.classId === action.classId);
+    const sectionIdx = stateCopy[classIdx].sections.findIndex(section => section.sectionName === action.sectionName);
+    stateCopy[classIdx].sections[sectionIdx].sectionName = action.sectionNewName;
+    return stateCopy;
+
   }),
   on(assignStudentsRandomly, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));

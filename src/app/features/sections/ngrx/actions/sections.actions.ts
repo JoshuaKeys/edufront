@@ -44,4 +44,11 @@ export const createClassesWithStudents = createAction(
 export const createClassesWithStudentsSuccess = createAction(
   '[SectionsEffects] createClassesWithStudentsSuccess',
   props<{ response: ClassesWithStudentsModel[] }>()
+);
+export const changeSectionNameRequest = createAction(
+  '[SectionsEffects] changeSectionNameRequest',
+  props<{ classId: string, sectionName: string; sectionNewName: string }>()
+)
+export const changeSectionName = createAction(
+  '[SectionsEffects] changeSectionName'
 )

@@ -2,12 +2,13 @@ import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { SectionsStateModel } from '../../models/sections-state.model';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { assignStudentsRequest, assignStudentsRandomly, getAggregatedResult, setAggregatedResult, createClassesWithStudents, createClassesWithStudentsSuccess } from '../actions/sections.actions';
-import { withLatestFrom, map, mergeMap } from 'rxjs/operators';
+import { assignStudentsRequest, assignStudentsRandomly, getAggregatedResult, setAggregatedResult, createClassesWithStudents, createClassesWithStudentsSuccess, changeSectionNameRequest, changeSectionName } from '../actions/sections.actions';
+import { withLatestFrom, map, mergeMap, switchMap } from 'rxjs/operators';
 import { selectNotDraggedStudents, selectAllClasses, selectSections, selectAllSections, selectAggregate, selectCreateSectionData } from '../selectors/classes.selectors';
 import { of } from 'rxjs';
 import { AggregateModel } from '../../models/aggregate.model';
 import { SectionsService } from '../../services/sections.service';
+import { toggleModal } from '../actions/sections-modal.actions';
 
 @Injectable()
 export class SectionsEffects {
@@ -23,6 +24,7 @@ export class SectionsEffects {
     ofType(getAggregatedResult),
     withLatestFrom(this.store.select(selectAllClasses), this.store.select(selectAllSections)),
     map(([action, classes, sections]) => {
+
       const mappOfClassesToSections: AggregateModel[] = sections.map(section => {
         const classItem = classes.find(classItem => classItem.class.id === section.classId)
         const sectionIdx = sections.findIndex(sectionItem => sectionItem.classId === section.classId)
@@ -32,7 +34,7 @@ export class SectionsEffects {
           sections: sections[sectionIdx].sections
         }
       })
-      return setAggregatedResult({ result: mappOfClassesToSections })
+      return setAggregatedResult({ result: mappOfClassesToSections });
     })
   ))
   createClassesWithStudents$ = createEffect(() => this.actions$.pipe(
@@ -40,10 +42,10 @@ export class SectionsEffects {
     withLatestFrom(this.store.select(selectCreateSectionData)),
     mergeMap(([action, createSecData]) => {
       return this.sectionsService.createClassesWithStudents(createSecData).pipe(
-        map(response => createClassesWithStudentsSuccess({ response }))
+        switchMap(response => [createClassesWithStudentsSuccess({ response }), toggleModal({ modal: 'endModal' })])
       )
     })
-  ), { dispatch: false })
+  ))
   constructor(
     private store: Store<SectionsStateModel>,
     private actions$: Actions,

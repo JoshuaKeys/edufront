@@ -14,13 +14,20 @@
       [ngClass]="{ 'drop-zone--is-dragged': isDraggedOver }"
     >
       <h4 class="drop-zone__title">
-        {{ _section.sectionName }}
+        <input
+          [value]="_section.sectionName"
+          (change)="
+            changeSectionName($event, _section.sectionName, sections.classId)
+          "
+        />
       </h4>
 
       <div
         class="chip"
         *ngFor="let student of _section.subjects"
         (click)="onClick(sections.classId, _section.sectionName, student)"
+        draggable="true"
+        [appDraggable]="{ data: student }"
         [ngClass]="{
           'chip--blue': student.gender.toLocaleLowerCase() === 'male',
           'chip--pink': student.gender.toLocaleLowerCase() === 'female'

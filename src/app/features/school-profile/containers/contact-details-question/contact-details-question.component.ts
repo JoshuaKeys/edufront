@@ -51,10 +51,10 @@ export class ContactDetailsQuestionComponent implements OnInit {
         contacts.phone = null;
         contacts.website = '';
       } else {
+        console.log(schoolContacts)
         contacts.email = schoolContacts.email;
         contacts.website = schoolContacts.website;
         const phoneIdx = this.countryIconMap.findIndex(countryItem =>
-          // `(${countryItem.phonePrefix})${countryItem.phoneNum}` === schoolContacts.phone
           countryItem.phonePrefix === schoolContacts.countryCode
         );
         if (schoolContacts.phone) {
@@ -66,6 +66,7 @@ export class ContactDetailsQuestionComponent implements OnInit {
           contacts.phone = null;
         }
       }
+
       this.contactForm = new FormGroup({
         phone: new FormControl(contacts.phone, Validators.required),
         email: new FormControl(contacts.email),

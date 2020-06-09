@@ -7,7 +7,6 @@ import { StoreModule } from '@ngrx/store';
 import { studentsReducer } from './ngrx/reducers';
 import { StudentsCreationComponent } from './containers/students-creation/students-creation.component';
 import { StudentsService } from './services/students.service';
-import { StudentsFormComponent } from './components/students-form/students-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { StudentsEffects } from './ngrx/effects';
@@ -23,7 +22,6 @@ import { TotalStudentsComponent } from './components/total-students/total-studen
   declarations: [
     StudentsShellComponent,
     StudentsCreationComponent,
-    StudentsFormComponent,
     StudentChipComponent,
     SortAlphabeticallyComponent,
     SortByGenderComponent,

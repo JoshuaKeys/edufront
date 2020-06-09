@@ -12,14 +12,19 @@
       <ul class="popup__entries">
         <li class="popup__entry popup__search-wrapper">
           <img class="popup__search-icon" src="assets/search.svg" alt="" />
-          <input class="popup__search-input" type="text" placeholder="Search" />
+          <input
+            class="popup__search-input"
+            type="text"
+            (input)="onSearchInputChange($event)"
+            placeholder="Search"
+          />
         </li>
       </ul>
       <div class="popup__content">
         <div class="icons">
           <div
             class="icon"
-            *ngFor="let icon of icons"
+            *ngFor="let icon of filteredIcons"
             (click)="changeItem(icon)"
           >
             <div class="icon__content">

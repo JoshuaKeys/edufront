@@ -46,13 +46,21 @@ const routes: Routes = [
     loadChildren: () => import('./features/students/students.module').then(m => m.StudentsModule)
   },
   {
+    path: 'dashboard',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module').then(
+        m => m.DashboardModule
+      )
+  },
+  {
     path: 'sections',
     canLoad: [AuthenticatedGuard],
     loadChildren: () => import('./features/sections/sections.module').then(m => m.SectionsModule)
   },
   {
     path: '',
-    redirectTo: '/sections/create-sections',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   }
 ];

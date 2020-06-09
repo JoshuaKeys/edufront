@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { SectionModel } from '../../models/section.model';
-import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest, getAggregatedResult } from '../../ngrx/actions/sections.actions';
+import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest, getAggregatedResult, changeSectionNameRequest } from '../../ngrx/actions/sections.actions';
 
 @Component({
   selector: 'edu-create-sections',
@@ -60,9 +60,22 @@ export class CreateSectionsComponent implements OnInit {
   goToConfirmation() {
     this.router.navigate(['../', this.activatedRouteData.next], { relativeTo: this.activatedRoute })
   }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard');
+  }
   onAssign(classId: string) {
-    // this.store.dispatch(assignStudentsRandomly())
     this.store.dispatch(assignStudentsRequest({ classId }))
+  }
+  onChangeGroupName(groupName: {
+    oldName: string;
+    newName: string;
+    classId: string
+  }) {
+    this.store.dispatch(changeSectionNameRequest({
+      sectionName: groupName.oldName,
+      sectionNewName: groupName.newName,
+      classId: groupName.classId
+    }))
   }
   processClassClick(classGrade: string) {
     console.log(classGrade);
