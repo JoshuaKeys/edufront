@@ -1,0 +1,107 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+
+.placeholderImg {
+  position: relative;
+}
+.file {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+
+image-cropper ::ng-deep {
+  //   width: 180px;
+  //   height: 180px;
+
+  & > div:first-child {
+    // width: 180px;
+    // height: 180px;
+  }
+  .source-image {
+    // max-width: 350px !important;
+    max-height: 232px !important;
+  }
+
+  .cropper {
+    // width: 180px !important;
+    // height: 180px !important;
+    // top: 50% !important;
+    // /* left: 1.5px; */
+
+    // left: 50% !important;
+    // transform: translate(-50%, -50%) !important;
+    // margin-left: 0 !important;
+  }
+}
+.buttons {
+  @include displayFlex(center, center);
+}
+.textButton {
+  font: 500 16px/24px Raleway;
+  color: $blue !important;
+  margin: 0 55px;
+}
+.zoom {
+  font-size: 26px;
+  line-height: 44px;
+  width: 44px !important;
+  height: 44px !important;
+  color: $blue;
+  margin: 0 8px;
+}
+
+.hidden {
+  opacity: 0 !important;
+  position: relative !important;
+  z-index: -1 !important;
+}
+.image--wrapper {
+  position: relative;
+}
+.image--confirmed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h3 {
+  position: absolute;
+  max-width: 90vw;
+}
+
+.img--confirmed-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  &__label {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.mouseOverText {
+  cursor: pointer;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  @include displayFlex();
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}

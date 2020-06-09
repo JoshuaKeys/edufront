@@ -1,18 +1,79 @@
-<input type="file" (change)="fileChangeEvent($event)" />
-<img [src]="croppedImage" *ngIf="confirmed" />
-<div>
-  <image-cropper
-    [imageChangedEvent]="imageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    format="png"
-    (imageCropped)="imageCropped($event)"
-    (imageLoaded)="imageLoaded()"
-    (cropperReady)="cropperReady()"
-    (loadImageFailed)="loadImageFailed()"
-  ></image-cropper>
+<div class="placeholderImg">
+  <!-- {{ showPlaceHolderImage() }}{{ !imgUploaded }}{{ confirmed }} -->
+  <ng-container *ngIf="showPlaceHolderImage(); else cropperTemplate">
+    <div
+      class="image--wrapper"
+      (dragenter)="handleDragEnter()"
+      (dragleave)="handleDragLeave()"
+      (drop)="handleDrop($event)"
+    >
+      <div [ngClass]="{ hidden: confirmed }">
+        <ng-content select=".placeholderImg"> </ng-content>
+      </div>
 
-  <div *ngIf="croppedImage">
-    <button>Delete</button><button (click)="onConfirm()">Confirm</button>
-  </div>
+      <div
+        *ngIf="value"
+        class="img--confirmed-wrapper"
+        (mouseenter)="onMouseEnter()"
+        (mouseleave)="onMouseLeave()"
+      >
+        <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
+          <h4>click to change image</h4>
+        </label>
+        <img class="image--confirmed" [src]="value" *ngIf="confirmed" />
+      </div>
+      <input
+        id="fileInput"
+        #file
+        class="file"
+        type="file"
+        (change)="fileChangeEvent($event)"
+      />
+    </div>
+  </ng-container>
+
+  <ng-template #cropperTemplate>
+    <div>
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [transform]="imageTransFormObj"
+        format="png"
+        roundCropper="true"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+      <!-- <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [transform]="imageTransFormObj"
+      [cropper]="imageCropperPosition"
+      roundCropper="true"
+      hideResizeSquares="true"
+      format="png"
+      autoCrop="false"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper> -->
+
+      <div *ngIf="imgUploaded && showControls">
+        <div class="buttons">
+          <button ButtonType="fab" class="zoom" (click)="zoomIn()">+</button>
+          <button ButtonType="fab" class="zoom" (click)="zoomOut()">-</button>
+        </div>
+        <div class="buttons">
+          <button class="textButton" ButtonType="text" (click)="resetCropper()">
+            Delete
+          </button>
+          <button class="textButton" ButtonType="text" (click)="onConfirm()">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>
