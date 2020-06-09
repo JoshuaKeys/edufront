@@ -38,14 +38,17 @@
               <span class="edu-label">Last Name</span>
             </edu-input>
           </div>
-          <div class="modal__content-second-row">
-            <edu-input-field
+          <div class="group--row form--row">
+            <edu-input alignment="left" formControlName="dob">
+              <span class="edu lebel">Date of Birth</span>
+            </edu-input>
+            <!-- <edu-input-field
               idPrefix="dateOfBirth"
               formControlName="dob"
               text="Date of Birth"
-            ></edu-input-field>
+            ></edu-input-field> -->
             <!-- <edu-datepicker formControlName="dob"></edu-datepicker> -->
-            <edu-select formControlName="gender">
+            <edu-select formControlName="gender" alignment="left">
               <span class="edu-label"> Sex </span>
               <edu-option OptionValue="Male"> Male </edu-option>
               <edu-option OptionValue="Female"> Female </edu-option>
@@ -87,7 +90,7 @@
           </div>
 
           <div class="group--row form--row">
-            <edu-select formControlName="classId">
+            <edu-select alignment="left" formControlName="classId">
               <span class="edu-label"> Class </span>
               <edu-option
                 *ngFor="let studentXClass of studentsXClasses | async"
@@ -96,7 +99,7 @@
               </edu-option>
             </edu-select>
 
-            <edu-input alignment="left" formControlName="id" [disabled]="true">
+            <edu-input alignment="left" formControlName="id" disabled="true">
               <span class="edu-label ashcolor"> ID - Auto Generated</span>
             </edu-input>
           </div>

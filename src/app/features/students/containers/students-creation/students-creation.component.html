@@ -7,22 +7,7 @@
       <h2 class="content__title">
         Add or upload Students
       </h2>
-      <!-- <div class="search__wrapper">
-        <div class="search__input-wrapper">
-          <img class="search__icon" src="../../../assets/search.svg" alt="" />
 
-          <input
-            class="search__input"
-            type="text"
-            #searchInput
-            placeholder="Search"
-            (input)="onTextChange($event)"
-          />
-        </div>
-        <button class="search__btn" (click)="onAddStudent()">
-          <span>+</span>
-        </button>
-      </div> -->
       <div class="search__wrapper">
         <div class="search__input-wrapper">
           <img class="search__icon" src="../../../assets/search.svg" alt="" />
@@ -58,18 +43,9 @@
             (click)="onSortByClasses()"
           >
             <img
-              class="search__icon"
-              src="../../../assets/search-icon.svg"
+              src="../../../assets/subject-search-icon-2.svg"
               alt=""
               class="icon-img"
-            />
-
-            <input
-              class="search__input"
-              type="text"
-              #searchInput
-              placeholder="Search"
-              (input)="onTextChange($event)"
             />
           </div>
           <div
@@ -93,41 +69,42 @@
             <span>+</span>
           </button>
         </div>
-        <div class="group">
-          <div
-            class="group__body"
-            *ngIf="
-              (sortingState | async).alphabetical === false &&
-              (sortingState | async).byGender === false &&
-              (sortingState | async).byClasses == false
-            "
-          >
-            <edu-student-chip
-              *ngFor="let student of studentsXClasses | async"
-              [student]="student"
-            ></edu-student-chip>
-          </div>
+      </div>
+
+      <div class="group">
+        <div
+          class="group__body"
+          *ngIf="
+            (sortingState | async).alphabetical === false &&
+            (sortingState | async).byGender === false &&
+            (sortingState | async).byClasses == false
+          "
+        >
+          <edu-student-chip
+            *ngFor="let student of studentsXClasses | async"
+            [student]="student"
+          ></edu-student-chip>
         </div>
-        <div class="group group--alphabetically">
-          <div class="group__body" *ngIf="(sortingState | async).alphabetical">
-            <edu-sort-alphabetically
-              [studentsXClasses]="studentsXClasses"
-            ></edu-sort-alphabetically>
-          </div>
+      </div>
+      <div class="group group--alphabetically">
+        <div class="group__body" *ngIf="(sortingState | async).alphabetical">
+          <edu-sort-alphabetically
+            [studentsXClasses]="studentsXClasses"
+          ></edu-sort-alphabetically>
         </div>
-        <div class="group group-gender">
-          <div class="group__body" *ngIf="(sortingState | async).byGender">
-            <edu-sort-by-gender
-              [students]="studentsXClasses"
-            ></edu-sort-by-gender>
-          </div>
+      </div>
+      <div class="group group-gender">
+        <div class="group__body" *ngIf="(sortingState | async).byGender">
+          <edu-sort-by-gender
+            [students]="studentsXClasses"
+          ></edu-sort-by-gender>
         </div>
-        <div class="group group-gender">
-          <div class="group__body" *ngIf="(sortingState | async).byClasses">
-            <edu-sort-by-classes
-              [studentsXClasses]="studentsXClasses"
-            ></edu-sort-by-classes>
-          </div>
+      </div>
+      <div class="group group-gender">
+        <div class="group__body" *ngIf="(sortingState | async).byClasses">
+          <edu-sort-by-classes
+            [studentsXClasses]="studentsXClasses"
+          ></edu-sort-by-classes>
         </div>
       </div>
     </div>

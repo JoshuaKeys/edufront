@@ -56,7 +56,7 @@ export class InputComponent
   disabled: boolean; //for ControlValueAccessor implmentation
 
   @Output() onValueChange = new EventEmitter<any>();
-
+  @Input('disabled') isDisabled;
   @Input('elementId') elementId;
   @Input('alignment') alignment = 'center'; //center (default ),left,right
   @Input('isPassword') isPassword = false;
@@ -165,5 +165,8 @@ export class InputComponent
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    if (this.isDisabled != undefined) {
+      this.disabled = this.isDisabled;
+    }
   }
 }

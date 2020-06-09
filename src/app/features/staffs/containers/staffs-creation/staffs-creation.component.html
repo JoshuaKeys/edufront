@@ -30,17 +30,9 @@
           >
             <img
               class="search__icon"
-              src="../../../assets/search-icon.svg"
+              src="../../../assets/subject-search-icon-1.svg"
               alt=""
               class="icon-img"
-            />
-
-            <input
-              class="search__input"
-              type="text"
-              #searchInput
-              placeholder="Search"
-              (input)="onTextChange($event)"
             />
           </div>
           <div
@@ -64,31 +56,31 @@
             <span>+</span>
           </button>
         </div>
-        <div class="group">
-          <div
-            class="group__body"
-            *ngIf="
-              (sortingState | async).alphabetical === false &&
-              (sortingState | async).byGender === false
-            "
-          >
-            <edu-staff-chip
-              *ngFor="let staff of staffs | async"
-              [staff]="staff"
-            ></edu-staff-chip>
-          </div>
+      </div>
+      <div class="group">
+        <div
+          class="group__body"
+          *ngIf="
+            (sortingState | async).alphabetical === false &&
+            (sortingState | async).byGender === false
+          "
+        >
+          <edu-staff-chip
+            *ngFor="let staff of staffs | async"
+            [staff]="staff"
+          ></edu-staff-chip>
         </div>
-        <div class="group group--alphabetically">
-          <div class="group__body" *ngIf="(sortingState | async).alphabetical">
-            <edu-classes-alphabetically
-              [staffs]="staffs"
-            ></edu-classes-alphabetically>
-          </div>
+      </div>
+      <div class="group group--alphabetically">
+        <div class="group__body" *ngIf="(sortingState | async).alphabetical">
+          <edu-classes-alphabetically
+            [staffs]="staffs"
+          ></edu-classes-alphabetically>
         </div>
-        <div class="group group-gender">
-          <div class="group__body" *ngIf="(sortingState | async).byGender">
-            <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
-          </div>
+      </div>
+      <div class="group group-gender">
+        <div class="group__body" *ngIf="(sortingState | async).byGender">
+          <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
         </div>
       </div>
       <div class="content__btns ">
