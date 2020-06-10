@@ -2,6 +2,9 @@
   height: 100vh;
 }
 .side-bar {
+  overflow-y: scroll;
+  min-width: 250px;
+  max-width: 300px;
   width: 20%;
   background: #fafbfc;
   padding: 20px;

@@ -1,10 +1,41 @@
 <div class="form__input-wrapper">
+  <!-- <edu-input
+    elementId="{{ idPrefix }}-{{ index }}"
+    [(ngModel)]="inputValue"
+    (change)="onTextChange($event)"
+    [ngClass]="{ subFields: index }"
+  >
+    <div class="edu-input__prefix" InputAffix>
+      <img
+        src="../../../assets/iconfinder_subject_plus-blue.svg"
+        alt=""
+        (click)="add(type, index)"
+      />
+    </div>
+    <span
+      class="edu-input__suffix deleteIcon"
+      InputAffix
+      (click)="remove(type, index)"
+      *ngIf="index && !last"
+      >-</span
+    >
+    <span class="edu-label" *ngIf="!index; else subsequentItems"
+      >{{ text }} <span class="ashcolor">(Optional)</span></span
+    >
+    <ng-template #subsequentItems>
+      <span class="edu-label "
+        ><span class="ashcolor"> {{ text }} </span></span
+      >
+    </ng-template>
+  </edu-input> -->
+
   <img
+    class="form__input-icon form__input-icon--left"
     src="../../../assets/iconfinder_subject_plus-blue.svg"
     alt=""
-    class="form__input-icon"
     (click)="add(type, index)"
   />
+
   <input
     id="{{ idPrefix }}-{{ index }}"
     type="text"
@@ -30,6 +61,6 @@
     (click)="remove(type, index)"
     *ngIf="!last"
     class="form__input-icon form__input-icon--right"
-    >-</span
-  >
+    >-
+  </span>
 </div>

@@ -19,6 +19,15 @@ body {
   width: 100%;
   overflow: scroll;
   align-content: flex-start;
+  &::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 0px;
+  }
+
+  &::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 0px;
+  }
 }
 
 @include form();
@@ -194,7 +203,7 @@ body {
 .search__wrapper {
   position: relative;
   width: 100%;
-  padding: 4px 15px;
+  padding: 4px 5px;
   justify-content: flex-start;
   align-items: flex-end;
   flex-direction: row;

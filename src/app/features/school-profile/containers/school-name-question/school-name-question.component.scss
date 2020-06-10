@@ -17,7 +17,9 @@ body {
 @include modalIntro();
 
 @include modalComplete();
-
+main .content-wrapper {
+  margin-bottom: 46px;
+}
 edu-input ::ng-deep {
   width: 377px;
   height: 54px;

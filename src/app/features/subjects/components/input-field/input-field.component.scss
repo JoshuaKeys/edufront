@@ -6,6 +6,16 @@
 
 @include groups();
 @include form();
+
+edu-input.subFields ::ng-deep .label--active {
+  // font-size: 0;
+  // height: 0;
+  display: none;
+}
+.deleteIcon {
+  font-size: 2em;
+  color: red;
+}
 .content__title {
   width: 560px;
 }

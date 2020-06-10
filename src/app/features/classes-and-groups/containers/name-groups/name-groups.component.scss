@@ -483,6 +483,8 @@ aside {
   flex-wrap: wrap;
   // max-width: 1000px;
   width: 100%;
+  max-height: calc(100vh - 480px);
+  overflow-y: scroll;
 }
 
 .drop-zone {

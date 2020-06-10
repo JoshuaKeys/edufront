@@ -1,36 +1,38 @@
 <form [formGroup]="addSubjForm" (ngSubmit)="onSubmit()" class="card form">
-  <edu-subject-icon-field
-    formControlName="subjectName"
-  ></edu-subject-icon-field>
-  <div class="groups groups--split-layout">
-    <div class="group">
-      <div class="form__array" formArrayName="subSubjects">
-        <edu-array-input-field
-          text="Sub subject"
-          idPrefix="subSubject"
-          type="subject"
-          *ngFor="let subSubject of subSubjects.controls; let i = index"
-          [index]="i"
-          [formControlName]="i"
-          [last]="subSubjects.controls.length === 1"
-          (insertItem)="insertItem($event)"
-          (removeItem)="removeItem($event)"
-        ></edu-array-input-field>
+  <div class="inputs-wrapper">
+    <edu-subject-icon-field
+      formControlName="subjectName"
+    ></edu-subject-icon-field>
+    <div class="groups groups--split-layout">
+      <div class="group">
+        <div class="form__array" formArrayName="subSubjects">
+          <edu-array-input-field
+            text="Sub subject"
+            idPrefix="subSubject"
+            type="subject"
+            *ngFor="let subSubject of subSubjects.controls; let i = index"
+            [index]="i"
+            [formControlName]="i"
+            [last]="subSubjects.controls.length === 1"
+            (insertItem)="insertItem($event)"
+            (removeItem)="removeItem($event)"
+          ></edu-array-input-field>
+        </div>
       </div>
-    </div>
-    <div class="group">
-      <div class="form__array" formArrayName="activities">
-        <edu-array-input-field
-          text="Activity"
-          idPrefix="activity"
-          type="activity"
-          *ngFor="let activity of activities.controls; let i = index"
-          [index]="i"
-          [formControlName]="i"
-          [last]="activities.controls.length === 1"
-          (insertItem)="insertItem($event)"
-          (removeItem)="removeItem($event)"
-        ></edu-array-input-field>
+      <div class="group">
+        <div class="form__array" formArrayName="activities">
+          <edu-array-input-field
+            text="Activity"
+            idPrefix="activity"
+            type="activity"
+            *ngFor="let activity of activities.controls; let i = index"
+            [index]="i"
+            [formControlName]="i"
+            [last]="activities.controls.length === 1"
+            (insertItem)="insertItem($event)"
+            (removeItem)="removeItem($event)"
+          ></edu-array-input-field>
+        </div>
       </div>
     </div>
   </div>
