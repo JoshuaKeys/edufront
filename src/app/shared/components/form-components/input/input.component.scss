@@ -24,6 +24,7 @@ input:focus {
 }
 
 input {
+  text-overflow: ellipsis;
   border: none;
   height: 0;
   width: 100%;
@@ -148,7 +149,7 @@ label {
 
 .prefix,
 .suffix {
-  margin-bottom: 17px;
+  // margin-bottom: 17px;
   display: flex;
 }
 .prefix {

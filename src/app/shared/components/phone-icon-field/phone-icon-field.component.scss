@@ -1,15 +1,38 @@
 @import '../../../../assets/styles/modules/section-module';
+@import 'src/assets/styles/colors';
 
 @include splitLayout2();
 
 .wrapper {
   // z-index: 1;
 }
-edu-input {
+edu-input ::ng-deep {
   height: 100%;
+
+  .label-input__wrapper {
+    position: static;
+  }
+  label {
+    position: absolute;
+
+    left: 50%;
+    transform: translate(-50%);
+  }
+  .label--active {
+    top: 0;
+  }
+
+  input {
+    padding-right: 56px;
+  }
 }
 .edu-input__prefix {
-  position: absolute;
+  // position: absolute;
+  // top: calc(50% -1px);
+  // transform: translateY(-50%);
+  // height: calc(100% - 1px);
+  // background: white;
+  // position: absolute;
 }
 .icon__phone-prefix {
   font: 400 16px/24px Raleway;
@@ -70,14 +93,13 @@ aside {
 .chip {
   @include chip();
 }
-
 // TODO: Refactor to own file
-.form__input-wrapper--main .form__icon-select-wrapper {
+.form__icon-select-wrapper.edu-input__prefix {
   // z-index: 1;
   // position: absolute;
   // left: 0;
   // transform: translateX(-150%);
-  display: flex;
+  @include displayFlex();
 }
 
 .form__input-wrapper--main .form__icon-select-wrapper img {
@@ -169,7 +191,9 @@ aside {
   width: 30px;
 }
 .icon__phone-prefix {
-  position: absolute;
-  left: 45px;
-  color: grey;
+  // position: absolute;
+  font: 400 16px/24px Raleway;
+  margin-left: 10px;
+  margin-right: 5px;
+  color: $ash;
 }

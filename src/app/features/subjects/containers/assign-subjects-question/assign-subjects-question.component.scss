@@ -2,6 +2,10 @@
 @import '../../scss_fixes.scss';
 
 @include splitLayout2();
+
+:host ::ng-deep edu-options .drop-zone__options {
+  padding: 0 10px;
+}
 .search__input {
   border-width: 2px;
   font: 400 14px/22px Raleway;

@@ -56,13 +56,22 @@
           </div>
 
           <div class="group--row form--row">
-            <edu-icon-field
+            <edu-country-field
+              formControlName="country"
+              [fieldName]="'Country'"
+              [icons]="countryIconMap"
+              (valueChanged)="updateCountry($event)"
+              [mode]="'select'"
+            >
+            </edu-country-field>
+
+            <!-- <edu-icon-field
               formControlName="country"
               [fieldName]="'Country'"
               [icons]="countryIconMap"
               (valueChanged)="updateCountry($event)"
               mode="select"
-            ></edu-icon-field>
+            ></edu-icon-field> -->
             <!-- <edu-country-field
               formControlName="country"
               [fieldName]="'Country'"

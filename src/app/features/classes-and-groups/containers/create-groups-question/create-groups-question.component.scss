@@ -4,6 +4,7 @@
 section {
   padding-top: 46px;
   @include displayFlex(unset, unset, column);
+  padding-bottom: 46px;
 }
 
 .modal__text {
