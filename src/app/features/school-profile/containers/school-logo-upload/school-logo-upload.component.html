@@ -16,7 +16,10 @@
             (uploadimagedata)="onImageUpload($event)"
             formControlName="image"
           ></edu-image-upload> -->
-          <edu-image-upload-v3 (onImageCropped)="onCropImage($event)">
+          <edu-image-upload-v3
+            (onImageCropped)="onCropImage($event)"
+            [formControl]="uploadForm.controls['schoolLogo']"
+          >
             <div class="placeholderImg">
               <img src="/assets/32pxplusgrey.svg" alt="" srcset="" />
             </div>

@@ -12,7 +12,7 @@
       </div>
 
       <div
-        *ngIf="b64"
+        *ngIf="value.base64"
         class="img--confirmed-wrapper"
         (mouseenter)="onMouseEnter()"
         (mouseleave)="onMouseLeave()"
@@ -20,11 +20,12 @@
         <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
           <h4>click to change image</h4>
         </label>
-        <img class="image--confirmed" [src]="b64" *ngIf="confirmed" />
+        <img class="image--confirmed" [src]="value.base64" *ngIf="confirmed" />
       </div>
       <input
         id="fileInput"
         #file
+        name="file"
         class="file"
         type="file"
         (change)="fileChangeEvent($event)"

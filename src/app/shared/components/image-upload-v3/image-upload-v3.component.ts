@@ -11,11 +11,11 @@ import {
   Renderer2,
   ElementRef
 } from '@angular/core';
+import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import {
   ImageCroppedEvent,
   ImageTransform,
-  CropperPosition,
   ImageCropperComponent
 } from 'ngx-image-cropper';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -56,6 +56,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   ) {}
   @Input('showControls') showControls = true;
   @Output() onImageCropped = new EventEmitter<File>();
+  @Output('confirm') onConfirmEvent = new EventEmitter<ProfilePicModel>();
   @ViewChild(ImageCropperComponent) ImageCropper: ImageCropperComponent;
   @ViewChild('file') file: ElementRef;
   dragging;
@@ -66,8 +67,8 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.setHostToCircle(true);
   }
 
-  b64; // is value rendered by output Image
-  value; // is the blob croppedImg
+  // b64; // is value rendered by output Image
+  value: ProfilePicModel = { base64: '', acceptedFile: null, imageUrl: '' }; //
   croppedImage; //isValue of cropped image at any time
   imageChangedEvent: any = '';
 
@@ -119,7 +120,6 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.imageChangedEvent = null;
     this.imgUploaded = false;
     this.croppedImage = '';
-    this.value = '';
     this.setHostToCircle(true);
     this.isMousedOver = false;
   }
@@ -143,9 +143,9 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   imageCropped(event: ImageCroppedEvent) {
     //come back to fix the blob image output
     this.croppedImage = event.base64;
+    // console.log(this.croppedImage);
 
-    this.cd.markForCheck();
-
+    //was here originally
     var file = dataURLtoFile(
       'data:text/plain;base64,aGVsbG8gd29ybGQ=',
       'image.png'
@@ -161,19 +161,20 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
 
     let width = this.ImageCropper.sourceImage.nativeElement.offsetWidth;
     let height = this.ImageCropper.sourceImage.nativeElement.offsetHeight;
-    // this.ImageCropper.cropper = {
-    //   x1: 28,
-    //   y1: 52,
-    //   x2: 208,
-    //   y2: 232
-    // };
-    // this.cd.markForCheck();
-    // this.ImageCropper.crop();
 
+    // console.log(typeof this.croppedImage);
     // this.value = new Blob([this.croppedImage], { type: 'image/png' });
-    this.value = this.utils.getBlob(this.croppedImage);
-    this.b64 = this.croppedImage;
-    // console.log(this.b64);
+    let blob: any = this.utils.getBlob(this.croppedImage);
+
+    blob.lastModifiedDate = new Date();
+    blob.name = 'imageFile';
+
+    this.value.base64 = this.croppedImage;
+    this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile');
+
+    this.onConfirmEvent.emit(this.value);
+
+    // console.log(this.value);
 
     this.onChange(this.value);
     this.onTouched();
@@ -182,6 +183,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.cd.markForCheck();
     this.setHostToCircle(true);
   }
+
   cropperReady() {
     // cropper ready
   }
@@ -190,23 +192,37 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   }
 
   //Control value accessor implementation
-  disabled = false;
   onChange: any = () => {};
   onTouched: any = () => {};
+  writeValue(val: any) {
+    console.log('called');
+    if (val === null) {
+      return;
+    }
 
-  writeValue(value: any) {
-    this.value = value;
-    // this.imgURL = value;
+    this.value.base64 = val.base64;
   }
-
   registerOnChange(fn: any) {
-    this.onChange = fn;
+    // this.onUpload = fn;
   }
+  registerOnTouched() {}
 
-  registerOnTouched(fn: any) {
-    this.onTouched = fn;
-  }
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
+  // disabled = false;
+  // onChange: any = () => {};
+  // onTouched: any = () => {};
+
+  // writeValue(value: any) {
+  //   this.value = value;
+  // }
+
+  // registerOnChange(fn: any) {
+  //   this.onChange = fn;
+  // }
+
+  // registerOnTouched(fn: any) {
+  //   this.onTouched = fn;
+  // }
+  // setDisabledState(isDisabled: boolean): void {
+  //   this.disabled = isDisabled;
+  // }
 }
