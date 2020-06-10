@@ -171,13 +171,15 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
 
     this.value.base64 = this.croppedImage;
     this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile');
+    // console.log(this.value);
+    // this.value = { ...this.value };
+    this.onChange(this.value);
+    this.onTouched();
 
     this.onConfirmEvent.emit(this.value);
 
     // console.log(this.value);
 
-    this.onChange(this.value);
-    this.onTouched();
     this.confirmed = true;
     this.isMousedOver = false;
     this.cd.markForCheck();
@@ -195,7 +197,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   onChange: any = () => {};
   onTouched: any = () => {};
   writeValue(val: any) {
-    console.log('called');
+    // console.log('called');
     if (val === null) {
       return;
     }
@@ -203,6 +205,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.value.base64 = val.base64;
   }
   registerOnChange(fn: any) {
+    this.onChange = fn;
     // this.onUpload = fn;
   }
   registerOnTouched() {}

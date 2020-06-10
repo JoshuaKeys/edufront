@@ -37,6 +37,16 @@ export class SchoolLogoUploadComponent implements OnInit {
         });
       });
   }
+
+  onConfirm(img: { base64: string; imageUrl: string; acceptedFile: File }) {
+    // console.log(img);
+    this.uploadForm.patchValue({
+      image: img
+    });
+    this.store.dispatch(
+      uploadSchoolLogoRequest({ logo: img.acceptedFile, preview: img.base64 })
+    );
+  }
   onImageUpload(img: { base64: string; imageUrl: string; acceptedFile: File }) {
     this.uploadForm.patchValue({
       image: img
