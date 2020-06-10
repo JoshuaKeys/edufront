@@ -15,7 +15,7 @@ import { StudentModel } from '../../../../shared/models/student.model';
 import { createStudentRequest, deleteStudentRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'edu-students-creation',
   templateUrl: './students-creation.component.html',
@@ -30,11 +30,19 @@ export class StudentsCreationComponent implements OnInit {
   studentsXClasses: Observable<StudentsXClassesModel[]>;
   img;
   ngOnInit(): void {
-    this.httpClient.get('https://education.development.allexis.io/admin/image/profile/0ddcf2ee-9d85-4d25-9218-4a2c51d6f3f1.jpg')
-      .pipe(
-        catchError(res => of(console.log('hellooooo', res)))
-      )
-      .subscribe(res => alert('hello'))
+    const headers = new HttpHeaders().set('Content-Type', 'application/image; charset=utf-8');
+    this.httpClient.get('https://education.development.allexis.io/admin/image/profile/0ddcf2ee-9d85-4d25-9218-4a2c51d6f3f1.jpg', {
+      headers, responseType: 'blob'
+    })
+      .subscribe(res => {
+        console.log(res);
+        var reader = new FileReader();
+        reader.readAsDataURL(res);
+        reader.onloadend = () => {
+          var base64data = reader.result;
+          this.img = base64data
+        }
+      })
     this.studentsModalState = this.store.select(selectModalState);
     this.sortingState = this.store.select(selectSortingState)
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
