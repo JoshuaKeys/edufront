@@ -6,11 +6,12 @@ import {
   EventEmitter,
   ChangeDetectorRef,
   ViewChild,
-  AfterContentInit,
   forwardRef,
   Input,
+  Renderer2,
   ElementRef
 } from '@angular/core';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 import {
   ImageCroppedEvent,
   ImageTransform,
@@ -46,8 +47,13 @@ function dataURLtoFile(dataurl, filename) {
     }
   ]
 })
-export class ImageUploadV3Component implements OnInit, AfterContentInit {
-  constructor(private cd: ChangeDetectorRef) {}
+export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
+  constructor(
+    private utils: UtilsService,
+    private cd: ChangeDetectorRef,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {}
   @Input('showControls') showControls = true;
   @Output() onImageCropped = new EventEmitter<File>();
   @ViewChild(ImageCropperComponent) ImageCropper: ImageCropperComponent;
@@ -56,13 +62,15 @@ export class ImageUploadV3Component implements OnInit, AfterContentInit {
   isLoaded: boolean;
   confirmed: boolean;
   isMousedOver = false;
-  ngOnInit(): void {}
-  ngAfterContentInit() {}
+  ngOnInit(): void {
+    this.setHostToCircle(true);
+  }
 
-  value; // is the base64 croppedImg
-  croppedImage;
+  b64; // is value rendered by output Image
+  value; // is the blob croppedImg
+  croppedImage; //isValue of cropped image at any time
   imageChangedEvent: any = '';
-  // croppedImage: any = '';
+
   scale = 1;
   imgUploaded = false;
 
@@ -74,10 +82,10 @@ export class ImageUploadV3Component implements OnInit, AfterContentInit {
   };
 
   handleDrop(e) {
+    //work in progress
     e.preventDefault();
     this.dragging = false;
     const file = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-    //work in progress
   }
 
   handleDragEnter() {
@@ -98,16 +106,26 @@ export class ImageUploadV3Component implements OnInit, AfterContentInit {
   showPlaceHolderImage() {
     return !this.imgUploaded || this.confirmed;
   }
+
+  setHostToCircle(setToCircle) {
+    if (setToCircle) {
+      this.renderer.addClass(this.el.nativeElement, 'circle');
+    } else {
+      this.renderer.removeClass(this.el.nativeElement, 'circle');
+    }
+  }
+
   resetCropper() {
     this.imageChangedEvent = null;
     this.imgUploaded = false;
     this.croppedImage = '';
     this.value = '';
+    this.setHostToCircle(true);
+    this.isMousedOver = false;
   }
   zoomIn() {
     this.imageTransFormObj.scale += 0.1;
     this.imageTransFormObj = { ...this.imageTransFormObj };
-    this.cd.markForCheck();
   }
   zoomOut() {
     this.imageTransFormObj.scale -= 0.1;
@@ -115,17 +133,18 @@ export class ImageUploadV3Component implements OnInit, AfterContentInit {
       this.imageTransFormObj.scale = 0.1;
     }
     this.imageTransFormObj = { ...this.imageTransFormObj };
-    this.cd.markForCheck();
   }
   fileChangeEvent(event: any): void {
+    this.setHostToCircle(false);
     this.imageChangedEvent = event;
     this.imgUploaded = true;
     this.confirmed = false;
   }
   imageCropped(event: ImageCroppedEvent) {
-    // event.
-    console.log('IMAGE CROPPED');
+    //come back to fix the blob image output
     this.croppedImage = event.base64;
+
+    this.cd.markForCheck();
 
     var file = dataURLtoFile(
       'data:text/plain;base64,aGVsbG8gd29ybGQ=',
@@ -136,10 +155,10 @@ export class ImageUploadV3Component implements OnInit, AfterContentInit {
   imageLoaded() {
     // show cropper
   }
+
   onConfirm() {
     //work in progress to customize starting cropping position
-    console.log(this.ImageCropper.sourceImage.nativeElement.offsetWidth);
-    console.log(this.ImageCropper.sourceImage.nativeElement.offsetHeight);
+
     let width = this.ImageCropper.sourceImage.nativeElement.offsetWidth;
     let height = this.ImageCropper.sourceImage.nativeElement.offsetHeight;
     // this.ImageCropper.cropper = {
@@ -150,11 +169,18 @@ export class ImageUploadV3Component implements OnInit, AfterContentInit {
     // };
     // this.cd.markForCheck();
     // this.ImageCropper.crop();
-    this.value = this.croppedImage;
+
+    // this.value = new Blob([this.croppedImage], { type: 'image/png' });
+    this.value = this.utils.getBlob(this.croppedImage);
+    this.b64 = this.croppedImage;
+    // console.log(this.b64);
+
     this.onChange(this.value);
     this.onTouched();
     this.confirmed = true;
+    this.isMousedOver = false;
     this.cd.markForCheck();
+    this.setHostToCircle(true);
   }
   cropperReady() {
     // cropper ready

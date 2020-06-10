@@ -12,7 +12,7 @@
       </div>
 
       <div
-        *ngIf="value"
+        *ngIf="b64"
         class="img--confirmed-wrapper"
         (mouseenter)="onMouseEnter()"
         (mouseleave)="onMouseLeave()"
@@ -20,7 +20,7 @@
         <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
           <h4>click to change image</h4>
         </label>
-        <img class="image--confirmed" [src]="value" *ngIf="confirmed" />
+        <img class="image--confirmed" [src]="b64" *ngIf="confirmed" />
       </div>
       <input
         id="fileInput"
@@ -45,22 +45,8 @@
         (cropperReady)="cropperReady()"
         (loadImageFailed)="loadImageFailed()"
       ></image-cropper>
-      <!-- <image-cropper
-      [imageChangedEvent]="imageChangedEvent"
-      [maintainAspectRatio]="true"
-      [transform]="imageTransFormObj"
-      [cropper]="imageCropperPosition"
-      roundCropper="true"
-      hideResizeSquares="true"
-      format="png"
-      autoCrop="false"
-      (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded()"
-      (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()"
-    ></image-cropper> -->
 
-      <div *ngIf="imgUploaded && showControls">
+      <div class="controls" *ngIf="imgUploaded && showControls">
         <div class="buttons">
           <button ButtonType="fab" class="zoom" (click)="zoomIn()">+</button>
           <button ButtonType="fab" class="zoom" (click)="zoomOut()">-</button>

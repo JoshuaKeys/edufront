@@ -120,10 +120,11 @@ $fixed-footer-height: 100px;
     display: flex;
   }
   .popover {
-    max-height: 300px;
-    overflow: scroll;
+    // max-height: 300px;
+    // overflow: scroll;
   }
   .popup .chips {
+    max-height: 300px;
     overflow-y: scroll;
     padding-bottom: 20px;
   }

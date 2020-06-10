@@ -1,6 +1,11 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/alignment';
 
+:host.circle {
+  border-radius: 50% !important;
+  overflow: hidden;
+  display: block;
+}
 .placeholderImg {
   position: relative;
 }
@@ -23,7 +28,7 @@ image-cropper ::ng-deep {
     // height: 180px;
   }
   .source-image {
-    // max-width: 350px !important;
+    max-width: 350px !important;
     max-height: 232px !important;
   }
 
@@ -36,7 +41,13 @@ image-cropper ::ng-deep {
     // left: 50% !important;
     // transform: translate(-50%, -50%) !important;
     // margin-left: 0 !important;
+    &.rounded:after {
+      border: 2px dashed $blue;
+    }
   }
+}
+.controls {
+  margin-top: 10px;
 }
 .buttons {
   @include displayFlex(center, center);

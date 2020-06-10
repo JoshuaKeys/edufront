@@ -7,7 +7,7 @@
 >
   <div class="form__icon-select-wrapper  edu-input__prefix" InputAffix>
     <img class="form__icon icon__img" [src]="activeIcon" alt="" />
-    <span class="icon__phone-prefix">({{ phonePrefix }}) </span>
+    <span class="icon__phone-prefix">{{ phonePrefix }} </span>
     <edu-popover alignment="bottom" pointerAlignment="left">
       <div class=" " [ClosePopover]="popOverIsOpened">
         <div class="popup__search">
@@ -17,7 +17,12 @@
             alt=""
           />
 
-          <input class="popup__search-input" type="text" placeholder="Search" />
+          <input
+            tabIndex="-1"
+            class="popup__search-input"
+            type="text"
+            placeholder="Search"
+          />
         </div>
         <div class="popup__content">
           <div class="icons">
