@@ -1,5 +1,5 @@
 <div class="form__input-wrapper">
-  <edu-input
+  <!-- <edu-input
     elementId="{{ idPrefix }}-{{ index }}"
     [(ngModel)]="inputValue"
     (change)="onTextChange($event)"
@@ -27,8 +27,8 @@
         ><span class="ashcolor"> {{ text }} </span></span
       >
     </ng-template>
-  </edu-input>
-  <!-- 
+  </edu-input> -->
+
   <img
     class="form__input-icon form__input-icon--left"
     src="../../../assets/iconfinder_subject_plus-blue.svg"
@@ -43,7 +43,7 @@
     placeholder=""
     [value]="inputValue"
     #subSubjectValue
-    (change)="onTextChange($event)"
+    (input)="onTextChange($event)"
     pattern="(/w)"
   />
   <label
@@ -59,9 +59,8 @@
   </ng-template>
   <span
     (click)="remove(type, index)"
-    *ngIf="index && !last"
+    *ngIf="!last"
     class="form__input-icon form__input-icon--right"
     >-
   </span>
-</div> -->
 </div>

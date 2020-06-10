@@ -13,7 +13,7 @@
             *ngFor="let subSubject of subSubjects.controls; let i = index"
             [index]="i"
             [formControlName]="i"
-            [last]="subSubjects.controls.length === 2"
+            [last]="subSubjects.controls.length === 1"
             (insertItem)="insertItem($event)"
             (removeItem)="removeItem($event)"
           ></edu-array-input-field>
@@ -28,7 +28,7 @@
             *ngFor="let activity of activities.controls; let i = index"
             [index]="i"
             [formControlName]="i"
-            [last]="activities.controls.length === 2"
+            [last]="activities.controls.length === 1"
             (insertItem)="insertItem($event)"
             (removeItem)="removeItem($event)"
           ></edu-array-input-field>
@@ -36,7 +36,6 @@
       </div>
     </div>
   </div>
-
   <button
     class="form__round-btn"
     [ngClass]="{ 'form__round-btn--submit': addSubjForm.valid }"

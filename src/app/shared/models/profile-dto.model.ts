@@ -14,7 +14,7 @@ export interface ProfileDTOModel {
   id: string;
   login?: boolean;
   phone?: string;
-  profileImage: string;
+  profileImage?: string;
   roleIds?: string[],
   rollNumber: string;
   state?: string;

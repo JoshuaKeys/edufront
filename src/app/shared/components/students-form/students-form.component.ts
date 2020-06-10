@@ -54,11 +54,12 @@ export class StudentsFormComponent implements OnInit {
   addEditForm: FormGroup;
   sortedStudentsXClasses: Observable<StudentsXClassesModel[]>;
 
-  constructor() {}
+  constructor() { }
 
   createStaff() {
     const formValue = this.addEditForm.value;
-    formValue.profileDto.profileImage = formValue.profilePic.profileImage;
+    console.log(formValue)
+    formValue.profileDto.profileImage = formValue.profilePic.profileImage
     delete formValue.profilePic;
     this.onSubmit.emit(formValue);
   }
@@ -88,7 +89,7 @@ export class StudentsFormComponent implements OnInit {
         classId: new FormControl(''),
         rollNumber: new FormControl('')
       }),
-      guardianDto: new FormGroup({
+      guardianDetailsDto: new FormGroup({
         email: new FormControl(''),
         familyName: new FormControl(''),
         firstName: new FormControl(''),
@@ -108,7 +109,7 @@ export class StudentsFormComponent implements OnInit {
         firstName: new FormControl(''),
         middleName: new FormControl(''),
         familyName: new FormControl(''),
-        dob: new FormControl('01/02/20'),
+        dob: new FormControl('2020-02-01'),
         gender: new FormControl(''),
         id: new FormControl(''),
         country: new FormControl(this.countryIconMap[0]),
@@ -120,7 +121,7 @@ export class StudentsFormComponent implements OnInit {
         classId: new FormControl(''),
         rollNumber: new FormControl('')
       }),
-      guardianDto: new FormGroup({
+      guardianDetailsDto: new FormGroup({
         email: new FormControl(''),
         familyName: new FormControl(''),
         firstName: new FormControl(''),
@@ -132,6 +133,7 @@ export class StudentsFormComponent implements OnInit {
     });
   }
   handleImgUpload(event: ProfilePicModel) {
+
     this.addEditForm.controls.profilePic.patchValue({
       profileImage: event
     });

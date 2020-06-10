@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../models/students-state.model';
 import { selectAllStudents, selectAllClasses } from './selectors';
 import { StudentsXClassesModel } from '../models/students-x-classes.model';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 @Injectable()
 export class StudentsEffects {
@@ -52,9 +53,23 @@ export class StudentsEffects {
   ))
   createStudentRequest$ = createEffect(() => this.actions$.pipe(
     ofType(createStudentRequest),
-    mergeMap(action => this.studentsService.createStudent(action.student).pipe(
-      mergeMap(student => [createStudentSuccess({ student }), toggleAddModal()])
-    ))
+    mergeMap(action => {
+      const studentReqData = this.processStudentReqData(action.student);
+      if (studentReqData.profileDto.profileImage) {
+        return this.studentsService.uploadLogo(studentReqData.profileDto.profileImage['acceptedFile']).pipe(
+          mergeMap(res => {
+            const createStudentReqObj = this.composeCreateStudentData(studentReqData, res.file);
+            return this.studentsService.createStudent(createStudentReqObj).pipe(
+              mergeMap(student => [createStudentSuccess({ student }), toggleAddModal()])
+            )
+          })
+        )
+      }
+      const createStudentReqObj = this.composeCreateStudentData(studentReqData, null);
+      return this.studentsService.createStudent(studentReqData).pipe(
+        mergeMap(student => [createStudentSuccess({ student }), toggleAddModal()])
+      )
+    })
   ))
   deleteStudentRequest$ = createEffect(() => this.actions$.pipe(
     ofType(deleteStudentRequest),
@@ -62,6 +77,98 @@ export class StudentsEffects {
       map(res => deleteStudentSuccess({ student: action.student }))
     ))
   ))
+  composeCreateStudentData(student: StudentModel, file: string) {
+    console.log(student, file);
+    const studentCopy: StudentModel = { ...student, };
+    if (studentCopy.profileDto.profileImage) {
+      studentCopy.profileDto.profileImage = file;
+    }
+    if (studentCopy.guardianDetailsDto.phone) {
+      studentCopy.guardianDetailsDto.phone = student.guardianDetailsDto.phone['phoneNum']
+    }
+    if (studentCopy.profileDto['country']) {
+      studentCopy.profileDto.countryId = student.profileDto['country'].id
+    }
+    return studentCopy
+  }
+  processStudentReqData(student: StudentModel) {
+    const processedProfileDTO = this.processProfileDTO(student);
+    const processguardianDetailsDto = this.processguardianDetailsDto(processedProfileDTO);
+    return processguardianDetailsDto;
+  }
+  processguardianDetailsDto(student: StudentModel) {
+    let studentCopy: StudentModel = {
+      ...student,
+      guardianDetailsDto: {
+        ...student.guardianDetailsDto
+      }
+    }
+    if (!studentCopy.guardianDetailsDto.email) {
+      delete studentCopy.guardianDetailsDto.email
+    }
+    if (!studentCopy.guardianDetailsDto.familyName) {
+      delete studentCopy.guardianDetailsDto.familyName
+    }
+    if (!studentCopy.guardianDetailsDto.firstName) {
+      delete studentCopy.guardianDetailsDto.firstName
+    }
+    if (!studentCopy.guardianDetailsDto.middleName) {
+      delete studentCopy.guardianDetailsDto.middleName
+    }
+    if (!studentCopy.guardianDetailsDto.phone) {
+      delete studentCopy.guardianDetailsDto.phone
+    }
+    if (!studentCopy.guardianDetailsDto.id) {
+      delete studentCopy.guardianDetailsDto.id
+    }
+    return studentCopy
+  }
+  processProfileDTO(student: StudentModel) {
+    let studentCopy: StudentModel = {
+      ...student,
+      profileDto: { ...student.profileDto }
+    }
+    if (studentCopy.profileDto.profileImage == null) {
+      delete studentCopy.profileDto.profileImage;
+    }
+    if (!studentCopy.profileDto.address) {
+      delete studentCopy.profileDto.address;
+    }
+    if (!studentCopy.profileDto.id) {
+      delete studentCopy.profileDto.id;
+    }
+    if (!studentCopy.profileDto.city) {
+      delete studentCopy.profileDto.city
+    }
+    if (!studentCopy.profileDto.classId) {
+      delete studentCopy.profileDto.classId
+    }
+    if (!studentCopy.profileDto['familyName']) {
+      delete studentCopy.profileDto['familyName']
+    }
+    if (!studentCopy.profileDto.firstName) {
+      delete studentCopy.profileDto.firstName
+    }
+    if (!studentCopy.profileDto.lastName) {
+      delete studentCopy.profileDto.lastName
+    }
+    if (!studentCopy.profileDto.middleName) {
+      delete studentCopy.profileDto.middleName
+    }
+    if (!studentCopy.profileDto.state) {
+      delete studentCopy.profileDto.state
+    }
+    if (!studentCopy.profileDto.zipcode) {
+      delete studentCopy.profileDto.zipcode
+    }
+    if (!studentCopy.profileDto.gender) {
+      delete studentCopy.profileDto.gender
+    }
+    if (!studentCopy.profileDto.rollNumber) {
+      delete studentCopy.profileDto.rollNumber
+    }
+    return studentCopy;
+  }
   constructor(
     private actions$: Actions,
     private studentsService: StudentsService,
