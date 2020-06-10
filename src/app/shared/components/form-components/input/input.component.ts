@@ -137,6 +137,9 @@ export class InputComponent
   // value = ""; //for ControlValueAccessor implmentation
   val = '';
   // valLen;
+  get value() {
+    return this.val;
+  }
   set value(val) {
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
     if (val === null) {
