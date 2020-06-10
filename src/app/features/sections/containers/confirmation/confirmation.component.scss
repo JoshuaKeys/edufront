@@ -101,10 +101,13 @@ $fixed-footer-height: 100px;
       background: white;
       color: $blue;
       min-width: 32px;
-      height: 32px;
-      padding: 0 8px;
+      padding: 2px 8px;
       width: auto;
       border: 1px solid $blue;
+      word-break: break-all;
+      max-width: 60vw;
+      min-height: 32px;
+      height: auto;
       font: 400 12px/20px Roboto;
     }
 
@@ -147,4 +150,5 @@ $blue: #69a9f2;
 .selection--confirmation {
   display: flex;
   align-items: center;
+  min-width: 200px;
 }
