@@ -19,6 +19,7 @@ export const createStudentSuccess = createAction(
   '[StudentsEffects] createStudentSuccess',
   props<{ student: StudentModel }>()
 );
+
 export const fetchedClassesSuccess = createAction(
   '[StudentsEffects] fetchedClassesSuccess',
   props<{ classes: ClassModel[] }>()

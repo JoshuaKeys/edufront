@@ -9,6 +9,7 @@ export interface GetStaffResponseModel {
   lastName: string;
   login: string;
   middleName: string;
+  phone: string;
   profileImage: string;
   roles: {
     roleId: string;
