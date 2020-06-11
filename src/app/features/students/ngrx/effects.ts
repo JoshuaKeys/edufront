@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StudentsService } from '../services/students.service';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess, fetchStudentByIdRequest, fetchStudentByIdResponse } from './actions/class-students.actions';
+import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess, fetchStudentByIdRequest, fetchStudentByIdResponse, editStudentRequest, editStudentResponse } from './actions/class-students.actions';
 import { toggleAddModal, toggleEditModal } from './actions/students-modal.actions';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../models/students-state.model';
@@ -75,6 +75,17 @@ export class StudentsEffects {
       return this.studentsService.createStudent(studentReqData).pipe(
         mergeMap(student => [createStudentSuccess({ student }), toggleAddModal()])
       )
+    })
+  ))
+  editStudentRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(editStudentRequest),
+    mergeMap(action => {
+      const studentReqData = this.processStudentReqData(action.student);
+      if (studentReqData.profileDto.profileImage) {
+        return this.studentsService.editStudent(studentReqData).pipe(
+          map(student => editStudentResponse({ student }))
+        )
+      }
     })
   ))
   deleteStudentRequest$ = createEffect(() => this.actions$.pipe(

@@ -155,7 +155,7 @@
 <edu-student-edit-form
   *ngIf="(studentsModalState | async).editModal"
   [studentsXClasses]="studentsXClasses"
-  (onSubmit)="processSubmit($event)"
+  (onSubmit)="processEditStudent($event)"
   [editData]="studentEditState"
 >
 </edu-student-edit-form>

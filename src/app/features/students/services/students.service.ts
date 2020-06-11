@@ -29,5 +29,9 @@ export class StudentsService {
     formData.append('file', file);
     return this.httpClient.post<LogoUploadResponseModel>('/api/v1/upload/image', formData);
   }
+  editStudent(student: StudentModel): Observable<StudentModel> {
+    console.log(student)
+    return this.httpClient.put<StudentModel>(`/api/v1/profile/completeProfile/${student.guardianDetailsDto.id}`, student);
+  }
   constructor(private httpClient: HttpClient) { }
 }

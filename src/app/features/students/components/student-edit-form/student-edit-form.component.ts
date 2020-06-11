@@ -83,7 +83,7 @@ export class StudentEditFormComponent implements OnInit {
             classId: new FormControl(profileDto.classId ? profileDto.classId : ''),
             rollNumber: new FormControl(profileDto.rollNumber ? profileDto.rollNumber : ''),
           }),
-          guardianDto: new FormGroup({
+          guardianDetailsDto: new FormGroup({
             email: new FormControl(guardianDto.email ? guardianDto.email : ''),
             familyName: new FormControl(guardianDto.familyName ? guardianDto.familyName : ''),
             firstName: new FormControl(guardianDto.firstName ? guardianDto.firstName : ''),
