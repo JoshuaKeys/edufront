@@ -10,7 +10,8 @@ export class ImgTestComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
   ngOnInit(): void {
     this.testForm = this.formBuilder.group({
-      f1: ['', Validators.required]
+      f1: [{ base64: '', acceptedFile: null }, Validators.required],
+      f2: ['', Validators.required]
     });
   }
 
@@ -19,6 +20,10 @@ export class ImgTestComponent implements OnInit {
   }
   testForm: FormGroup;
   confirmEventResults;
+
+  pettyPrint(obj) {
+    return JSON.stringify(obj, null, 2);
+  }
 
   onConfirm(param) {
     this.confirmEventResults = param;

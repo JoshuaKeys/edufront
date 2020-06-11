@@ -6,6 +6,7 @@
         Add/Edit Staff
       </h2>
       <form
+        *ngIf="addEditForm"
         id="addEditForm"
         [formGroup]="addEditForm"
         (ngSubmit)="createStaff()"

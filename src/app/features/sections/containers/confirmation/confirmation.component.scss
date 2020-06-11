@@ -1,8 +1,9 @@
 .selection--confirmations {
-  justify-content: space-between;
-  max-width: 1068px;
-  width: 80%;
+  max-height: calc(100vh - 291px);
+  width: 95%;
+  max-width: unset;
   overflow-y: auto;
+  justify-content: flex-start !important;
 }
 @import 'src/assets/scss/mixins/components';
 @import 'src/assets/scss/colors';
@@ -18,12 +19,19 @@
 
 @import 'src/assets/scss/utils';
 @import 'src/assets/scss/modules/students';
+
+@import '../../scss-fixes.scss';
 @include studentChips();
 
 @include group();
 @include groups();
 @include splitLayout3(); //new layout version
 $fixed-footer-height: 100px;
+
+.content__button {
+  margin: 0 10px;
+}
+
 .content {
   width: 100%;
   padding: 0 20px;
@@ -33,6 +41,7 @@ $fixed-footer-height: 100px;
   }
 
   &__title {
+    margin: auto;
     margin-bottom: 20px;
   }
   &__desc {
@@ -45,36 +54,60 @@ $fixed-footer-height: 100px;
     height: 100%;
   }
 
-  &__btn-wrapper {
-    bottom: -30px - $fixed-footer-height;
+  &__button-wrapper {
+    margin: auto;
+
+    button {
+      width: 250px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    button.content__button--white {
+      background: white;
+      width: 186px;
+    }
+    // bottom: -30px - $fixed-footer-height;
   }
 }
 .section__back-btn {
   z-index: 200;
 }
 .selection--confirmation {
-  width: 30%;
-  min-width: 222px;
+  // width: 30%;
+  // min-width: 222px;
+
+  max-width: 100%;
   margin: 15px;
   & > *:not(:last-child) {
     margin-right: 20px;
   }
-
+  .badge--squares {
+    @include displayFlex(flex-start, center, row);
+    flex-wrap: wrap;
+  }
   .badge {
     width: 64px;
     height: 64px;
     font: 500 22px/22px Roboto;
     position: relative;
+    flex-shrink: 0;
     &--active {
       background: white;
       color: $blue;
     }
 
     &--square {
-      width: 32px;
-      height: 32px;
-
+      background: white;
+      color: $blue;
+      min-width: 32px;
+      padding: 2px 8px;
+      width: auto;
       border: 1px solid $blue;
+      word-break: break-all;
+      max-width: 60vw;
+      min-height: 32px;
+      height: auto;
       font: 400 12px/20px Roboto;
     }
 
@@ -90,10 +123,11 @@ $fixed-footer-height: 100px;
     display: flex;
   }
   .popover {
-    max-height: 300px;
-    overflow: scroll;
+    // max-height: 300px;
+    // overflow: scroll;
   }
   .popup .chips {
+    max-height: 300px;
     overflow-y: scroll;
     padding-bottom: 20px;
   }
@@ -116,4 +150,5 @@ $blue: #69a9f2;
 .selection--confirmation {
   display: flex;
   align-items: center;
+  min-width: 200px;
 }

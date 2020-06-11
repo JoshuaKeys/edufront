@@ -1,10 +1,26 @@
 @import '../../../../../assets/styles/modules/section-module';
 @include splitLayout();
-.form {
-  @include displayFlex(flex-start, center, column);
-  width: 90%;
-  max-width: 1080px;
 
+section {
+  padding-top: 46px;
+  @include displayFlex(unset, unset, column);
+  padding-bottom: 46px;
+}
+
+.modal__text {
+  max-width: 600px;
+  display: block;
+}
+.form {
+  position: relative;
+  top: unset;
+  left: unset;
+  transform: unset;
+  height: 100%;
+  @include displayFlex(center, center, column);
+  width: calc(100vw - 312px);
+  max-width: 1080px;
+  margin: auto;
   &__title {
     margin-bottom: 20px;
   }

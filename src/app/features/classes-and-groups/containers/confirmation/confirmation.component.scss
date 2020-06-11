@@ -1,3 +1,54 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+@import '../../../../../assets/styles/modules/section-module';
+@include splitLayout();
+
+section.section {
+  padding-top: 46px;
+  @include displayFlex(unset, unset, column);
+}
+.form {
+  position: relative;
+  top: unset;
+  left: unset;
+  transform: unset;
+  // height: 100%;
+  flex-grow: 1;
+  @include displayFlex(flex-start, center, column);
+  width: calc(100vw);
+  // max-width: 1080px;
+  margin: auto;
+  top: unset;
+  left: unset;
+  transform: unset;
+  position: relative;
+
+  &__btns {
+    position: relative;
+    margin: auto;
+    margin: 40px auto;
+    flex-shrink: 0;
+  }
+}
+.form__content-wrapper {
+  flex-grow: 1;
+  @include displayFlex(center, center, column);
+}
+.modal__text--complete {
+  max-width: 600px;
+}
+.drop-zones {
+  flex-wrap: wrap;
+}
+edu-group-box ::ng-deep .drop-zone {
+  margin: 16px 8px;
+}
+
+button.form__button {
+  width: 200px;
+  height: 52px;
+  margin: 0 10px;
+}
 // h1,
 // h2 {
 //   text-align: center;
@@ -533,7 +584,7 @@
 //   flex-direction: column;
 //   display: flex;
 // }
-@import '../../../../../assets/styles/modules/section-module';
+
 body {
   display: relative;
   background-color: white;
@@ -542,12 +593,11 @@ body {
 main {
   height: calc(100vh - 53px);
 }
-@include splitLayout();
 
 .form {
-  @include displayFlex(flex-start, center, column);
-  width: 90vw;
-  max-width: 1080px;
+  // @include displayFlex(flex-start, center, column);
+  // width: 90vw;
+  // max-width: 1080px;
 
   &__title {
     margin-bottom: 32px;
@@ -584,9 +634,9 @@ main {
 }
 
 .drop-zones {
-  @include displayFlex(space-between);
-  max-width: 1000px;
-  width: 95%;
+  @include displayFlex();
+  // max-width: 1000px;
+  // width: 95%;
 }
 @include dropZone();
 .drop-zone {

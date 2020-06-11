@@ -1,0 +1,55 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+main {
+  section {
+    padding: 3%;
+    padding-top: 46px;
+    padding-bottom: 0;
+    @include displayFlex(unset, unset, column);
+    width: 100%;
+  }
+
+  .form,
+  .content {
+    margin: auto;
+    position: relative;
+    top: unset;
+    left: unset;
+    transform: unset;
+    // height: 100%;
+    flex-grow: 1;
+    @include displayFlex(flex-start, center, column);
+    // width: calc(100vw - 412px);
+    width: 100%;
+    max-width: unset;
+
+    &__title {
+      width: 100%;
+      white-space: pre-wrap;
+      // transform: translateX(-67.5px);
+    }
+  }
+
+  .form__content-wrapper,
+  .content-wrapper {
+    // height: 100%; //only in staff and students
+    width: 100%;
+    margin: auto;
+    flex-grow: 1;
+    @include displayFlex(flex-start, center, column);
+  }
+  .form__button,
+  .content__button {
+    width: 250px;
+    height: 52px;
+    position: relative;
+    background: $blue;
+    margin: auto;
+    margin: 40px auto;
+    flex-shrink: 0;
+  }
+
+  .opacity {
+    position: relative;
+  }
+}

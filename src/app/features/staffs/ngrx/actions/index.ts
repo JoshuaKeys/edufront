@@ -89,5 +89,5 @@ export const fetchStaffById = createAction(
 )
 export const fetchStaffByIdSuccess = createAction(
   '[StaffsEffects] fetchStaffByIdSuccess',
-  props<{ staff: StaffModel }>()
+  props<{ staff: { profileDto: StaffModel }, profileId: string }>()
 )

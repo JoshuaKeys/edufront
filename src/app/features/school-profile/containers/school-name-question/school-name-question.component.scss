@@ -5,15 +5,32 @@
 @import './../../../../../assets/scss/utils';
 @import './../../../../../assets/scss/main';
 
+@import '../../scss-fixes.scss';
+
 body {
   display: relative;
   background-color: white;
 }
 
-@include form();
+// @include form();
 @include splitLayout3();
 @include modalIntro();
+
 @include modalComplete();
+main .content-wrapper {
+  margin-bottom: 46px;
+}
+edu-input ::ng-deep {
+  width: 377px;
+  height: 54px;
+  input,
+  label {
+    font-size: 16px;
+  }
+}
+.content__title {
+  margin-bottom: 30px;
+}
 
 .form {
   height: 100%;

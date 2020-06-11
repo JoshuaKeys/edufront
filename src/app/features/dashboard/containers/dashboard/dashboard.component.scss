@@ -12,6 +12,9 @@
 }
 //header
 
+.tracker:focus {
+  outline: none;
+}
 .header {
   @include displayFlex(center, center, column);
   .radial {
@@ -39,8 +42,10 @@
 
 //stepper
 .onboard_nav {
-  width: 100%;
   height: 100%;
+  width: 80%;
+  min-width: 1050px;
+  max-width: 1300px;
 }
 
 ul {
@@ -73,8 +78,12 @@ li {
   position: relative;
 
   .icon {
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
     flex-shrink: 0;
-
+    cursor: pointer;
     width: 64px;
     height: 64px;
     border: 2px solid #e6e9f3;

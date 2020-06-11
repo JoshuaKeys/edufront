@@ -5,9 +5,10 @@
         Add/Edit Students
       </h2>
       <form
+        *ngIf="addEditForm"
         id="addEditForm"
         [formGroup]="addEditForm"
-        (ngSubmit)="createStaff()"
+        (ngSubmit)="editStudent()"
         class="modal__content"
       >
         <div class="modal__content-profile" formGroupName="profilePic">

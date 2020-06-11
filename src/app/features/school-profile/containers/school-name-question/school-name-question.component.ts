@@ -6,7 +6,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
-import { setSchoolName } from '../../ngrx/actions';
+import { setSchoolName, toggleProfileStartModal } from '../../ngrx/actions';
 import { selectSchoolName } from '../../ngrx/selectors'
 import { selectProfileModal } from '../../ngrx/selectors/modal-selectors';
 
@@ -37,7 +37,7 @@ export class SchoolNameQuestionComponent implements OnInit {
     })
   }
   onModalBtnClicked() {
-
+    this.store.dispatch(toggleProfileStartModal())
   }
   getDescription() {
 
@@ -51,7 +51,6 @@ export class SchoolNameQuestionComponent implements OnInit {
   }
   onKeyPress(event) {
     if (event.key.toLowerCase() === 'enter') {
-
       this.router.navigate(['../', this.activatedRouteData.next], { relativeTo: this.activatedRoute })
     }
   }

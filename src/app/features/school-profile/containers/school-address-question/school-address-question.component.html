@@ -7,59 +7,99 @@
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content" *ngIf="schoolAddressForm">
-      <h2 class="content__title">
-        What is your school address?
-      </h2>
-      <form class="content__form" [formGroup]="schoolAddressForm">
-        <!-- <edu-icon-field
-          formControlName="country"
-          [fieldName]="'Country'"
-          [icons]="countryIconMap"
-          (valueChanged)="updateCountry($event)"
-          mode="select"
-        ></edu-icon-field> -->
-        <edu-country-field
-          formControlName="country"
-          [fieldName]="'Country'"
-          [icons]="countryIconMap"
-          (valueChanged)="updateCountry($event)"
-          [mode]="'select'"
-        >
-        </edu-country-field>
-        <edu-input-field
-          idPrefix="zipCode"
-          text="Zip Code"
-          formControlName="zipCode"
-          (onChange)="updateFormField($event)"
-        ></edu-input-field>
-        <edu-input-field
-          idPrefix="address"
-          text="Address"
-          formControlName="address"
-          (onChange)="updateFormField($event)"
-        ></edu-input-field>
-        <edu-input-field
-          idPrefix="state"
-          text="State"
-          formControlName="state"
-          (onChange)="updateFormField($event)"
-        ></edu-input-field>
-        <edu-input-field
-          idPrefix="city"
-          text="City"
-          formControlName="city"
-          (onChange)="updateFormField($event)"
-        ></edu-input-field>
-      </form>
-      <div class="content__btn-wrapper">
-        <button
-          class="content__btn"
-          [routerLink]="['../', activatedRouteData.next]"
-          [disabled]="schoolAddressForm.invalid"
-        >
-          Continue
-        </button>
+      <div class="content-wrapper">
+        <h2 class="content__title">
+          What is your school address?
+        </h2>
+        <form class="content__form" [formGroup]="schoolAddressForm">
+          <!-- <edu-icon-field
+            formControlName="country"
+            [fieldName]="'Country'"
+            [icons]="countryIconMap"
+            (valueChanged)="updateCountry($event)"
+            mode="select"
+          ></edu-icon-field> -->
+          <edu-country-field
+            formControlName="country"
+            [fieldName]="'Country'"
+            [icons]="countryIconMap"
+            (valueChanged)="updateCountry($event)"
+            [mode]="'select'"
+          >
+          </edu-country-field>
+
+          <!-- <edu-icon-field
+            formControlName="country"
+            [fieldName]="'Country'"
+            [icons]="countryIconMap"
+            (valueChanged)="updateCountry($event)"
+            [mode]="'select'"
+          >
+          </edu-icon-field> -->
+          <edu-input
+            alignment="center"
+            (input)="returnFormFieldFormat('zipCode', $event)"
+            [formControl]="schoolAddressForm.controls['zipCode']"
+          >
+            <span class="edu-label"> Zip Code</span>
+          </edu-input>
+          <edu-input
+            alignment="center"
+            (input)="returnFormFieldFormat('address', $event)"
+            [formControl]="schoolAddressForm.controls['address']"
+          >
+            <span class="edu-label"> Address</span>
+          </edu-input>
+          <edu-input
+            alignment="center"
+            (input)="returnFormFieldFormat('state', $event)"
+            [formControl]="schoolAddressForm.controls['state']"
+          >
+            <span class="edu-label"> State</span>
+          </edu-input>
+          <edu-input
+            alignment="center"
+            (input)="returnFormFieldFormat('city', $event)"
+            [formControl]="schoolAddressForm.controls['city']"
+          >
+            <span class="edu-label"> City</span>
+          </edu-input>
+          <!-- <edu-input-field
+            idPrefix="zipCode"
+            text="Zip Code"
+            formControlName="zipCode"
+            (onChange)="updateFormField($event)"
+          ></edu-input-field>
+          <edu-input-field
+            idPrefix="address"
+            text="Address"
+            formControlName="address"
+            (onChange)="updateFormField($event)"
+          ></edu-input-field>
+          <edu-input-field
+            idPrefix="state"
+            text="State"
+            formControlName="state"
+            (onChange)="updateFormField($event)"
+          ></edu-input-field>
+          <edu-input-field
+            idPrefix="city"
+            text="City"
+            formControlName="city"
+            (onChange)="updateFormField($event)"
+          ></edu-input-field> -->
+        </form>
       </div>
+    </div>
+    <div class="content__btn-wrapper">
+      <button
+        ButtonType="basic"
+        class="content__button"
+        [routerLink]="['../', activatedRouteData.next]"
+        [disabled]="schoolAddressForm.invalid"
+      >
+        Continue
+      </button>
     </div>
   </section>
 </main>

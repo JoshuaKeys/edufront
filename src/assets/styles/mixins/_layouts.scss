@@ -50,6 +50,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
 
   ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
     background-color: transparent;
   }
 
@@ -98,7 +99,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-weight: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       letter-spacing: 0.42px;
       color: $ash;
       margin: 0;
@@ -179,7 +180,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-size: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       letter-spacing: 0.42px;
       color: $grey;
       font-weight: 500;
@@ -190,7 +191,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-size: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       max-width: 270px;
       width: 100%;
       color: $grey;
@@ -228,7 +229,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-weight: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       letter-spacing: 0.42px;
       color: $ash;
       margin: 0;
@@ -310,7 +311,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-size: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       letter-spacing: 0.42px;
       color: $grey;
       font-weight: 500;
@@ -321,7 +322,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-size: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       max-width: 270px;
       width: 100%;
       color: $grey;
@@ -353,7 +354,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-weight: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       letter-spacing: 0.42px;
       color: $ash;
       margin: 0;
@@ -422,7 +423,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       text-align: center;
       font-size: 14px;
       line-height: 22px;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       letter-spacing: 0.42px;
       color: $grey;
       font-weight: 500;
@@ -448,7 +449,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       border-radius: 50%;
       border: 8px solid #f4f6fc;
       color: $blue;
-      font-family: "Raleway", sans-serif;
+      font-family: 'Raleway', sans-serif;
       position: relative;
       margin-bottom: 40px;
 
@@ -527,7 +528,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
               border-radius: 50%;
               border: 1px solid $orange;
               display: block;
-              content: "";
+              content: '';
               @include absoluteCenter();
             }
           }
@@ -548,7 +549,7 @@ $fixed-footer-height: 140px; //was 140 for the longest tinme // original value i
       }
       &-title {
         color: $grey;
-        font-family: "Raleway", sans-serif;
+        font-family: 'Raleway', sans-serif;
         font-size: 14px;
         text-align: center;
         white-space: nowrap;

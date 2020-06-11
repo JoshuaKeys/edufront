@@ -1,6 +1,33 @@
 @import '../../../../../assets/styles/modules/section-module';
-
+@import '../../scss_fixes.scss';
 @include splitLayout2();
+
+.cards.flex-wrap.content__body--final {
+  align-items: flex-start;
+}
+
+main .content.content--final {
+  // width: 100vw;
+  // align-items: flex-start;
+  width: 100%;
+  max-width: unset;
+  overflow-y: auto;
+  justify-content: start;
+  .content-wrapper {
+    width: 100%;
+  }
+}
+
+.content {
+  width: 100%;
+}
+
+edu-modal-v2.complete ::ng-deep {
+  .modal__desc {
+    max-width: 600px;
+    margin-bottom: 65px !important;
+  }
+}
 
 .content__title {
   width: 560px;
@@ -14,7 +41,9 @@
 }
 
 aside {
-  width: 400px;
+  max-width: 400px;
+  min-width: 300px;
+  width: 25vw;
 }
 .chips {
   @include displayFlex(flex-start);
@@ -73,10 +102,6 @@ aside {
   top: 50%;
   color: #c7ccdb;
 }
-.content--final {
-  overflow-y: auto;
-  justify-content: start;
-}
 
 .flex-wrap {
   justify-content: center;
@@ -106,6 +131,10 @@ aside {
   position: absolute;
   top: 0;
   transform: translateY(-100%);
+}
+.content__btns {
+  width: auto;
+  margin: auto;
 }
 .content__btns button {
   width: 200px;

@@ -27,7 +27,6 @@ import { Store } from '@ngrx/store';
 import { StaffsStateModel } from '../../models/staff-state.model';
 import { selectSelectedSubject, classesAndSubjectsAssoc } from '../selectors';
 import { StaffFormModel } from '../../models/staff-form.model';
-import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
 import { CreateStaffRequestModel } from '../../models/create-staff-request.model';
 
 @Injectable()
@@ -67,61 +66,88 @@ export class StaffsEffects {
     ofType(createStaffRequest),
     withLatestFrom(this.store.select(classesAndSubjectsAssoc)),
     mergeMap(([action, subjectsAssociation]) => {
-      return this.staffsService.uploadLogo(action.staff.profilePic.acceptedFile).pipe(
-        mergeMap(res => {
-          const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, res.file)
-          return this.staffsService.createStaff(createStaffRequestObj).pipe(
-            mergeMap(response => [createStaffResponse({ staff: response }), toggleAddModal()])
-          );
-        })
-      )
+      if (action.staff.profilePic) {
+        return this.staffsService.uploadLogo(action.staff.profilePic.acceptedFile).pipe(
+          mergeMap(res => {
+            const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, res.file)
+            return this.staffsService.createStaff(createStaffRequestObj).pipe(
+              mergeMap(response => [createStaffResponse({ staff: response }), toggleAddModal()])
+            );
+          })
+        )
+      }
+      const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, null)
+      return this.staffsService.createStaff(createStaffRequestObj).pipe(
+        mergeMap(response => [createStaffResponse({ staff: response }), toggleAddModal()])
+      );
     })
   ));
+  fetchStaffById$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchStaffById),
+    mergeMap(action => {
+      return this.staffsService.fetchStaffById(action.staff).pipe(
+        mergeMap(staff => [fetchStaffByIdSuccess({ staff, profileId: action.staff.id }), toggleEditModal()])
+      )
+    })
+  ))
   deleteStaffReqest$ = createEffect(() => this.actions$.pipe(
     ofType(deleteStaffRequest),
     mergeMap(action => this.staffsService.deleteStaff(action.staff.id).pipe(
       map(resp => deleteStaffSuccess({ staff: action.staff }))
     ))
   ));
-  fetchStaffById$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStaffById),
-    mergeMap(action => this.staffsService.fetchStaffById(action.staff).pipe(
-      switchMap(staff => [fetchStaffByIdSuccess({ staff }), toggleEditModal()])
-    ))
-  ))
-  composeCreateStaffData(staffData: StaffFormModel, subjectData: SubjectClassesAssociation[], profilePic: string): CreateStaffRequestModel {
-    let createStaffObj: CreateStaffRequestModel = {
-      subjectClasses: null,
-      profileDto: null
-    };
-    createStaffObj['subjectClasses'] = subjectData.map(item => {
-      let classIds = item.classes.map(classItem => classItem.id)
-      return {
-        subjectId: item.subjectId,
-        classids: classIds
-      }
-    })
-
-
-
-    createStaffObj['profileDto'] = {
-      contexts: ['TEACHER'],
-      dob: staffData.dob,
-      email: staffData.email,
-      firstName: staffData.firstName,
-      gender: staffData.sex,
-      lastName: staffData.familyName,
-      middleName: staffData.middleName,
-      profileImage: profilePic,
-      countryId: staffData.country.id,
-      address: staffData.address,
-      city: staffData.city,
-      state: staffData.state,
-      zipcode: staffData.zip,
-      createdCode: false,
-      phone: staffData.phone.phoneNum,
+  composeCreateStaffData(staff: StaffFormModel, subjectsAssociation, file: string) {
+    const staffCopy: StaffFormModel = { ...staff };
+    console.log(staff)
+    const staffReqObj: CreateStaffRequestModel = {
+      profileDto: {},
+      subjectClasses: []
     }
-    return createStaffObj;
+
+    if (subjectsAssociation) {
+      staffReqObj.subjectClasses = subjectsAssociation.map(item => {
+        let classIds = item.classes.map(classItem => classItem.id)
+        return {
+          subjectId: item.subjectId,
+          classids: classIds
+        }
+      })
+    }
+    staffReqObj.profileDto.contexts = ['TEACHER']
+    if (staffCopy.profilePic) {
+      staffReqObj.profileDto.profileImage = file;
+    }
+    if (staffCopy.phone.phoneNum) {
+      staffReqObj.profileDto.phone = staffCopy.phone.phoneNum;
+    }
+    if (staffCopy.city) {
+      staffReqObj.profileDto.city = staffCopy.city;
+    }
+    if (staffCopy.address) {
+      staffReqObj.profileDto.address = staffCopy.address
+    }
+    if (staffCopy.email) {
+      staffReqObj.profileDto.email = staffCopy.email
+    }
+    if (staffCopy.firstName) {
+      staffReqObj.profileDto.firstName = staffCopy.firstName
+    }
+    if (staffCopy.familyName) {
+      staffReqObj.profileDto.lastName = staffCopy.familyName
+    }
+    if (staffCopy.sex) {
+      staffReqObj.profileDto.gender = staffCopy.sex;
+    }
+    if (staffCopy.state) {
+      staffReqObj.profileDto.state = staffCopy.state;
+    }
+    if (staffCopy.dob) {
+      staffReqObj.profileDto.dob = staffCopy.dob;
+    }
+    if (staffCopy.country) {
+      staffReqObj.profileDto.countryId = staffCopy.country.id
+    }
+    return staffReqObj;
   }
   constructor(
     private actions$: Actions,

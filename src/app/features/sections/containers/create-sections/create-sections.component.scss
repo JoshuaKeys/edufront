@@ -4,6 +4,7 @@
 @import 'src/assets/scss/mixins/alignment';
 @import 'src/assets/scss/utils';
 @import 'src/assets/scss/main';
+@import '../../scss-fixes.scss';
 
 body {
   display: relative;
@@ -14,6 +15,14 @@ body {
 @include splitLayout3();
 @include modalIntro();
 @include modalComplete();
+
+edu-classes {
+  flex-shrink: 0;
+  & ::ng-deep .form__badges.round-badges {
+    padding-top: 60px;
+    margin-bottom: unset;
+  }
+}
 
 .form {
   height: 100%;
@@ -201,6 +210,7 @@ body {
   display: flex;
 }
 .content__body {
+  justify-content: flex-start;
   align-items: stretch;
   height: 100%;
 }

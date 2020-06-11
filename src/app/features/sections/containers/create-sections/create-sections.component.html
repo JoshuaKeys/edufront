@@ -5,37 +5,40 @@
     </button>
 
     <div class="content">
-      <div class="content__body groups groups--split-layout">
-        <edu-classes
-          (classClicked)="processClassClick($event)"
-          class="group group--row-layout badges flex-wrap"
-          [classes]="sortedClasses"
-          [style]="{
-            width: '44px',
-            height: '44px',
-            margin: '4px',
-            border: '2px solid #e6e9f3',
-            fontSize: '12px'
-          }"
-        ></edu-classes>
-        <edu-section-drop-box
-          [selectedClass]="selectedClass"
-          (onDropped)="processDroppedStudent($event)"
-          (onRemove)="processStudentRemoval($event)"
-          (onAddSection)="processAddSection($event)"
-          [sections]="selectedSections"
-          (onChangeSectionName)="onChangeGroupName($event)"
-        >
-        </edu-section-drop-box>
+      <div class="content-wrapper">
+        <div class="content__body groups groups--split-layout">
+          <edu-classes
+            (classClicked)="processClassClick($event)"
+            class="group group--row-layout badges flex-wrap"
+            [classes]="sortedClasses"
+            [style]="{
+              width: '44px',
+              height: '44px',
+              margin: '4px',
+              border: '2px solid #e6e9f3',
+              fontSize: '12px'
+            }"
+          ></edu-classes>
+          <edu-section-drop-box
+            [selectedClass]="selectedClass"
+            (onDropped)="processDroppedStudent($event)"
+            (onRemove)="processStudentRemoval($event)"
+            (onAddSection)="processAddSection($event)"
+            [sections]="selectedSections"
+            (onChangeSectionName)="onChangeGroupName($event)"
+          >
+          </edu-section-drop-box>
+        </div>
       </div>
-      <div class="content__btn-wrapper">
-        <button
-          class="content__btn content__btn--inactive"
-          (click)="goToConfirmation()"
-        >
-          Continue
-        </button>
-      </div>
+    </div>
+    <div class="content__btn-wrapper">
+      <button
+        ButtonType="basic"
+        class="content__button content__btn--inactive"
+        (click)="goToConfirmation()"
+      >
+        Continue
+      </button>
     </div>
   </section>
   <aside class="aside">
@@ -48,6 +51,7 @@
   </aside>
 </main>
 <edu-modal-v2
+  class="intro"
   *ngIf="(sectionsModalState | async).startModal"
   header="Creating Sections"
   icon="assets/sections-intro.svg"

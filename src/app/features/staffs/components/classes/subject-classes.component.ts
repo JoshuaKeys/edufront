@@ -1,6 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClassModel } from 'src/app/shared/models/class.model';
+import { map } from 'rxjs/operators';
 
 interface ClassesStyle {
   fontSize: string;
@@ -17,9 +25,28 @@ export class SubjectClassesComponent implements OnInit {
   @Input() classes: Observable<ClassModel[]>;
   @Output() classClicked = new EventEmitter<ClassModel>();
   @Input() style: ClassesStyle;
-  constructor() { }
+
+  sortedClasses$: Observable<ClassModel[]>;
+  constructor() {}
   ngOnInit(): void {
+    this.sortedClasses$ = this.classes.pipe(
+      map(classArr => {
+        console.log('b4' + JSON.stringify(classArr, null, 2));
+        let temp = classArr.sort(this.sortingFn);
+        console.log('AFTER' + JSON.stringify(temp, null, 2));
+        return temp;
+      })
+    );
   }
+
+  sortingFn(a, b) {
+    if (a.name.length != b.name.length) {
+      return a.name.length > b.name.length ? 1 : -1;
+    } else {
+      return a.name > b.name ? 1 : -1;
+    }
+  }
+
   processClicked(classItem: ClassModel) {
     this.classClicked.emit(classItem);
   }

@@ -14,6 +14,7 @@ import { StudentModel } from 'src/app/shared/models/student.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentEditFormComponent implements OnInit {
+  @Input() editData: Observable<StudentModel>;
   countryIconMap = [
     {
       id: '1c1e29e4-642b-11ea-a762-9bcb0d229311',
@@ -49,82 +50,56 @@ export class StudentEditFormComponent implements OnInit {
 
   constructor() { }
 
-  createStaff() {
+  editStudent() {
     const formValue = this.addEditForm.value;
     formValue.profileDto.profileImage = formValue.profilePic.profileImage
     delete formValue.profilePic;
+    console.log(formValue);
     this.onSubmit.emit(formValue)
   }
   ngOnInit(): void {
-    if (!this.students) {
-      this.addEditForm = this.setupCreateMode();
-    }
+    this.editData.subscribe(
+      editData => {
+        const profileDto = editData.profileDto;
+        const guardianDto = editData.guardianDetailsDto;
+        const countryIdx = this.countryIconMap.findIndex(country => country.id === editData.profileDto.countryId);
+        this.addEditForm = new FormGroup({
+          profilePic: new FormGroup({
+            profileImage: new FormControl(profileDto.profileImage ? { imageUrl: profileDto.profileImage } : null),
+          }),
+          profileDto: new FormGroup({
+            firstName: new FormControl(profileDto.firstName ? profileDto.firstName : ''),
+            middleName: new FormControl(profileDto.middleName ? profileDto.middleName : ''),
+            familyName: new FormControl(profileDto.lastName ? profileDto.lastName : ''),
+            dob: new FormControl(profileDto.dob ? profileDto.dob : ''),
+            gender: new FormControl(profileDto.gender ? profileDto.gender : ''),
+            id: new FormControl(profileDto.id ? profileDto.id : ''),
+            country: new FormControl(this.countryIconMap[countryIdx]),
+            city: new FormControl(profileDto.city ? profileDto.city : ''),
+            state: new FormControl(profileDto.state ? profileDto.state : ''),
+            zipcode: new FormControl(profileDto.zipcode ? profileDto.zipcode : ''),
+            address: new FormControl(profileDto.address ? profileDto.address : ''),
+            contexts: new FormControl(['STUDENT']),
+            classId: new FormControl(profileDto.classId ? profileDto.classId : ''),
+            rollNumber: new FormControl(profileDto.rollNumber ? profileDto.rollNumber : ''),
+          }),
+          guardianDto: new FormGroup({
+            email: new FormControl(guardianDto.email ? guardianDto.email : ''),
+            familyName: new FormControl(guardianDto.familyName ? guardianDto.familyName : ''),
+            firstName: new FormControl(guardianDto.firstName ? guardianDto.firstName : ''),
+            middleName: new FormControl(guardianDto.middleName ? guardianDto.middleName : ''),
+            id: new FormControl(guardianDto.id ? guardianDto.id : ''),
+            phone: new FormControl(this.countryIconMap[countryIdx]),
+            profileId: new FormControl(guardianDto.profileId ? guardianDto.profileId : '')
+          })
+        })
+      }
+    )
+
   }
   setupEditMode() {
-    return new FormGroup({
-      profilePic: new FormGroup({
-        profileImage: new FormControl(null),
-      }),
-      profileDto: new FormGroup({
-        firstName: new FormControl(''),
-        middleName: new FormControl(''),
-        familyName: new FormControl(''),
-        dob: new FormControl(''),
-        gender: new FormControl(''),
-        id: new FormControl(''),
-        country: new FormControl(this.countryIconMap[0]),
-        city: new FormControl(''),
-        state: new FormControl(''),
-        zipcode: new FormControl(''),
-        address: new FormControl(''),
-        contexts: new FormControl(['STUDENT']),
-        classId: new FormControl(''),
-        rollNumber: new FormControl(''),
-
-      }),
-      guardianDto: new FormGroup({
-        email: new FormControl(''),
-        familyName: new FormControl(''),
-        firstName: new FormControl(''),
-        middleName: new FormControl(''),
-        id: new FormControl(''),
-        phone: new FormControl(this.countryIconMap[0]),
-        profileId: new FormControl('')
-      })
-    })
   }
   setupCreateMode() {
-    return new FormGroup({
-      profilePic: new FormGroup({
-        profileImage: new FormControl(null),
-      }),
-      profileDto: new FormGroup({
-        firstName: new FormControl(''),
-        middleName: new FormControl(''),
-        familyName: new FormControl(''),
-        dob: new FormControl('01/02/20'),
-        gender: new FormControl(''),
-        id: new FormControl(''),
-        country: new FormControl(this.countryIconMap[0]),
-        city: new FormControl(''),
-        state: new FormControl(''),
-        zipcode: new FormControl(''),
-        address: new FormControl(''),
-        contexts: new FormControl(['STUDENT']),
-        classId: new FormControl(''),
-        rollNumber: new FormControl(''),
-
-      }),
-      guardianDto: new FormGroup({
-        email: new FormControl(''),
-        familyName: new FormControl(''),
-        firstName: new FormControl(''),
-        middleName: new FormControl(''),
-        id: new FormControl(''),
-        phone: new FormControl(this.countryIconMap[0]),
-        profileId: new FormControl('')
-      })
-    })
   }
   handleImgUpload(event: ProfilePicModel) {
     this.addEditForm.controls.profilePic.patchValue({

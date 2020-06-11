@@ -57,26 +57,26 @@ export class StaffEditFormComponent implements OnInit {
   ngOnInit(): void {
     this.editState.subscribe(editState => {
       if (editState) {
-        console.log(editState)
         const countryIdx = this.countryIconMap.findIndex(country => {
-          return editState.profileDto.countryId === country.id
+          console.log(editState)
+          return editState.countryId === country.id
         });
         console.log(countryIdx)
         this.addEditForm = new FormGroup({
-          profilePic: new FormControl(null),
-          firstName: new FormControl(editState.profileDto.firstName ? editState.profileDto.firstName : ''),
-          middleName: new FormControl(editState.profileDto.middleName ? editState.profileDto.middleName : ''),
-          familyName: new FormControl(editState.profileDto.lastName ? editState.profileDto.lastName : ''),
-          dob: new FormControl(editState.profileDto.dob ? editState.profileDto.dob : ''),
-          sex: new FormControl(editState.profileDto.gender ? editState.profileDto.gender : ''),
-          id: new FormControl(editState.profileDto.id ? editState.profileDto.id : ''),
+          profilePic: new FormControl(editState.profileImage ? { imageUrl: editState.profileImage } : null),
+          firstName: new FormControl(editState.firstName ? editState.firstName : ''),
+          middleName: new FormControl(editState.middleName ? editState.middleName : ''),
+          familyName: new FormControl(editState.lastName ? editState.lastName : ''),
+          dob: new FormControl(editState.dob ? editState.dob : ''),
+          sex: new FormControl(editState.gender ? editState.gender : ''),
+          id: new FormControl(editState.id ? editState.id : ''),
           phone: new FormControl(this.countryIconMap[countryIdx]),
           country: new FormControl(this.countryIconMap[countryIdx]),
-          city: new FormControl(editState.profileDto.city ? editState.profileDto.city : ''),
-          state: new FormControl(editState.profileDto.state ? editState.profileDto.state : ''),
-          zip: new FormControl(editState.profileDto.zip ? editState.profileDto.zip : ''),
-          email: new FormControl(editState.profileDto.email ? editState.profileDto.email : ''),
-          address: new FormControl(editState.profileDto.address ? editState.profileDto.address : ''),
+          city: new FormControl(editState.city ? editState.city : ''),
+          state: new FormControl(editState.state ? editState.state : ''),
+          zip: new FormControl(editState.zip ? editState.zip : ''),
+          email: new FormControl(editState.email ? editState.email : ''),
+          address: new FormControl(editState.address ? editState.address : ''),
         });
       }
     })

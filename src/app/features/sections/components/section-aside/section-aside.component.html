@@ -30,11 +30,12 @@
 </div>
 
 <div class="aside__btn-wrapper opacity">
-  <div
+  <!-- <div
     class="opacity-overlay
        "
-  ></div>
+  ></div> -->
   <button
+    ButtonType="basic"
     class="aside__btn"
     (click)="assign()"
     [disabled]="!(fileredStudents | async).length"

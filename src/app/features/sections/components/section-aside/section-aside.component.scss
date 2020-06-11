@@ -2,8 +2,14 @@
 @import 'src/assets/scss/colors';
 @import 'src/assets/scss/modules/students';
 @include studentChips();
-$pink: #fd7fc2;
-$blue: #69a9f2;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+}
 .chip:hover {
   background-color: unset;
 }
@@ -13,22 +19,26 @@ $blue: #69a9f2;
 .chip.chip--blue:hover .chip__desc {
   color: $blue;
 }
-$sidebarOpacityHeight: 70px;
+// $sidebarOpacityHeight: 70px;
 :host {
   .group.group--scrollable {
     flex-grow: 1;
-    padding-bottom: $sidebarOpacityHeight;
+    // padding-bottom: $sidebarOpacityHeight;
     margin: 0;
   }
   .aside__btn {
-    @include button_default(white, $blue);
-
+    // @include button_default(white, $blue);
+    flex-shrink: 0;
+    width: 100%;
     border: 1px solid $blue;
 
     width: 100%;
+    &-wrapper {
+      width: 100%;
+    }
   }
 }
-@include opacityFooter($sidebarOpacityHeight);
+// @include opacityFooter($sidebarOpacityHeight);
 // .aside {
 //   .group.group--scrollable {
 //     flex-grow: 1;

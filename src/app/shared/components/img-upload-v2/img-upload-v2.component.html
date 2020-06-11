@@ -1,6 +1,7 @@
 <div [class.frame]="loaded">
   <label
     class="uploader position-relative"
+    [style.position]="'relative'"
     ondragover="return false;"
     [style.width.px]="count"
     [style.height.px]="count"
@@ -24,13 +25,23 @@
     ></i>
 
     <img
+      *ngIf="mode === 'base64'; else imgUrl"
       [style.width.%]="100"
       [style.height.%]="100"
       [src]="imageSrc"
       (load)="handleImageLoad()"
       [class.loaded]="imageLoaded"
     />
-
+    <ng-template #imgUrl>
+      <img
+        [style.width.%]="100"
+        [style.height.%]="100"
+        [src]="imageSrc"
+        (load)="handleImageLoad()"
+        [src]="imageSrc | imgAuth | async"
+        [class.loaded]="imageLoaded"
+      />
+    </ng-template>
     <input
       type="file"
       name="file"

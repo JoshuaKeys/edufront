@@ -10,7 +10,7 @@ export const schoolProfilePreviewReducer = createReducer(initialState,
     if (hasSchoolName > -1) {
       stateCopy[hasSchoolName].values[0].value = schoolName
     } else {
-      stateCopy.push({
+      stateCopy.unshift({
         label: 'School Name',
         values: [{ name: 'schoolName', value: schoolName }],
         route: 'school-name-question'
@@ -29,7 +29,7 @@ export const schoolProfilePreviewReducer = createReducer(initialState,
         stateCopy[hasAddress].values.push({ name: action.field, value: action.value });
       }
     } else {
-      stateCopy.push({
+      stateCopy.unshift({
         label: 'School Address',
         values: [{ name: action.field, value: action.value }],
         route: 'school-address-question'
@@ -48,7 +48,7 @@ export const schoolProfilePreviewReducer = createReducer(initialState,
         stateCopy[hasContact].values.push({ name: action.field, value: action.value });
       }
     } else {
-      stateCopy.push({
+      stateCopy.unshift({
         label: 'School Contact',
         values: [{ name: action.field, value: action.value }],
         route: 'contact-details-question'

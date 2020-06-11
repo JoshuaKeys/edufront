@@ -1,3 +1,5 @@
+import { PhoneIconModel } from './phone-icon.model';
+
 export interface StaffModel {
   classId: string;
   contexts: string[];
@@ -5,14 +7,15 @@ export interface StaffModel {
   firstName: string;
   gender: string;
   id: string;
-  isDeleted: boolean;
+  isDeleted?: boolean;
   lastName: string;
   login: string;
   middleName: string;
-  profileImage: string;
-  roles: {
+  phone: string | PhoneIconModel;
+  profileImage?: string;
+  roles?: {
     roleId: string;
     roleName: string;
-  }
+  };
   rollNumber: string;
 }

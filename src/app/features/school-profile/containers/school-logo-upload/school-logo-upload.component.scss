@@ -5,6 +5,7 @@
 @import './../../../../../assets/scss/utils';
 @import './../../../../../assets/scss/main';
 
+@import '../../scss-fixes.scss';
 body {
   display: relative;
   background-color: white;
@@ -14,6 +15,27 @@ body {
 @include splitLayout3();
 @include modalIntro();
 @include modalComplete();
+
+.placeholderImg {
+  border: 2px dashed #e6e9f3;
+  width: 180px;
+  height: 180px;
+  @include displayFlex();
+  position: relative;
+  border-radius: 150%;
+  cursor: pointer;
+
+  img {
+    @include absoluteCenter();
+  }
+  &:hover {
+    background: red;
+    border-color: $blue;
+    img {
+      content: url('/assets/32pxplusblue.svg');
+    }
+  }
+}
 
 .form {
   height: 100%;

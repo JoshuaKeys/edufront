@@ -7,23 +7,36 @@
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content" *ngIf="uploadForm">
-      <h2 class="content__title">
-        Upload your school logo
-      </h2>
-      <form [formGroup]="uploadForm">
-        <edu-image-upload
-          (uploadimagedata)="onImageUpload($event)"
-          formControlName="image"
-        ></edu-image-upload>
-      </form>
-      <div class="content__btn-wrapper">
-        <button
-          class="content__btn"
-          [routerLink]="['../', activatedRouteData.next]"
-        >
-          Continue
-        </button>
+      <div class="content-wrapper">
+        <h2 class="content__title">
+          Upload your school logo
+        </h2>
+        <form [formGroup]="uploadForm">
+          <!-- <edu-image-upload
+            (uploadimagedata)="onImageUpload($event)"
+            formControlName="image"
+          ></edu-image-upload> -->
+
+          <!-- (onImageCropped)="onCropImage($event)" -->
+          <edu-image-upload-v3
+            (confirm)="onConfirm($event)"
+            formControlName="image"
+          >
+            <div class="placeholderImg">
+              <img src="/assets/32pxplusgrey.svg" alt="" srcset="" />
+            </div>
+          </edu-image-upload-v3>
+        </form>
       </div>
+    </div>
+    <div class="content__btn-wrapper">
+      <button
+        ButtonType="basic"
+        class="content__button"
+        [routerLink]="['../', activatedRouteData.next]"
+      >
+        Continue
+      </button>
     </div>
   </section>
 </main>

@@ -7,22 +7,7 @@
       <h2 class="content__title">
         Add or upload Students
       </h2>
-      <!-- <div class="search__wrapper">
-        <div class="search__input-wrapper">
-          <img class="search__icon" src="../../../assets/search.svg" alt="" />
 
-          <input
-            class="search__input"
-            type="text"
-            #searchInput
-            placeholder="Search"
-            (input)="onTextChange($event)"
-          />
-        </div>
-        <button class="search__btn" (click)="onAddStudent()">
-          <span>+</span>
-        </button>
-      </div> -->
       <div class="search__wrapper">
         <div class="search__input-wrapper">
           <img class="search__icon" src="../../../assets/search.svg" alt="" />
@@ -49,9 +34,6 @@
               alt=""
               class="icon-img"
             />
-            <div class="tooltip tooltip--top">
-              Sort Alphabetical
-            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -65,9 +47,6 @@
               alt=""
               class="icon-img"
             />
-            <div class="tooltip tooltip--top">
-              Sort by Classes
-            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -85,12 +64,13 @@
               Sort by Sex
             </div>
           </div>
-        </div>
 
-        <button class="search__btn" (click)="onAddStudent()">
-          <span>+</span>
-        </button>
+          <button class="search__btn" (click)="onAddStudent()">
+            <span>+</span>
+          </button>
+        </div>
       </div>
+
       <div class="group">
         <div
           class="group__body"
@@ -127,22 +107,21 @@
           ></edu-sort-by-classes>
         </div>
       </div>
-      <div class="content__btns opacity">
-        <div class="opacity-overlay"></div>
-        <button class="content__btn" (click)="onFinish()">Continue</button>
-      </div>
-      <div class="content__btns opacity">
-        <div class="opacity-overlay"></div>
-        <button class="content__btn" type="button" (click)="onFinish()">
-          Continue
-        </button>
-      </div>
     </div>
+    <button
+      ButtonType="basic"
+      class="content__button"
+      type="button"
+      (click)="onFinish()"
+    >
+      Continue
+    </button>
   </section>
 </main>
 <edu-modal-v2
   *ngIf="(studentsModalState | async).startModal"
   btnText="GOT IT"
+  class="intro"
   header="Students Creation"
   icon="assets/students-intro.svg"
   (btnClicked)="onStart()"
@@ -177,6 +156,6 @@
   *ngIf="(studentsModalState | async).editModal"
   [studentsXClasses]="studentsXClasses"
   (onSubmit)="processSubmit($event)"
+  [editData]="studentEditState"
 >
 </edu-student-edit-form>
-{{ (studentsModalState | async).editModal }}

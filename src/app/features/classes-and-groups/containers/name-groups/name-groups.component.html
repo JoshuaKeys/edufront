@@ -8,32 +8,34 @@
     </button>
 
     <div class="form">
-      <h2 class="form__title">
-        Please name your groups and allocated their classes
-      </h2>
-      <p class="form__desc">Drag and drop in in the relevant group</p>
+      <div class="form__content-wrapper">
+        <h2 class="form__title">
+          Please name your groups and allocated their classes
+        </h2>
+        <p class="form__desc">Drag and drop in in the relevant group</p>
 
-      <div
-        class="form__badges round-badges flex-wrap"
-        *ngIf="selectedClasses | async"
-      >
-        <edu-draggable-class
-          *ngFor="let class of selectedClasses | async"
-          [class]="class"
-          [appDraggable]="{ data: class }"
-          [draggable]="true"
-        ></edu-draggable-class>
-      </div>
+        <div
+          class="form__badges round-badges flex-wrap"
+          *ngIf="selectedClasses | async"
+        >
+          <edu-draggable-class
+            *ngFor="let class of selectedClasses | async"
+            [class]="class"
+            [appDraggable]="{ data: class }"
+            [draggable]="true"
+          ></edu-draggable-class>
+        </div>
 
-      <div class="drop-zones">
-        <edu-group-box
-          *ngFor="let group of groupClassMap | async"
-          [group]="group"
-          (onDropped)="handleDropped($event)"
-          (deselected)="deselectClass($event)"
-          (groupNameChange)="onGroupNameChange($event)"
-          [editable]="true"
-        ></edu-group-box>
+        <div class="drop-zones">
+          <edu-group-box
+            *ngFor="let group of groupClassMap | async"
+            [group]="group"
+            (onDropped)="handleDropped($event)"
+            (deselected)="deselectClass($event)"
+            (groupNameChange)="onGroupNameChange($event)"
+            [editable]="true"
+          ></edu-group-box>
+        </div>
       </div>
       <!-- <button
         class="form__btn"
@@ -45,10 +47,15 @@
       >
         Continue
       </button> -->
-      <button class="form__btn" [routerLink]="['../', activatedRouteData.next]">
-        Continue
-      </button>
     </div>
+    <button
+      class="form__button"
+      ButtonType="basic"
+      [disabled]="hasUngroupedClass | async"
+      [routerLink]="['../', activatedRouteData.next]"
+    >
+      Continue
+    </button>
   </section>
   <aside class="aside">
     <h5 class="aside__title">Preview</h5>
