@@ -8,7 +8,7 @@ import { selectModalState } from '../../ngrx/selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getAllClassesRequest, toggleSelectedState, toggleStudentsDraggedState } from '../../ngrx/actions/classes.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections } from '../../ngrx/selectors/classes.selectors';
+import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections, selectAllSections } from '../../ngrx/selectors/classes.selectors';
 import { ClassesModel } from '../../models/classes-model';
 import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -31,7 +31,9 @@ export class CreateSectionsComponent implements OnInit {
   draggedStudents: Observable<ExtendedProfileDTOModel[]>;
   selectedClass: Observable<ClassesModel> | null;
   selectedSections: Observable<SectionModel>
+  selectAllSections: Observable<SectionModel[]>;
   ngOnInit(): void {
+    this.selectAllSections = this.store.select(selectAllSections)
     this.sectionsModalState = this.store.select(selectModalState);
     this.sortedClassesStaffs = this.store.select(selectSortedClasses)
     this.notDraggedStudents = this.store.select(selectNotDraggedStudents)

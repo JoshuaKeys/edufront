@@ -70,9 +70,17 @@ export const sectionsReducer = createReducer(initialState,
     const sectionIndex = stateCopy.findIndex(section => section.classId === action.classId);
     const sections = stateCopy[sectionIndex].sections;
     const sectionsLength = sections.length;
+    let currentIndex = 0;
+
     for (let i = 0; i < action.students.length; i++) {
-      const randomLocation = Math.floor(Math.random() * (sectionsLength))
-      sections[randomLocation].subjects.push(action.students[i])
+      if (currentIndex < sectionsLength) {
+        sections[currentIndex].subjects.push(action.students[i]);
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+        sections[currentIndex].subjects.push(action.students[i]);
+        currentIndex++;
+      }
     }
     return stateCopy;
   })

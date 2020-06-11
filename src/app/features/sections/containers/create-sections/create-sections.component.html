@@ -36,6 +36,7 @@
         ButtonType="basic"
         class="content__button content__btn--inactive"
         (click)="goToConfirmation()"
+        [disabled]="!(selectAllSections | async).length"
       >
         Continue
       </button>
@@ -66,3 +67,8 @@
   If you have no preference about what student goes into which section,<br />use
   the <b class="orangeColor">random function</b>!
 </edu-modal-v2>
+<!-- <edu-students-form
+  *ngIf="(studentsModalState | async).editModal"
+  [studentsXClasses]="studentsXClasses"
+  (onSubmit)="processSubmit($event)"
+></edu-students-form> -->
