@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 
@@ -14,6 +14,7 @@ export class StudentChipComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   onEdit(student: StudentsXClassesModel) {
     this.studentsCommuncator.editStudent({ profileDto: student })
   }

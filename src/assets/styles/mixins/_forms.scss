@@ -209,7 +209,7 @@
   .form {
     @include displayFlex(flex-start, center, column);
     @include absoluteCenter();
-    top: 45%;
+    // top: 45%;
     &__title {
       margin-bottom: 42px;
     }

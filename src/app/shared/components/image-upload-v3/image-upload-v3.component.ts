@@ -20,7 +20,7 @@ import {
 } from 'ngx-image-cropper';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-function dataURLtoFile(dataurl, filename) {
+export function dataURLtoFile(dataurl, filename) {
   var arr = dataurl.split(','),
     mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]),
@@ -53,7 +53,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     private cd: ChangeDetectorRef,
     private renderer: Renderer2,
     private el: ElementRef
-  ) {}
+  ) { }
   @Input('showControls') showControls = true;
   @Output() onImageCropped = new EventEmitter<File>();
   @Output('confirm') onConfirmEvent = new EventEmitter<ProfilePicModel>();
@@ -194,8 +194,8 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   }
 
   //Control value accessor implementation
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
   writeValue(val: any) {
     // console.log('called');
     if (val === null) {
@@ -208,7 +208,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.onChange = fn;
     // this.onUpload = fn;
   }
-  registerOnTouched() {}
+  registerOnTouched() { }
 
   // disabled = false;
   // onChange: any = () => {};

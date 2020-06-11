@@ -53,18 +53,13 @@ export class InputComponent
     this.subscribeToAffixDirectives();
   }
   config;
-  focusVal = false;
-  set inputElIsFocus(val) {
-    this.focusVal = val;
-  }
-  get inputElIsFocus() {
-    return this.focusVal;
-  }
+  inputElIsFocus = false;
+
   inputIsActive: boolean = false;
-  disabled: boolean; //for ControlValueAccessor implmentation
+  // disabled: boolean; //for ControlValueAccessor implmentation
 
   @Output() onValueChange = new EventEmitter<any>();
-  @Input('disabled') isDisabled;
+  @Input('disabled') disabled = false;
   @Input('elementId') elementId;
   @Input('alignment') alignment = 'center'; //center (default ),left,right
   @Input('isPassword') isPassword = false;
@@ -176,8 +171,8 @@ export class InputComponent
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    if (this.isDisabled != undefined) {
-      this.disabled = this.isDisabled;
-    }
+    // if (this.isDisabled != undefined) {
+    //   this.disabled = this.isDisabled;
+    // }
   }
 }

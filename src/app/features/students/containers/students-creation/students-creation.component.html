@@ -34,6 +34,9 @@
               alt=""
               class="icon-img"
             />
+            <div class="tooltip tooltip--top">
+              Sort Alphabetical
+            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -47,6 +50,9 @@
               alt=""
               class="icon-img"
             />
+            <div class="tooltip tooltip--top">
+              Sort by Classes
+            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -133,6 +139,7 @@
 >
 <edu-modal-v2
   *ngIf="(studentsModalState | async).endModal"
+  class="complete"
   btnText="GOT IT"
   header="Students Set Up Complete"
   icon="assets/icon-complete.svg"
@@ -155,7 +162,7 @@
 <edu-student-edit-form
   *ngIf="(studentsModalState | async).editModal"
   [studentsXClasses]="studentsXClasses"
-  (onSubmit)="processSubmit($event)"
+  (onSubmit)="processEditStudent($event)"
   [editData]="studentEditState"
 >
 </edu-student-edit-form>

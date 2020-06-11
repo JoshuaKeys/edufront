@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter } from '@ngrx/entity';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
-import { initClassesAndStudentsResponse, deleteStudentSuccess } from '../actions/class-students.actions';
+import { initClassesAndStudentsResponse, deleteStudentSuccess, editStudentResponse } from '../actions/class-students.actions';
 
 const studentsAndClassesAdapter = createEntityAdapter<StudentsXClassesModel>();
 const initialState = studentsAndClassesAdapter.getInitialState();

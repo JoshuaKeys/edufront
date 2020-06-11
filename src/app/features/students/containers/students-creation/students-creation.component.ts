@@ -12,7 +12,7 @@ import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { map, catchError } from 'rxjs/operators';
 import { StudentModel } from '../../../../shared/models/student.model';
-import { createStudentRequest, deleteStudentRequest, fetchStudentByIdRequest } from '../../ngrx/actions/class-students.actions';
+import { createStudentRequest, deleteStudentRequest, fetchStudentByIdRequest, editStudentRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -49,6 +49,7 @@ export class StudentsCreationComponent implements OnInit {
     this.studentsModalState = this.store.select(selectModalState);
     this.sortingState = this.store.select(selectSortingState)
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
+    this.studentsXClasses.subscribe(console.log);
     this.studentCommunication.studentEdition$.subscribe(student => this.onEditStudent(student))
     this.studentCommunication.studentRemoval$.subscribe(student => this.onRemoveStudent(student))
   }
@@ -94,10 +95,13 @@ export class StudentsCreationComponent implements OnInit {
     // this.store.dispatch(editSt)
     this.store.dispatch(fetchStudentByIdRequest({ student }))
     // this.store.dispatch(toggleEditModal())
-    this.studentsService.getStudentById(student).subscribe(console.log)
+    // this.studentsService.getStudentById(student).subscribe(console.log)
   }
   processSubmit(event: StudentModel) {
     this.createStudent(event)
+  }
+  processEditStudent(student: StudentModel) {
+    this.store.dispatch(editStudentRequest({ student }))
   }
 
   onRemoveStudent(student: StudentModel) {

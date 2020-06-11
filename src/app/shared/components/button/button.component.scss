@@ -87,7 +87,7 @@
   }
 }
 
-:host.basic {
+:host[buttontype='basic'].basic {
   width: 292px;
   height: 52px;
   border-radius: 100px;
@@ -115,7 +115,7 @@
   }
 }
 
-:host.outline {
+:host[buttontype='outline'].outline {
   width: 292px;
   height: 52px;
   border-radius: 100px;

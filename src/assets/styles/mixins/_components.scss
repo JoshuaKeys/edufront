@@ -1,6 +1,6 @@
-@import "./buttons";
-@import "./forms";
-@import "./layouts";
+@import './buttons';
+@import './forms';
+@import './layouts';
 
 // @mixin select() {
 //   font-family: "Raleway", sans-serif;
@@ -109,7 +109,7 @@
   opacity: 1;
   padding: 44px 50px 53px 50px;
   @include fixedCenter();
-  top: 45%;
+  // top: 45%;
   @include displayFlex(space-between, center, column);
 
   max-width: 600px;
@@ -177,7 +177,7 @@
 
   &__title {
     text-align: center;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
     line-height: 1.4;
     letter-spacing: 0.36px;
@@ -189,7 +189,7 @@
   }
   &__desc {
     text-align: center;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 16px;
     line-height: 1.4;
     letter-spacing: 0.48px;
@@ -215,7 +215,7 @@
     &::before {
       position: absolute;
       top: 0;
-      content: "";
+      content: '';
       display: block;
       background-color: white;
       transform-origin: center;
@@ -280,7 +280,7 @@
         &::placeholder {
           color: $grey;
           font: 14px;
-          font-family: "Raleway", sans-serif;
+          font-family: 'Raleway', sans-serif;
         }
         &:focus {
           outline: none;
@@ -390,7 +390,7 @@
     margin: 4px;
     font-size: 12px;
     line-height: 20px;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     box-shadow: 0px 2px 6px #3c4b9b14;
     @include displayFlex();
     &--square {
@@ -507,7 +507,7 @@
       &::placeholder {
         color: $grey;
         font: 14px;
-        font-family: "Raleway", sans-serif;
+        font-family: 'Raleway', sans-serif;
       }
       &:focus {
         outline: none;
@@ -589,7 +589,7 @@
       top: -7px;
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         width: 0;
         height: 0;
@@ -608,7 +608,7 @@
       top: 50%;
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         width: 0;
         height: 0;
@@ -625,7 +625,7 @@
 }
 
 @mixin emptyPesudoElement($position: absolute) {
-  content: "";
+  content: '';
   display: block;
   position: $position;
 }

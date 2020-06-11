@@ -40,6 +40,10 @@ export const editStudentRequest = createAction(
   '[StudentsCreationComponent] editStudentRequest',
   props<{ student: StudentModel }>()
 );
+export const editStudentResponse = createAction(
+  '[StudentsCreationComponent] editStudentResponse',
+  props<{ student: StudentModel }>()
+);
 export const fetchStudentByIdRequest = createAction(
   '[StudentsCreationComponent] fetchStudentByIdRequest',
   props<{ student: StudentModel }>()
