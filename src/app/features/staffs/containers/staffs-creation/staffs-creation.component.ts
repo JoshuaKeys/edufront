@@ -10,7 +10,8 @@ import {
   selectAllClasses,
   selectClassesOfSubject,
   classesAndSubjectsAssoc,
-  selectSortingData
+  selectSortingData,
+  selectEditData
 } from '../../ngrx/selectors';
 import { Observable } from 'rxjs';
 import { StaffsModalsModel } from '../../models/staffs-modal.model';
@@ -55,6 +56,7 @@ export class StaffsCreationComponent implements OnInit {
   currentlySelectedSubject: string;
   subjectClassesAssociation: Observable<SubjectClassesAssociation[]>
   sortingState: Observable<SortingModel>;
+  selectEditState: Observable<StaffModel>;
   @ViewChild('searchInput') searchInput;
 
   ngOnInit(): void {
@@ -66,6 +68,7 @@ export class StaffsCreationComponent implements OnInit {
     this.sortingState = this.store.select(selectSortingData)
     this.staffsCommunicator.staffEdition$.subscribe(staff => this.onEditStaff(staff))
     this.staffsCommunicator.staffRemoval$.subscribe(staff => this.onRemoveStaff(staff))
+    this.selectEditState = this.store.select(selectEditData);
   }
 
   onTextChange(event) {

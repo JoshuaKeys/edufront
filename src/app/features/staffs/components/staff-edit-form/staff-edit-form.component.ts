@@ -48,28 +48,39 @@ export class StaffEditFormComponent implements OnInit {
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
   @Output() onCreateStaff = new EventEmitter();
+  @Input() editState = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
   createStaff() {
     this.onCreateStaff.emit(this.addEditForm.value);
   }
   ngOnInit(): void {
-    this.addEditForm = new FormGroup({
-      profilePic: new FormControl(null),
-      firstName: new FormControl(''),
-      middleName: new FormControl(''),
-      familyName: new FormControl(''),
-      dob: new FormControl(''),
-      sex: new FormControl(''),
-      id: new FormControl(''),
-      phone: new FormControl(this.countryIconMap[0]),
-      country: new FormControl(this.countryIconMap[0]),
-      city: new FormControl(''),
-      state: new FormControl(''),
-      zip: new FormControl(''),
-      email: new FormControl(''),
-      address: new FormControl(''),
-    });
+    this.editState.subscribe(editState => {
+      if (editState) {
+        console.log(editState)
+        const countryIdx = this.countryIconMap.findIndex(country => {
+          return editState.profileDto.countryId === country.id
+        });
+        console.log(countryIdx)
+        this.addEditForm = new FormGroup({
+          profilePic: new FormControl(null),
+          firstName: new FormControl(editState.profileDto.firstName ? editState.profileDto.firstName : ''),
+          middleName: new FormControl(editState.profileDto.middleName ? editState.profileDto.middleName : ''),
+          familyName: new FormControl(editState.profileDto.lastName ? editState.profileDto.lastName : ''),
+          dob: new FormControl(editState.profileDto.dob ? editState.profileDto.dob : ''),
+          sex: new FormControl(editState.profileDto.gender ? editState.profileDto.gender : ''),
+          id: new FormControl(editState.profileDto.id ? editState.profileDto.id : ''),
+          phone: new FormControl(this.countryIconMap[countryIdx]),
+          country: new FormControl(this.countryIconMap[countryIdx]),
+          city: new FormControl(editState.profileDto.city ? editState.profileDto.city : ''),
+          state: new FormControl(editState.profileDto.state ? editState.profileDto.state : ''),
+          zip: new FormControl(editState.profileDto.zip ? editState.profileDto.zip : ''),
+          email: new FormControl(editState.profileDto.email ? editState.profileDto.email : ''),
+          address: new FormControl(editState.profileDto.address ? editState.profileDto.address : ''),
+        });
+      }
+    })
+
   }
   handleImgUpload(event: ProfilePicModel) {
     console.log(event);
