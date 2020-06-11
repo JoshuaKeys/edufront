@@ -1,5 +1,6 @@
 .edu-staff-chips {
   display: flex;
+  flex-wrap: wrap;
 }
 :host {
   width: 100%;
