@@ -6,6 +6,9 @@ export const toggleStartModal = createAction(
 export const toggleAddModal = createAction(
   '[StudentsCreationComponent] toggleEditModal'
 )
+export const toggleEditModal = createAction(
+  '[StudentsCreationComponent] toggleEditModal'
+)
 export const toggleEndModal = createAction(
   '[StudentsCreationComponent] toggleEndModal'
 )

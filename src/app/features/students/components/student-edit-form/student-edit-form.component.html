@@ -1,26 +1,27 @@
-<p>staff-edit-form works!</p>
 <main>
   <div class="modal__overlay">
     <div class="modal">
       <h2 class="modal__title">
-        Add/Edit Staff
+        Add/Edit Students
       </h2>
       <form
         *ngIf="addEditForm"
         id="addEditForm"
         [formGroup]="addEditForm"
-        (ngSubmit)="createStaff()"
+        (ngSubmit)="editStudent()"
         class="modal__content"
       >
-        <div class="modal__content-profile">
+        <div class="modal__content-profile" formGroupName="profilePic">
           <h3 class="modal__content-header">Profile Picture</h3>
           <edu-img-upload-v2
-            formControlName="profilePic"
+            formControlName="profileImage"
             (uploadimagedata)="handleImgUpload($event)"
           ></edu-img-upload-v2>
         </div>
-        <div class="modal__content-staff-details">
-          <h3 class="modal__content-header">Staff Details</h3>
+        <div class="modal__content-staff-details" formGroupName="profileDto">
+          <h3 class="modal__content-header">
+            Student Details
+          </h3>
           <div class="modal__content-first-row">
             <edu-input-field
               idPrefix="firstName"
@@ -39,36 +40,21 @@
               formControlName="familyName"
               text="Family Name"
             ></edu-input-field>
-
+          </div>
+          <div class="modal__content-second-row">
             <edu-input-field
               idPrefix="dateOfBirth"
               formControlName="dob"
               text="Date of Birth"
             ></edu-input-field>
-
-            <edu-select formControlName="sex">
+            <!-- <edu-datepicker formControlName="dob"></edu-datepicker> -->
+            <edu-select formControlName="gender">
               <span class="edu-label"> Sex </span>
               <edu-option OptionValue="Male"> Male </edu-option>
               <edu-option OptionValue="Female"> Female </edu-option>
             </edu-select>
-            <edu-input-field
-              idPrefix="id"
-              formControlName="id"
-              text="ID - Auto Generated"
-            ></edu-input-field>
           </div>
-          <div class="modal__content-second-row">
-            <edu-phone-field
-              formControlName="phone"
-              [icons]="countryIconMap"
-              fieldName="Phone"
-              (valueChanged)="updatePhone($event)"
-            ></edu-phone-field>
-            <edu-input-field
-              idPrefix="email"
-              formControlName="email"
-              text="Email(Optional)"
-            ></edu-input-field>
+          <div class="modal__content-third-row">
             <edu-country-field
               formControlName="country"
               [fieldName]="'Country'"
@@ -82,7 +68,7 @@
               text="Address"
             ></edu-input-field>
           </div>
-          <div class="modal__content-third-row">
+          <div class="modal__content-fourth-row">
             <edu-input-field
               idPrefix="city"
               formControlName="city"
@@ -95,21 +81,57 @@
             ></edu-input-field>
             <edu-input-field
               idPrefix="zip"
-              formControlName="zip"
+              formControlName="zipcode"
               text="Zip Code"
             ></edu-input-field>
           </div>
+          <div class="modal__content-fifth-row">
+            <edu-select formControlName="classId">
+              <span class="edu-label"> Class </span>
+              <edu-option
+                *ngFor="let studentXClass of studentsXClasses | async"
+                [OptionValue]="studentXClass.classId"
+                >{{ studentXClass.className }}
+              </edu-option>
+            </edu-select>
+            <edu-input-field
+              idPrefix="id"
+              formControlName="id"
+              [disabled]="true"
+              text="ID - Auto Generated"
+            ></edu-input-field>
+          </div>
         </div>
-        <div class="modal__content-subject-area">
-          <h3 class="modal__content-header">Subject Area</h3>
-          <edu-subjects-area
-            [classes]="classes"
-            [subjects]="subjects"
-            (selectSubject)="onSelectSubject($event)"
-            (unSelectSubject)="onUnSelectSubject($event)"
-            (classClicked)="onClassClicked($event)"
-            [classesAndSubject]="classesAndSubjects"
-          ></edu-subjects-area>
+        <div class="modal__content-subject-area" formGroupName="guardianDto">
+          <h3 class="modal__content-header">Guardian Details</h3>
+          <edu-input-field
+            idPrefix="guardianFirstName"
+            formControlName="firstName"
+            text="First Name"
+          ></edu-input-field>
+          <edu-input-field
+            idPrefix="guardianMiddleName"
+            formControlName="middleName"
+            text="Middle Name (Optional)"
+          >
+          </edu-input-field>
+          <edu-input-field
+            idPrefix="guardianFamilyName"
+            formControlName="familyName"
+            text="Family Name"
+          >
+          </edu-input-field>
+          <edu-phone-field
+            formControlName="phone"
+            [icons]="countryIconMap"
+            fieldName="Phone"
+            (valueChanged)="updatePhone($event)"
+          ></edu-phone-field>
+          <edu-input-field
+            idPrefix="guardianEmail"
+            formControlName="email"
+            text="Email Address (Optional)"
+          ></edu-input-field>
         </div>
       </form>
       <button

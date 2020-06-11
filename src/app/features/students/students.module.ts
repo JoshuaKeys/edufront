@@ -15,6 +15,7 @@ import { SortAlphabeticallyComponent } from './components/sort-alphabetically/so
 import { SortByGenderComponent } from './components/sort-by-gender/sort-by-gender.component';
 import { SortByClassesComponent } from './components/sort-by-classes/sort-by-classes.component';
 import { TotalStudentsComponent } from './components/total-students/total-students.component';
+import { StudentEditFormComponent } from './components/student-edit-form/student-edit-form.component';
 
 
 
@@ -26,7 +27,8 @@ import { TotalStudentsComponent } from './components/total-students/total-studen
     SortAlphabeticallyComponent,
     SortByGenderComponent,
     SortByClassesComponent,
-    TotalStudentsComponent
+    TotalStudentsComponent,
+    StudentEditFormComponent
   ],
   imports: [
     CommonModule,

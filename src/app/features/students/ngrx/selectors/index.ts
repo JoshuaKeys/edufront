@@ -11,3 +11,5 @@ export const selectStudentsAndClasses = createSelector(selectStudentsAndClassesF
 
 export const selectAllStudents = createSelector(featureState, feat => fromStudents.selectAll(feat.students))
 export const selectAllClasses = createSelector(featureState, feat => fromClasses.selectAll(feat.classes))
+
+export const selectEditData = createSelector(featureState, feat => feat.edit)

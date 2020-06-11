@@ -48,28 +48,39 @@ export class StaffEditFormComponent implements OnInit {
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
   @Output() onCreateStaff = new EventEmitter();
+  @Input() editState = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
   createStaff() {
     this.onCreateStaff.emit(this.addEditForm.value);
   }
   ngOnInit(): void {
-    this.addEditForm = new FormGroup({
-      profilePic: new FormControl(null),
-      firstName: new FormControl(''),
-      middleName: new FormControl(''),
-      familyName: new FormControl(''),
-      dob: new FormControl(''),
-      sex: new FormControl(''),
-      id: new FormControl(''),
-      phone: new FormControl(this.countryIconMap[0]),
-      country: new FormControl(this.countryIconMap[0]),
-      city: new FormControl(''),
-      state: new FormControl(''),
-      zip: new FormControl(''),
-      email: new FormControl(''),
-      address: new FormControl(''),
-    });
+    this.editState.subscribe(editState => {
+      if (editState) {
+        const countryIdx = this.countryIconMap.findIndex(country => {
+          console.log(editState)
+          return editState.countryId === country.id
+        });
+        console.log(countryIdx)
+        this.addEditForm = new FormGroup({
+          profilePic: new FormControl(editState.profileImage ? { imageUrl: editState.profileImage } : null),
+          firstName: new FormControl(editState.firstName ? editState.firstName : ''),
+          middleName: new FormControl(editState.middleName ? editState.middleName : ''),
+          familyName: new FormControl(editState.lastName ? editState.lastName : ''),
+          dob: new FormControl(editState.dob ? editState.dob : ''),
+          sex: new FormControl(editState.gender ? editState.gender : ''),
+          id: new FormControl(editState.id ? editState.id : ''),
+          phone: new FormControl(this.countryIconMap[countryIdx]),
+          country: new FormControl(this.countryIconMap[countryIdx]),
+          city: new FormControl(editState.city ? editState.city : ''),
+          state: new FormControl(editState.state ? editState.state : ''),
+          zip: new FormControl(editState.zip ? editState.zip : ''),
+          email: new FormControl(editState.email ? editState.email : ''),
+          address: new FormControl(editState.address ? editState.address : ''),
+        });
+      }
+    })
+
   }
   handleImgUpload(event: ProfilePicModel) {
     console.log(event);

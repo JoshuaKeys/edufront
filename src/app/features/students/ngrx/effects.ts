@@ -3,8 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StudentsService } from '../services/students.service';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess } from './actions/class-students.actions';
-import { toggleAddModal } from './actions/students-modal.actions';
+import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess, fetchStudentByIdRequest, fetchStudentByIdResponse } from './actions/class-students.actions';
+import { toggleAddModal, toggleEditModal } from './actions/students-modal.actions';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../models/students-state.model';
 import { selectAllStudents, selectAllClasses } from './selectors';
@@ -33,6 +33,12 @@ export class StudentsEffects {
         ]
       })
     )),
+  ))
+  fetchStudentData$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchStudentByIdRequest),
+    mergeMap(action => this.studentsService.getStudentById(action.student).pipe(
+      mergeMap(student => [fetchStudentByIdResponse({ student }), toggleEditModal()])
+    ))
   ))
   refreshStudentsXClasses$ = createEffect(() => this.actions$.pipe(
     ofType(createStudentSuccess),
@@ -78,16 +84,15 @@ export class StudentsEffects {
     ))
   ))
   composeCreateStudentData(student: StudentModel, file: string) {
-    console.log(student, file);
     const studentCopy: StudentModel = { ...student, };
     if (studentCopy.profileDto.profileImage) {
       studentCopy.profileDto.profileImage = file;
     }
     if (studentCopy.guardianDetailsDto.phone) {
-      studentCopy.guardianDetailsDto.phone = student.guardianDetailsDto.phone['phoneNum']
+      studentCopy.guardianDetailsDto.phone = student.guardianDetailsDto.phone['phoneNum'];
     }
     if (studentCopy.profileDto['country']) {
-      studentCopy.profileDto.countryId = student.profileDto['country'].id
+      studentCopy.profileDto.countryId = student.profileDto['country'].id;
     }
     return studentCopy
   }

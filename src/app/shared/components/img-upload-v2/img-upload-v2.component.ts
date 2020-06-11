@@ -14,15 +14,22 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export class ImgUploadV2Component implements OnInit {
   imageSrc: string;
   acceptedFile: File
+  mode = 'base64';
   constructor(private cdRef: ChangeDetectorRef) { }
-  // onUpload: (src: string) => any;
   ngOnInit(): void {
   }
   writeValue(val: ProfilePicModel) {
     if (val === null) {
       return;
     }
+    if (val.imageUrl) {
+      this.mode = 'imageUrl';
+      this.imageSrc = `https://education.development.allexis.io/admin/image/profile/${val.imageUrl}`;
+      return;
+    }
     this.imageSrc = val.base64;
+    return;
+
   }
   registerOnChange(fn: any) {
     // this.onUpload = fn;
