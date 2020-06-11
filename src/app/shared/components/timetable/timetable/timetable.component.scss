@@ -1,77 +1,77 @@
-@import "../../../../../assets/scss/mixins/alignment";
-@import "../../../../../assets/scss/colors";
+@import '../../../../../assets/scss/mixins/alignment';
+@import '../../../../../assets/scss/colors';
 
-
-@for $i from 0 through 50{
-  
-    .r#{$i}{
-      grid-row-start: #{$i   + 1};   
-    }
-    .c#{$i}{
-      grid-column-start: #{$i   + 1};   
-    }
-
-    .re#{$i}{
-        grid-row-end: #{$i   + 2};   
-      }
-      .ce#{$i}{
-        grid-column-end: #{$i   + 2};   
-      }
-    .row-start-#{$i}{
-      grid-row-start: #{$i + 1};
-    }
-      .row-end-#{$i}{
-      grid-row-start: #{$i + 1};
-    }
-    
+@for $i from 0 through 50 {
+  .r#{$i} {
+    grid-row-start: #{$i + 1};
+  }
+  .c#{$i} {
+    grid-column-start: #{$i + 1};
   }
 
-
-.calendar > div{
-    @include displayFlex();
+  .re#{$i} {
+    grid-row-end: #{$i + 2};
+  }
+  .ce#{$i} {
+    grid-column-end: #{$i + 2};
+  }
+  .row-start-#{$i} {
+    grid-row-start: #{$i + 1};
+  }
+  .row-end-#{$i} {
+    grid-row-start: #{$i + 1};
+  }
 }
 
-
-
-.calendar{
-    display: grid;
-    grid-template-columns: 60px 110px  ;
-    grid-template-rows:  20px 30px ;
-    column-gap: 10px;
-    row-gap: 10px;
-    grid-auto-rows: 32px;
-    grid-auto-columns: 110px;
-    grid-auto-flow: column dense;
-
-
-
+.calendar > div {
+  @include displayFlex();
 }
-.special-period{
-    background-color: red;
-}
-.empty-placeholder{
-    grid-row: 1;
-    grid-column: 1;
-  }
-.time{
-    grid-column: 1/2;
-    grid-row:span 2;
-    @include displayFlex(space-around);
-    font: 600 16px/20px Quicksand;
-    &--break, &--assembly{
-      height: 30px ;
-      grid-row:span 1;
-      color: $orange;
-    }
-    &--assembly{
-      color: $blue ;
-    }
-    // grid-col
-  }
 
-  .single-row{
-    grid-row:span 1;
+.calendar {
+  display: grid;
+  grid-template-columns: 60px 110px;
+  grid-template-rows: 20px 30px;
+  column-gap: 10px;
+  row-gap: 10px;
+  grid-auto-rows: 32px;
+  grid-auto-columns: 110px;
+  grid-auto-flow: column dense;
+}
+.special-period {
+  font: 400 12px/20px Roboto;
+  border-radius: 4px;
+}
+.empty-placeholder {
+  grid-row: 1;
+  grid-column: 1;
+}
+.day {
+  text-transform: capitalize;
+  color: $ash;
+  font: 600 16px/40px Quicksand;
+}
+.time {
+  color: $ash;
+  font: 600 16px/40px Quicksand;
+  grid-column: 1/2;
+  grid-row: span 2;
+  @include displayFlex(space-around);
+  font: 600 16px/20px Quicksand;
+  &--break,
+  &--assembly {
+    height: 30px;
+    grid-row: span 1;
+    color: $orange;
   }
-  .dual-row{
-    grid-row:span 2;
+  &--assembly {
+    color: $blue;
   }
+  // grid-col
+}
+
+.single-row {
+  grid-row: span 1;
+}
+.dual-row {
+  grid-row: span 2;
+}

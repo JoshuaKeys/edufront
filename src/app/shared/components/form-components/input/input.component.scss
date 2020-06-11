@@ -2,6 +2,35 @@
 // @import "src/assets/styles/form-general";
 @import 'src/assets/styles/mixins/alignment';
 
+//animations
+:host {
+  .wrapper:hover {
+    background: #f8f9fa;
+
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+  }
+
+  .input-wrapper-border--active.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+  }
+  .input-wrapper-border--active.input-wrapper-border--error.wrapper {
+    background-color: rgba($red, 0.1);
+    &:hover {
+      background-color: rgba($red, 0.1);
+    }
+  }
+  .input-wrapper-border--error.wrapper {
+    border-color: $red !important;
+    label {
+      color: $red;
+    }
+  }
+}
+
 :host {
   display: block;
   position: relative;
@@ -17,6 +46,8 @@ input:focus {
 }
 
 .wrapper {
+  padding: 0 12px;
+  border-color: #e6e9f3;
   margin: auto;
   height: 100%;
   @include displayFlex(flex-start, center, row);
@@ -78,17 +109,6 @@ label {
 
 .input--active {
   height: auto;
-}
-
-.input-wrapper-border--active {
-  border-color: $blue;
-}
-
-.input-wrapper-border--error {
-  border-color: $red;
-  label {
-    color: $red;
-  }
 }
 
 .label-input-affix__wrapper {

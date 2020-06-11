@@ -12,6 +12,7 @@ import {
   ContentChildren,
   QueryList,
   ChangeDetectorRef,
+  Renderer2,
   HostListener
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -37,7 +38,8 @@ export class InputComponent
   constructor(
     private cd: ChangeDetectorRef,
     private el: ElementRef,
-    private inputService: InputService
+    private inputService: InputService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +53,13 @@ export class InputComponent
     this.subscribeToAffixDirectives();
   }
   config;
-  inputElIsFocus = false;
+  focusVal = false;
+  set inputElIsFocus(val) {
+    this.focusVal = val;
+  }
+  get inputElIsFocus() {
+    return this.focusVal;
+  }
   inputIsActive: boolean = false;
   disabled: boolean; //for ControlValueAccessor implmentation
 

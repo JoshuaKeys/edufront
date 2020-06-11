@@ -1,23 +1,146 @@
-.templateContainer{
-    border:1px dashed grey;
-    border-radius: 12px;
-    display: flex;
+//for styling of individual period (box with dashed line, you can repurpose this for your dropzone)
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/mixins/alignment';
+.templateContainer.active {
+  border-color: $blue;
+  &::after {
+    background: $blue;
+    border-color: $blue;
+  }
+  &::before {
+    background: url('/assets/timetable-tick-white.svg') no-repeat no-repeat
+      center center;
+  }
+}
+.templateContainer {
+  border: 1px dashed #e6e9f3;
+  border-radius: 12px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+  width: 100%;
+  height: 100%;
 
-    width: 100%;
-    height: 100%;
-
-    h6{
-        margin: 0.5em 0.1em;
+  h6 {
+    margin: 0.5em 0.1em;
+  }
+  &:hover {
+    border-color: $blue;
+    &::after {
+      border-color: $blue;
     }
+  }
+  &::after {
+    content: '';
+    background: white;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    border: 1px solid #e6e9f3;
+    border-radius: 50%;
+    right: 0;
+    top: 0;
+    transform: translate(25%, -25%);
+  }
+  &::before {
+    content: '';
+    display: block;
+    right: 0;
+    top: 0;
+    transform: translate(25%, -25%);
+    background: url(/assets/timetable-tick-grey.svg) no-repeat no-repeat center
+      center;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    z-index: 1;
+  }
+
+  //   .status-icon {
+  //     background: white;
+  //     width: 18px;
+  //     height: 18px;
+  //     position: absolute;
+  //     border: 1px solid #e6e9f3;
+  //     border-radius: 50%;
+  //     right: 0;
+  //     top: 0;
+  //     transform: translate(25%, -25%);
+  //     img {
+  //       @include absoluteCenter();
+  //     }
+  //   }
 }
 
-p{
-    padding-left: 10px;;
-    text-align: left;
-    align-self: flex-start;
+//styling of chips inside container
+@import 'src/assets/styles/modules/students';
+@import 'src/assets/styles/mixins/alignment';
+@include studentChips();
+
+.drop-zone {
+  @include displayFlex(center, center, column);
+  width: 100%;
+  padding: 5px;
+  //   padding-top: 20px;
+}
+.templateContainer {
+  .chip {
+    // margin-left: 10px;
+    margin: 3px;
+    transform: unset;
+    min-width: 70px;
+    padding: 5px 11px;
+    max-width: 100%;
+    @include displayFlex(flex-start);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font: 500 9px/24px Raleway;
+    height: 24px;
+
+    img {
+      transform: scale(0.7);
+    }
+    // .chip__icon-btn:first-child {
+    //   margin-right: 10px;
+    // }
+  }
+  .chip--subject {
+    padding: 0;
+    // padding-right: 8px;
+  }
+  .chip:hover::after {
+    content: 'X';
+    display: block;
+    color: white;
+    font: 700 14px/24px Raleway;
+    @include absoluteCenter();
+  }
+
+  .chip--subject:hover {
+    img {
+      opacity: 0;
+      background: $blue;
+    }
+    background: $blue;
+  }
+  .chip__text,
+  .chip__desc {
+    margin: 0;
+    font: 500 9px/24px Raleway;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+//not important
+p {
+  padding-left: 10px;
+  text-align: left;
+  align-self: flex-start;
 }

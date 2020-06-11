@@ -12,12 +12,10 @@
   @include displayFlex();
   display: inline-flex;
 }
-:host ::ng-deep img + span {
-  margin-left: 20px;
-}
 
-.blank {
-}
+// :host ::ng-deep img + span {
+//   margin-left: 20px;
+// }
 
 :host.fab {
   border-radius: 50%;
@@ -27,17 +25,94 @@
   height: 30px;
 }
 
+:host.tick {
+  &:hover {
+  }
+  &:active {
+  }
+  &:disabled {
+  }
+}
+:host.fab,
+:host.tick {
+  width: 44px;
+  height: 44px;
+  border: 2px solid $blue;
+  background: transparent;
+  border-radius: 50%;
+
+  &:hover {
+    border-color: $green;
+  }
+  &:active {
+    border-color: $green;
+    background: $green;
+  }
+  &:disabled {
+    border-color: $disabled;
+    background: $disabled;
+  }
+}
+
+:host.round {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font: 400 16px/22px Roboto;
+  border: 2px solid #c7ccdb;
+  color: #c7ccdb;
+  background: transparent;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  @include displayFlex();
+  // text-transform: uppercase;
+  // box-shadow: 0px 4px 8px #3c4b9b26;
+  position: relative;
+
+  &:hover {
+    color: $blue;
+    border-color: $blue;
+  }
+  &:active {
+    color: white;
+    border-color: $blue;
+    background: $blue;
+    box-shadow: none;
+  }
+  &:disabled {
+    // border: none !important;
+    background: $disabled;
+    border-color: $disabled;
+    color: white;
+    box-shadow: none;
+  }
+}
+
 :host.basic {
   width: 292px;
   height: 52px;
   border-radius: 100px;
   font: 700 12px/20px Raleway;
-
+  box-shadow: 0px 4px 8px #3c4b9b26;
   color: white;
   background: $blue;
   text-transform: uppercase;
-  box-shadow: 0px 4px 8px #3c4b9b26;
+  // box-shadow: 0px 4px 8px #3c4b9b26;
   position: relative;
+
+  &:hover {
+    background: $dark-blue;
+  }
+  &:active {
+    background: $navy;
+    box-shadow: unset;
+  }
+  &:disabled {
+    // border: none !important;
+    background: $disabled;
+    border-color: $disabled;
+    color: white;
+    box-shadow: unset;
+  }
 }
 
 :host.outline {
@@ -49,13 +124,25 @@
   border: 2px solid $blue;
   color: $blue;
   background: transparent;
+  box-shadow: 0px 4px 8px #3c4b9b1a;
+  &:hover {
+    background: $blue;
+    border-color: $blue;
+    color: white;
+  }
+
+  &:active {
+    border-color: $navy;
+    background: $navy;
+    box-shadow: none;
+  }
+  &:disabled {
+    background: transparent;
+    color: $disabled;
+    border-color: $disabled;
+    box-shadow: none;
+  }
 }
 
 .text {
-}
-
-:host.basic:disabled {
-  border: none !important;
-  background: #e6e9f3;
-  color: white;
 }
