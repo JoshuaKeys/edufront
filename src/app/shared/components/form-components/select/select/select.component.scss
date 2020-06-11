@@ -4,6 +4,45 @@
 
 //default color >> $grey-blue
 
+//animations
+:host {
+  // [active, inactive( default ), focus, disabled ]
+  .wrapper {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+
+  .wrapper:hover {
+    background: #f8f9fa;
+
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+  }
+
+  .focus.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+  }
+
+  .active.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+  }
+
+  .wrapper.disabled:hover {
+    background: transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-radius: 0px;
+  }
+}
+
 :host {
   display: block;
   position: relative;

@@ -36,6 +36,7 @@ import { filter } from 'rxjs/operators';
 export class SelectComponent implements OnInit, ControlValueAccessor {
   @Output() onValueChange = new EventEmitter<any>();
   @Input('alignment') alignment = 'center'; //left right center
+  @Input('disabled') disabled = false;
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
 
@@ -225,8 +226,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   onChange: any = () => {};
   onTouched: any = () => {};
-
-  disabled: boolean;
 
   writeValue(value: any) {
     this.selectService.setActiveOption(value);

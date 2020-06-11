@@ -4,6 +4,12 @@
 
 //animations
 :host {
+  .wrapper {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+
   .wrapper:hover {
     background: #f8f9fa;
 
@@ -28,6 +34,14 @@
     label {
       color: $red;
     }
+  }
+
+  .wrapper.disabled:hover {
+    background: transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-radius: 0px;
   }
 }
 
