@@ -49,6 +49,7 @@ export class StudentsCreationComponent implements OnInit {
     this.studentsModalState = this.store.select(selectModalState);
     this.sortingState = this.store.select(selectSortingState)
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
+    this.studentsXClasses.subscribe(console.log);
     this.studentCommunication.studentEdition$.subscribe(student => this.onEditStudent(student))
     this.studentCommunication.studentRemoval$.subscribe(student => this.onRemoveStudent(student))
   }

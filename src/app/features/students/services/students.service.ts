@@ -31,7 +31,7 @@ export class StudentsService {
   }
   editStudent(student: StudentModel): Observable<StudentModel> {
     console.log(student)
-    return this.httpClient.put<StudentModel>(`/api/v1/profile/completeProfile/${student.guardianDetailsDto.id}`, student);
+    return this.httpClient.put<StudentModel>(`/api/v1/profile/completeProfile/${student.guardianDetailsDto.profileId}`, student);
   }
   constructor(private httpClient: HttpClient) { }
 }

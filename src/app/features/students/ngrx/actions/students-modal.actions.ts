@@ -4,7 +4,7 @@ export const toggleStartModal = createAction(
   '[StudentsCreationComponent] toggleStartModal'
 );
 export const toggleAddModal = createAction(
-  '[StudentsCreationComponent] toggleEditModal'
+  '[StudentsCreationComponent] toggleAddModal'
 )
 export const toggleEditModal = createAction(
   '[StudentsCreationComponent] toggleEditModal'

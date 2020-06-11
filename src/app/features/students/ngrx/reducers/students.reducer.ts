@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter } from '@ngrx/entity';
 import { StudentModel } from '../../../../shared/models/student.model';
-import { fetchedStudentsSuccess, createStudentSuccess, deleteStudentSuccess } from '../actions/class-students.actions';
+import { fetchedStudentsSuccess, createStudentSuccess, deleteStudentSuccess, editStudentResponse } from '../actions/class-students.actions';
 import { ProfileDTOModel } from '../../../../shared/models/profile-dto.model';
 
 const studentsAdapter = createEntityAdapter<StudentModel>({
@@ -17,6 +17,18 @@ export const studentsReducer = createReducer(initialState,
   }),
   on(deleteStudentSuccess, (state, action) => {
     return studentsAdapter.removeOne(action.student.profileDto.id, state);
+  }),
+  on(editStudentResponse, (state, action) => {
+    return studentsAdapter.updateOne(
+      {
+        id: action.student.profileDto.id,
+        changes: {
+          profileDto: {
+            ...action.student.profileDto
+          }
+        }
+      }, state
+    )
   })
 );
 

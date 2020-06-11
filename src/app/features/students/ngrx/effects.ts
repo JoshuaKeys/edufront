@@ -10,6 +10,7 @@ import { StudentsStateModel } from '../models/students-state.model';
 import { selectAllStudents, selectAllClasses } from './selectors';
 import { StudentsXClassesModel } from '../models/students-x-classes.model';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { dataURLtoFile } from 'src/app/shared/components/image-upload-v3/image-upload-v3.component';
 
 @Injectable()
 export class StudentsEffects {
@@ -81,11 +82,33 @@ export class StudentsEffects {
     ofType(editStudentRequest),
     mergeMap(action => {
       const studentReqData = this.processStudentReqData(action.student);
+      studentReqData.profileDto.countryId = studentReqData.profileDto['country'].id
+      studentReqData.profileDto.phone = studentReqData.guardianDetailsDto.phone['phoneNum'] || ''
+      studentReqData.guardianDetailsDto.phone = studentReqData.guardianDetailsDto.phone['phoneNum'] || ''
+      studentReqData.profileDto.login = true;
+      studentReqData.profileDto.createdCode = false;
+      delete studentReqData.profileDto['country']
       if (studentReqData.profileDto.profileImage) {
-        return this.studentsService.editStudent(studentReqData).pipe(
-          map(student => editStudentResponse({ student }))
+        if (studentReqData.profileDto.profileImage['imageUrl'].length > 0) {
+          studentReqData.profileDto.profileImage = studentReqData.profileDto.profileImage['imageUrl'];
+          return this.studentsService.editStudent(studentReqData).pipe(
+            map(student => editStudentResponse({ student }), toggleEditModal())
+          )
+        }
+        const fileConvertedFromBase64 = dataURLtoFile(studentReqData.profileDto.profileImage['base64'], 'profilePic.png')
+        return this.studentsService.uploadLogo(fileConvertedFromBase64).pipe(
+          mergeMap(res => {
+            console.log(res);
+            const editStudentObj = this.composeCreateStudentData(studentReqData, res.file);
+            return this.studentsService.editStudent(editStudentObj).pipe(
+              mergeMap(student => [editStudentResponse({ student }), toggleEditModal()])
+            )
+          })
         )
       }
+      return this.studentsService.editStudent(studentReqData).pipe(
+        mergeMap(student => [editStudentResponse({ student }), toggleEditModal()])
+      )
     })
   ))
   deleteStudentRequest$ = createEffect(() => this.actions$.pipe(
