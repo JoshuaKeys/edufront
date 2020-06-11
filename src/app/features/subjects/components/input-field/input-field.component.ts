@@ -59,7 +59,7 @@ export class ArrayInputFieldComponent implements OnInit, ControlValueAccessor {
     this.onValueChange(event.target.value);
   }
   add(type: string, pos: number) {
-    console.log(this.subSubjectsValue);
+    // console.log(this.subSubjectsValue);
     if (!this.subSubjectsValue.value) {
       return;
     }

@@ -8,13 +8,14 @@
   >
     <div class="edu-input__prefix" InputAffix>
       <img
+        class="iconbtn"
         src="../../../assets/iconfinder_subject_plus-blue.svg"
         alt=""
         (click)="add(type, index)"
       />
     </div>
     <span
-      class="edu-input__suffix deleteIcon"
+      class="edu-input__suffix deleteIcon iconbtn"
       InputAffix
       (click)="remove(type, index)"
       *ngIf="index && !last"

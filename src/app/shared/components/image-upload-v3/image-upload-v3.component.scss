@@ -18,6 +18,10 @@
   top: 0;
   left: 0;
 }
+image-cropper {
+  --cropper-outline-color: rgba(255, 255, 255, 1);
+  --cropper-overlay-color: #a5aec7;
+}
 
 image-cropper ::ng-deep {
   //   width: 180px;
@@ -30,6 +34,23 @@ image-cropper ::ng-deep {
   .source-image {
     max-width: 350px !important;
     max-height: 232px !important;
+  }
+
+  .resize {
+    &.top,
+    &.bottom,
+    &.right,
+    &.left {
+      // display: none !important;
+    }
+  }
+  .resize-bar {
+    &.top,
+    &.bottom,
+    &.right,
+    &.left {
+      // display: none !important;
+    }
   }
 
   .cropper {
