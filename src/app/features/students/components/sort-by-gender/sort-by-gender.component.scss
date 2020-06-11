@@ -2,10 +2,10 @@
   display: flex;
   justify-content: space-between;
   &__female {
-    width: 40%;
+    width: 48%;
   }
   &__male {
-    width: 40%;
+    width: 48%;
   }
   &__header {
     color: #a5aec7;
@@ -20,4 +20,20 @@
 .edu-staff-chips {
   display: flex;
   flex-wrap: wrap;
+  max-height: calc(100vh - 470px);
+  overflow: auto;
+
+  &::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 0px;
+  }
+
+  &::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 0px;
+  }
+}
+
+.sort-by-gender__header {
+  line-height: 1;
 }
