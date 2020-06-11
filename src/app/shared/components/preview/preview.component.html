@@ -1,7 +1,11 @@
 <div
   [ngClass]="{
-    'preview-select-preview--horizontal': styleMode === 'horizontal'
+    'preview-select-preview--horizontal': styleMode === 'horizontal',
+    click: mouseDown
   }"
+  (mousedown)="onMouseDown()"
+  (mouseup)="onMouseUp()"
+  (mouseout)="onMouseUp()"
 >
   <div
     class="profile-select-preview"

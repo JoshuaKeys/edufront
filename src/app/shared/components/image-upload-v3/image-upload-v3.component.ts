@@ -9,7 +9,8 @@ import {
   forwardRef,
   Input,
   Renderer2,
-  ElementRef
+  ElementRef,
+  AfterViewInit
 } from '@angular/core';
 import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
 import { UtilsService } from 'src/app/shared/services/utils.service';
@@ -47,24 +48,31 @@ export function dataURLtoFile(dataurl, filename) {
     }
   ]
 })
-export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
+export class ImageUploadV3Component
+  implements OnInit, AfterViewInit, ControlValueAccessor {
   constructor(
     private utils: UtilsService,
     private cd: ChangeDetectorRef,
     private renderer: Renderer2,
     private el: ElementRef
-  ) { }
+  ) {}
   @Input('showControls') showControls = true;
   @Output() onImageCropped = new EventEmitter<File>();
   @Output('confirm') onConfirmEvent = new EventEmitter<ProfilePicModel>();
   @ViewChild(ImageCropperComponent) ImageCropper: ImageCropperComponent;
   @ViewChild('file') file: ElementRef;
+  @ViewChild('imgCropper') imgCropper: ElementRef;
+
   dragging;
   isLoaded: boolean;
   confirmed: boolean;
   isMousedOver = false;
   ngOnInit(): void {
     this.setHostToCircle(true);
+  }
+  ngAfterViewInit() {
+    let viewCropper = this.imgCropper;
+    console.log(viewCropper);
   }
 
   // b64; // is value rendered by output Image
@@ -179,9 +187,11 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.onConfirmEvent.emit(this.value);
 
     // console.log(this.value);
-
+    this.imageChangedEvent = null;
+    this.file.nativeElement.value = null;
     this.confirmed = true;
     this.isMousedOver = false;
+    this.imgUploaded = false;
     this.cd.markForCheck();
     this.setHostToCircle(true);
   }
@@ -194,8 +204,8 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   }
 
   //Control value accessor implementation
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
   writeValue(val: any) {
     // console.log('called');
     if (val === null) {
@@ -208,24 +218,5 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.onChange = fn;
     // this.onUpload = fn;
   }
-  registerOnTouched() { }
-
-  // disabled = false;
-  // onChange: any = () => {};
-  // onTouched: any = () => {};
-
-  // writeValue(value: any) {
-  //   this.value = value;
-  // }
-
-  // registerOnChange(fn: any) {
-  //   this.onChange = fn;
-  // }
-
-  // registerOnTouched(fn: any) {
-  //   this.onTouched = fn;
-  // }
-  // setDisabledState(isDisabled: boolean): void {
-  //   this.disabled = isDisabled;
-  // }
+  registerOnTouched() {}
 }

@@ -1,66 +1,68 @@
 <div class="placeholderImg">
   <!-- {{ showPlaceHolderImage() }}{{ !imgUploaded }}{{ confirmed }} -->
-  <ng-container *ngIf="showPlaceHolderImage(); else cropperTemplate">
-    <div
-      class="image--wrapper"
-      (dragenter)="handleDragEnter()"
-      (dragleave)="handleDragLeave()"
-      (drop)="handleDrop($event)"
-    >
-      <div [ngClass]="{ hidden: confirmed }">
-        <ng-content select=".placeholderImg"> </ng-content>
-      </div>
+  <!-- <ng-container *ngIf="showPlaceHolderImage(); else cropperTemplate"> -->
+  <div
+    [ngClass]="{ hide: !showPlaceHolderImage() }"
+    class="image--wrapper"
+    (dragenter)="handleDragEnter()"
+    (dragleave)="handleDragLeave()"
+    (drop)="handleDrop($event)"
+  >
+    <div [ngClass]="{ hidden: confirmed }">
+      <ng-content select=".placeholderImg"> </ng-content>
+    </div>
 
-      <div
-        *ngIf="value.base64"
-        class="img--confirmed-wrapper"
-        (mouseenter)="onMouseEnter()"
-        (mouseleave)="onMouseLeave()"
-      >
-        <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
+    <div *ngIf="value.base64" class="img--confirmed-wrapper">
+      <!--   (mouseenter)="onMouseEnter()"
+        (mouseleave)="onMouseLeave()" -->
+      <!-- <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
           <h4>click to change image</h4>
-        </label>
+        </label> -->
+      <label for="fileInput">
         <img class="image--confirmed" [src]="value.base64" *ngIf="confirmed" />
-      </div>
-      <input
-        id="fileInput"
-        #file
-        name="file"
-        class="file"
-        type="file"
-        (change)="fileChangeEvent($event)"
-      />
+      </label>
     </div>
-  </ng-container>
+    <input
+      id="fileInput"
+      #file
+      name="file"
+      class="file"
+      type="file"
+      (change)="fileChangeEvent($event)"
+    />
+  </div>
+  <!-- </ng-container> -->
 
-  <ng-template #cropperTemplate>
-    <div>
-      <image-cropper
-        [imageChangedEvent]="imageChangedEvent"
-        [maintainAspectRatio]="true"
-        [transform]="imageTransFormObj"
-        format="png"
-        roundCropper="true"
-        (imageCropped)="imageCropped($event)"
-        (imageLoaded)="imageLoaded()"
-        (cropperReady)="cropperReady()"
-        (loadImageFailed)="loadImageFailed()"
-      ></image-cropper>
+  <!-- <ng-template #cropperTemplate> -->
+  <div [ngClass]="{ hide: showPlaceHolderImage() }">
+    <image-cropper
+      #imgCropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [transform]="imageTransFormObj"
+      format="png"
+      roundCropper="true"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
 
-      <div class="controls" *ngIf="imgUploaded && showControls">
-        <div class="buttons">
-          <button ButtonType="fab" class="zoom" (click)="zoomIn()">+</button>
-          <button ButtonType="fab" class="zoom" (click)="zoomOut()">-</button>
-        </div>
-        <div class="buttons">
-          <button class="textButton" ButtonType="text" (click)="resetCropper()">
-            Delete
-          </button>
-          <button class="textButton" ButtonType="text" (click)="onConfirm()">
-            Confirm
-          </button>
-        </div>
+    <div class="controls" *ngIf="imgUploaded && showControls">
+      <div class="buttons">
+        <button ButtonType="fab" class="zoom" (click)="zoomOut()">-</button>
+
+        <button ButtonType="fab" class="zoom" (click)="zoomIn()">+</button>
+      </div>
+      <div class="buttons">
+        <button class="textButton" ButtonType="text" (click)="resetCropper()">
+          Delete
+        </button>
+        <button class="textButton" ButtonType="text" (click)="onConfirm()">
+          Confirm
+        </button>
       </div>
     </div>
-  </ng-template>
+  </div>
+  <!-- </ng-template> -->
 </div>

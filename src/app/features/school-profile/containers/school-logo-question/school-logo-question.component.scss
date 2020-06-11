@@ -29,10 +29,16 @@ body {
 
     margin: 40px 0;
   }
-  &__btn--round {
-    @include roundButton();
+
+  &__button--round {
+    width: 64px;
+    height: 64px;
     margin: 0 10px;
   }
+  // &__btn--round {
+  //   @include roundButton();
+  //   margin: 0 10px;
+  // }
   &__btn-wrapper {
     @include displayFlex();
   }

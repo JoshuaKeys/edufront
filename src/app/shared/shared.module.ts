@@ -38,6 +38,7 @@ import { StudentsFormComponent } from './components/students-form/students-form.
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadV3Component } from './components/image-upload-v3/image-upload-v3.component';
 import { ImgAuthPipe } from './pipes/img-auth.pipe';
+import { PreviewAnimateDirective } from './directives/preview-animate.directive';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ImgAuthPipe } from './pipes/img-auth.pipe';
     PopoverOptionDirective,
     StudentsFormComponent,
     ImgAuthPipe,
+    PreviewAnimateDirective
   ],
   imports: [
     ImageCropperModule,
@@ -77,6 +79,7 @@ import { ImgAuthPipe } from './pipes/img-auth.pipe';
     RouterModule
   ],
   exports: [
+    PreviewAnimateDirective,
     FormComponentsModule,
     PopoverOptionDirective,
     ModalComponent,
@@ -106,4 +109,4 @@ import { ImgAuthPipe } from './pipes/img-auth.pipe';
   ],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule { }
+export class SharedModule {}

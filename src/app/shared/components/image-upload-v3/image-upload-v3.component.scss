@@ -72,6 +72,7 @@ image-cropper ::ng-deep {
 }
 .buttons {
   @include displayFlex(center, center);
+  margin-bottom: 10px;
 }
 .textButton {
   font: 500 16px/24px Raleway;
@@ -136,4 +137,11 @@ h3 {
   @include displayFlex();
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
+}
+
+.hide {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
 }

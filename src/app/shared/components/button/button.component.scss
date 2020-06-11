@@ -86,10 +86,11 @@
     box-shadow: none;
   }
 }
-
-:host[buttontype='basic'].basic {
+:host.basic {
   width: 292px;
   height: 52px;
+}
+:host[buttontype='basic'].basic {
   border-radius: 100px;
   font: 700 12px/20px Raleway;
   box-shadow: 0px 4px 8px #3c4b9b26;
@@ -114,10 +115,11 @@
     box-shadow: unset;
   }
 }
-
-:host[buttontype='outline'].outline {
+:host.outline {
   width: 292px;
   height: 52px;
+}
+:host[buttontype='outline'].outline {
   border-radius: 100px;
   font: 700 12px/20px Raleway;
   text-transform: uppercase;
