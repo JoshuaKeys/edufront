@@ -1,9 +1,6 @@
 <main>
   <section class="section">
-    <button
-      class="section__back-btn"
-      [routerLink]="[activatedRouteData.previous]"
-    >
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content" *ngIf="schoolAddressForm">

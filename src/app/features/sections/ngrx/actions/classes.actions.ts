@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { ClassesModel } from '../../models/classes-model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 export const getAllClassesRequest = createAction(
   '[CreateSectionsComponent] getAllClassesRequest'
@@ -24,4 +25,12 @@ export const setClassStudents = createAction(
 export const toggleStudentsDraggedState = createAction(
   '[SectionsEffects] toggleStudentsDraggedState',
   props<{ student: ExtendedProfileDTOModel }>()
+);
+export const createStudentRequest = createAction(
+  '[SectionsEffects] createStudentRequest',
+  props<{ student: StudentModel }>()
+)
+export const createStudentSuccess = createAction(
+  '[SectionsEffects] createStudentSuccess',
+  props<{ student: StudentModel }>()
 )

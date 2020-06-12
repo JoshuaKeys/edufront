@@ -6,15 +6,16 @@ import { Observable } from 'rxjs';
 import { SectionsModalState } from '../../models/sections-modal-state.model';
 import { selectModalState } from '../../ngrx/selectors';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getAllClassesRequest, toggleSelectedState, toggleStudentsDraggedState } from '../../ngrx/actions/classes.actions';
+import { getAllClassesRequest, toggleSelectedState, toggleStudentsDraggedState, createStudentRequest } from '../../ngrx/actions/classes.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections } from '../../ngrx/selectors/classes.selectors';
+import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections, selectAllClasses } from '../../ngrx/selectors/classes.selectors';
 import { ClassesModel } from '../../models/classes-model';
 import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { SectionModel } from '../../models/section.model';
 import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest, getAggregatedResult, changeSectionNameRequest } from '../../ngrx/actions/sections.actions';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 @Component({
   selector: 'edu-create-sections',
@@ -31,11 +32,14 @@ export class CreateSectionsComponent implements OnInit {
   draggedStudents: Observable<ExtendedProfileDTOModel[]>;
   selectedClass: Observable<ClassesModel> | null;
   selectedSections: Observable<SectionModel>
+  allClasses: Observable<ClassesModel[]>;
   ngOnInit(): void {
     this.sectionsModalState = this.store.select(selectModalState);
     this.sortedClassesStaffs = this.store.select(selectSortedClasses)
     this.notDraggedStudents = this.store.select(selectNotDraggedStudents)
     this.selectedSections = this.store.select(selectSections);
+    this.allClasses = this.store.select(selectAllClasses);
+    this.allClasses.subscribe(x => console.log('hellooooo', x));
     this.sortedClasses = this.sortedClassesStaffs.pipe(
       map(sortedClasses => sortedClasses.map(classItem => classItem.class))
     );
@@ -49,6 +53,12 @@ export class CreateSectionsComponent implements OnInit {
   }
   onContinue() {
     this.store.dispatch(toggleModal({ modal: 'startModal' }))
+  }
+  processSubmit(student: StudentModel) {
+    this.store.dispatch(createStudentRequest({ student }))
+  }
+  openAddModal() {
+    this.store.dispatch(toggleModal({ modal: 'addModal' }))
   }
   processStudentRemoval(payload: { student: ExtendedProfileDTOModel, classId: string, sectionName: string }) {
     this.store.dispatch(removeStudentFromSection(payload))

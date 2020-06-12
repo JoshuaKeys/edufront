@@ -14,6 +14,7 @@ import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { SectionDropBoxComponent } from './components/section-drop-box/section-drop-box.component';
 import { SectionAsideComponent } from './components/section-aside/section-aside.component';
 import { SectionsEffects } from './ngrx/effects/sections.effects';
+import { StudentsService } from '../students/services/students.service';
 
 
 
@@ -35,6 +36,7 @@ import { SectionsEffects } from './ngrx/effects/sections.effects';
   ],
   providers: [
     SectionsService,
+    StudentsService,
     {
       provide: HTTP_INTERCEPTORS, multi: true, useClass: AuthInterceptor
     }

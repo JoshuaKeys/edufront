@@ -27,7 +27,7 @@ export class ConfirmationComponent implements OnInit {
     // this.store.dispatch(toggleEndModal())
   }
   goToStudents() {
-    this.router.navigate(['../', 'students/students-creation'], { relativeTo: this.activatedRoute })
+    this.router.navigateByUrl('/students/students-creation')
   }
   get description() {
     return `You made it! Now that we know what is taught in the school, we can move

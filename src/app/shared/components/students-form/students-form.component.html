@@ -104,7 +104,11 @@
               <edu-option
                 *ngFor="let studentXClass of studentsXClasses | async"
                 [OptionValue]="studentXClass.classId"
-                >{{ studentXClass.className }}
+                >{{
+                  studentXClass.className
+                    ? studentXClass.className
+                    : studentXClass['class'].name
+                }}
               </edu-option>
             </edu-select>
 

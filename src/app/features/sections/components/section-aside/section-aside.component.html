@@ -9,7 +9,7 @@
       placeholder="Search"
     />
   </div>
-  <button class="search__btn"><span>+</span></button>
+  <button class="search__btn" (click)="openAddModal()"><span>+</span></button>
 </div>
 
 <div class="group group--scrollable">
@@ -34,12 +34,7 @@
     class="opacity-overlay
        "
   ></div> -->
-  <button
-    ButtonType="basic"
-    class="aside__btn"
-    (click)="assign()"
-    [disabled]="!(fileredStudents | async).length"
-  >
+  <button ButtonType="basic" class="aside__btn" (click)="assign()">
     assign all
   </button>
 </div>

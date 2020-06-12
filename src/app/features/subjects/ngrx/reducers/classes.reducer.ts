@@ -58,12 +58,13 @@ export const classesReducer = createReducer(initialState,
       let subjectsUpdate;
       if (previousSubjects.find(subject => subject.id === action.subject.id)) {
         const subIndex = previousSubjects.findIndex(subject => subject.id === action.subject.id);
-        const previousSubjectsCopy = { ...previousSubjects };
+        const previousSubjectsCopy = [...previousSubjects];
         previousSubjectsCopy.splice(subIndex, 1);
         subjectsUpdate = [
           ...previousSubjectsCopy
         ]
       }
+      console.log(subjectsUpdate)
       return {
         id: subClass.id,
         changes: {

@@ -47,6 +47,6 @@ export class SortAlphabeticallyComponent implements OnInit {
       let idx = alphabetObj.findIndex(item => item.alphabet === firstAlphbet.toLowerCase());
       alphabetObj[idx].items.push(item)
     })
-    return alphabetObj;
+    return alphabetObj.sort((a, b) => a.alphabet < b.alphabet ? -1 : 1);
   }
 }
