@@ -8,33 +8,29 @@
     (dragleave)="handleDragLeave()"
     (drop)="handleDrop($event)"
   >
-    <div [ngClass]="{ hidden: confirmed }">
-      <ng-content select=".placeholderImg"> </ng-content>
-    </div>
+    <label [for]="elementId">
+      <div [ngClass]="{ hidden: confirmed }">
+        <ng-content select=".placeholderImg"> </ng-content>
+      </div>
 
-    <div *ngIf="value.base64" class="img--confirmed-wrapper">
-      <!--   (mouseenter)="onMouseEnter()"
+      <div *ngIf="value.base64" class="img--confirmed-wrapper">
+        <!--   (mouseenter)="onMouseEnter()"
         (mouseleave)="onMouseLeave()" -->
-      <!-- <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
+        <!-- <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
           <h4>click to change image</h4>
         </label> -->
-      <label for="fileInput">
+
         <img class="image--confirmed" [src]="value.base64" *ngIf="confirmed" />
-      </label>
-    </div>
-    <input
-      id="fileInput"
-      #file
-      name="file"
-      class="file"
-      type="file"
-      (change)="fileChangeEvent($event)"
-    />
+      </div>
+    </label>
   </div>
   <!-- </ng-container> -->
 
   <!-- <ng-template #cropperTemplate> -->
-  <div [ngClass]="{ hide: showPlaceHolderImage() }">
+  <div
+    [ngClass]="{ hide: showPlaceHolderImage() }"
+    [id]="getImgCropperWrapperId()"
+  >
     <image-cropper
       #imgCropper
       [imageChangedEvent]="imageChangedEvent"
@@ -48,11 +44,15 @@
       (loadImageFailed)="loadImageFailed()"
     ></image-cropper>
 
-    <div class="controls" *ngIf="imgUploaded && showControls">
+    <div class="controls" *ngIf="imgUploaded">
       <div class="buttons">
-        <button ButtonType="fab" class="zoom" (click)="zoomOut()">-</button>
+        <button ButtonType="round" class="zoom" (click)="zoomOut()">
+          <span>-</span>
+        </button>
 
-        <button ButtonType="fab" class="zoom" (click)="zoomIn()">+</button>
+        <button ButtonType="round" class="zoom" (click)="zoomIn()">
+          <span>+</span>
+        </button>
       </div>
       <div class="buttons">
         <button class="textButton" ButtonType="text" (click)="resetCropper()">
@@ -66,3 +66,12 @@
   </div>
   <!-- </ng-template> -->
 </div>
+
+<input
+  [id]="elementId"
+  #file
+  name="file"
+  class="file"
+  type="file"
+  (change)="fileChangeEvent($event)"
+/>

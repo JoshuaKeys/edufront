@@ -1,13 +1,10 @@
 <div
   [ngClass]="{
-    'preview-select-preview--horizontal': styleMode === 'horizontal',
-    click: mouseDown
+    'preview-select-preview--horizontal': styleMode === 'horizontal'
   }"
-  (mousedown)="onMouseDown()"
-  (mouseup)="onMouseUp()"
-  (mouseout)="onMouseUp()"
 >
   <div
+    PreviewAnimate
     class="profile-select-preview"
     *ngFor="let block of previewState | async"
   >

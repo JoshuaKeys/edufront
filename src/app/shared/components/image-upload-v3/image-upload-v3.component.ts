@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
@@ -9,8 +10,7 @@ import {
   forwardRef,
   Input,
   Renderer2,
-  ElementRef,
-  AfterViewInit
+  ElementRef
 } from '@angular/core';
 import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
 import { UtilsService } from 'src/app/shared/services/utils.service';
@@ -56,7 +56,8 @@ export class ImageUploadV3Component
     private renderer: Renderer2,
     private el: ElementRef
   ) {}
-  @Input('showControls') showControls = true;
+  // @Input('showControls') showControls = false;
+  @Input('elementId') elementId = 'baseElementId';
   @Output() onImageCropped = new EventEmitter<File>();
   @Output('confirm') onConfirmEvent = new EventEmitter<ProfilePicModel>();
   @ViewChild(ImageCropperComponent) ImageCropper: ImageCropperComponent;
@@ -68,14 +69,25 @@ export class ImageUploadV3Component
   confirmed: boolean;
   isMousedOver = false;
   ngOnInit(): void {
+    this.setElementId();
     this.setHostToCircle(true);
   }
   ngAfterViewInit() {
-    let viewCropper = this.imgCropper;
-    console.log(viewCropper);
+    let wrapperID = this.getImgCropperWrapperId();
+    let overlayEl = document.querySelector(`#${wrapperID} .overlay`);
+    const classToAdd = ['topleft', 'topright', 'bottomleft', 'bottomright'];
+    classToAdd.forEach(_class => {
+      let injectedItem = this.renderer.createElement('img');
+      this.renderer.setAttribute(
+        injectedItem,
+        'src',
+        'assets/cropper-top-left-corner.svg'
+      );
+      this.renderer.addClass(injectedItem, _class);
+      this.renderer.addClass(injectedItem, 'corner');
+      this.renderer.appendChild(overlayEl, injectedItem);
+    });
   }
-
-  // b64; // is value rendered by output Image
   value: ProfilePicModel = { base64: '', acceptedFile: null, imageUrl: '' }; //
   croppedImage; //isValue of cropped image at any time
   imageChangedEvent: any = '';
@@ -90,8 +102,19 @@ export class ImageUploadV3Component
     flipV: false
   };
 
+  getImgCropperWrapperId() {
+    return this.elementId + '__cropperwrapper';
+  }
+
+  setElementId() {
+    let elId = this.el.nativeElement.getAttribute('formcontrolname');
+    if (this.el != undefined) {
+      this.elementId = elId;
+    }
+  }
+
   handleDrop(e) {
-    //work in progress
+    //NOTE: work in progress
     e.preventDefault();
     this.dragging = false;
     const file = e.dataTransfer ? e.dataTransfer.files : e.target.files;
@@ -125,6 +148,14 @@ export class ImageUploadV3Component
   }
 
   resetCropper() {
+    // this.imageChangedEvent = null;
+    //
+    // this.confirmed = true;
+    // this.isMousedOver = false;
+    // this.imgUploaded = false;
+    // this.cd.markForCheck();
+
+    this.file.nativeElement.value = null;
     this.imageChangedEvent = null;
     this.imgUploaded = false;
     this.croppedImage = '';
@@ -149,11 +180,9 @@ export class ImageUploadV3Component
     this.confirmed = false;
   }
   imageCropped(event: ImageCroppedEvent) {
-    //come back to fix the blob image output
     this.croppedImage = event.base64;
-    // console.log(this.croppedImage);
 
-    //was here originally
+    //NOTE:was here originally no idea what this is emitting
     var file = dataURLtoFile(
       'data:text/plain;base64,aGVsbG8gd29ybGQ=',
       'image.png'
@@ -167,33 +196,27 @@ export class ImageUploadV3Component
   onConfirm() {
     //work in progress to customize starting cropping position
 
-    let width = this.ImageCropper.sourceImage.nativeElement.offsetWidth;
-    let height = this.ImageCropper.sourceImage.nativeElement.offsetHeight;
-
-    // console.log(typeof this.croppedImage);
-    // this.value = new Blob([this.croppedImage], { type: 'image/png' });
-    let blob: any = this.utils.getBlob(this.croppedImage);
-
-    blob.lastModifiedDate = new Date();
-    blob.name = 'imageFile';
+    // let blob: any = this.utils.getBlob(this.croppedImage);
+    // blob.lastModifiedDate = new Date();
+    // blob.name = 'imageFile';
 
     this.value.base64 = this.croppedImage;
     this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile');
-    // console.log(this.value);
-    // this.value = { ...this.value };
     this.onChange(this.value);
     this.onTouched();
 
     this.onConfirmEvent.emit(this.value);
 
     // console.log(this.value);
-    this.imageChangedEvent = null;
-    this.file.nativeElement.value = null;
     this.confirmed = true;
-    this.isMousedOver = false;
-    this.imgUploaded = false;
-    this.cd.markForCheck();
-    this.setHostToCircle(true);
+    this.resetCropper();
+    // this.imageChangedEvent = null;
+    // this.file.nativeElement.value = null;
+    // this.confirmed = true;
+    // this.isMousedOver = false;
+    // this.imgUploaded = false;
+    // this.cd.markForCheck();
+    // this.setHostToCircle(true);
   }
 
   cropperReady() {

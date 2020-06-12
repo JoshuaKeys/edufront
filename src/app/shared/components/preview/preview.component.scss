@@ -5,8 +5,7 @@ a:focus {
 }
 
 :host {
-  cursor: pointer;
-  .click .profile-select-preview {
+  .click.profile-select-preview {
     background: white;
     box-shadow: 0px 2px 6px #3c4b9b14;
     border: 1px solid $blue;
@@ -14,7 +13,8 @@ a:focus {
       color: $blue;
     }
   }
-  &:hover .profile-select-preview {
+  .profile-select-preview:hover {
+    cursor: pointer;
     background: white;
     box-shadow: 0px 2px 6px #3c4b9b14;
 

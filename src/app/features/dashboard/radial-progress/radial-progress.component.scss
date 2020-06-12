@@ -77,10 +77,12 @@ $primary-color-orange-dark: #e08833;
   // centered value inside circle
   #percentSign {
     font-size: 12px;
+    font-weight: 400;
     transform: translate(34px, 3px);
   }
   > span {
-    position: absolute;
+    font-family: Roboto;
+    font-weight: 900;
     // width: 100%;
     z-index: 1;
     // left: 0;

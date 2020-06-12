@@ -11,7 +11,13 @@
   @include displayFlex(space-between, center, column);
 }
 //header
-
+.header-onboard-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-grow: 1;
+  justify-content: center;
+}
 .tracker:focus {
   outline: none;
 }
@@ -19,13 +25,13 @@
   margin-bottom: 60px;
   @include displayFlex(center, center, column);
   .radial {
-    color: $blue;
-    width: 125px;
-    height: 125px;
-    border-radius: 50%;
+    // color: $blue;
+    // width: 125px;
+    // height: 125px;
+    // border-radius: 50%;
     margin-bottom: 48px;
-    font-size: 95px;
-    font-weight: 700;
+    // font-size: 95px;
+    // font-weight: 700;
   }
   .nav__title {
     margin: 0;
@@ -48,6 +54,7 @@
   width: 80%;
   min-width: 1050px;
   max-width: 1300px;
+  margin-bottom: 30px;
 }
 
 ul {
