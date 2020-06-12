@@ -14,6 +14,13 @@ export class PreviewComponent implements OnInit {
   ngOnInit() {
     console.log(this.styleMode);
   }
-  constructor() {
+  constructor() {}
+
+  mouseDown = false;
+  onMouseDown() {
+    this.mouseDown = true;
+  }
+  onMouseUp() {
+    this.mouseDown = false;
   }
 }

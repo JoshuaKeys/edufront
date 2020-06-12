@@ -5,6 +5,7 @@ import { GetStaffResponseModel } from '../models/get-staff-response.model';
 import { CreateStaffRequestModel } from '../models/create-staff-request.model';
 import { CreateStaffResponseModel } from '../models/create-staff-response.model';
 import { LogoUploadResponseModel } from 'src/app/shared/models/logo-upload-response.model';
+import { StaffModel } from 'src/app/shared/models/staff.model';
 
 @Injectable()
 export class StaffsService {
@@ -16,6 +17,9 @@ export class StaffsService {
   }
   deleteStaff(profileId: string): Observable<any> {
     return this.httpClient.delete(`/api/v1/profile/${profileId}`)
+  }
+  fetchStaffById(staff: StaffModel): Observable<any> {
+    return this.httpClient.get(`/api/v1/profile/completeProfile/${staff.id}`)
   }
   uploadLogo(file: File): Observable<LogoUploadResponseModel> {
     const formData = new FormData();

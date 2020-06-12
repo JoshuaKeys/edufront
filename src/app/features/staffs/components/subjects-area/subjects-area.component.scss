@@ -129,6 +129,9 @@
 .popup .subjects {
   max-height: 280px;
   overflow-y: scroll;
+  width: 140px;
+  flex-shrink: 0;
+  overflow-x: hidden;
 }
 
 .search {
@@ -146,7 +149,7 @@
 }
 :host ::ng-deep .chip__text {
   white-space: nowrap;
-  max-width: 80px;
+  max-width: 70px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -182,6 +185,7 @@
   }
 }
 .subjects-classes {
+  width: 120px;
   margin-top: 10px;
 }
 edu-icon-button ::ng-deep {

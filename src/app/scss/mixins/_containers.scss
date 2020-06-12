@@ -1,11 +1,10 @@
-
 //modal used for end of module
 @mixin modalComplete() {
   .modal {
     @include modal();
 
     //modal  is the base modal class
-    &--complete.modal{
+    &--complete.modal {
       padding-top: 120px;
       max-width: 989px;
       width: 100%;
@@ -17,7 +16,7 @@
       margin-bottom: 85px;
       line-height: 26px;
     }
-      //modal__btn is the btn for the modal
+    //modal__btn is the btn for the modal
     &__btn--complete.modal__btn {
       margin: 0 10px;
       width: 288px;
@@ -30,8 +29,8 @@
 @mixin modalIntro() {
   .modal {
     @include modal();
-       //modal  is the base modal class
-    &--intro.modal  {
+    //modal  is the base modal class
+    &--intro.modal {
       padding: 50px;
       max-width: 600px;
     }
@@ -73,7 +72,7 @@
   }
 }
 
-//base modal class used 
+//base modal class used
 @mixin modal() {
   box-sizing: border-box;
   width: 80%;
@@ -87,7 +86,7 @@
   opacity: 1;
   padding: 44px 50px 53px 50px;
   @include fixedCenter();
-  top: 45%;
+  // top: 45%;
   @include displayFlex(space-between, center, column);
 
   max-width: 600px;
@@ -135,7 +134,7 @@
   }
 }
 
-//card 
+//card
 @mixin card() {
   @include displayFlex(flex-start, center, column);
   background-color: white;
@@ -147,17 +146,17 @@
   padding: 40px 19px;
   margin-bottom: 15px;
   box-sizing: border-box;
-  //card-img-wrapper used only in School Profile module  
+  //card-img-wrapper used only in School Profile module
   &-img-wrapper {
     width: 100px;
     height: 100px;
     border: 2px dashed $grey-blue;
     border-radius: 50%;
   }
-//card_title is the  title for card
+  //card_title is the  title for card
   &__title {
     text-align: center;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
     line-height: 1.4;
     letter-spacing: 0.36px;
@@ -170,7 +169,7 @@
   //card_desc basic desc for card
   &__desc {
     text-align: center;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 16px;
     line-height: 1.4;
     letter-spacing: 0.48px;
@@ -184,7 +183,7 @@
     background: transparent;
     justify-content: center;
   }
-   //card__title--dash atitlee for cards  with dashed boroder
+  //card__title--dash atitlee for cards  with dashed boroder
   &__title--dash {
     text-align: center;
     font: 400 14px/20px Raleway;
@@ -193,8 +192,6 @@
   }
 }
 
-
- 
 @mixin dropZone() {
   .drop-zone {
     border: 2px dashed $grey-blue;
@@ -251,7 +248,8 @@
   .groups {
     @include displayFlex(flex-start, center, column);
     //--split-layout only used in the begining
-    &--split-layout,&--row-layout {
+    &--split-layout,
+    &--row-layout {
       width: 100%;
       @include displayFlex(center, flex-start);
     }
@@ -261,7 +259,8 @@
   }
 }
 @mixin group($color: inherit) {
-  .group { //defaults to column layout
+  .group {
+    //defaults to column layout
     @include displayFlex(flex-start, flex-start, column);
 
     &--row-layout {

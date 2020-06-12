@@ -6,6 +6,7 @@ import { CreateStaffRequestModel } from '../../models/create-staff-request.model
 import { CreateStaffResponseModel } from '../../models/create-staff-response.model';
 import { StaffFormModel } from '../../models/staff-form.model';
 import { StaffModel } from '../../../../shared/models/staff.model';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 export const fetchStaffsRequest = createAction(
   '[StaffShellComponent] fetchStaffsRequest'
@@ -81,4 +82,12 @@ export const toggleEndModal = createAction(
 )
 export const toggleStartModal = createAction(
   '[StaffsCreationComponent] toggleStartModal'
+)
+export const fetchStaffById = createAction(
+  '[StaffsCreationComponent] fetchStaffById',
+  props<{ staff: StaffModel }>()
+)
+export const fetchStaffByIdSuccess = createAction(
+  '[StaffsEffects] fetchStaffByIdSuccess',
+  props<{ staff: { profileDto: StaffModel }, profileId: string }>()
 )

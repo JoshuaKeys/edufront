@@ -37,6 +37,8 @@ import { SelectModule } from './components/form-components/select/select.module'
 import { StudentsFormComponent } from './components/students-form/students-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadV3Component } from './components/image-upload-v3/image-upload-v3.component';
+import { ImgAuthPipe } from './pipes/img-auth.pipe';
+import { PreviewAnimateDirective } from './directives/preview-animate.directive';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { ImageUploadV3Component } from './components/image-upload-v3/image-uploa
     ButtonComponent,
     PopoverComponent,
     PopoverOptionDirective,
-    StudentsFormComponent
+    StudentsFormComponent,
+    ImgAuthPipe,
+    PreviewAnimateDirective
   ],
   imports: [
     ImageCropperModule,
@@ -75,6 +79,7 @@ import { ImageUploadV3Component } from './components/image-upload-v3/image-uploa
     RouterModule
   ],
   exports: [
+    PreviewAnimateDirective,
     FormComponentsModule,
     PopoverOptionDirective,
     ModalComponent,
@@ -99,7 +104,8 @@ import { ImageUploadV3Component } from './components/image-upload-v3/image-uploa
     CountryFieldComponent,
     PhoneFieldComponent,
     PopoverComponent,
-    StudentsFormComponent
+    StudentsFormComponent,
+    ImgAuthPipe
   ],
   providers: [ClassesService, SubjectsService]
 })

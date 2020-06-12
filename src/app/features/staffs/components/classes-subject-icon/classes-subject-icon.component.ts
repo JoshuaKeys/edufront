@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { SelectableSubjectModel } from 'src/app/shared/models/selectable-subject.model';
 import { Observable } from 'rxjs';
 import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
@@ -11,15 +18,13 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClassesSubjectIconComponent implements OnInit {
-
   @Input() subjects: Observable<SelectableSubjectModel[]>;
   @Input() association: SubjectClassesAssociation;
   @Output() onClick = new EventEmitter<SelectableSubjectModel>();
-  subject: Observable<{ title: string, classes: string[] }>;
-  constructor() { }
+  subject: Observable<{ title: string; classes: string[] }>;
+  constructor() {}
   handleClick() {
     // this.onClick.emit(this.subject)
-
   }
   ngOnInit(): void {
     this.subject = this.subjects.pipe(
@@ -30,11 +35,11 @@ export class ClassesSubjectIconComponent implements OnInit {
             newAssociation = {
               title: subjects[i].title,
               classes: this.association.classes.map(classItem => classItem.name)
-            }
+            };
           }
         }
         return newAssociation;
       })
-    )
+    );
   }
 }

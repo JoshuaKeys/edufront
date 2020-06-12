@@ -1,6 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy,Input, Output, EventEmitter } from '@angular/core';
-
-
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef
+} from '@angular/core';
 
 @Component({
   selector: 'edu-cb',
@@ -9,19 +15,16 @@ import { Component, OnInit, ChangeDetectionStrategy,Input, Output, EventEmitter 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CbComponent implements OnInit {
-  @Output() onChange = new EventEmitter();
-  @Input("id") id; 
-  @Input("initialValue") initialValue;
-  constructor() { }
-  value ;
-  ngOnInit(): void {
-    this.value = this.initialValue
+  @Output('valueChange') valueChangeEvent = new EventEmitter();
+  @Input('id') id;
+  @Input('initialValue') initialValue;
+  constructor(private cd: ChangeDetectorRef) {}
+  value;
+  onBlur() {
+    console.log('blurring and emmitting');
+    this.valueChangeEvent.emit(this.value);
   }
- 
-
-
-  changeInComponent( ){
-    console.log("cb")
-    this.onChange.emit( this.value)
+  ngOnInit(): void {
+    this.value = this.initialValue;
   }
 }

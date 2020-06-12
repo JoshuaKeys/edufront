@@ -12,6 +12,7 @@ import {
   ContentChildren,
   QueryList,
   ChangeDetectorRef,
+  Renderer2,
   HostListener
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -37,7 +38,8 @@ export class InputComponent
   constructor(
     private cd: ChangeDetectorRef,
     private el: ElementRef,
-    private inputService: InputService
+    private inputService: InputService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -52,11 +54,12 @@ export class InputComponent
   }
   config;
   inputElIsFocus = false;
+
   inputIsActive: boolean = false;
-  disabled: boolean; //for ControlValueAccessor implmentation
+  // disabled: boolean; //for ControlValueAccessor implmentation
 
   @Output() onValueChange = new EventEmitter<any>();
-  @Input('disabled') isDisabled;
+  @Input('disabled') disabled = false;
   @Input('elementId') elementId;
   @Input('alignment') alignment = 'center'; //center (default ),left,right
   @Input('isPassword') isPassword = false;
@@ -168,8 +171,8 @@ export class InputComponent
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    if (this.isDisabled != undefined) {
-      this.disabled = this.isDisabled;
-    }
+    // if (this.isDisabled != undefined) {
+    //   this.disabled = this.isDisabled;
+    // }
   }
 }

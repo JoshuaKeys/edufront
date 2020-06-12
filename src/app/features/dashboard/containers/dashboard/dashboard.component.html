@@ -1,32 +1,30 @@
-<div class="header">
-  <radial-progress [value]="progress"></radial-progress>
-  <h2 class="nav__title">Set Up Your School</h2>
-  <p class="nav__desc">
-    Complete a step to be able to move to the next one. You can go back to work
-    on previous steps, but that might have consequences, don’t worry, we will
-    alert you.
-  </p>
-</div>
+<div class="header-onboard-nav">
+  <div class="header">
+    <radial-progress class="radial" [value]="progress"></radial-progress>
+    <h2 class="nav__title">Set Up Your School</h2>
+    <p class="nav__desc">
+      Complete a step to be able to move to the next one. You can go back to
+      work on previous steps, but that might have consequences, don’t worry, we
+      will alert you.
+    </p>
+  </div>
 
-<div class="onboard_nav">
-  <ul>
-    <li
-      [ngClass]="{ 'w-auto': isLast }"
-      *ngFor="let item of dasboardNavConfig; index as i; last as isLast"
-    >
-      <div class="tracker" [ngClass]="trackerState(i)">
-        <div class="icon">
-          <img
-            src="assets/dashboard/{{ getIconPath(i) }}.svg"
-            [routerLink]="item.route"
-            alt=""
-          />
-          <span class="label">{{ item.label }} </span>
+  <div class="onboard_nav">
+    <ul>
+      <li
+        [ngClass]="{ 'w-auto': isLast }"
+        *ngFor="let item of dasboardNavConfig; index as i; last as isLast"
+      >
+        <div class="tracker" [ngClass]="trackerState(i)">
+          <div class="icon" [routerLink]="[item.route]">
+            <img src="assets/dashboard/{{ getIconPath(i) }}.svg" alt="" />
+            <span class="label">{{ item.label }} </span>
+          </div>
+          <div *ngIf="!isLast" class="dash i{{ i }}"></div>
         </div>
-        <div *ngIf="!isLast" class="dash i{{ i }}"></div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div class="footer">

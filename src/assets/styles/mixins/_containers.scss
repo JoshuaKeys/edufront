@@ -88,7 +88,8 @@
   opacity: 1;
   padding: 44px 50px 53px 50px;
   @include fixedCenter();
-  // top: 45%;
+  top: 50%;
+
   @include displayFlex(space-between, center, column);
 
   max-width: 600px;

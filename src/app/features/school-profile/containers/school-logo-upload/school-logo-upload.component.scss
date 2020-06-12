@@ -29,7 +29,6 @@ body {
     @include absoluteCenter();
   }
   &:hover {
-    background: red;
     border-color: $blue;
     img {
       content: url('/assets/32pxplusblue.svg');

@@ -34,6 +34,9 @@
               alt=""
               class="icon-img"
             />
+            <div class="tooltip tooltip--top">
+              Sort Alphabetical
+            </div>
           </div>
           <div
             class="search__icon-btn"
@@ -100,6 +103,7 @@
   (unSelectSubject)="onUnselectSubject($event)"
   (classClicked)="onClassClicked($event)"
   [classesAndSubjects]="subjectClassesAssociation"
+  [editState]="selectEditState"
 >
 </edu-staff-edit-form>
 <edu-staff-form

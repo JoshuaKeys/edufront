@@ -22,6 +22,7 @@ export class SortAlphabeticallyComponent implements OnInit {
     )
   }
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
     if (changes.studentsXClasses.firstChange) {
       return;
     }

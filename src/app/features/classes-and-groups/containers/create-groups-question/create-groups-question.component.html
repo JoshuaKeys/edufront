@@ -16,14 +16,19 @@
         with<br />
         similar time structures be grouped together.
       </p>
-      <div class="form__btn-wrapper">
+      <div buttonType="round" class="form__btn-wrapper">
         <button
-          class="form__btn--round"
+          ButtonType="round"
+          class="form__button--round"
           [routerLink]="['../', activatedRouteData.next]"
         >
           Yes
         </button>
-        <button class="form__btn--round" (click)="submitWithoutGroups()">
+        <button
+          ButtonType="round"
+          class="form__button--round"
+          (click)="submitWithoutGroups()"
+        >
           No
         </button>
       </div>

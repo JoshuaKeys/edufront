@@ -2,6 +2,16 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/containers';
 @include group();
+
+//fixing search bar
+
+edu-subjects-area ::ng-deep .group--3 > .group--row {
+  width: 100%;
+  .search__input-wrapper {
+    width: 100%;
+  }
+}
+
 .group--row.form--row {
   margin-bottom: 20px;
   edu-input.middleName {
@@ -156,7 +166,6 @@ main {
 .modal {
   max-width: unset;
   padding: unset;
-  top: 45%;
 }
 .modal__title {
   margin: 40px 0 0;

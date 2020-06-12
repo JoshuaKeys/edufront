@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ElementRef
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -47,7 +48,10 @@ export class SubjectClassesComponent implements OnInit {
     }
   }
 
-  processClicked(classItem: ClassModel) {
+  processClicked(classItem: ClassModel, el?: ElementRef) {
+    // console.log('click');
+    // console.log(el);
+
     this.classClicked.emit(classItem);
   }
 }

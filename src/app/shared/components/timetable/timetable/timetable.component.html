@@ -1,29 +1,45 @@
-<div class = "calendar">
+<div class="calendar">
+  <div class="empty__placeholder r0 c0"></div>
+  <div
+    [ngClass]="timeClasses[i]"
+    [ngStyle]="timeStyles[i]"
+    class="time"
+    *ngFor="let t of time; index as i"
+  >
+    {{ t.value }}
+  </div>
+  <div class="day r0 c{{ i + 1 }}" *ngFor="let day of days; index as i">
+    {{ day }}
+  </div>
 
-    <div  class="empty__placeholder r0 c0"></div>
-    <div  [ngClass]="timeClasses[i]" class = "time" *ngFor="let t of time; index as i">{{t.value}}</div>
-    <div class = "day r0 c{{i+1}}"  *ngFor="let day of days;  index as i;">{{day}}</div>
+  <div
+    class="special-period"
+    [ngClass]="SpecialPeriodClasses[i]"
+    [ngStyle]="SpecialPeriodStyles[i]"
+    *ngFor="let specialPeriod of specialPeriods; index as i"
+  >
+    {{ specialPeriod.text }}
+  </div>
 
-    <div class = "special-period" [ngClass]="specialPeriod.classes" *ngFor="let specialPeriod of specialPeriods; index as i"> {{specialPeriod.text}}  </div>
+  <!-- defining lesson for mon - sun -->
 
+  <ng-container *ngFor="let day of days; index as i">
+    <div
+      ngClass="c{{ i + 1 }}"
+      class=" dual-row"
+      *ngFor="let period of model[day]"
+    >
+      <ng-container
+        *ngTemplateOutlet="
+          periodTemplate;
+          context: { key: period.key, value: period.value, onChange: onChange }
+        "
+      >
+      </ng-container>
+    </div>
+  </ng-container>
 
-    <!-- defining lesson for mon - sun -->
-
-    <ng-container *ngFor="let day of days; index as i">
-        <div  ngClass="c{{i +1}}" class=" dual-row" *ngFor="let period of model[day]">
-         
-            <ng-container
-            *ngTemplateOutlet="periodTemplate;context:{key:period.key, value:period.value, onChange:onChange}"
-             >
-            </ng-container>
-    
-
-          
-        </div>
-    </ng-container>
-
-
-    <!-- <div class="c2 dual-row" *ngFor="let tPeriod of model.tue"> 
+  <!-- <div class="c2 dual-row" *ngFor="let tPeriod of model.tue"> 
         <ng-container
         (onTemplateChange) = "templateOnChangeEvent()"
         *ngIf="periodTemplate"
@@ -71,8 +87,4 @@
          >
         </ng-container>
     </div> -->
-
 </div>
-
- 
-

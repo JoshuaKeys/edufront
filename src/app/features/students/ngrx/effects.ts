@@ -3,13 +3,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StudentsService } from '../services/students.service';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess } from './actions/class-students.actions';
-import { toggleAddModal } from './actions/students-modal.actions';
+import { initClassesAndStudentsResponse, initClassesAndStudentsRequest, fetchedClassesSuccess, fetchedStudentsSuccess, createStudentRequest, createStudentSuccess, deleteStudentRequest, deleteStudentSuccess, fetchStudentByIdRequest, fetchStudentByIdResponse, editStudentRequest, editStudentResponse } from './actions/class-students.actions';
+import { toggleAddModal, toggleEditModal } from './actions/students-modal.actions';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../models/students-state.model';
 import { selectAllStudents, selectAllClasses } from './selectors';
 import { StudentsXClassesModel } from '../models/students-x-classes.model';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { dataURLtoFile } from 'src/app/shared/components/image-upload-v3/image-upload-v3.component';
 
 @Injectable()
 export class StudentsEffects {
@@ -33,6 +34,12 @@ export class StudentsEffects {
         ]
       })
     )),
+  ))
+  fetchStudentData$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchStudentByIdRequest),
+    mergeMap(action => this.studentsService.getStudentById(action.student).pipe(
+      mergeMap(student => [fetchStudentByIdResponse({ student }), toggleEditModal()])
+    ))
   ))
   refreshStudentsXClasses$ = createEffect(() => this.actions$.pipe(
     ofType(createStudentSuccess),
@@ -71,6 +78,39 @@ export class StudentsEffects {
       )
     })
   ))
+  editStudentRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(editStudentRequest),
+    mergeMap(action => {
+      const studentReqData = this.processStudentReqData(action.student);
+      studentReqData.profileDto.countryId = studentReqData.profileDto['country'].id
+      studentReqData.profileDto.phone = studentReqData.guardianDetailsDto.phone['phoneNum'] || ''
+      studentReqData.guardianDetailsDto.phone = studentReqData.guardianDetailsDto.phone['phoneNum'] || ''
+      studentReqData.profileDto.login = true;
+      studentReqData.profileDto.createdCode = false;
+      delete studentReqData.profileDto['country']
+      if (studentReqData.profileDto.profileImage) {
+        if (studentReqData.profileDto.profileImage['imageUrl'].length > 0) {
+          studentReqData.profileDto.profileImage = studentReqData.profileDto.profileImage['imageUrl'];
+          return this.studentsService.editStudent(studentReqData).pipe(
+            map(student => editStudentResponse({ student }), toggleEditModal())
+          )
+        }
+        const fileConvertedFromBase64 = dataURLtoFile(studentReqData.profileDto.profileImage['base64'], 'profilePic.png')
+        return this.studentsService.uploadLogo(fileConvertedFromBase64).pipe(
+          mergeMap(res => {
+            console.log(res);
+            const editStudentObj = this.composeCreateStudentData(studentReqData, res.file);
+            return this.studentsService.editStudent(editStudentObj).pipe(
+              mergeMap(student => [editStudentResponse({ student }), toggleEditModal()])
+            )
+          })
+        )
+      }
+      return this.studentsService.editStudent(studentReqData).pipe(
+        mergeMap(student => [editStudentResponse({ student }), toggleEditModal()])
+      )
+    })
+  ))
   deleteStudentRequest$ = createEffect(() => this.actions$.pipe(
     ofType(deleteStudentRequest),
     mergeMap(action => this.studentsService.deleteStudent(action.student).pipe(
@@ -78,16 +118,15 @@ export class StudentsEffects {
     ))
   ))
   composeCreateStudentData(student: StudentModel, file: string) {
-    console.log(student, file);
     const studentCopy: StudentModel = { ...student, };
     if (studentCopy.profileDto.profileImage) {
       studentCopy.profileDto.profileImage = file;
     }
     if (studentCopy.guardianDetailsDto.phone) {
-      studentCopy.guardianDetailsDto.phone = student.guardianDetailsDto.phone['phoneNum']
+      studentCopy.guardianDetailsDto.phone = student.guardianDetailsDto.phone['phoneNum'];
     }
     if (studentCopy.profileDto['country']) {
-      studentCopy.profileDto.countryId = student.profileDto['country'].id
+      studentCopy.profileDto.countryId = student.profileDto['country'].id;
     }
     return studentCopy
   }

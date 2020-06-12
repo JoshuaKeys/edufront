@@ -1,6 +1,9 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/alignment';
 
+:host {
+  position: relative;
+}
 :host.circle {
   border-radius: 50% !important;
   overflow: hidden;
@@ -11,12 +14,19 @@
 }
 .file {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 0;
+  height: 0;
+  z-index: -1;
+  // width: 100%;
+  // height: 100%;
   opacity: 0;
-  z-index: 2;
-  top: 0;
-  left: 0;
+  // z-index: 2;
+  // top: 0;
+  // left: 0;
+}
+image-cropper {
+  --cropper-outline-color: rgba(255, 255, 255, 1);
+  --cropper-overlay-color: #a5aec7;
 }
 
 image-cropper ::ng-deep {
@@ -30,6 +40,23 @@ image-cropper ::ng-deep {
   .source-image {
     max-width: 350px !important;
     max-height: 232px !important;
+  }
+
+  .resize {
+    &.top,
+    &.bottom,
+    &.right,
+    &.left {
+      // display: none !important;
+    }
+  }
+  .resize-bar {
+    &.top,
+    &.bottom,
+    &.right,
+    &.left {
+      // display: none !important;
+    }
   }
 
   .cropper {
@@ -51,6 +78,7 @@ image-cropper ::ng-deep {
 }
 .buttons {
   @include displayFlex(center, center);
+  margin-bottom: 10px;
 }
 .textButton {
   font: 500 16px/24px Raleway;
@@ -63,7 +91,12 @@ image-cropper ::ng-deep {
   width: 44px !important;
   height: 44px !important;
   color: $blue;
+  border-color: $blue;
   margin: 0 8px;
+  position: relative;
+  span {
+    @include absoluteCenter();
+  }
 }
 
 .hidden {
@@ -115,4 +148,40 @@ h3 {
   @include displayFlex();
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
+}
+
+.hide {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  overflow: hidden !important;
+}
+
+image-cropper ::ng-deep .overlay > .corner {
+  z-index: 2;
+  position: absolute;
+  transform-origin: center center;
+}
+
+image-cropper ::ng-deep .overlay > .corner {
+  &.topleft {
+    left: 0;
+    top: 0;
+  }
+  &.topright {
+    right: 0;
+    top: 0;
+    transform: rotate(90deg);
+  }
+  &.bottomleft {
+    left: 0;
+    bottom: 0;
+    transform: rotate(270deg);
+  }
+  &.bottomright {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+  }
 }

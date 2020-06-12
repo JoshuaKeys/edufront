@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { StudentsModalModel } from '../../models/students-modal.model';
-import { toggleStartModal, toggleAddModal, toggleEndModal } from '../actions/students-modal.actions';
+import { toggleStartModal, toggleAddModal, toggleEndModal, toggleEditModal } from '../actions/students-modal.actions';
 
 const initialState: StudentsModalModel = {
   startModal: true,
@@ -16,6 +16,12 @@ export const studentsModalReducer = createReducer(initialState,
     }
   }),
   on(toggleAddModal, (state, action) => {
+    return {
+      ...state,
+      addModal: !state.addModal
+    }
+  }),
+  on(toggleEditModal, (state, action) => {
     return {
       ...state,
       editModal: !state.editModal
