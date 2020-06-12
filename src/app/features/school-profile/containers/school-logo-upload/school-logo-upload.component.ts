@@ -39,7 +39,7 @@ export class SchoolLogoUploadComponent implements OnInit {
   }
 
   onConfirm(img: { base64: string; imageUrl: string; acceptedFile: File }) {
-    // console.log(img);
+    console.log(img);
     this.uploadForm.patchValue({
       image: img
     });
@@ -58,5 +58,5 @@ export class SchoolLogoUploadComponent implements OnInit {
   constructor(
     private store: Store<ProfileModel>,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 }

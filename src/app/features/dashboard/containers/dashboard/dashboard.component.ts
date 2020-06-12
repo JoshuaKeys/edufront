@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { DashboardStateModel } from '../../models/dashboard-state.model';
 import { selectDashboardState } from '../../ngrx/selectors';
+import { selectUserModalState } from '../../ngrx/actions';
 
 @Component({
   selector: 'edu-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit {
 
   activeNavIndex: number;
   progress: number;
-
+  selectModalState: Observable<any>;
   trackerState(index) {
     if (index > this.activeNavIndex) {
       return '';
@@ -75,9 +76,13 @@ export class DashboardComponent implements OnInit {
       route: '/timetable'
     }
   ];
+  onContinue() {
+    this.store.dispatch(selectUserModalState());
+  }
   constructor(private store: Store<DashboardStateModel>) { }
 
   ngOnInit(): void {
+    this.selectModalState = this.store.select(selectDashboardState)
     this.store.select(selectDashboardState).subscribe(
       dashboardState => {
         this.activeNavIndex = dashboardState.activeNavIndex

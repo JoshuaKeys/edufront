@@ -67,6 +67,12 @@
     margin: 0 10px;
   }
 }
+.modal {
+  max-height: unset !important;
+}
+.modal__text {
+  margin-bottom: 10px;
+}
 
 // main {
 //   @include splitLayout();
@@ -126,4 +132,7 @@
 
 ::ng-deep .orangeColor {
   color: #f2b269;
+}
+::ng-deep .modal__text p {
+  margin: 60px;
 }

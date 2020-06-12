@@ -7,23 +7,23 @@ export const navigation = {
   },
   'school-address-question': {
     next: 'contact-details-question',
-    previous: 'school-name-question'
+    previous: '/dashboard'
   },
   'contact-details-question': {
     next: 'school-logo-question',
-    previous: 'school-address-question'
+    previous: '/dashboard'
   },
   'school-logo-question': {
     next: 'school-logo-upload',
-    previous: 'contact-details-question',
+    previous: '/dashboard',
   },
   'school-logo-upload': {
     next: 'school-profile-confirmation',
-    previous: 'school-logo-question'
+    previous: '/dashboard'
   },
   'school-profile-confirmation': {
     next: null,
-    previous: 'school-logo-upload'
+    previous: '/ashboard'
   }
 };
 
