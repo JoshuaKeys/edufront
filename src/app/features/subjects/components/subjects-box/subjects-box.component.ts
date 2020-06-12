@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class SubjectsBoxComponent implements OnInit {
   @Output() onDropped = new EventEmitter<SubjectModel>();
   @Input() subjects: Observable<SubjectModel[]>;
+  @Output() subjectRemoval = new EventEmitter<SubjectModel>()
   constructor() { }
   onDragOver(event) {
     event.preventDefault();
@@ -20,6 +21,9 @@ export class SubjectsBoxComponent implements OnInit {
     event.preventDefault();
     const draggedSubject = JSON.parse(event.dataTransfer.getData('Text')) as SubjectModel;
     this.onDropped.emit(draggedSubject);
+  }
+  removeFromSelected(subject: SubjectModel) {
+    this.subjectRemoval.emit(subject)
   }
   ngOnInit(): void {
   }

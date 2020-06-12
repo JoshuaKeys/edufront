@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -48,6 +48,9 @@ export class SchoolAddressQuestionComponent implements OnInit {
       icon: 'assets/images/flags/flg-uk.svg'
     }
   ];
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   ngOnInit(): void {
     // this.schoolProfService.getCountries().subscribe(console.log)
     let country;
@@ -108,7 +111,8 @@ export class SchoolAddressQuestionComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<PreviewModel>,
-    private schoolProfService: SchoolProfileService,
-    private cdRef: ChangeDetectorRef
+    // private schoolProfService: SchoolProfileService,
+    // private cdRef: ChangeDetectorRef,
+    private router: Router
   ) { }
 }

@@ -6,7 +6,7 @@ import { SubjectsStateModel } from '../../models/subjects-state.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { selectAllClasses, selectSortedClasses, selectAllSubjects, getCommonClasses, selectSubjectModalState } from '../../ngrx/selectors';
 import { SubjectModel } from '../../models/subject.model';
-import { assignToSelectedClassesRequest, toggleClass, toggleFormModal, createSubjectRequest } from '../../ngrx/actions';
+import { assignToSelectedClassesRequest, toggleClass, toggleFormModal, createSubjectRequest, removeFromSelectedClassesRequest } from '../../ngrx/actions';
 import { SubjectModalStateModel } from '../../models/subject-modal-state.model';
 import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 import { filter, map } from 'rxjs/operators';
@@ -33,6 +33,9 @@ export class AssignSubjectsQuestionComponent implements OnInit {
     this.subjectsInterception = this.store.select(getCommonClasses);
     this.subjectsInterception.subscribe()
     this.setupFilter();
+  }
+  onRemoveSubject(subject: SubjectModel) {
+    this.store.dispatch(removeFromSelectedClassesRequest({ subject }))
   }
   setupFilter() {
     this.filteredSubjects = this.allSubjects.pipe(

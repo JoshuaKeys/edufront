@@ -9,6 +9,7 @@
     <edu-icon-button
       *ngFor="let subject of subjects | async"
       [subject]="subject"
+      (click)="removeFromSelected(subject)"
     ></edu-icon-button>
   </ng-container>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProfileModel } from '../../models/profile.model';
@@ -18,6 +18,7 @@ import { withLatestFrom, first, tap } from 'rxjs/operators';
 export class SchoolLogoUploadComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   uploadForm: FormGroup;
+  disabledContinue = true;
   onCropImage($event) {
     console.log($event);
   }
@@ -37,9 +38,11 @@ export class SchoolLogoUploadComponent implements OnInit {
         });
       });
   }
-
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   onConfirm(img: { base64: string; imageUrl: string; acceptedFile: File }) {
-    console.log(img);
+    this.disabledContinue = false;
     this.uploadForm.patchValue({
       image: img
     });
@@ -57,6 +60,7 @@ export class SchoolLogoUploadComponent implements OnInit {
   }
   constructor(
     private store: Store<ProfileModel>,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 }

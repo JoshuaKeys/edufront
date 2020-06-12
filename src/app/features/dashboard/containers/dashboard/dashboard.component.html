@@ -16,7 +16,11 @@
     >
       <div class="tracker" [ngClass]="trackerState(i)">
         <div class="icon">
-          <img src="assets/dashboard/{{ getIconPath(i) }}.svg" alt="" />
+          <img
+            src="assets/dashboard/{{ getIconPath(i) }}.svg"
+            [routerLink]="item.route"
+            alt=""
+          />
           <span class="label">{{ item.label }} </span>
         </div>
         <div *ngIf="!isLast" class="dash i{{ i }}"></div>
@@ -39,7 +43,7 @@
   *ngIf="(selectModalState | async).startModal"
   class="complete"
   btnText="GOT IT"
-  header="Welcome to our up bringing"
+  header="Welcome to our On-Boarding"
   icon="assets/icon-complete.svg"
   btnText="GET ME STARTED"
   (btnClicked)="onContinue()"
@@ -48,7 +52,7 @@
     <p>Excity but aso intimidating</p>
     <p>
       This step by step process would get you up and running
-      <i class="router">in no time</i>
+      <i class="orangeColor">in no time</i>
     </p>
     <p>
       The entire process take 20 to 120 minutes

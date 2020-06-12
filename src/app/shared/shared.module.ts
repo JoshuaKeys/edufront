@@ -103,4 +103,4 @@ import { ImageUploadV3Component } from './components/image-upload-v3/image-uploa
   ],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule {}
+export class SharedModule { }

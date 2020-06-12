@@ -53,7 +53,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     private cd: ChangeDetectorRef,
     private renderer: Renderer2,
     private el: ElementRef
-  ) {}
+  ) { }
   @Input('showControls') showControls = true;
   @Output() onImageCropped = new EventEmitter<File>();
   @Output('confirm') onConfirmEvent = new EventEmitter<ProfilePicModel>();
@@ -167,10 +167,10 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     let blob: any = this.utils.getBlob(this.croppedImage);
 
     blob.lastModifiedDate = new Date();
-    blob.name = 'imageFile';
+    blob.name = 'imageFile.jpg';
 
     this.value.base64 = this.croppedImage;
-    this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile');
+    this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile.jpg');
     // console.log(this.value);
     // this.value = { ...this.value };
     this.onChange(this.value);
@@ -194,8 +194,8 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
   }
 
   //Control value accessor implementation
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
   writeValue(val: any) {
     // console.log('called');
     if (val === null) {
@@ -208,7 +208,7 @@ export class ImageUploadV3Component implements OnInit, ControlValueAccessor {
     this.onChange = fn;
     // this.onUpload = fn;
   }
-  registerOnTouched() {}
+  registerOnTouched() { }
 
   // disabled = false;
   // onChange: any = () => {};

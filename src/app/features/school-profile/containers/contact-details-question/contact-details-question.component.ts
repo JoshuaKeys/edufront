@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -90,6 +90,9 @@ export class ContactDetailsQuestionComponent implements OnInit {
       })
     );
   }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   updatePhone(event: PhoneIconModel) {
     this.contactForm.patchValue({
       phone: event
@@ -110,6 +113,7 @@ export class ContactDetailsQuestionComponent implements OnInit {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<PreviewModel>
-  ) {}
+    private store: Store<PreviewModel>,
+    private router: Router
+  ) { }
 }
