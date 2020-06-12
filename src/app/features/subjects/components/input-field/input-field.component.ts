@@ -37,13 +37,13 @@ export class ArrayInputFieldComponent implements OnInit, ControlValueAccessor {
   @ViewChild('subSubjectValue') subSubjectsValue;
   inputValue: string;
   onValueChange: (value: string) => any;
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   writeValue(val: string) {
     if (val === null) {
       this.renderer.setProperty(
-        this.subSubjectsValue.nativeElement,
+        this.subSubjectsValue.el.nativeElement,
         'value',
         ''
       );
@@ -53,7 +53,7 @@ export class ArrayInputFieldComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: any) {
     this.onValueChange = fn;
   }
-  registerOnTouched(fn: any) {}
+  registerOnTouched(fn: any) { }
   onTextChange(event) {
     // console.log('asdsa');
     this.onValueChange(event.target.value);

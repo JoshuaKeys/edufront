@@ -55,7 +55,8 @@ export class ImageUploadV3Component
     private cd: ChangeDetectorRef,
     private renderer: Renderer2,
     private el: ElementRef
-  ) {}
+  ) { }
+  @Input('showControls') showControls = true;
   // @Input('showControls') showControls = false;
   @Input('elementId') elementId = 'baseElementId';
   @Output() onImageCropped = new EventEmitter<File>();
@@ -196,12 +197,20 @@ export class ImageUploadV3Component
   onConfirm() {
     //work in progress to customize starting cropping position
 
-    // let blob: any = this.utils.getBlob(this.croppedImage);
-    // blob.lastModifiedDate = new Date();
-    // blob.name = 'imageFile';
+    let width = this.ImageCropper.sourceImage.nativeElement.offsetWidth;
+    let height = this.ImageCropper.sourceImage.nativeElement.offsetHeight;
+
+    // console.log(typeof this.croppedImage);
+    // this.value = new Blob([this.croppedImage], { type: 'image/png' });
+    let blob: any = this.utils.getBlob(this.croppedImage);
+
+    blob.lastModifiedDate = new Date();
+    blob.name = 'imageFile.jpg';
 
     this.value.base64 = this.croppedImage;
-    this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile');
+    this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile.jpg');
+    // console.log(this.value);
+    // this.value = { ...this.value };
     this.onChange(this.value);
     this.onTouched();
 
@@ -227,8 +236,8 @@ export class ImageUploadV3Component
   }
 
   //Control value accessor implementation
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
   writeValue(val: any) {
     // console.log('called');
     if (val === null) {
@@ -241,5 +250,24 @@ export class ImageUploadV3Component
     this.onChange = fn;
     // this.onUpload = fn;
   }
-  registerOnTouched() {}
+  registerOnTouched() { }
+
+  // disabled = false;
+  // onChange: any = () => {};
+  // onTouched: any = () => {};
+
+  // writeValue(value: any) {
+  //   this.value = value;
+  // }
+
+  // registerOnChange(fn: any) {
+  //   this.onChange = fn;
+  // }
+
+  // registerOnTouched(fn: any) {
+  //   this.onTouched = fn;
+  // }
+  // setDisabledState(isDisabled: boolean): void {
+  //   this.disabled = isDisabled;
+  // }
 }

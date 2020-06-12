@@ -50,6 +50,29 @@ export const classesReducer = createReducer(initialState,
       }
     });
     return classAdapter.updateMany(updates, state);
+  }),
+  on(fromSubjectActions.removeFromSelectedClasses, (state, action) => {
+    const updates = action.selectedSubClasses.map(subClass => {
+      let previousClassState = selectAll(state).find(classItem => classItem.id === subClass.id)
+      let previousSubjects = previousClassState.subjects ? previousClassState.subjects : [];
+      let subjectsUpdate;
+      if (previousSubjects.find(subject => subject.id === action.subject.id)) {
+        const subIndex = previousSubjects.findIndex(subject => subject.id === action.subject.id);
+        const previousSubjectsCopy = [...previousSubjects];
+        previousSubjectsCopy.splice(subIndex, 1);
+        subjectsUpdate = [
+          ...previousSubjectsCopy
+        ]
+      }
+      console.log(subjectsUpdate)
+      return {
+        id: subClass.id,
+        changes: {
+          subjects: subjectsUpdate
+        }
+      }
+    });
+    return classAdapter.updateMany(updates, state);
   })
 );
 

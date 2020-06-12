@@ -19,12 +19,17 @@ export class SectionAsideComponent implements OnInit {
   fileredStudents: Observable<ProfileDTOModel[]>;
   @Input() students: Observable<ExtendedProfileDTOModel[]>
   @Output() onAssign = new EventEmitter<string>()
+  @Output() onOpenAddModal = new EventEmitter<string>();
   constructor() { }
   onTextChange(event) {
     this.filter = event.target.value;
     this.filterItems(this.filter);
   }
+  openAddModal() {
+    this.onOpenAddModal.emit()
+  }
   ngOnInit(): void {
+    this.selectedClass.subscribe(console.log)
     this.filterItems(this.filter);
     this.selectedClass.subscribe(classItem => this.classId = classItem.class.id)
   }
@@ -38,12 +43,16 @@ export class SectionAsideComponent implements OnInit {
     this.onAssign.emit(this.classId);
   }
   filterItems(_filter: string) {  // Sorting bug over here
+    console.log(_filter)
     const filter = _filter.toLowerCase();
     this.fileredStudents = this.students.pipe(
-      map(students => students ? students.filter(
-        student => student.firstName.toLowerCase().match(filter) || student.lastName.toLowerCase().match(filter)
-          || `${student.firstName.toLowerCase()} ${student.lastName.toLowerCase()}`.match(filter)
-      ) : [])
+      map(students => {
+        return students ? students.filter(
+          student => student.firstName && student.firstName.toLowerCase().match(filter) || student.lastName &&
+            student.lastName.toLowerCase().match(filter)
+          //|| `${student.firstName.toLowerCase()} ${student.lastName.toLowerCase()}`.match(filter)
+        ) : []
+      })
 
     )
   }

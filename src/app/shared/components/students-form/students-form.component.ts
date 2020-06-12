@@ -58,12 +58,12 @@ export class StudentsFormComponent implements OnInit {
 
   createStaff() {
     const formValue = this.addEditForm.value;
-    console.log(formValue)
-    formValue.profileDto.profileImage = formValue.profilePic.profileImage
+    formValue.profileDto.profileImage = formValue.profilePic.profileImage;
     delete formValue.profilePic;
     this.onSubmit.emit(formValue);
   }
   ngOnInit(): void {
+    this.studentsXClasses.subscribe(console.log);
     if (!this.students) {
       this.addEditForm = this.setupCreateMode();
     }

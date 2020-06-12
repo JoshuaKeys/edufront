@@ -7,6 +7,7 @@ import { selectPreviewState } from '../../ngrx/selectors';
 import { ProfileModalModel } from '../../models/profile-modal.model';
 import { selectProfileModal } from '../../ngrx/selectors/modal-selectors';
 import { createSchoolRequest } from '../../ngrx/actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-school-profile-confirmation',

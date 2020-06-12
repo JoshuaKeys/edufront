@@ -75,7 +75,6 @@ export class ImgUploadV2Component implements OnInit {
     const pattern = /image-*/;
     const reader = new FileReader();
     if (!file.type.match(pattern)) {
-      alert('invalid format');
       return;
     }
     this.loaded = false;

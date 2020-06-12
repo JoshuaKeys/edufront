@@ -40,11 +40,10 @@ export class SectionDropBoxComponent implements OnInit {
     event.preventDefault();
     this.isDraggedOver = false;
     const draggedStudent: ProfileDTOModel = JSON.parse(event.dataTransfer.getData('Text'))
-    console.log(draggedStudent, 'haaaaaa')
-    console.log(draggedStudent, typeof draggedStudent);
     this.onDropped.emit({ student: draggedStudent, classId, sectionName });
   }
   onClick(classId: string, sectionName: string, student: ExtendedProfileDTOModel) {
+    console.log(classId, student, sectionName)
     this.onRemove.emit({ student, classId, sectionName });
   }
   onDragOver(event: DragEvent) {

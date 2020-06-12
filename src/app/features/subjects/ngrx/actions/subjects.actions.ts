@@ -35,6 +35,14 @@ export const assignToSelectedClasses = createAction(
 export const assignToSelectedClassesFailure = createAction(
   '[SubjectsEffects] assignSubjectToSelectedClassesFailure'
 )
+export const removeFromSelectedClassesRequest = createAction(
+  '[AssignSubjectsQuestionComponent] removeFromSelectedClassesRequest',
+  props<{ subject: SubjectModel }>()
+)
+export const removeFromSelectedClasses = createAction(
+  '[AssignSubjectsQuestionComponent] removeFromSelectedClassest',
+  props<{ selectedSubClasses: ClassModel[], subject: SubjectModel }>()
+)
 export const postClassesSubjectsRequest = createAction(
   '[ConfirmationComponent] postClassesSubjects',
 )

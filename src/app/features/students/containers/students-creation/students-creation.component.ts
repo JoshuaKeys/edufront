@@ -57,7 +57,7 @@ export class StudentsCreationComponent implements OnInit {
     this.router.navigateByUrl('/dashboard')
   }
   goToStaffs() {
-
+    this.router.navigateByUrl('/staffs/staffs-creation')
   }
   onStart() {
     this.store.dispatch(toggleStartModal())

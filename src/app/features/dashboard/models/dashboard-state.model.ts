@@ -1,4 +1,5 @@
 export interface DashboardStateModel {
   activeNavIndex: number;
-  progress: number
+  progress: number;
+  startModal: boolean
 }

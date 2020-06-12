@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -28,14 +28,14 @@ export class SchoolAddressQuestionComponent implements OnInit {
 
   countryIconMap = [
     {
-      id: '1c1e29e4-642b-11ea-a762-9bcb0d229311',
-      item: 'United States',
-      icon: 'assets/images/flags/flg-us.svg'
-    },
-    {
       id: 'ab53c906-6427-11ea-a761-8b6db09d1095',
       item: 'India',
       icon: 'assets/images/flags/flg-in.svg'
+    },
+    {
+      id: '1c1e29e4-642b-11ea-a762-9bcb0d229311',
+      item: 'United States',
+      icon: 'assets/images/flags/flg-us.svg'
     },
     {
       id: '418bc6b4-642b-11ea-a763-33192cb50cc3',
@@ -48,6 +48,9 @@ export class SchoolAddressQuestionComponent implements OnInit {
       icon: 'assets/images/flags/flg-uk.svg'
     }
   ];
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   ngOnInit(): void {
     // this.schoolProfService.getCountries().subscribe(console.log)
     let country;
@@ -108,7 +111,8 @@ export class SchoolAddressQuestionComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<PreviewModel>,
-    private schoolProfService: SchoolProfileService,
-    private cdRef: ChangeDetectorRef
-  ) {}
+    // private schoolProfService: SchoolProfileService,
+    // private cdRef: ChangeDetectorRef,
+    private router: Router
+  ) { }
 }
