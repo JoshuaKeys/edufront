@@ -17,13 +17,13 @@ import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-respo
 )
 export class ClassesAndGroupsService {
   getClasses(): Observable<GetClassesResponseModel[]> {
-    return this.httpClient.get<GetClassesResponseModel[]>(`/api/v1/class/systemClasses`);
+    return this.httpClient.get<GetClassesResponseModel[]>(`${environment.origin}api/v1/class/systemClasses`);
   }
   sendClassesWithoutGroups(requestData: ClassesWithoutGroupsRequestModel[]): Observable<ClassesWithoutGroupResponseModel> {
-    return this.httpClient.post<ClassesWithoutGroupResponseModel>(`/api/v1/class/createAll`, requestData);
+    return this.httpClient.post<ClassesWithoutGroupResponseModel>(`${environment.origin}api/v1/class/createAll`, requestData);
   }
   sendClassesWithGroups(requestData: ClassesWithGroupsRequestModel[]): Observable<ClassesWithGroupsResponseModel> {
-    return this.httpClient.post<ClassesWithGroupsResponseModel>('/api/v1/classGroup/groupwithclass', requestData);
+    return this.httpClient.post<ClassesWithGroupsResponseModel>(`${environment.origin}api/v1/classGroup/groupwithclass`, requestData);
   }
   constructor(private httpClient: HttpClient) { }
 }

@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   origin: 'https://education.development.allexis.io/admin/'
 };
