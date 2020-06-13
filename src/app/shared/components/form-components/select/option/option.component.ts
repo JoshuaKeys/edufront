@@ -73,11 +73,17 @@ export class OptionComponent implements OnInit, AfterViewInit {
         : displayedValue.nodeValue;
     this.displayedValue = displayedValue;
 
-    console.log(JSON.stringify(this.selectService.activeOption));
-    console.log(
-      `selet vs opt - ${this.selectService.activeOption} ${this.OptionValue}`
-    );
-    console.log(this.selectService.activeOption === this.OptionValue);
+    // console.log(JSON.stringify(this.selectService.activeOption));
+    // console.log(
+    //   `selet vs opt - ${this.selectService.activeValue} ${this.OptionValue}`
+    // );
+    // console.log(this.selectService.activeValue);
+    if (
+      this.selectService.activeValue.toUpperCase() ===
+      this.OptionValue.toUpperCase()
+    ) {
+      this.selectService.activeOptionComponent.next(this);
+    }
   }
 
   @Input('OptionValue') OptionValue;
