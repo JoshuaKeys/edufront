@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { SubjectsStateModel } from '../../models/subjects-state.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { Observable } from 'rxjs';
-import { selectSortedClasses, getAllSelectedClasses, selectSubjectModalState } from '../../ngrx/selectors';
+import { selectSortedClasses, getAllSelectedClasses, selectSubjectModalState, getAssignedClasses } from '../../ngrx/selectors';
 import { SubjectModalStateModel } from '../../models/subject-modal-state.model';
 import { toggleEndModal, postClassesSubjectsRequest } from '../../ngrx/actions';
 
@@ -19,12 +19,11 @@ export class ConfirmationComponent implements OnInit {
   classes: Observable<ClassModel[]>;
   modalState: Observable<SubjectModalStateModel>;
   ngOnInit(): void {
-    this.modalState = this.store.select(selectSubjectModalState)
-    this.classes = this.store.select(getAllSelectedClasses);
+    this.modalState = this.store.select(selectSubjectModalState);
+    this.classes = this.store.select(getAssignedClasses);
   }
   saveSubjects() {
-    this.store.dispatch(postClassesSubjectsRequest())
-    // this.store.dispatch(toggleEndModal())
+    this.store.dispatch(postClassesSubjectsRequest());
   }
   goToStudents() {
     this.router.navigateByUrl('/students/students-creation')
