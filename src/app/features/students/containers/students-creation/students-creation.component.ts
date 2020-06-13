@@ -12,7 +12,7 @@ import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { map } from 'rxjs/operators';
 import { StudentModel } from '../../../../shared/models/student.model';
-import { createStudentRequest, deleteStudentRequest } from '../../ngrx/actions/class-students.actions';
+import { createStudentRequest, deleteStudentRequest, editStudentRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -96,8 +96,8 @@ export class StudentsCreationComponent implements OnInit {
   processSubmit(event: StudentModel) {
     this.createStudent(event)
   }
-  processEditStudent($event) {
-
+  processEditStudent(student: StudentModel) {
+    this.store.dispatch(editStudentRequest({ student }))
   }
   onRemoveStudent(student: StudentModel) {
     this.store.dispatch(deleteStudentRequest({ student }))
