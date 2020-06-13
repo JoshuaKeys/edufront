@@ -67,6 +67,18 @@ export const selectCreateSectionData = createSelector(selectAllSections, section
   return mappedSections;
 })
 export const selectAggregate = createSelector(featureSelector, feat => {
-
-  return feat.aggregate ? feat.aggregate : []
+  const result = [];
+  const aggregateData = feat.aggregate ? feat.aggregate : []
+  if (aggregateData.length > 0) {
+    aggregateData.forEach(aggregateDataItem => {
+      for (let i = 0; i < aggregateDataItem.sections.length; i++) {
+        if (aggregateDataItem.sections[i].subjects.length > 0) {
+          result.push(aggregateDataItem)
+        }
+      }
+    })
+    console.log(result);
+    return result;
+  }
+  return aggregateData;
 })

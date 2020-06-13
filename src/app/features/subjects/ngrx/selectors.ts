@@ -6,7 +6,9 @@ import { SubjectModel } from 'src/app/shared/models/subject.model';
 
 const subjectsFeature = createFeatureSelector<SubjectsStateModel>('subjects');
 const selectClassesState = createSelector(
-  subjectsFeature, subFeat => subFeat.classes
+  subjectsFeature, subFeat => {
+    return subFeat ? subFeat.classes : []
+  }
 )
 
 export const selectSubjectModalState = createSelector(
@@ -32,11 +34,13 @@ export const selectSortedClasses = createSelector(selectAllClasses, classes => {
       return 1;
     }
     return 0;
-
   }) : []
 })
 export const getAllSelectedClasses = createSelector(selectAllClasses, classes => {
   return classes.filter(val => val.selected === true)
+})
+export const getAssignedClasses = createSelector(selectAllClasses, classes => {
+  return classes.filter(val => val.subjects && val.subjects.length > 0)
 })
 export const getCommonClasses = createSelector(getAllSelectedClasses, classes => {
   const subjects = classes.map(classItem => classItem.subjects ? classItem.subjects : [])
@@ -49,7 +53,6 @@ function getIntersection(arrayGroup: SubjectModel[][]) {
     if (currIndex === 0) {
       return currentVal;
     }
-
     let newArray = [];
     for (let i = 0; i < currentVal.length; i++) {
       if (accumulator.find(item => currentVal[i].id === item.id)) {
