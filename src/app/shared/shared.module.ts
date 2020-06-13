@@ -109,4 +109,4 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
   ],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule { }
+export class SharedModule {}

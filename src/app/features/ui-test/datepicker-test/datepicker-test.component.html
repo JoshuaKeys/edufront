@@ -8,5 +8,7 @@
 <br /><br />
 
 <form action="" [formGroup]="testForm" (ngSubmit)="formSubmit()">
-  <edu-datepicker formControlName="f1"></edu-datepicker>
+  <edu-datepicker formControlName="f1">
+    <span class="edu-label">date of birth</span>
+  </edu-datepicker>
 </form>

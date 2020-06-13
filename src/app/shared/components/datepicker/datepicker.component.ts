@@ -1,4 +1,13 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterContentInit,
+  forwardRef,
+  Input,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
@@ -14,23 +23,48 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
     }
   ]
 })
-export class DatepickerComponent implements OnInit, ControlValueAccessor {
-  constructor() {}
+export class DatepickerComponent
+  implements OnInit, AfterViewInit, ControlValueAccessor {
+  constructor(private el: ElementRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setElementID();
+  }
+  ngAfterViewInit() {
+    console.log('staff');
+    console.log(this.inputEl);
+  }
 
+  @ViewChild('inputEl') inputEl;
+  @Input('elementId') elementId = 'tempDatepickerId123';
+  tempId = 'datepickerinputid';
   model: IMyDateModel = null;
 
+  setElementID() {
+    if (
+      this.elementId == undefined &&
+      this.el.nativeElement.getAttribute('formcontrolname') !== undefined
+    ) {
+      this.elementId = this.el.nativeElement.getAttribute('formcontrolname');
+    }
+  }
+
   onInputBlur() {
+    if (!this.isValidDate()) {
+      this.displayedValue = this.convertValuetoDisplayedValue(this.value);
+    }
     this.updateDatePickerModel();
   }
 
   updateDatePickerModel() {
-    this.value = this.val;
-    let day = parseInt(this.val.substring(0, 2));
-    let month = parseInt(this.val.substring(3, 5));
-    let year = parseInt(this.val.substring(6, 8));
+    const dateValue = this.displayedValue;
+    console.log(this.displayedValue);
+    let day = parseInt(dateValue.substring(0, 2));
+    let month = parseInt(dateValue.substring(3, 5));
+    let year = parseInt(dateValue.substring(6, 8));
     year = year < 50 ? year + 2000 : year + 1900;
+
+    this.value = `${year}-${month}-${day}`;
 
     let model: IMyDateModel = {
       isRange: false,
@@ -44,16 +78,23 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     console.log(this.model);
   }
 
+  isValidDate() {
+    return true;
+  }
+
   onDateChanged(event: IMyDateModel): void {
     // date selected
     let dateObj = event.singleDate.date;
     console.log(event);
-    this.value = `${this.formatDayMonth(dateObj.day)}/${this.formatDayMonth(
-      dateObj.month
-    )}/${this.formatYear(dateObj.year)}`;
+
+    this.displayedValue = `${this.formatDayMonth(
+      dateObj.day
+    )}/${this.formatDayMonth(dateObj.month)}/${this.formatYear(dateObj.year)}`;
+    this.value = `${dateObj.year}-${dateObj.month}-${dateObj.day}`;
   }
 
   val;
+  //value should be yyyy-mm-dd
   set value(val) {
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
     this.val = val;
@@ -61,12 +102,36 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     this.onTouched();
     // this.onTouched(val)
   }
+  get value() {
+    return this.val;
+  }
+  displayedVal;
+  //value should be dd/mm/yy
+  set displayedValue(val) {
+    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    this.displayedVal = val;
+    // this.onChange(val);
+    // this.onTouched();
+    // this.onTouched(val)
+  }
+  get displayedValue() {
+    return this.displayedVal;
+  }
 
   formatDayMonth(param) {
     return param < 10 ? `0${param}` : `${param}`;
   }
   formatYear(param) {
     return param.toString().substring(2, 4);
+  }
+
+  convertValuetoDisplayedValue(value: string) {
+    const day = value.substring(8, 10);
+    const month = value.substring(5, 7);
+    const year = value.substring(2, 4);
+
+    console.log(`${day}/${month}/${year}`);
+    return `${day}/${month}/${year}`;
   }
 
   myDatePickerOptions: IAngularMyDpOptions = {
@@ -206,6 +271,9 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   disabled: boolean = false;
   writeValue(value: any) {
     this.value = value;
+    console.log(this.value);
+    //need parse value > displayedValue
+    this.displayedValue = this.convertValuetoDisplayedValue(value);
     this.updateDatePickerModel();
   }
 

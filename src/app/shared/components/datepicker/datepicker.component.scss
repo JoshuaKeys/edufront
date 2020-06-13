@@ -143,3 +143,17 @@
   }
   // y_2_2 myDpYearcell myDpSelectedYear myDpTableSingleYear
 }
+
+.clicker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+edu-input {
+  width: 100%;
+  height: 100%;
+}
