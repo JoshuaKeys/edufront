@@ -228,7 +228,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => {};
 
   writeValue(value: any) {
-    this.selectService.setActiveOption(value);
+    this.selectService.setActiveValue(value);
+    // this.selectService.setActiveOption(value);
   }
 
   registerOnChange(fn: any) {
