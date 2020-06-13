@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { StudentsModalModel } from '../../models/students-modal.model';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../../models/students-state.model';
-import { selectModalState, selectSortingState, selectStudentsAndClasses } from '../../ngrx/selectors'
+import { selectModalState, selectSortingState, selectStudentsAndClasses, selectEditData, selectAllClasses } from '../../ngrx/selectors'
 import { toggleStartModal, toggleAddModal, toggleEndModal } from '../../ngrx/actions/students-modal.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentsService } from '../../services/students.service';
@@ -16,6 +16,7 @@ import { createStudentRequest, deleteStudentRequest, editStudentRequest } from '
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 @Component({
   selector: 'edu-students-creation',
@@ -29,14 +30,16 @@ export class StudentsCreationComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   sortingState: Observable<StudentsSortingModel>;
   studentsXClasses: Observable<StudentsXClassesModel[]>;
+  allClasses: Observable<ClassModel[]>;
   img;
+  studentEditState: Observable<StudentModel>
   ngOnInit(): void {
+    this.studentEditState = this.store.select(selectEditData);
     const headers = new HttpHeaders().set('Content-Type', 'application/image; charset=utf-8');
     this.httpClient.get('https://education.development.allexis.io/admin/image/profile/0ddcf2ee-9d85-4d25-9218-4a2c51d6f3f1.jpg', {
       headers, responseType: 'blob'
     })
       .subscribe(res => {
-        console.log(res);
         var reader = new FileReader();
         reader.readAsDataURL(res);
         reader.onloadend = () => {
@@ -47,6 +50,7 @@ export class StudentsCreationComponent implements OnInit {
     this.studentsModalState = this.store.select(selectModalState);
     this.sortingState = this.store.select(selectSortingState)
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
+    this.allClasses = this.store.select(selectAllClasses);
     this.studentCommunication.studentEdition$.subscribe(student => this.onEditStudent(student))
     this.studentCommunication.studentRemoval$.subscribe(student => this.onRemoveStudent(student))
   }
