@@ -58,13 +58,15 @@ export class DatepickerComponent
 
   updateDatePickerModel() {
     const dateValue = this.displayedValue;
-    console.log(this.displayedValue);
+    // console.log(this.displayedValue);
     let day = parseInt(dateValue.substring(0, 2));
     let month = parseInt(dateValue.substring(3, 5));
     let year = parseInt(dateValue.substring(6, 8));
     year = year < 50 ? year + 2000 : year + 1900;
 
-    this.value = `${year}-${month}-${day}`;
+    this.value = `${year}-${this.formatDayMonth(month)}-${this.formatDayMonth(
+      day
+    )}`;
 
     let model: IMyDateModel = {
       isRange: false,
@@ -75,7 +77,7 @@ export class DatepickerComponent
       dateRange: null
     };
     this.model = model;
-    console.log(this.model);
+    // console.log(this.model);
   }
 
   isValidDate() {
@@ -85,12 +87,14 @@ export class DatepickerComponent
   onDateChanged(event: IMyDateModel): void {
     // date selected
     let dateObj = event.singleDate.date;
-    console.log(event);
+    // console.log(event);
 
     this.displayedValue = `${this.formatDayMonth(
       dateObj.day
     )}/${this.formatDayMonth(dateObj.month)}/${this.formatYear(dateObj.year)}`;
-    this.value = `${dateObj.year}-${dateObj.month}-${dateObj.day}`;
+    this.value = `${dateObj.year}-${this.formatDayMonth(
+      dateObj.month
+    )}-${this.formatDayMonth(dateObj.day)}`;
   }
 
   val;
