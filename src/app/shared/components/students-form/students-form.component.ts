@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 import { StudentsStateModel } from 'src/app/features/students/models/students-state.model';
 import { StudentsXClassesModel } from 'src/app/features/students/models/students-x-classes.model';
 import { StudentModel } from '../../models/student.model';
+import { ClassModel } from '../../models/class.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-students-form',
@@ -47,13 +49,13 @@ export class StudentsFormComponent implements OnInit {
       phonePrefix: '+44'
     }
   ];
-
+  @Input() allClasses: Observable<ClassModel[]>;
   @Input() studentsXClasses: Observable<StudentsXClassesModel[]>;
   @Input() students: StudentModel;
   @Output() onSubmit = new EventEmitter<StudentsStateModel>();
   addEditForm: FormGroup;
   sortedStudentsXClasses: Observable<StudentsXClassesModel[]>;
-
+  sortedClasses: Observable<ClassModel[]>;
   constructor() { }
 
   createStaff() {
@@ -63,6 +65,11 @@ export class StudentsFormComponent implements OnInit {
     this.onSubmit.emit(formValue);
   }
   ngOnInit(): void {
+    this.sortedClasses = this.allClasses.pipe(
+      map(classes => {
+        return classes.sort((classA, classB) => classA.grade < classB.grade ? -1 : 1)
+      })
+    )
     this.studentsXClasses.subscribe(console.log);
     if (!this.students) {
       this.addEditForm = this.setupCreateMode();

@@ -105,13 +105,9 @@
             <edu-select alignment="left" formControlName="classId">
               <span class="edu-label"> Class </span>
               <edu-option
-                *ngFor="let studentXClass of studentsXClasses | async"
-                [OptionValue]="studentXClass.classId"
-                >{{
-                  studentXClass.className
-                    ? studentXClass.className
-                    : studentXClass['class'].name
-                }}
+                *ngFor="let classItem of sortedClasses | async"
+                [OptionValue]="classItem.id"
+                >{{ classItem.name ? classItem.name : classItem.grade }}
               </edu-option>
             </edu-select>
 
