@@ -1,12 +1,13 @@
 import {
   Component,
   OnInit,
-  AfterContentInit,
+  ChangeDetectorRef,
   forwardRef,
   Input,
   ElementRef,
   ViewChild,
-  AfterViewInit
+  AfterViewInit,
+  HostListener
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
@@ -14,7 +15,10 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 @Component({
   selector: 'edu-datepicker',
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.scss'],
+  styleUrls: [
+    './datepicker.component.scss',
+    './datepicker-style-overwrite.scss'
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -25,35 +29,85 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 })
 export class DatepickerComponent
   implements OnInit, AfterViewInit, ControlValueAccessor {
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.setElementID();
   }
   ngAfterViewInit() {
-    console.log('staff');
     console.log(this.inputEl);
   }
-
+  TAB_KEY_CODE = 9;
+  @ViewChild('dp') dp: any;
   @ViewChild('inputEl') inputEl;
+  @Input('alignment') alignment = 'center';
+  @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('elementId') elementId = 'tempDatepickerId123';
+  @Input('disabled') set disabled(disabled) {
+    this._disabled = disabled;
+  }
+  _disabled = false;
   tempId = 'datepickerinputid';
   model: IMyDateModel = null;
+  dpIsActive = false;
+
+  _elState = 'inactive';
+  set elState(state) {
+    this._elState = state;
+    if (this.elState === 'active') {
+      this.onTouched();
+      this.dp.openCalendar();
+    }
+    this.cd.markForCheck();
+  }
+  get elState() {
+    return this._elState;
+  }
+  cbFocus() {
+    this.elState = 'active';
+    console.log('should be active now');
+  }
+  cbBlur() {
+    //change to rxjs operator later
+    setTimeout(() => {
+      if (!this.el.nativeElement.contains(document.activeElement)) {
+        this.elState = 'inactive';
+        this.dpIsActive = false;
+        this.onTouched();
+        this.cd.markForCheck();
+      }
+    }, 150);
+  }
+
+  cbChange() {
+    if (this.dpIsActive) {
+      this.elState = 'active';
+    } else {
+      this.elState = 'inactive';
+    }
+  }
+
+  isLabelActive() {
+    return (
+      this.dpIsActive || (typeof this.value == 'string' && this.value != '')
+    );
+  }
 
   setElementID() {
-    if (
-      this.elementId == undefined &&
-      this.el.nativeElement.getAttribute('formcontrolname') !== undefined
-    ) {
+    if (this.el.nativeElement.getAttribute('formcontrolname') !== undefined) {
       this.elementId = this.el.nativeElement.getAttribute('formcontrolname');
     }
   }
 
-  onInputBlur() {
-    if (!this.isValidDate()) {
-      this.displayedValue = this.convertValuetoDisplayedValue(this.value);
+  calendarBlur(option) {
+    // 2 = calendar closed by date select
+    // 3 = calendar closed by calendar button
+    // 4 = calendar closed by outside click (document click)
+    // 5 = calendar closed by ESC key
+    if (option > 1) {
+      this.elState = 'inactive';
+      this.dpIsActive = false;
     }
-    this.updateDatePickerModel();
   }
 
   updateDatePickerModel() {
@@ -80,10 +134,6 @@ export class DatepickerComponent
     // console.log(this.model);
   }
 
-  isValidDate() {
-    return true;
-  }
-
   onDateChanged(event: IMyDateModel): void {
     // date selected
     let dateObj = event.singleDate.date;
@@ -95,6 +145,23 @@ export class DatepickerComponent
     this.value = `${dateObj.year}-${this.formatDayMonth(
       dateObj.month
     )}-${this.formatDayMonth(dateObj.day)}`;
+  }
+  keyboardEvent(keycode, isShift, event) {
+    if (keycode === this.TAB_KEY_CODE) {
+      event.preventDefault();
+      this.elState = 'inactive';
+      this.dpIsActive = false;
+      this.dp.closeCalendar();
+    }
+  }
+
+  @HostListener('keydown', ['$event']) onKeydown($event) {
+    //stops propagation on lower layers
+
+    this.keyboardEvent($event.keyCode, $event.shiftKey, $event);
+    // $event.preventDefault();
+    //need able this but include support for tab out
+    // $event.stopPropagation();
   }
 
   val;
@@ -272,13 +339,16 @@ export class DatepickerComponent
 
   onChange: any = () => {};
   onTouched: any = () => {};
-  disabled: boolean = false;
+  // disabled: boolean = false;
   writeValue(value: any) {
-    this.value = value;
-    console.log(this.value);
-    //need parse value > displayedValue
-    this.displayedValue = this.convertValuetoDisplayedValue(value);
-    this.updateDatePickerModel();
+    if (this.value != null && this.value.length === 10) {
+      this.value = value;
+      console.log(this.value);
+      //need parse value > displayedValue
+
+      this.displayedValue = this.convertValuetoDisplayedValue(value);
+      this.updateDatePickerModel();
+    }
   }
 
   registerOnChange(fn: any) {
@@ -292,3 +362,8 @@ export class DatepickerComponent
     this.disabled = isDisabled;
   }
 }
+
+// onInputBlur() {
+//   //only for typable datepicker
+//   this.updateDatePickerModel();
+// }
