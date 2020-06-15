@@ -133,14 +133,16 @@
   max-height: 170px;
   overflow-y: scroll;
   border-radius: 6px;
-  ::-webkit-scrollbar-track-piece:end {
+  &::-webkit-scrollbar-track-piece:end {
     background: transparent;
     margin: 0;
+    margin-bottom: 5px;
   }
 
-  ::-webkit-scrollbar-track-piece:start {
+  &::-webkit-scrollbar-track-piece:start {
     background: transparent;
     margin: 0;
+    margin-top: 5px;
   }
 }
 
