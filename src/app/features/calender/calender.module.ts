@@ -17,7 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     CalenderRoutingModule,
     SharedModule,
-    StoreModule.forFeature('calender', calenderReducer)
+    StoreModule.forFeature('calendar', calenderReducer)
   ]
 })
 export class CalenderModule { }

@@ -1,2 +1,20 @@
-<p>calender-shell works!</p>
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+<div class="shell">
+    <edu-header-nav>
+      <ng-template #selectedTemplate>
+        <img class="nav__active-module-img" src="assets/calendar-blue.svg" alt="" />
+        <span>Calendar</span>
+      </ng-template>
+    </edu-header-nav>
+    <main class="main">
+      <div class="main__main-content">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- <aside class="side-bar">
+        <h1 class="side-bar__heading">Preview</h1>
+        <edu-preview></edu-preview>
+        <edu-total-staff [numOfStaffs]="allStaffs"></edu-total-staff>
+      </aside> -->
+    </main>
+  </div>
+  

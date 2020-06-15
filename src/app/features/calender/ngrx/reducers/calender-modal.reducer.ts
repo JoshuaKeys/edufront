@@ -1,7 +1,14 @@
-import { createReducer } from '@ngrx/store';
-import { CalenderModalModel } from '../../models/calender-modal.model';
-
-const initialState: CalenderModalModel = {
+import { createReducer, on } from '@ngrx/store';
+import { CalendarModalModel } from '../../models/calender-modal.model';
+import * as calenderActions from '../actions'
+const initialState: CalendarModalModel = {
     startModal: true
 }
-export const calenderModalReducer = createReducer(initialState)
+export const calenderModalReducer = createReducer(initialState,
+    on(calenderActions.toggleStartModal, (state, action)=> {
+        return {
+            ...state,
+            startModal: !state.startModal
+        }
+    })
+);

@@ -1,2 +1,19 @@
-<p>academic-year-question works!</p>
-<edu-modal-v2></edu-modal-v2>
+<div>
+    <h1 class="header">What are the dates of the current<br>academic year?</h1>
+    <div class="academic-year">
+        
+    </div>
+</div>
+<edu-modal-v2
+
+    *ngIf="(calendarModalState | async) && (calendarModalState | async).startModal"
+    icon="assets/calendar-start.svg"
+    btnText="GOT IT"
+    header="Calendar Set Up"
+    (btnClicked)="closeStartModal()"
+>
+    The rest of the work from here is all about <b><span class="orangeColor">calendars</span></b>
+    and <b><span class="orangeColor">timetables</span></b>.<br>
+    This step will provide a clear picture of your operating times/dates, and<br>
+    what the structure of the section timetables.
+</edu-modal-v2>
