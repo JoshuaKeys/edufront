@@ -78,12 +78,8 @@ export class ImageUploadV3Component
     let overlayEl = document.querySelector(`#${wrapperID} .overlay`);
     const classToAdd = ['topleft', 'topright', 'bottomleft', 'bottomright'];
     classToAdd.forEach(_class => {
-      let injectedItem = this.renderer.createElement('img');
-      this.renderer.setAttribute(
-        injectedItem,
-        'src',
-        'assets/cropper-top-left-corner.svg'
-      );
+      let injectedItem = this.renderer.createElement('div');
+
       this.renderer.addClass(injectedItem, _class);
       this.renderer.addClass(injectedItem, 'corner');
       this.renderer.appendChild(overlayEl, injectedItem);
