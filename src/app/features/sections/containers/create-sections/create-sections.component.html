@@ -47,6 +47,7 @@
       [selectedClass]="selectedClass"
       [students]="notDraggedStudents"
       (onAssign)="onAssign($event)"
+      (onOpenAddModal)="openAddModal()"
     ></edu-section-aside>
   </aside>
 </main>
@@ -66,3 +67,8 @@
   If you have no preference about what student goes into which section,<br />use
   the <b class="orangeColor">random function</b>!
 </edu-modal-v2>
+<edu-students-form
+  *ngIf="(sectionsModalState | async).addModal"
+  (onSubmit)="processSubmit($event)"
+  [studentsXClasses]="allClasses"
+></edu-students-form>

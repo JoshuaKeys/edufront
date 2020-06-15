@@ -172,8 +172,8 @@ export class StaffsCreationComponent implements OnInit {
   goToDashboard() {
     this.router.navigateByUrl('/dashboard')
   }
-  goToStudents() {
-
+  goToSections() {
+    this.router.navigateByUrl('sections/create-sections')
   }
   constructor(
     private store: Store<EntityState<StaffModel>>,

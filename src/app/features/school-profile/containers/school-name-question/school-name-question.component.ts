@@ -26,9 +26,7 @@ export class SchoolNameQuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedSchoolName = this.store.select(selectSchoolName)
-    this.selectedSchoolName.subscribe(console.log)
     this.modalState = this.store.select(selectProfileModal);
-    this.modalState.subscribe(modal => console.log('hello', modal));
     this.selectedSchoolName.subscribe(schoolName => {
       this.schoolNameForm = new FormGroup({
         schoolName: new FormControl(schoolName, Validators.required)

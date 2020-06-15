@@ -1,9 +1,6 @@
 <main>
   <section class="section">
-    <button
-      class="section__back-btn"
-      [routerLink]="['../', activatedRouteData.previous]"
-    >
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
     <div class="content">
@@ -34,7 +31,7 @@
             <span class="edu-label"> Website(Optional)</span>
           </edu-input>
 
-          <!-- 
+          <!--
           <edu-input-field
             idPrefix="email"
             text="Email(Optional)"

@@ -50,6 +50,15 @@ export class SubjectsEffects {
       return fromSubjectActions.assignToSelectedClassesFailure()
     })
   ));
+  removeFromSelectedClassesRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(fromSubjectActions.removeFromSelectedClassesRequest),
+    withLatestFrom(this.store.select(getAllSelectedClasses)),
+    map(([action, selectedSubClasses]) => {
+      if (selectedSubClasses.length > 0) {
+        return fromSubjectActions.removeFromSelectedClasses({ selectedSubClasses, subject: action.subject })
+      }
+    })
+  ))
   postsClassesSubjectRequest$ = createEffect(() => this.actions$.pipe(
     ofType(postClassesSubjectsRequest),
     withLatestFrom(this.store.select(getAllSelectedClasses)),

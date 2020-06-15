@@ -10,6 +10,7 @@ import { AggregateModel } from '../../models/aggregate.model';
 import { SectionsService } from '../../services/sections.service';
 import { toggleModal } from '../actions/sections-modal.actions';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
+import { doNothing } from '../actions/classes.actions';
 
 @Injectable()
 export class SectionsEffects {
@@ -42,9 +43,15 @@ export class SectionsEffects {
     ofType(createClassesWithStudents),
     withLatestFrom(this.store.select(selectCreateSectionData)),
     mergeMap(([action, createSecData]) => {
-      return this.sectionsService.createClassesWithStudents(createSecData).pipe(
-        switchMap(response => [createClassesWithStudentsSuccess({ response }), toggleModal({ modal: 'endModal' }), incrementProgress()])
-      )
+      console.log(createSecData)
+      const filteredSecData = createSecData.filter(secItem => secItem.studentIds.length > 0)
+      console.log(filteredSecData)
+      if (filteredSecData.length > 0) {
+        return this.sectionsService.createClassesWithStudents(filteredSecData).pipe(
+          switchMap(response => [createClassesWithStudentsSuccess({ response }), toggleModal({ modal: 'endModal' }), incrementProgress()])
+        )
+      }
+      return of(doNothing())
     })
   ))
   constructor(

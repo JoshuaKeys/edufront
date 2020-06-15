@@ -5,7 +5,8 @@ import { state } from '@angular/animations';
 
 const initialState: SectionsModalState = {
   endModal: false,
-  startModal: true
+  startModal: true,
+  addModal: false,
 }
 export const sectionsModalReducer = createReducer(initialState,
   on(toggleModal, (state, action) => {

@@ -2,5 +2,5 @@ import { createAction, props } from '@ngrx/store';
 
 export const toggleModal = createAction(
   '[CreateSectionsComponent] toggleModal',
-  props<{ modal: 'startModal' | 'endModal' }>()
+  props<{ modal: 'startModal' | 'endModal' | 'addModal' }>()
 )

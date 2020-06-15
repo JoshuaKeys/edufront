@@ -39,9 +39,12 @@
             </edu-input>
           </div>
           <div class="group--row form--row">
-            <edu-input alignment="left" formControlName="dob">
+            <edu-datepicker formControlName="dob">
+              <span class="edu-label">Date of Birth</span>
+            </edu-datepicker>
+            <!-- <edu-input alignment="left" formControlName="dob">
               <span class="edu lebel">Date of Birth</span>
-            </edu-input>
+            </edu-input> -->
             <!-- <edu-input-field
               idPrefix="dateOfBirth"
               formControlName="dob"
@@ -102,9 +105,9 @@
             <edu-select alignment="left" formControlName="classId">
               <span class="edu-label"> Class </span>
               <edu-option
-                *ngFor="let studentXClass of studentsXClasses | async"
-                [OptionValue]="studentXClass.classId"
-                >{{ studentXClass.className }}
+                *ngFor="let classItem of sortedClasses | async"
+                [OptionValue]="classItem.id"
+                >{{ classItem.name ? classItem.name : classItem.grade }}
               </edu-option>
             </edu-select>
 

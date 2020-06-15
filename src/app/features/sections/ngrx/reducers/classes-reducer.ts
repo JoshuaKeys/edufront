@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, Update } from '@ngrx/entity';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { getAllClassesSuccess, toggleSelectedState, setClassStudents, toggleStudentsDraggedState } from '../actions/classes.actions';
+import { getAllClassesSuccess, toggleSelectedState, setClassStudents, toggleStudentsDraggedState, createStudentSuccess } from '../actions/classes.actions';
 import { removePreviouslySelectedState } from './utilities';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { ClassesModel } from '../../models/classes-model';
@@ -75,6 +75,20 @@ export const classesReducer = createReducer(classesInitialState,
       }
     }, state)
 
+  }),
+  on(createStudentSuccess, (state, action) => {
+    const allStudents = selectAll(state);
+    const specificStudentIdx = allStudents.findIndex(item => item.class.id === action.student.profileDto.classId);
+    if (specificStudentIdx > -1) {
+      allStudents[specificStudentIdx].students.push(action.student.profileDto);
+    }
+
+    return classesAdapter.updateOne({
+      id: allStudents[specificStudentIdx].class.id,
+      changes: {
+        students: allStudents[specificStudentIdx].students
+      }
+    }, state)
   })
 );
 

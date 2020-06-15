@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SchoolLogoQuestionComponent {
   activatedRouteData = this.activatedRoute.snapshot.data;
-
-  constructor(private activatedRoute: ActivatedRoute) { }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 }

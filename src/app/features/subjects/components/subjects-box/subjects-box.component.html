@@ -1,14 +1,22 @@
 <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-  <ng-template #noClassSelected>
-    <p class="drop-zone__text drop-zone__placeholder">
-      No <b class="orangecolor">class</b> selected
+  <p
+    *ngIf="(selectedClasses | async).length === 0; else commonSubjects"
+    class="drop-zone__text drop-zone__placeholder"
+  >
+    No <b class="orangecolor">class</b> selected
+  </p>
+  <ng-template #commonSubjects>
+    <p class="drop-zone__text">
+      Showing <b class="orangecolor">common</b> subjects
     </p>
   </ng-template>
-
-  <ng-container *ngIf="(subjects | async).length; else noClassSelected">
-    <edu-icon-button
-      *ngFor="let subject of subjects | async"
-      [subject]="subject"
-    ></edu-icon-button>
-  </ng-container>
+  <div class="drop-zone__btn-container">
+    <ng-container *ngIf="(subjects | async).length">
+      <edu-icon-button
+        *ngFor="let subject of subjects | async"
+        [subject]="subject"
+        (click)="removeFromSelected(subject)"
+      ></edu-icon-button>
+    </ng-container>
+  </div>
 </div>

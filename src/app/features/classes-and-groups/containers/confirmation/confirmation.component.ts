@@ -30,7 +30,7 @@ export class ConfirmationComponent implements OnInit {
     this.store.dispatch(sendClassesWithGroupsRequest())
   }
   goToSubjects() {
-    this.router.navigate(['../', '/subjects/subjects-taught'], { relativeTo: this.activatedRoute })
+    this.router.navigate(['/subjects/subjects-taught'], { relativeTo: this.activatedRoute })
   }
   goToDashboard() {
     this.router.navigate(['/dashboard'], { relativeTo: this.activatedRoute })

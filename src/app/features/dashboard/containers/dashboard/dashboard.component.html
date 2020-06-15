@@ -29,7 +29,31 @@
 
 <div class="footer">
   <p>Current Step</p>
-  <button ButtonType="basic">
+  <button
+    ButtonType="basic"
+    [routerLink]="[dasboardNavConfig[activeNavIndex].route]"
+  >
     Set Up {{ dasboardNavConfig[activeNavIndex].label }}
   </button>
 </div>
+
+<edu-modal-v2
+  *ngIf="(selectModalState | async).startModal"
+  class="complete"
+  btnText="GOT IT"
+  header="Welcome to our On-Boarding"
+  icon="assets/icon-complete.svg"
+  btnText="GET ME STARTED"
+  (btnClicked)="onContinue()"
+>
+  <span class="modal__text">
+    <p>Excity but aso intimidating</p>
+    <p>
+      This step by step process would get you up and running
+      <i class="orangeColor">in no time</i>
+    </p>
+    <p>
+      The entire process take 20 to 120 minutes
+    </p>
+  </span></edu-modal-v2
+>
