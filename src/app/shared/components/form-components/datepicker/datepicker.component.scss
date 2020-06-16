@@ -12,6 +12,7 @@ edu-input {
 :host {
   // [active, inactive( default ), focus, disabled ]
   .wrapper {
+    min-height: inherit;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
     border-top: 1px solid transparent;
@@ -61,82 +62,21 @@ edu-input {
   height: 44px;
 }
 
-//popup style
-.popup {
-  transition: none;
-
-  cursor: pointer;
-  position: absolute;
-  background: white;
-  z-index: 4;
-
-  border: 1px solid $blue;
-  border-radius: 6px;
-
-  white-space: nowrap;
-  // padding: $y-padding $x-padding;
-  text-align: left;
-  border-color: $blue;
-
-  //hiding popover
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  bottom: -8px;
-  left: 0;
-  top: unset;
-  position: absolute;
-  transform: translate(0, 100%);
-
+//error
+.error.wrapper.dp__wrapper {
+  color: $red;
+  border-bottom: 1px solid $red;
+  .dp__input {
+  }
   &.active {
-    min-width: 100%;
-    width: auto;
-    height: auto;
-    overflow: unset;
-    opacity: 1;
+    border-radius: 8px;
+    border-color: $red;
+    background-color: rgba($red, 0.1);
   }
-
-  .pointer {
-    position: absolute;
-    top: 0;
-    transform: translateY(-100%);
-    left: 10px;
-
-    &::before,
-    &::after {
-      //triangle ??
-      // position: absolute;
-      content: '';
-      display: block;
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 7px solid $blue;
-    }
-    &::after {
-      //triangle ??
-      position: absolute;
-      top: 0px;
-      left: 0px;
-
-      border-bottom: 7px solid white;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      transform-origin: center bottom;
-      transform: scale(0.8);
-    }
+  &:hover {
+    border-color: $red;
+    background-color: rgba($red, 0.1);
   }
-}
-
-.popup__content-wrapper {
-  // to prevent overflow of edges
-  overflow: hidden;
-
-  max-height: 170px;
-  overflow-y: scroll;
-  border-radius: 6px;
 }
 
 .dp {
@@ -299,5 +239,37 @@ input {
   }
   input {
     text-align: right;
+  }
+}
+
+//validator
+.validator {
+  transition: none;
+  color: $red;
+
+  &.bottom-flow {
+  }
+
+  //for absolute positioned validators
+  &.left,
+  &.right,
+  &.bottom {
+    position: absolute;
+  }
+
+  &.right {
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+  }
+  &.left {
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+  }
+  &.bottom {
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
   }
 }

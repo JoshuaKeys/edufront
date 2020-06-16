@@ -1,14 +1,16 @@
 import {
   Component,
   OnInit,
+  AfterViewInit,
   ChangeDetectorRef,
   forwardRef,
   Input,
   ElementRef,
   ViewChild,
-  AfterViewInit,
   HostListener
 } from '@angular/core';
+import { ValidatorService } from '../validator/validator.service';
+import { myDatePickerOptions } from './datepicker-config';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
@@ -24,21 +26,30 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: forwardRef(() => DatepickerComponent)
-    }
+    },
+    ValidatorService
   ]
 })
 export class DatepickerComponent
   implements OnInit, AfterViewInit, ControlValueAccessor {
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private validatorService: ValidatorService
+  ) {}
 
   ngOnInit(): void {
     this.setElementID();
+    this.registerHasErrorEvent();
   }
   ngAfterViewInit() {
-    console.log(this.inputEl);
+    // console.log('registering stuff');
+    this.registerValidatorPosition();
   }
+
   TAB_KEY_CODE = 9;
   @ViewChild('dp') dp: any;
+  @ViewChild('validator') validator: any;
   @ViewChild('inputEl') inputEl;
   @Input('alignment') alignment = 'center';
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
@@ -47,15 +58,18 @@ export class DatepickerComponent
     this._disabled = disabled;
   }
   _disabled = false;
+  hasError = false;
   tempId = 'datepickerinputid';
   model: IMyDateModel = null;
   dpIsActive = false;
+  myDatePickerOptions = myDatePickerOptions;
 
   _elState = 'inactive';
   set elState(state) {
     this._elState = state;
     if (this.elState === 'active') {
       this.onTouched();
+      // this.dpIsActive = true;
       this.dp.openCalendar();
     }
     this.cd.markForCheck();
@@ -63,9 +77,26 @@ export class DatepickerComponent
   get elState() {
     return this._elState;
   }
+
+  val;
+  set value(val) {
+    //value should be yyyy-mm-dd
+    this.val = val;
+    this.onChange(val);
+    this.onTouched();
+  }
+  get value() {
+    return this.val;
+  }
+  _displayedValue;
+
+  set displayedValue(val) {
+    //value should be dd/mm/yy
+    this._displayedValue = val;
+  }
+
   cbFocus() {
     this.elState = 'active';
-    console.log('should be active now');
   }
   cbBlur() {
     //change to rxjs operator later
@@ -111,8 +142,8 @@ export class DatepickerComponent
   }
 
   updateDatePickerModel() {
-    const dateValue = this.displayedValue;
-    // console.log(this.displayedValue);
+    const dateValue = this._displayedValue;
+    // console.log(this._displayedValue);
     let day = parseInt(dateValue.substring(0, 2));
     let month = parseInt(dateValue.substring(3, 5));
     let year = parseInt(dateValue.substring(6, 8));
@@ -137,9 +168,8 @@ export class DatepickerComponent
   onDateChanged(event: IMyDateModel): void {
     // date selected
     let dateObj = event.singleDate.date;
-    // console.log(event);
 
-    this.displayedValue = `${this.formatDayMonth(
+    this._displayedValue = `${this.formatDayMonth(
       dateObj.day
     )}/${this.formatDayMonth(dateObj.month)}/${this.formatYear(dateObj.year)}`;
     this.value = `${dateObj.year}-${this.formatDayMonth(
@@ -147,8 +177,11 @@ export class DatepickerComponent
     )}-${this.formatDayMonth(dateObj.day)}`;
   }
   keyboardEvent(keycode, isShift, event) {
+    // console.log(keycode);
+    // console.log(isShift);
+    // console.log(event);
     if (keycode === this.TAB_KEY_CODE) {
-      event.preventDefault();
+      // event.preventDefault();
       this.elState = 'inactive';
       this.dpIsActive = false;
       this.dp.closeCalendar();
@@ -164,31 +197,6 @@ export class DatepickerComponent
     // $event.stopPropagation();
   }
 
-  val;
-  //value should be yyyy-mm-dd
-  set value(val) {
-    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
-    this.val = val;
-    this.onChange(val);
-    this.onTouched();
-    // this.onTouched(val)
-  }
-  get value() {
-    return this.val;
-  }
-  displayedVal;
-  //value should be dd/mm/yy
-  set displayedValue(val) {
-    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
-    this.displayedVal = val;
-    // this.onChange(val);
-    // this.onTouched();
-    // this.onTouched(val)
-  }
-  get displayedValue() {
-    return this.displayedVal;
-  }
-
   formatDayMonth(param) {
     return param < 10 ? `0${param}` : `${param}`;
   }
@@ -201,154 +209,45 @@ export class DatepickerComponent
     const month = value.substring(5, 7);
     const year = value.substring(2, 4);
 
-    console.log(`${day}/${month}/${year}`);
+    // console.log(`${day}/${month}/${year}`);
     return `${day}/${month}/${year}`;
   }
 
-  myDatePickerOptions: IAngularMyDpOptions = {
-    selectorWidth: '286px',
-    selectorHeight: '280px',
-    dateFormat: 'dd/mm/yyyy',
-    markCurrentDay: false,
-    markCurrentMonth: false,
-    markCurrentYear: false,
-    sunHighlight: false,
-    satHighlight: false,
-    showMonthNumber: false,
-    monthLabels: {
-      1: 'January ',
-      2: 'February ',
-      3: 'March ',
-      4: 'April ',
-      5: 'May',
-      6: 'June ',
-      7: 'July ',
-      8: 'August ',
-      9: 'September',
-      10: 'October',
-      11: 'November',
-      12: 'December'
-    },
-    stylesData: {
-      styles: `
-            
-            
-            .myDpSelectorArrowLeft:after, .myDpSelectorArrowLeft:before{
-              left : 50%;
-           
-            }
-            .myDpSelectorArrowLeft:after{
-              border-bottom-color: white;
-            }
-            .myDpSelector.myDpSelectorArrow.myDpSelectorArrowLeft.myDpSelectorAbsolute{
-              padding:11px;
-              broder-color:red;
-              background:white;
-            }
-        
-           
-            .myDpIconLeftArrow,
-            .myDpIconRightArrow  {
-      
-            }  
-            .myDpMonthBtn, .myDpYearBtn {
-              font: 500 14px/16px Raleway;
-              color : #212121;
-            }
-            .myDpIconLeftArrow::before{
-              content:url("/assets/date-picker_arrow-left.svg") ; 
-            }
-            .myDpIconRightArrow::before{
-              content:url("/assets/date-picker_arrow-right.svg") ; 
-            }
+  registerHasErrorEvent() {
+    this.validatorService.validatorHasError.subscribe(hasError => {
+      this.hasError = hasError;
+      this.cd.markForCheck();
+    });
+  }
 
-            
-
-         
-            th.myDpWeekDayTitle{
-              font: 600 12px/14px Raleway;
-              color: #A5AEC7;
-            
-            }
-            
-            .myDpNextMonth  .myDpTableSingleDay, .myDpPrevMonth  .myDpTableSingleDay{
-              font: 400 12px/14px Roboto;
-              color:#A5AEC7;
-            }
-
-           .myDpCurrMonth  .myDpTableSingleDay{
-              font: 400 12px/14px Roboto;
-              color : #212121;
-            }
-
-           
-             .myDpSelectedDay, .myDpSelectedMonth, .myDpSelectedYear  {  
-              background:unset;
-            }
-          
-            .myDpDaycell:focus, .myDpMonthcell:focus, .myDpYearcell:focus {
-              box-shadow: unset;
-              outline-width: 0;
-           }
-            
-            .myDpSelectedDay span, .myDpMarkCurrDay, .myDpMarkCurrMonth, .myDpMarkCurrYear { 
-              border-width:0px !important;
-              color:  white;
-              background: #69A9F2;
-            }
-
-            .myDpDayValue{
-              width: 38px;
-              height: 38px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-        
-            }
-        
-
-        
-
-            .myDpDaycell {
-              border-radius: 50%;
-            }
-            .myDpDayValue{
-              width: 35px;
-              height: 35px;
-              display: flex;
-              border-radius: 50%;
-              justify-content: center;
-              align-items: center;
-            }
-
-        
-
-            .myDpTableSingleMonth{
-              width:50%;
-            }
-
-            .myDpMonthNbr{
-              display:none;
-            }
-        
-    
-        `
-    }
-    // other options here
-  };
+  registerValidatorPosition() {
+    let possiblePositions = ['left', 'right', 'bottom', 'bottom-flow'];
+    this.validatorService.validatorPosition.subscribe(position => {
+      if (
+        possiblePositions.indexOf(position) != -1 &&
+        this.validator &&
+        !this.validator.nativeElement.classList.contains(position)
+      ) {
+        this.validator.nativeElement.classList.add(position);
+      }
+      // console.log(this.validator.nativeElement.classList);
+      // console.log(position);
+    });
+  }
 
   onChange: any = () => {};
   onTouched: any = () => {};
   // disabled: boolean = false;
   writeValue(value: any) {
-    if (this.value != null && this.value.length === 10) {
-      this.value = value;
-      console.log(this.value);
-      //need parse value > displayedValue
-
-      this.displayedValue = this.convertValuetoDisplayedValue(value);
-      this.updateDatePickerModel();
+    if (value == null || value.length != 10) {
+      return;
     }
+    this.value = value;
+    console.log(this.value);
+    //need parse value > displayedValue
+
+    this._displayedValue = this.convertValuetoDisplayedValue(value);
+    this.updateDatePickerModel();
   }
 
   registerOnChange(fn: any) {

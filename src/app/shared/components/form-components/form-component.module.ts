@@ -8,21 +8,28 @@ import { SelectModule } from './select/select.module';
 
 import { InputComponent } from './input/input.component';
 import { InputAffixDirective } from './input/directives/input-affix.directive';
-import { ValidatorDirective } from './input/directives/validator.directive';
 
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { ImgUploadComponent } from './img-upload/img-upload.component';
+import { ValidatorModule } from './validator/validator.module';
+import { datePickerModule } from './datepicker/datepicker.module';
+import { ValidatorDirective } from './validator/validator.directive';
 let components = [
   InputComponent,
   InputAffixDirective,
   CheckboxComponent,
-  ValidatorDirective,
   ImgUploadComponent
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [SelectModule, FormsModule, CommonModule],
-  exports: [...components, SelectModule]
+  imports: [
+    CommonModule,
+    SelectModule,
+    FormsModule,
+    ValidatorModule,
+    datePickerModule
+  ],
+  exports: [...components, SelectModule, datePickerModule, ValidatorModule]
 })
 export class FormComponentsModule {}

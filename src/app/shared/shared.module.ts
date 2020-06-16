@@ -20,7 +20,7 @@ import { PhoneIconFieldComponent } from './components/phone-icon-field/phone-ico
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
 
-import { datePickerModule } from './components/datepicker/datepicker.module';
+// import { datePickerModule } from './components/datepicker/datepicker.module';
 
 import { TimetableModule } from './components/timetable/timetable.module';
 import { SubjectsService } from './services/subjects.service';
@@ -73,7 +73,7 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    datePickerModule,
+    // datePickerModule,
     SelectModule,
     TimetableModule,
     RouterModule
@@ -87,7 +87,7 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     CustomSelectComponent,
     HeaderNavComponent,
     ButtonComponent,
-    datePickerModule,
+    // datePickerModule,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,

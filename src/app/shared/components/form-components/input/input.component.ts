@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputAffixDirective } from './directives/input-affix.directive';
-import { InputService } from './input.service';
+import { ValidatorService } from '../validator/validator.service';
 
 @Component({
   selector: 'edu-input',
@@ -30,7 +30,7 @@ import { InputService } from './input.service';
       multi: true,
       useExisting: forwardRef(() => InputComponent)
     },
-    InputService
+    ValidatorService
   ]
 })
 export class InputComponent
@@ -38,7 +38,7 @@ export class InputComponent
   constructor(
     private cd: ChangeDetectorRef,
     private el: ElementRef,
-    private inputService: InputService,
+    private validatorService: ValidatorService,
     private renderer: Renderer2
   ) {}
 
@@ -94,20 +94,21 @@ export class InputComponent
   }
 
   registerHasErrorEvent() {
-    this.inputService.inputHasError.subscribe(
+    this.validatorService.validatorHasError.subscribe(
       hasError => (this.config.hasError = hasError)
     );
   }
 
   registerValidatorPosition() {
     let possiblePositions = ['left', 'right', 'bottom', 'bottom-flow'];
-    this.inputService.validatorPosition.subscribe(position => {
+    this.validatorService.validatorPosition.subscribe(position => {
       if (
         possiblePositions.indexOf(position) != -1 &&
         this.validator &&
         !this.validator.nativeElement.classList.contains(position)
       ) {
         this.validator.nativeElement.classList.add(position);
+        console.log(this.validator.nativeElement.classList);
       }
     });
   }

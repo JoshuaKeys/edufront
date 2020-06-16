@@ -1,6 +1,6 @@
-<!-- {{ isLabelActive() }} {{ _elState }} -->
+<!-- dpIsActive {{ dpIsActive }},hasError {{ hasError }},_elState {{ _elState }} -->
 <div
-  [ngClass]="{ disabled: _disabled, active: dpIsActive }"
+  [ngClass]="{ disabled: _disabled, active: dpIsActive, error: hasError }"
   class="{{ alignment }} {{ _elState }} wrapper  dp__wrapper"
 >
   <input
@@ -23,13 +23,13 @@
     <input
       tabindex="-1"
       class="  dp__input"
-      [(ngModel)]="displayedValue"
+      [(ngModel)]="_displayedValue"
       name="{{ elementId }}-input"
       #input
       [ngClass]="{ 'input--active': isLabelActive() }"
       type="text"
       placeholder="-"
-      [disabled]="_disabled"
+      disabled
     />
 
     <label [ngClass]="{ 'label--active': isLabelActive() }" class="dp__label ">
@@ -64,6 +64,10 @@
       (dateChanged)="onDateChanged($event)"
     />
   </div>
+</div>
+
+<div #validator class="validator">
+  <ng-content select="[validator]"></ng-content>
 </div>
 
 <!-- <edu-input
