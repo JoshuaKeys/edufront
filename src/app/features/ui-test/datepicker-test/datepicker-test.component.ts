@@ -12,7 +12,7 @@ export class DatepickerTestComponent implements OnInit {
   ngOnInit(): void {
     this.testForm = this.formBuilder.group({
       f1: ['2012-01-01', Validators.required],
-      f2: ['', Validators.required],
+      f2: [null, Validators.required],
       f3: ['', Validators.required],
       f4: ['', Validators.required],
       f5: ['', Validators.required]

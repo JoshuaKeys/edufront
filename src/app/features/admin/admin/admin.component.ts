@@ -26,13 +26,13 @@ export class AdminComponent implements OnInit {
 
   activeSideMenuOption = { value: 'users', text: 'Users' };
   sideMenuOptions = [
-    { value: 'home', text: 'Home' },
-    { value: 'classes', text: 'Classes' },
-    { value: 'users', text: 'Users' },
-    { value: 'assessment', text: 'Assessment' },
-    { value: 'course', text: 'Course' },
-    { value: 'files', text: 'My Files' },
-    { value: 'results', text: 'Results' }
+    { value: 'home', text: 'Home', route: '/admin/home' },
+    { value: 'classes', text: 'Classes', route: '/admin/classes' },
+    { value: 'users', text: 'Users', route: '/admin/users' },
+    { value: 'assessment', text: 'Assessment', route: '/admin/assessment' },
+    { value: 'course', text: 'Course', route: '/admin/course' },
+    { value: 'files', text: 'My Files', route: '/admin/files' },
+    { value: 'results', text: 'Results', route: '/admin/results' }
   ];
 
   modalOptions = { none: 'none', profile: 'profile', school: 'school' };
