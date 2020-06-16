@@ -1,3 +1,3 @@
-export interface CalenderModalModel {
+export interface CalendarModalModel {
     startModal: boolean;
 }

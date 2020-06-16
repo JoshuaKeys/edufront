@@ -1,11 +1,34 @@
 <div>
     <h1 class="header">What are the dates of the current<br>academic year?</h1>
     <div class="academic-year">
-        
+        <form action="" class="academic-year__form" [formGroup]="academicYearForm" (ngSubmit)="formSubmit()">
+            <edu-datepicker formControlName="startDate" alignment="center">
+              <span class="edu-label">date of birth</span>
+              <div class="edu-suffix" InputAffix>
+                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+              </div>
+            </edu-datepicker>
+          
+            <edu-datepicker formControlName="endDate" alignment="center">
+              <span class="edu-label">date of birth</span>
+              <div class="edu-suffix" InputAffix>
+                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+              </div>
+            </edu-datepicker>
+
+          </form>
+          <div *ngIf="academicYearForm.errors && academicYearForm.errors.msg.length; else continue" class="academic-year__form-errors" #item>
+              <div *ngFor="let error of academicYearForm.errors.msg">{{error}}</div>
+          </div>
+          <ng-template #continue>
+            <div class="academic-year__btn-container" *ngIf="academicYearForm.valid; else item">
+                <button class="academic-year__continue-btn" (click)="goNext()">Continue</button>
+            </div>
+          </ng-template>
+
     </div>
 </div>
 <edu-modal-v2
-
     *ngIf="(calendarModalState | async) && (calendarModalState | async).startModal"
     icon="assets/calendar-start.svg"
     btnText="GOT IT"

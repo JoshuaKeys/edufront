@@ -1,0 +1,18 @@
+main {
+    display: flex;
+    justify-content: space-between;
+    .main__main-content {
+        flex: 1;
+        width: 80%;
+        height: calc(100vh - 52px);
+    }
+}
+.side-bar {
+    width: 400px;
+    background: #fafbfc 0% 0% no-repeat padding-box;
+}
+.side-bar__heading {
+    font-size: 14px;
+    color: #c7ccdb;
+    margin: 30px 0 20px;
+}

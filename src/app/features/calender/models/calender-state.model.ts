@@ -1,4 +1,9 @@
 import { CalendarModalModel } from './calender-modal.model'
+import { PreviewModel } from './preview.model';
+import { CalendarModel } from './calendar.model';
+
 export interface CalendarStateModel {
-    modal: CalendarModalModel
+    modal: CalendarModalModel,
+    preview: PreviewModel,
+    calenderData: CalendarModel
 }
