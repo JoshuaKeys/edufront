@@ -341,7 +341,7 @@ export class DatepickerComponent
   onTouched: any = () => {};
   // disabled: boolean = false;
   writeValue(value: any) {
-    if (this.value != null && this.value.length === 10) {
+    if (value != null && value.length === 10) {
       this.value = value;
       console.log(this.value);
       //need parse value > displayedValue
