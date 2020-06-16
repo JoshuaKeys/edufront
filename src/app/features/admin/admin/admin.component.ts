@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'edu-user-settings-shell',
-  templateUrl: './user-settings-shell.component.html',
-  styleUrls: ['./user-settings-shell.component.scss'],
+  selector: 'edu-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserSettingsShellComponent implements OnInit {
+export class AdminComponent implements OnInit {
   @Output('close') close = new EventEmitter();
 
   constructor(private cd: ChangeDetectorRef) {}

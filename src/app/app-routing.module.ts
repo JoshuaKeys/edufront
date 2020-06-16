@@ -10,11 +10,9 @@ const routes: Routes = [
   },
 
   {
-    path: 'user-settings',
+    path: 'admin',
     loadChildren: () =>
-      import('./features/user-settings/user-settings.module').then(
-        m => m.UserSettingsModule
-      )
+      import('./features/admin/admin.module').then(m => m.AdminModule)
   },
 
   {

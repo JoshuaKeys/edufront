@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { UserSettingsRoutingModule } from './user-settings-routing.module';
+// import { UserSettingsRoutingModule } from './user-settings-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { UserSettingsShellComponent } from './containers';
+// import { UserSettingsShellComponent } from './containers';
 import {
   ProfileSettingsMainComponent,
   EmailTabComponent,
@@ -15,10 +15,7 @@ import {
   ProfileTabComponent,
   ProfileDeactivateModalComponent
 } from './components';
-import {
-  VisibilityToggleComponent,
-  ResetPasswordComponent
-} from './components';
+import { ResetPasswordComponent } from './components';
 import {
   SchoolSettingsComponent,
   SchoolDeactivateModalComponent
@@ -28,7 +25,7 @@ const schoolComponents = [
   SchoolSettingsComponent,
   SchoolDeactivateModalComponent
 ];
-const component = [VisibilityToggleComponent, ResetPasswordComponent];
+const component = [ResetPasswordComponent];
 const profileComponents = [
   ProfileDeactivateModalComponent,
   ProfileSettingsMainComponent,
@@ -40,19 +37,15 @@ const profileComponents = [
 ];
 
 @NgModule({
-  declarations: [
-    ...schoolComponents,
-    ...component,
-    ...profileComponents,
-    UserSettingsShellComponent
-  ],
+  declarations: [...schoolComponents, ...component, ...profileComponents],
   imports: [
-    UserSettingsRoutingModule,
+    // UserSettingsRoutingModule,
 
     CommonModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule
-  ]
+  ],
+  exports: [...schoolComponents, ...component, ...profileComponents]
 })
 export class UserSettingsModule {}
