@@ -1,30 +1,32 @@
 <div>
-    <h1 class="header">What are the term names and dates?</h1>
-    <p>Note: we will assume that all days between terms are considered holidays</p>
-    <form *ngIf="termsAndDatesForm" [formGroup]="termsAndDatesForm">
-        <div class="terms-and-dates" formArrayName="termsAndDates"
-            *ngFor="let schoolTerm of (calendarData | async).termsAndDates; let i = index">
-            <div [formGroupName]="i" class="terms-and-dates__item">
-                <edu-input
-                formControlName="termName"
-                alignment="center"
-              >
-              </edu-input>
-              <edu-datepicker formControlName="startDate" alignment="center">
-                <span class="edu-label">Starts from</span>
-                <div class="edu-suffix" InputAffix>
-                  <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-                </div>
-              </edu-datepicker>
-              <edu-datepicker formControlName="endDate" alignment="center" >
-                <span class="edu-label">Ends on</span>
-                <div class="edu-suffix" InputAffix>
-                  <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-                </div>
-              </edu-datepicker>
-            </div>
-           
-        
-        </div>
-    </form>
+  <h1 class="header">What are the term names and dates?</h1>
+  <p class="desc">
+    Note: we will assume that all days between terms are considered holidays
+  </p>
+  <form *ngIf="termsAndDatesForm" [formGroup]="termsAndDatesForm">
+    <div
+      class="terms-and-dates"
+      formArrayName="termsAndDates"
+      *ngFor="
+        let schoolTerm of (calendarData | async).termsAndDates;
+        let i = index
+      "
+    >
+      <div [formGroupName]="i" class="terms-and-dates__item">
+        <edu-input formControlName="termName" alignment="center"> </edu-input>
+        <edu-datepicker formControlName="startDate" alignment="center">
+          <span class="edu-label">Starts from</span>
+          <div class="edu-suffix" InputAffix>
+            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+          </div>
+        </edu-datepicker>
+        <edu-datepicker formControlName="endDate" alignment="center">
+          <span class="edu-label">Ends on</span>
+          <div class="edu-suffix" InputAffix>
+            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+          </div>
+        </edu-datepicker>
+      </div>
+    </div>
+  </form>
 </div>
