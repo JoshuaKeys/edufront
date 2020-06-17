@@ -1,0 +1,15 @@
+.holiday-list {
+    &__header {
+        margin-top: 40px;
+        font-size: 26px;
+    }
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__item {
+        max-width: 200px;
+        list-style-type: none;
+
+    }
+}

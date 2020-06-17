@@ -24,7 +24,14 @@
     }
   }
 }
-
+.terms-and-dates__errors {
+    display: flex;
+    justify-content: center;
+    span {
+        color: red;
+        font-weight: 700;
+    }
+}
 edu-input,
 edu-datepicker {
   width: 240px;
@@ -38,4 +45,23 @@ edu-datepicker {
   &:last-child {
     margin-right: 0;
   }
+}
+.terms-and-dates__btn-container {
+    display: flex;
+    justify-content: center;
+}
+.terms-and-dates__continue-btn {
+    height: 52px;
+    border-radius: 100px;
+    background: #69a9f2 0% 0% no-repeat padding-box;
+    width: 250px;
+    margin-top: 230px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    border: none;
+    &:active,
+    &:focus {
+        outline: none;
+    }
 }

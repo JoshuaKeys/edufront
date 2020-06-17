@@ -6,8 +6,12 @@
         <span>Calendar</span>
       </ng-template>
     </edu-header-nav>
+
     <main class="main">
       <div class="main__main-content">
+        <button class="section__back-btn" (click)="goToDashboard()">
+            <img src="../../../assets/chevron-left.svg" alt="" /> Back
+          </button>
         <router-outlet></router-outlet>
       </div>
       <aside class="side-bar">

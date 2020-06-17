@@ -38,4 +38,22 @@ export const setTermStartDate = createAction(
 export const setTermEndDate = createAction(
     '[TermNamesAndDatesComponent] setTermEndDate',
     props<{idx: number, endDate: string}>()
+);
+export const initializeVacations = createAction(
+    '[SchoolTermsQuestionComponent] initializeVacations'
+);
+export const addVacation = createAction(
+    '[VacationNamesAndDatesComponent] addVacation'
+);
+export const setVacationName = createAction(
+    '[VacationNamesAndDatesComponent] setVacationName',
+    props<{idx: number, vacationName: string}>()
+);
+export const setVacationStartDate = createAction(
+    '[VacationNamesAndDatesComponent] setVacationStartDate',
+    props<{idx: number, startDate: string}>()
+);
+export const setVacationEndDate = createAction(
+    '[VacationNamesAndDatesComponent] setVacationEndDate',
+    props<{idx: number, endDate: string}>()
 )

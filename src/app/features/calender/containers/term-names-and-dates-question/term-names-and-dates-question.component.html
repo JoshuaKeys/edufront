@@ -6,7 +6,6 @@
 
   <form *ngIf="termsAndDatesForm" [formGroup]="termsAndDatesForm">
     <div
-      class="terms-and-dates"
       formArrayName="termsAndDates"
       *ngFor="
         let schoolTerm of (calendarData | async).termsAndDates;
@@ -28,6 +27,14 @@
           </div>
         </edu-datepicker>
       </div>
+      <div class="terms-and-dates__errors" *ngIf="termsAndDatesForm.controls.termsAndDates['controls'][i].errors as errors">
+          <span class="terms-and-dates__errors" *ngFor="let error of errors['msg']">
+              {{error}}
+          </span>
+      </div>
+    </div>
+        <div class="terms-and-dates__btn-container" *ngIf="termsAndDatesForm && termsAndDatesForm.valid">
+            <button class="terms-and-dates__continue-btn" (click)="goNext()">Continue</button>
     </div>
   </form>
 </div>

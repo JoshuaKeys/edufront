@@ -1,4 +1,5 @@
 import { TermsAndDates } from './terms-and-date.model';
+import { VacationModel } from './vacation.model';
 
 export interface PreviewModel {
     datePreview?: {
@@ -16,6 +17,6 @@ export interface PreviewModel {
     },
     termVacations?: {
         route: string;
-        items: {vacationName: string; vacationStartDate: string; vacationEndDate: string}[]
+        items?: VacationModel[]
     }
 }
