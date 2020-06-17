@@ -3,7 +3,12 @@
     font-size: 26px;
     color: #212121;
 }
-.term-name-date {
+.terms-and-dates {
     display: flex;
-
+    &__item {
+        display: flex;
+        * {
+            width: 25%;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
-import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates } from '../actions/calendar.actions';
+import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate } from '../actions/calendar.actions';
 import { TermsAndDates } from '../../models/terms-and-date.model';
 
 const initialState: CalendarModel = {
@@ -44,7 +44,7 @@ export const calendarReducer = createReducer(initialState,
         if(schoolTerms) {
             for(let i = 0; i < schoolTerms; i++) {
                 termsAndDates.push({
-                    termName: `Term ${i+1}`,
+                    termName: 'Term ' + (i+1),
                     startDate: null,
                     endDate: null
                 })
@@ -54,5 +54,33 @@ export const calendarReducer = createReducer(initialState,
             ...state,
             termsAndDates
         }
-    })
+    }),
+    on(setTermName, (state, action)=> {
+        let stateCopy: CalendarModel = JSON.parse(JSON.stringify(state))
+        let termsAndDates = stateCopy.termsAndDates;
+        termsAndDates[action.idx].termName = action.termName;
+        console.log(stateCopy);
+        return {
+            ...state,
+            termsAndDates
+        }
+    }), 
+    on(setTermEndDate, (state, action)=> {
+        let stateCopy: CalendarModel = JSON.parse(JSON.stringify(state))
+        let termsAndDates = stateCopy.termsAndDates;
+        termsAndDates[action.idx].endDate = action.endDate;
+        return {
+            ...state,
+            termsAndDates
+        }
+    }),
+    on(setTermStartDate, (state, action)=> {
+        let stateCopy: CalendarModel = JSON.parse(JSON.stringify(state))
+        let termsAndDates = stateCopy.termsAndDates;
+        termsAndDates[action.idx].startDate = action.startDate;
+        return {
+            ...state,
+            termsAndDates
+        }
+    }),
 );

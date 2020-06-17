@@ -27,3 +27,15 @@ export const toggleSelectedTerms = createAction(
 export const initializeTermsAndDates = createAction(
     '[SchoolTermsQuestionComponent] initializeTermsAndDates'
 )
+export const setTermName = createAction(
+    '[TermNamesAndDatesComponent] setTermName',
+    props<{idx: number, termName: string}>()
+);
+export const setTermStartDate = createAction(
+    '[TermNamesAndDatesComponent] setTermStartDate',
+    props<{idx: number, startDate: string}>()
+);
+export const setTermEndDate = createAction(
+    '[TermNamesAndDatesComponent] setTermEndDate',
+    props<{idx: number, endDate: string}>()
+)

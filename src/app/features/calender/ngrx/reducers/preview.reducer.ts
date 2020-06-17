@@ -32,9 +32,7 @@ export const previewReducer = createReducer(initialState,
     }),
     on(toggleSelectedTerms, (state, action)=> {
         let termsNumber = undefined;
-        console.log('holla')
         if(state.schoolTerms.termsNumber !== action.schoolTerms) {
-            console.log('true')
             termsNumber = action.schoolTerms;
         }
         return {
