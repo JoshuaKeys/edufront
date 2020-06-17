@@ -1,0 +1,15 @@
+<ul class="preview-parent">
+    <li class="preview-parent__item"
+    *ngIf="(previewState | async).schoolTerms.termsNumber"
+    [routerLink]="(previewState | async).schoolTerms.route">
+        <edu-school-terms-preview        
+            [previewState]="previewState">
+        </edu-school-terms-preview>
+    </li>
+    <li class="preview-parent__item" *ngIf="(previewState | async).datePreview.endDate ||
+        (previewState | async).datePreview.startDate">
+        <edu-academic-year-preview 
+            [previewState]="previewState"
+    ></edu-academic-year-preview>
+    </li>
+</ul>

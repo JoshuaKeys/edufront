@@ -7,7 +7,9 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  HostListener
+  HostListener,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
@@ -43,6 +45,7 @@ export class DatepickerComponent
   @Input('alignment') alignment = 'center';
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('elementId') elementId = 'tempDatepickerId123';
+  @Output() onDateDataChanged = new EventEmitter<string>()
   @Input('disabled') set disabled(disabled) {
     this._disabled = disabled;
   }
@@ -170,6 +173,7 @@ export class DatepickerComponent
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
     this.val = val;
     this.onChange(val);
+    // this.onDateDataChanged.emit(val);
     this.onTouched();
     // this.onTouched(val)
   }
@@ -231,11 +235,8 @@ export class DatepickerComponent
     },
     stylesData: {
       styles: `
-            
-            
             .myDpSelectorArrowLeft:after, .myDpSelectorArrowLeft:before{
               left : 50%;
-           
             }
             .myDpSelectorArrowLeft:after{
               border-bottom-color: white;
@@ -245,8 +246,6 @@ export class DatepickerComponent
               broder-color:red;
               background:white;
             }
-        
-           
             .myDpIconLeftArrow,
             .myDpIconRightArrow  {
       
@@ -261,27 +260,18 @@ export class DatepickerComponent
             .myDpIconRightArrow::before{
               content:url("/assets/date-picker_arrow-right.svg") ; 
             }
-
-            
-
-         
             th.myDpWeekDayTitle{
               font: 600 12px/14px Raleway;
               color: #A5AEC7;
-            
             }
-            
             .myDpNextMonth  .myDpTableSingleDay, .myDpPrevMonth  .myDpTableSingleDay{
               font: 400 12px/14px Roboto;
               color:#A5AEC7;
             }
-
            .myDpCurrMonth  .myDpTableSingleDay{
               font: 400 12px/14px Roboto;
               color : #212121;
             }
-
-           
              .myDpSelectedDay, .myDpSelectedMonth, .myDpSelectedYear  {  
               background:unset;
             }
@@ -290,13 +280,11 @@ export class DatepickerComponent
               box-shadow: unset;
               outline-width: 0;
            }
-            
             .myDpSelectedDay span, .myDpMarkCurrDay, .myDpMarkCurrMonth, .myDpMarkCurrYear { 
               border-width:0px !important;
               color:  white;
               background: #69A9F2;
             }
-
             .myDpDayValue{
               width: 38px;
               height: 38px;
@@ -305,10 +293,6 @@ export class DatepickerComponent
               align-items: center;
         
             }
-        
-
-        
-
             .myDpDaycell {
               border-radius: 50%;
             }
@@ -320,13 +304,9 @@ export class DatepickerComponent
               justify-content: center;
               align-items: center;
             }
-
-        
-
             .myDpTableSingleMonth{
               width:50%;
             }
-
             .myDpMonthNbr{
               display:none;
             }

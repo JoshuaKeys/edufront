@@ -1,0 +1,34 @@
+<div>
+    <h1 class="header">Pleae specify the vacation dates and names</h1>
+    <p>Note: Only define vacations on this step which last <b class="orangeColor">longer</b> than one day, single<br>
+    Holidays will be input in the next step</p>
+    <div class="term-name-date">
+        <edu-input
+        alignment="center"
+      >
+        <span class="edu-label">Vacation name</span>
+      </edu-input>
+      <edu-datepicker  alignment="center">
+        <span class="edu-label">Starts from</span>
+        <div class="edu-suffix" InputAffix>
+          <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+        </div>
+      </edu-datepicker>
+      <edu-datepicker alignment="center" >
+        <span class="edu-label">Ends on</span>
+        <div class="edu-suffix" InputAffix>
+          <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+        </div>
+      </edu-datepicker>
+    
+    </div>
+    <!-- <div class="school-terms-question">
+        <edu-terms [terms]="6" [active]="(calendarData | async).schoolTerms" (toggleActive)="onToggleActive($event)"></edu-terms>
+        <div class="school-terms__btn-container">
+            <button class="school-terms__continue-btn" 
+                [disabled]="!(calendarData | async).schoolTerms"
+                (click)="goNext()"
+            >Continue</button>
+        </div>
+    </div> -->
+</div>

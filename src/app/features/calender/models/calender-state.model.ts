@@ -5,5 +5,5 @@ import { CalendarModel } from './calendar.model';
 export interface CalendarStateModel {
     modal: CalendarModalModel,
     preview: PreviewModel,
-    calenderData: CalendarModel
+    calendarData: CalendarModel
 }

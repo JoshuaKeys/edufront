@@ -1,0 +1,26 @@
+<div>
+    <h1 class="header">What are the term names and dates?</h1>
+    <p>Note: we will assume that all days between terms are considered holidays</p>
+    <form [formGroup]="termsAndDatesForm">
+        <div class="term-name-date" *ngFor="let schoolTerm of (calendarData | async).termsAndDates">
+            <edu-input
+            alignment="center"
+          >
+            <span class="edu-label">{{schoolTerm.termName}}</span>
+          </edu-input>
+          <edu-datepicker  alignment="center">
+            <span class="edu-label">Starts from</span>
+            <div class="edu-suffix" InputAffix>
+              <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+            </div>
+          </edu-datepicker>
+          <edu-datepicker alignment="center" >
+            <span class="edu-label">Ends on</span>
+            <div class="edu-suffix" InputAffix>
+              <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+            </div>
+          </edu-datepicker>
+        
+        </div>
+    </form>
+</div>

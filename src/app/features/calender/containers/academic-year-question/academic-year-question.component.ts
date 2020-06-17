@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { CalendarModalModel } from '../../models/calender-modal.model';
 import * as calendarSelectors from '../../ngrx/selectors'
 import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
-import { setAcademicYearStartDate, setAcademicYearEndDate } from '../../ngrx/actions/calendar.actions';
+import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setAcademicYearStartDate, setAcademicYearEndDate } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'edu-academic-year-question',
@@ -24,16 +24,30 @@ export class AcademicYearQuestionComponent implements OnInit {
   getFormErrors(error: ValidationErrors) {
     
   }
+  onDateDataChanged(dateData: string) {
+    // this.academicYearForm.patchValue({
+      
+    // })
+    console.log(dateData)
+  }
   ngOnInit(): void {
+    this.store.select(calendarSelectors.selectCalendar).subscribe(console.log)
     this.store.select(calendarSelectors.selectCalendar).subscribe(
       calendarState => {
-        // this.academicYearForm = new FormGroup({
-        //   startDate: new FormControl(calendarState.currentAcademicYear? calendarState.currentAcademicYear.startDate : ''),
-        //   endDate: new FormControl(calendarState.currentAcademicYear? calendarState.currentAcademicYear.endDate : ''),
-        // })
+        console.log('hellooo', calendarState.currentAcademicYear)
+        console.log(calendarState && calendarState.currentAcademicYear? calendarState.currentAcademicYear.startDate : null)
         this.academicYearForm = new FormGroup({
-          startDate: new FormControl('2020-09-09'),
-          endDate: new FormControl('2020-01-05'),
+          startDate: new FormControl(calendarState && calendarState.currentAcademicYear? calendarState.currentAcademicYear.startDate : null),
+          // startDate: new FormControl('2019-01-01'),
+          endDate: new FormControl(calendarState && calendarState.currentAcademicYear? calendarState.currentAcademicYear.endDate : null),
+        })
+        this.academicYearForm.controls.startDate.valueChanges.subscribe((startDate: string)=> {
+          this.store.dispatch(setPreviewAcademicYearStartDate({startDate: startDate.substr(0, 4)}));
+          this.store.dispatch(setAcademicYearStartDate({startDate}));
+        })
+        this.academicYearForm.controls.endDate.valueChanges.subscribe((endDate: string)=> {
+          this.store.dispatch(setPreviewAcademicYearEndDate({endDate: endDate.substr(0, 4)}));
+          this.store.dispatch(setAcademicYearEndDate({endDate}))
         })
         this.academicYearForm.validator = (academicYearForm)=> {
           const startDate = academicYearForm.value.startDate;
@@ -41,13 +55,13 @@ export class AcademicYearQuestionComponent implements OnInit {
           let errors = {
             msg: []
           };
-          if(startDate.length === 0) {
+          if(!startDate || startDate.length === 0) {
             errors.msg.push('Start Date is Empty')
           }
-          if(endDate.length === 0) {
+          if(!endDate || endDate.length === 0) {
             errors.msg.push('End Date is Empty')
           }
-          if(startDate.length && endDate.length) {
+          if(startDate && startDate.length && endDate && endDate.length) {
             const startDateObj = new Date(startDate);
             const endDateObj = new Date(endDate);
             if(startDateObj.getTime() > endDateObj.getTime()) {
@@ -58,20 +72,11 @@ export class AcademicYearQuestionComponent implements OnInit {
           if(!errors.msg.length) {
             errors = null;
           }
-          console.log(errors)
           return errors;
         }
       }
-    )
-   
+    );
     this.calendarModalState = this.store.select(calendarSelectors.selectCalendarModalState)
-    this.academicYearForm.controls.startDate.valueChanges.subscribe((startDate: string)=> {
-      console.log(startDate)
-      this.store.dispatch(setAcademicYearStartDate({startDate: startDate.substr(0, 4)}))
-    })
-    this.academicYearForm.controls.endDate.valueChanges.subscribe((endDate: string)=> {
-      this.store.dispatch(setAcademicYearEndDate({endDate: endDate.substr(0, 4)}))
-    })
   }
   formSubmit() {
 
