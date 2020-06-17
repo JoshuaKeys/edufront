@@ -1,0 +1,36 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+.pills {
+  edu-user-pill {
+    margin: 4px 6px;
+    transform: translateX(-6px);
+  }
+}
+
+.pill {
+  &__title {
+    font: 600 16px/20px Quicksand;
+    margin: 20px 0;
+  }
+}
+
+//view specific styles
+.gender {
+  flex-wrap: wrap;
+  @include displayFlex(flex-start, flex-start);
+  &--male,
+  &--female {
+    margin: auto;
+    width: 48%;
+    // flex-shrink: 0;
+    @include displayFlex(flex-start, flex-start, column);
+
+    .pills {
+      max-height: calc(100vh - 206px);
+      overflow-y: auto;
+    }
+    .pill__title {
+      margin-top: 0px;
+    }
+  }
+}

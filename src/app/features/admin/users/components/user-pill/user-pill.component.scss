@@ -1,0 +1,59 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+:host {
+  display: inline-block;
+}
+.male {
+  border: 1px solid $blue;
+  color: $blue;
+  &:hover {
+    background: $blue;
+  }
+  &:active {
+    border-color: $navy;
+    background: $navy;
+  }
+}
+.female {
+  border: 1px solid $pink;
+  color: $pink;
+  &:hover {
+    background: $pink;
+  }
+  &:active {
+    border-color: $dark-pink;
+    background: $dark-pink;
+  }
+}
+
+.pill {
+  &__wrapper {
+    @include displayFlex(flex-start, center);
+    display: inline-flex;
+    width: auto;
+    padding: 4px;
+    padding-right: 15px;
+    border-radius: 100px;
+    font: 600 12px/14px Raleway;
+    cursor: pointer;
+    &:hover {
+      .pill__img {
+        opacity: 0;
+        z-index: -1;
+      }
+    }
+    &:hover,
+    &:active {
+      .pill__text {
+        opacity: 0;
+        color: transparent;
+      }
+    }
+  }
+  &__img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+}

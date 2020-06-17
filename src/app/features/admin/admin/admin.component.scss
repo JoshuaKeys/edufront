@@ -4,13 +4,15 @@
 
 @include group();
 
-$border-color: $grey-white;
+// $border-color: $grey-white;
+$border-color: #e6e9f3;
 
 :host {
   @include displayFlex(flex-start, flex-start, row);
 }
 
 .top-nav-and-content {
+  align-self: stretch;
   @include displayFlex(flex-start, flex-start, column);
   flex-grow: 1;
 }
@@ -20,8 +22,9 @@ $border-color: $grey-white;
 .top-nav {
   align-self: stretch;
   flex-grow: 1;
+  flex-shrink: 0;
   height: 70px;
-  border-bottom: 3px solid $border-color;
+  border-bottom: 1px solid $border-color;
   padding: 0 5px;
   padding-right: 10px;
   &--left > *:first-child {
@@ -128,11 +131,12 @@ $side-menu-options: (
 }
 
 .side-nav {
+  flex-shrink: 0;
   width: 200px;
   padding: 20px 0;
   @include displayFlex(flex-start, flex-start, column);
   min-height: 100vh;
-  border-right: 3px solid $border-color;
+  border-right: 1px solid $border-color;
   &__brand-logo {
     @include displayFlex();
     width: 100%;

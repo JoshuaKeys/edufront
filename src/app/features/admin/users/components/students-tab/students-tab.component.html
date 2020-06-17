@@ -1,1 +1,61 @@
-<p>students-tab works!</p>
+<div class="header">
+  <button
+    ButtonType="round"
+    (click)="showAddStudentPanel()"
+    class="button button--add"
+  >
+    <img src="assets/user-settings/top-nav_plus.svg" alt="" />
+  </button>
+  <button
+    ButtonType="round"
+    *ngFor="let option of sortOptions; let i = index"
+    [ngClass]="{ active: isActiveSort(option.type) }"
+    class="button button--sort"
+    (click)="sortClick(option.type)"
+    (mouseleave)="setSortBtnImg(i, '')"
+    (mouseover)="setSortBtnImg(i, 'hover')"
+  >
+    <img
+      src="assets/admin/buttons/sort-icon-{{ option.type }}{{
+        option.imgSuffix
+      }}.svg"
+      alt=""
+    />
+  </button>
+
+  <div
+    class="search__wrapper"
+    [ngClass]="{ 'sidepanel-active': showSidePanel }"
+  >
+    <input
+      [(ngModel)]="searchTerm"
+      (focus)="setSearchState('active')"
+      (blur)="setSearchState('inactive')"
+      type="text"
+      id="searchbar"
+      class="search__input"
+    />
+    <label
+      class="search__label"
+      for="searchbar"
+      [ngClass]="{ hidden: hideLabel() }"
+      >Press <b class="bluecolor">Ctrl + S</b> to search</label
+    >
+  </div>
+</div>
+<main class="main">
+  <div class="content" [ngClass]="{ 'sidepanel-active': showSidePanel }">
+    <edu-user-pill-sorted-views
+      [users]="sampleUsers"
+      [activeSort]="activeSort"
+    ></edu-user-pill-sorted-views>
+  </div>
+  <aside
+    class="aside"
+    [ngClass]="{ 'sidepanel-active': showSidePanel }"
+  ></aside>
+</main>
+<div class="sidePanel" [ngClass]="{ active: showSidePanel }">
+  <edu-add-student-panel *ngIf="showAddStudent"></edu-add-student-panel>
+  <edu-edit-student-panel *ngIf="showEditStudent"></edu-edit-student-panel>
+</div>
