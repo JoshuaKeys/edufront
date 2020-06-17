@@ -58,7 +58,6 @@ export class InputComponent
   inputIsActive: boolean = false;
   // disabled: boolean; //for ControlValueAccessor implmentation
 
-  @Output() onValueChange = new EventEmitter<any>();
   @Input('disabled') disabled = false;
   @Input('elementId') elementId;
   @Input('alignment') alignment = 'center'; //center (default ),left,right
