@@ -1,0 +1,51 @@
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.admin {
+  &__options {
+    @include displayFlex(flex-start);
+    position: absolute;
+    top: 0;
+    left: 64px;
+    transform: translateY(-100%);
+    list-style: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+  }
+  &__option {
+    font: 500 12px/12px Raleway;
+    padding: 0;
+    padding-bottom: 12px;
+
+    margin: 0 15px;
+    position: relative;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__option.active {
+    color: $blue;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: $blue;
+    }
+  }
+}

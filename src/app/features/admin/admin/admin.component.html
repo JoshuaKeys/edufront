@@ -10,6 +10,7 @@
       [ngClass]="{ active: isActiveOption(option) }"
       class="side-nav__option {{ option.value }} "
       ButtonType="blank"
+      routerLink="./users"
     >
       <img src="assets/user-settings/side-nav_{{ option.value }}.svg" alt="" />
       <span>{{ option.text }} </span>

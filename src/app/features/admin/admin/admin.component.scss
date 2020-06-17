@@ -24,8 +24,10 @@ $border-color: $grey-white;
   border-bottom: 3px solid $border-color;
   padding: 0 5px;
   padding-right: 10px;
-  &--left > * {
+  &--left > *:first-child {
     margin: 0 11px;
+    margin-right: 22px;
+    padding: 0;
   }
   &--right > * {
     margin: 0 7.5px;
@@ -35,9 +37,14 @@ $border-color: $grey-white;
     width: 30px;
   }
   &__active-option {
+    margin: 0;
+    padding: 0;
     position: relative;
     color: $black;
     font: 600 16px/24px Quicksand;
+
+    //hack to make it float up abit
+    transform: translateY(-9px);
   }
 }
 

@@ -104,7 +104,11 @@
     // Month Year Text on day view
     font: 500 14px/16px Raleway;
   }
-
+  .myDpTableSingleDay:hover,
+  .myDpTableSingleMonth:hover,
+  .myDpTableSingleYear:hover {
+    background-color: unset !important;
+  }
   .myDpTableSingleYear:hover,
   .myDpTableSingleMonth:hover {
     background: transparent;
