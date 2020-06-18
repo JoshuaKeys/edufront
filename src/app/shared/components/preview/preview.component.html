@@ -8,7 +8,7 @@
     class="profile-select-preview"
     *ngFor="let block of previewState | async"
   >
-    <a class="preview-select-preview__link" [routerLink]="[block.route]">
+    <a *ngIf="block" class="preview-select-preview__link" [routerLink]="[block.route]">
       <div class="selected-heading">{{ block.label }}</div>
       <div class="selected-data" *ngFor="let field of block.values">
         <span
