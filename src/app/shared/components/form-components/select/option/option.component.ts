@@ -81,10 +81,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
     if (!this.selectService.activeValue) {
       return;
     }
-    if (
-      this.selectService.activeValue.toUpperCase() ===
-      this.OptionValue.toUpperCase()
-    ) {
+    if (this.selectService.activeValue == this.OptionValue) {
       this.selectService.activeOptionComponent.next(this);
     }
   }

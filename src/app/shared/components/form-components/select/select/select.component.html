@@ -1,5 +1,9 @@
 <div
-  [ngClass]="{ disabled: disabled, active: selectIsActive }"
+  [ngClass]="{
+    disabled: disabled,
+    active: selectIsActive,
+    hideChevron: hideChevron
+  }"
   role="listbox"
   class="{{ alignment }} {{ selectState }} wrapper  select__wrapper"
 >
@@ -30,7 +34,10 @@
     />
 
     <label
-      [ngClass]="{ 'label--active': isLabelActive() }"
+      [ngClass]="{
+        'label--active': isLabelActive(),
+        labelIsPlaceholder: labelIsPlaceholder
+      }"
       class="select__label "
       [for]="elementId"
     >
@@ -41,7 +48,7 @@
   </div>
 
   <div class="prefix">
-    <ng-content select=".edu-select__prefix"></ng-content>
+    <ng-content select=".prefix"></ng-content>
   </div>
 
   <div class="select__dropdown ">

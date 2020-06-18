@@ -81,6 +81,7 @@ edu-image-upload-v3 {
 }
 
 edu-input,
+edu-select,
 edu-datepicker {
   margin: 0px;
   height: 42px;
@@ -89,12 +90,27 @@ edu-datepicker {
     border-bottom: 1px solid transparent;
   }
 }
-edu-datepicker {
+edu-datepicker,
+edu-select {
+  padding: 0;
   width: 244px;
 }
-.input__prefix {
+edu-select ::ng-deep .select__wrapper {
+  padding: 0 !important;
+}
+
+edu-input ::ng-deep {
+  // border: 1px solid transparent;
+  .wrapper.disabled {
+    border: 1px solid transparent !important;
+    &:hover {
+      border: 1px solid transparent !important;
+    }
+  }
+}
+.prefix {
   border: 1px dashed #e6e9f3;
-  margin-right: 14px;
+  margin-right: 20px;
   margin-left: 10px;
   border-radius: 50%;
   width: 32px;

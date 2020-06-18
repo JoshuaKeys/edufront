@@ -10,7 +10,7 @@
   <button
     ButtonType="round"
     *ngFor="let option of sortOptions; let i = index"
-    [ngClass]="{ active: isActiveSort(option.type) }"
+    [ngClass]="{ active: isActiveSort(i) }"
     class="button button--sort"
     (click)="sortClick(option.type)"
     (mouseleave)="setSortBtnImg(i, '')"
@@ -29,6 +29,7 @@
     [ngClass]="{ 'sidepanel-active': showSidePanel() }"
   >
     <input
+      #search
       [(ngModel)]="searchTerm"
       (focus)="setSearchState('active')"
       (blur)="setSearchState('inactive')"

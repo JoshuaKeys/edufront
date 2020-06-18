@@ -2,7 +2,10 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+  HostListener
 } from '@angular/core';
 import { users } from '../sample-user-details';
 import { StudentsService } from '../../services/students.service';
@@ -21,7 +24,6 @@ export class StudentsTabComponent implements OnInit {
   ngOnInit(): void {
     this.boundStudentClick = this.studentClick.bind(this);
     this.boundResetStudents = this.resetStudents.bind(this);
-    console.log('registering');
     this.registerActiveStudentSub();
   }
 
@@ -55,6 +57,16 @@ export class StudentsTabComponent implements OnInit {
   // showSidePanel = true;
   public boundStudentClick: Function;
   public boundResetStudents: Function;
+
+  @ViewChild('search') search: ElementRef;
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.ctrlKey && event.charCode === 115) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.search.nativeElement.focus();
+    }
+  }
   showAddStudentPanel() {
     this.showAddStudent = !this.showAddStudent;
     // this.showSidePanel =
@@ -64,6 +76,10 @@ export class StudentsTabComponent implements OnInit {
     return this.showAddStudent || this.showEditStudent;
   }
   setSortBtnImg(index, imgSuffix) {
+    if (this.sortOptions[index].type == this.activeSort) {
+      return;
+    }
+
     if (imgSuffix != '') {
       this.sortOptions[index].imgSuffix = `-${imgSuffix}`;
     } else {
@@ -88,8 +104,16 @@ export class StudentsTabComponent implements OnInit {
       this.activeSort = sort;
     }
   }
-  isActiveSort(sort) {
-    return this.activeSort === sort;
+  isActiveSort(index) {
+    let res = this.activeSort === this.sortOptions[index].type;
+
+    if (res) {
+      this.sortOptions[index].imgSuffix = '-active';
+    } else if (this.sortOptions[index].imgSuffix == '-active') {
+      this.sortOptions[index].imgSuffix = '';
+    }
+
+    return res;
   }
 
   registerActiveStudentSub() {

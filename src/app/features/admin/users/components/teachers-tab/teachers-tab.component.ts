@@ -2,7 +2,10 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  HostListener,
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 import { users } from '../sample-user-details';
 import { StaffService } from '../../services/staff.service';
@@ -56,7 +59,15 @@ export class TeachersTabComponent implements OnInit {
   showAddStaff = false;
   public boundStaffClick: Function;
   public boundResetStaffs: Function;
-
+  @ViewChild('search') search: ElementRef;
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.ctrlKey && event.charCode === 115) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.search.nativeElement.focus();
+    }
+  }
   showAddStaffPanel() {
     this.showAddStaff = !this.showAddStaff;
   }
@@ -89,8 +100,16 @@ export class TeachersTabComponent implements OnInit {
       this.activeSort = sort;
     }
   }
-  isActiveSort(sort) {
-    return this.activeSort === sort;
+  isActiveSort(index) {
+    let res = this.activeSort === this.sortOptions[index].type;
+
+    if (res) {
+      this.sortOptions[index].imgSuffix = '-active';
+    } else if (this.sortOptions[index].imgSuffix == '-active') {
+      this.sortOptions[index].imgSuffix = '';
+    }
+
+    return res;
   }
 
   registerActiveStudentSub() {

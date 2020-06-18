@@ -27,6 +27,9 @@
 }
 
 .pill {
+  &__text {
+    font: 600 12px/22px Raleway;
+  }
   &__wrapper {
     @include displayFlex(flex-start, center);
     display: inline-flex;

@@ -115,7 +115,7 @@
         formControlName="dob"
         labelIsPlaceholder="true"
       >
-        <div class="edu-prefix input__prefix" InputAffix>
+        <div class="prefix edu-prefix" InputAffix>
           <img src="assets/admin/form/datepicker-prefix.svg" alt="" />
         </div>
         <span class="edu-label"> dd/mm/yy </span>
@@ -123,23 +123,61 @@
     </div>
     <div class="group--row">
       <label for="sex">Sex</label>
-      <edu-input
+      <edu-select
+        alignment="left"
+        formControlName="sex"
+        labelIsPlaceholder="true"
+        hideChevron="true"
+      >
+        <div class="prefix  " InputAffix>
+          <img src="assets/admin/form/gender-prefix.svg" alt="" />
+        </div>
+        <span class="edu-label"> select sex </span>
+        <edu-option OptionValue="male">Male</edu-option>
+        <edu-option OptionValue="female">Female</edu-option>
+      </edu-select>
+      <!-- <edu-input
         alignment="left"
         formControlName="sex"
         labelIsPlaceholder="true"
       >
         <span class="edu-label"> select sex </span>
-      </edu-input>
+      </edu-input> -->
     </div>
     <div class="group--row">
       <label for="class">Class</label>
+      <edu-select
+        alignment="left"
+        formControlName="class"
+        labelIsPlaceholder="true"
+        hideChevron="true"
+      >
+        <div class="prefix  " InputAffix>
+          <img src="assets/admin/form/class-prefix.svg" alt="" />
+        </div>
+        <span class="edu-label"> select class </span>
+        <edu-option OptionValue="1">1</edu-option>
+        <edu-option OptionValue="2">2</edu-option>
+        <edu-option OptionValue="3">3</edu-option>
+        <edu-option OptionValue="4">4</edu-option>
+        <edu-option OptionValue="5">5</edu-option>
+        <edu-option OptionValue="6">6</edu-option>
+        <edu-option OptionValue="7">7</edu-option>
+        <edu-option OptionValue="8">8</edu-option>
+        <edu-option OptionValue="9">9</edu-option>
+        <edu-option OptionValue="10">10</edu-option>
+        <edu-option OptionValue="11">11</edu-option>
+        <edu-option OptionValue="12">12</edu-option>
+      </edu-select>
+
+      <!-- <label for="class">Class</label>
       <edu-input
         alignment="left"
         formControlName="class"
         labelIsPlaceholder="true"
       >
         <span class="edu-label"> select class </span>
-      </edu-input>
+      </edu-input> -->
     </div>
     <div class="group--row">
       <label for="schId">School ID</label>

@@ -16,7 +16,7 @@ export class AdministratorsTabComponent implements OnInit {
 
   ngOnInit(): void {}
   showAddAdmin = false;
-  showModal = true;
+  showModal = false;
   popoverToggleBoolean = false;
   @Input() owners = [
     { firstName: 'Ronald', lastName: 'Mendoza', img: '' },
