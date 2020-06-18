@@ -1,7 +1,7 @@
 <div class="modal__overlay" (click)="onCloseModal()">
   <div class="modal" #modal>
     <button class="btn--close" ButtonType="icon" (click)="onCloseModal()">
-      <img src="assets/user-settings/modal_close.svg" alt="" srcset="" />
+      <img src="assets/admin/form/close.svg" alt="" srcset="" />
     </button>
 
     <div class="screen0 content__wrapper" *ngIf="isActiveScreen(0)">
@@ -27,7 +27,9 @@
         </form>
       </div>
       <div class="btns">
-        <button class="btn" ButtonType="basic">continue</button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(1)">
+          continue
+        </button>
       </div>
     </div>
 
@@ -51,8 +53,96 @@
         </form>
       </div>
       <div class="btns">
-        <button class="btn" ButtonType="outline">Cancel</button>
-        <button class="btn" ButtonType="basic">continue</button>
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(0)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(2)">
+          continue
+        </button>
+      </div>
+    </div>
+
+    <div class="screen2 content__wrapper" *ngIf="isActiveScreen(2)">
+      <div class="content ">
+        <h2 class="conent__title">Add New User</h2>
+
+        <form action="" class="form">
+          <div class="group--row">
+            <edu-image-upload-v3 elementId="profile">
+              <div class="placeholderImg">
+                <img
+                  src="/assets/admin/profile-placeholder.svg"
+                  alt=""
+                  srcset=""
+                />
+              </div>
+            </edu-image-upload-v3>
+          </div>
+          <div class="group--row">
+            <edu-input alignment="left" elementId="firstName">
+              <span class="edu-label"> First Name </span>
+            </edu-input>
+            <edu-input alignment="left" elementId="middleName">
+              <span class="edu-label"> Middle Name (Optional)</span>
+            </edu-input>
+            <edu-input alignment="left" elementId="lastName">
+              <span class="edu-label"> Family Name </span>
+            </edu-input>
+          </div>
+          <div class="group--row">
+            <edu-input alignment="left" elementId="email">
+              <span class="edu-label"> Email </span>
+            </edu-input>
+            <edu-input alignment="left" elementId="phone">
+              <span class="edu-label"> Phone </span>
+            </edu-input>
+          </div>
+        </form>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(1)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(3)">
+          continue
+        </button>
+      </div>
+    </div>
+
+    <div class="screen3 content__wrapper" *ngIf="isActiveScreen(3)">
+      <div class="content ">
+        <h2 class="conent__title">Transfer School Ownership</h2>
+        <p>
+          The next administrator will be <b class="bluecolor">username</b> Are
+          you sure you want to transfer the school ownership?
+        </p>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(2)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(4)">
+          Yes, Transfer
+        </button>
+      </div>
+    </div>
+
+    <div class="screen4 content__wrapper" *ngIf="isActiveScreen(4)">
+      <div class="content ">
+        <img src="assets/admin/form/complete.svg" alt="" />
+        <h2 class="conent__title">Ownership Transfer Completed</h2>
+        <p>
+          We have notified <b class="bluecolor">username</b>, once the user
+          acknowledges ownership you will be downgraded to administrator.
+        </p>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(3)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(0)">
+          Yes, Transfer
+        </button>
       </div>
     </div>
   </div>

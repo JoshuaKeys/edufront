@@ -7,7 +7,7 @@
   @include modal();
   width: 80%;
   height: 80%;
-  max-width: 600px;
+  max-width: 690px;
   max-height: 539px;
   position: relative;
   top: 50%;
@@ -19,6 +19,8 @@
     background: rgba(0, 0, 0, 0.3);
   }
 }
+
+//common across all screens , saved at top for future overwrite if needed
 
 .content {
   flex-grow: 1;
@@ -101,5 +103,75 @@ edu-input {
     img {
       @include absoluteCenter();
     }
+  }
+}
+
+//screen2
+.screen2 {
+  .content {
+    padding-top: 50px;
+  }
+  .group--row {
+    width: 610px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .form {
+    margin-top: 20px;
+  }
+  edu-image-upload-v3 {
+    align-self: center;
+    // margin: 24px 0;
+    width: 100px;
+    height: 100px;
+  }
+
+  edu-input {
+    height: 44px;
+    width: 60%;
+    margin: 0 10px;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+@include group();
+
+.placeholderImg {
+  border: 2px dashed #e6e9f3;
+  width: 100px;
+  height: 100px;
+  @include displayFlex();
+  position: relative;
+  border-radius: 150%;
+  cursor: pointer;
+
+  img {
+    @include absoluteCenter();
+  }
+  &:hover {
+    border-color: $blue;
+  }
+}
+
+//screen3
+.screen3 {
+  p {
+    margin-top: 20px;
+    max-width: 438px;
+  }
+}
+//screen4
+.screen4 {
+  img {
+    margin-bottom: 17px;
+  }
+  p {
+    margin-top: 20px;
+    max-width: 542px;
   }
 }
