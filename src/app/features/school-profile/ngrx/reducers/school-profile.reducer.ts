@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { ProfileModel } from '../../models/profile.model';
-import { setSchoolName, setAddressData, setContactsData, setSchoolLogo, setCountryIdData, setPhoneData } from '../actions';
+import { setSchoolName, setAddressData, setContactsData, setSchoolLogo, setCountryIdData, setPhoneData, clearLogoPreview } from '../actions';
 const initialState: ProfileModel = {
   schoolName: null,
   schoolLogo: null
@@ -52,6 +52,11 @@ export const profileReducer = createReducer(initialState,
   on(setSchoolLogo, (state, action) => {
     let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
     stateCopy.schoolLogo = action.logo;
+    return stateCopy;
+  }),
+  on(clearLogoPreview, (state, action)=> {
+    let stateCopy: ProfileModel = JSON.parse(JSON.stringify(state));
+    delete stateCopy.schoolLogo
     return stateCopy;
   })
 );
