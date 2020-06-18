@@ -21,8 +21,7 @@
       <button
         ButtonType="outline"
         class="form__button form__button--white"
-        [routerLink]="['../', activatedRouteData.previous]"
-      >
+        (click)="goToLogoPage()">
         Back
       </button>
       <button ButtonType="basic" class="form__button" (click)="submit()">

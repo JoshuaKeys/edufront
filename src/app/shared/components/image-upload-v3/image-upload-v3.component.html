@@ -9,17 +9,15 @@
     (drop)="handleDrop($event)"
   >
     <label [for]="elementId">
-      <div [ngClass]="{ hidden: confirmed }">
-        <ng-content select=".placeholderImg"> </ng-content>
-      </div>
+      <ng-template #noPreview>
+        <div [ngClass]="{ hidden: confirmed }">
+          <ng-content select=".placeholderImg"> </ng-content>
+        </div>
+      </ng-template>
 
+      <!-- {{value.base64}} -->
+      <img *ngIf="value.base64 && !confirmed; else noPreview" [src]="value.base64">
       <div *ngIf="value.base64" class="img--confirmed-wrapper">
-        <!--   (mouseenter)="onMouseEnter()"
-        (mouseleave)="onMouseLeave()" -->
-        <!-- <label for="fileInput" class="mouseOverText" *ngIf="isMousedOver">
-          <h4>click to change image</h4>
-        </label> -->
-
         <img class="image--confirmed" [src]="value.base64" *ngIf="confirmed" />
       </div>
     </label>

@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { PreviewModel } from '../../models/preview.model';
-import { setSchoolName, setAddressData, setContactsData, setSchoolLogo } from '../actions';
+import { setSchoolName, setAddressData, setContactsData, setSchoolLogo, clearLogoPreview } from '../actions';
 
 const initialState: PreviewModel[] = []
 export const schoolProfilePreviewReducer = createReducer(initialState,
@@ -60,13 +60,21 @@ export const schoolProfilePreviewReducer = createReducer(initialState,
     const stateCopy: PreviewModel[] = JSON.parse(JSON.stringify(state));
     const hasImg = stateCopy.findIndex(previewItem => previewItem.label === 'School Logo')
     if (hasImg > -1) {
-      stateCopy[hasImg].values[0] = { name: 'schoolLogo', value: action.logo };
+      stateCopy[hasImg].values[0] = { name: 'schoolLogo', value: action.preview };
     } else {
       stateCopy.unshift({
         label: 'School Logo',
         values: [{ name: 'schoolLogo', value: action.preview }],
         route: 'school-logo-upload'
       })
+    }
+    return stateCopy;
+  }),
+  on(clearLogoPreview, (state, action)=> {
+    const stateCopy: PreviewModel[] = JSON.parse(JSON.stringify(state));
+    const hasImg = stateCopy.findIndex(previewItem => previewItem.label === 'School Logo')
+    if(hasImg > -1) {
+      delete stateCopy[hasImg];
     }
     return stateCopy;
   })
