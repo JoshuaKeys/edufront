@@ -1,11 +1,97 @@
 @import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/mixins/containers';
 @import 'src/assets/styles/colors';
+
+@include group();
 
 .header {
   height: 56px;
   width: 100%;
-  @include displayFlex(flex-start, center);
+  @include displayFlex(space-between, center);
   border-bottom: 1px solid #e6e9f3;
   flex-shrink: 0;
   padding: 8px 20px;
+}
+.button--basic {
+  width: 130px;
+  height: 32px;
+  font: 700 12px/20px Raleway;
+  background: $green;
+}
+.main {
+  padding: 20px;
+  max-height: calc(100vh - 126px);
+  overflow-y: auto;
+  background-color: white;
+}
+
+.student-details,
+.guardian-details {
+  @include displayFlex(flex-start, stretch, column);
+  .group--row {
+    justify-content: space-between;
+    margin: 6px 0;
+    margin-right: 22px;
+    padding-right: 20px;
+  }
+}
+
+h4 {
+  margin: 0;
+}
+label {
+  color: #a5aec7;
+}
+edu-image-upload-v3 {
+  align-self: center;
+  margin: 24px 0;
+  width: 100px;
+  height: 100px;
+}
+
+edu-input,
+edu-datepicker {
+  margin: 0px;
+  height: 42px;
+  width: 198px;
+  ::ng-deep .wrapper {
+    border-bottom: 1px solid transparent;
+  }
+}
+edu-datepicker {
+  width: 244px;
+}
+.input__prefix {
+  border: 1px dashed #e6e9f3;
+  margin-right: 14px;
+  margin-left: 10px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  img {
+    @include absoluteCenter();
+  }
+}
+.edu-label {
+  color: #c3c9da;
+}
+.placeholderImg {
+  border: 2px dashed #e6e9f3;
+  width: 100px;
+  height: 100px;
+  @include displayFlex();
+  position: relative;
+  border-radius: 150%;
+  cursor: pointer;
+
+  img {
+    @include absoluteCenter();
+  }
+  &:hover {
+    border-color: $blue;
+    //   img {
+    //     content: url('/assets/32pxplusblue.svg');
+    //   }
+  }
 }

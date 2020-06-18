@@ -1,20 +1,97 @@
 <ng-container [ngSwitch]="_activeSort">
   <div class="pills" *ngSwitchCase="''">
-    <edu-user-pill *ngFor="let user of parsedUsers" [user]="user">
+    <edu-user-pill
+      *ngFor="let user of parsedUsers"
+      [user]="user"
+      (click)="clickCallBack(user)"
+      [ngClass]="{ active: isActive(user) }"
+    >
     </edu-user-pill>
+    <div
+      *ngIf="activeUsers.length > 1"
+      class="pill--active-user-selected bluecolor"
+    >
+      <span class="pill__text">{{ activeUsers.length }} Users Selected</span>
+
+      <button ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" alt="" />
+      </button>
+
+      <button ButtonType="icon" (click)="resetUsers()">
+        <img src="assets/admin/buttons/close.svg" alt="" />
+      </button>
+    </div>
   </div>
 
   <div class="pills" *ngSwitchCase="'alphabetical'">
-    <edu-user-pill *ngFor="let user of parsedUsers" [user]="user">
+    <edu-user-pill
+      *ngFor="let user of parsedUsers"
+      [user]="user"
+      (click)="clickCallBack(user)"
+      [ngClass]="{ active: isActive(user) }"
+    >
     </edu-user-pill>
+    <div
+      *ngIf="activeUsers.length > 1"
+      class="pill--active-user-selected bluecolor"
+    >
+      <span class="pill__text">{{ activeUsers.length }} Users Selected</span>
+
+      <button ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" alt="" />
+      </button>
+
+      <button ButtonType="icon" (click)="resetUsers()">
+        <img src="assets/admin/buttons/close.svg" alt="" />
+      </button>
+    </div>
   </div>
   <div class="pills" *ngSwitchCase="'unknown'">
-    <edu-user-pill *ngFor="let user of parsedUsers" [user]="user">
+    <edu-user-pill
+      *ngFor="let user of parsedUsers"
+      [user]="user"
+      (click)="clickCallBack(user)"
+      [ngClass]="{ active: isActive(user) }"
+    >
     </edu-user-pill>
+    <div
+      *ngIf="activeUsers.length > 1"
+      class="pill--active-user-selected bluecolor"
+    >
+      <span class="pill__text">{{ activeUsers.length }} Users Selected</span>
+
+      <button ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" alt="" />
+      </button>
+
+      <button ButtonType="icon" (click)="resetUsers()">
+        <img src="assets/admin/buttons/close.svg" alt="" />
+      </button>
+    </div>
   </div>
   <div class="pills" *ngSwitchCase="'id'">
-    <edu-user-pill *ngFor="let user of parsedUsers" [user]="user">
+    <edu-user-pill
+      *ngFor="let user of parsedUsers"
+      [user]="user"
+      (click)="clickCallBack(user)"
+      [ngClass]="{ active: isActive(user) }"
+    >
     </edu-user-pill>
+
+    <div
+      *ngIf="activeUsers.length > 1"
+      class="pill--active-user-selected bluecolor"
+    >
+      <span class="pill__text">{{ activeUsers.length }} Users Selected</span>
+
+      <button ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" alt="" />
+      </button>
+
+      <button ButtonType="icon" (click)="resetUsers()">
+        <img src="assets/admin/buttons/close.svg" alt="" />
+      </button>
+    </div>
   </div>
 
   <ng-container *ngSwitchCase="'class'">
@@ -24,9 +101,28 @@
         <b class="ashcolor">{{ class.value.length }} Students</b>
       </h5>
       <div class="pills">
-        <edu-user-pill *ngFor="let user of class.value" [user]="user">
+        <edu-user-pill
+          *ngFor="let user of class.value"
+          [user]="user"
+          (click)="clickCallBack(user)"
+          [ngClass]="{ active: isActive(user) }"
+        >
         </edu-user-pill>
       </div>
+    </div>
+    <div
+      *ngIf="activeUsers.length > 1"
+      class="pill--active-user-selected bluecolor"
+    >
+      <span class="pill__text">{{ activeUsers.length }} Users Selected</span>
+
+      <button ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" alt="" />
+      </button>
+
+      <button ButtonType="icon" (click)="resetUsers()">
+        <img src="assets/admin/buttons/close.svg" alt="" />
+      </button>
     </div>
   </ng-container>
 
@@ -37,7 +133,12 @@
           Male <b class="ashcolor">{{ gender.male.length }} Students</b>
         </h5>
         <div class="pills">
-          <edu-user-pill *ngFor="let user of gender.male" [user]="user">
+          <edu-user-pill
+            *ngFor="let user of gender.male"
+            [user]="user"
+            (click)="clickCallBack(user)"
+            [ngClass]="{ active: isActive(user) }"
+          >
           </edu-user-pill>
         </div>
       </div>
@@ -46,10 +147,29 @@
           Female <b class="ashcolor">{{ gender.female.length }} Students</b>
         </h5>
         <div class="pills">
-          <edu-user-pill *ngFor="let user of gender.female" [user]="user">
+          <edu-user-pill
+            *ngFor="let user of gender.female"
+            [user]="user"
+            (click)="clickCallBack(user)"
+            [ngClass]="{ active: isActive(user) }"
+          >
           </edu-user-pill>
         </div>
       </div>
+    </div>
+    <div
+      *ngIf="activeUsers.length > 1"
+      class="pill--active-user-selected bluecolor"
+    >
+      <span class="pill__text">{{ activeUsers.length }} Users Selected</span>
+
+      <button ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" alt="" />
+      </button>
+
+      <button ButtonType="icon" (click)="resetUsers()">
+        <img src="assets/admin/buttons/close.svg" alt="" />
+      </button>
     </div>
   </ng-container>
 </ng-container>

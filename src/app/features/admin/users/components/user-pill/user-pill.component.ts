@@ -25,8 +25,15 @@ export class UserPillComponent implements OnInit {
     if (typeof this.user.img === 'undefined') {
       this.user.img = '';
     }
+    if (typeof this.user.prefix === 'undefined') {
+      this.user.prefix = '';
+    }
+
     // console.log(this.user);
+    this._user = this.user;
+    this._user.name = `${this.user.prefix} ${this.user.firstName} ${this.user.lastName}`;
   }
 
-  @Input() user: User;
+  @Input() user: any;
+  _user: User;
 }

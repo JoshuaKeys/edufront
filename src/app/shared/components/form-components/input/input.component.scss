@@ -117,6 +117,11 @@ label {
     align-self: flex-end;
   }
 }
+
+//form wrapper overwrite
+.labelIsPlaceholder.label--active {
+  display: none;
+}
 .label--active {
   .label__shrink-wrapper {
     font-size: 0.85em;

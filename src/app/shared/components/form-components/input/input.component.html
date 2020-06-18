@@ -29,7 +29,8 @@
       class="{{ alignment }}"
       [ngClass]="{
         'label--active': isLabelActive(),
-        'label--focus': inputElIsFocus
+        'label--focus': inputElIsFocus,
+        labelIsPlaceholder: labelIsPlaceholder
       }"
       class="form__label "
       [for]="elementId"

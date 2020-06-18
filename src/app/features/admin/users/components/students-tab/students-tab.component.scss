@@ -38,8 +38,20 @@
   flex-shrink: 0;
   border-left: 1px solid #e6e9f3;
   width: 238px;
+  max-height: calc(100vh - 126px);
+  padding: 20px 16px;
   &.sidepanel-active {
     width: 0px;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  .download-excel {
+    padding: 0px;
+    img {
+      margin-right: 10px;
+    }
+    font: 500 12px/24px Raleway;
   }
 }
 
@@ -57,6 +69,12 @@
   }
   &--add {
     border-color: $blue;
+  }
+  &--add.active {
+    background: $blue;
+    img {
+      content: url('/assets/user-settings/top-nav_plus-white.svg');
+    }
   }
   &--sort > img {
     width: 16px;
@@ -116,11 +134,15 @@
 .sidePanel {
   border-left: 1px solid #e6e9f3;
   position: absolute;
-  transform: translateX(100%);
+  //   transform: translateX(100%);
   right: 0;
-  width: 480px;
+  overflow: hidden;
+  opacity: 0;
+  width: 0px;
   height: 100%;
   &.active {
+    opacity: 1;
+    width: 480px;
     transform: unset;
   }
 }

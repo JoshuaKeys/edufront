@@ -1,12 +1,12 @@
-<div class="{{ user.gender }} pill__wrapper">
+<div class="{{ _user.gender }} pill__wrapper">
   <img
-    *ngIf="user.img; else placeholderImg"
+    *ngIf="_user.img; else placeholderImg"
     class="pill__img"
-    src="{{ user.img }}"
+    src="{{ _user.img }}"
   />
   <ng-template #placeholderImg>
     <img class="pill__img" src="assets/admin/pill-placeholder.svg" />
   </ng-template>
 
-  <span class="pill__text">{{ user.name }}</span>
+  <span class="pill__text">{{ _user.name }}</span>
 </div>

@@ -61,6 +61,7 @@ export class InputComponent
   @Output() onValueChange = new EventEmitter<any>();
   @Input('disabled') disabled = false;
   @Input('elementId') elementId;
+  @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('alignment') alignment = 'center'; //center (default ),left,right
   @Input('isPassword') isPassword = false;
   @ViewChild('inputEl') inputEl: ElementRef;

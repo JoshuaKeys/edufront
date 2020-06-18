@@ -1,1 +1,260 @@
-<p>edit-student-panel works!</p>
+<div class="header">
+  <button ButtonType="icon" (click)="onClosePanel()">
+    <img src="assets/admin/buttons/close.svg" alt="" />
+  </button>
+
+  <div class="tabs">
+    <button
+      ButtonType="text"
+      (click)="setActiveTab('Profile')"
+      [ngClass]="{ active: isActiveTab('Profile') }"
+    >
+      Profile
+    </button>
+    <button
+      ButtonType="text"
+      (click)="setActiveTab('Security')"
+      [ngClass]="{ active: isActiveTab('Security') }"
+    >
+      Security
+    </button>
+  </div>
+  <button class="button--basic" ButtonType="basic" disabled>delete</button>
+</div>
+
+<div class="main" *ngIf="isActiveTab('Security')">
+  <form class="security-details" [formGroup]="securityDetailsForm">
+    <h4>Guardian Details</h4>
+    <div class="group--row">
+      <label for="username">User Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="username"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> - </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="password">Password</label>
+      <edu-input
+        isPassword="true"
+        alignment="left"
+        formControlName="password"
+        labelIsPlaceholder="true"
+      >
+      </edu-input>
+    </div>
+
+    <div class="group--row">
+      <label for="question1">Security Question 1</label>
+      <edu-input
+        alignment="left"
+        formControlName="question1"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> Answer </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="question2">Security Question 2</label>
+      <edu-input
+        alignment="left"
+        formControlName="question2"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> Answer </span>
+      </edu-input>
+    </div>
+  </form>
+</div>
+
+<div class="main" *ngIf="isActiveTab('Profile')">
+  <form class="student-details" [formGroup]="studentDetailsForm">
+    <h4>Profile Picture</h4>
+    <edu-image-upload-v3 formControlName="profile">
+      <div class="placeholderImg">
+        <img src="/assets/admin/profile-placeholder.svg" alt="" srcset="" />
+      </div>
+    </edu-image-upload-v3>
+    <h4>Student Details</h4>
+    <div class="group--row">
+      <label for="firstName">First Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="firstName"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> - </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="middleName">Middle Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="middleName"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> (Optional) </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="lastName">Last Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="lastName"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> - </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="dob">Date of Birth</label>
+      <edu-datepicker
+        alignment="left"
+        formControlName="dob"
+        labelIsPlaceholder="true"
+      >
+        <div class="edu-prefix input__prefix" InputAffix>
+          <img src="assets/admin/form/datepicker-prefix.svg" alt="" />
+        </div>
+        <span class="edu-label"> dd/mm/yy </span>
+      </edu-datepicker>
+    </div>
+    <div class="group--row">
+      <label for="sex">Sex</label>
+      <edu-input
+        alignment="left"
+        formControlName="sex"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> select sex </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="class">Class</label>
+      <edu-input
+        alignment="left"
+        formControlName="class"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> select class </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="schId">School ID</label>
+      <edu-input
+        alignment="left"
+        formControlName="schId"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> auto generated</span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="country">Country</label>
+
+      <edu-input
+        alignment="left"
+        formControlName="country"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label">-</span></edu-input
+      >
+    </div>
+    <div class="group--row">
+      <label for="address">Address</label>
+      <edu-input
+        alignment="left"
+        formControlName="address"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label">-</span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="state">State</label>
+      <edu-input
+        alignment="left"
+        formControlName="state"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label">-</span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="city">City</label>
+      <edu-input
+        alignment="left"
+        formControlName="city"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label">-</span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="zip">Zip Code</label>
+      <edu-input
+        alignment="left"
+        formControlName="zip"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label">-</span>
+      </edu-input>
+    </div>
+  </form>
+
+  <form class="guardian-details" [formGroup]="guardianDetailsForm">
+    <h4>Guardian Details</h4>
+    <div class="group--row">
+      <label for="firstName2">First Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="firstName2"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> - </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="middleName2">Middle Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="middleName2"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> (Optional) </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="lastName2">Last Name</label>
+      <edu-input
+        alignment="left"
+        formControlName="lastName2"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> - </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="phone">Phone Number</label>
+      <edu-input
+        alignment="left"
+        formControlName="phone"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> - </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <label for="email">Email</label>
+      <edu-input
+        alignment="left"
+        formControlName="email"
+        labelIsPlaceholder="true"
+      >
+        <span class="edu-label"> (Optional) </span>
+      </edu-input>
+    </div>
+  </form>
+</div>

@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { users } from '../sample-user-details';
+import { StudentsService } from '../../services/students.service';
 @Component({
   selector: 'edu-students-tab',
   templateUrl: './students-tab.component.html',
@@ -12,13 +13,21 @@ import { users } from '../sample-user-details';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentsTabComponent implements OnInit {
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private studentService: StudentsService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.boundStudentClick = this.studentClick.bind(this);
+    this.boundResetStudents = this.resetStudents.bind(this);
+    console.log('registering');
+    this.registerActiveStudentSub();
+  }
 
   searchTerm = '';
   searchState = 'inactive';
-
+  activeStudents = [];
   activeSort = '';
 
   sortOptions = [
@@ -28,16 +37,21 @@ export class StudentsTabComponent implements OnInit {
     { type: 'id', imgSuffix: '' },
     { type: 'unknown', imgSuffix: '' }
   ];
-  sampleUsers = users;
+  users = users;
 
   showEditStudent = false;
-  showAddStudent = true;
-  showSidePanel = true;
+  showAddStudent = false;
+  // showSidePanel = true;
+  public boundStudentClick: Function;
+  public boundResetStudents: Function;
   showAddStudentPanel() {
     this.showAddStudent = !this.showAddStudent;
-    this.showSidePanel = this.showAddStudent || this.showEditStudent;
+    // this.showSidePanel =
   }
 
+  showSidePanel() {
+    return this.showAddStudent || this.showEditStudent;
+  }
   setSortBtnImg(index, imgSuffix) {
     if (imgSuffix != '') {
       this.sortOptions[index].imgSuffix = `-${imgSuffix}`;
@@ -65,5 +79,20 @@ export class StudentsTabComponent implements OnInit {
   }
   isActiveSort(sort) {
     return this.activeSort === sort;
+  }
+
+  registerActiveStudentSub() {
+    this.studentService.activeStudents$.subscribe(_activeStudents => {
+      this.activeStudents = [..._activeStudents];
+      this.showEditStudent = this.activeStudents.length === 1;
+    });
+  }
+
+  resetStudents() {
+    this.studentService.resetActiveStudents();
+  }
+
+  studentClick(user) {
+    this.studentService.studentPillClick(this.activeStudents, user);
   }
 }

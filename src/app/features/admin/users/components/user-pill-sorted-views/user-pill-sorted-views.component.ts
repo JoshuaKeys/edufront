@@ -27,6 +27,9 @@ export class UserPillSortedViewsComponent implements OnInit {
       this.parsedUsers = this.parseUser(this._users, sortOption);
     }
   }
+  @Input('clickCallBack') clickCallBack;
+  @Input('resetUsers') resetUsers;
+  @Input() activeUsers = [];
   _activeSort = null;
   parsedUsers = null;
   _users = null;
@@ -36,7 +39,7 @@ export class UserPillSortedViewsComponent implements OnInit {
     female: []
   };
   ngOnInit(): void {
-    // console.log(this._users);
+    // console.log(this.clickCallBack);
     // console.log(this._activeSort);
   }
 
@@ -48,21 +51,32 @@ export class UserPillSortedViewsComponent implements OnInit {
     // }
   }
 
+  isActive(user) {
+    let res = this.activeUsers.filter(active => {
+      return active.id === user.id;
+    });
+    return res.length === 1;
+  }
+
   parseUser(users, sort) {
     switch (sort) {
       case '':
         return users.map(user => {
-          let newName = { name: `C${user.class} ${user.name}` };
+          let newName = { prefix: `C${user.class}` };
           return { ...user, ...newName };
         });
         break;
       case 'alphabetical':
         let tempalpha = [...users];
         return tempalpha.sort((a, b) => {
-          if (a.name.substring(0, 1) == b.name.substring(0, 1)) {
-            return a.name.substring(0, 3) > b.name.substring(0, 3) ? 1 : -1;
+          if (a.firstName.substring(0, 1) == b.firstName.substring(0, 1)) {
+            return a.firstName.substring(0, 3) > b.firstName.substring(0, 3)
+              ? 1
+              : -1;
           } else {
-            return a.name.substring(0, 1) > b.name.substring(0, 1) ? 1 : -1;
+            return a.firstName.substring(0, 1) > b.firstName.substring(0, 1)
+              ? 1
+              : -1;
           }
         });
         break;
