@@ -27,8 +27,8 @@ export class AdminModalComponent implements OnInit, AfterViewInit {
       $event.preventDefault();
     });
   }
-  //0,1
-  activeScreenIndex = 0;
+  //0,1,2,3,4
+  activeScreenIndex = 1;
   isActiveScreen(index) {
     return this.activeScreenIndex === index;
   }

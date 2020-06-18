@@ -24,6 +24,11 @@
   flex-grow: 1;
   @include displayFlex(center, center, column);
 
+  &__wrapper {
+    @include displayFlex(center, center, column);
+    width: 100%;
+    height: 100%;
+  }
   &__title {
     margin: 0;
     color: $black;
@@ -34,6 +39,12 @@
     font: 400 14px/22px Raleway;
     text-align: center;
   }
+}
+
+.btn {
+  width: 156px;
+  margin: 0 12px;
+  height: 40px;
 }
 .btn--close {
   position: absolute;
@@ -47,4 +58,48 @@ edu-input {
   margin: 20px auto;
   height: 44px;
   width: 300px;
+}
+
+//screen 1
+.screen1 {
+  .content {
+    margin-top: 80px;
+  }
+  .form {
+    height: 100%;
+    margin: 0;
+    @include displayFlex();
+  }
+}
+
+.search__wrapper {
+  @include displayFlex();
+  width: 260px;
+  input {
+    flex-grow: 1;
+    border: 0px;
+    background: transparent;
+    color: $black;
+    font: 400 14px/24px Raleway;
+    margin: 0 14px;
+    &::placeholder {
+      font: 400 14px/24px Raleway;
+      color: #c3c9da;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .search__icon {
+    flex-shrink: 0;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border: 1px dashed #e6e9f3;
+    position: relative;
+    img {
+      @include absoluteCenter();
+    }
+  }
 }

@@ -27,7 +27,7 @@
         </form>
       </div>
       <div class="btns">
-        <button ButtonType="basic">continue</button>
+        <button class="btn" ButtonType="basic">continue</button>
       </div>
     </div>
 
@@ -38,14 +38,21 @@
           Nominate the next School Master Administrator
         </p>
         <form action="" class="form">
-          <edu-input alignment="center" elementId="'test1322'">
-            <span class="edu-label">Security Question</span>
-          </edu-input>
+          <div class="search__wrapper">
+            <div class="search__icon">
+              <img src="assets/admin/form/search-prefix.svg" alt="" />
+            </div>
+            <input type="text" placeholder="Search user" />
+            <button ButtonType="round" class="search__icon">
+              <edu-tooltip>Add New </edu-tooltip>
+              <img src="assets/admin/form/add-16px.svg" alt="" />
+            </button>
+          </div>
         </form>
       </div>
       <div class="btns">
-        <button ButtonType="outline">Cancel</button>
-        <button ButtonType="basic">continue</button>
+        <button class="btn" ButtonType="outline">Cancel</button>
+        <button class="btn" ButtonType="basic">continue</button>
       </div>
     </div>
   </div>

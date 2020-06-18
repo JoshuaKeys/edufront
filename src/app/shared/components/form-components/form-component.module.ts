@@ -13,12 +13,14 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { ImgUploadComponent } from './img-upload/img-upload.component';
 import { ValidatorModule } from './validator/validator.module';
 import { datePickerModule } from './datepicker/datepicker.module';
+import { TooltipComponent } from './tooltip/tooltip.component';
 import { ValidatorDirective } from './validator/validator.directive';
 let components = [
   InputComponent,
   InputAffixDirective,
   CheckboxComponent,
-  ImgUploadComponent
+  ImgUploadComponent,
+  TooltipComponent
 ];
 
 @NgModule({
