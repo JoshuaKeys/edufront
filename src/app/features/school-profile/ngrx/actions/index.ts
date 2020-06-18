@@ -39,4 +39,7 @@ export const toggleProfileEndModal = createAction(
 )
 export const createSchoolRequest = createAction(
   '[SchoolProfileConfirmationComponent] createSchoolRequest'
+);
+export const  clearLogoPreview = createAction(
+  '[SchoolLogoQuestion] clearLogoPreview'
 )

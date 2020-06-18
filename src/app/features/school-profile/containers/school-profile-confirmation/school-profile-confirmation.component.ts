@@ -26,6 +26,9 @@ export class SchoolProfileConfirmationComponent implements OnInit {
   goToDashboard() {
     this.router.navigateByUrl('/dashboard')
   }
+  goToLogoPage() {
+    this.router.navigateByUrl('/school-profile/school-logo-question');
+  }
   goToClassCreation() {
     this.router.navigateByUrl('/classes-and-groups/classes-in-school')
   }
