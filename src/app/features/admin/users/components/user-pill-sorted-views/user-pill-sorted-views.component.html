@@ -95,7 +95,7 @@
   </div>
 
   <ng-container *ngSwitchCase="'class'">
-    <div *ngFor="let class of classes | keyvalue">
+    <div *ngFor="let class of classes | keyvalue" class="classes">
       <h5 class="pill__title">
         {{ class.key }} -
         <b class="ashcolor">{{ class.value.length }} Students</b>

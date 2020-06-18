@@ -54,12 +54,22 @@ edu-user-pill.active ::ng-deep {
 }
 
 //view specific styles
+.classes {
+  h5 {
+    margin-top: 0px;
+  }
+  .pills {
+    margin-bottom: 20px;
+  }
+}
 .gender {
   flex-wrap: wrap;
   @include displayFlex(flex-start, flex-start);
   &--male,
   &--female {
-    margin: auto;
+    min-width: calc(50vw - 255px);
+    align-self: flex-start;
+    margin: 0 auto;
     width: 48%;
     // flex-shrink: 0;
     @include displayFlex(flex-start, flex-start, column);

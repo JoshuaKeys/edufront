@@ -5,22 +5,22 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { users } from '../sample-user-details';
-import { StudentsService } from '../../services/students.service';
+import { StaffService } from '../../services/staff.service';
 @Component({
-  selector: 'edu-students-tab',
-  templateUrl: './students-tab.component.html',
-  styleUrls: ['./students-tab.component.scss'],
+  selector: 'edu-teachers-tab',
+  templateUrl: './teachers-tab.component.html',
+  styleUrls: ['./teachers-tab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentsTabComponent implements OnInit {
+export class TeachersTabComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
-    private studentService: StudentsService
+    private staffService: StaffService
   ) {}
 
   ngOnInit(): void {
-    this.boundStudentClick = this.studentClick.bind(this);
-    this.boundResetStudents = this.resetStudents.bind(this);
+    this.boundStaffClick = this.staffClick.bind(this);
+    this.boundResetStaffs = this.resetStaffs.bind(this);
     console.log('registering');
     this.registerActiveStudentSub();
   }
@@ -37,31 +37,32 @@ export class StudentsTabComponent implements OnInit {
     return this._searchTerm;
   }
   _searchTerm = '';
+
   searchState = 'inactive';
-  activeStudents = [];
+  activeStaff = [];
   activeSort = '';
 
   sortOptions = [
-    { type: 'class', imgSuffix: '' },
+    // { type: 'class', imgSuffix: '' },
     { type: 'alphabetical', imgSuffix: '' },
     { type: 'gender', imgSuffix: '' },
-    { type: 'id', imgSuffix: '' },
+    // { type: 'id', imgSuffix: '' },
     { type: 'unknown', imgSuffix: '' }
   ];
   users = users;
   filteredUsers = this.users;
-  showEditStudent = false;
-  showAddStudent = false;
-  // showSidePanel = true;
-  public boundStudentClick: Function;
-  public boundResetStudents: Function;
-  showAddStudentPanel() {
-    this.showAddStudent = !this.showAddStudent;
-    // this.showSidePanel =
+
+  showEditStaff = false;
+  showAddStaff = false;
+  public boundStaffClick: Function;
+  public boundResetStaffs: Function;
+
+  showAddStaffPanel() {
+    this.showAddStaff = !this.showAddStaff;
   }
 
   showSidePanel() {
-    return this.showAddStudent || this.showEditStudent;
+    return this.showAddStaff || this.showEditStaff;
   }
   setSortBtnImg(index, imgSuffix) {
     if (imgSuffix != '') {
@@ -93,17 +94,17 @@ export class StudentsTabComponent implements OnInit {
   }
 
   registerActiveStudentSub() {
-    this.studentService.activeStudents$.subscribe(_activeStudents => {
-      this.activeStudents = [..._activeStudents];
-      this.showEditStudent = this.activeStudents.length === 1;
+    this.staffService.activeStaff$.subscribe(_activeStaff => {
+      this.activeStaff = [..._activeStaff];
+      this.showEditStaff = this.activeStaff.length === 1;
     });
   }
 
-  resetStudents() {
-    this.studentService.resetActiveStudents();
+  resetStaffs() {
+    this.staffService.resetActiveStudents();
   }
 
-  studentClick(user) {
-    this.studentService.studentPillClick(this.activeStudents, user);
+  staffClick(user) {
+    this.staffService.staffPillClick(this.activeStaff, user);
   }
 }

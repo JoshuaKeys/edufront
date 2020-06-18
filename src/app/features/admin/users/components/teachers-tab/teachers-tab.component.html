@@ -1,8 +1,8 @@
 <div class="header">
   <button
     ButtonType="round"
-    (click)="showAddStudentPanel()"
-    [ngClass]="{ active: showAddStudent }"
+    (click)="showAddStaffPanel()"
+    [ngClass]="{ active: showAddStaff }"
     class="button button--add"
   >
     <img src="assets/user-settings/top-nav_plus.svg" alt="" />
@@ -48,16 +48,17 @@
   <div class="content" [ngClass]="{ 'sidepanel-active': showSidePanel() }">
     <edu-user-pill-sorted-views
       [users]="filteredUsers"
-      [activeUsers]="activeStudents"
+      [activeUsers]="activeStaff"
       [activeSort]="activeSort"
-      [resetUsers]="boundResetStudents"
-      [clickCallBack]="boundStudentClick"
+      [resetUsers]="boundResetStaffs"
+      [clickCallBack]="boundStaffClick"
     ></edu-user-pill-sorted-views>
   </div>
   <aside class="aside" [ngClass]="{ 'sidepanel-active': showSidePanel() }">
     <edu-user-summary-preview
       [users]="users"
-      userType="students"
+      userType="teachers"
+      displayFooter="false"
     ></edu-user-summary-preview>
     <edu-user-excel-preview></edu-user-excel-preview>
     <button class="download-excel" ButtonType="text">
@@ -67,13 +68,18 @@
   </aside>
 </main>
 <div class="sidePanel" [ngClass]="{ active: showSidePanel() }">
-  <edu-add-student-panel
-    *ngIf="showAddStudent"
-    (closePanel)="showAddStudentPanel()"
-  ></edu-add-student-panel>
-  <edu-edit-student-panel
+  <edu-teacher-panel
+    *ngIf="showAddStaff"
+    (closePanel)="showAddStaffPanel()"
+  ></edu-teacher-panel>
+  <edu-teacher-panel
+    *ngIf="showEditStaff"
+    [activeUser]="activeStaff[0]"
+    (closePanel)="resetStaffs()"
+  ></edu-teacher-panel>
+  <!-- <edu-edit-student-panel
     *ngIf="showEditStudent"
     (closePanel)="resetStudents()"
     [activeUser]="activeStudents[0]"
-  ></edu-edit-student-panel>
+  ></edu-edit-student-panel> -->
 </div>

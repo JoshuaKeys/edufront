@@ -57,3 +57,18 @@
     margin-right: 8px;
   }
 }
+
+.placeholder-img {
+  background: $purple;
+  position: relative;
+  color: white;
+  span {
+    text-transform: uppercase;
+    font: 600 10px/11px Raleway;
+    letter-spacing: 0px;
+    white-space: nowrap;
+    @include absoluteCenter();
+    transform-origin: top left;
+    transform: scale(0.8) translate(-50%, -50%);
+  }
+}

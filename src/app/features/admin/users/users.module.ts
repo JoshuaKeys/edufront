@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UsersRoutingModule } from './users-routing/users-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserExcelPreviewComponent } from './components/user-excel-preview/user-excel-preview.component';
 import { UserSummaryPreviewComponent } from './components/user-summary-preview/user-summary-preview.component';
@@ -10,13 +12,18 @@ import { EditStudentPanelComponent } from './components/edit-student-panel/edit-
 import { UserPillComponent } from './components/user-pill/user-pill.component';
 import { UserPillSortedViewsComponent } from './components/user-pill-sorted-views/user-pill-sorted-views.component';
 import { UsersShellComponent } from './containers/users-shell/users-shell.component';
-import { UsersRoutingModule } from './users-routing/users-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { TeachersTabComponent } from './components/teachers-tab/teachers-tab.component';
+import { TeacherPanelComponent } from './components/teacher-panel/teacher-panel.component';
+import { AdministratorsTabComponent } from './components/administrators-tab/administrators-tab.component';
 import { StudentsService } from './services/students.service';
+import { StaffService } from './services/staff.service';
 
 @NgModule({
   declarations: [
+    TeacherPanelComponent,
+    AdministratorsTabComponent,
+    TeachersTabComponent,
     UserExcelPreviewComponent,
     UserSummaryPreviewComponent,
     StudentsTabComponent,
@@ -26,7 +33,7 @@ import { StudentsService } from './services/students.service';
     UserPillSortedViewsComponent,
     UsersShellComponent
   ],
-  providers: [StudentsService],
+  providers: [StudentsService, StaffService],
   imports: [
     CommonModule,
     UsersRoutingModule,

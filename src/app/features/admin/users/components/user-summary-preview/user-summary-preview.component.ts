@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  ChangeDetectorRef
 } from '@angular/core';
 
 @Component({
@@ -12,9 +13,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserSummaryPreviewComponent implements OnInit {
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this._displayFooter);
+  }
 
   @Input() set users(_users) {
     this._users = _users;
@@ -22,7 +25,7 @@ export class UserSummaryPreviewComponent implements OnInit {
     console.log(this.classes);
   }
   @Input() userType = 'student';
-
+  @Input('displayFooter') displayFooter = true;
   _users;
   classes = {};
   parser(users) {

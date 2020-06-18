@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'edu-users-shell',
   templateUrl: './users-shell.component.html',
@@ -7,10 +7,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersShellComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  isActiveRoute(param) {
+    // console.log(this.router.url);
+    // console.log(`/admin/users/${param}`);
+    // console.log(this.router.url === `/admin/users/${param}`);
+
+    return this.router.url === `/admin/users/${param}`;
   }
-
 }

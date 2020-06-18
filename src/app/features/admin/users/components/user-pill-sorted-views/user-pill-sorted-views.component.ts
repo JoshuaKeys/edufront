@@ -15,7 +15,7 @@ export class UserPillSortedViewsComponent implements OnInit {
   constructor() {}
   @Input() set users(_users) {
     this._users = _users;
-    console.log('init users');
+    // console.log('init users');
     if (this._activeSort != null) {
       this.parsedUsers = this.parseUser(this._users, this._activeSort);
     }

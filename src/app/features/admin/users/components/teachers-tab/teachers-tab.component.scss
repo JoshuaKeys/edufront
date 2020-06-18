@@ -38,8 +38,8 @@
   flex-shrink: 0;
   border-left: 1px solid #e6e9f3;
   width: 238px;
-  max-height: calc(100vh - 126px);
   overflow-y: auto;
+  max-height: calc(100vh - 126px);
   padding: 20px 16px;
   &.sidepanel-active {
     width: 0px;

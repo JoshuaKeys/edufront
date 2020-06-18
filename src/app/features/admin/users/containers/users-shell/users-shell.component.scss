@@ -36,6 +36,9 @@
     &:last-child {
       margin-right: 0;
     }
+    &:focus {
+      outline: none;
+    }
   }
 
   &__option.active {

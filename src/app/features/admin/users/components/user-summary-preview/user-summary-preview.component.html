@@ -5,7 +5,7 @@
   <p class="student-summary__desc student-summary__desc--total">
     {{ _users.length }}
   </p>
-  <div class="student-summary__footer">
+  <div class="student-summary__footer" *ngIf="displayFooter === true">
     <div
       class="student-summary__group"
       *ngFor="let class of classes | keyvalue"
