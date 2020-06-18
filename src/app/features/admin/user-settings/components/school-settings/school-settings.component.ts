@@ -1,9 +1,13 @@
 import {
   Component,
   OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  Renderer2
 } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 @Component({
@@ -12,8 +16,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./school-settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SchoolSettingsComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+export class SchoolSettingsComponent implements OnInit, AfterViewInit {
+  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.userDetailForm = this.formBuilder.group({
@@ -32,14 +36,31 @@ export class SchoolSettingsComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.blockModalClick();
+  }
   get formControls() {
     return this.userDetailForm.controls;
   }
   userDetailForm: FormGroup;
 
   @Output('close') closeModalEvent = new EventEmitter();
+  @ViewChild('modal') modal: ElementRef;
 
-  closeModal() {
+  blockModalClick() {
+    console.log(this.modal);
+    this.renderer.listen(this.modal.nativeElement, 'click', $event => {
+      //  $event.preventDefault();
+      console.log('MODAL CLICK');
+      $event.stopPropagation();
+    });
+  }
+
+  closeModal($event, src) {
+    console.log($event);
+    console.log(src);
+    $event.preventDefault();
+    $event.stopPropagation();
     this.closeModalEvent.emit();
   }
 

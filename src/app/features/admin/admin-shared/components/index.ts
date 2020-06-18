@@ -1,3 +1,4 @@
 import { VisibilityToggleComponent } from './visibility-toggle/visibility-toggle.component';
 
-export { VisibilityToggleComponent };
+const sharedComponents = [VisibilityToggleComponent];
+export { sharedComponents };

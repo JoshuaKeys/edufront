@@ -5,15 +5,18 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminComponent } from './admin/admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { AdminSharedModule } from './admin-shared/admin-shared.module';
 
 import { UserSettingsModule } from './user-settings/user-settings.module';
 
-import { VisibilityToggleComponent } from './components';
-
-let components = [VisibilityToggleComponent];
-
 @NgModule({
-  declarations: [...components, AdminComponent],
-  imports: [CommonModule, SharedModule, AdminRoutingModule, UserSettingsModule]
+  declarations: [AdminComponent],
+  imports: [
+    CommonModule,
+    SharedModule,
+    AdminSharedModule,
+    AdminRoutingModule,
+    UserSettingsModule
+  ]
 })
 export class AdminModule {}

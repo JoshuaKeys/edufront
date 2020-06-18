@@ -1,0 +1,54 @@
+<div class="modal__overlay" (click)="onCloseModal()">
+  <div class="modal" #modal>
+    <button class="btn--close" ButtonType="icon" (click)="onCloseModal()">
+      <img src="assets/user-settings/modal_close.svg" alt="" srcset="" />
+    </button>
+
+    <div class="screen0 content__wrapper" *ngIf="isActiveScreen(0)">
+      <div class="content ">
+        <h2 class="conent__title">Transfer School Ownership</h2>
+        <p class="content__desc">
+          Enter password and security question to transfer ownership
+        </p>
+        <form action="" class="form">
+          <edu-input alignment="center" isPassword="true" elementId="'test132'">
+            <span class="edu-label">Enter Password</span>
+            <visibility-toggle
+              class="edu-input__suffix"
+              InputAffix
+            ></visibility-toggle>
+          </edu-input>
+          <edu-input alignment="center" elementId="'test1322'">
+            <span class="edu-label">Security Question</span>
+          </edu-input>
+          <edu-input alignment="center" elementId="'test1323'">
+            <span class="edu-label">Answer</span>
+          </edu-input>
+        </form>
+      </div>
+      <div class="btns">
+        <button ButtonType="basic">continue</button>
+      </div>
+    </div>
+
+    <div class="screen1 content__wrapper" *ngIf="isActiveScreen(1)">
+      <div class="content ">
+        <h2 class="conent__title">Transfer School Ownership</h2>
+        <p class="content__desc">
+          Nominate the next School Master Administrator
+        </p>
+        <form action="" class="form">
+          <edu-input alignment="center" elementId="'test1322'">
+            <span class="edu-label">Security Question</span>
+          </edu-input>
+        </form>
+      </div>
+      <div class="btns">
+        <button ButtonType="outline">Cancel</button>
+        <button ButtonType="basic">continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- (click)="closeModal( )" -->

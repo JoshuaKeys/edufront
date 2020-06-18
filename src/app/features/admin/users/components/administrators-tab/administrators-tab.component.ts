@@ -15,7 +15,9 @@ export class AdministratorsTabComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
+  showAddAdmin = false;
+  showModal = false;
+  popoverToggleBoolean = false;
   @Input() owners = [
     { firstName: 'Ronald', lastName: 'Mendoza', img: '' },
     { firstName: 'Anna', lastName: 'Fuller', img: '' }
@@ -35,5 +37,22 @@ export class AdministratorsTabComponent implements OnInit {
   ];
   getPlaceholderName(firstName, lastName) {
     return ` ${firstName.substring(0, 1)} ${lastName.substring(0, 1)}`;
+  }
+
+  showAddAdminPanel() {
+    this.showAddAdmin = !this.showAddAdmin;
+    this.closePopover();
+  }
+  closePopover() {
+    this.popoverToggleBoolean = !this.popoverToggleBoolean;
+  }
+  closePanelIfOpen() {
+    if (this.showAddAdmin) {
+      this.showAddAdmin = false;
+    }
+  }
+
+  toggleModal() {
+    this.showModal = !this.showModal;
   }
 }

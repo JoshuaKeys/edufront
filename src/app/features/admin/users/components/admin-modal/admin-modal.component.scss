@@ -1,0 +1,50 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+//modal
+.modal {
+  @include modal();
+  width: 80%;
+  height: 80%;
+  max-width: 600px;
+  max-height: 539px;
+  position: relative;
+  top: 50%;
+  border-radius: 15px;
+  padding: 0px;
+  padding-bottom: 60px;
+  overflow: hidden;
+  &__overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.content {
+  flex-grow: 1;
+  @include displayFlex(center, center, column);
+
+  &__title {
+    margin: 0;
+    color: $black;
+  }
+  &__desc {
+    margin-top: 16px;
+    color: $ash;
+    font: 400 14px/22px Raleway;
+    text-align: center;
+  }
+}
+.btn--close {
+  position: absolute;
+  right: 17px;
+  top: 17px;
+}
+.form {
+  margin-top: 40px;
+}
+edu-input {
+  margin: 20px auto;
+  height: 44px;
+  width: 300px;
+}

@@ -1,11 +1,11 @@
-<div class="modal__overlay">
-  <div class="modal">
+<div class="modal__overlay" (click)="closeModal($event, 'overlay')">
+  <div class="modal" #modal>
     <div class="profile-main">
       <div class="title-and-close group--row just-between">
         <div class="profile__title">School Settings</div>
         <button
           class="profile__close-btn"
-          (click)="closeModal()"
+          (click)="closeModal($event, 'btn')"
           ButtonType="icon"
         >
           <img src="assets/user-settings/modal_close.svg" alt="" srcset="" />

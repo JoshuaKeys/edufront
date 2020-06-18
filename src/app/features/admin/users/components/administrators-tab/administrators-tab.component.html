@@ -21,7 +21,9 @@
       </div>
     </div>
 
-    <button class="btn--transfer" ButtonType="basic">Transfer ownership</button>
+    <button class="btn--transfer" ButtonType="basic" (click)="toggleModal()">
+      Transfer ownership
+    </button>
   </div>
 
   <div class="admins section">
@@ -49,10 +51,15 @@
       </div>
 
       <div class="group--row btn__wrapper--add">
-        <button class="btn--add" ButtonType="round">
+        <button
+          class="btn--add"
+          ButtonType="round"
+          (click)="closePanelIfOpen()"
+        >
           <edu-popover alignment="top">
-            <div class="section__padmins">
+            <div class="section__padmins" [ClosePopover]="popoverToggleBoolean">
               <div
+                (click)="closePopover()"
                 class="group--row section__user"
                 *ngFor="let padmin of possibleAdmins"
               >
@@ -72,12 +79,29 @@
 
                 {{ padmin.firstName }} {{ padmin.lastName }}
               </div>
+
+              <div class="btn--new-user" (click)="showAddAdminPanel()">
+                <img src="/assets/admin/buttons/plus-black.svg" alt="" />
+                <span> New User </span>
+              </div>
             </div>
           </edu-popover>
           <img src="assets/admin/buttons/plus-big-blue.svg" alt="" />
         </button>
-        <span class="bluecolor">Add New</span>
+        <span class="bluecolor">Add New </span>
       </div>
     </div>
   </div>
 </div>
+
+<div class="sidePanel" [ngClass]="{ active: showAddAdmin }">
+  <edu-add-admin-panel
+    *ngIf="showAddAdmin"
+    (closePanel)="showAddAdminPanel()"
+  ></edu-add-admin-panel>
+</div>
+
+<edu-admin-modal
+  *ngIf="showModal"
+  (closeModal)="toggleModal()"
+></edu-admin-modal>
