@@ -67,7 +67,7 @@ export class AcademicYearQuestionComponent implements OnInit {
           if(startDate && startDate.length && endDate && endDate.length) {
             const startDateObj = new Date(startDate);
             const endDateObj = new Date(endDate);
-            if(startDateObj.getTime() > endDateObj.getTime()) {
+            if(startDateObj.getTime() >= endDateObj.getTime()) {
               errors.msg.push('End Date must be more than start date')
             }
           }
