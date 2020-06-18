@@ -29,7 +29,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
     this.indexInParent = Array.from(
       this.el.nativeElement.parentElement.children
     ).indexOf(this.el.nativeElement);
-
+    console.log('testing', this.OptionValue)
     //  this.selectService.activeOption
     // .subscribe((activeOption)=>{
     //   this.isActive = (activeOption === this.OptionValue);
