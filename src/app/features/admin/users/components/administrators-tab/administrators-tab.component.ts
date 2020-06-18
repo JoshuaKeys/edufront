@@ -16,6 +16,24 @@ export class AdministratorsTabComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  @Input() owner;
-  @Input() administrators;
+  @Input() owners = [
+    { firstName: 'Ronald', lastName: 'Mendoza', img: '' },
+    { firstName: 'Anna', lastName: 'Fuller', img: '' }
+  ];
+  @Input() administrators = [
+    { firstName: 'Sean', lastName: 'Jackson', img: '' },
+    { firstName: 'Anna', lastName: 'Fuller', img: '' },
+    { firstName: 'Philip', lastName: 'Hall', img: '' }
+  ];
+
+  @Input() possibleAdmins = [
+    { firstName: 'Caitlin', lastName: 'Ingram', img: '' },
+    { firstName: 'Cecil', lastName: 'Ferrell', img: '' },
+    { firstName: 'Francisca', lastName: 'Carr', img: '' },
+    { firstName: 'Heather', lastName: 'Morales', img: '' },
+    { firstName: 'Jack', lastName: 'Phillips', img: '' }
+  ];
+  getPlaceholderName(firstName, lastName) {
+    return ` ${firstName.substring(0, 1)} ${lastName.substring(0, 1)}`;
+  }
 }

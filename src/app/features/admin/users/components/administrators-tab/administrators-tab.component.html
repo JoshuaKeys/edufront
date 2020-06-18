@@ -1,1 +1,83 @@
-<p>administrators-tab works!</p>
+<div class="main">
+  <div class="owners section">
+    <h3 class="section__title">Owner</h3>
+    <div class="section__users">
+      <div class="group--row section__user" *ngFor="let owner of owners">
+        <img
+          *ngIf="owner.img; else placeholderImg"
+          class="user__img"
+          src="{{ owner.img }}"
+        />
+        <ng-template #placeholderImg>
+          <div class="placeholder-img user__img">
+            <span>{{
+              getPlaceholderName(owner.firstName, owner.lastName)
+            }}</span>
+          </div>
+          <!-- <img class="pill__img" src="assets/admin/pill-placeholder.svg" /> -->
+        </ng-template>
+
+        {{ owner.firstName }} {{ owner.lastName }}
+      </div>
+    </div>
+
+    <button class="btn--transfer" ButtonType="basic">Transfer ownership</button>
+  </div>
+
+  <div class="admins section">
+    <h3 class="section__title">Administrators</h3>
+    <div class="section__users">
+      <div
+        class="group--row section__user"
+        *ngFor="let admin of administrators"
+      >
+        <img
+          *ngIf="admin.img; else placeholderImg"
+          class="user__img"
+          src="{{ admin.img }}"
+        />
+        <ng-template #placeholderImg>
+          <div class="placeholder-img user__img">
+            <span>{{
+              getPlaceholderName(admin.firstName, admin.lastName)
+            }}</span>
+          </div>
+          <!-- <img class="pill__img" src="assets/admin/pill-placeholder.svg" /> -->
+        </ng-template>
+
+        {{ admin.firstName }} {{ admin.lastName }}
+      </div>
+
+      <div class="group--row btn__wrapper--add">
+        <button class="btn--add" ButtonType="round">
+          <edu-popover alignment="top">
+            <div class="section__padmins">
+              <div
+                class="group--row section__user"
+                *ngFor="let padmin of possibleAdmins"
+              >
+                <img
+                  *ngIf="padmin.img; else placeholderImg"
+                  class="user__img"
+                  src="{{ padmin.img }}"
+                />
+                <ng-template #placeholderImg>
+                  <div class="placeholder-img user__img">
+                    <span>{{
+                      getPlaceholderName(padmin.firstName, padmin.lastName)
+                    }}</span>
+                  </div>
+                  <!-- <img class="pill__img" src="assets/user/pill-placeholder.svg" /> -->
+                </ng-template>
+
+                {{ padmin.firstName }} {{ padmin.lastName }}
+              </div>
+            </div>
+          </edu-popover>
+          <img src="assets/admin/buttons/plus-big-blue.svg" alt="" />
+        </button>
+        <span class="bluecolor">Add New</span>
+      </div>
+    </div>
+  </div>
+</div>

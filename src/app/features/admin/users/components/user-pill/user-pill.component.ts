@@ -33,9 +33,9 @@ export class UserPillComponent implements OnInit {
       1
     )} ${this.user.lastName.substring(1, 2)}`;
 
-    console.log(
-      this.placeholderName + ',' + this.user.lastName.substring(1, 2)
-    );
+    // console.log(
+    //   this.placeholderName + ',' + this.user.lastName.substring(1, 2)
+    // );
     // console.log(this.user);
     this._user = this.user;
     this._user.name = `${this.user.prefix} ${this.user.firstName} ${this.user.lastName}`;
