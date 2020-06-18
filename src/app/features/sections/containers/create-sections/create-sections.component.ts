@@ -32,14 +32,16 @@ export class CreateSectionsComponent implements OnInit {
   draggedStudents: Observable<ExtendedProfileDTOModel[]>;
   selectedClass: Observable<ClassesModel> | null;
   selectedSections: Observable<SectionModel>
-  allClasses: Observable<ClassesModel[]>;
+  allClasses: Observable<ClassModel[]>;
   ngOnInit(): void {
     this.sectionsModalState = this.store.select(selectModalState);
     this.sortedClassesStaffs = this.store.select(selectSortedClasses)
     this.notDraggedStudents = this.store.select(selectNotDraggedStudents)
     this.selectedSections = this.store.select(selectSections);
-    this.allClasses = this.store.select(selectAllClasses);
-    this.allClasses.subscribe(x => console.log('hellooooo', x));
+    this.allClasses = this.store.select(selectAllClasses).pipe(
+      map(classes=> classes.map(classItem => classItem.class))
+    )
+        this.allClasses.subscribe(x => console.log('hellooooo', x));
     this.sortedClasses = this.sortedClassesStaffs.pipe(
       map(sortedClasses => sortedClasses.map(classItem => classItem.class))
     );
