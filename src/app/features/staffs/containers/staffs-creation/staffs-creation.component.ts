@@ -110,6 +110,9 @@ export class StaffsCreationComponent implements OnInit {
   onEditStaff(staff: StaffModel) {
     this.store.dispatch(fetchStaffById({ staff }))
   }
+  processEditStaff(staff: StaffModel) {
+    console.log(staff);
+  }
   onRemoveStaff(staff: StaffModel) {
     this.store.dispatch(deleteStaffRequest({ staff }))
   }
