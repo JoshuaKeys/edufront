@@ -1,80 +1,50 @@
 <main>
-  <section class="section">
-    <button
-      class="section__back-btn"
-      [routerLink]="['../', activatedRouteData.previous]"
-    >
+    <section class="section">
+        <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
-    <div class="content">
-      <div class="content-wrapper">
-        <h2 class="content__title">
-          Assign subjects to your class
-        </h2>
-        <p class="content__desc">
-          Now please assign subjects to classes by selecting one or multiple
-          classes on the left and selecting/dropping the subjects from the right
-        </p>
-        <div class="drop-zone__wrapper">
-          <div class="drop-zone__options">
-            <edu-options
-              (clicked)="updateSelectedState($event)"
-              [classes]="classes"
-            ></edu-options>
-          </div>
-          <edu-subjects-box
-            appDroppable
-            [subjects]="subjectsInterception"
-            (onDropped)="onDrop($event)"
-            [selectedClasses]="selectedClasses"
-            (subjectRemoval)="onRemoveSubject($event)"
-          ></edu-subjects-box>
+        <div class="content">
+            <div class="content-wrapper">
+                <h2 class="content__title">
+                    Assign subjects to your class
+                </h2>
+                <p class="content__desc">
+                    Now please assign subjects to classes by selecting one or multiple classes on the left and selecting/dropping the subjects from the right
+                </p>
+                <div class="drop-zone__wrapper">
+                    <div class="drop-zone__options">
+                        <edu-options (clicked)="updateSelectedState($event)" [classes]="classes"></edu-options>
+                    </div>
+                    <edu-subjects-box appDroppable [subjects]="subjectsInterception" (onDropped)="onDrop($event)" [selectedClasses]="selectedClasses" (subjectRemoval)="onRemoveSubject($event)"></edu-subjects-box>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="content__btn-wrapper">
-      <button
-        ButtonType="basic"
-        class="  form__button"
-        [routerLink]="['../', activatedRouteData.next]"
-        [disabled]="!(subjectsInterception | async).length"
-      >
+        <div class="content__btn-wrapper">
+            <button ButtonType="basic" class="  form__button" [routerLink]="['../', activatedRouteData.next]" [disabled]="!(subjectsInterception | async).length">
         Continue
       </button>
-    </div>
-  </section>
-  <aside class="aside">
-    <div class="search__wrapper">
-      <div class="search__input-wrapper">
-        <img
-          class="search__icon"
-          src="../../../assets/search-icon.svg"
-          alt=""
-        />
-        <input
-          class="search__input"
-          (input)="updateFilter($event)"
-          type="text"
-          placeholder="Search"
-        />
-      </div>
-      <button class="search__btn" (click)="openFormModal()">
+        </div>
+    </section>
+    <aside class="aside">
+        <div class="search__wrapper">
+            <div class="search__input-wrapper">
+                <img class="search__icon" src="../../../assets/search-icon.svg" alt="" />
+                <input class="search__input" (input)="updateFilter($event)" type="text" placeholder="Search" />
+            </div>
+            <button class="search__btn" (click)="openFormModal()">
         <span>+</span>
       </button>
-    </div>
-    <div *ngIf="filteredSubjects | async as allSubjects; else noSubjects">
-      <edu-subjects-list [allSubjects]="allSubjects"></edu-subjects-list>
-    </div>
-    <ng-template #noSubjects>
-      <p class="aside__placeholder">
-        Add <b class="orangecolor">subjects</b> using window on the
-        <b class="orangecolor">left</b>
-      </p>
-    </ng-template>
-  </aside>
+        </div>
+        <div *ngIf="filteredSubjects | async as allSubjects; else noSubjects">
+            <edu-subjects-list [allSubjects]="allSubjects"></edu-subjects-list>
+        </div>
+        <ng-template #noSubjects>
+            <p class="aside__placeholder">
+                Add <b class="orangecolor">subjects</b> using window on the
+                <b class="orangecolor">left</b>
+            </p>
+        </ng-template>
+    </aside>
 </main>
-<edu-add-subject-modal
-  (createSubject)="createSubject($event)"
-  *ngIf="(modalState | async).formModal"
->
+<edu-add-subject-modal (createSubject)="createSubject($event)" *ngIf="(modalState | async).formModal">
 </edu-add-subject-modal>

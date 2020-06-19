@@ -18,6 +18,10 @@ export const calenderNavigation = {
     },
     'government-holidays-observed-question': {
         previous: 'vacation-names-and-dates',
+        next: 'holiday-list'
+    },
+    'holiday-list': {
+        previous: 'government-holidays-observed-question',
         next: ''
     }
 }
@@ -26,5 +30,6 @@ export const calenderRouteToComponentMap = {
     'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
     'term-names-and-dates-question': fromCalenderContainer.TermNamesAndDatesQuestionComponent,
     'vacation-names-and-dates': fromCalenderContainer.VacationNamesAndDatesQuestionComponent,
-    'government-holidays-observed-question': fromCalenderContainer.GovernmentHolidaysObservedQuestionComponent
+    'government-holidays-observed-question': fromCalenderContainer.GovernmentHolidaysObservedQuestionComponent,
+    'holiday-list': fromCalenderContainer.HolidayListComponent
 }

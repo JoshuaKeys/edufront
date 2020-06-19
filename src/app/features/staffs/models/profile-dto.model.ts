@@ -7,6 +7,7 @@ export interface ProfileDTOModel {
   profileImage?: string;
   lastName?: string;
   middleName?: string;
+  id?: string;
   countryId?: string;
   address?: string;
   city?: string;

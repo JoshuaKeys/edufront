@@ -8,6 +8,7 @@ import * as calendarSelectors from '../../ngrx/selectors'
 import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
 import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setAcademicYearStartDate, setAcademicYearEndDate } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 @Component({
   selector: 'edu-academic-year-question',
   templateUrl: './academic-year-question.component.html',
@@ -32,7 +33,9 @@ export class AcademicYearQuestionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.store.select(calendarSelectors.selectCalendar).subscribe(console.log)
-    this.store.select(calendarSelectors.selectCalendar).subscribe(
+    this.store.select(calendarSelectors.selectCalendar).pipe(
+      first()
+    ).subscribe(
       calendarState => {
         console.log('hellooo', calendarState.currentAcademicYear)
         console.log(calendarState && calendarState.currentAcademicYear? calendarState.currentAcademicYear.startDate : null)

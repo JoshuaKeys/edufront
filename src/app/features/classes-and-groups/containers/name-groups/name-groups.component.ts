@@ -24,6 +24,9 @@ export class NameGroupsComponent implements OnInit {
   classesAndGroupsForm: FormGroup;
   selectedClasses: Observable<ClassModel[]>
   hasUngroupedClass: Observable<boolean>
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard');
+  }
   ngOnInit(): void {
 
     this.store.dispatch(requestGroupsClassMap())

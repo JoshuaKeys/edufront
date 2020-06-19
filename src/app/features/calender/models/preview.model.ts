@@ -1,3 +1,6 @@
+import { TermsAndDates } from './terms-and-date.model';
+import { VacationModel } from './vacation.model';
+
 export interface PreviewModel {
     datePreview?: {
         route: string;
@@ -10,10 +13,10 @@ export interface PreviewModel {
     },
     termsNamesAndDates?: {
         route: string;
-        items: {termName: string; termStartDate: string; termEndDate: string}[]
+        items?: TermsAndDates[]
     },
     termVacations?: {
         route: string;
-        items: {vacationName: string; vacationStartDate: string; vacationEndDate: string}[]
+        items?: VacationModel[]
     }
 }
