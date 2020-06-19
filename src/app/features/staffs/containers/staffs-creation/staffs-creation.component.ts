@@ -27,7 +27,8 @@ import {
   toggleEndModal,
   toggleStartModal,
   toggleEditModal,
-  fetchStaffById
+  fetchStaffById,
+  editStaffRequest
 } from '../../ngrx/actions';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -109,6 +110,9 @@ export class StaffsCreationComponent implements OnInit {
 
   onEditStaff(staff: StaffModel) {
     this.store.dispatch(fetchStaffById({ staff }))
+  }
+  processEditStaff(staff: StaffFormModel) {
+    this.store.dispatch(editStaffRequest({staff}))
   }
   onRemoveStaff(staff: StaffModel) {
     this.store.dispatch(deleteStaffRequest({ staff }))
