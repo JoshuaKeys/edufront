@@ -5,6 +5,7 @@ export interface CreateSchoolModel {
   email: string;
   phoneNo: string;
   website: string;
+  id?: string;
   logo: string;
   addressDto: {
     address: string;

@@ -24,7 +24,10 @@ export class SchoolProfileEffects {
     mergeMap(([action, schoolProfile]) => {
       const schoolData = this.getSchoolReqData(schoolProfile);
       return this.schoolProfileService.createSchool(schoolData).pipe(
-        switchMap(res => [toggleProfileEndModal(), incrementProgress()])
+        switchMap(res => {
+          localStorage.setItem('schoolId', res.id)
+         return [toggleProfileEndModal(), incrementProgress()]
+        })
       )
     })
   ))
