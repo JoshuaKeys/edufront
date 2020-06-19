@@ -1,10 +1,22 @@
 @import 'src/assets/styles/mixins/alignment';
+@import '../../scss-fixes.scss';
 :host {
   @include displayFlex(center, center, column);
   width: 100%;
   flex-grow: 1;
   height: 100%;
 }
+form {
+  // height: 100% !important;
+}
+
+.scrollable-content {
+  flex-grow: 1;
+  // height: 100%;
+  @include displayFlex(flex-start, center, column);
+  max-height: calc(100vh - 330px);
+}
+
 .header {
   font-size: 26px;
   color: #212121;
@@ -25,12 +37,12 @@
   }
 }
 .terms-and-dates__errors {
-    display: flex;
-    justify-content: center;
-    span {
-        color: red;
-        font-weight: 700;
-    }
+  display: flex;
+  justify-content: center;
+  span {
+    color: red;
+    font-weight: 700;
+  }
 }
 edu-input,
 edu-datepicker {
@@ -39,6 +51,9 @@ edu-datepicker {
   max-width: 30%;
   margin: 0 10px;
   flex-shrink: 0;
+  img {
+    margin-right: 10px;
+  }
   &:first-child {
     margin-left: 0;
   }
@@ -47,21 +62,21 @@ edu-datepicker {
   }
 }
 .terms-and-dates__btn-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .terms-and-dates__continue-btn {
-    height: 52px;
-    border-radius: 100px;
-    background: #69a9f2 0% 0% no-repeat padding-box;
-    width: 250px;
-    margin-top: 230px;
-    text-transform: uppercase;
-    text-align: center;
-    color: #fff;
-    border: none;
-    &:active,
-    &:focus {
-        outline: none;
-    }
+  height: 52px;
+  border-radius: 100px;
+  background: #69a9f2 0% 0% no-repeat padding-box;
+  width: 250px;
+  margin-top: 230px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  border: none;
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
