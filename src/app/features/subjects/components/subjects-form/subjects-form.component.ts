@@ -28,12 +28,8 @@ export class SubjectsFormComponent implements OnInit {
   @Output() createSubject = new EventEmitter<CreateSubjModel>();
   addSubjForm = this.fb.group({
     subjectName: ['', Validators.required],
-    subSubjects: this.fb.array([
-      this.fb.control('')
-    ]),
-    activities: this.fb.array([
-      this.fb.control('')
-    ])
+    subSubjects: this.fb.array([this.fb.control('')]),
+    activities: this.fb.array([this.fb.control('')])
   });
 
   onSubmit() {
@@ -53,12 +49,15 @@ export class SubjectsFormComponent implements OnInit {
       teachersIds: []
     };
     this.createSubject.emit(submitData);
+    // console.log('onsubmit');
     this.addSubjForm.reset();
-    this.addSubjForm.patchValue({
-      subjectName: '',
-      subSubjects: this.fb.array([this.fb.control('')]),
-      activities: this.fb.array([this.fb.control('')])
-    });
+    // this.addSubjForm.patchValue({
+    //   subSubjects: this.fb.array([this.fb.control('')]),
+    //   activities: this.fb.array([this.fb.control('')])
+    // });
+    // this.addSubjForm.controls.subSubjects.setValue(
+    //   this.fb.array([this.fb.control('')])
+    // );
   }
   processArrayFields(
     type: 'activity' | 'subsubject',
