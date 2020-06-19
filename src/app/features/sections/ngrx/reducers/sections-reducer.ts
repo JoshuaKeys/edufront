@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { SectionModel } from '../../models/section.model';
 import { initFirstSection, addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, changeSectionNameRequest } from '../actions/sections.actions';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { mapAlphaToNumeric } from './utilities';
 
 const initialState: SectionModel[] = [];
 
@@ -10,9 +11,10 @@ export const sectionsReducer = createReducer(initialState,
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
     const sectionIsPresent = stateCopy.findIndex(section => action.classId === section.classId);
     if (sectionIsPresent === -1) {
+      const sectionIdx = 1;
       stateCopy.push({
         classId: action.classId,
-        sections: [{ sectionName: '1', subjects: [] }]
+        sections: [{ sectionIdx, sectionName: mapAlphaToNumeric()[sectionIdx].toUpperCase(), subjects: [] }]
       })
       return stateCopy;
     }
@@ -45,9 +47,9 @@ export const sectionsReducer = createReducer(initialState,
 
     const sectionId = stateCopy.findIndex(section => section.classId === action.classId);
     // get last section
-    const sectionLength = stateCopy[sectionId].sections.length;
+    const sectionName = mapAlphaToNumeric()[stateCopy[sectionId].sections.length + 1].toUpperCase();
 
-    stateCopy[sectionId].sections.push({ sectionName: (sectionLength + 1).toString(), subjects: [] })
+    stateCopy[sectionId].sections.push({ sectionName, subjects: [] })
 
     return stateCopy;
   }),
