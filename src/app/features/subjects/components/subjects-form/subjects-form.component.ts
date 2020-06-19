@@ -51,6 +51,15 @@ export class SubjectsFormComponent implements OnInit {
     this.createSubject.emit(submitData);
     // console.log('onsubmit');
     this.addSubjForm.reset();
+
+    while (this.subSubjects.controls.length > 1) {
+      this.subSubjects.removeAt(1);
+    }
+
+    while (this.activities.controls.length > 1) {
+      this.activities.removeAt(1);
+    }
+    // this.subSubjects.insert(item.pos + 1, this.fb.control(''));
     // this.addSubjForm.patchValue({
     //   subSubjects: this.fb.array([this.fb.control('')]),
     //   activities: this.fb.array([this.fb.control('')])
