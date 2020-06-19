@@ -27,19 +27,22 @@ export class SchoolLogoUploadComponent implements OnInit {
       .select(selectSchoolLogo)
       .pipe(withLatestFrom(this.store.select(selectLogoPreview)))
       .subscribe(([image, logoPreview]) => {
+        // console.log(image, logoPreview)
         let schoolLogo;
         if (image) {
           schoolLogo = { base64: logoPreview };
+          this.disabledContinue = false;
         } else {
           schoolLogo = null;
         }
+        console.log(schoolLogo);
         this.uploadForm = new FormGroup({
           image: new FormControl(schoolLogo, Validators.required)
         });
       });
   }
   goToDashboard() {
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('/dashboard');
   }
   onConfirm(img: { base64: string; imageUrl: string; acceptedFile: File }) {
     this.disabledContinue = false;
