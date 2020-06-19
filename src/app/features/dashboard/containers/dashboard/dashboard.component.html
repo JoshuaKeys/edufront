@@ -39,24 +39,22 @@
 
 <edu-modal-v2
   *ngIf="(selectModalState | async).startModal"
-  class="complete"
+  class="complete welcomeModal"
   btnText="GOT IT"
   header="Welcome to our On-Boarding"
-  icon="assets/icon-complete.svg"
+  icon="assets/modal-start.svg"
   btnText="GET ME STARTED"
   (btnClicked)="onContinue()"
 >
   <span class="modal__text">
-    <p>
-      Excity but aso intimidating <br /><br />
+    Excity but aso intimidating <br /><br />
 
-      This step by step process would get you up and running
-      <i class="orangeColor">in no time</i>
+    This step by step process would get you up and running
+    <i class="orangeColor">in no time</i>
 
-      <br />
-      <br />
+    <br />
+    <br />
 
-      The entire process take 20 to 120 minutes
-    </p>
+    The entire process take 20 to 120 minutes
   </span></edu-modal-v2
 >

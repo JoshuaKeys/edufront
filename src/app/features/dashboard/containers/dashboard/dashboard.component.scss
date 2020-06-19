@@ -11,6 +11,18 @@
   @include displayFlex(space-between, center, column);
 }
 //header
+.complete.welcomeModal ::ng-deep .modal {
+  padding-top: 85px !important;
+
+  .modal__desc {
+    margin-bottom: 70px;
+  }
+}
+.modal__desc--intro {
+  max-height: 130px;
+  margin: auto !important;
+}
+
 .header-onboard-nav {
   display: flex;
   flex-direction: column;
