@@ -64,12 +64,16 @@ export class StudentsFormComponent implements OnInit {
     delete formValue.profilePic;
     this.onSubmit.emit(formValue);
   }
+  log(item) {
+    console.log(item);
+  }
   ngOnInit(): void {
     this.sortedClasses = this.allClasses.pipe(
       map(classes => {
         return classes.sort((classA, classB) => classA.grade < classB.grade ? -1 : 1)
       })
     )
+    this.sortedClasses.subscribe(x=> console.log(x, 'hoooooooll'))
     this.studentsXClasses.subscribe(console.log);
     if (!this.students) {
       this.addEditForm = this.setupCreateMode();

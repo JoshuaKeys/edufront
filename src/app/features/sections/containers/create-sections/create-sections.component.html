@@ -3,7 +3,6 @@
     <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
-
     <div class="content">
       <div class="content-wrapper">
         <div class="content__body groups groups--split-layout">
@@ -71,4 +70,5 @@
   *ngIf="(sectionsModalState | async).addModal"
   (onSubmit)="processSubmit($event)"
   [studentsXClasses]="allClasses"
+  [allClasses]="allClasses"
 ></edu-students-form>
