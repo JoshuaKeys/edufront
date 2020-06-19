@@ -1,5 +1,5 @@
 <div class="modal__overlay" (click)="onCloseModal()">
-  <div class="modal" #modal>
+  <div class="modal" stopEventBubble="click">
     <button class="btn--close" ButtonType="icon" (click)="onCloseModal()">
       <img src="assets/admin/form/close.svg" alt="" srcset="" />
     </button>

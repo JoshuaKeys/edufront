@@ -39,6 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadV3Component } from './components/image-upload-v3/image-upload-v3.component';
 import { ImgAuthPipe } from './pipes/img-auth.pipe';
 import { PreviewAnimateDirective } from './directives/preview-animate.directive';
+import { StopEventBubbleDirective } from './directives/stop-event-bubble.directive';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     PopoverOptionDirective,
     StudentsFormComponent,
     ImgAuthPipe,
-    PreviewAnimateDirective
+    PreviewAnimateDirective,
+    StopEventBubbleDirective
   ],
   imports: [
     ImageCropperModule,
@@ -105,7 +107,8 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     PhoneFieldComponent,
     PopoverComponent,
     StudentsFormComponent,
-    ImgAuthPipe
+    ImgAuthPipe,
+    StopEventBubbleDirective
   ],
   providers: [ClassesService, SubjectsService]
 })

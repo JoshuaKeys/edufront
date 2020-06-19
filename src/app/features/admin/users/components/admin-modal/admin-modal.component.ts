@@ -22,9 +22,9 @@ export class AdminModalComponent implements OnInit, AfterViewInit {
   @ViewChild('modal') modal: ElementRef;
   ngOnInit(): void {}
   ngAfterViewInit() {
-    this.renderer.listen(this.modal.nativeElement, 'click', $event => {
-      $event.stopPropagation();
-    });
+    // this.renderer.listen(this.modal.nativeElement, 'click', $event => {
+    //   $event.stopPropagation();
+    // });
   }
   //0 Transfer School Ownership user authenthication,
   //1 Nominate the next School Master Administrator,
