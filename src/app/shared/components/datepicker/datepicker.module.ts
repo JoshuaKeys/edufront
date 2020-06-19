@@ -9,7 +9,6 @@ import { FormComponentsModule } from '../form-components/form-component.module';
 @NgModule({
   declarations: [DatepickerComponent],
   imports: [
-    FormComponentsModule,
     ReactiveFormsModule,
     FormsModule,
     AngularMyDatePickerModule,

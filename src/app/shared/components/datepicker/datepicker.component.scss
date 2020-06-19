@@ -1,159 +1,303 @@
+//from select
 @import 'src/assets/styles/colors';
-@import 'src/assets/styles/mixins/alignment';
-:host {
-  position: relative;
-  @include displayFlex();
-  flex-direction: column;
-  width: 200px;
-  height: 54px;
-}
+// @import "src/assets/styles/form-general"; //remove dependency on this soon
+@import 'src/assets/styles/mixins/components';
 
-.exposedInput {
-  width: 200px;
-  height: 54px;
-  text-align: center;
-  border: none;
-  border-bottom: 1px solid $grey-blue;
-  color: $black;
-  font: 400 16px/54px Raleway;
-  &:focus {
-    outline-width: 0px;
-  }
-  &::placeholder {
-    color: $black;
-    font: 400 16px/24px Raleway;
-  }
-}
-.input-box-container {
-  height: 0;
-  padding: 0;
-  margin: 0;
-  width: 0;
-}
-.hiddenInput {
+//default color >> $grey-blue
+edu-input {
   width: 100%;
-  //   display: none;
-  opacity: 0;
-  height: 0;
+  height: 100%;
+}
+//animations
+:host {
+  // [active, inactive( default ), focus, disabled ]
+  .wrapper {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+
+  .wrapper:hover {
+    background: #f8f9fa;
+
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+  }
+
+  .focus.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+  }
+
+  .active.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+
+    &:before {
+      // transform-origin: top center;
+      transform: rotate(180deg) translateY(-50%);
+    }
+  }
+
+  .wrapper.disabled:hover {
+    background: transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-radius: 0px;
+  }
 }
 
-:host ::ng-deep {
-  .myDpSelector {
-    border-color: $blue;
-    top: unset !important;
-    bottom: -10px;
-    transform: translateY(100%);
+:host {
+  display: block;
+  position: relative;
+  margin: auto;
+  width: 380px;
+  cursor: pointer;
+  height: 44px;
+}
+
+//popup style
+.popup {
+  transition: none;
+
+  cursor: pointer;
+  position: absolute;
+  background: white;
+  z-index: 4;
+
+  border: 1px solid $blue;
+  border-radius: 6px;
+
+  white-space: nowrap;
+  // padding: $y-padding $x-padding;
+  text-align: left;
+  border-color: $blue;
+
+  //hiding popover
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  bottom: -8px;
+  left: 0;
+  top: unset;
+  position: absolute;
+  transform: translate(0, 100%);
+
+  &.active {
+    min-width: 100%;
+    width: auto;
+    height: auto;
+    overflow: unset;
+    opacity: 1;
   }
 
-  //button styling
-  .datepicker__btn {
+  .pointer {
     position: absolute;
-    border: 0;
-    right: 0;
-    cursor: pointer;
-    background: transparent;
-    &:focus {
-      outline-width: 0px;
-    }
-    &:hover,
-    &:active {
-      transform: scale(1.15);
-    }
-    label {
-      opacity: 0;
-      z-index: 2;
-      left: 0;
-      top: 0;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      //   background-color: red;
-    }
-  }
+    top: 0;
+    transform: translateY(-100%);
+    left: 10px;
 
-  //pointer styling
-  .myDpSelectorArrow {
     &::before,
     &::after {
       //triangle ??
       // position: absolute;
-      left: 50%;
       content: '';
       display: block;
       width: 0;
       height: 0;
-      border-left: 5px solid transparent !important;
-      border-right: 5px solid transparent !important;
-      border-bottom: 7px solid $blue !important;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 7px solid $blue;
     }
     &::after {
+      //triangle ??
       position: absolute;
-      top: -16px;
-      border-bottom: 7px solid white !important;
-      border-left: 5px solid transparent !important;
-      border-right: 5px solid transparent !important;
+      top: 0px;
+      left: 0px;
+
+      border-bottom: 7px solid white;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
       transform-origin: center bottom;
-      transform: translateX(-1px) scale(0.8);
+      transform: scale(0.8);
     }
   }
-
-  .myDpMonthYearText {
-    // Month Year Text on day view
-    font: 500 14px/16px Raleway;
-  }
-
-  .myDpTableSingleYear:hover,
-  .myDpTableSingleMonth:hover {
-    background: transparent;
-  }
-  .myDpTableSingleDay:not(.myDpSelectedDay):hover span,
-  .myDpTableSingleMonth:not(.myDpSelectedMonth):hover span,
-  .myDpTableSingleYear:not(.myDpSelectedYear):hover span {
-    background-color: #ddd;
-  }
-
-  //month  styling
-  .myDpHeaderBtn.myDpMonthBtn.myDpMonthLabel {
-    color: $blue;
-  }
-
-  .myDpMonthValue {
-    margin: 3px;
-    display: block;
-    height: 28px;
-    line-height: 28px;
-    border-radius: 100px;
-  }
-  .myDpSelectedMonth span {
-    background: $blue;
-    color: white;
-  }
-
-  //year styling{
-  .myDpSelectedYear span {
-    background: $blue;
-    color: white;
-  }
-  .myDpYearValue {
-    margin: 3px;
-    display: block;
-    height: 28px;
-    line-height: 28px;
-    border-radius: 100px;
-  }
-  // y_2_2 myDpYearcell myDpSelectedYear myDpTableSingleYear
 }
 
-.clicker {
-  position: absolute;
-  left: 0;
+.popup__content-wrapper {
+  // to prevent overflow of edges
+  overflow: hidden;
+
+  max-height: 170px;
+  overflow-y: scroll;
+  border-radius: 6px;
+}
+
+.dp {
+  //form__input--select is a checkbox used to toggle "select" element
+
+  &__wrapper {
+    @include displayFlex();
+    position: relative;
+    border-bottom: 1px solid $grey-blue;
+    height: 100%;
+    width: 100%;
+    &.active {
+      border-color: $blue;
+    }
+    &:before {
+      transform-origin: top center;
+      width: 16px;
+      height: 16px;
+      right: 12.5px;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  &__checkbox {
+    cursor: pointer;
+    z-index: 2;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+  }
+
+  &__label {
+    font-family: Raleway;
+    font-size: 14px;
+    line-height: 1.45;
+    order: -1;
+  }
+  //(1) text displayed when selected by element
+  &__input {
+    background: unset;
+    line-height: 1;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-family: Raleway;
+    font-size: 14px;
+    line-height: 1.45;
+    height: 0;
+    // border-bottom: 1px solid $grey-blue;
+
+    color: transparent;
+
+    &::placeholder {
+      color: transparent;
+    }
+  }
+}
+
+.input--active {
+  height: auto;
+  color: $black;
+  &::placeholder {
+    color: $black;
+  }
+}
+
+.input-label {
+  //wrapper for both input and label
+  // position: relative;
+  @include displayFlex(center, center, column);
+  position: relative;
+  flex-grow: 1;
+  align-self: stretch;
+  input {
+    margin: 0;
+  }
+}
+
+.prefix {
+  order: -1;
+  // left: 0;
+  // top: 50%;
+  // transform: translateY(-50%);
+  // position: absolute;
+}
+.suffix {
+  order: 1;
+  // right: 0;
+  // top: 50%;
+  // transform: translateY(-50%);
+  // position: absolute;
+
+  // position: absolute;
+}
+
+.focus,
+.active {
+  &.dp__wrapper:before {
+  }
+  &.dp__wrapper {
+    border-color: $blue;
+  }
+}
+
+//disabled state
+.disabled {
+  input,
+  input::placeholder,
+  label {
+    color: $ash;
+  }
+}
+
+//form wrapper overwrite
+.labelIsPlaceholder .label--active {
+  display: none;
+}
+
+.label--active {
   top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
+  // transform: scale(0.8);
+  text-align: center;
+  .optional {
+    font-size: 0;
+  }
+  .label__shrink-wrap {
+    font-size: 0.85em;
+  }
 }
 
-edu-input {
-  width: 100%;
-  height: 100%;
+input {
+  border: none;
+  align-self: flex-end;
+  margin-bottom: 10px;
+  font: 400 20px/24px Raleway;
+  padding: 0;
+}
+.center {
+  label,
+  input {
+    text-align: center;
+  }
+}
+.left {
+  label {
+    align-self: flex-start;
+  }
+  input {
+    text-align: left;
+  }
+}
+.right {
+  label {
+    align-self: flex-end;
+  }
+  input {
+    text-align: right;
+  }
 }

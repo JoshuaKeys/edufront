@@ -1,0 +1,86 @@
+.header {
+    margin-top: 290px;
+    font-size: 26px;
+    color: #212121;
+}
+.term-name-date {
+    display: flex;
+}
+.orangeColor {
+    color: #F2B269;
+}
+edu-input,
+edu-datepicker {
+  width: 240px;
+  height: 54px;
+  max-width: 30%;
+  margin: 0 10px;
+  flex-shrink: 0;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.vacations-and-dates {
+    // display: flex;
+  
+    &__item {
+      margin: auto;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    &__add-btn-container {
+        max-width: 60%;
+        margin: auto;
+    }
+    &__add-btn {
+        width: 240px;
+        border:none;
+        border-bottom: 1px solid #E6E9F3;
+        height: 60px;
+        background-color: transparent;
+        cursor: pointer;
+        &:focus {
+            outline: none;
+        }
+        img {
+            width: 1.4em;
+        }
+    }
+  }
+
+  .vacations-and-dates__btn-container {
+    display: flex;
+    justify-content: center;
+  }
+  .vacations-and-dates__errors {
+    display: flex;
+    justify-content: center;
+    span {
+        color: red;
+        font-weight: 700;
+    }
+}
+.vacations-and-dates__btn-container {
+    display: flex;
+    justify-content: center;
+}
+.vacations-and-dates__continue-btn {
+    height: 52px;
+    border-radius: 100px;
+    background: #69a9f2 0% 0% no-repeat padding-box;
+    width: 250px;
+    margin-top: 230px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    border: none;
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
