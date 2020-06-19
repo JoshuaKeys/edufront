@@ -1,5 +1,9 @@
 <div class="icon-wrapper">
-  <img [src]="countryIconMap[activeIndex].icon" alt="" />{{ popoverState }}
+  <img [src]="countryIconMap[activeIndex].icon" alt="" />
+  <span class="active-prefix">{{
+    countryIconMap[activeIndex].phonePrefix
+  }}</span>
+  {{ popoverState }}
   <!-- need event for popover whenever it closes -->
   <edu-popover
     alignment="bottom"

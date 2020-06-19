@@ -48,9 +48,10 @@ export class PopoverComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     this.popoverOptionDir.forEach(dir => {
+      console.log('subscribe');
       dir.closePopoverEvent.subscribe(close => {
         this.renderer.removeClass(this.el.nativeElement, 'active');
-        // console.log('close?');
+        console.log('close?');
         this.cd.markForCheck();
       });
     });
