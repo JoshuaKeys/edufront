@@ -11,7 +11,6 @@ import {
   toggleEndModal
 } from './actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
-
 import * as fromSubjectActions from './actions/index'
 import { ClassesService } from 'src/app/shared/services/classes.service';
 import { getAllSelectedClasses, getAssignedClasses } from './selectors';
@@ -30,9 +29,14 @@ export class SubjectsEffects {
   ));
   createSubjectRequest$ = createEffect(() => this.actions$.pipe(
     ofType(createSubjectRequest),
-    mergeMap(action => this.subjectsService.createSubject(action.subject).pipe(
+    mergeMap(action => {
+      // if(!action.subject.subSubjects) {
+      //   delete action.subject.subSubjects;
+      // }
+      // if(!action.subject.)
+      return this.subjectsService.createSubject(action.subject).pipe(
       map(subject => createSubjectSuccess({ subject }))
-    ))
+    )})
   ));
   fetchAllClasses$ = createEffect(() => this.actions$.pipe(
     ofType(fromSubjectActions.getClassesRequest),
