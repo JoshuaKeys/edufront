@@ -167,6 +167,9 @@ export class StaffsEffects {
     if (staffCopy.familyName) {
       staffReqObj.profileDto.lastName = staffCopy.familyName
     }
+    if(staffCopy.middleName) {
+      staffReqObj.profileDto.middleName = staffCopy.middleName
+    }
     if (staffCopy.sex) {
       staffReqObj.profileDto.gender = staffCopy.sex;
     }
