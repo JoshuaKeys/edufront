@@ -47,12 +47,12 @@ export class StaffEditFormComponent implements OnInit {
   @Output() selectSubject = new EventEmitter<string>();
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
-  @Output() onCreateStaff = new EventEmitter();
+  @Output() onEditStaff = new EventEmitter();
   @Input() editState = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
-  createStaff() {
-    this.onCreateStaff.emit(this.addEditForm.value);
+  editStaff() {
+    this.onEditStaff.emit(this.addEditForm.value);
   }
   ngOnInit(): void {
     this.editState.subscribe(editState => {
