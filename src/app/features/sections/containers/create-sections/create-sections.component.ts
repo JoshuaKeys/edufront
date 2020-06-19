@@ -8,7 +8,7 @@ import { selectModalState } from '../../ngrx/selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getAllClassesRequest, toggleSelectedState, toggleStudentsDraggedState, createStudentRequest } from '../../ngrx/actions/classes.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections, selectAllClasses } from '../../ngrx/selectors/classes.selectors';
+import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections, selectAllClasses, selectAllStudents } from '../../ngrx/selectors/classes.selectors';
 import { ClassesModel } from '../../models/classes-model';
 import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -29,6 +29,7 @@ export class CreateSectionsComponent implements OnInit {
   sortedClassesStaffs: Observable<ClassesModel[]>;
   sortedClasses: Observable<ClassModel[]>
   notDraggedStudents: Observable<ExtendedProfileDTOModel[]>;
+  allStudents: Observable<ExtendedProfileDTOModel[]>;
   draggedStudents: Observable<ExtendedProfileDTOModel[]>;
   selectedClass: Observable<ClassesModel> | null;
   selectedSections: Observable<SectionModel>
@@ -37,11 +38,12 @@ export class CreateSectionsComponent implements OnInit {
     this.sectionsModalState = this.store.select(selectModalState);
     this.sortedClassesStaffs = this.store.select(selectSortedClasses)
     this.notDraggedStudents = this.store.select(selectNotDraggedStudents)
+    this.allStudents = this.store.select(selectAllStudents);
     this.selectedSections = this.store.select(selectSections);
     this.allClasses = this.store.select(selectAllClasses).pipe(
-      map(classesModel => classesModel.map(classesModelItem => classesModelItem.class))
-    );
-    this.allClasses.subscribe(x => console.log('hellooooo', x));
+      map(classes=> classes.map(classItem => classItem.class))
+    )
+        this.allClasses.subscribe(x => console.log('hellooooo', x));
     this.sortedClasses = this.sortedClassesStaffs.pipe(
       map(sortedClasses => sortedClasses.map(classItem => classItem.class))
     );
