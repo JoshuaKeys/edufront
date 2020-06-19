@@ -14,8 +14,14 @@ import { ImgUploadComponent } from './img-upload/img-upload.component';
 import { ValidatorModule } from './validator/validator.module';
 import { datePickerModule } from './datepicker/datepicker.module';
 import { TooltipComponent } from './tooltip/tooltip.component';
+import { PhonePrefixComponent } from './phone-prefix/phone-prefix.component';
+import { PopoverComponent } from './popover/popover.component';
+import { PopoverOptionDirective } from './popover/popover-option.directive';
 import { ValidatorDirective } from './validator/validator.directive';
 let components = [
+  PopoverComponent,
+  PopoverOptionDirective,
+  PhonePrefixComponent,
   InputComponent,
   InputAffixDirective,
   CheckboxComponent,

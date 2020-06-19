@@ -29,8 +29,8 @@ import { CountryFieldComponent } from './components/country-field/country-field.
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
 import { ButtonComponent } from './components/button/button.component';
-import { PopoverComponent } from './components/popover/popover.component';
-import { PopoverOptionDirective } from './components/popover/popover-option.directive';
+// import { PopoverComponent } from './components/popover/popover.component';
+// import { PopoverOptionDirective } from './components/popover/popover-option.directive';
 
 import { FormComponentsModule } from './components/form-components/form-component.module';
 import { SelectModule } from './components/form-components/select/select.module';
@@ -62,8 +62,8 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     ImgUploadV2Component,
     PhoneFieldComponent,
     ButtonComponent,
-    PopoverComponent,
-    PopoverOptionDirective,
+    // PopoverComponent,
+    // PopoverOptionDirective,
     StudentsFormComponent,
     ImgAuthPipe,
     PreviewAnimateDirective,
@@ -83,7 +83,7 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
   exports: [
     PreviewAnimateDirective,
     FormComponentsModule,
-    PopoverOptionDirective,
+    // PopoverOptionDirective,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
@@ -105,7 +105,7 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     ImgUploadV2Component,
     CountryFieldComponent,
     PhoneFieldComponent,
-    PopoverComponent,
+    // PopoverComponent,
     StudentsFormComponent,
     ImgAuthPipe,
     StopEventBubbleDirective
