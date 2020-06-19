@@ -3,7 +3,7 @@
 
     <div class="drop-zones flex-grow-1" *ngIf="sections | async as sections">
         <div class="drop-zones__wrapper">
-            <div *ngFor="let _section of sections.sections" class="drop-zone flex-grow-1" (drop)="onDrop($event, sections.classId, _section.sectionName)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" [ngClass]="{ 'drop-zone--is-dragged': isDraggedOver }">
+            <div *ngFor="let _section of sections.sections" class="drop-zone flex-grow-1" (drop)="onDrop($event, sections.classId, _section.sectionName)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
                 <h4 class="drop-zone__title">
                     <input [value]="_section.sectionName" (change)="
               changeSectionName($event, _section.sectionName, sections.classId)
