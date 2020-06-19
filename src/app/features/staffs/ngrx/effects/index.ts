@@ -17,7 +17,8 @@ import {
   deleteStaffSuccess,
   fetchStaffById,
   fetchStaffByIdSuccess,
-  toggleEditModal
+  toggleEditModal,
+  editStaffRequest
 } from '../actions';
 import { mergeMap, map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { StaffsService } from '../../services/staffs.service';
@@ -60,6 +61,26 @@ export class StaffsEffects {
         subjectId: selectedSubject.id,
         class: action.class
       })
+    })
+  ));
+  editStaffRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(editStaffRequest),
+    withLatestFrom(this.store.select(classesAndSubjectsAssoc)),
+    mergeMap(([action, subjectsAssociation]) => {
+      if (action.staff.profilePic) {
+        return this.staffsService.uploadLogo(action.staff.profilePic.acceptedFile).pipe(
+          mergeMap(res => {
+            const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, res.file)
+            return this.staffsService.createStaff(createStaffRequestObj).pipe(
+              mergeMap(response => [createStaffResponse({ staff: response }), toggleAddModal()])
+            );
+          })
+        )
+      }
+      const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, null)
+      return this.staffsService.createStaff(createStaffRequestObj).pipe(
+        mergeMap(response => [createStaffResponse({ staff: response }), toggleAddModal()])
+      );
     })
   ));
   createStaffRequest$ = createEffect(() => this.actions$.pipe(
