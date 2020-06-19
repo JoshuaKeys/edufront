@@ -85,6 +85,7 @@ export class ImageUploadV3Component
       this.renderer.appendChild(overlayEl, injectedItem);
     });
   }
+
   value: ProfilePicModel = { base64: '', acceptedFile: null, imageUrl: '' }; //
   croppedImage; //isValue of cropped image at any time
   imageChangedEvent: any = '';
@@ -99,19 +100,32 @@ export class ImageUploadV3Component
     flipV: false
   };
 
+  testClick() {
+    console.log('clickeddd' + this.elementId);
+  }
+
   getImgCropperWrapperId() {
     return this.elementId + '__cropperwrapper';
   }
 
   setElementId() {
     let elId = this.el.nativeElement.getAttribute('formcontrolname');
-    if (this.el != undefined) {
+
+    if (elId != null) {
       this.elementId = elId;
     }
   }
 
-  hidePlaceholderImg() {
-    return this.value.base64;
+  validBase64() {
+    // console.log("checl")
+    if (this.value.base64) {
+      // console.log(this.value.base64.length);
+      // console.log(/[A-Za-z0-9+/=]/.test(this.value.base64));
+      return /[A-Za-z0-9+/=]/.test(this.value.base64);
+    }
+
+    // console.log(this.value.base64.test(/[A-Za-z0-9+/=]/))
+    return false;
   }
 
   handleDrop(e) {
@@ -220,8 +234,13 @@ export class ImageUploadV3Component
     if (val === null) {
       return;
     }
-
+    console.log(val);
+    this.value = { ...val };
     this.value.base64 = val.base64;
+    console.log(this.value.base64.length);
+    console.log(this.validBase64());
+
+    this.cd.markForCheck();
   }
   registerOnChange(fn: any) {
     this.onChange = fn;

@@ -1,11 +1,17 @@
 <form [formGroup]="userDetailForm" (ngSubmit)="formSubmit()">
   <h5 class="sub-title">User Details</h5>
   <div class="group--row just-center">
-    <edu-img-upload [showInputControls]="false">
+    <edu-image-upload-v3 formControlName="profile">
+      <div class="edu-img-upload__dropzone placeholderImg">
+        <img src="assets/user-settings/modal_plus-18.svg" alt="" />
+      </div>
+    </edu-image-upload-v3>
+
+    <!-- <edu-img-upload [showInputControls]="false">
       <div class="edu-img-upload__dropzone ">
         <img src="assets/user-settings/modal_plus-18.svg" alt="" />
       </div>
-    </edu-img-upload>
+    </edu-img-upload> -->
   </div>
 
   <div class="group--row">

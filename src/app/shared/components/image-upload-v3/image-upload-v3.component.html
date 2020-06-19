@@ -8,14 +8,14 @@
     (dragleave)="handleDragLeave()"
     (drop)="handleDrop($event)"
   >
-    <label [for]="elementId">
+    <label [for]="elementId" (click)="testClick()">
       <!-- placeholder img -->
-      <div [ngClass]="{ hidden: hidePlaceholderImg() }">
+      <div [ngClass]="{ hidden: validBase64() }">
         <ng-content select=".placeholderImg"> </ng-content>
       </div>
 
       <!-- currently loaded img from source or previously -->
-      <img id="loaded-img" *ngIf="value.base64" [src]="value.base64" />
+      <img id="loaded-img" *ngIf="validBase64()" [src]="value.base64" />
     </label>
   </div>
 

@@ -20,8 +20,14 @@ export class SchoolSettingsComponent implements OnInit, AfterViewInit {
   constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {}
 
   ngOnInit(): void {
+    let schLogoValue = {
+      base64: this.schoolLogoPlaceholder,
+      imageUrl: '',
+      acceptedFile: null
+    };
+
     this.userDetailForm = this.formBuilder.group({
-      schLogo: [this.schoolLogoPlaceholder, Validators.required],
+      schLogo: [schLogoValue, Validators.required],
       schName: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', Validators.required],

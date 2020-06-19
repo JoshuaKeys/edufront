@@ -24,7 +24,6 @@ export class AdminModalComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.renderer.listen(this.modal.nativeElement, 'click', $event => {
       $event.stopPropagation();
-      $event.preventDefault();
     });
   }
   //0 Transfer School Ownership user authenthication,

@@ -14,7 +14,6 @@
   border-radius: 15px;
   padding: 0px;
   padding-bottom: 60px;
-  overflow: hidden;
   &__overlay {
     background: rgba(0, 0, 0, 0.3);
   }
@@ -23,6 +22,7 @@
 //common across all screens , saved at top for future overwrite if needed
 
 .content {
+  overflow-y: scroll;
   flex-grow: 1;
   @include displayFlex(center, center, column);
 
@@ -110,6 +110,7 @@ edu-input {
 .screen2 {
   .content {
     padding-top: 50px;
+    padding-bottom: 50px;
   }
   .group--row {
     width: 610px;
@@ -122,8 +123,8 @@ edu-input {
   edu-image-upload-v3 {
     align-self: center;
     // margin: 24px 0;
-    width: 100px;
-    height: 100px;
+    // width: 100px;
+    // height: 100px;
   }
 
   edu-input {
