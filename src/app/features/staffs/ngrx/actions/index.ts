@@ -94,4 +94,8 @@ export const fetchStaffByIdSuccess = createAction(
 export const editStaffRequest = createAction(
   '[StaffsCreationComponent] editStaffRequest',
   props<{staff: StaffFormModel}>()
+);
+export const editStaffResponse = createAction(
+  '[StaffsCreationComponent] editStaffResponse',
+  props<{staff: CreateStaffResponseModel}>()
 )
