@@ -1,0 +1,30 @@
+<ul class="preview-parent">
+    <li class="preview-parent__item" *ngIf="(previewState | async).termVacations.items &&
+        (previewState | async).termVacations.items"
+    [routerLink]="(previewState | async).termVacations.route">
+        <edu-vacation-dates-preview
+            [previewState]="previewState"
+        ></edu-vacation-dates-preview>
+
+    </li>
+    <li class="preview-parent__item"
+    *ngIf="(previewState | async).termsNamesAndDates.items && (previewState | async).termsNamesAndDates.items"
+    [routerLink]="(previewState | async).termsNamesAndDates.route">
+        <edu-terms-dates-preview
+            [previewState]="previewState"
+        ></edu-terms-dates-preview>
+    </li>
+    <li class="preview-parent__item"
+    *ngIf="(previewState | async).schoolTerms.termsNumber"
+    [routerLink]="(previewState | async).schoolTerms.route">
+        <edu-school-terms-preview        
+            [previewState]="previewState">
+        </edu-school-terms-preview>
+    </li>
+    <li class="preview-parent__item" *ngIf="(previewState | async).datePreview.endDate ||
+        (previewState | async).datePreview.startDate">
+        <edu-academic-year-preview 
+            [previewState]="previewState"
+    ></edu-academic-year-preview>
+    </li>
+</ul>

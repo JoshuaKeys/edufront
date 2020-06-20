@@ -29,8 +29,7 @@ export class SectionsEffects {
 
       const mappOfClassesToSections: AggregateModel[] = sections.map(section => {
         const classItem = classes.find(classItem => classItem.class.id === section.classId)
-        const sectionIdx = sections.findIndex(sectionItem => sectionItem.classId === section.classId)
-        console.log(sections[sectionIdx].sections)
+        const sectionIdx = sections.findIndex(sectionItem => sectionItem.classId === section.classId);
         return {
           classItem: classItem.class.name,
           sections: sections[sectionIdx].sections

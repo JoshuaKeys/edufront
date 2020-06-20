@@ -1,0 +1,40 @@
+<div>
+  <h1 class="header">What are the term names and dates?</h1>
+  <p class="desc">
+    Note: we will assume that all days between terms are considered holidays
+  </p>
+
+  <form *ngIf="termsAndDatesForm" [formGroup]="termsAndDatesForm">
+    <div
+      formArrayName="termsAndDates"
+      *ngFor="
+        let schoolTerm of (calendarData | async).termsAndDates;
+        let i = index
+      "
+    >
+      <div [formGroupName]="i" class="terms-and-dates__item">
+        <edu-input formControlName="termName" alignment="center"> </edu-input>
+        <edu-datepicker formControlName="startDate" alignment="center">
+          <span class="edu-label">Starts from</span>
+          <div class="edu-suffix" InputAffix>
+            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+          </div>
+        </edu-datepicker>
+        <edu-datepicker formControlName="endDate" alignment="center">
+          <span class="edu-label">Ends on</span>
+          <div class="edu-suffix" InputAffix>
+            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+          </div>
+        </edu-datepicker>
+      </div>
+      <div class="terms-and-dates__errors" *ngIf="termsAndDatesForm.controls.termsAndDates['controls'][i].errors as errors">
+          <span class="terms-and-dates__errors" *ngFor="let error of errors['msg']">
+              {{error}}
+          </span>
+      </div>
+    </div>
+        <div class="terms-and-dates__btn-container" *ngIf="termsAndDatesForm && termsAndDatesForm.valid">
+            <button class="terms-and-dates__continue-btn" (click)="goNext()">Continue</button>
+    </div>
+  </form>
+</div>

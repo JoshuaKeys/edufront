@@ -1,0 +1,14 @@
+<ng-container>
+    <div class="preview-item" *ngIf="(previewState | async).termVacations as dataPreview" [routerLink]="dataPreview.route">
+        <h1 class="preview-item__header">Academic Year</h1>
+        <div *ngFor="let data of dataPreview.items">
+            <div class="preview-item__content">
+                <div class="preview-item__content-term">{{data.vacationName}}</div>
+                <div class="preview-item__content-dates"
+                    *ngIf="data.startDate || data.endDate"
+                >{{getDateFormat(data.startDate)}} - {{getDateFormat(data.endDate)}}</div>
+            </div>
+        </div>
+        
+    </div>
+</ng-container>

@@ -1,5 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy, forwardRef, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  forwardRef,
+  ViewEncapsulation,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+  FormArray,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
 import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 import { SubSubjectModel } from '../../../../shared/models/sub-subject.model';
 
@@ -13,30 +28,50 @@ export class SubjectsFormComponent implements OnInit {
   @Output() createSubject = new EventEmitter<CreateSubjModel>();
   addSubjForm = this.fb.group({
     subjectName: ['', Validators.required],
-    subSubjects: this.fb.array([
-      // this.fb.control(''),
-      this.fb.control('')
-    ]),
-    activities: this.fb.array([
-      // this.fb.control(''),
-      this.fb.control('')
-    ])
-  })
+    subSubjects: this.fb.array([this.fb.control('')]),
+    activities: this.fb.array([this.fb.control('')])
+  });
 
   onSubmit() {
     const addFormVal = this.addSubjForm.value;
-    const processedActivities = this.processArrayFields('activity', addFormVal.activities);
-    const processedSubSubjects = this.processArrayFields('subsubject', addFormVal.subSubjects);
+    const processedActivities = this.processArrayFields(
+      'activity',
+      addFormVal.activities
+    );
+    const processedSubSubjects = this.processArrayFields(
+      'subsubject',
+      addFormVal.subSubjects
+    );
     const submitData: CreateSubjModel = {
       title: addFormVal.subjectName,
       subSubjects: [...processedActivities, ...processedSubSubjects],
       subjectIcon: '',
-      teachersIds: [],
-    }
+      teachersIds: []
+    };
     this.createSubject.emit(submitData);
+    // console.log('onsubmit');
     this.addSubjForm.reset();
+
+    while (this.subSubjects.controls.length > 1) {
+      this.subSubjects.removeAt(1);
+    }
+
+    while (this.activities.controls.length > 1) {
+      this.activities.removeAt(1);
+    }
+    // this.subSubjects.insert(item.pos + 1, this.fb.control(''));
+    // this.addSubjForm.patchValue({
+    //   subSubjects: this.fb.array([this.fb.control('')]),
+    //   activities: this.fb.array([this.fb.control('')])
+    // });
+    // this.addSubjForm.controls.subSubjects.setValue(
+    //   this.fb.array([this.fb.control('')])
+    // );
   }
-  processArrayFields(type: 'activity' | 'subsubject', subFields: string[]): SubSubjectModel[] {
+  processArrayFields(
+    type: 'activity' | 'subsubject',
+    subFields: string[]
+  ): SubSubjectModel[] {
     return subFields
       .filter(subField => subField !== '')
       .map(subField => ({
@@ -46,18 +81,17 @@ export class SubjectsFormComponent implements OnInit {
         subjectType: type
       }));
   }
-  ngOnInit(): void {
-  }
-  insertItem(item: { type: string, pos: number }) {
+  ngOnInit(): void {}
+  insertItem(item: { type: string; pos: number }) {
     if (item.type === 'subject') {
-      this.subSubjects.insert(item.pos + 1, this.fb.control(''))
+      this.subSubjects.insert(item.pos + 1, this.fb.control(''));
       return;
     }
-    this.activities.insert(item.pos + 1, this.fb.control(''))
+    this.activities.insert(item.pos + 1, this.fb.control(''));
   }
-  removeItem(item: { type: string, pos: number }) {
+  removeItem(item: { type: string; pos: number }) {
     if (item.type === 'subject') {
-      this.subSubjects.removeAt(item.pos)
+      this.subSubjects.removeAt(item.pos);
       return;
     }
     this.activities.removeAt(item.pos);
@@ -69,5 +103,5 @@ export class SubjectsFormComponent implements OnInit {
     return this.addSubjForm.get('activities') as FormArray;
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 }

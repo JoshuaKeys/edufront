@@ -1,151 +1,81 @@
 <main>
-  <section class="section">
-    <button class="section__back-btn" (click)="goToDashboard()">
+    <section class="section">
+        <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
-    <div class="content">
-      <h2 class="content__title">
-        Add or upload staff
-      </h2>
-      <div class="search__wrapper">
-        <div class="search__input-wrapper">
-          <img class="search__icon" src="../../../assets/search.svg" alt="" />
+        <div class="content">
+            <h2 class="content__title">
+                Add or upload staff
+            </h2>
+            <div class="search__wrapper">
+                <div class="search__input-wrapper">
+                    <img class="search__icon" src="../../../assets/search.svg" alt="" />
 
-          <input
-            class="search__input"
-            type="text"
-            #searchInput
-            placeholder="Search"
-            (input)="onTextChange($event)"
-          />
-        </div>
+                    <input class="search__input" type="text" #searchInput placeholder="Search" (input)="onTextChange($event)" />
+                </div>
 
-        <div class="search__icon-btns">
-          <div
-            class="search__icon-btn"
-            [ngClass]="{
+                <div class="search__icon-btns">
+                    <div class="search__icon-btn" [ngClass]="{
               active: (sortingState | async).alphabetical
-            }"
-            (click)="onSortByAlphabet()"
-          >
-            <img
-              class="search__icon"
-              src="../../../assets/subject-search-icon-1.svg"
-              alt=""
-              class="icon-img"
-            />
-            <div class="tooltip tooltip--top">
-              Sort Alphabetical
-            </div>
-          </div>
-          <div
-            class="search__icon-btn"
-            [ngClass]="{
+            }" (click)="onSortByAlphabet()">
+                        <img class="search__icon" src="../../../assets/subject-search-icon-1.svg" alt="" class="icon-img" />
+                        <div class="tooltip tooltip--top">
+                            Sort Alphabetical
+                        </div>
+                    </div>
+                    <div class="search__icon-btn" [ngClass]="{
               active: (sortingState | async).byGender
-            }"
-            (click)="onSortByGender()"
-          >
-            <img
-              src="../../../assets/subject-search-icon-3.svg"
-              alt=""
-              class="icon-img"
-            />
-            <div class="tooltip tooltip--top">
-              Sort by Sex
-            </div>
-          </div>
+            }" (click)="onSortByGender()">
+                        <img src="../../../assets/subject-search-icon-3.svg" alt="" class="icon-img" />
+                        <div class="tooltip tooltip--top">
+                            Sort by Sex
+                        </div>
+                    </div>
 
-          <button class="search__btn" (click)="onAddStaff()">
+                    <button class="search__btn" (click)="onAddStaff()">
             <span>+</span>
           </button>
-        </div>
-      </div>
-      <div class="group">
-        <div
-          class="group__body"
-          *ngIf="
+                </div>
+            </div>
+            <div class="group">
+                <div class="group__body" *ngIf="
             (sortingState | async).alphabetical === false &&
             (sortingState | async).byGender === false
-          "
-        >
-          <edu-staff-chip
-            *ngFor="let staff of staffs | async"
-            [staff]="staff"
-          ></edu-staff-chip>
-        </div>
-      </div>
-      <div class="group group--alphabetically">
-        <div class="group__body" *ngIf="(sortingState | async).alphabetical">
-          <edu-classes-alphabetically
-            [staffs]="staffs"
-          ></edu-classes-alphabetically>
-        </div>
-      </div>
-      <div class="group group-gender">
-        <div class="group__body" *ngIf="(sortingState | async).byGender">
-          <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
-        </div>
-      </div>
-      <div class="content__btns ">
-        <!-- <div class="opacity-overlay"></div> -->
-        <button class="content__button" ButtonType="basic" (click)="onFinish()">
+          ">
+                    <edu-staff-chip *ngFor="let staff of staffs | async" [staff]="staff"></edu-staff-chip>
+                </div>
+            </div>
+            <div class="group group--alphabetically">
+                <div class="group__body" *ngIf="(sortingState | async).alphabetical">
+                    <edu-classes-alphabetically [staffs]="staffs"></edu-classes-alphabetically>
+                </div>
+            </div>
+            <div class="group group-gender">
+                <div class="group__body" *ngIf="(sortingState | async).byGender">
+                    <edu-classes-by-gender [staffs]="staffs"></edu-classes-by-gender>
+                </div>
+            </div>
+            <div class="content__btns ">
+                <!-- <div class="opacity-overlay"></div> -->
+                <button class="content__button" ButtonType="basic" (click)="onFinish()">
           Continue
         </button>
-      </div>
-    </div>
-  </section>
+            </div>
+        </div>
+    </section>
 </main>
-<edu-staff-edit-form
-  *ngIf="(staffsModalsState | async).editModal"
-  [subjects]="subjects"
-  [classes]="classes"
-  (selectSubject)="onSelectSubject($event)"
-  (unSelectSubject)="onUnselectSubject($event)"
-  (classClicked)="onClassClicked($event)"
-  [classesAndSubjects]="subjectClassesAssociation"
-  [editState]="selectEditState"
->
+<edu-staff-edit-form *ngIf="(staffsModalsState | async).editModal" [subjects]="subjects" [classes]="classes" (selectSubject)="onSelectSubject($event)" (unSelectSubject)="onUnselectSubject($event)" (classClicked)="onClassClicked($event)" [classesAndSubjects]="subjectClassesAssociation"
+    [editState]="selectEditState" (onEditStaff)="processEditStaff($event)">
 </edu-staff-edit-form>
-<edu-staff-form
-  *ngIf="(staffsModalsState | async).addModal"
-  [subjects]="subjects"
-  [classes]="classes"
-  (selectSubject)="onSelectSubject($event)"
-  (unSelectSubject)="onUnselectSubject($event)"
-  (classClicked)="onClassClicked($event)"
-  [classesAndSubjects]="subjectClassesAssociation"
-  (onCreateStaff)="createStaff($event)"
-></edu-staff-form>
+<edu-staff-form *ngIf="(staffsModalsState | async).addModal" [subjects]="subjects" [classes]="classes" (selectSubject)="onSelectSubject($event)" (unSelectSubject)="onUnselectSubject($event)" (classClicked)="onClassClicked($event)" [classesAndSubjects]="subjectClassesAssociation"
+    (onCreateStaff)="createStaff($event)"></edu-staff-form>
 
-<edu-modal-v2
-  *ngIf="(staffsModalsState | async).endModal"
-  btnText="GOT IT"
-  header="Staffs Set Up Complete"
-  icon="assets/icon-complete.svg"
-  [completeModal]="true"
-  class="complete"
-  leftBtn="TAKE ME TO
-  DASHBOARD"
-  rightBtn="TAKE ME TO SECTIONS"
-  (leftBtnClicked)="goToDashboard()"
-  (rightBtnClicked)="goToSections()"
->
-  You are done with profile uploads, we promise! Now we can start putting things
-  together. Whenever you are ready, go to the next step where we will organ your
-  sections
+<edu-modal-v2 *ngIf="(staffsModalsState | async).endModal" btnText="GOT IT" header="Staffs Set Up Complete" icon="assets/icon-complete.svg" [completeModal]="true" class="complete" leftBtn="TAKE ME TO
+  DASHBOARD" rightBtn="TAKE ME TO SECTIONS" (leftBtnClicked)="goToDashboard()" (rightBtnClicked)="goToSections()">
+    You are done with profile uploads, we promise! Now we can start putting things together. Whenever you are ready, go to the next step where we will organ your sections
 </edu-modal-v2>
 
-<edu-modal-v2
-  *ngIf="(staffsModalsState | async).startModal"
-  btnText="GOT IT"
-  header="Staff Creation"
-  class="intro"
-  icon="assets/staff-modal.svg"
-  (btnClicked)="onStart()"
->
-  You will now create the Staff profiles. same as the last step. The only
-  difference is that we will ask you what <b class="orangeColor">subject</b> the
-  staff is <b class="orangeColor">able</b> to teach, and at what
-  <b class="orangeColor">level</b>. This will help timetabling and organise
-  courses.</edu-modal-v2
->
+<edu-modal-v2 *ngIf="(staffsModalsState | async).startModal" btnText="GOT IT" header="Staff Creation" class="intro" icon="assets/staff-modal.svg" (btnClicked)="onStart()">
+    You will now create the Staff profiles. same as the last step. The only difference is that we will ask you what <b class="orangeColor">subject</b> the staff is <b class="orangeColor">able</b> to teach, and at what
+    <b class="orangeColor">level</b>. This will help timetabling and organise courses.
+</edu-modal-v2>

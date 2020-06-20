@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
     {
       icon: 'calendar',
       label: 'Calendar',
-      route: '/calendar'
+      route: '/calendar/dates-of-academic-year'
     },
     {
       icon: 'timetable',

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { selectSortedClasses, getAllSelectedClasses, selectSubjectModalState, getAssignedClasses } from '../../ngrx/selectors';
 import { SubjectModalStateModel } from '../../models/subject-modal-state.model';
 import { toggleEndModal, postClassesSubjectsRequest } from '../../ngrx/actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-confirmation',
@@ -18,9 +19,12 @@ export class ConfirmationComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   classes: Observable<ClassModel[]>;
   modalState: Observable<SubjectModalStateModel>;
+
   ngOnInit(): void {
     this.modalState = this.store.select(selectSubjectModalState);
-    this.classes = this.store.select(getAssignedClasses);
+    this.classes = this.store.select(getAssignedClasses).pipe(
+      map(classes=> classes.sort((classItemA, classItemB)=> classItemA.grade - classItemB.grade))
+    );
   }
   saveSubjects() {
     this.store.dispatch(postClassesSubjectsRequest());

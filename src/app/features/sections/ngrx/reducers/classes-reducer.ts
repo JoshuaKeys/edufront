@@ -77,7 +77,8 @@ export const classesReducer = createReducer(classesInitialState,
 
   }),
   on(createStudentSuccess, (state, action) => {
-    const allStudents = selectAll(state);
+    const stateCopy = JSON.parse(JSON.stringify(state))
+    const allStudents = selectAll(stateCopy);
     const specificStudentIdx = allStudents.findIndex(item => item.class.id === action.student.profileDto.classId);
     if (specificStudentIdx > -1) {
       allStudents[specificStudentIdx].students.push(action.student.profileDto);
@@ -88,7 +89,7 @@ export const classesReducer = createReducer(classesInitialState,
       changes: {
         students: allStudents[specificStudentIdx].students
       }
-    }, state)
+    }, stateCopy)
   })
 );
 

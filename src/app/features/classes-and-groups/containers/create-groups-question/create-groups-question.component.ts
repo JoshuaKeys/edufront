@@ -23,7 +23,6 @@ export class CreateGroupsQuestionComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
-
   ngOnInit(): void {
     this.selectedClasses = this.store.select(selectSelectedClasses);
     this.modalState = this.store.select(selectModalState)

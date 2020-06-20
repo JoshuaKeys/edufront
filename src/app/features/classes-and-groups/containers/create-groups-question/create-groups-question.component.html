@@ -1,61 +1,36 @@
 <main>
-  <section class="section">
-    <button
-      class="section__back-btn"
-      [routerLink]="['../', activatedRouteData.previous]"
-    >
+    <section class="section">
+        <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
 
-    <div class="form">
-      <h2 class="form__title">
-        Do you want to create any groups?
-      </h2>
-      <p class="form__desc">
-        Groups are used to speed up any set up. We recommend that classes
-        with<br />
-        similar time structures be grouped together.
-      </p>
-      <div buttonType="round" class="form__btn-wrapper">
-        <button
-          ButtonType="round"
-          class="form__button--round"
-          [routerLink]="['../', activatedRouteData.next]"
-        >
+        <div class="form">
+            <h2 class="form__title">
+                Do you want to create any groups?
+            </h2>
+            <p class="form__desc">
+                Groups are used to speed up any set up. We recommend that classes with
+                <br /> similar time structures be grouped together.
+            </p>
+            <div buttonType="round" class="form__btn-wrapper">
+                <button ButtonType="round" class="form__button--round" [routerLink]="['../', activatedRouteData.next]">
           Yes
         </button>
-        <button
-          ButtonType="round"
-          class="form__button--round"
-          (click)="submitWithoutGroups()"
-        >
+                <button ButtonType="round" class="form__button--round" (click)="submitWithoutGroups()">
           No
         </button>
-      </div>
-    </div>
-  </section>
-  <aside class="aside">
-    <h5 class="aside__title">Preview</h5>
+            </div>
+        </div>
+    </section>
+    <aside class="aside">
+        <h5 class="aside__title">Preview</h5>
 
-    <edu-school-classes-card
-      [selectedClasses]="selectedClasses"
-    ></edu-school-classes-card>
-  </aside>
+        <edu-school-classes-card [selectedClasses]="selectedClasses"></edu-school-classes-card>
+    </aside>
 </main>
-<edu-modal-v2
-  *ngIf="(modalState | async).endModal"
-  class="complete"
-  btnText="GOT IT"
-  header="Classes And Groups"
-  icon="assets/icon-complete.svg"
-  [completeModal]="true"
-  leftBtn="TAKE ME TO DASHBOARD"
-  rightBtn="TAKE ME TO SUBJECTS"
-  (leftBtnClicked)="goToDashboard()"
-  (rightBtnClicked)="goToSubjects()"
->
-  <span class="modal__text">
+<edu-modal-v2 *ngIf="(modalState | async).endModal" class="complete" btnText="GOT IT" header="Classes And Groups" icon="assets/icon-complete.svg" [completeModal]="true" leftBtn="TAKE ME TO DASHBOARD" rightBtn="TAKE ME TO SUBJECTS" (leftBtnClicked)="goToDashboard()"
+    (rightBtnClicked)="goToSubjects()">
+    <span class="modal__text">
     Nicely Done! Now you can either move on to telling us all about what
     subjects are taught, or return to the dashboard.
-  </span></edu-modal-v2
->
+  </span></edu-modal-v2>

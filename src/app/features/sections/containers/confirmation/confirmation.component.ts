@@ -23,6 +23,7 @@ export class ConfirmationComponent implements OnInit {
   ngOnInit(): void {
     this.sectionsModalState = this.store.select(selectModalState);
     this.aggregate = this.store.select(selectAggregate)
+    this.aggregate.subscribe(console.log)
     this.store.dispatch(getAggregatedResult())
   }
   goToDashboard() {

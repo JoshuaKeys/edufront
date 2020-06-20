@@ -15,6 +15,10 @@ export class StaffsService {
   createStaff(staff: CreateStaffRequestModel): Observable<CreateStaffResponseModel> {
     return this.httpClient.post<CreateStaffResponseModel>('/api/v1/profile/completeProfile', staff);
   }
+  editStaff(staff: CreateStaffRequestModel): Observable<CreateStaffResponseModel> {
+    return this.httpClient.put<CreateStaffResponseModel>(`/api/v1/profile/completeProfile/${staff.profileDto.id}`, staff);
+  }
+  
   deleteStaff(profileId: string): Observable<any> {
     return this.httpClient.delete(`/api/v1/profile/${profileId}`)
   }
