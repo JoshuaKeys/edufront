@@ -9,11 +9,7 @@
     [formGroup]="termsAndDatesForm"
     class="pos-relative"
   >
-    <div
-      class="scrollable-content"
-      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
-      #scrollableEl
-    >
+    <div class="scrollable-content" setOVerflow maximum="300" #scrollableEl>
       <div
         formArrayName="termsAndDates"
         *ngFor="
