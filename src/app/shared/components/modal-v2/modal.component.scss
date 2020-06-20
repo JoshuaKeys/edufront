@@ -25,6 +25,7 @@
 
 :host.complete .modal {
   max-width: 989px;
+  max-height: 651px !important;
   width: 80%;
   padding: 120px 60px 60px 60px;
   &__title {
