@@ -24,14 +24,14 @@ import { VacationDatesPreviewComponent } from './components/vacation-dates-previ
 import { HolidayListComponent } from './containers/holiday-list/holiday-list.component';
 import { HolidayAddComponent } from './components/holiday-add/holiday-add.component';
 import { HolidayPillComponent } from './components/holiday-pill/holiday-pill.component';
-import { SetOVerflowDirective } from './components/set-overflow.directive';
 import { CalendarService } from './services/calendar.service';
 import { EffectsModule } from '@ngrx/effects';
 import { CalendarEffects } from './ngrx/effects';
 import { DaysOfWeekComponent } from './components/days-of-week/days-of-week.component';
-
+import { TeachingDayForClassQuestionComponent } from './containers/teaching-day-for-class-question/teaching-day-for-class-question.component';
 @NgModule({
   declarations: [
+    TeachingDayForClassQuestionComponent,
     AcademicYearQuestionComponent,
     CalenderShellComponent,
     PreviewParentComponent,
@@ -47,7 +47,7 @@ import { DaysOfWeekComponent } from './components/days-of-week/days-of-week.comp
     HolidayListComponent,
     HolidayAddComponent,
     HolidayPillComponent,
-    SetOVerflowDirective,
+
     TeachingDaysComponent,
     SameTeachingDaysQuestionComponent,
     DaysOfWeekComponent
