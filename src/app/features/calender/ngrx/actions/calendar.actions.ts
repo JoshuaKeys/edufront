@@ -1,4 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { HolidayListModel } from '../../models/holiday-list.model';
+import { HolidayModel } from '../../models/holiday.model';
 
 export const setPreviewAcademicYearStartDate = createAction(
     '[AcademicYearQuestionComponent] setPreviewAcademicYearStartDate',
@@ -15,7 +17,7 @@ export const setAcademicYearStartDate = createAction(
 export const setAcademicYearEndDate = createAction(
     '[AcademicYearQuestionComponent] setAcademicYearEndDate',
     props<{endDate: string}>()
-)
+);
 export const setSchoolTerms = createAction(
     '[SchoolTermsQuestionComponent] setSchoolTerms',
     props<{schoolTerms: number}>()
@@ -23,10 +25,10 @@ export const setSchoolTerms = createAction(
 export const toggleSelectedTerms = createAction(
     '[SchoolTermsQuestionComponent] toggleSelectedTerms',
     props<{schoolTerms: number}>()
-)
+);
 export const initializeTermsAndDates = createAction(
     '[SchoolTermsQuestionComponent] initializeTermsAndDates'
-)
+);
 export const setTermName = createAction(
     '[TermNamesAndDatesComponent] setTermName',
     props<{idx: number, termName: string}>()
@@ -56,4 +58,27 @@ export const setVacationStartDate = createAction(
 export const setVacationEndDate = createAction(
     '[VacationNamesAndDatesComponent] setVacationEndDate',
     props<{idx: number, endDate: string}>()
+);
+export const fetchHolidaysRequest = createAction(
+    '[HolidayListComponent] fetchHolidaysRequest'
+);
+export const fetchHolidaysResponse = createAction(
+    '[CalendarEffects] fetchHolidaysResponse',
+    props<{holidays: HolidayListModel}>()
+);
+export const deleteHoliday = createAction(
+    '[HolidayListComponent] deleteHoliday',
+    props<{holiday: HolidayModel}>()
+);
+export const editHoliday = createAction(
+    '[HolidayListComponent] editHoliday',
+    props<{holiday: HolidayModel}>()
+);
+export const editHolidayRequest = createAction(
+    '[HolidayListComponent] editHolidayRequest',
+    props<{holiday: HolidayModel}>()
+);
+export const addHoliday = createAction(
+    '[HolidayListComponent] addHoliday',
+    props<{holiday: HolidayModel}>()
 )

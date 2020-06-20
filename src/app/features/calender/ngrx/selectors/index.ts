@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { CalendarStateModel } from '../../models/calender-state.model';
+import { selectAll } from '../reducers/holidays-reducer';
 
 const calendarFeatureState = createFeatureSelector<CalendarStateModel>('calendar');
 
@@ -8,4 +9,5 @@ export const selectPreviewState = createSelector(calendarFeatureState, feat => f
 export const selectCalendar = createSelector(calendarFeatureState, feat => {
     return feat.calendarData
 });
-// export const selectSchoolTerms = createSelector(calendarFeatureState, feat => feat.calendarData.schoolTerms)
+export const selectAllHolidays = createSelector(calendarFeatureState, feat=>  selectAll(feat.holidays.holidayList));
+export const selectEditState = createSelector(calendarFeatureState, feat => feat.holidays.holidayEdit)

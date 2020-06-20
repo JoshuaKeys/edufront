@@ -10,6 +10,24 @@
     &__item {
         max-width: 200px;
         list-style-type: none;
-
+    }
+    &__btn-container {
+        display: flex;
+        justify-content: center;
+    }
+    &__continue-btn {
+        height: 52px;
+        border-radius: 100px;
+        background: #69a9f2 0% 0% no-repeat padding-box;
+        width: 250px;
+        margin-top: 230px;
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+        border: none;
+        &:active,
+        &:focus {
+            outline: none;
+        }
     }
 }

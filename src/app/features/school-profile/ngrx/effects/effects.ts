@@ -25,8 +25,8 @@ export class SchoolProfileEffects {
       const schoolData = this.getSchoolReqData(schoolProfile);
       return this.schoolProfileService.createSchool(schoolData).pipe(
         switchMap(res => {
-          localStorage.setItem('schoolId', res.id)
-         return [toggleProfileEndModal(), incrementProgress()]
+          localStorage.setItem('schoolId', res.id);
+         return [toggleProfileEndModal(), incrementProgress()];
         })
       )
     })

@@ -15,8 +15,9 @@ import { VacationDatesPreviewComponent } from './components/vacation-dates-previ
 import { HolidayListComponent } from './containers/holiday-list/holiday-list.component';
 import { HolidayAddComponent } from './components/holiday-add/holiday-add.component';
 import { HolidayPillComponent } from './components/holiday-pill/holiday-pill.component';
-
-
+import { CalendarService } from './services/calendar.service';
+import { EffectsModule } from '@ngrx/effects';
+import { CalendarEffects } from './ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,11 @@ import { HolidayPillComponent } from './components/holiday-pill/holiday-pill.com
     CalenderRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([CalendarEffects]),
     StoreModule.forFeature('calendar', calenderReducer)
+  ],
+  providers: [
+    CalendarService
   ]
 })
 export class CalenderModule { }
