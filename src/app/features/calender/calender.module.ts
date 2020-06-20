@@ -9,7 +9,8 @@ import {
   SchoolTermsQuestionComponent,
   TermNamesAndDatesQuestionComponent,
   VacationNamesAndDatesQuestionComponent,
-  GovernmentHolidaysObservedQuestionComponent
+  GovernmentHolidaysObservedQuestionComponent,
+  TeachingDayForClassQuestionComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
@@ -22,13 +23,13 @@ import { VacationDatesPreviewComponent } from './components/vacation-dates-previ
 import { HolidayListComponent } from './containers/holiday-list/holiday-list.component';
 import { HolidayAddComponent } from './components/holiday-add/holiday-add.component';
 import { HolidayPillComponent } from './components/holiday-pill/holiday-pill.component';
-import { SetOVerflowDirective } from './components/set-overflow.directive';
 import { CalendarService } from './services/calendar.service';
 import { EffectsModule } from '@ngrx/effects';
 import { CalendarEffects } from './ngrx/effects';
 
 @NgModule({
   declarations: [
+    TeachingDayForClassQuestionComponent,
     AcademicYearQuestionComponent,
     CalenderShellComponent,
     PreviewParentComponent,
@@ -43,8 +44,7 @@ import { CalendarEffects } from './ngrx/effects';
     VacationDatesPreviewComponent,
     HolidayListComponent,
     HolidayAddComponent,
-    HolidayPillComponent,
-    SetOVerflowDirective
+    HolidayPillComponent
   ],
   imports: [
     CommonModule,

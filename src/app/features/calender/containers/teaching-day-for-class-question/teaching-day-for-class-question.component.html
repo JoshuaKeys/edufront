@@ -1,0 +1,54 @@
+<div class="main">
+  <div class="content">
+    <h2 class="content__title">
+      Please define the teaching days for the relevant classes
+    </h2>
+    <div class="badges scrollable-content ">
+      <div class="badges--inlineflex">
+        <div class="group--row line-entry" *ngFor="let item of emptyarr">
+          <div class="card ">
+            <h4 class="card__title">
+              Classes
+            </h4>
+            <p class="card__desc">
+              1-12
+            </p>
+            <edu-popover>
+              <div class="classes">
+                <div class="badge badge--class">1</div>
+                <div class="badge badge--class">2</div>
+                <div class="badge badge--class">3</div>
+                <div class="badge badge--class">4</div>
+                <div class="badge badge--class">5</div>
+                <div class="badge badge--class">6</div>
+                <div class="badge badge--class">7</div>
+                <div class="badge badge--class">8</div>
+                <div class="badge badge--class">9</div>
+                <div class="badge badge--class">10</div>
+                <div class="badge badge--class">11</div>
+                <div class="badge badge--class">12</div>
+              </div>
+            </edu-popover>
+          </div>
+
+          <div class="days">
+            <div class="badge badge--day">Mon</div>
+            <div class="badge badge--day">Tue</div>
+            <div class="badge badge--day">Wed</div>
+            <div class="badge badge--day">Thu</div>
+            <div class="badge badge--day">Fri</div>
+            <div class="badge badge--day">Sat</div>
+            <div class="badge badge--day">Sun</div>
+          </div>
+        </div>
+
+        <div class="group--row line-entry">
+          <div class="card card--dashed">
+            <img src="/assets/search-plus.svg" alt="" srcset="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="button--bottom" ButtonType="basic">continue</button>
+</div>
