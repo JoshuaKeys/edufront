@@ -1,4 +1,4 @@
-<form (submit)="addHoliday()" [formGroup]="addHolidayForm" class="holiday-add" *ngIf="!(mode | async).editedHoliday; else editMode">
+<form (submit)="addHoliday()" [formGroup]="addHolidayForm" class="holiday-add" *ngIf="!(mode | async)['editedHoliday']; else editMode">
     <edu-input alignment="center" formControlName="name"></edu-input>
     <edu-datepicker alignment="center" formControlName="date">
         <span class="edu-label">Select Date</span>
@@ -8,10 +8,8 @@
     </edu-datepicker>
     <button class="holiday-add__add-btn">Add</button>
 </form>
-<!-- <div>Holiday Name</div> -->
 <ng-template #editMode>
     <form (submit)="editHoliday()" class="holiday-add" [formGroup]="editHolidayForm">
-        <!-- <div>Holiday Name</div> -->
         <edu-input formControlName="name" alignment="center"></edu-input>
         <edu-datepicker alignment="center" formControlName="date">
             <span class="edu-label">Select Date</span>
