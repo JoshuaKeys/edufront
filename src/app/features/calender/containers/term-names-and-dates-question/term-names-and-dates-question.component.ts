@@ -46,19 +46,20 @@ export class TermNamesAndDatesQuestionComponent
 
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   startScroll(el) {
+    if (typeof this.scrollableEl === 'undefined') {
+      return true;
+    }
     var vh = Math.max(
       document.documentElement.clientHeight,
       window.innerHeight || 0
     );
+    var scrollableHeight = this.scrollableEl.nativeElement.offsetHeight;
     var maxHeight = vh - 330;
-    console.log(this.scrollableEl);
-    console.log(el);
-    var scrollableHeight = el.offsetHeight;
-    console.log(
-      `vh   ${vh} maxHeight ${maxHeight}  scrollable ${scrollableHeight}`
-    );
-    let res = scrollableHeight < maxHeight;
-    this.log(res);
+    // console.log(
+    //   'maxHeight - ' + maxHeight + ',scrollable - ' + scrollableHeight
+    // );
+    let res = scrollableHeight >= maxHeight - 10;
+    // console.log(res);
     return res;
   }
 

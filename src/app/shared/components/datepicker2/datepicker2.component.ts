@@ -38,7 +38,7 @@ export class Datepicker2Component
     this.setElementID();
   }
   ngAfterViewInit() {
-    console.log(this.inputEl);
+    // console.log(this.inputEl);
   }
   TAB_KEY_CODE = 9;
   @ViewChild('dp') dp: any;
@@ -80,7 +80,7 @@ export class Datepicker2Component
   }
   cbFocus() {
     this.elState = 'active';
-    console.log('should be active now');
+    // console.log('should be active now');
   }
   cbBlur() {
     //change to rxjs operator later
@@ -151,7 +151,7 @@ export class Datepicker2Component
 
   onDateChanged(event: IMyDateModel): void {
     // date selected
-    console.log(event);
+    // console.log(event);
     let dateObj = event.singleDate.date;
     // console.log(event);
 
@@ -219,7 +219,7 @@ export class Datepicker2Component
     const month = value.substring(5, 7);
     const year = value.substring(2, 4);
 
-    console.log(`${day}/${month}/${year}`);
+    // console.log(`${day}/${month}/${year}`);
     return `${day}/${month}/${year}`;
   }
 
@@ -337,7 +337,7 @@ export class Datepicker2Component
   writeValue(value: any) {
     if (value != null && value.length === 10) {
       this.value = value;
-      console.log(this.value);
+      // console.log(this.value);
       //need parse value > displayedValue
 
       this.displayedValue = this.convertValuetoDisplayedValue(value);
