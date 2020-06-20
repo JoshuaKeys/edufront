@@ -22,13 +22,19 @@ export const calenderNavigation = {
   },
   'holiday-list': {
     previous: 'government-holidays-observed-question',
+    next: 'same-teaching-days-question'
+  },
+  'same-teaching-days-question': {
+    previous: 'holiday-list',
+    next: 'teaching-days'
+  },
+  'teaching-days': {
+    previous: 'same-teaching-days-question',
     next: ''
   }
 };
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  //   'dates-of-academic-year':
-  //     fromCalenderContainer.TeachingDayForClassQuestionComponent,
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
     fromCalenderContainer.TermNamesAndDatesQuestionComponent,
@@ -36,5 +42,8 @@ export const calenderRouteToComponentMap = {
     fromCalenderContainer.VacationNamesAndDatesQuestionComponent,
   'government-holidays-observed-question':
     fromCalenderContainer.GovernmentHolidaysObservedQuestionComponent,
-  'holiday-list': fromCalenderContainer.HolidayListComponent
+  'holiday-list': fromCalenderContainer.HolidayListComponent,
+  'same-teaching-days-question':
+    fromCalenderContainer.SameTeachingDaysQuestionComponent,
+  'teaching-days': fromCalenderContainer.TeachingDaysComponent
 };
