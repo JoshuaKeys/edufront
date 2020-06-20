@@ -4,7 +4,7 @@
     *ngIf="(previewState | async).termsNamesAndDates as dataPreview"
     [routerLink]="dataPreview.route"
   >
-    <h1 class="preview-item__header">Academic Year</h1>
+    <h1 class="preview-item__header">Term Names and Dates</h1>
     <div *ngFor="let data of dataPreview.items">
       <div class="preview-item__content">
         <div
