@@ -1,0 +1,4 @@
+<ul class="terms">
+    <li class="term" (click)="onToggleActive(term)" [ngClass]="{'active': active === term}" *ngFor="let term of termsArray;
+        let index=i">{{term}}</li>
+</ul>

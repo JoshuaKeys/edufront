@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'edu-same-teaching-days-question',
@@ -7,10 +8,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SameTeachingDaysQuestionComponent implements OnInit {
-
-  constructor() { }
-
+  activatedRouteData = this.activatedRoute.snapshot.data;
   ngOnInit(): void {
   }
+  goToDaysDefinition() {
+    // this.router.navigate(['../', this.activatedRouteData])
+  }
+  goToTeachingDays() {
+    this.router.navigate(['../', this.activatedRouteData.next], {relativeTo: this.activatedRoute})
+  }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute){}
 
 }

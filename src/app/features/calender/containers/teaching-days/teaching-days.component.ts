@@ -12,5 +12,7 @@ export class TeachingDaysComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  goNext(){
+    
+  }
 }

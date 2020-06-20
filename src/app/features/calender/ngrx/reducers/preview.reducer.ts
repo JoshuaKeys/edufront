@@ -127,4 +127,4 @@ export const previewReducer = createReducer(initialState,
         item.vacationName = action.vacationName;
         return stateCopy;
     }),
-)
+);
