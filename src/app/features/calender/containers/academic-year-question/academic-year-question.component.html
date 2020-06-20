@@ -21,20 +21,6 @@
             </form>
         </div>
     </div>
-
-    <!-- <div
-    *ngIf="
-      academicYearForm &&
-        academicYearForm.errors &&
-        academicYearForm.errors.msg.length;
-      else continue
-    "
-    class="academic-year__form-errors"
-    #item
-  >
-    <div *ngFor="let error of academicYearForm.errors.msg">{{ error }}</div>
-  </div> -->
-
     <div class="academic-year__btn-container button--bottom" *ngIf="academicYearForm && academicYearForm.valid">
         <button ButtonType="basic" class="academic-year__continue-btn" class="form__button" (click)="goNext()">
         Continue
