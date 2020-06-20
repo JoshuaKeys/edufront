@@ -23,6 +23,9 @@ import { HolidayListComponent } from './containers/holiday-list/holiday-list.com
 import { HolidayAddComponent } from './components/holiday-add/holiday-add.component';
 import { HolidayPillComponent } from './components/holiday-pill/holiday-pill.component';
 import { SetOVerflowDirective } from './components/set-overflow.directive';
+import { CalendarService } from './services/calendar.service';
+import { EffectsModule } from '@ngrx/effects';
+import { CalendarEffects } from './ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,9 @@ import { SetOVerflowDirective } from './components/set-overflow.directive';
     CalenderRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([CalendarEffects]),
     StoreModule.forFeature('calendar', calenderReducer)
-  ]
+  ],
+  providers: [CalendarService]
 })
 export class CalenderModule {}
