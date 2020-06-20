@@ -10,7 +10,8 @@ import {
   TermNamesAndDatesQuestionComponent,
   VacationNamesAndDatesQuestionComponent,
   GovernmentHolidaysObservedQuestionComponent,
-  TeachingDayForClassQuestionComponent
+  TeachingDaysComponent,
+  SameTeachingDaysQuestionComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
@@ -26,7 +27,8 @@ import { HolidayPillComponent } from './components/holiday-pill/holiday-pill.com
 import { CalendarService } from './services/calendar.service';
 import { EffectsModule } from '@ngrx/effects';
 import { CalendarEffects } from './ngrx/effects';
-
+import { DaysOfWeekComponent } from './components/days-of-week/days-of-week.component';
+import { TeachingDayForClassQuestionComponent } from './containers/teaching-day-for-class-question/teaching-day-for-class-question.component';
 @NgModule({
   declarations: [
     TeachingDayForClassQuestionComponent,
@@ -44,7 +46,11 @@ import { CalendarEffects } from './ngrx/effects';
     VacationDatesPreviewComponent,
     HolidayListComponent,
     HolidayAddComponent,
-    HolidayPillComponent
+    HolidayPillComponent,
+
+    TeachingDaysComponent,
+    SameTeachingDaysQuestionComponent,
+    DaysOfWeekComponent
   ],
   imports: [
     CommonModule,

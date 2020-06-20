@@ -19,4 +19,8 @@ export interface PreviewModel {
         route: string;
         items?: VacationModel[]
     }
+    teachingDays?: {
+        route: string;
+        items?: string[];
+    }
 }
