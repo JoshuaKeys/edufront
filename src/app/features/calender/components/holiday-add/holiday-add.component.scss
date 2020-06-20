@@ -1,17 +1,43 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+:host {
+  color: $black;
+}
 .holiday-add {
-    max-width: 530px;
-    border: 1px dashed #e6e9f3;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-    align-items: center;
-    margin: 30px auto;
-    &__add-btn {
-        background-color: transparent;
-        border: none;
-        color: #a5aec7;
-        font-size: 16px;
-        font-weight: bold;
-    }
+  height: 54px;
+  max-width: 530px;
+  width: 527px;
+  position: relative;
+  border: 1px dashed #e6e9f3;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  align-items: center;
+  margin: 30px auto;
+  &__add-btn {
+    background-color: transparent;
+    border: none;
+    color: #a5aec7;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+edu-datepicker {
+  height: 54px;
+  width: 140px;
+  @include absoluteCenter();
+}
+
+input {
+  border: 0;
+  color: $black;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    border: 0;
+    color: #a5aec7;
+  }
 }
