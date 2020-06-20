@@ -5,7 +5,8 @@ import {
   forwardRef,
   Renderer2,
   ViewChild,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -23,18 +24,24 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
-  constructor(private renderer: Renderer2) { }
-  value: string;
+  constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {}
+  _value;
+  set value(val) {
+    this._value = val;
+    this.cd.markForCheck();
+  }
+  get value() {
+    return this._value;
+  }
   @ViewChild('subjectName') subjectName;
   onValueChange: (text: string) => any;
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   isChecked = false;
   isFocused = false;
   popoverToogle = false;
   writeValue(val: any) {
     if (val === null) {
-      this.renderer.setProperty(this.subjectName.el.nativeElement, 'value', '');
-      return;
+      this.value = '';
     }
     this.value = val;
   }
@@ -48,7 +55,7 @@ export class SubjectIconFieldComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: any) {
     this.onValueChange = fn;
   }
-  registerOnTouched(fn: any) { }
+  registerOnTouched(fn: any) {}
 
   onTextChange(event) {
     this.onValueChange(event.target.value);

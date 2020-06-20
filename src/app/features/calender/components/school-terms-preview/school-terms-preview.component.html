@@ -1,0 +1,4 @@
+<div class="preview-item" *ngIf="(previewState | async).schoolTerms as schoolTerms">
+    <h1 class="preview-item__header">School Terms</h1>
+    <div class="preview-item__content">{{schoolTerms.termsNumber}}</div>
+</div>

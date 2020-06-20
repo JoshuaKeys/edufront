@@ -1,0 +1,6 @@
+<ng-container>
+    <div class="preview-item" *ngIf="(previewState | async).datePreview as dataPreview" [routerLink]="dataPreview.route">
+        <h1 class="preview-item__header">Academic Year</h1>
+        <div class="preview-item__content">{{dataPreview.startDate}} - {{dataPreview.endDate}}</div>
+    </div>
+</ng-container>

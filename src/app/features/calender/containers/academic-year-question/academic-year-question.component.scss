@@ -1,0 +1,36 @@
+.header {
+    margin-top: 290px;
+    font-size: 26px;
+    color: #212121;
+}
+.academic-year__form {
+    display: flex;
+    max-width: 500px;
+    margin: 30px auto;
+}
+.academic-year__btn-container {
+    display: flex;
+    justify-content: center;
+}
+.academic-year__continue-btn {
+    height: 52px;
+    border-radius: 100px;
+    background: #69a9f2 0% 0% no-repeat padding-box;
+    width: 250px;
+    margin-top: 230px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    border: none;
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+.academic-year__form-errors {
+    div {
+        text-align: center;
+        color: red;
+        font-weight: bold;
+    }
+}

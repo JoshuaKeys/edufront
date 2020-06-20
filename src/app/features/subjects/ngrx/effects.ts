@@ -11,10 +11,9 @@ import {
   toggleEndModal
 } from './actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
-
 import * as fromSubjectActions from './actions/index'
 import { ClassesService } from 'src/app/shared/services/classes.service';
-import { getAllSelectedClasses } from './selectors';
+import { getAllSelectedClasses, getAssignedClasses } from './selectors';
 import { Store } from '@ngrx/store';
 import { SubjectsStateModel } from '../models/subjects-state.model';
 import { SubjectsService } from 'src/app/shared/services/subjects.service';
@@ -30,9 +29,14 @@ export class SubjectsEffects {
   ));
   createSubjectRequest$ = createEffect(() => this.actions$.pipe(
     ofType(createSubjectRequest),
-    mergeMap(action => this.subjectsService.createSubject(action.subject).pipe(
+    mergeMap(action => {
+      // if(!action.subject.subSubjects) {
+      //   delete action.subject.subSubjects;
+      // }
+      // if(!action.subject.)
+      return this.subjectsService.createSubject(action.subject).pipe(
       map(subject => createSubjectSuccess({ subject }))
-    ))
+    )})
   ));
   fetchAllClasses$ = createEffect(() => this.actions$.pipe(
     ofType(fromSubjectActions.getClassesRequest),
@@ -61,9 +65,9 @@ export class SubjectsEffects {
   ))
   postsClassesSubjectRequest$ = createEffect(() => this.actions$.pipe(
     ofType(postClassesSubjectsRequest),
-    withLatestFrom(this.store.select(getAllSelectedClasses)),
-    mergeMap(([action, selectedClasses]) => {
-      const requestData = selectedClasses.map(classItem => {
+    withLatestFrom(this.store.select(getAssignedClasses)),
+    mergeMap(([action, assignedClasses]) => {
+      const requestData = assignedClasses.map(classItem => {
         return {
           classId: classItem.id,
           subjectIds: classItem.subjects.map(subject => subject.id)

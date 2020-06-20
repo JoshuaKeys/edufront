@@ -31,6 +31,9 @@ export class ClassesAndGroupComponent implements OnInit {
   computeNumOfGroupsInClasses(event) {
     this.store.dispatch(setGroupOfClassesQty({ qty: event }))
   }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard')
+  }
   isDisabled() {
     console.log(this.classesAndGroupsForm.controls.numOfGroups.value)
     return !!this.classesAndGroupsForm.value.numOfGroups;

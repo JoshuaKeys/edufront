@@ -17,7 +17,9 @@ import {
   deleteStaffSuccess,
   fetchStaffById,
   fetchStaffByIdSuccess,
-  toggleEditModal
+  toggleEditModal,
+  editStaffRequest,
+  editStaffResponse
 } from '../actions';
 import { mergeMap, map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { StaffsService } from '../../services/staffs.service';
@@ -60,6 +62,33 @@ export class StaffsEffects {
         subjectId: selectedSubject.id,
         class: action.class
       })
+    })
+  ));
+  editStaffRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(editStaffRequest),
+    withLatestFrom(this.store.select(classesAndSubjectsAssoc)),
+    mergeMap(([action, subjectsAssociation]) => {
+      if(action.staff.profilePic.imageUrl) {
+        const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, action.staff.profilePic.imageUrl)
+        return this.staffsService.editStaff(createStaffRequestObj).pipe(
+          mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
+        );
+      }
+      if (action.staff.profilePic.acceptedFile) {
+        return this.staffsService.uploadLogo(action.staff.profilePic.acceptedFile).pipe(
+          mergeMap(res => {
+            const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, res.file)
+            return this.staffsService.editStaff(createStaffRequestObj).pipe(
+              mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
+            );
+          })
+        )
+      }
+      
+      const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, null)
+      return this.staffsService.editStaff(createStaffRequestObj).pipe(
+        mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
+      );
     })
   ));
   createStaffRequest$ = createEffect(() => this.actions$.pipe(
@@ -117,6 +146,9 @@ export class StaffsEffects {
     if (staffCopy.profilePic) {
       staffReqObj.profileDto.profileImage = file;
     }
+    if(staffCopy.id) {
+      staffReqObj.profileDto.id = staffCopy.id
+    }
     if (staffCopy.phone.phoneNum) {
       staffReqObj.profileDto.phone = staffCopy.phone.phoneNum;
     }
@@ -134,6 +166,9 @@ export class StaffsEffects {
     }
     if (staffCopy.familyName) {
       staffReqObj.profileDto.lastName = staffCopy.familyName
+    }
+    if(staffCopy.middleName) {
+      staffReqObj.profileDto.middleName = staffCopy.middleName
     }
     if (staffCopy.sex) {
       staffReqObj.profileDto.gender = staffCopy.sex;
