@@ -9,27 +9,28 @@ import {
   AfterViewInit,
   HostListener,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-//v1 which might be deleted
 @Component({
-  selector: 'edu-datepicker-temp',
-  templateUrl: './datepicker.component.html',
+  selector: 'edu-datepicker',
+  templateUrl: './datepicker2.component.html',
   styleUrls: [
-    './datepicker.component.scss',
+    './datepicker2.component.scss',
     './datepicker-style-overwrite.scss'
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => DatepickerComponent)
+      useExisting: forwardRef(() => Datepicker2Component)
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatepickerComponent
+export class Datepicker2Component
   implements OnInit, AfterViewInit, ControlValueAccessor {
   constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
 
@@ -52,7 +53,7 @@ export class DatepickerComponent
   _disabled = false;
   tempId = 'datepickerinputid';
   model: IMyDateModel = null;
-  dpIsActive = false;
+  dpIsActive = false; // can delete this soon
 
   _elState = 'inactive';
   set elState(state) {
@@ -65,6 +66,17 @@ export class DatepickerComponent
   }
   get elState() {
     return this._elState;
+  }
+
+  dpClick() {
+    if (this.elState == 'inactive') {
+      this.elState = 'active';
+      this.dp.openCalendar();
+    } else {
+      this.dp.closeCalendar();
+    }
+    // this.dp.toggleCalendar();
+    this.cd.markForCheck();
   }
   cbFocus() {
     this.elState = 'active';
@@ -139,6 +151,7 @@ export class DatepickerComponent
 
   onDateChanged(event: IMyDateModel): void {
     // date selected
+    console.log(event);
     let dateObj = event.singleDate.date;
     // console.log(event);
 
@@ -148,6 +161,7 @@ export class DatepickerComponent
     this.value = `${dateObj.year}-${this.formatDayMonth(
       dateObj.month
     )}-${this.formatDayMonth(dateObj.day)}`;
+    this.cd.markForCheck();
   }
   keyboardEvent(keycode, isShift, event) {
     if (keycode === this.TAB_KEY_CODE) {
@@ -342,8 +356,3 @@ export class DatepickerComponent
     this.disabled = isDisabled;
   }
 }
-
-// onInputBlur() {
-//   //only for typable datepicker
-//   this.updateDatePickerModel();
-// }

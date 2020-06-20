@@ -1,16 +1,16 @@
-<h1>form.get('f1').value : {{ testForm.get('f1').value }}</h1>
+<h1>form.get('f5').value : {{ testForm.get('f5').value }}</h1>
 <h1>form.get('f2').value : {{ testForm.get('f2').value }}</h1>
 <h1>form.get('f3').value : {{ testForm.get('f3').value }}</h1>
 <!-- <h1> onchangeValue event: {{updatedValue}}  </h1> -->
 
-<h1>f1 touched : {{ testForm.get('f1').touched }}</h1>
-<h1>f1 dirty : {{ testForm.get('f1').dirty }}</h1>
-<h1>f1 disabled : {{ testForm.get('f1').disabled }}</h1>
+<h1>f5 touched : {{ testForm.get('f5').touched }}</h1>
+<h1>f5 dirty : {{ testForm.get('f5').dirty }}</h1>
+<h1>f5 disabled : {{ testForm.get('f5').disabled }}</h1>
 <!-- <h1>confirm event : {{ confirmEventResults }}</h1> -->
 <br /><br />
 
 <input type="text" />
-
+<edu-datepicker></edu-datepicker>
 <form action="" [formGroup]="testForm" (ngSubmit)="formSubmit()">
   <edu-datepicker formControlName="f1" alignment="center">
     <span class="edu-label">date of birth</span>
@@ -35,4 +35,9 @@
   <edu-datepicker formControlName="f4" alignment="center" disabled="true">
     <span class="edu-label">date of birth disabled</span>
   </edu-datepicker>
+  <edu-datepicker formControlName="f5">
+    <span class="edu-label">date picker 2 test </span>
+    <div class="edu-suffix" InputAffix>
+      <img src="/assets/date-picker-calender.svg" alt="" srcset="" /></div
+  ></edu-datepicker>
 </form>
