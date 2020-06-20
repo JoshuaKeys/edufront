@@ -5,6 +5,7 @@
 <h1>dirty : {{ testForm.get('f1').dirty }}</h1>
 <h1>disabled : {{ testForm.get('f1').disabled }}</h1>
 
+<button ButtonType="basic" (click)="reset()">resetForm</button>
 <form [formGroup]="testForm" (ngSubmit)="formSubmit()">
   <!-- 
     <input type="text"  formControlName="f1">
@@ -18,9 +19,10 @@
             
             </ul> -->
   <!-- (onValueChange) = "updateValue($event) "" -->
-  <p>
+  <!-- <p>
     {{ prettifyJSON(testForm.controls['f1'].errors) }}
-  </p>
+  </p> -->
+  <!-- <edu-subject-icon-field formControlName="f2"></edu-subject-icon-field> -->
   <edu-input class="f1" alignment="center" name="name" formControlName="f1">
     <span class="edu-label"> input 1 </span>
 
@@ -38,6 +40,8 @@
       <li *ngIf="testForm.controls['f1'].errors.pattern">numbers only</li>
     </ul>
   </edu-input>
+
+  <button ButtonType="outline">submit</button>
 </form>
 
 <br />

@@ -27,10 +27,12 @@ export class SubjectsTaughtQuestionComponent implements OnInit {
     this.store.dispatch(closeSubjectsStartModal())
   }
   createSubject(subject: CreateSubjModel) {
-    this.store.dispatch(createSubjectRequest({ subject }))
+    const subSubjects = subject.subSubjects.filter(subSubject=> subSubject.title !== null);
+    const clearedSubject: CreateSubjModel = {...subject, subSubjects}
+    this.store.dispatch(createSubjectRequest({ subject: clearedSubject }));
   }
   goToDashboard() {
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('/dashboard');
   }
   getDescription() {
     return `

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { ClassesModel } from '../../models/classes-model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
-import { map } from 'rxjs/operators';
+import { map, filter, mapTo, withLatestFrom } from 'rxjs/operators';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 
 @Component({
@@ -16,8 +16,9 @@ export class SectionAsideComponent implements OnInit {
   @Input() selectedClass: Observable<ClassesModel>;
   classId: string;
   filter = '';
-  fileredStudents: Observable<ProfileDTOModel[]>;
+  fileredStudents: Observable<ExtendedProfileDTOModel[]>;
   @Input() students: Observable<ExtendedProfileDTOModel[]>
+  @Input() allStudents: Observable<ExtendedProfileDTOModel[]>
   @Output() onAssign = new EventEmitter<string>()
   @Output() onOpenAddModal = new EventEmitter<string>();
   constructor() { }
@@ -28,8 +29,16 @@ export class SectionAsideComponent implements OnInit {
   openAddModal() {
     this.onOpenAddModal.emit()
   }
+  areAllStudentsAssigned() {
+    return this.fileredStudents.pipe(
+      withLatestFrom(this.allStudents),
+      map(([students, allStudents])=> {
+        const isDraggedPresent = allStudents && allStudents.find(student => student.dragged);
+        return allStudents && isDraggedPresent
+      })
+    )
+  }
   ngOnInit(): void {
-    this.selectedClass.subscribe(console.log)
     this.filterItems(this.filter);
     this.selectedClass.subscribe(classItem => this.classId = classItem.class.id)
   }

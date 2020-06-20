@@ -7,7 +7,8 @@ import {
   EventEmitter,
   forwardRef,
   Renderer2,
-  ViewChild
+  ViewChild,
+  ChangeDetectorRef
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -35,25 +36,34 @@ export class ArrayInputFieldComponent implements OnInit, ControlValueAccessor {
   @Output() removeItem = new EventEmitter<{ type: string; pos: number }>();
 
   @ViewChild('subSubjectValue') subSubjectsValue;
-  inputValue: string;
+  inputValue: string; //cant use inputValue for controlValueAccessor as Angualr looks specifically for [this.value]
+  _value;
+  set value(val) {
+    this._value = val;
+    this.cd.markForCheck();
+  }
+  get value() {
+    return this._value;
+  }
   onValueChange: (value: string) => any;
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   writeValue(val: string) {
-    if (val === null) {
-      this.renderer.setProperty(
-        this.subSubjectsValue.el.nativeElement,
-        'value',
-        ''
-      );
-    }
-    this.inputValue = val;
+    this.value = val;
+    // if (val === null) {
+    //   this.renderer.setProperty(
+    //     this.subSubjectsValue.el.nativeElement,
+    //     'value',
+    //     ''
+    //   );
+    // }
+    // this.inputValue = val;
   }
   registerOnChange(fn: any) {
     this.onValueChange = fn;
   }
-  registerOnTouched(fn: any) { }
+  registerOnTouched(fn: any) {}
   onTextChange(event) {
     // console.log('asdsa');
     this.onValueChange(event.target.value);

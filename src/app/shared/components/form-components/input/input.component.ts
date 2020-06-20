@@ -143,13 +143,16 @@ export class InputComponent
     return this.val;
   }
   set value(val) {
+    // console.log(`setValue --` + val);
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
     if (val === null) {
+      // console.log('is null');
       val = '';
     }
     this.val = val;
     // this.valLen = this.val.length;
     this.onChange(val);
+    this.cd.markForCheck();
     // this.onTouched(val)
   }
   //Control value accessor implementation
@@ -158,6 +161,7 @@ export class InputComponent
   onTouched: any = () => {};
 
   writeValue(value: any) {
+    // console.log('write value -- ' + value);
     this.value = value;
   }
 
