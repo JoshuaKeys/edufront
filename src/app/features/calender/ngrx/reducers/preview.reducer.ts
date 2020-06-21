@@ -1,8 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
 import { TermsAndDates } from '../../models/terms-and-date.model'
-import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate } from '../actions/calendar.actions';
+import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
+import { TeachingDay } from '../../models/teaching-day.model';
+import { ClassGroupModel } from '../../models/class-group.model';
+import { clearClassOffGroups } from '../../utilities';
 const initialState: PreviewModel = {
     datePreview: {
         route: '/calendar/dates-of-academic-year',
@@ -15,9 +18,97 @@ const initialState: PreviewModel = {
     },
     termVacations: {
         route: '/calendar/vacation-names-and-dates'
+    },
+    teachingDays: {
+        route: '/calendar/teaching-days',
+        items: [
+            {day: 'Mon', selected: false},
+            {day: 'Tue', selected: false},
+            {day: 'Wed', selected: false},
+            {day: 'Thu', selected: false},
+            {day: 'Fri', selected: false},
+            {day: 'Sat', selected: false},
+            {day: 'Sun', selected: false}
+        ]
     }
 }
 export const previewReducer = createReducer(initialState,
+    on(fetchClassesAndGroupsSuccess, (state, action)=> {
+        return {
+            ...state,
+            teachingDays: {
+                ...state.teachingDays,
+                classesAndGroupItems: [
+                    ...action.classesAndGroups
+                ]
+            }
+        }
+    }),
+    on(toggleClassesGroupActive, (state, action)=> {
+        const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+        const groupsState = stateCopy.teachingDays.classesAndGroupItems;
+        const classGroupIdx = groupsState.findIndex(
+            classGroupItem => classGroupItem.id === action.classesGroup.id
+        );
+        const teachingDayIdx = groupsState[classGroupIdx].teachingDays.findIndex(teachingDay=> teachingDay.day === action.day.day);
+        groupsState[classGroupIdx].teachingDays[teachingDayIdx].selected = !groupsState[classGroupIdx].teachingDays[teachingDayIdx].selected;
+
+        return {
+            ...state,
+            teachingDays: {
+                ...state.teachingDays,
+                classesAndGroupItems: groupsState
+            }
+        }
+    }),
+    on(reassignClass, (state, action) => {
+        const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+        const groupsState = stateCopy.teachingDays.classesAndGroupItems;
+
+        const groupIdx = groupsState.findIndex(groupItem => groupItem.id === action.classesGroup.id);
+        const clickedClassIdx = groupsState[groupIdx].classes.findIndex(classItem => classItem.id === action.class.id);
+        if(clickedClassIdx > -1) {
+            groupsState[groupIdx].classes.splice(clickedClassIdx, 1)
+            if(groupsState[groupIdx].classes.length === 0) {
+                groupsState.splice(groupIdx, 1)
+            }
+        }else {
+            groupsState[groupIdx].classes.push(action.class)
+        }
+        const adjustedGroups = clearClassOffGroups(action.class, groupsState, action.classesGroup)
+        return {
+            ...state,
+            teachingDays: {
+                ...state.teachingDays,
+                classesAndGroupItems: adjustedGroups
+            }
+        }
+    }),
+    on(toggleSelectedDay, (state, action)=> {
+        const dayIdx = state.teachingDays.items.findIndex(dayItem => dayItem.day === action.day.day);
+        const stateCopy: TeachingDay[] = JSON.parse(JSON.stringify(state.teachingDays.items));
+        stateCopy[dayIdx].selected = !stateCopy[dayIdx].selected
+        return {
+            ...state,
+            teachingDays: {
+                ...state.teachingDays,
+                items: stateCopy
+            }
+        }
+    }),
+    on(setDefaultTeachingDays, (state, action)=> {
+        const stateCopy: TeachingDay[] = JSON.parse(JSON.stringify(state.teachingDays.items));
+        for(let i = 0; i < 5; i++) {
+            stateCopy[i].selected = true;
+        }
+        return {
+            ...state,
+            teachingDays: {
+                ...state.teachingDays,
+                items: stateCopy
+            }
+        }
+    }),
     on(setPreviewAcademicYearStartDate, (state, action)=> {
         return {
             ...state,

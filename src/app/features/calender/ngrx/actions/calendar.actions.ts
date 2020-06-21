@@ -1,7 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { HolidayListModel } from '../../models/holiday-list.model';
 import { HolidayModel } from '../../models/holiday.model';
-
+import { TeachingDay } from '../../models/teaching-day.model';
+import { ClassGroupModel } from '../../models/class-group.model'
+import { ClassModel } from 'src/app/shared/models/class.model';
 export const setPreviewAcademicYearStartDate = createAction(
     '[AcademicYearQuestionComponent] setPreviewAcademicYearStartDate',
     props<{startDate: string}>()
@@ -81,4 +83,33 @@ export const editHolidayRequest = createAction(
 export const addHoliday = createAction(
     '[HolidayListComponent] addHoliday',
     props<{holiday: HolidayModel}>()
+);
+export const toggleSelectedDay = createAction(
+    '[TeachingDaysComponent] toggleSelectedDay',
+    props<{day: TeachingDay}>()
+);
+export const fetchClassesAndGroups = createAction(
+    '[TeachingDayForClassQuestion] fetchClassesAndGroups'
+);
+export const fetchClassesAndGroupsSuccess = createAction(
+    '[CalendarEffects] fetchClassesAndGroupsSuccess',
+    props<{classesAndGroups: ClassGroupModel[]}>()
+);
+export const setDefaultTeachingDays = createAction(
+    '[TeachingDaysComponent] setDefaultTeachingDays'
+);
+export const toggleClassesGroupActive = createAction(
+    '[TeachingDayForClassQuestion] toggleClassGroupActive',
+    props<{day: TeachingDay, classesGroup: ClassGroupModel}>()
+)
+export const getAllClassesRequest = createAction(
+    '[TeachingDayForClassQuestion] getAllClassesRequest'
+);
+export const getAllClassesResponse = createAction(
+    '[CalendarEffects] getAllClassesResponse',
+    props<{classes: ClassModel[]}>()
+);
+export const reassignClass = createAction(
+    '[TeachingDayForClassQuestion] reassignClass',
+    props<{class: ClassModel, classesGroup: ClassGroupModel}>()
 )

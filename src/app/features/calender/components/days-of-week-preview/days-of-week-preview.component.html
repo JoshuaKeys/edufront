@@ -1,0 +1,25 @@
+<ng-container>
+    <div class="preview-item" *ngIf="(previewState | async).teachingDays as dataPreview" [routerLink]="dataPreview.route">
+        <h1 class="preview-item__header">Teaching Days</h1>
+        <ul class="days" *ngIf="allIsUniform() | async; else nonUniform">
+            <li class="day" [ngClass]="{'active': day.selected}" *ngFor="let day of (previewState | async).teachingDays.items;
+            let index=i">{{day.day}}</li>
+        </ul>
+        <ng-template #nonUniform>
+            <div class="days-split-container" *ngFor="let group of (previewState|async).teachingDays.classesAndGroupItems">
+                <div class="classes">
+                    <span class="classes__header">Classes</span>
+                    <div class="classes__items">
+                        <div class="classes__item" *ngFor="let classItem of group.classes; let i = index">
+                            {{classItem.grade}} <span *ngIf="!(i === group.classes.length - 1)">|</span>
+                        </div>
+                    </div>
+
+                </div>
+                <ul class="days days-split">
+                    <li class="day" [ngClass]="{'active': day.selected}" *ngFor="let day of group.teachingDays">{{day.day}}</li>
+                </ul>
+            </div>
+        </ng-template>
+    </div>
+</ng-container>

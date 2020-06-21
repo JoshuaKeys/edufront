@@ -1,5 +1,6 @@
 import { TermsAndDates } from './terms-and-date.model';
 import { VacationModel } from './vacation.model';
+import { ClassGroupModel } from './class-group.model';
 
 export interface CalendarModel {
     currentAcademicYear?: {
@@ -8,5 +9,7 @@ export interface CalendarModel {
     },
     schoolTerms?: number,
     termsAndDates?: TermsAndDates[],
-    vacations?: VacationModel[]
+    vacations?: VacationModel[],
+    teachingDays?: string[],
+    classesAndGroups?: ClassGroupModel[]
 }

@@ -8,3 +8,4 @@ export * from './holiday-list/holiday-list.component';
 export * from './same-teaching-days-question/same-teaching-days-question.component';
 export * from './teaching-days/teaching-days.component';
 export * from './teaching-day-for-class-question/teaching-day-for-class-question.component';
+export * from './same-periods-for-classes-question/same-periods-for-classes-question.component';

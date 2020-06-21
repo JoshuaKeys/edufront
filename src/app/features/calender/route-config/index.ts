@@ -1,4 +1,5 @@
 import * as fromCalenderContainer from '../containers';
+
 export const calenderNavigation = {
   'dates-of-academic-year': {
     previous: null,
@@ -30,12 +31,20 @@ export const calenderNavigation = {
   },
   'teaching-days': {
     previous: 'same-teaching-days-question',
-    next: ''
+    next: 'teaching-day-for-class-question'
+  },
+  'teaching-day-for-class-question': {
+      previous: 'teaching-days',
+      next: 'same-periods-for-classes-question'
+  },
+  'same-periods-for-classes-question': {
+      previous: 'teaching-day-for-class-question',
+      next: ''
   }
 };
+
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  // 'dates-of-academic-year': fromCalenderContainer.HolidayListComponent,
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
     fromCalenderContainer.TermNamesAndDatesQuestionComponent,
@@ -46,5 +55,7 @@ export const calenderRouteToComponentMap = {
   'holiday-list': fromCalenderContainer.HolidayListComponent,
   'same-teaching-days-question':
     fromCalenderContainer.SameTeachingDaysQuestionComponent,
-  'teaching-days': fromCalenderContainer.TeachingDaysComponent
+  'teaching-days': fromCalenderContainer.TeachingDaysComponent,
+  'teaching-day-for-class-question': fromCalenderContainer.TeachingDayForClassQuestionComponent,
+  'same-periods-for-classes-question': fromCalenderContainer.SamePeriodsForClassesQuestionComponent
 };

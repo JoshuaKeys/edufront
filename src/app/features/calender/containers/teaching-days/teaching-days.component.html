@@ -4,12 +4,13 @@
             What are those teaching days?
         </h1>
         <div class="school-terms-question">
+            <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="teachingDays"></edu-days-of-week>
             <!-- <edu-terms [terms]="6" [active]="(calendarData | async).schoolTerms" (toggleActive)="onToggleActive($event)"></edu-terms> -->
         </div>
     </div>
 
     <div class="teaching-days__btn-container button--bottom">
-        <button class="teaching-days__continue-btn" (click)="goNext()">
+        <button class="teaching-days__continue-btn" [routerLink]="['../', activatedRouteData.next]">
         Continue
       </button>
     </div>

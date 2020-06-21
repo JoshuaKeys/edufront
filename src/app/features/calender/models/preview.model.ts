@@ -1,5 +1,7 @@
 import { TermsAndDates } from './terms-and-date.model';
 import { VacationModel } from './vacation.model';
+import { TeachingDay } from './teaching-day.model';
+import { ClassGroupModel } from './class-group.model';
 
 export interface PreviewModel {
     datePreview?: {
@@ -21,6 +23,7 @@ export interface PreviewModel {
     }
     teachingDays?: {
         route: string;
-        items?: string[];
+        items?: TeachingDay[];
+        classesAndGroupItems?: ClassGroupModel[]
     }
 }

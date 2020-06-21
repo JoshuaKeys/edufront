@@ -4,6 +4,9 @@ import { CalendarModel } from './calendar.model';
 import { HolidayModel } from './holiday.model';
 import { EntityState } from '@ngrx/entity';
 import { HolidayEditModel } from './holiday-edit.model';
+import { TeachingDay } from './teaching-day.model';
+import { ClassGroupModel } from './class-group.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 export interface CalendarStateModel {
     modal: CalendarModalModel,
@@ -12,5 +15,8 @@ export interface CalendarStateModel {
     holidays?: {
         holidayList: EntityState<HolidayModel>;
         holidayEdit: HolidayEditModel
-    }
+    },
+    teachingDays?: TeachingDay[],
+    classesAndGroups: ClassGroupModel[],
+    classes: ClassModel[]
 }

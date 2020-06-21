@@ -11,7 +11,8 @@ import {
   VacationNamesAndDatesQuestionComponent,
   GovernmentHolidaysObservedQuestionComponent,
   TeachingDaysComponent,
-  SameTeachingDaysQuestionComponent
+  SameTeachingDaysQuestionComponent,
+  SamePeriodsForClassesQuestionComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
@@ -29,6 +30,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { CalendarEffects } from './ngrx/effects';
 import { DaysOfWeekComponent } from './components/days-of-week/days-of-week.component';
 import { TeachingDayForClassQuestionComponent } from './containers/teaching-day-for-class-question/teaching-day-for-class-question.component';
+import { DaysOfWeekPreviewComponent } from './components/days-of-week-preview/days-of-week-preview.component';
 @NgModule({
   declarations: [
     TeachingDayForClassQuestionComponent,
@@ -47,10 +49,11 @@ import { TeachingDayForClassQuestionComponent } from './containers/teaching-day-
     HolidayListComponent,
     HolidayAddComponent,
     HolidayPillComponent,
-
     TeachingDaysComponent,
     SameTeachingDaysQuestionComponent,
-    DaysOfWeekComponent
+    DaysOfWeekComponent,
+    DaysOfWeekPreviewComponent,
+    SamePeriodsForClassesQuestionComponent
   ],
   imports: [
     CommonModule,
