@@ -3,6 +3,10 @@
 :host {
   color: $black;
 }
+form {
+  position: relative;
+  z-index: 2;
+}
 .holiday-add {
   height: 54px;
   max-width: 530px;
@@ -28,6 +32,9 @@ edu-datepicker {
   height: 54px;
   width: 140px;
   @include absoluteCenter();
+  img {
+    margin-left: 10px;
+  }
 }
 
 input {

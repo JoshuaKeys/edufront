@@ -1,9 +1,14 @@
-<div class="card">
-    <h5 class="card__title bluecolor">All Classes</h5>
-    <div class="table">
-        <div class="column" *ngFor="let period of (previewState | async).periods.items">
-            <span class="header">{{period.day}}</span>
-            <span *ngFor="let periodItem of period.periods">{{periodItem}}</span>
-        </div>
+<!-- <div class="card"> -->
+<h5 class="card__title bluecolor">All Classes</h5>
+<div class="table-wrapper">
+  <div class="table">
+    <div
+      class="column"
+      *ngFor="let period of (previewState | async).periods.items"
+    >
+      <span class="header">{{ period.day }}</span>
+      <span *ngFor="let periodItem of period.periods">{{ periodItem }}</span>
     </div>
+  </div>
 </div>
+<!-- </div> -->

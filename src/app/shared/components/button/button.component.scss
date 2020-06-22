@@ -86,11 +86,13 @@
     box-shadow: none;
   }
 }
+
 :host.basic {
   width: 292px;
   height: 52px;
 }
-:host[buttontype='basic'].basic {
+:host[buttontype='basic'].basic,
+:host.round-basic {
   border-radius: 100px;
   font: 700 12px/20px Raleway;
   box-shadow: 0px 4px 8px #3c4b9b26;
@@ -114,6 +116,14 @@
     color: white;
     box-shadow: unset;
   }
+}
+
+:host.round-basic {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font: 400 16px/22px Roboto;
+  text-transform: capitalize;
 }
 :host.outline {
   width: 292px;

@@ -14,6 +14,7 @@
 
   <div class="school-terms__btn-container button--bottom">
     <button
+      ButtonType="basic"
       class="school-terms__continue-btn"
       [disabled]="!(calendarData | async).schoolTerms"
       (click)="goNext()"
