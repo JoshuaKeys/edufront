@@ -28,6 +28,9 @@ edu-datepicker {
   height: 54px;
   width: 140px;
   @include absoluteCenter();
+  img {
+    margin-left: 10px;
+  }
 }
 
 input {

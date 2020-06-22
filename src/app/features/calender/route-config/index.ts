@@ -34,25 +34,27 @@ export const calenderNavigation = {
     next: 'teaching-day-for-class-question'
   },
   'teaching-day-for-class-question': {
-      previous: 'teaching-days',
-      next: 'same-periods-for-classes-question'
+    previous: 'teaching-days',
+    next: 'same-periods-for-classes-question'
   },
   'same-periods-for-classes-question': {
-      previous: 'teaching-day-for-class-question',
-      next: 'number-of-periods'
+    previous: 'teaching-day-for-class-question',
+    next: 'number-of-periods'
   },
   'number-of-periods': {
-      previous: 'same-periods-for-classes-question',
-      next: 'teaching-periods-per-day'
+    previous: 'same-periods-for-classes-question',
+    next: 'teaching-periods-per-day'
   },
   'teaching-periods-per-day': {
-      previous: 'number-of-periods',
-      next: ''
+    previous: 'number-of-periods',
+    next: ''
   }
 };
 
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
+  // 'dates-of-academic-year':
+  //   fromCalenderContainer.VacationNamesAndDatesQuestionComponent,
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
     fromCalenderContainer.TermNamesAndDatesQuestionComponent,
@@ -64,8 +66,11 @@ export const calenderRouteToComponentMap = {
   'same-teaching-days-question':
     fromCalenderContainer.SameTeachingDaysQuestionComponent,
   'teaching-days': fromCalenderContainer.TeachingDaysComponent,
-  'teaching-day-for-class-question': fromCalenderContainer.TeachingDayForClassQuestionComponent,
-  'same-periods-for-classes-question': fromCalenderContainer.SamePeriodsForClassesQuestionComponent,
+  'teaching-day-for-class-question':
+    fromCalenderContainer.TeachingDayForClassQuestionComponent,
+  'same-periods-for-classes-question':
+    fromCalenderContainer.SamePeriodsForClassesQuestionComponent,
   'number-of-periods': fromCalenderContainer.NumberOfPeriodsComponent,
-  'teaching-periods-per-day': fromCalenderContainer.TeachingPeriodsPerDayComponent
+  'teaching-periods-per-day':
+    fromCalenderContainer.TeachingPeriodsPerDayComponent
 };
