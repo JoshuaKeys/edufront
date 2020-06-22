@@ -19,7 +19,10 @@ export class PeriodsPerDayComponent implements OnInit {
   ngOnInit(): void {
     this.classGroup.subscribe(console.log);
   }
-  selectPeriod(day: DayModel, group: ClassGroupModel) {
+  selectPeriod(day: TeachingDay, group: ClassGroupModel) {
+    if(!day.period) {
+      return;
+    }
     this.onSelectPeriod.emit({day, classGroup: group})
   }
 }
