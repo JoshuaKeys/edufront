@@ -8,6 +8,7 @@
                 <div class="container">
                     <div>
                         <div class="group--row line-entry" *ngFor="let item of classesAndGroups | async">
+
                             <div class="card ">
                                 <h4 class="card__title">
                                     Classes
@@ -23,16 +24,15 @@
                                     </div>
                                 </edu-popover>
                             </div>
-
                             <div class="days">
-                                <edu-periods-per-day (toggleActive)="toggleActive($event, item)" [teachingDays]="asObservable(item.teachingDays)"></edu-periods-per-day>
+                                <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="asObservable(item)"></edu-periods-per-day>
                             </div>
                         </div>
                     </div>
                     <div class="card period-menu">
                         <h5 class="card-title">Select Periods</h5>
                         <div class="badges flex-wrap">
-                            <div *ngFor="let period of periods" class="badge badge--small badge--inactive" [ngClass]="{'badge--inactive': calendarData.periods[0].periods.length !== period}">{{period}}</div>
+                            <div *ngFor="let period of periods" (click)="updateSelectedDays(period)" class="badge badge--small badge--inactive" [ngClass]="{'badge--inactive': calendarData.periods[0].periods.length !== period}">{{period}}</div>
                         </div>
                     </div>
                 </div>

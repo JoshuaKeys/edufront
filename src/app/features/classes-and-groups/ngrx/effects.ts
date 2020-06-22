@@ -34,9 +34,6 @@ export class ClassesAndGroupsEffects {
   sendClassesWithoutGroups$ = createEffect(() => this.actions$.pipe(
     ofType(classesWithoutGroupsRequest),
     withLatestFrom(this.store.select(selectSelectedClasses)),
-    tap(([action, selectedClasses]) => {
-      console.log(action, selectedClasses);
-    }),
     mergeMap(([action, selectedClasses]) => {
       let copyOfSelectedClasses = selectedClasses.map(item => ({ grade: item.grade, name: +item.name }))
       return this.classesAndGroupsService.sendClassesWithoutGroups(copyOfSelectedClasses)

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { TeachingDay } from '../../models/teaching-day.model';
-import { toggleSelectedDay, setDefaultTeachingDays, getAllClassesResponse, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, assignPeriodsToTeachingDates } from '../actions/calendar.actions';
+import { toggleSelectedDay, setDefaultTeachingDays, getAllClassesResponse, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, assignPeriodsToTeachingDates, selectTeachingDay } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups } from '../../utilities';
@@ -107,6 +107,28 @@ export const teachingReducer = createReducer(initialState,
                 if(teachingDay.selected) {
                     teachingDay.period = action.numberOfPeriods
                 }
+                return teachingDay
+            })
+            classAndGroup.teachingDays = teachingDaysArr;
+            return classAndGroup
+        })
+        return {
+            ...stateCopy,
+            classesAndGroups: updatedClassesAndGroups
+        }
+    }),
+    on(selectTeachingDay, (state, action)=> {
+        const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+        const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classAndGroup=> {
+            const teachingDaysArr = classAndGroup.teachingDays.map(teachingDay=> {
+                if(teachingDay.day === action.day.day && classAndGroup.id === action.classGroup.id) {
+                    if(teachingDay.periodSelected) {
+                        teachingDay.periodSelected = false
+                    }else {
+                        teachingDay.periodSelected = true;
+                    }
+                }
+                
                 return teachingDay
             })
             classAndGroup.teachingDays = teachingDaysArr;

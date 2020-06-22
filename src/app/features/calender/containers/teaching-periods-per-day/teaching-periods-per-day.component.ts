@@ -10,7 +10,8 @@ import { selectClassesAndGroups, selectCalendar, selectTeaching, selectAllClasse
 import { map } from 'rxjs/operators';
 import { CalendarModel } from '../../models/calendar.model';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { reassignClass } from '../../ngrx/actions/calendar.actions';
+import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest } from '../../ngrx/actions/calendar.actions';
+import { SelectedPeriodModel } from '../../models/selected-period.model';
 
 @Component({
   selector: 'edu-teaching-periods-per-day',
@@ -41,7 +42,6 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
     this.store.dispatch(reassignClass({class: classItem, classesGroup}))
   }
   isPresent(classes: ClassModel[], classItem: ClassModel) {
-    console.log(classes, classItem)
     for(let i = 0; i < classes.length; i++) {
       if(classes[i].id === classItem.id) {
         return true
@@ -49,10 +49,19 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
     }
     return false;
   }
+  debug(item) {
+    console.log(item);
+  }
   toggleActive(day: TeachingDay, classesGroup: ClassGroupModel) {
     // this.store.dispatch(toggleClassesGroupActive({day, classesGroup}))
   }
   asObservable(item) {
     return of(item);
+  }
+  selectPeriod($event: SelectedPeriodModel) {
+    this.store.dispatch(selectTeachingDay($event))
+  }
+  updateSelectedDays(updateTo: number) {
+    this.store.dispatch(updateSelectedTeachingDaysRequest({updateTo}));
   }
 }

@@ -62,7 +62,7 @@ export const calendarReducer = createReducer(initialState,
         let stateCopy: CalendarModel = JSON.parse(JSON.stringify(state))
         let termsAndDates = stateCopy.termsAndDates;
         termsAndDates[action.idx].termName = action.termName;
-        console.log(stateCopy);
+        // console.log(stateCopy);
         return {
             ...state,
             termsAndDates
