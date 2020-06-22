@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'edu-same-periods-for-classes-question',
@@ -7,10 +8,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamePeriodsForClassesQuestionComponent implements OnInit {
-
-  constructor() { }
+  activatedRouteData = this.activatedRoute.snapshot.data;
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
+  goNext() {
 
+  }
+  
 }

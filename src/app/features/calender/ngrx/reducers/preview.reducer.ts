@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
 import { TermsAndDates } from '../../models/terms-and-date.model'
-import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass } from '../actions/calendar.actions';
+import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -30,9 +30,33 @@ const initialState: PreviewModel = {
             {day: 'Sat', selected: false},
             {day: 'Sun', selected: false}
         ]
+    },
+    periods: {
+        route: '/calendar/same-periods-for-classes-question'
     }
 }
 export const previewReducer = createReducer(initialState,
+    on(setNumberOfPeriods, (state, action) => {
+        const teachingDays = state.teachingDays.items;
+        const periodsArr = [];
+        for(let i = 1; i <= action.numberOfPeriods; i++) {
+            periodsArr.push('P' + i)
+        }
+        const periodsObjs = teachingDays.filter(teachingDay => teachingDay.selected)
+            .map(teachingDay=> {
+                return {
+                    day: teachingDay.day,
+                    periods: periodsArr
+                }
+            })
+        return {
+            ...state,
+            periods: {
+                ...state.periods,
+                items: periodsObjs
+            }
+        }
+    }),
     on(fetchClassesAndGroupsSuccess, (state, action)=> {
         return {
             ...state,

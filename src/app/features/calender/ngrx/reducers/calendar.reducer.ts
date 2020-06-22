@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
-import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate, initializeVacations, addVacation, setVacationName, setVacationEndDate, setVacationStartDate } from '../actions/calendar.actions';
+import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate, initializeVacations, addVacation, setVacationName, setVacationEndDate, setVacationStartDate, setNumberOfPeriods, toggleSelectedDay } from '../actions/calendar.actions';
 import { TermsAndDates } from '../../models/terms-and-date.model';
 import { VacationModel } from '../../models/vacation.model';
 import { CalendarStateModel } from '../../models/calender-state.model';
+import { selectTeachingDays } from '../selectors';
 
 const initialState: CalendarModel = {
     // currentAcademicYear: {
@@ -67,6 +68,7 @@ export const calendarReducer = createReducer(initialState,
             termsAndDates
         }
     }), 
+
     on(setTermEndDate, (state, action)=> {
         let stateCopy: CalendarModel = JSON.parse(JSON.stringify(state))
         let termsAndDates = stateCopy.termsAndDates;
@@ -137,4 +139,13 @@ export const calendarReducer = createReducer(initialState,
             vacations
         }
     }),
+    // on(setNumberOfPeriods, (state, action) => {
+    //     const teachingState = selectTeachingDays()
+    //     let stateCopy: CalendarModel = JSON.parse(JSON.stringify(state));
+    //     stateCopy.periods = action.numberOfPeriods;
+    //     return {
+    //         ...stateCopy
+            
+    //     }
+    // })
 );

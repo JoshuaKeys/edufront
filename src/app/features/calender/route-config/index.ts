@@ -39,6 +39,14 @@ export const calenderNavigation = {
   },
   'same-periods-for-classes-question': {
       previous: 'teaching-day-for-class-question',
+      next: 'number-of-periods'
+  },
+  'number-of-periods': {
+      previous: 'same-periods-for-classes-question',
+      next: 'teaching-periods-per-day'
+  },
+  'teaching-periods-per-day': {
+      previous: 'number-of-periods',
       next: ''
   }
 };
@@ -57,5 +65,7 @@ export const calenderRouteToComponentMap = {
     fromCalenderContainer.SameTeachingDaysQuestionComponent,
   'teaching-days': fromCalenderContainer.TeachingDaysComponent,
   'teaching-day-for-class-question': fromCalenderContainer.TeachingDayForClassQuestionComponent,
-  'same-periods-for-classes-question': fromCalenderContainer.SamePeriodsForClassesQuestionComponent
+  'same-periods-for-classes-question': fromCalenderContainer.SamePeriodsForClassesQuestionComponent,
+  'number-of-periods': fromCalenderContainer.NumberOfPeriodsComponent,
+  'teaching-periods-per-day': fromCalenderContainer.TeachingPeriodsPerDayComponent
 };

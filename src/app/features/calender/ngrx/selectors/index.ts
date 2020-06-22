@@ -9,9 +9,10 @@ export const selectPreviewState = createSelector(calendarFeatureState, feat => f
 export const selectCalendar = createSelector(calendarFeatureState, feat => {
     return feat.calendarData
 });
+export const selectTeaching = createSelector(calendarFeatureState, feat=> feat.teaching)
 export const selectAllHolidays = createSelector(calendarFeatureState, feat=>  selectAll(feat.holidays.holidayList));
 export const selectEditState = createSelector(calendarFeatureState, feat => feat.holidays.holidayEdit);
 
-export const selectTeachingDays = createSelector(calendarFeatureState, feat=> feat.teachingDays);
-export const selectClassesAndGroups = createSelector(calendarFeatureState, feat => feat.classesAndGroups)
-export const selectAllClasses = createSelector(calendarFeatureState, feat => feat.classes);
+export const selectTeachingDays = createSelector(calendarFeatureState, feat=> feat.teaching.teachingDays);
+export const selectClassesAndGroups = createSelector(calendarFeatureState, feat => feat.teaching.classesAndGroups)
+export const selectAllClasses = createSelector(calendarFeatureState, feat => feat.teaching.classes);

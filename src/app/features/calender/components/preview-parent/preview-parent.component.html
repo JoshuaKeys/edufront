@@ -1,12 +1,14 @@
 <ul class="preview-parent">
+    <li class="preview-parent__item" *ngIf="(previewState | async).periods.items" [routerLink]="(previewState | async).periods.route">
+        <edu-periods-preview [previewState]="previewState"></edu-periods-preview>
+
+    </li>
     <li class="preview-parent__item" *ngIf="(previewState | async).teachingDays.items" [routerLink]="(previewState | async).teachingDays.route">
         <edu-days-of-week-preview [previewState]="previewState"></edu-days-of-week-preview>
-
     </li>
     <li class="preview-parent__item" *ngIf="(previewState | async).termVacations.items &&
         (previewState | async).termVacations.items" [routerLink]="(previewState | async).termVacations.route">
         <edu-vacation-dates-preview [previewState]="previewState"></edu-vacation-dates-preview>
-
     </li>
     <li class="preview-parent__item" *ngIf="(previewState | async).termsNamesAndDates.items && (previewState | async).termsNamesAndDates.items" [routerLink]="(previewState | async).termsNamesAndDates.route">
         <edu-terms-dates-preview [previewState]="previewState"></edu-terms-dates-preview>

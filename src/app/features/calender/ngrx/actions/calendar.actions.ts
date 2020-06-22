@@ -112,4 +112,16 @@ export const getAllClassesResponse = createAction(
 export const reassignClass = createAction(
     '[TeachingDayForClassQuestion] reassignClass',
     props<{class: ClassModel, classesGroup: ClassGroupModel}>()
-)
+);
+export const addClassesGroup = createAction(
+    '[TeachingDayForClassQuestion] addClassesGroup'
+);
+export const setNumberOfPeriods = createAction(
+    '[NumberOfPeriodsComponent] setNumberOfPeriods',
+    props<{numberOfPeriods: number}>()
+);
+export const assignPeriodsToTeachingDates = createAction(
+    '[NumberOfPeriodsComponent] assignPeriodsToTeachingDates',
+    props<{numberOfPeriods: number}>()
+);
+// export const selectTeachingDay = createAction()

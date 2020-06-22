@@ -23,7 +23,10 @@ export const selectAllSubjects = createSelector(
   selectSubjectsState, selectAll
 )
 export const selectAllClasses = createSelector(
-  selectClassesState, fromClassesReducer.selectAll
+  selectClassesState, (feat: any) => {
+    console.log(feat)
+    return fromClassesReducer.selectAll(feat);
+  }
 )
 export const selectSortedClasses = createSelector(selectAllClasses, classes => {
   return classes && classes.length > 0 ? classes.slice().sort((a, b) => {
