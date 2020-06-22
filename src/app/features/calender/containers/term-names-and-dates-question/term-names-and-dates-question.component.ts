@@ -41,7 +41,7 @@ export class TermNamesAndDatesQuestionComponent
     private cd: ChangeDetectorRef
   ) {}
   log(item) {
-    console.log(item);
+    // console.log(item);
   }
 
   @ViewChild('scrollableEl') scrollableEl: ElementRef;

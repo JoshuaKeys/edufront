@@ -16,3 +16,16 @@ export const selectEditState = createSelector(calendarFeatureState, feat => feat
 export const selectTeachingDays = createSelector(calendarFeatureState, feat=> feat.teaching.teachingDays);
 export const selectClassesAndGroups = createSelector(calendarFeatureState, feat => feat.teaching.classesAndGroups)
 export const selectAllClasses = createSelector(calendarFeatureState, feat => feat.teaching.classes);
+export const getAllSelectedClassPeriods = createSelector(calendarFeatureState, feat => {
+    return feat.teaching.classesAndGroups.map(classesGroup => {
+        const selectedTeachingDays = classesGroup.teachingDays.filter(teachingDay => teachingDay.periodSelected);
+        if(selectedTeachingDays.length > 0) {
+            return {
+                groupId: classesGroup.id,
+                teachingDays: selectedTeachingDays
+            }
+        }else {
+            return null;
+        }
+    }).filter(items => items.teachingDays)
+})

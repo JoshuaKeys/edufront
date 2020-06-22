@@ -1,5 +1,5 @@
-<ul class="days">
-    <li class="day-container" (click)="onToggleActive(day)" [ngClass]="{'active': day.selected}" *ngFor="let day of teachingDays | async;
+<ul class="days" *ngIf="(classGroup | async) as group">
+    <li class="day-container" (click)="selectPeriod(day, group)" [ngClass]="{'active': day.selected}" *ngFor="let day of group.teachingDays;
         let index=i">
         <span class="day">{{day.day}}</span>
         <span class="value">{{day.period ? day.period : 'X'}}</span>
