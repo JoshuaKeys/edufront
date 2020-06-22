@@ -26,6 +26,7 @@ export class TimetableComponent implements OnInit {
   @Input() model: TimetableModel;
   @Input() time: Time[]; //has to be defined in ascending order
   @Input() specialPeriods: SpecialPeriod[];
+  @Input() specialPeriodHeight: number = 1;
 
   @ContentChild('periodTemplate') periodTemplate: TemplateRef<any>;
   constructor(private timeTableService: TimetableService) {}
@@ -119,11 +120,23 @@ export class TimetableComponent implements OnInit {
       // );
       // _sp.classes.push(`c${this.days.indexOf(_sp.start) + 1}`);
       // _sp.classes.push(`ce${this.days.indexOf(_sp.end) + 1}`);
+      if (this.specialPeriodHeight == 2) {
+        let rowStart = this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf) - 1;
+        this.SpecialPeriodClasses[i] = this.assignToClassArr(
+          this.SpecialPeriodClasses[i],
+          `r${rowStart}`
+        );
+        this.SpecialPeriodClasses[i] = this.assignToClassArr(
+          this.SpecialPeriodClasses[i],
+          `re${rowStart + 1}`
+        );
+      } else {
+        this.SpecialPeriodClasses[i] = this.assignToClassArr(
+          this.SpecialPeriodClasses[i],
+          `r${this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf)}`
+        );
+      }
 
-      this.SpecialPeriodClasses[i] = this.assignToClassArr(
-        this.SpecialPeriodClasses[i],
-        `r${this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf)}`
-      );
       this.SpecialPeriodClasses[i] = this.assignToClassArr(
         this.SpecialPeriodClasses[i],
         `c${this.days.indexOf(_sp.start) + 1}`
