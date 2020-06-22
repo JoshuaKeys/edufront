@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
 import { TermsAndDates } from '../../models/terms-and-date.model'
-import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods } from '../actions/calendar.actions';
+import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, updateSelectedTeachingDays, assignPeriodsToTeachingDates } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
-import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups } from '../../utilities';
+import { ClassGroupModel } from '../../models/class-group.model';
 const initialState: PreviewModel = {
     datePreview: {
         route: '/calendar/dates-of-academic-year',
@@ -49,14 +49,34 @@ export const previewReducer = createReducer(initialState,
                     periods: periodsArr
                 }
             })
+        const classesAndGroupsCopy: ClassGroupModel[] = JSON.parse(JSON.stringify(state.teachingDays.classesAndGroupItems))
+        console.log(classesAndGroupsCopy)
         return {
             ...state,
             periods: {
                 ...state.periods,
-                items: periodsObjs
-            }
+                items: periodsObjs,
+
+            },
         }
     }),
+    // on(assignPeriodsToTeachingDates, (state, action) => {
+    //     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    //     const updatedClassesAndGroups = stateCopy.periods.classesAndGroupItems.map(classAndGroup=> {
+    //         const teachingDaysArr = classAndGroup.teachingDays.map(teachingDay=> {
+    //             if(teachingDay.selected) {
+    //                 teachingDay.period = action.numberOfPeriods
+    //             }
+    //             return teachingDay
+    //         })
+    //         classAndGroup.teachingDays = teachingDaysArr;
+    //         return classAndGroup
+    //     })
+    //     return {
+    //         ...stateCopy,
+    //         classesAndGroups: updatedClassesAndGroups
+    //     }
+    // }),
     on(fetchClassesAndGroupsSuccess, (state, action)=> {
         return {
             ...state,

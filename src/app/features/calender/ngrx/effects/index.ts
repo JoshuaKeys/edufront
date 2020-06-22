@@ -39,7 +39,10 @@ export class CalendarEffects {
     updateSelectedTeachingDaysRequest$ = createEffect(() => this.actions$.pipe(
         ofType(updateSelectedTeachingDaysRequest),
         withLatestFrom(this.store.select(getAllSelectedClassPeriods)),
-        map(([action, selectedTeachingDates]) => updateSelectedTeachingDays({updateTo: action.updateTo, selectedTeachingDates}))
+        map(([action, selectedTeachingDates]) => {
+            console.log(selectTeachingDays)
+            return updateSelectedTeachingDays({updateTo: action.updateTo, selectedTeachingDates})
+        })
     ))
     constructor(private actions$: Actions,
         private store: Store<CalendarStateModel>,

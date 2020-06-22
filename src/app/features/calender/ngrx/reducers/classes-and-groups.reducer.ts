@@ -3,6 +3,14 @@ import { ClassGroupModel } from '../../models/class-group.model';
 import { fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass } from '../actions/calendar.actions';
 import { clearClassOffGroups } from '../../utilities';
 
+function genKey() {
+    let alphaNum = 'abcdefghijklmnopqrstuvwxyz'
+    let res = ''
+    for(let i = 0; i < 24; i++){
+        res += alphaNum[Math.floor(Math.random() + 26)];
+    }
+    return res;
+}
 
 const initialState: ClassGroupModel[] = [];
 export const classesAndGroupsReducer = createReducer(

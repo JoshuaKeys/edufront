@@ -27,5 +27,5 @@ export const getAllSelectedClassPeriods = createSelector(calendarFeatureState, f
         }else {
             return null;
         }
-    }).filter(items => items.teachingDays)
+    }).filter(items => items)
 })

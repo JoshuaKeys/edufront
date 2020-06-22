@@ -20,6 +20,7 @@ export class HolidayAddComponent implements OnInit {
   editHolidayForm: FormGroup;
   constructor() { }
   addHoliday(){
+    console.log(this.addHolidayForm.value)
     this.add.emit(this.addHolidayForm.value);
   }
   editHoliday() {
