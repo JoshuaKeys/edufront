@@ -56,7 +56,7 @@ export const previewReducer = createReducer(initialState,
             periods: {
                 ...state.periods,
                 items: periodsObjs,
-                classesAndGroupItems: {}
+
             },
         }
     }),
