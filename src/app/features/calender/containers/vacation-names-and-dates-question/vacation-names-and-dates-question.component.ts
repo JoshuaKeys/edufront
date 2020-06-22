@@ -9,7 +9,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
 import { selectCalendar } from '../../ngrx/selectors';
-import { first, take } from 'rxjs/operators';
+import { first, take, skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import {
   addVacation,
@@ -60,7 +60,7 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
     this.calendarData = this.store.select(selectCalendar);
     this.store
       .select(selectCalendar)
-      // .pipe(first())
+      // .pipe(skip(1))
       .subscribe(calendarState => {
         console.log(calendarState);
         const formGroups = calendarState.vacations.map(vacation => {

@@ -10,7 +10,8 @@
   padding: 40px 5px;
 
   &::ng-deep {
-    h1.preview-item__header {
+    h1.preview-item__header,
+    h5.card__title {
       color: $black;
       font: 400 12px/20px Raleway !important;
     }
