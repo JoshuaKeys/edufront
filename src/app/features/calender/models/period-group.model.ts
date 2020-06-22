@@ -1,7 +1,7 @@
 import { TeachingDay } from './teaching-day.model';
 import { PeriodModel } from './period.model';
 
-export interface ClassGroupModel {
+export interface PeriodGroupModel {
     id: string;
     groupName: string;
     classes: {
@@ -13,5 +13,6 @@ export interface ClassGroupModel {
         subjectIds?: string[],
         teacherIds?: [],
     }[],
-    teachingDays?: TeachingDay[]
+    // teachingDays?: TeachingDay[]
+    periods: PeriodModel[]
 }

@@ -3,6 +3,7 @@ import { VacationModel } from './vacation.model';
 import { TeachingDay } from './teaching-day.model';
 import { ClassGroupModel } from './class-group.model';
 import { PeriodModel } from './period.model';
+import { PeriodGroupModel } from './period-group.model';
 
 export interface PreviewModel {
     datePreview?: {
@@ -30,6 +31,6 @@ export interface PreviewModel {
     periods?: {
         route: string;
         items?: PeriodModel[],
-        classesAndGroupItems?: ClassGroupModel[]
+        classesAndGroupItems?: PeriodGroupModel[]
     }
 }

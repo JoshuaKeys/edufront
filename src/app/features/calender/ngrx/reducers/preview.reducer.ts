@@ -4,8 +4,8 @@ import { TermsAndDates } from '../../models/terms-and-date.model'
 import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, updateSelectedTeachingDays, assignPeriodsToTeachingDates } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
-import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups } from '../../utilities';
+import { ClassGroupModel } from '../../models/class-group.model';
 const initialState: PreviewModel = {
     datePreview: {
         route: '/calendar/dates-of-academic-year',
@@ -49,12 +49,15 @@ export const previewReducer = createReducer(initialState,
                     periods: periodsArr
                 }
             })
+        const classesAndGroupsCopy: ClassGroupModel[] = JSON.parse(JSON.stringify(state.teachingDays.classesAndGroupItems))
+        console.log(classesAndGroupsCopy)
         return {
             ...state,
             periods: {
                 ...state.periods,
-                items: periodsObjs
-            }
+                items: periodsObjs,
+                classesAndGroupItems: {}
+            },
         }
     }),
     // on(assignPeriodsToTeachingDates, (state, action) => {
