@@ -3,6 +3,10 @@
 :host {
   color: $black;
 }
+form {
+  position: relative;
+  z-index: 2;
+}
 .holiday-add {
   height: 54px;
   max-width: 530px;
