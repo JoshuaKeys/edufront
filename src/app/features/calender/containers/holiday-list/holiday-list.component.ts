@@ -63,7 +63,6 @@ export class HolidayListComponent implements OnInit {
         }
       })
     );
-    this.store.dispatch(fetchHolidaysRequest());
   }
 
   goNext() {

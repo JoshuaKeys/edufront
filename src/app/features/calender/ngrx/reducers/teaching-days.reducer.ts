@@ -1,6 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { TeachingDay } from '../../models/teaching-day.model';
-import { toggleSelectedDay, setDefaultTeachingDays, getAllClassesResponse, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, assignPeriodsToTeachingDates, selectTeachingDay, updateSelectedTeachingDays } from '../actions/calendar.actions';
+import { 
+    toggleSelectedDay,
+    setDefaultTeachingDays,
+    getAllClassesResponse,
+    fetchClassesAndGroupsSuccess,
+    toggleClassesGroupActive,
+    reassignClass,
+    setNumberOfPeriods, assignPeriodsToTeachingDates, selectTeachingDay, updateSelectedTeachingDays } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups } from '../../utilities';
