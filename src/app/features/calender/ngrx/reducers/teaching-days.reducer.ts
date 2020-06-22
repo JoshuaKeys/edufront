@@ -4,7 +4,6 @@ import { toggleSelectedDay, setDefaultTeachingDays, getAllClassesResponse, fetch
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups } from '../../utilities';
-import { PeriodModel } from '../../models/period.model';
 
 const initialState: TeachingStateModel = {
     teachingDays: [
@@ -104,7 +103,9 @@ export const teachingReducer = createReducer(initialState,
         const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
         const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classAndGroup=> {
             const teachingDaysArr = classAndGroup.teachingDays.map(teachingDay=> {
+
                 if(teachingDay.selected) {
+                    
                     teachingDay.period = action.numberOfPeriods
                 }
                 return teachingDay
