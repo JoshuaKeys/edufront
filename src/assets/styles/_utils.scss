@@ -54,6 +54,21 @@
 .justify-around {
   justify-content: space-around;
 }
+.align-items-start {
+  align-items: flex-start;
+}
+.align-items-end {
+  align-items: flex-end;
+}
+.align-items-center {
+  align-items: center;
+}
+.align-items-around {
+  align-items: space-around;
+}
+.align-items-between {
+  align-items: space-between;
+}
 
 .static {
   position: static;
