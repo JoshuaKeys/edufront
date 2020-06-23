@@ -2,7 +2,6 @@ import { NgModule, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IconSelectModule } from './icon-select/icon-select.module';
 import { SelectModule } from './select/select.module';
 
 // import { datePickerModule } from '../datepicker/datepicker.module';
