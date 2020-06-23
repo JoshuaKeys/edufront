@@ -4,7 +4,7 @@
   font-size: 26px;
   color: #212121;
   line-height: 40px;
-  max-width: 484px;
+  // max-width: 484px;
   margin-bottom: 30px;
 }
 edu-input {
@@ -16,7 +16,9 @@ edu-input {
     font-size: 16px;
   }
 }
-
+button.button--bottom {
+  margin: 0px auto 40px auto !important;
+}
 .country {
   padding: 5px 30px;
   border: 1px solid #69a9f2;
