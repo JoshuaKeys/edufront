@@ -1,5 +1,7 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/mixins/containers';
+@include group();
 .scrollable-content {
   overflow-y: auto;
 }

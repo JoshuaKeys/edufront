@@ -1,0 +1,92 @@
+<div class="main">
+  <div class="content">
+    <h2 class="content__title">
+      What time does the first period start in these days?
+    </h2>
+    <p class="content__desc">Note: You can select multiple days at a time</p>
+    <div class="group--row align-items-start">
+      <div class="badges-wrapper group--column justify-start ">
+        <ul class="days--header">
+          <li>Mon</li>
+          <li>Tue</li>
+          <li>Wed</li>
+          <li>Thu</li>
+          <li>Fri</li>
+          <li>Sat</li>
+          <li>Sun</li>
+        </ul>
+        <div class="badges scrollable-content">
+          <div class="badges--inlineflex">
+            <div class="container">
+              <div>
+                <div class="group--row line-entry" *ngFor="let item of tempArr">
+                  <div class="card ">
+                    <h4 class="card__title">
+                      Classes
+                    </h4>
+                    <p class="card__desc">
+                      12 | 13
+                    </p>
+                    <edu-popover>
+                      <div class="classes">
+                        <div
+                          class="badge badge--class"
+                          *ngFor="let item of popoverArr; let i = index"
+                        >
+                          {{ i }}
+                        </div>
+                      </div>
+                    </edu-popover>
+                  </div>
+                  <div class="days">
+                    <!-- add .badge--inactive  for inanctive class-->
+                    <div
+                      class="badge badge--time {{ isWeekend(i) }}"
+                      *ngFor="let time of timeArr; let i = index"
+                    >
+                      {{ time }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="group--row line-entry">
+              <div class="card card--dashed">
+                <img src="/assets/search-plus.svg" alt="" srcset="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card period-menu">
+        <h5 class="card-title">Select Time</h5>
+        <div class="group--row timeSelector">
+          <edu-select class="timeSelector--hr">
+            <span class="edu-label">Hr</span>
+            <edu-option
+              *ngFor="let hr of hrSelector; let i = index"
+              [OptionValue]="i + 7"
+            >
+              {{ display2Digit(i + 7) }}
+            </edu-option>
+          </edu-select>
+          <edu-select class="timeSelector--min">
+            <span class="edu-label">Min</span>
+            <edu-option
+              *ngFor="let min of minSelector; let i = index"
+              [OptionValue]="i"
+            >
+              {{ display2Digit(i) }}
+            </edu-option>
+          </edu-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="button--bottom" ButtonType="basic">
+    continue
+  </button>
+</div>
