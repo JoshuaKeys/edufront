@@ -1,1 +1,36 @@
-<p>p94 works!</p>
+<div class="main">
+  <div class="content">
+    <h1 class="header">
+      Tell us more about the assembly
+    </h1>
+
+    <div class="group--row">
+      <edu-input>
+        <span class="edu-label">
+          Name
+        </span>
+      </edu-input>
+
+      <edu-select
+        ><span class="edu-label">
+          Starting at
+        </span>
+        <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
+          {{ i + 1 }} mins
+        </edu-option>
+      </edu-select>
+
+      <edu-select
+        ><span class="edu-label">
+          Assembly Duration
+        </span>
+        <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
+          {{ i + 1 }} mins
+        </edu-option>
+      </edu-select>
+    </div>
+  </div>
+  <button class="button--bottom" ButtonType="basic">
+    continue
+  </button>
+</div>

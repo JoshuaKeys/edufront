@@ -1,1 +1,19 @@
-<p>p91 works!</p>
+<div class="main">
+  <div class="content">
+    <h1 class="header">
+      Define the interval between periods
+    </h1>
+
+    <edu-select
+      ><span class="edu-label">
+        Interval Duration
+      </span>
+      <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
+        {{ i + 1 }} mins
+      </edu-option>
+    </edu-select>
+  </div>
+  <button class="button--bottom" ButtonType="basic">
+    continue
+  </button>
+</div>
