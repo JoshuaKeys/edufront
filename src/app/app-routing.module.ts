@@ -71,6 +71,12 @@ const routes: Routes = [
       import('./features/sections/sections.module').then(m => m.SectionsModule)
   },
   {
+    path: 'calendar',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () =>
+      import('./features/calender/calender.module').then(m => m.CalenderModule)
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'

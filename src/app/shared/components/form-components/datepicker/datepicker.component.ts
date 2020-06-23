@@ -7,7 +7,14 @@ import {
   Input,
   ElementRef,
   ViewChild,
+<<<<<<< HEAD:src/app/shared/components/form-components/datepicker/datepicker.component.ts
   HostListener
+=======
+  AfterViewInit,
+  HostListener,
+  Output,
+  EventEmitter
+>>>>>>> f6ff1d160f5c57172e1f8b6895ad0dc7ee4cf0d6:src/app/shared/components/datepicker/datepicker.component.ts
 } from '@angular/core';
 import { ValidatorService } from '../validator/validator.service';
 import { myDatePickerOptions } from './datepicker-config';
@@ -54,6 +61,7 @@ export class DatepickerComponent
   @Input('alignment') alignment = 'center';
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('elementId') elementId = 'tempDatepickerId123';
+  @Output() onDateDataChanged = new EventEmitter<string>()
   @Input('disabled') set disabled(disabled) {
     this._disabled = disabled;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
@@ -28,7 +28,7 @@ export class SectionDropBoxComponent implements OnInit {
   @Output() onChangeSectionName = new EventEmitter<{ classId: string; oldName: string; newName: string }>()
   @Input() sections: Observable<SectionModel>;
   isDraggedOver = false;
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
   addSection(classId: string) {
     this.
       onAddSection.emit(classId)
@@ -48,12 +48,13 @@ export class SectionDropBoxComponent implements OnInit {
   }
   onDragOver(event: DragEvent) {
     event.preventDefault();
-    this.isDraggedOver = true;
-
+    console.log(event);
+    this.renderer.addClass(event.target, 'drop-zone--is-dragged')
   }
   onDragLeave(event) {
     event.preventDefault();
     this.isDraggedOver = false;
+    this.renderer.removeClass(event.target, 'drop-zone--is-dragged')
   }
   ngOnInit(): void {
     this.sections.subscribe(console.log)

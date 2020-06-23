@@ -1,121 +1,83 @@
 <p>staff-edit-form works!</p>
 <main>
-  <div class="modal__overlay">
-    <div class="modal">
-      <h2 class="modal__title">
-        Add/Edit Staff
-      </h2>
-      <form
-        *ngIf="addEditForm"
-        id="addEditForm"
-        [formGroup]="addEditForm"
-        (ngSubmit)="createStaff()"
-        class="modal__content"
-      >
-        <div class="modal__content-profile">
-          <h3 class="modal__content-header">Profile Picture</h3>
-          <edu-img-upload-v2
-            formControlName="profilePic"
-            (uploadimagedata)="handleImgUpload($event)"
-          ></edu-img-upload-v2>
-        </div>
+    <div class="modal__overlay">
+        <div class="modal">
+            <h2 class="modal__title">
+                Add/Edit Staff
+            </h2>
+            <form *ngIf="addEditForm" id="addEditForm" [formGroup]="addEditForm" (ngSubmit)="editStaff()" class="modal__content">
+                <div class="modal__content-profile">
+                    <h3 class="modal__content-header">Profile Picture</h3>
+                    <edu-img-upload-v2 formControlName="profilePic" (uploadimagedata)="handleImgUpload($event)"></edu-img-upload-v2>
+                </div>
 
-        <div class="modal__content-staff-details">
-          <h3 class="modal__content-header">Staff Details</h3>
-          <div class="group--row form--row">
-            <edu-input alignment="left" formControlName="firstName">
-              <span class="edu-label">First Name</span>
-            </edu-input>
-            <edu-input
-              class="p-0 middleName"
-              alignment="left"
-              formControlName="middleName"
-            >
-              <span class="edu-label"
-                >Middle Name <b class="ashcolor">(Optional)</b></span
+                <div class="modal__content-staff-details">
+                    <h3 class="modal__content-header">Staff Details</h3>
+                    <div class="group--row form--row">
+                        <edu-input alignment="left" formControlName="firstName">
+                            <span class="edu-label">First Name</span>
+                        </edu-input>
+                        <edu-input class="p-0 middleName" alignment="left" formControlName="middleName">
+                            <span class="edu-label">Middle Name <b class="ashcolor">(Optional)</b></span
               >
             </edu-input>
             <edu-input alignment="left" formControlName="familyName">
               <span class="edu-label">Last Name</span>
-            </edu-input>
-          </div>
+                        </edu-input>
+                    </div>
 
-          <div class="group--row form--row">
-            <edu-datepicker formControlName="dob">
-              <span class="edu-label">Date of Birth</span>
-            </edu-datepicker>
-            <!-- <edu-input alignment="left" formControlName="dob">
+                    <div class="group--row form--row">
+                        <edu-datepicker formControlName="dob">
+                            <span class="edu-label">Date of Birth</span>
+                        </edu-datepicker>
+                        <!-- <edu-input alignment="left" formControlName="dob">
               <span class="edu-label">Date of Birth</span>
             </edu-input> -->
 
-            <edu-select alignment="left" formControlName="sex">
-              <span class="edu-label">Sex</span>
-              <edu-option OptionValue="Male"> Male </edu-option>
-              <edu-option OptionValue="Female"> Female </edu-option>
-            </edu-select>
-            <edu-input
-              disabled="true"
-              class=" p-0"
-              alignment="left"
-              formControlName="id"
-            >
-              <span class="edu-label ashcolor"> ID - Auto Generated</span>
-            </edu-input>
-          </div>
+                        <edu-select alignment="left" formControlName="sex">
+                            <span class="edu-label">Sex</span>
+                            <edu-option OptionValue="Male"> Male </edu-option>
+                            <edu-option OptionValue="Female"> Female </edu-option>
+                        </edu-select>
+                        <edu-input disabled="true" class=" p-0" alignment="left" formControlName="id">
+                            <span class="edu-label ashcolor"> ID - Auto Generated</span>
+                        </edu-input>
+                    </div>
 
-          <div class="group--row form--row">
-            <edu-phone-icon-field
-              formControlName="phone"
-              fieldName="Phone"
-              [icons]="countryIconMap"
-              (valueChanged)="updatePhone($event)"
-            ></edu-phone-icon-field>
-            <edu-input alignment="left" formControlName="email"
-              ><span class="edu-label">
+                    <div class="group--row form--row">
+                        <edu-phone-icon-field formControlName="phone" fieldName="Phone" [icons]="countryIconMap" (valueChanged)="updatePhone($event)"></edu-phone-icon-field>
+                        <edu-input alignment="left" formControlName="email"><span class="edu-label">
                 Email Address <b class="ashcolor">(Optional)</b>
               </span>
-            </edu-input>
-          </div>
+                        </edu-input>
+                    </div>
 
-          <div class="group--row form--row">
-            <edu-icon-field
-              formControlName="country"
-              [fieldName]="'Country'"
-              [icons]="countryIconMap"
-              (valueChanged)="updateCountry($event)"
-              mode="select"
-            ></edu-icon-field>
-            <edu-input alignment="left" formControlName="address">
-              <span class="edu-label"> Address</span>
-            </edu-input>
-          </div>
+                    <div class="group--row form--row">
+                        <edu-icon-field formControlName="country" [fieldName]="'Country'" [icons]="countryIconMap" (valueChanged)="updateCountry($event)" mode="select"></edu-icon-field>
+                        <edu-input alignment="left" formControlName="address">
+                            <span class="edu-label"> Address</span>
+                        </edu-input>
+                    </div>
 
-          <div class="group--row form--row">
-            <edu-input alignment="left" formControlName="city">
-              <span class="edu-label"> City</span>
-            </edu-input>
-            <edu-input alignment="left" formControlName="state">
-              <span class="edu-label"> State</span>
-            </edu-input>
+                    <div class="group--row form--row">
+                        <edu-input alignment="left" formControlName="city">
+                            <span class="edu-label"> City</span>
+                        </edu-input>
+                        <edu-input alignment="left" formControlName="state">
+                            <span class="edu-label"> State</span>
+                        </edu-input>
 
-            <edu-input alignment="left" formControlName="zip">
-              <span class="edu-label"> Zip Code</span>
-            </edu-input>
-          </div>
-        </div>
-        <div class="modal__content-subject-area">
-          <h3 class="modal__content-header">Subject Area</h3>
-          <edu-subjects-area
-            [classes]="classes"
-            [subjects]="subjects"
-            (selectSubject)="onSelectSubject($event)"
-            (unSelectSubject)="onUnSelectSubject($event)"
-            (classClicked)="onClassClicked($event)"
-            [classesAndSubject]="classesAndSubjects"
-          ></edu-subjects-area>
-        </div>
+                        <edu-input alignment="left" formControlName="zip">
+                            <span class="edu-label"> Zip Code</span>
+                        </edu-input>
+                    </div>
+                </div>
+                <div class="modal__content-subject-area">
+                    <h3 class="modal__content-header">Subject Area</h3>
+                    <edu-subjects-area [classes]="classes" [subjects]="subjects" (selectSubject)="onSelectSubject($event)" (unSelectSubject)="onUnSelectSubject($event)" (classClicked)="onClassClicked($event)" [classesAndSubject]="classesAndSubjects"></edu-subjects-area>
+                </div>
 
-        <!-- <div class="modal__content-staff-details">
+                <!-- <div class="modal__content-staff-details">
           <h3 class="modal__content-header">Staff Details</h3>
           <div class="modal__content-first-row">
             <edu-input-field
@@ -207,14 +169,10 @@
             [classesAndSubject]="classesAndSubjects"
           ></edu-subjects-area>
         </div> -->
-      </form>
-      <button
-        form="addEditForm"
-        class="form__round-btn form__round-btn--active"
-        type="submit"
-      >
+            </form>
+            <button form="addEditForm" class="form__round-btn form__round-btn--active" type="submit">
         <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
       </button>
+        </div>
     </div>
-  </div>
 </main>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { SubjectsStateModel } from '../../models/subjects-state.model';
@@ -47,6 +47,9 @@ export class AssignSubjectsQuestionComponent implements OnInit {
       })
     )
   }
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard');
+  }
   updateFilter(event) {
     const value = event.target.value;
     this.filter = value;
@@ -70,6 +73,7 @@ export class AssignSubjectsQuestionComponent implements OnInit {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store<SubjectsStateModel>
+    private store: Store<SubjectsStateModel>,
+    private router: Router
   ) { }
 }

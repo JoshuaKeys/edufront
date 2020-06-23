@@ -1,0 +1,45 @@
+<div>
+    <h1 class="header">Pleae specify the vacation dates and names</h1>
+    <p>Note: Only define vacations on this step which last <b class="orangeColor">longer</b> than one day, single<br>
+        Holidays will be input in the next step</p>
+
+    <form *ngIf="vacationForm" [formGroup]="vacationForm">
+        <div formArrayName="vacationsAndDates" class="vacations-and-dates">
+            <!-- <div *ngFor="let vacation of (calendarData | async).vacations; let i = index" [formGroupName]="i"
+                class="vacations-and-dates__item"> -->
+                <div *ngFor="let vacation of vacationForm.controls.vacationsAndDates['controls']; let i = index" [formGroupName]="i"
+                >
+                <div class="vacations-and-dates__item">
+                    <edu-input formControlName="vacationName" alignment="center"> </edu-input>
+                    <edu-datepicker formControlName="startDate" alignment="center">
+                        <span class="edu-label">Starts from</span>
+                        <div class="edu-suffix" InputAffix>
+                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                        </div>
+                    </edu-datepicker>
+                    <edu-datepicker formControlName="endDate" alignment="center">
+                        <span class="edu-label">Ends on</span>
+                        <div class="edu-suffix" InputAffix>
+                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                        </div>
+                    </edu-datepicker>
+                </div>
+                <div class="vacations-and-dates__errors" *ngIf="vacationForm.controls.vacationsAndDates['controls'][i].errors as errors">
+                    <span class="vacations-and-dates__errors" *ngFor="let error of errors['msg']">
+                        {{error}}
+                    </span>
+                </div>
+            </div>
+
+
+
+            <div class="vacations-and-dates__add-btn-container">
+                <button class="vacations-and-dates__add-btn" (click)="addVacation()"><img
+                        src="assets/32pxplusblue.svg"></button>
+            </div>
+            <div class="vacations-and-dates__btn-container" *ngIf="vacationForm && vacationForm.valid">
+                <button type="button" class="vacations-and-dates__continue-btn" (click)="goNext()">Continue</button>
+            </div>
+        </div>
+    </form>
+</div>

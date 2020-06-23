@@ -43,6 +43,9 @@ export class InputTestComponent implements OnInit {
 
   f1model;
 
+  reset() {
+    this.testForm.reset();
+  }
   prettifyJSON(obj) {
     return JSON.stringify(obj, null, 2);
   }
@@ -54,6 +57,7 @@ export class InputTestComponent implements OnInit {
 
   formSubmit() {
     console.log(this.formControls);
+    this.reset();
   }
 
   @Output('setConfig') setConfig = new EventEmitter();

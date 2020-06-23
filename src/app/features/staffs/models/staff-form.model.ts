@@ -11,6 +11,7 @@ export interface StaffFormModel {
   email: string;
   familyName: string;
   firstName: string;
+  id?:string;
   middleName: string;
   phone: PhoneIconModel,
   profilePic: ImageUploadModel;
