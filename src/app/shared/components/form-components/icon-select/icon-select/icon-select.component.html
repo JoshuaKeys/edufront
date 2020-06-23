@@ -1,0 +1,57 @@
+<div
+  [ngClass]="{ disabled: disabled, active: selectIsActive }"
+  role="listbox"
+  class="{{ alignment }} {{ selectState }} wrapper  select__wrapper"
+>
+  <input
+    #checkboxEl
+    (change)="cbChange()"
+    (blur)="cbBlur()"
+    (focus)="cbFocus()"
+    [(ngModel)]="selectIsActive"
+    [id]="elementId"
+    name="{{ elementId }}-checkbox"
+    type="checkbox"
+    class="select__checkbox"
+    [disabled]="disabled"
+  />
+
+  <div class="input-label">
+    <input
+      tabindex="-1"
+      class="  select__input"
+      [(ngModel)]="inputValue"
+      name="{{ elementId }}-input"
+      #input
+      [ngClass]="{ 'input--active': isLabelActive() }"
+      type="text"
+      placeholder="-"
+      [disabled]="disabled"
+    />
+
+    <label
+      [ngClass]="{ 'label--active': isLabelActive() }"
+      class="select__label "
+      [for]="elementId"
+    >
+      <div class="label__shrink-wrap">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
+    </label>
+  </div>
+
+  <div class="prefix">
+    <ng-content select=".edu-select__prefix"></ng-content>
+  </div>
+
+  <ng-content select="edu-popover"></ng-content>
+  <!-- <div class="select__dropdown ">
+    <div class="popup" [ngClass]="{ active: selectIsActive }">
+      <div class="pointer"></div>
+      <div class="popup__content-wrapper">
+     
+        <ng-content select="edu-option"></ng-content>
+      </div>
+    </div>
+  </div> -->
+</div>

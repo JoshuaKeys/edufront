@@ -20,20 +20,20 @@ import { filter } from 'rxjs/operators';
 // import { OptionValueDirective } from "../option-value.directive"
 
 @Component({
-  selector: 'edu-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  selector: 'edu-icon-select',
+  templateUrl: './icon-select.component.html',
+  styleUrls: ['./icon-select.component.scss'],
   providers: [
     SelectService,
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => SelectComponent)
+      useExisting: forwardRef(() => IconSelectComponent)
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class IconSelectComponent implements OnInit, ControlValueAccessor {
   @Output() onValueChange = new EventEmitter<any>();
   @Input('alignment') alignment = 'center'; //left right center
   @Input('disabled') disabled = false;
@@ -54,9 +54,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   ESCAPE_KEY_CODE = 27;
   TAB_KEY_CODE = 9;
 
-  @Output('edu-keydown') elkeydown = new EventEmitter();
-  @Output('edu-change') elchange = new EventEmitter();
-
   constructor(
     private selectService: SelectService,
     private cd: ChangeDetectorRef,
@@ -65,30 +62,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.setElementId();
-    // this.selectService.activeOption.subscribe((val)=>{
-
-    //   this.onValueChange.emit(val);
-    //   this.onChange(val);
-
-    //   this.value = val;
-
-    //   this.cd.markForCheck();
-
-    //  })
 
     this.selectService.optionClicked.subscribe(() => {
       this.selectState = 'focus';
       this.selectIsActive = false;
       this.checkboxEl.nativeElement.focus();
     });
-
-    // this.selectService.activeOptionIndex.subscribe((index)=>{
-    //   this.activeOptionIndex = index;
-    //   if(this.optionEls){
-    //     this.value = this.optionEls.toArray()[index].OptionValue;
-    //     this.cd.markForCheck();
-    //   }
-    // })
 
     this.selectService.activeOptionComponent
       .pipe(filter(optionValue => optionValue))
@@ -98,7 +77,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         this.activeOptionIndex = optionComp.indexInParent;
         // console.log(this.activeOptionIndex)
         this.onValueChange.emit(this.value);
-        this.elchange.emit(this.value);
         this.onChange(this.value);
         this.cd.markForCheck();
       });
@@ -165,8 +143,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   keyboardEvent(keyCode, shiftPressed, event) {
-    this.elkeydown.emit(event);
-
     let newIndex;
     switch (keyCode) {
       case this.ENTER_KEY_CODE:

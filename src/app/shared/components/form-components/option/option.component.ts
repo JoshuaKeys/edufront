@@ -10,7 +10,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { SelectService } from '../select.service';
+import { SelectService } from '../_shared/select.service';
 import { filter } from 'rxjs/operators';
 @Component({
   selector: 'edu-option',
