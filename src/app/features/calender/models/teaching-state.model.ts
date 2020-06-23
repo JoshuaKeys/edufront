@@ -5,7 +5,7 @@ import { PeriodModel } from './period.model';
 
 export interface TeachingStateModel {
     teachingDays?: TeachingDay[];
+    periods?: PeriodModel[];
     classesAndGroups?: ClassGroupModel[];
     classes?: ClassModel[];
-    periods?: PeriodModel[];
-}
+};

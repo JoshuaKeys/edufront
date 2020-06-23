@@ -1,5 +1,6 @@
 import { TeachingDay } from './teaching-day.model';
 import { PeriodModel } from './period.model';
+import { ExtendedClassModel } from '../../subjects/models/extend-class.model';
 
 export interface ClassGroupModel {
     id: string;
@@ -13,5 +14,6 @@ export interface ClassGroupModel {
         subjectIds?: string[],
         teacherIds?: [],
     }[],
-    teachingDays?: TeachingDay[]
+    teachingDays?: TeachingDay[],
+    periods?: PeriodModel[]
 }

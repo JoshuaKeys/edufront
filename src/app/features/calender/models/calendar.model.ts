@@ -3,6 +3,7 @@ import { VacationModel } from './vacation.model';
 import { ClassGroupModel } from './class-group.model';
 import { TeachingDay } from './teaching-day.model';
 import { PeriodModel } from './period.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 export interface CalendarModel {
     currentAcademicYear?: {
@@ -16,5 +17,6 @@ export interface CalendarModel {
         teachingDays?: TeachingDay[],
         classesAndGroups?: ClassGroupModel[],
         periods?: PeriodModel[]
+        classes?:ClassModel[]
     }
 }

@@ -11,6 +11,7 @@ import {
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups } from '../../utilities';
+import { PeriodModel } from '../../models/period.model';
 
 const initialState: TeachingStateModel = {
     teachingDays: [
@@ -101,6 +102,7 @@ export const teachingReducer = createReducer(initialState,
                     periods: periodsArr
                 }
             })
+        // const classesGroup = stateCopy.classesAndGroups[0].
         return {
             ...state,
             periods:  periodsObjs
@@ -109,15 +111,22 @@ export const teachingReducer = createReducer(initialState,
     on(assignPeriodsToTeachingDates, (state, action)=> {
         const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
         const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classAndGroup=> {
-            const teachingDaysArr = classAndGroup.teachingDays.map(teachingDay=> {
-
+            const periodsArr: PeriodModel[] = classAndGroup.teachingDays.map(teachingDay=> {
+                const period: PeriodModel = {
+                    day: null,
+                    periods: []
+                };
                 if(teachingDay.selected) {
-                    
-                    teachingDay.period = action.numberOfPeriods
+  
+                    period.day = teachingDay.day;
+                    for(let i = 1; i <= action.numberOfPeriods; i++) {
+                        period.periods.push('P' + i as any)
+                    }
+
                 }
-                return teachingDay
+                return period;
             })
-            classAndGroup.teachingDays = teachingDaysArr;
+            classAndGroup.periods = periodsArr
             return classAndGroup
         })
         return {

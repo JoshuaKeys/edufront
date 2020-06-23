@@ -6,6 +6,7 @@ import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { clearClassOffGroups } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
+import { PeriodModel } from '../../models/period.model';
 const initialState: PreviewModel = {
     datePreview: {
         route: '/calendar/dates-of-academic-year',
@@ -77,6 +78,36 @@ export const previewReducer = createReducer(initialState,
     //         classesAndGroups: updatedClassesAndGroups
     //     }
     // }),
+    on(assignPeriodsToTeachingDates, (state, action)=> {
+        const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+        const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(classAndGroup=> {
+            const periodsArr: PeriodModel[] = classAndGroup.teachingDays.map(teachingDay=> {
+                const period: PeriodModel = {
+                    day: null,
+                    periods: []
+                };
+                if(teachingDay.selected) {
+  
+                    period.day = teachingDay.day;
+                    for(let i = 1; i <= action.numberOfPeriods; i++) {
+                        period.periods.push('P' + i as any)
+                    }
+
+                }
+                return period;
+            })
+            classAndGroup.periods = periodsArr
+            return classAndGroup
+        })
+        return {
+            ...stateCopy,
+            teachingDays: {
+                ...stateCopy.teachingDays,
+                classesAndGroupItems: updatedClassesAndGroups
+            }
+            // classesAndGroups: updatedClassesAndGroups
+        }
+    }),
     on(fetchClassesAndGroupsSuccess, (state, action)=> {
         return {
             ...state,
