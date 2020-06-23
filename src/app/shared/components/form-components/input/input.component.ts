@@ -63,6 +63,8 @@ export class InputComponent
   @Input('alignment') alignment = 'center'; //center (default ),left,right
   @Input('isPassword') isPassword = false;
   @ViewChild('inputEl') inputEl: ElementRef;
+  @Output('edu-keydown') elkeydown = new EventEmitter();
+  @Output('edu-change') elchange = new EventEmitter();
   @ContentChildren(InputAffixDirective) InputAffixDirectives: QueryList<
     InputAffixDirective
   >;
@@ -70,6 +72,10 @@ export class InputComponent
 
   @HostListener('click') onclick() {
     this.inputEl.nativeElement.focus();
+  }
+  @HostListener('keydown', ['$event']) EventKeydown(event) {
+    // console.log(event);
+    this.elkeydown.emit(event);
   }
 
   setElementID() {
@@ -151,6 +157,7 @@ export class InputComponent
     }
     this.val = val;
     // this.valLen = this.val.length;
+    this.elchange.emit(val);
     this.onChange(val);
     this.cd.markForCheck();
     // this.onTouched(val)

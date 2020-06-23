@@ -18,6 +18,10 @@ export class P89Component implements OnInit {
   minSelector = Array(61).fill('');
 
   // periods:[1]
+
+  addToTempArr() {
+    this.tempArr.push('');
+  }
   isWeekend(index) {
     if (index > 4) {
       return 'badge--inactive';
