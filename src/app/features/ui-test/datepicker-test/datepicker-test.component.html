@@ -25,10 +25,10 @@
       <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
     </div>
   </edu-datepicker>
-
+  t
   <edu-datepicker formControlName="f5" alignment="center">
     <span class="edu-label">validator test </span>
-    <ul validator alignment="left">
+    <ul *ngIf="testForm.get('f5').touched" validator alignment="right">
       <li>Name is required.</li>
       <li>
         Name must be at least 4 characters long

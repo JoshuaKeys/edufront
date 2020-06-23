@@ -5,11 +5,17 @@
 .icon-wrapper {
   position: relative;
 }
+:host {
+  color: #c3c9da;
+}
 
 edu-popover {
   padding: 6px 0;
 }
-
+.active-prefix {
+  margin-left: 10px;
+  color: inherit;
+}
 .popover__search {
   position: relative;
   min-height: 44px;
