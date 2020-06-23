@@ -1,0 +1,151 @@
+<div class="modal__overlay" (click)="onCloseModal()">
+  <div class="modal" stopEventBubble="click">
+    <button class="btn--close" ButtonType="icon" (click)="onCloseModal()">
+      <img src="assets/admin/form/close.svg" alt="" srcset="" />
+    </button>
+
+    <div class="screen0 content__wrapper" *ngIf="isActiveScreen(0)">
+      <div class="content ">
+        <h2 class="conent__title">Transfer School Ownership</h2>
+        <p class="content__desc">
+          Enter password and security question to transfer ownership
+        </p>
+        <form action="" class="form">
+          <edu-input alignment="center" isPassword="true" elementId="'test132'">
+            <span class="edu-label">Enter Password</span>
+            <visibility-toggle
+              class="edu-input__suffix"
+              InputAffix
+            ></visibility-toggle>
+          </edu-input>
+          <edu-input alignment="center" elementId="'test1322'">
+            <span class="edu-label">Security Question</span>
+          </edu-input>
+          <edu-input alignment="center" elementId="'test1323'">
+            <span class="edu-label">Answer</span>
+          </edu-input>
+        </form>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(1)">
+          continue
+        </button>
+      </div>
+    </div>
+
+    <div class="screen1 content__wrapper" *ngIf="isActiveScreen(1)">
+      <div class="content ">
+        <h2 class="conent__title">Transfer School Ownership</h2>
+        <p class="content__desc">
+          Nominate the next School Master Administrator
+        </p>
+        <form action="" class="form">
+          <div class="search__wrapper">
+            <div class="search__icon">
+              <img src="assets/admin/form/search-prefix.svg" alt="" />
+            </div>
+            <input type="text" placeholder="Search user" />
+            <button ButtonType="round" class="search__icon">
+              <edu-tooltip>Add New </edu-tooltip>
+              <img src="assets/admin/form/add-16px.svg" alt="" />
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(0)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(2)">
+          continue
+        </button>
+      </div>
+    </div>
+
+    <div class="screen2 content__wrapper" *ngIf="isActiveScreen(2)">
+      <div class="content ">
+        <h2 class="conent__title">Add New User</h2>
+
+        <form action="" class="form">
+          <div class="group--row">
+            <edu-image-upload-v3 elementId="profile">
+              <div class="placeholderImg">
+                <img
+                  src="/assets/admin/profile-placeholder.svg"
+                  alt=""
+                  srcset=""
+                />
+              </div>
+            </edu-image-upload-v3>
+          </div>
+          <div class="group--row">
+            <edu-input alignment="left" elementId="firstName">
+              <span class="edu-label"> First Name </span>
+            </edu-input>
+            <edu-input alignment="left" elementId="middleName">
+              <span class="edu-label"> Middle Name (Optional)</span>
+            </edu-input>
+            <edu-input alignment="left" elementId="lastName">
+              <span class="edu-label"> Family Name </span>
+            </edu-input>
+          </div>
+          <div class="group--row">
+            <edu-input alignment="left" elementId="email">
+              <span class="edu-label"> Email </span>
+            </edu-input>
+            <edu-input alignment="left" elementId="phone">
+              <span class="edu-label"> Phone </span>
+            </edu-input>
+          </div>
+        </form>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(1)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(3)">
+          continue
+        </button>
+      </div>
+    </div>
+
+    <div class="screen3 content__wrapper" *ngIf="isActiveScreen(3)">
+      <div class="content ">
+        <h2 class="conent__title">Transfer School Ownership</h2>
+        <p>
+          The next administrator will be <b class="bluecolor">username</b> Are
+          you sure you want to transfer the school ownership?
+        </p>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(2)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(4)">
+          Yes, Transfer
+        </button>
+      </div>
+    </div>
+
+    <div class="screen4 content__wrapper" *ngIf="isActiveScreen(4)">
+      <div class="content ">
+        <img src="assets/admin/form/complete.svg" alt="" />
+        <h2 class="conent__title">Ownership Transfer Completed</h2>
+        <p>
+          We have notified <b class="bluecolor">username</b>, once the user
+          acknowledges ownership you will be downgraded to administrator.
+        </p>
+      </div>
+      <div class="btns">
+        <button class="btn" ButtonType="outline" (click)="setActiveScreen(3)">
+          Cancel
+        </button>
+        <button class="btn" ButtonType="basic" (click)="setActiveScreen(0)">
+          Yes, Transfer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- (click)="closeModal( )" -->

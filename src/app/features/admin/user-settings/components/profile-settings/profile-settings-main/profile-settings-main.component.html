@@ -1,0 +1,38 @@
+<div class="modal__overlay" (click)="closeModal()">
+  <div class="modal" #modal>
+    <div class="profile-main">
+      <div class="title-and-close group--row just-between">
+        <div class="profile__title">My Profile Settings</div>
+        <button
+          class="profile__close-btn"
+          (click)="closeModal()"
+          ButtonType="icon"
+        >
+          <img src="assets/user-settings/modal_close.svg" alt="" srcset="" />
+        </button>
+      </div>
+      <nav class="menu">
+        <ul>
+          <li
+            *ngFor="let option of menuOptions"
+            (click)="setActiveMenu(option)"
+            [ngClass]="{ active: isActiveMenu(option) }"
+          >
+            {{ option }}
+          </li>
+        </ul>
+      </nav>
+      <section class="content">
+        <ng-container *ngIf="isActiveMenu('Profile')">
+          <edu-profile-tab></edu-profile-tab>
+        </ng-container>
+        <ng-container *ngIf="isActiveMenu('Security')">
+          <edu-security-tab></edu-security-tab>
+        </ng-container>
+        <ng-container *ngIf="isActiveMenu('Email Preferences')">
+          <edu-email-tab></edu-email-tab>
+        </ng-container>
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<ul class="admin__options">
+  <li
+    class="admin__option"
+    [ngClass]="{ active: isActiveRoute('students') }"
+    [routerLink]="['/admin/users/students']"
+  >
+    Students
+  </li>
+  <li
+    class="admin__option"
+    [ngClass]="{ active: isActiveRoute('teachers') }"
+    [routerLink]="['/admin/users/teachers']"
+  >
+    Teachers
+  </li>
+  <li
+    class="admin__option"
+    [routerLink]="['/admin/users/administrators']"
+    [ngClass]="{ active: isActiveRoute('administrators') }"
+  >
+    Administrators
+  </li>
+</ul>
+
+<router-outlet></router-outlet>
+<!-- <edu-students-tab></edu-students-tab> -->

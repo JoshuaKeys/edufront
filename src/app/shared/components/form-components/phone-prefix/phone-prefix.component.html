@@ -1,0 +1,45 @@
+<div class="icon-wrapper">
+  <img [src]="countryIconMap[activeIndex].icon" alt="" />
+  <span class="active-prefix">{{
+    countryIconMap[activeIndex].phonePrefix
+  }}</span>
+  {{ popoverState }}
+  <!-- need event for popover whenever it closes -->
+  <edu-popover
+    alignment="bottom"
+    pointerAlignment="left"
+    [ClosePopover]="popoverState"
+  >
+    {{ search }}
+    <div class="popover__search">
+      <img class="popover__search-icon" src="/assets/search-icon.svg" alt="" />
+
+      <input
+        [(ngModel)]="search"
+        tabIndex="-1"
+        class="popover__search-input"
+        type="text"
+        placeholder="Search"
+      />
+    </div>
+
+    <div
+      *ngFor="let country of filteredCountries; let i = index"
+      class="group--row popover__entry"
+      [ngClass]="{ active: isActiveIndex(i) }"
+      (click)="setActiveIndex(i)"
+    >
+      <img [src]="country.icon" alt="" /> {{ country.item }}
+      {{ country.phonePrefix }}
+    </div>
+
+    <div class="popover__entry" *ngIf="filteredCountries.length === 0">
+      no results matching your search
+    </div>
+  </edu-popover>
+</div>
+
+<!-- id: '1c1e29e4-642b-11ea-a762-9bcb0d229311',
+item: 'United States',
+icon: 'assets/images/flags/flg-us.svg',
+phonePrefix: '+1' -->

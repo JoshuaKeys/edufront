@@ -78,6 +78,9 @@ export class OptionComponent implements OnInit, AfterViewInit {
     //   `selet vs opt - ${this.selectService.activeValue} ${this.OptionValue}`
     // );
     // console.log(this.selectService.activeValue);
+    if (!this.selectService.activeValue) {
+      return;
+    }
     if (this.selectService.activeValue == this.OptionValue) {
       this.selectService.activeOptionComponent.next(this);
     }

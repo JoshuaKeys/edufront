@@ -21,7 +21,7 @@ export class ContentOnChangeDirective {
   // }
 
   @HostListener('valueChange', ['$event']) onValueChange(value) {
-    console.log('valueChange dir' + this.key + ', ' + value);
+    // console.log('valueChange dir' + this.key + ', ' + value);
     this.timetableService.updateModel(this.key, value);
   }
 }

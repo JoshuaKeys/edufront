@@ -1,0 +1,15 @@
+<div class="{{ _user.gender }} pill__wrapper">
+  <img
+    *ngIf="_user.img; else placeholderImg"
+    class="pill__img"
+    src="{{ _user.img }}"
+  />
+  <ng-template #placeholderImg>
+    <div class="placeholder-img pill__img">
+      <span>{{ placeholderName }}</span>
+    </div>
+    <!-- <img class="pill__img" src="assets/admin/pill-placeholder.svg" /> -->
+  </ng-template>
+
+  <span class="pill__text">{{ _user.name }}</span>
+</div>

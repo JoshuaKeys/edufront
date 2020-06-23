@@ -8,23 +8,18 @@
     (dragleave)="handleDragLeave()"
     (drop)="handleDrop($event)"
   >
-    <label [for]="elementId">
-      <ng-template #noPreview>
-        <div [ngClass]="{ hidden: confirmed }">
-          <ng-content select=".placeholderImg"> </ng-content>
-        </div>
-      </ng-template>
-
-      <!-- {{value.base64}} -->
-      <img *ngIf="value.base64 && !confirmed; else noPreview" [src]="value.base64">
-      <div *ngIf="value.base64" class="img--confirmed-wrapper">
-        <img class="image--confirmed" [src]="value.base64" *ngIf="confirmed" />
+    <label [for]="elementId" (click)="testClick()">
+      <!-- placeholder img -->
+      <div [ngClass]="{ hidden: validBase64() }">
+        <ng-content select=".placeholderImg"> </ng-content>
       </div>
+
+      <!-- currently loaded img from source or previously -->
+      <img id="loaded-img" *ngIf="validBase64()" [src]="value.base64" />
     </label>
   </div>
-  <!-- </ng-container> -->
 
-  <!-- <ng-template #cropperTemplate> -->
+  <!-- cropper to not be loaded with ngIf and is hidden as it is easier to inject borders into overlay element  -->
   <div
     [ngClass]="{ hide: showPlaceHolderImage() }"
     [id]="getImgCropperWrapperId()"
@@ -62,7 +57,6 @@
       </div>
     </div>
   </div>
-  <!-- </ng-template> -->
 </div>
 
 <input

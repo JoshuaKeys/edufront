@@ -1,0 +1,59 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+
+.user-type {
+  text-transform: capitalize;
+}
+
+.student-summary {
+  color: $black;
+  @include displayFlex(flex-start, center, column);
+  //   padding: 30px 19px;
+  padding: 30px 0;
+  &__title {
+    font: 600 16px/24px Quicksand;
+    letter-spacing: 0.48px;
+    text-align: center;
+    margin: 0;
+  }
+
+  &__desc {
+    font: 700 18px/18px Roboto;
+    line-height: 1;
+    letter-spacing: -0.18px;
+    text-align: center;
+    margin: 0;
+    &--total {
+      margin: 16px 0;
+      font-size: 44px;
+      //   margin: 20px 0;
+      //   min-height: 74px;
+    }
+  }
+
+  &__footer {
+    align-self: stretch;
+    flex-wrap: wrap;
+    @include displayFlex();
+  }
+  &__group {
+    @include displayFlex(flex-start, center, column);
+    width: auto;
+    margin: 7px;
+    span {
+      font: 400 12px/12px Roboto;
+      color: #c7ccdb;
+      @include absoluteCenter();
+    }
+  }
+  &__icon {
+    margin-top: 5px;
+    width: 32px;
+    height: 32px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 6px #3c4b9b14;
+    border: 2px solid #e6e9f3;
+    border-radius: 50%;
+    position: relative;
+  }
+}

@@ -1,0 +1,99 @@
+<div
+  [ngClass]="{ disabled: _disabled, active: dpIsActive, error: hasError }"
+  class="{{ alignment }} {{ _elState }} wrapper  dp__wrapper"
+>
+  <input
+    #checkboxEl
+    (change)="cbChange()"
+    (blur)="cbBlur()"
+    (focus)="cbFocus()"
+    [(ngModel)]="dpIsActive"
+    [id]="elementId"
+    name="{{ elementId }}-checkbox"
+    type="checkbox"
+    class="dp__checkbox"
+    [disabled]="_disabled"
+  />
+
+  <div
+    class="input-label"
+    [ngClass]="{ labelIsPlaceholder: labelIsPlaceholder }"
+  >
+    <input
+      tabindex="-1"
+      class="  dp__input"
+      [(ngModel)]="_displayedValue"
+      name="{{ elementId }}-input"
+      #input
+      [ngClass]="{ 'input--active': isLabelActive() }"
+      type="text"
+      placeholder="-"
+      disabled
+    />
+
+    <label [ngClass]="{ 'label--active': isLabelActive() }" class="dp__label ">
+      <!-- for="dp-{{ elementId }}" -->
+      <div class="label__shrink-wrap">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
+    </label>
+  </div>
+
+  <div class="prefix">
+    <ng-content select=".edu-prefix"></ng-content>
+  </div>
+
+  <div class="suffix">
+    <ng-content select=".edu-suffix"></ng-content>
+  </div>
+  <!-- (click)="dp.toggleCalendar()" -->
+  <div class="input-box-container">
+    <input
+      #hiddenInput
+      id="dp-{{ elementId }}"
+      tabindex="-1"
+      class="input-box hiddenInput"
+      placeholder="Click to select a date"
+      angular-mydatepicker
+      name="mydate"
+      (calendarToggle)="calendarBlur($event)"
+      [(ngModel)]="model"
+      [options]="myDatePickerOptions"
+      #dp="angular-mydatepicker"
+      (dateChanged)="onDateChanged($event)"
+    />
+  </div>
+</div>
+
+<div #validator class="validator">
+  <ng-content select="[validator]"></ng-content>
+</div>
+
+<!-- <edu-input
+  #inputEl
+  alignment="left"
+  elementId="input-{{ elementId }}"
+  [(ngModel)]="displayedValue"
+>
+  <span class="edu-label"
+    ><ng-content select=".edu-label"></ng-content>
+    <label class="hiddenLabel clicker" for="datepicker"></label>
+  </span>
+</edu-input> -->
+
+<!-- <div class="input-box-container">
+  <input
+    #hiddenInput
+    id="datepicker"
+    tabindex="-1"
+    class="input-box hiddenInput"
+    placeholder="Click to select a date"
+    angular-mydatepicker
+    name="mydate"
+    (click)="dp.toggleCalendar()"
+    [(ngModel)]="model"
+    [options]="myDatePickerOptions"
+    #dp="angular-mydatepicker"
+    (dateChanged)="onDateChanged($event)"
+  />
+</div> -->

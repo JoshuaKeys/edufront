@@ -63,11 +63,11 @@ export class TimeTableTestComponent implements OnInit {
     //time has to be exactly the same as the time declared above as the main comp determines placing by matching the strings
     //color MUST be hex
     {
-      //for empty block
-      time: '8:00',
-      text: '',
-      start: Day.wed,
-      end: Day.wed
+      time: '11:45',
+      text: 'break',
+      color: '#F2B269',
+      start: Day.mon,
+      end: Day.mon
     },
     {
       time: '9:45',
@@ -77,19 +77,20 @@ export class TimeTableTestComponent implements OnInit {
       end: Day.sun
     },
     {
+      //for empty block
+      time: '8:00',
+      text: '',
+      start: Day.wed,
+      end: Day.wed
+    },
+    {
       time: '7:45',
       text: 'Assembly',
       color: '#69a9f2',
       start: Day.mon,
       end: Day.sun
     },
-    {
-      time: '11:45',
-      text: 'break',
-      color: '#F2B269',
-      start: Day.mon,
-      end: Day.mon
-    },
+
     {
       time: '11:45',
       text: 'break',

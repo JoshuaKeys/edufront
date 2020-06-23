@@ -55,7 +55,7 @@ export class ImageUploadV3Component
     private cd: ChangeDetectorRef,
     private renderer: Renderer2,
     private el: ElementRef
-  ) { }
+  ) {}
   @Input('showControls') showControls = true;
   // @Input('showControls') showControls = false;
   @Input('elementId') elementId = 'baseElementId';
@@ -85,6 +85,7 @@ export class ImageUploadV3Component
       this.renderer.appendChild(overlayEl, injectedItem);
     });
   }
+
   value: ProfilePicModel = { base64: '', acceptedFile: null, imageUrl: '' }; //
   croppedImage; //isValue of cropped image at any time
   imageChangedEvent: any = '';
@@ -99,15 +100,32 @@ export class ImageUploadV3Component
     flipV: false
   };
 
+  testClick() {
+    console.log('clickeddd' + this.elementId);
+  }
+
   getImgCropperWrapperId() {
     return this.elementId + '__cropperwrapper';
   }
 
   setElementId() {
     let elId = this.el.nativeElement.getAttribute('formcontrolname');
-    if (this.el != undefined) {
+
+    if (elId != null) {
       this.elementId = elId;
     }
+  }
+
+  validBase64() {
+    // console.log("checl")
+    if (this.value.base64) {
+      // console.log(this.value.base64.length);
+      // console.log(/[A-Za-z0-9+/=]/.test(this.value.base64));
+      return /[A-Za-z0-9+/=]/.test(this.value.base64);
+    }
+
+    // console.log(this.value.base64.test(/[A-Za-z0-9+/=]/))
+    return false;
   }
 
   handleDrop(e) {
@@ -145,13 +163,6 @@ export class ImageUploadV3Component
   }
 
   resetCropper() {
-    // this.imageChangedEvent = null;
-    //
-    // this.confirmed = true;
-    // this.isMousedOver = false;
-    // this.imgUploaded = false;
-    // this.cd.markForCheck();
-
     this.file.nativeElement.value = null;
     this.imageChangedEvent = null;
     this.imgUploaded = false;
@@ -179,7 +190,7 @@ export class ImageUploadV3Component
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
 
-    //NOTE:was here originally no idea what this is emitting
+    //NOTE:was here originally. no idea what this is emitting or doing
     var file = dataURLtoFile(
       'data:text/plain;base64,aGVsbG8gd29ybGQ=',
       'image.png'
@@ -191,37 +202,21 @@ export class ImageUploadV3Component
   }
 
   onConfirm() {
-    //work in progress to customize starting cropping position
-
-    let width = this.ImageCropper.sourceImage.nativeElement.offsetWidth;
-    let height = this.ImageCropper.sourceImage.nativeElement.offsetHeight;
-
-    // console.log(typeof this.croppedImage);
-    // this.value = new Blob([this.croppedImage], { type: 'image/png' });
-    let blob: any = this.utils.getBlob(this.croppedImage);
-
-    blob.lastModifiedDate = new Date();
-    blob.name = 'imageFile.jpg';
+    //not in use currently, using exisint function provided to convert to File
+    // let blob: any = this.utils.getBlob(this.croppedImage);
+    // blob.lastModifiedDate = new Date();
+    // blob.name = 'imageFile.jpg';
 
     this.value.base64 = this.croppedImage;
     this.value.acceptedFile = dataURLtoFile(this.croppedImage, 'imageFile.jpg');
-    // console.log(this.value);
-    // this.value = { ...this.value };
+
     this.onChange(this.value);
     this.onTouched();
 
     this.onConfirmEvent.emit(this.value);
 
-    // console.log(this.value);
     this.confirmed = true;
     this.resetCropper();
-    // this.imageChangedEvent = null;
-    // this.file.nativeElement.value = null;
-    // this.confirmed = true;
-    // this.isMousedOver = false;
-    // this.imgUploaded = false;
-    // this.cd.markForCheck();
-    // this.setHostToCircle(true);
   }
 
   cropperReady() {
@@ -232,21 +227,26 @@ export class ImageUploadV3Component
   }
 
   //Control value accessor implementation
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
   writeValue(val: any) {
     // console.log('called');
     if (val === null) {
       return;
     }
-
+    console.log(val);
+    this.value = { ...val };
     this.value.base64 = val.base64;
+    console.log(this.value.base64.length);
+    console.log(this.validBase64());
+
+    this.cd.markForCheck();
   }
   registerOnChange(fn: any) {
     this.onChange = fn;
     // this.onUpload = fn;
   }
-  registerOnTouched() { }
+  registerOnTouched() {}
 
   // disabled = false;
   // onChange: any = () => {};

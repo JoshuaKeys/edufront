@@ -1,0 +1,178 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+//modal
+.modal {
+  @include modal();
+  width: 80%;
+  height: 80%;
+  max-width: 690px;
+  max-height: 539px;
+  position: relative;
+  top: 50%;
+  border-radius: 15px;
+  padding: 0px;
+  padding-bottom: 60px;
+  &__overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+//common across all screens , saved at top for future overwrite if needed
+
+.content {
+  overflow-y: scroll;
+  flex-grow: 1;
+  @include displayFlex(center, center, column);
+
+  &__wrapper {
+    @include displayFlex(center, center, column);
+    width: 100%;
+    height: 100%;
+  }
+  &__title {
+    margin: 0;
+    color: $black;
+  }
+  &__desc {
+    margin-top: 16px;
+    color: $ash;
+    font: 400 14px/22px Raleway;
+    text-align: center;
+  }
+}
+
+.btn {
+  width: 156px;
+  margin: 0 12px;
+  height: 40px;
+}
+.btn--close {
+  position: absolute;
+  right: 17px;
+  top: 17px;
+}
+.form {
+  margin-top: 40px;
+}
+edu-input {
+  margin: 20px auto;
+  height: 44px;
+  width: 300px;
+}
+
+//screen 1
+.screen1 {
+  .content {
+    margin-top: 80px;
+  }
+  .form {
+    height: 100%;
+    margin: 0;
+    @include displayFlex();
+  }
+}
+
+.search__wrapper {
+  @include displayFlex();
+  width: 260px;
+  input {
+    flex-grow: 1;
+    border: 0px;
+    background: transparent;
+    color: $black;
+    font: 400 14px/24px Raleway;
+    margin: 0 14px;
+    &::placeholder {
+      font: 400 14px/24px Raleway;
+      color: #c3c9da;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .search__icon {
+    flex-shrink: 0;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border: 1px dashed #e6e9f3;
+    position: relative;
+    img {
+      @include absoluteCenter();
+    }
+  }
+}
+
+//screen2
+.screen2 {
+  .content {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .group--row {
+    width: 610px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .form {
+    margin-top: 20px;
+  }
+  edu-image-upload-v3 {
+    align-self: center;
+    // margin: 24px 0;
+    // width: 100px;
+    // height: 100px;
+  }
+
+  edu-input {
+    height: 44px;
+    width: 60%;
+    margin: 0 10px;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+@include group();
+
+.placeholderImg {
+  border: 2px dashed #e6e9f3;
+  width: 100px;
+  height: 100px;
+  @include displayFlex();
+  position: relative;
+  border-radius: 150%;
+  cursor: pointer;
+
+  img {
+    @include absoluteCenter();
+  }
+  &:hover {
+    border-color: $blue;
+  }
+}
+
+//screen3
+.screen3 {
+  p {
+    margin-top: 20px;
+    max-width: 438px;
+  }
+}
+//screen4
+.screen4 {
+  img {
+    margin-bottom: 17px;
+  }
+  p {
+    margin-top: 20px;
+    max-width: 542px;
+  }
+}

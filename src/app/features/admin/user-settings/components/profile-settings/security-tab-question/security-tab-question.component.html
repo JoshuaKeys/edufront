@@ -1,0 +1,97 @@
+<button
+  class="screen__back-btn"
+  (click)="backToPasswordTab()"
+  ButtonType="icon"
+  tabindex="-1"
+>
+  <img src="assets/user-settings/modal_back-arrow.svg" alt="" srcset="" />
+</button>
+
+<!-- page 19 -->
+<ng-container *ngIf="isActiveScreen(1)">
+  <h2 class="screen__title">Enter your password</h2>
+  <edu-input isPassword="true" alignment="center" elementId="pw">
+    <visibility-toggle class="edu-input__suffix" InputAffix></visibility-toggle>
+    <span class="edu-label"> Password </span>
+  </edu-input>
+</ng-container>
+
+<!-- page 20 -->
+<ng-container *ngIf="isActiveScreen(2)">
+  <div class="screen--2">
+    <h2 class="screen__title">Security Question</h2>
+    <p class="screen__desc">Set up new security question to recover password</p>
+    <div class="group--row">
+      <edu-select alignment="center" elementId="question1">
+        <span class="edu-label"> Select Security Question </span>
+        <edu-option OptionValue="1">one</edu-option>
+        <edu-option OptionValue="2">two</edu-option>
+        <edu-option OptionValue="3">three</edu-option>
+      </edu-select>
+      <edu-select alignment="center" elementId="question2">
+        <span class="edu-label"> Select Security Question </span>
+        <edu-option OptionValue="1">one</edu-option>
+        <edu-option OptionValue="2">two</edu-option>
+        <edu-option OptionValue="3">three</edu-option>
+      </edu-select>
+    </div>
+    <div class="group--row">
+      <edu-input alignment="center" elementId="answer1">
+        <span class="edu-label"> Answer </span>
+      </edu-input>
+      <edu-input alignment="center" elementId="answer2">
+        <span class="edu-label"> Answer </span>
+      </edu-input>
+    </div>
+  </div>
+</ng-container>
+
+<!-- page 21, continuation page page 20 -->
+<ng-container *ngIf="isActiveScreen(2.1)">
+  <div class="screen--2">
+    <h2 class="screen__title">Security Question</h2>
+    <p class="screen__desc">Set up new security question to recover password</p>
+    <div class="group--row">
+      <edu-select alignment="center" elementId="question1">
+        <span class="edu-label">Custom Question</span>
+        <edu-option OptionValue="1">one</edu-option>
+        <edu-option OptionValue="2">two</edu-option>
+        <edu-option OptionValue="3">three</edu-option>
+      </edu-select>
+      <edu-select alignment="center" elementId="question2">
+        <span class="edu-label"> Select Security Question </span>
+        <edu-option OptionValue="1">one</edu-option>
+        <edu-option OptionValue="2">two</edu-option>
+        <edu-option OptionValue="3">three</edu-option>
+      </edu-select>
+    </div>
+    <div class="group--row">
+      <edu-input alignment="center" elementId="answer2">
+        <span class="edu-label"> Type Security Question </span>
+      </edu-input>
+      <edu-input alignment="center" elementId="answer2">
+        <span class="edu-label"> Answer </span>
+      </edu-input>
+    </div>
+    <div class="group--row">
+      <edu-input alignment="center" elementId="answer2">
+        <span class="edu-label"> Answer </span>
+      </edu-input>
+    </div>
+  </div>
+</ng-container>
+
+<!-- page 22, completion page for page 20 -->
+<ng-container *ngIf="isActiveScreen(3)">
+  <div class="screen__confirmation">
+    <img
+      src="assets/user-settings/modal_green-tick.svg"
+      alt=""
+      class="screen__img"
+    />
+    <h2 class="screen__title">Security Question Changed</h2>
+    <p class="screen__desc">
+      you will be automatically redirected
+    </p>
+  </div>
+</ng-container>

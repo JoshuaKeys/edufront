@@ -1,0 +1,60 @@
+@import 'src/assets/styles/mixins/containers';
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+@include group();
+.icon-wrapper {
+  position: relative;
+}
+:host {
+  color: #c3c9da;
+}
+
+edu-popover {
+  padding: 6px 0;
+}
+.active-prefix {
+  margin-left: 10px;
+  color: inherit;
+}
+.popover__search {
+  position: relative;
+  min-height: 44px;
+  margin: 0 20px;
+  @include displayFlex(flex-start);
+  border-bottom: 1px solid #e6e9f3;
+
+  &-icon {
+    margin-right: 12px;
+  }
+  &-input {
+    color: $black;
+    border: 0px;
+    font: 400 14px/22px Raleway !important;
+  }
+  &-input:focus {
+    outline: none;
+  }
+}
+
+.popover__search-input::placeholder {
+  font: 400 14px/22px Raleway;
+  color: #c7ccdb;
+}
+
+.popover__entry {
+  padding: 0 20px;
+  height: 44px;
+  font: 400 14px/22px Raleway;
+  color: $black;
+
+  &:hover {
+    background-color: #fafbfc;
+  }
+  &.active {
+    color: $blue;
+  }
+
+  img {
+    margin-right: 10px;
+  }
+}

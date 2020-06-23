@@ -19,9 +19,9 @@
             
             </ul> -->
   <!-- (onValueChange) = "updateValue($event) "" -->
-  <!-- <p>
+  <p>
     {{ prettifyJSON(testForm.controls['f1'].errors) }}
-  </p> -->
+  </p>
   <!-- <edu-subject-icon-field formControlName="f2"></edu-subject-icon-field> -->
   <edu-input
     class="f1"
@@ -33,11 +33,11 @@
   >
     <span class="edu-label"> input 1 </span>
 
-    <!-- for validation only need [Validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->
+    <!-- for validation only need [validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->
     <!-- bottom-flow is basically for validation to flow as part of the flow and not be absolutely positioned -->
     <ul
-      Validator
-      alignment="bottom-flow"
+      validator
+      alignment="left"
       *ngIf="testForm.controls['f1'].invalid && testForm.controls.f1.touched"
     >
       <li *ngIf="testForm.controls['f1'].errors.required">Name is required.</li>
