@@ -23,7 +23,13 @@
     {{ prettifyJSON(testForm.controls['f1'].errors) }}
   </p> -->
   <!-- <edu-subject-icon-field formControlName="f2"></edu-subject-icon-field> -->
-  <edu-input class="f1" alignment="center" name="name" formControlName="f1">
+  <edu-input
+    class="f1"
+    alignment="center"
+    name="name"
+    formControlName="f1"
+    (edu-change)="log($event)"
+  >
     <span class="edu-label"> input 1 </span>
 
     <!-- for validation only need [Validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->

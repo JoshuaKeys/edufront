@@ -5,7 +5,8 @@ import {
   Output,
   EventEmitter,
   Host,
-  HostListener
+  HostListener,
+  ɵCompiler_compileModuleSync__POST_R3__
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -37,6 +38,10 @@ export class InputTestComponent implements OnInit {
 
   reset() {
     this.testForm.reset();
+  }
+
+  log(param) {
+    console.log(param);
   }
   prettifyJSON(obj) {
     return JSON.stringify(obj, null, 2);
