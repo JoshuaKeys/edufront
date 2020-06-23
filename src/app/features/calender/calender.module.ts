@@ -13,7 +13,9 @@ import {
   TeachingDaysComponent,
   SameTeachingDaysQuestionComponent,
   SamePeriodsForClassesQuestionComponent,
-  TeachingPeriodsPerDayComponent
+  TeachingPeriodsPerDayComponent,
+  SamePeriodsPerTimeComponent,
+  StartTimeOfFirstPeriodComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
@@ -63,7 +65,9 @@ import { pages } from './pages';
     NumberOfPeriodsComponent,
     TeachingPeriodsPerDayComponent,
     PeriodsPerDayComponent,
-    PeriodsPreviewComponent
+    PeriodsPreviewComponent,
+    SamePeriodsPerTimeComponent,
+    StartTimeOfFirstPeriodComponent
   ],
   imports: [
     CommonModule,

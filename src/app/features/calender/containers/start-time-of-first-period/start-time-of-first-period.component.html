@@ -1,0 +1,17 @@
+<div class="main">
+    <div class="content">
+        <h1 class="header">
+            What time does the first period in a day start?
+        </h1>
+
+        <!-- <edu-input (keypress)="test($event)" [elementId]="'elementId'"><span class="edu-label">
+          Start time
+        </span></edu-input> -->
+        <edu-datepicker [elementId]="'elementId'" alignment="center" (valueChange)="test()">
+            <span class="edu-label">Start Time</span>
+            <div class="edu-suffix" InputAffix>
+                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+            </div>
+        </edu-datepicker>
+    </div>
+</div>

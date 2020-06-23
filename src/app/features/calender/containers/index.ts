@@ -10,4 +10,6 @@ export * from './teaching-days/teaching-days.component';
 export * from './teaching-day-for-class-question/teaching-day-for-class-question.component';
 export * from './same-periods-for-classes-question/same-periods-for-classes-question.component';
 export * from './number-of-periods/number-of-periods.component';
-export * from './teaching-periods-per-day/teaching-periods-per-day.component'
+export * from './teaching-periods-per-day/teaching-periods-per-day.component';
+export * from './same-periods-per-time/same-periods-per-time.component';
+export * from './start-time-of-first-period/start-time-of-first-period.component';

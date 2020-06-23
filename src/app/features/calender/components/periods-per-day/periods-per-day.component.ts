@@ -15,7 +15,9 @@ export class PeriodsPerDayComponent implements OnInit {
   @Input() classGroup: Observable<ClassGroupModel>;
   @Output() onSelectPeriod = new EventEmitter<SelectedPeriodModel>()
   constructor() { }
-
+  debug(item) {
+    console.log(item);
+  }
   ngOnInit(): void {
     this.classGroup.subscribe(console.log);
   }
