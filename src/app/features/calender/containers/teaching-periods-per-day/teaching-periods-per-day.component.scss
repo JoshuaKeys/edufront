@@ -322,6 +322,9 @@ edu-popover ::ng-deep {
   //badge inside period menu
   .badge {
     margin: 5px 7.5px;
+    background: $blue;
+  }
+  .badge.badge--inactive {
     background: #ffffff 0% 0% no-repeat padding-box !important;
   }
 }

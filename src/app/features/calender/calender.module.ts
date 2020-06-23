@@ -35,8 +35,10 @@ import { DaysOfWeekPreviewComponent } from './components/days-of-week-preview/da
 import { NumberOfPeriodsComponent } from './containers/number-of-periods/number-of-periods.component';
 import { PeriodsPerDayComponent } from './components/periods-per-day/periods-per-day.component';
 import { PeriodsPreviewComponent } from './components/periods-preview/periods-preview.component';
+import { pages } from './pages';
 @NgModule({
   declarations: [
+    ...pages,
     TeachingDayForClassQuestionComponent,
     AcademicYearQuestionComponent,
     CalenderShellComponent,
