@@ -15,7 +15,7 @@ export class DatepickerTestComponent implements OnInit {
       f2: [null, Validators.required],
       f3: ['', Validators.required],
       f4: ['', Validators.required],
-      f5: ['', Validators.required]
+      f5: ['2012-01-01', Validators.required]
     });
   }
 

@@ -5,6 +5,7 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 const routes: Routes = [
   {
     path: 'ui',
+
     loadChildren: () =>
       import('./features/ui-test/ui-test.module').then(m => m.uiTestModule)
   },

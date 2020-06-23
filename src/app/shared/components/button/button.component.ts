@@ -23,6 +23,6 @@ export class ButtonComponent implements OnInit {
     // this.el.nativeElement.classList.add()
   }
 
-  //[text , outline , icon,  basic, blank, fab/icon-circle ]
+  //[text , outline , icon,  basic, roundbasic, round , blank, fab/icon-circle ]
   @Input() ButtonType = 'basic';
 }

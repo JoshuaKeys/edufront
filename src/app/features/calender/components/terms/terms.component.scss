@@ -2,7 +2,10 @@
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    padding: 0;
+    flex-wrap: wrap;
 }
+
 .term {
     width: 64px;
     height: 64px;
@@ -15,8 +18,9 @@
     cursor: pointer;
     font-size: 22px;
     color: #c7ccdb;
-    margin: 0 10px;
+    margin: 0 10px 20px;
 }
+
 .term.active {
     border: 2px solid #69a9f2;
     background: #69a9f2 0% 0% no-repeat padding-box;

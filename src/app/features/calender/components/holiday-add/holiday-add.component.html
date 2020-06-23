@@ -1,11 +1,24 @@
-<div class="holiday-add">
-    <div>Holiday Name</div>
-    <!-- <edu-input  alignment="center"> </edu-input> -->
-    <edu-datepicker alignment="center">
+<form (submit)="addHoliday()" [formGroup]="addHolidayForm" class="holiday-add" *ngIf="!(mode | async)['editedHoliday']; else editMode">
+    <input formControlName="name" type="text" placeholder="Holiday name" />
+    <!-- <edu-input alignment="center" formControlName="name"></edu-input> -->
+    <edu-datepicker alignment="center" formControlName="date">
         <span class="edu-label">Select Date</span>
-        <div class="edu-prefix" InputAffix>
-          <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+        <div class="prefix" InputAffix>
+            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
         </div>
-      </edu-datepicker>
-    <button class="holiday-add__add-btn">Add</button>
-</div>
+    </edu-datepicker>
+    <button ButtonType="text" class="holiday-add__add-btn">Add</button>
+</form>
+<ng-template #editMode>
+    <form (submit)="editHoliday()" class="holiday-add" [formGroup]="editHolidayForm">
+        <!-- <edu-input formControlName="name" alignment="center"></edu-input> -->
+        <input formControlName="name" type="text" placeholder="Holiday name" />
+        <edu-datepicker alignment="center" formControlName="date">
+            <span class="edu-label">Select Date</span>
+            <div class="prefix" InputAffix>
+                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+            </div>
+        </edu-datepicker>
+        <button ButtonType="text" class="holiday-add__add-btn">Update</button>
+    </form>
+</ng-template>

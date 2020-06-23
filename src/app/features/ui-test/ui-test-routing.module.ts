@@ -5,6 +5,7 @@ import { DatepickerTestComponent } from './datepicker-test/datepicker-test.compo
 import { SelectTestComponent } from './select-test/select-test.component';
 import { InputTestComponent } from './input-test/input-test.component';
 import { TimeTableTestComponent } from './timetable-test/timetable-test.component';
+import { TimeTableTestComponent2 } from './timetable-test-2/timetable-test.component';
 import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'timetable',
     component: TimeTableTestComponent
+  },
+  {
+    path: 'timetable2',
+    component: TimeTableTestComponent2
   },
   {
     path: 'select',

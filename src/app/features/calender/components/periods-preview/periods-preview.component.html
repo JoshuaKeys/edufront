@@ -1,0 +1,14 @@
+<!-- <div class="card"> -->
+<h1 class="preview-item__header">All Classes</h1>
+<div class="table-wrapper">
+  <div class="table">
+    <div
+      class="column"
+      *ngFor="let period of (previewState | async).periods.items"
+    >
+      <span class="header">{{ period.day }}</span>
+      <span *ngFor="let periodItem of period.periods">{{ periodItem }}</span>
+    </div>
+  </div>
+</div>
+<!-- </div> -->

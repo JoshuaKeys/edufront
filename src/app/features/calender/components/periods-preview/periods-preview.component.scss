@@ -1,0 +1,112 @@
+// @import "src/assets/scss/utils";
+// @import "src/assets/scss/typography";
+// @import "src/assets/scss/main";
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/mixins/containers';
+.aside .card table {
+  position: relative;
+  color: $ash;
+  font: 600 12px/24px Raleway;
+  .table__block {
+    position: absolute;
+    width: calc(84% - 20px);
+    left: 64px;
+    &.lime {
+      color: $lime;
+      background: rgba($lime, 0.1);
+    }
+    &.purple {
+      color: $purple;
+      background: rgba($purple, 0.1);
+    }
+    &.blue {
+      color: $blue;
+      background: rgba($blue, 0.1);
+    }
+    &.orange {
+      color: $orange;
+      background: rgba($orange, 0.1);
+    }
+  }
+  .time {
+    font: 500 12px/24px Roboto;
+    min-width: 32px;
+    width: auto;
+  }
+  td,
+  th {
+    min-width: 43px;
+    text-align: center;
+    vertical-align: center;
+  }
+  td {
+    padding: 8px 0;
+    font: 400 12px/20px Roboto;
+    color: $black;
+  }
+}
+
+.aside {
+  width: 400px;
+  .card {
+    align-self: center;
+    width: 100%;
+    max-width: unset;
+  }
+  .badge {
+    width: 44px;
+    height: 44px;
+    font: 500 12px/20px Roboto;
+    margin: 0;
+    &:not(:last-child) {
+      margin-right: 9px;
+    }
+  }
+}
+
+.card {
+  margin: 15px auto;
+  max-width: 370px;
+  &--classes.card {
+    flex-shrink: 0;
+    margin: 0;
+    margin-right: 30px;
+    padding: 12px 0;
+    width: 156px;
+    box-shadow: 0px 2px 6px #3c4b9b14;
+    border: 2px solid #e6e9f3;
+    .card__title {
+      font: 600 14px/18px Quicksand;
+      margin: 0 auto;
+    }
+    .card__desc {
+      font: 600 26px/33px Quicksand;
+      margin: 0 auto;
+    }
+  }
+  &--dashed-border.card {
+    height: 76px;
+    border: 1px dashed #e6e9f3;
+    box-shadow: unset;
+    position: relative;
+  }
+}
+
+.table {
+  display: flex;
+  justify-content: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  font-size: 12px;
+  align-items: center;
+  span {
+    margin: 0 0 14px 0;
+  }
+  .header {
+    color: #a5aec7;
+  }
+}

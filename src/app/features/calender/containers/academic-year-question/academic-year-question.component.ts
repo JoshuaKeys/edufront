@@ -1,14 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CalendarStateModel } from './../../models/calender-state.model'
-import * as calendarActions from '../../ngrx/actions';
+// import { CalendarStateModel } from './../../models/calender-state.model'
+// import * as calendarActions from '../../ngrx/actions';
 import { Observable } from 'rxjs';
-import { CalendarModalModel } from '../../models/calender-modal.model';
-import * as calendarSelectors from '../../ngrx/selectors'
+// import { CalendarModalModel } from '../../models/calender-modal.model';
+// import * as calendarSelectors from '../../ngrx/selectors'
 import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
 import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setAcademicYearStartDate, setAcademicYearEndDate } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { CalendarModalModel } from '../../models/calender-modal.model';
+import { selectCalendar, selectCalendarModalState } from '../../ngrx/selectors';
+import { toggleStartModal } from '../../ngrx/actions';
+import { CalendarStateModel } from '../../models/calender-state.model';
 @Component({
   selector: 'edu-academic-year-question',
   templateUrl: './academic-year-question.component.html',
@@ -32,8 +36,7 @@ export class AcademicYearQuestionComponent implements OnInit {
     console.log(dateData)
   }
   ngOnInit(): void {
-    this.store.select(calendarSelectors.selectCalendar).subscribe(console.log)
-    this.store.select(calendarSelectors.selectCalendar).pipe(
+    this.store.select(selectCalendar).pipe(
       first()
     ).subscribe(
       calendarState => {
@@ -67,7 +70,7 @@ export class AcademicYearQuestionComponent implements OnInit {
           if(startDate && startDate.length && endDate && endDate.length) {
             const startDateObj = new Date(startDate);
             const endDateObj = new Date(endDate);
-            if(startDateObj.getTime() > endDateObj.getTime()) {
+            if(startDateObj.getTime() >= endDateObj.getTime()) {
               errors.msg.push('End Date must be more than start date')
             }
           }
@@ -79,13 +82,13 @@ export class AcademicYearQuestionComponent implements OnInit {
         }
       }
     );
-    this.calendarModalState = this.store.select(calendarSelectors.selectCalendarModalState)
+    this.calendarModalState = this.store.select(selectCalendarModalState)
   }
   formSubmit() {
 
   }
   closeStartModal() {
-    this.store.dispatch(calendarActions.toggleStartModal())
+    this.store.dispatch(toggleStartModal())
   }
   constructor(
     private store: Store<CalendarStateModel>,

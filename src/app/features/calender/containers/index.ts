@@ -4,4 +4,10 @@ export * from './school-terms-question/school-terms-question.component';
 export * from './term-names-and-dates-question/term-names-and-dates-question.component';
 export * from './vacation-names-and-dates-question/vacation-names-and-dates-question.component';
 export * from './government-holidays-observed-question/government-holidays-observed-question.component';
-export * from './holiday-list/holiday-list.component'
+export * from './holiday-list/holiday-list.component';
+export * from './same-teaching-days-question/same-teaching-days-question.component';
+export * from './teaching-days/teaching-days.component';
+export * from './teaching-day-for-class-question/teaching-day-for-class-question.component';
+export * from './same-periods-for-classes-question/same-periods-for-classes-question.component';
+export * from './number-of-periods/number-of-periods.component';
+export * from './teaching-periods-per-day/teaching-periods-per-day.component'

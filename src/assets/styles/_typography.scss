@@ -11,7 +11,7 @@ h2 {
   margin: 0 auto;
 }
 h1 {
-  font-size: 34px;
+  font: 600 34px/40px Quicksand;
   letter-spacing: 1.02px;
 }
 
@@ -25,22 +25,24 @@ h3 {
   letter-spacing: 0.78px;
 }
 
-h4{
+h4 {
   font: 600 16px/24px Quicksand;
 }
 
-h5{
+h5 {
   font: 600 12px/22px Quicksand;
 }
 p {
-  font-family: 'Raleway', sans-serif;
+  font: 400 16px/24px Raleway;
+  letter-spacing: 1.02px;
+  // font-family: 'Raleway', sans-serif;
 
   text-align: center;
   letter-spacing: 0.48px;
   opacity: 1;
-  font-size: 16px;
+  // font-size: 16px;
   margin: 0 auto;
-  line-height: 1.5;
+  // line-height: 1.5;
 }
 
 p.small {

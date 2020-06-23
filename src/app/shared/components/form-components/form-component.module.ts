@@ -13,6 +13,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { ImgUploadComponent } from './img-upload/img-upload.component';
 import { ValidatorModule } from './validator/validator.module';
 import { datePickerModule } from './datepicker/datepicker.module';
+import { Datepicker2Module } from './datepicker2/datepicker2.module';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { PhonePrefixComponent } from './phone-prefix/phone-prefix.component';
 import { PopoverComponent } from './popover/popover.component';
@@ -36,8 +37,15 @@ let components = [
     SelectModule,
     FormsModule,
     ValidatorModule,
-    datePickerModule
+    datePickerModule,
+    Datepicker2Module
   ],
-  exports: [...components, SelectModule, datePickerModule, ValidatorModule]
+  exports: [
+    ...components,
+    SelectModule,
+    datePickerModule,
+    ValidatorModule,
+    Datepicker2Module
+  ]
 })
 export class FormComponentsModule {}

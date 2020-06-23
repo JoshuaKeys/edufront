@@ -20,9 +20,9 @@ import { ValidatorService } from '../validator/validator.service';
 import { myDatePickerOptions } from './datepicker-config';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
-
+//v1 which might be deleted
 @Component({
-  selector: 'edu-datepicker',
+  selector: 'edu-datepicker-temp',
   templateUrl: './datepicker.component.html',
   styleUrls: [
     './datepicker.component.scss',
@@ -61,7 +61,7 @@ export class DatepickerComponent
   @Input('alignment') alignment = 'center';
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('elementId') elementId = 'tempDatepickerId123';
-  @Output() onDateDataChanged = new EventEmitter<string>()
+  @Output() onDateDataChanged = new EventEmitter<string>();
   @Input('disabled') set disabled(disabled) {
     this._disabled = disabled;
   }

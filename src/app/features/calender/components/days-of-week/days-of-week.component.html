@@ -1,0 +1,4 @@
+<ul class="days">
+    <li class="day" (click)="onToggleActive(day)" [ngClass]="{'active': day.selected}" *ngFor="let day of teachingDays | async;
+        let index=i">{{day.day}}</li>
+</ul>

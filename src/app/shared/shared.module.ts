@@ -21,6 +21,8 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
 
 // import { datePickerModule } from './components/datepicker/datepicker.module';
+// import { datePickerModule } from './components/form-components/datepicker/datepicker.module';
+// import { Datepicker2Module } from './components/form-components/datepicker2/datepicker2.module';
 
 import { TimetableModule } from './components/timetable/timetable.module';
 import { SubjectsService } from './services/subjects.service';

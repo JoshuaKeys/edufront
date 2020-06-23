@@ -1,15 +1,39 @@
-.holiday-list {
-    &__header {
-        margin-top: 40px;
-        font-size: 26px;
-    }
-    &__items {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    &__item {
-        max-width: 200px;
-        list-style-type: none;
+@import '../../scss-fixes.scss';
 
+.scrollable-content {
+  height: 100%;
+  max-height: calc(100vh - 370px);
+}
+
+.holiday-list {
+  &__header {
+    font-size: 26px;
+  }
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__item {
+    max-width: 200px;
+    list-style-type: none;
+  }
+  &__btn-container {
+    display: flex;
+    justify-content: center;
+  }
+  &__continue-btn {
+    height: 52px;
+    border-radius: 100px;
+    background: #69a9f2 0% 0% no-repeat padding-box;
+    width: 250px;
+    margin-top: 230px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    border: none;
+    &:active,
+    &:focus {
+      outline: none;
     }
+  }
 }
