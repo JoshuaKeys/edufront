@@ -37,6 +37,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Output() onValueChange = new EventEmitter<any>();
   @Input('alignment') alignment = 'center'; //left right center
   @Input('disabled') disabled = false;
+  @Input('labelIsPlaceholder') labelIsPlaceholder = false;
+  @Input('hideChevron') hideChevron = false;
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
 

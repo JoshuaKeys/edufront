@@ -29,6 +29,14 @@ export class InputTestComponent implements OnInit {
           Validators.minLength(4),
           Validators.pattern('.*[0-9].*')
         ]
+      ],
+      f2: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.pattern('.*[a-z].*')
+        ]
       ]
     });
   }

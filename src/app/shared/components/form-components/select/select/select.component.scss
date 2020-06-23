@@ -155,6 +155,7 @@
     border-bottom: 1px solid $grey-blue;
     height: 100%;
     width: 100%;
+    padding: 0 12px;
     &.active {
       border-color: $blue;
     }
@@ -208,7 +209,9 @@
     }
   }
 }
-
+.select__wrapper.hideChevron:before {
+  display: none !important;
+}
 .input--active {
   height: auto;
   color: $black;
@@ -254,7 +257,9 @@
 }
 
 //form wrapper overwrite
-
+.labelIsPlaceholder.label--active {
+  display: none;
+}
 .label--active {
   top: 0;
   // transform: scale(0.8);

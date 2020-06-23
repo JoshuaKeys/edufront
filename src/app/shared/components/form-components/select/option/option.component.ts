@@ -29,7 +29,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
     this.indexInParent = Array.from(
       this.el.nativeElement.parentElement.children
     ).indexOf(this.el.nativeElement);
-    console.log('testing', this.OptionValue)
+    // console.log('testing', this.OptionValue);
     //  this.selectService.activeOption
     // .subscribe((activeOption)=>{
     //   this.isActive = (activeOption === this.OptionValue);
@@ -78,10 +78,10 @@ export class OptionComponent implements OnInit, AfterViewInit {
     //   `selet vs opt - ${this.selectService.activeValue} ${this.OptionValue}`
     // );
     // console.log(this.selectService.activeValue);
-    if (
-      this.selectService.activeValue.toUpperCase() ===
-      this.OptionValue.toUpperCase()
-    ) {
+    if (!this.selectService.activeValue) {
+      return;
+    }
+    if (this.selectService.activeValue == this.OptionValue) {
       this.selectService.activeOptionComponent.next(this);
     }
   }

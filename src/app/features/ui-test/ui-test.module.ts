@@ -6,6 +6,7 @@ import { SelectTestComponent } from './select-test/select-test.component';
 import { uiTestRoutingModule } from './ui-test-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { TimeTableTestComponent } from './timetable-test/timetable-test.component';
+import { TimeTableTestComponent2 } from './timetable-test-2/timetable-test.component';
 import { CbComponent } from './timetable-test/cb/cb.component';
 // import { SubjectIconFieldComponent } from './input-test/subject-icon-field/subject-icon-field.component';
 import { InputTestComponent } from './input-test/input-test.component';
@@ -14,6 +15,7 @@ import { InputPrefixTestComponent } from './input-test/input-prefix-test/input-p
 import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
 const components = [
+  TimeTableTestComponent2,
   ImgTestComponent,
   DatepickerTestComponent,
   SelectTestComponent,

@@ -5,16 +5,15 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 const routes: Routes = [
   {
     path: 'ui',
+
     loadChildren: () =>
       import('./features/ui-test/ui-test.module').then(m => m.uiTestModule)
   },
 
   {
-    path: 'user-settings',
+    path: 'admin',
     loadChildren: () =>
-      import('./features/user-settings/user-settings.module').then(
-        m => m.UserSettingsModule
-      )
+      import('./features/admin/admin.module').then(m => m.AdminModule)
   },
 
   {

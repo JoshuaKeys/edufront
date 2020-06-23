@@ -12,7 +12,7 @@ export class PreviewComponent implements OnInit {
   @Input() previewState: Observable<PreviewModel>;
 
   ngOnInit() {
-    console.log(this.styleMode);
+    // console.log(this.styleMode);
   }
   constructor() {}
 

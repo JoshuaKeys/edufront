@@ -1,0 +1,58 @@
+.days {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.days.days-split {
+  border-left: 1px solid black;
+  margin: 0;
+}
+
+.days-split-container {
+  display: flex;
+  margin: 5px 10px 0 0;
+}
+
+.classes {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-right: 10px;
+  &__header {
+    font-weight: bold;
+  }
+  &__items {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  &__item {
+    margin: 0 3px 0;
+  }
+}
+
+.day {
+  width: 44px;
+  height: 44px;
+  margin: 3px;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  //   margin: 10px;
+  border: 2px solid #69a9f2;
+  background: #69a9f2 0% 0% no-repeat padding-box;
+  color: #fff;
+}
+
+.day.active {
+  display: flex;
+}

@@ -1,5 +1,5 @@
 <div class="content">
-  <button ButtonType="basic" disabled>
+  <button ButtonType="basic">
     popover top left
 
     <edu-popover alignment="top" pointerAlignment="left">
@@ -11,8 +11,13 @@
         <button (click)="toggleBtn()">click</button>
       </p></edu-popover
     >
+
+    <edu-tooltip alignment="top" pointerAlignment="left">hi there </edu-tooltip>
   </button>
   <button ButtonType="outline">
+    <edu-tooltip alignment="top" pointerAlignment="center"
+      >hi there
+    </edu-tooltip>
     <edu-popover alignment="top" pointerAlignment="center"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
@@ -22,6 +27,9 @@
     popover top center
   </button>
   <button ButtonType="basic">
+    <edu-tooltip alignment="top" pointerAlignment="right"
+      >hi there
+    </edu-tooltip>
     <edu-popover alignment="top" pointerAlignment="right"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
@@ -31,6 +39,9 @@
     popover top right
   </button>
   <button ButtonType="outline">
+    <edu-tooltip alignment="bottom" pointerAlignment="left"
+      >hi there
+    </edu-tooltip>
     <edu-popover alignment="bottom" pointerAlignment="left"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
@@ -40,6 +51,9 @@
     popover bottom left
   </button>
   <button ButtonType="round">
+    <edu-tooltip alignment="bottom" pointerAlignment="center"
+      >hi there
+    </edu-tooltip>
     <edu-popover alignment="bottom" pointerAlignment="center"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
@@ -49,6 +63,9 @@
     bottom center
   </button>
   <button ButtonType="round">
+    <edu-tooltip alignment="bottom" pointerAlignment="right"
+      >hi there
+    </edu-tooltip>
     <edu-popover alignment="bottom" pointerAlignment="right"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
@@ -58,6 +75,7 @@
     popover bottom right
   </button>
   <button ButtonType="basic">
+    <edu-tooltip alignment="left">hi there </edu-tooltip>
     <edu-popover alignment="left"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione
@@ -67,6 +85,7 @@
     popover left
   </button>
   <button ButtonType="basic">
+    <edu-tooltip alignment="right">hi there </edu-tooltip>
     <edu-popover alignment="right"
       ><p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam ratione

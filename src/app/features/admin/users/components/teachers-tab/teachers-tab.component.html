@@ -1,0 +1,86 @@
+<div class="header">
+  <button
+    ButtonType="round"
+    (click)="showAddStaffPanel()"
+    [ngClass]="{ active: showAddStaff }"
+    class="button button--add"
+  >
+    <img src="assets/user-settings/top-nav_plus.svg" alt="" />
+  </button>
+  <button
+    ButtonType="round"
+    *ngFor="let option of sortOptions; let i = index"
+    [ngClass]="{ active: isActiveSort(i) }"
+    class="button button--sort"
+    (click)="sortClick(option.type)"
+    (mouseleave)="setSortBtnImg(i, '')"
+    (mouseover)="setSortBtnImg(i, 'hover')"
+  >
+    <img
+      src="assets/admin/buttons/sort-icon-{{ option.type }}{{
+        option.imgSuffix
+      }}.svg"
+      alt=""
+    />
+  </button>
+
+  <div
+    class="search__wrapper"
+    [ngClass]="{ 'sidepanel-active': showSidePanel() }"
+  >
+    <input
+      #search
+      [(ngModel)]="searchTerm"
+      (focus)="setSearchState('active')"
+      (blur)="setSearchState('inactive')"
+      type="text"
+      id="searchbar"
+      class="search__input"
+    />
+    <label
+      class="search__label"
+      for="searchbar"
+      [ngClass]="{ hidden: hideLabel() }"
+      >Press <b class="bluecolor">Ctrl + S</b> to search</label
+    >
+  </div>
+</div>
+<main class="main">
+  <div class="content" [ngClass]="{ 'sidepanel-active': showSidePanel() }">
+    <edu-user-pill-sorted-views
+      [users]="filteredUsers"
+      [activeUsers]="activeStaff"
+      [activeSort]="activeSort"
+      [resetUsers]="boundResetStaffs"
+      [clickCallBack]="boundStaffClick"
+    ></edu-user-pill-sorted-views>
+  </div>
+  <aside class="aside" [ngClass]="{ 'sidepanel-active': showSidePanel() }">
+    <edu-user-summary-preview
+      [users]="users"
+      userType="teachers"
+      displayFooter="false"
+    ></edu-user-summary-preview>
+    <edu-user-excel-preview></edu-user-excel-preview>
+    <button class="download-excel" ButtonType="text">
+      <img src="../../../assets/bluedownload.svg" alt="" />
+      <span class="bluecolor">Download Excel Template</span>
+    </button>
+  </aside>
+</main>
+<div class="sidePanel" [ngClass]="{ active: showSidePanel() }">
+  <edu-teacher-panel
+    *ngIf="showAddStaff"
+    (closePanel)="showAddStaffPanel()"
+  ></edu-teacher-panel>
+  <edu-teacher-panel
+    *ngIf="showEditStaff"
+    [activeUser]="activeStaff[0]"
+    (closePanel)="resetStaffs()"
+  ></edu-teacher-panel>
+  <!-- <edu-edit-student-panel
+    *ngIf="showEditStudent"
+    (closePanel)="resetStudents()"
+    [activeUser]="activeStudents[0]"
+  ></edu-edit-student-panel> -->
+</div>

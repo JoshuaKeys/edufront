@@ -1,0 +1,161 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+:host {
+  position: relative;
+  @include displayFlex();
+  flex-direction: column;
+  width: 200px;
+  height: 54px;
+}
+
+.exposedInput {
+  width: 200px;
+  height: 54px;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid $grey-blue;
+  color: $black;
+  font: 400 16px/54px Raleway;
+  &:focus {
+    outline-width: 0px;
+  }
+  &::placeholder {
+    color: $black;
+    font: 400 16px/24px Raleway;
+  }
+}
+.input-box-container {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  width: 0;
+}
+.hiddenInput {
+  width: 100%;
+  //   display: none;
+  opacity: 0;
+  height: 0;
+}
+
+:host ::ng-deep {
+  .myDpSelector {
+    border-color: $blue;
+    top: unset !important;
+    bottom: -10px;
+
+    left: 50% !important;
+    transform: translate(-50%, 100%);
+    // transform: translateY(100%);
+  }
+
+  //button styling
+  .datepicker__btn {
+    position: absolute;
+    border: 0;
+    right: 0;
+    cursor: pointer;
+    background: transparent;
+    &:focus {
+      outline-width: 0px;
+    }
+    &:hover,
+    &:active {
+      transform: scale(1.15);
+    }
+    label {
+      opacity: 0;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      //   background-color: red;
+    }
+  }
+
+  //pointer styling
+  .myDpSelectorArrow {
+    &::before,
+    &::after {
+      //triangle ??
+      // position: absolute;
+      left: 50%;
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent !important;
+      border-right: 5px solid transparent !important;
+      border-bottom: 7px solid $blue !important;
+    }
+    &::after {
+      position: absolute;
+      top: -16px;
+      border-bottom: 7px solid white !important;
+      border-left: 5px solid transparent !important;
+      border-right: 5px solid transparent !important;
+      transform-origin: center bottom;
+      transform: translateX(-1px) scale(0.8);
+    }
+  }
+
+  .myDpMonthYearText {
+    // Month Year Text on day view
+    font: 500 14px/16px Raleway;
+  }
+  .myDpTableSingleDay:hover,
+  .myDpTableSingleMonth:hover,
+  .myDpTableSingleYear:hover {
+    background-color: unset !important;
+  }
+  .myDpTableSingleYear:hover,
+  .myDpTableSingleMonth:hover {
+    background: transparent;
+  }
+  .myDpTableSingleDay:not(.myDpSelectedDay):hover span,
+  .myDpTableSingleMonth:not(.myDpSelectedMonth):hover span,
+  .myDpTableSingleYear:not(.myDpSelectedYear):hover span {
+    background-color: #ddd;
+  }
+
+  //month  styling
+  .myDpHeaderBtn.myDpMonthBtn.myDpMonthLabel {
+    color: $blue;
+  }
+
+  .myDpMonthValue {
+    margin: 3px;
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 100px;
+  }
+  .myDpSelectedMonth span {
+    background: $blue;
+    color: white;
+  }
+
+  //year styling{
+  .myDpSelectedYear span {
+    background: $blue;
+    color: white;
+  }
+  .myDpYearValue {
+    margin: 3px;
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 100px;
+  }
+  // y_2_2 myDpYearcell myDpSelectedYear myDpTableSingleYear
+}
+
+.clicker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}

@@ -1,12 +1,25 @@
-<div>
-    <h1 class="header">How many terms does the current<br>academic year have</h1>
+<div class="main">
+  <div class="content">
+    <h1 class="header">
+      How many terms does the current<br />academic year have
+    </h1>
     <div class="school-terms-question">
-        <edu-terms [terms]="6" [active]="(calendarData | async).schoolTerms" (toggleActive)="onToggleActive($event)"></edu-terms>
-        <div class="school-terms__btn-container">
-            <button class="school-terms__continue-btn" 
-                [disabled]="!(calendarData | async).schoolTerms"
-                (click)="goNext()"
-            >Continue</button>
-        </div>
+      <edu-terms
+        [terms]="6"
+        [active]="(calendarData | async).schoolTerms"
+        (toggleActive)="onToggleActive($event)"
+      ></edu-terms>
     </div>
+  </div>
+
+  <div class="school-terms__btn-container button--bottom">
+    <button
+      ButtonType="basic"
+      class="school-terms__continue-btn"
+      [disabled]="!(calendarData | async).schoolTerms"
+      (click)="goNext()"
+    >
+      Continue
+    </button>
+  </div>
 </div>
