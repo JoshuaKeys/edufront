@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
+import { ValidatorService } from '../validator/validator.service';
 @Component({
   selector: 'edu-datepicker',
   templateUrl: './datepicker2.component.html',
@@ -22,6 +23,7 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
     './datepicker-style-overwrite.scss'
   ],
   providers: [
+    ValidatorService,
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
@@ -32,10 +34,15 @@ import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 })
 export class Datepicker2Component
   implements OnInit, AfterViewInit, ControlValueAccessor {
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private validatorService: ValidatorService
+  ) {}
 
   ngOnInit(): void {
     this.setElementID();
+    this.registerHasErrorEvent();
   }
   ngAfterViewInit() {
     // console.log(this.inputEl);
@@ -43,6 +50,7 @@ export class Datepicker2Component
   TAB_KEY_CODE = 9;
   @ViewChild('dp') dp: any;
   @ViewChild('inputEl') inputEl;
+  @ViewChild('validator') validator: any;
   @Input('alignment') alignment = 'center';
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('elementId') elementId = 'tempDatepickerId123';
@@ -51,6 +59,7 @@ export class Datepicker2Component
     this._disabled = disabled;
   }
   _disabled = false;
+  hasError = false;
   tempId = 'datepickerinputid';
   model: IMyDateModel = null;
   dpIsActive = false; // can delete this soon
@@ -330,6 +339,30 @@ export class Datepicker2Component
     }
     // other options here
   };
+
+  registerHasErrorEvent() {
+    this.registerValidatorPosition();
+
+    this.validatorService.validatorHasError.subscribe(hasError => {
+      this.hasError = hasError;
+      this.cd.markForCheck();
+    });
+  }
+
+  registerValidatorPosition() {
+    let possiblePositions = ['left', 'right', 'bottom', 'bottom-flow'];
+    this.validatorService.validatorPosition.subscribe(position => {
+      if (
+        possiblePositions.indexOf(position) != -1 &&
+        this.validator &&
+        !this.validator.nativeElement.classList.contains(position)
+      ) {
+        this.validator.nativeElement.classList.add(position);
+      }
+      // console.log(this.validator.nativeElement.classList);
+      // console.log(position);
+    });
+  }
 
   onChange: any = () => {};
   onTouched: any = () => {};
