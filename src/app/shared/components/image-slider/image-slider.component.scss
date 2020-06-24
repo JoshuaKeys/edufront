@@ -1,0 +1,98 @@
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+:host {
+  position: relative;
+  display: block;
+  padding: 0 86px;
+  ng-image-slider ::ng-deep {
+    display: block;
+    width: 100%;
+    // position: relative;
+
+    .ng-image-slider,
+    .ng-image-slider-container,
+    .main {
+      position: static;
+    }
+
+    .next.icons.next-icon,
+    .prev.icons.prev-icon {
+      width: 64px;
+      background: white;
+      border: 2px solid #e6e9f3;
+      height: 64px;
+      border-radius: 50%;
+      box-shadow: 0px 2px 6px #3c4b9b14;
+      position: relative;
+      position: absolute;
+      top: 50%;
+
+      &:hover {
+        border-color: $blue;
+        img {
+          content: url('/assets/form-components/slider-arrow-right-blue.svg');
+        }
+      }
+      &:active {
+        border-color: $blue;
+        background: $blue;
+        img {
+          content: url('/assets/form-components/slider-arrow-left-white.svg');
+        }
+      }
+
+      //   display: none;
+    }
+
+    .next.icons.next-icon {
+      transform-origin: center center;
+      right: 15px;
+      transform: translateY(-50%) rotate(180deg);
+    }
+    .prev.icons.prev-icon {
+      left: 15px;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.button {
+  width: 64px;
+  background: white;
+  border: 2px solid #e6e9f3;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  position: relative;
+  position: absolute;
+  top: 50%;
+  &:focus {
+    outline: none;
+  }
+  img {
+    @include absoluteCenter();
+  }
+  &:hover {
+    border-color: $blue;
+    img {
+      content: url('/assets/form-components/slider-arrow-right-blue.svg');
+    }
+  }
+  &:active {
+    border-color: $blue;
+    background: $blue;
+    img {
+      content: url('/assets/form-components/slider-arrow-left-white.svg');
+    }
+  }
+}
+.left {
+  left: 15px;
+  transform: translateY(-50%);
+}
+.right {
+  transform-origin: center center;
+  right: 15px;
+  transform: translateY(-50%) rotate(180deg);
+}

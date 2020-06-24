@@ -42,6 +42,7 @@ import { ImageUploadV3Component } from './components/image-upload-v3/image-uploa
 import { ImgAuthPipe } from './pipes/img-auth.pipe';
 import { PreviewAnimateDirective } from './directives/preview-animate.directive';
 import { StopEventBubbleDirective } from './directives/stop-event-bubble.directive';
+import { ImageSliderModule } from './components/image-slider/image-slider.module';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     StopEventBubbleDirective
   ],
   imports: [
+    ImageSliderModule,
     ImageCropperModule,
     FormComponentsModule,
     ReactiveFormsModule,
@@ -83,6 +85,7 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     RouterModule
   ],
   exports: [
+    ImageSliderModule,
     PreviewAnimateDirective,
     FormComponentsModule,
     // PopoverOptionDirective,

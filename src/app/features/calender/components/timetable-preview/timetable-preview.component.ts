@@ -26,10 +26,7 @@ export class TimetablePreviewComponent implements OnInit {
   specialPeriods = [];
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
   tempTimeArr = [];
-  ngOnInit(): void {
-    // this.elValue = testData;
-    // this.elValue = testData;
-  }
+  ngOnInit(): void {}
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
     this.resetMainValues();
@@ -41,7 +38,7 @@ export class TimetablePreviewComponent implements OnInit {
 
     this.cd.markForCheck();
 
-    // this.logStuff();
+    this.logStuff();
   }
 
   periodDurationIsSet = false;
@@ -69,6 +66,9 @@ export class TimetablePreviewComponent implements OnInit {
   }
 
   addToTempTimeArr(time: number) {
+    if (Number.isNaN(time)) {
+      return;
+    }
     if (this.tempTimeArr.indexOf(time) == -1) {
       this.tempTimeArr.push(time);
     }

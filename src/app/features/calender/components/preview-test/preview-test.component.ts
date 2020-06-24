@@ -14,10 +14,11 @@ export class PreviewTestComponent implements OnInit {
   }
   activeindex = 0;
   resetComponent() {
-    this.activeindex = (this.activeindex + 1) % 5;
+    this.activeindex = (this.activeindex + 1) % 6;
     switch (this.activeindex) {
       case 0:
-        this.data = newState;
+        console.log('testdata5');
+        this.data = testData5;
         break;
       case 1:
         this.data = testData;
@@ -30,6 +31,9 @@ export class PreviewTestComponent implements OnInit {
         break;
       case 4:
         this.data = testData4;
+        break;
+      case 5:
+        this.data = newState;
         break;
     }
   }
@@ -265,11 +269,70 @@ let testData4: CalendarModel[] = [
     assembly: { name: '', startingAt: '', duration: '' }
   }
 ];
+
+let testData5: CalendarModel[] = [
+  {
+    day: 'Mon',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '',
+    periodDuration: '0',
+    intervaBtwPeriods: '08:30',
+    breaks: [],
+    assembly: { name: '', startingAt: '', duration: '' }
+  },
+  {
+    day: 'Tue',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '',
+    periodDuration: '0',
+    intervaBtwPeriods: '08:30',
+    breaks: [],
+    assembly: { name: '', startingAt: '', duration: '' }
+  },
+  {
+    day: 'Wed',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '',
+    periodDuration: '0',
+    intervaBtwPeriods: '08:30',
+    breaks: [],
+    assembly: { name: '', startingAt: '', duration: '' }
+  },
+  {
+    day: 'Thu',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '',
+    periodDuration: '0',
+    intervaBtwPeriods: '08:30',
+    breaks: [],
+    assembly: { name: '', startingAt: '', duration: '' }
+  },
+  {
+    day: 'Fri',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '',
+    periodDuration: '0',
+    intervaBtwPeriods: '08:30',
+    breaks: [],
+    assembly: { name: '', startingAt: '', duration: '' }
+  },
+  ,
+  {
+    day: 'Sat',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '',
+    periodDuration: '0',
+    intervaBtwPeriods: '08:30',
+    breaks: [],
+    assembly: { name: '', startingAt: '', duration: '' }
+  }
+];
+
 let newState: CalendarModel[] = [
   {
     day: 'Mon',
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'],
-    startTime: '09:00',
+    startTime: '08:30',
     periodDuration: '30',
     intervaBtwPeriods: '08:30',
     breaks: [
@@ -277,7 +340,7 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '30'
+        duration: '45'
       },
       {
         firstBreak: '',
@@ -299,13 +362,13 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '30'
+        duration: '45'
       },
       {
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '30'
+        duration: '45'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
@@ -321,13 +384,13 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '30'
+        duration: '45'
       },
       {
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '30'
+        duration: '45'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
@@ -343,13 +406,13 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '30'
+        duration: '45'
       },
       {
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '30'
+        duration: '45'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
@@ -365,13 +428,13 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '30'
+        duration: '45'
       },
       {
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '30'
+        duration: '45'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
