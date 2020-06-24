@@ -1,6 +1,6 @@
 import * as fromCalenderContainer from '../containers';
 import * as fromPages from '../pages';
-import { TimetablePreviewComponent } from '../components/timetable-preview/timetable-preview.component';
+import { PreviewTestComponent } from '../components/preview-test/preview-test.component';
 export const calenderNavigation = {
   'dates-of-academic-year': {
     previous: null,
@@ -53,8 +53,8 @@ export const calenderNavigation = {
 };
 
 export const calenderRouteToComponentMap = {
-  // 'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  'dates-of-academic-year': TimetablePreviewComponent,
+  'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
+  // 'dates-of-academic-year': PreviewTestComponent,
 
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
