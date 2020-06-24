@@ -49,6 +49,9 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
   toggleActive(day: TeachingDay, classesGroup: ClassGroupModel) {
     this.store.dispatch(toggleClassesGroupActive({day, classesGroup}))
   }
+  addGroup() {
+    alert('hello')
+  }
   asObservable(item) {
     return of(item);
   }
