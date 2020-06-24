@@ -14,7 +14,10 @@ import { CbTestComponent } from './input-test/cb-test/cb-test.component'; // tes
 import { InputPrefixTestComponent } from './input-test/input-prefix-test/input-prefix-test.component';
 import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
+
+import { SliderTestComponent } from './slider-test/slider-test.component';
 const components = [
+  SliderTestComponent,
   TimeTableTestComponent2,
   ImgTestComponent,
   DatepickerTestComponent,

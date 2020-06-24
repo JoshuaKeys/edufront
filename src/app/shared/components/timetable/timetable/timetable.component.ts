@@ -5,7 +5,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   ContentChild,
-  TemplateRef
+  TemplateRef,
+  ElementRef
 } from '@angular/core';
 import {
   SpecialPeriod,
@@ -23,9 +24,45 @@ import { skip } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetableComponent implements OnInit {
-  @Input() model: TimetableModel;
-  @Input() time: Time[]; //has to be defined in ascending order
-  @Input() specialPeriods: SpecialPeriod[];
+  _model;
+  @Input() set model(_model: TimetableModel) {
+    this._model = _model;
+    if (this.initHookHasPassed) {
+      this.setDays();
+    }
+  }
+  get model() {
+    return this._model;
+  }
+  _time;
+  @Input() set time(_time: Time[]) {
+    this._time = _time;
+
+    if (this.initHookHasPassed) {
+      this.timeClasses = new Array(this.time.length).fill([]);
+      this.timeStyles = new Array(this.time.length).fill({});
+      this.setTimeFormatting();
+    }
+  } //has to be defined in ascending order
+  get time() {
+    return this._time;
+  }
+  _specialPeriods;
+  @Input() set specialPeriods(val: SpecialPeriod[]) {
+    // console.log('setter');
+    this._specialPeriods = val;
+
+    if (this.initHookHasPassed) {
+      this.SpecialPeriodClasses = new Array(this.specialPeriods.length).fill(
+        []
+      );
+      this.SpecialPeriodStyles = new Array(this.specialPeriods.length).fill({});
+      this.initSpecialPeriods();
+    }
+  }
+  get specialPeriods() {
+    return this._specialPeriods;
+  }
   @Input() specialPeriodHeight: number = 1;
 
   @ContentChild('periodTemplate') periodTemplate: TemplateRef<any>;
@@ -38,8 +75,9 @@ export class TimetableComponent implements OnInit {
   days = [];
 
   value = {};
-
+  initHookHasPassed = false;
   ngOnInit(): void {
+    // console.log('init');
     this.timeClasses = new Array(this.time.length).fill([]);
     this.timeStyles = new Array(this.time.length).fill({});
     this.SpecialPeriodClasses = new Array(this.specialPeriods.length).fill([]);
@@ -49,14 +87,16 @@ export class TimetableComponent implements OnInit {
     this.setDays();
     this.setTimeFormatting();
     this.initSpecialPeriods();
-
+    // console.log('initSpecialPeriods');
     this.value = JSON.parse(JSON.stringify(this.model));
 
     this.timeTableService.$model.pipe(skip(1)).subscribe(({ key, value }) => {
-      console.log(`k ${key}, v ${value}`);
+      // console.log(`k ${key}, v ${value}`);
       this.updateModel(key, value);
-      console.log(this.model);
+      // console.log(this.model);
     });
+
+    this.initHookHasPassed = true;
   }
 
   // ngAfterContentInit() {
@@ -76,13 +116,13 @@ export class TimetableComponent implements OnInit {
   }
 
   onChange(key, value) {
-    console.log(`key ${key} - value ${value}`);
+    // console.log(`key ${key} - value ${value}`);
     // console.log(`key ${key} - value ${value} - parentScope ${this.parentContextVar}`);
   }
 
   setDays() {
     this.days = [...Object.keys(this.model)];
-    console.log(this.days);
+    // console.log(this.days);
   }
 
   setTimeFormatting() {
@@ -109,9 +149,9 @@ export class TimetableComponent implements OnInit {
 
   initSpecialPeriods() {
     //rework this
-    console.log('initspecialperiods');
-    console.log(this.specialPeriods);
-    console.log(this.days);
+    // console.log('initspecialperiods');
+    // console.log(this.specialPeriods);
+    // console.log(this.days);
     let lowerCaseDays = this.days.map(day => day.toLowerCase());
     this.specialPeriods.forEach((_sp, i) => {
       // _sp.classes = [];
@@ -140,8 +180,8 @@ export class TimetableComponent implements OnInit {
           `r${this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf)}`
         );
       }
-      console.log(_sp.start);
-      console.log(this.days.indexOf(_sp.start));
+      // console.log(_sp.start);
+      // console.log(this.days.indexOf(_sp.start));
       this.SpecialPeriodClasses[i] = this.assignToClassArr(
         this.SpecialPeriodClasses[i],
         `c${lowerCaseDays.indexOf(_sp.start) + 1}`

@@ -41,7 +41,7 @@ export class ModalComponentV2 implements OnInit {
   }
   constructor(private el: ElementRef, private renderer: Renderer2) {}
   ngOnInit() {
-    console.log('?? startg');
+    // console.log('?? startg');
     this.validateInputFields();
     if (this.modalType === 'intro') {
       this.renderer.addClass(this.el.nativeElement, 'intro');

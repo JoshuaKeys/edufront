@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   SpecialPeriod,
@@ -10,9 +11,7 @@ import {
   TimetableModel
 } from 'src/app/shared/components/timetable/timetable.interface';
 import { CalendarModel } from './calendar.interface';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { min } from 'moment';
-import { datePickerModule } from 'src/app/shared/components/form-components/datepicker/datepicker.module';
+
 @Component({
   selector: 'edu-timetable-preview',
   templateUrl: './timetable-preview.component.html',
@@ -20,17 +19,42 @@ import { datePickerModule } from 'src/app/shared/components/form-components/date
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetablePreviewComponent implements OnInit {
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
   day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
   time = [];
   model = {};
   specialPeriods = [];
-  ngOnInit(): void {
-    this.elValue = testData;
+  tempSpecialPeriod: tempSpecialPeriodModel[] = [];
+  tempTimeArr = [];
+  ngOnInit(): void {}
+  @Input('edu-value') set elValue(val: CalendarModel[]) {
+    // console.log('SETTING EL VALUE');
+    this.resetMainValues();
+
+    this.parseElValue(val);
     this.setTime();
+    this.addBlankToStartOfClass(val);
     this.setSpecialPeriod();
-    console.log('testData');
-    console.log(testData);
+
+    this.cd.markForCheck();
+
+    this.logStuff();
+  }
+
+  periodDurationIsSet = false;
+
+  resetMainValues() {
+    this.time = [];
+    this.specialPeriods = [];
+    this.model = {};
+
+    this.tempTimeArr = [];
+    this.tempSpecialPeriod = [];
+  }
+
+  logStuff() {
+    // console.log('testData');
+    // console.log(testData);
 
     console.log('this.time');
     console.log(this.time);
@@ -39,15 +63,12 @@ export class TimetablePreviewComponent implements OnInit {
     console.log(this.tempSpecialPeriod);
     console.log('this.specialPeriod');
     console.log(this.specialPeriods);
-    console.log('specialPeriods2');
-    console.log(specialPeriods2);
   }
-  @Input('edu-value') set elValue(val: CalendarModel[]) {
-    this.parseElValue(val);
-  }
-  tempSpecialPeriod: tempSpecialPeriodModel[] = [];
-  tempTimeArr = [];
+
   addToTempTimeArr(time: number) {
+    if (Number.isNaN(time)) {
+      return;
+    }
     if (this.tempTimeArr.indexOf(time) == -1) {
       this.tempTimeArr.push(time);
     }
@@ -63,9 +84,90 @@ export class TimetablePreviewComponent implements OnInit {
       );
     } else {
       min = parseInt(inputTimeString);
+      min = min > 60 ? this.convertMinsToTime(min) : min;
     }
 
     return hr + min;
+  }
+
+  timeDifferenceInMins(time1: number, time2: number) {
+    //get duration in mins
+    let min1 = time1 % 100;
+    let min2 = time2 % 100;
+    let h1 = time1 - min1;
+    let h2 = time2 - min2;
+
+    let res = (h1 / 100) * 60 - (h2 / 100) * 60 + min1 - min2;
+
+    console.log(res);
+
+    return res;
+  }
+
+  convertBlankToSpecialPeriod(
+    startTimeArr: {
+      startTime: string;
+      blankPeriod: number;
+      startTimeInt: number;
+    }[],
+    val: CalendarModel[]
+  ) {
+    // console.log('startTimeArr');
+    // console.log(startTimeArr);
+    val.forEach((val, index) => {
+      let blankPeriod: any = startTimeArr.filter(
+        startTime => startTime.startTime === val.startTime
+      );
+      // console.log(blankPeriod);
+      blankPeriod = blankPeriod[0].blankPeriod;
+      for (let i = 0; i < blankPeriod; i++) {
+        // console.log('adding to temp special period');
+        this.addToTempSpecialPeriod(
+          startTimeArr[i].startTimeInt,
+          val.day,
+          '',
+          null
+        );
+      }
+    });
+  }
+
+  addBlankToStartOfClass(val: CalendarModel[]) {
+    let startTimeArr = [];
+    let tempTimeArr = [];
+    let periodDuration = 0;
+    val.forEach((val, index) => {
+      if (tempTimeArr.indexOf(val.startTime) == -1) {
+        let startTime = val.startTime;
+        let startTimeInt = this.parseTimeToInt(startTime);
+
+        periodDuration = this.parseTimeToInt(val.periodDuration);
+        tempTimeArr.push(startTime);
+        startTimeArr.push({ startTime, blankPeriod: 0, startTimeInt });
+      }
+    });
+    let earliestStartTime = JSON.parse(JSON.stringify(startTimeArr));
+    earliestStartTime.reduce((a, b) => {
+      return a.startTimeInt > b.startTimeInt ? b : a;
+    });
+
+    earliestStartTime.sort((a, b) => a.startTimeInt - b.startTimeInt);
+    earliestStartTime.forEach((element, index) => {
+      element.blankPeriod = index;
+    });
+    console.log(earliestStartTime);
+
+    //add without considering period duration
+    //return;
+
+    this.convertBlankToSpecialPeriod(earliestStartTime, val);
+    console.log(this.tempSpecialPeriod);
+    console.log(startTimeArr);
+
+    console.log(earliestStartTime);
+    console.log('START TIME ARR !!');
+    console.log(startTimeArr);
+    //check throught all class start time
   }
 
   addTime(time1: number, time2: number) {
@@ -81,9 +183,24 @@ export class TimetablePreviewComponent implements OnInit {
     return Math.floor(min / 60) * 100 + (min % 60);
   }
 
-  addToTempSpecialPeriod(time, day, text) {
-    let specialPeriodDetails: tempSpecialPeriodModel = { time, day, text };
+  addToTempSpecialPeriod(time, day, text, color: string = '#F2B269') {
+    let specialPeriodDetails: tempSpecialPeriodModel = {
+      time,
+      day,
+      text,
+      color
+    };
+    if (color == null) {
+      delete specialPeriodDetails.color;
+    }
     this.tempSpecialPeriod.push(specialPeriodDetails);
+  }
+  checkForAssembly(assembly: AssemblyModel, day, color: string) {
+    if (assembly.startingAt.length > 0) {
+      let startTime = this.parseTimeToInt(assembly.startingAt);
+      this.addToTempTimeArr(startTime);
+      this.addToTempSpecialPeriod(startTime, day, assembly.name, color);
+    }
   }
   checkForBreaks(
     currentPeriod,
@@ -94,6 +211,9 @@ export class TimetablePreviewComponent implements OnInit {
     let breakDuration = 0;
     breaks.forEach((_break, index) => {
       if (_break.after === currentPeriod) {
+        // console.log(_break.after === currentPeriod);
+        // console.log(_break.after);
+        // console.log(currentPeriodEndTime);
         this.addToTempSpecialPeriod(currentPeriodEndTime, day, 'break');
 
         breakDuration = this.convertMinsToTime(
@@ -101,7 +221,8 @@ export class TimetablePreviewComponent implements OnInit {
         );
 
         let breakEndTime = this.addTime(currentPeriodEndTime, breakDuration);
-
+        // console.log('breakEndTime' + day);
+        // console.log(breakEndTime);
         this.addToTempTimeArr(breakEndTime);
         return breakDuration;
       }
@@ -115,12 +236,8 @@ export class TimetablePreviewComponent implements OnInit {
     let _m = m < 10 ? `0${m}` : `${m}`;
     return `${_h}:${_m}`;
   }
+
   setSpecialPeriod() {
-    // time: '9:45',
-    // text: 'break',
-    // color: '#F2B269',
-    // start: Day.mon,
-    // end: Day.sat
     let specialPeriodTimes = [];
     let tempArr2 = [];
     this.specialPeriods = [];
@@ -130,17 +247,28 @@ export class TimetablePreviewComponent implements OnInit {
         specialPeriodTimes.push(_sp.time);
       }
     });
+    // console.log(specialPeriodTimes);
     specialPeriodTimes.forEach(time => {
       let daysActive = [];
       let text = [];
+      let color = [];
       this.tempSpecialPeriod.forEach((_sp, index) => {
         if (_sp.time === time) {
           daysActive.push(_sp.day);
           text.push(_sp.text);
+          color.push(_sp.color);
         }
       });
-      let specialPeriod = this.parseSpecialPeriodObj(time, text[0], daysActive);
-      this.specialPeriods = [...this.specialPeriods, ...specialPeriod];
+      let specialPeriodAtTime = this.parseSpecialPeriodObj(
+        time,
+        text[0],
+        daysActive,
+        color[0]
+      );
+
+      console.log('specialPeriodAtTime');
+      console.log(specialPeriodAtTime);
+      this.specialPeriods = [...this.specialPeriods, ...specialPeriodAtTime];
 
       tempArr2.push({
         time,
@@ -150,7 +278,7 @@ export class TimetablePreviewComponent implements OnInit {
     });
   }
 
-  parseSpecialPeriodObj(time, text, days: string[]) {
+  parseSpecialPeriodObj(time, text, days: string[], color: string) {
     let res = [];
     let isNewPeriod = true;
     let parsedTime = this.formatTime(time);
@@ -165,7 +293,7 @@ export class TimetablePreviewComponent implements OnInit {
           text,
           start: day.toLowerCase(),
           end: day.toLowerCase(),
-          color: '#F2B269'
+          color
         };
         isNewPeriod = false;
       } else if (dayExistOnSpecialPeriod) {
@@ -185,10 +313,14 @@ export class TimetablePreviewComponent implements OnInit {
       let value = `${this.formatTime(time)}`;
       this.time.push({ value });
     });
+    if (this.periodDurationIsSet) {
+      this.time.splice(-1);
+    }
   }
 
   parseElValue(val: CalendarModel[]) {
     //set time,specialPeriod, model
+    this.tempTimeArr = [];
 
     val.forEach((dayData, index) => {
       let totalBreakTime = 0;
@@ -197,14 +329,14 @@ export class TimetablePreviewComponent implements OnInit {
         let firstPeriodStartTime;
 
         if (dayData.periods.length > 0) {
-          // console.log('parsing first period start' + dayData.startTime);
           firstPeriodStartTime = this.parseTimeToInt(dayData.startTime);
-
           this.addToTempTimeArr(firstPeriodStartTime);
         }
 
         //reseting model for this particular day
         this.model[dayData.day] = [];
+
+        this.checkForAssembly(dayData.assembly, dayData.day, '#69A9F2');
         dayData.periods.forEach((period, periodindex) => {
           let key = `${dayData.day}${periodindex}`;
           let value = period;
@@ -229,6 +361,9 @@ export class TimetablePreviewComponent implements OnInit {
             dayData.breaks
           );
           totalBreakTime += breakTime;
+
+          this.periodDurationIsSet =
+            this.parseTimeToInt(dayData.periodDuration) > 0;
         });
       }
     });
@@ -239,6 +374,13 @@ interface tempSpecialPeriodModel {
   time: string;
   text: string;
   day: string;
+  color: string;
+}
+
+interface AssemblyModel {
+  name: string;
+  startingAt: string;
+  duration: string;
 }
 interface BreakModel {
   firstBreak: string;
@@ -246,179 +388,3 @@ interface BreakModel {
   after: string;
   duration: string;
 }
-let testData: CalendarModel[] = [
-  {
-    day: 'Mon',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '30'
-      },
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '30'
-      }
-    ],
-    assembly: { name: 'assembly', startingAt: '08:30', duration: '' }
-  },
-  {
-    day: 'Tue',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '30'
-      },
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '30'
-      }
-    ],
-    assembly: { name: 'assembly', startingAt: '08:30', duration: '' }
-  },
-  {
-    day: 'Wed',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [],
-    assembly: { name: 'assembly', startingAt: '08:30', duration: '' }
-  },
-  {
-    day: 'Thu',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '30'
-      },
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '30'
-      }
-    ],
-    assembly: { name: 'assembly', startingAt: '08:30', duration: '' }
-  },
-  {
-    day: 'Fri',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '30'
-      },
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '30'
-      }
-    ],
-    assembly: { name: 'assembly', startingAt: '08:30', duration: '' }
-  },
-  ,
-  {
-    day: 'Sat',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '30'
-      },
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '30'
-      }
-    ],
-    assembly: { name: 'assembly', startingAt: '08:30', duration: '' }
-  }
-];
-
-const specialPeriods2 = [
-  //time has to be exactly the same as the time declared above as the main comp determines placing by matching the strings
-  //color MUST be hex
-  {
-    //for empty block
-    time: '8:00',
-    text: '',
-    start: Day.wed,
-    end: Day.wed
-  },
-  {
-    time: '9:45',
-    text: 'break',
-    color: '#F2B269',
-    start: Day.mon,
-    end: Day.sat
-  },
-  {
-    time: '7:45',
-    text: 'Assembly',
-    color: '#69a9f2',
-    start: Day.mon,
-    end: Day.sat
-  },
-  {
-    time: '11:45',
-    text: 'break',
-    color: '#F2B269',
-    start: Day.mon,
-    end: Day.mon
-  },
-  {
-    time: '11:45',
-    text: 'break',
-    color: '#F2B269',
-    start: Day.thu,
-    end: Day.sat
-  },
-  {
-    time: '10:00',
-    text: 'break',
-    color: '#F2B269',
-    start: Day.wed,
-    end: Day.wed
-  },
-  {
-    time: '11:00',
-    text: 'break',
-    color: '#F2B269',
-    start: Day.wed,
-    end: Day.wed
-  }
-];
