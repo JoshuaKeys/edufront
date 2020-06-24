@@ -117,7 +117,8 @@ export const reassignClass = createAction(
     props<{class: ClassModel, classesGroup: ClassGroupModel}>()
 );
 export const addClassesGroup = createAction(
-    '[TeachingDayForClassQuestion] addClassesGroup'
+    '[TeachingDayForClassQuestion] addClassesGroup',
+    props<{generatedGroupId: string}>()
 );
 export const setNumberOfPeriods = createAction(
     '[NumberOfPeriodsComponent] setNumberOfPeriods',

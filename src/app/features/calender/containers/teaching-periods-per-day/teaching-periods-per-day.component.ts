@@ -6,13 +6,12 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { of, Observable } from 'rxjs';
-import { selectClassesAndGroups, selectCalendar, selectTeaching, selectAllClasses } from '../../ngrx/selectors';
+import { selectClassesAndGroups, selectTeaching, selectAllClasses } from '../../ngrx/selectors';
 import { map } from 'rxjs/operators';
-import { CalendarModel } from '../../models/calendar.model';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest } from '../../ngrx/actions/calendar.actions';
+import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest, addClassesGroup } from '../../ngrx/actions/calendar.actions';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-
+import { v4 as uuid44} from 'uuid';
 @Component({
   selector: 'edu-teaching-periods-per-day',
   templateUrl: './teaching-periods-per-day.component.html',
@@ -57,6 +56,10 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   }
   asObservable(item) {
     return of(item);
+  }
+  addGroup() {
+    // alert('hello')
+    this.store.dispatch(addClassesGroup({generatedGroupId: uuid44()}))
   }
   selectPeriod($event: SelectedPeriodModel) {
     this.store.dispatch(selectTeachingDay($event))

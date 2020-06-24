@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
 import { TermsAndDates } from '../../models/terms-and-date.model'
-import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, updateSelectedTeachingDays, assignPeriodsToTeachingDates } from '../actions/calendar.actions';
+import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, updateSelectedTeachingDays, assignPeriodsToTeachingDates, addClassesGroup } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { clearClassOffGroups } from '../../utilities';
@@ -136,15 +136,40 @@ export const previewReducer = createReducer(initialState,
             }
         }
     }),
+    on(addClassesGroup, (state, action) => {
+        const prevGroupLength = state.teachingDays.classesAndGroupItems.length;
+        const groupName = `Default-${prevGroupLength + 1}`;
+        const classes = [];
+        console.log(state.teachingDays.classesAndGroupItems);
+        const teachingDays: TeachingDay[] = [
+          { day: 'Mon', selected: false },
+          { day: 'Tue', selected: false },
+          { day: 'Wed', selected: false },
+          { day: 'Thu', selected: false },
+          { day: 'Fri', selected: false },
+          { day: 'Sat', selected: false },
+          { day: 'Sun', selected: false }
+        ];
+        const newGroupObj: ClassGroupModel = {
+            id: action.generatedGroupId,
+            groupName,
+            classes,
+            teachingDays
+        }
+        const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+        stateCopy.teachingDays.classesAndGroupItems.push(newGroupObj);
+        return stateCopy;
+      }),
     on(reassignClass, (state, action) => {
         const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
         const groupsState = stateCopy.teachingDays.classesAndGroupItems;
-
+        console.log(action.classesGroup, groupsState)
         const groupIdx = groupsState.findIndex(groupItem => groupItem.id === action.classesGroup.id);
         const clickedClassIdx = groupsState[groupIdx].classes.findIndex(classItem => classItem.id === action.class.id);
         if(clickedClassIdx > -1) {
             groupsState[groupIdx].classes.splice(clickedClassIdx, 1)
             if(groupsState[groupIdx].classes.length === 0) {
+                console.log(groupsState);
                 groupsState.splice(groupIdx, 1)
             }
         }else {

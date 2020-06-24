@@ -36,9 +36,9 @@
           <img src="assets/32pxplusblue.svg" />
         </button>
             </div>
-            <div class="vacations-and-dates__btn-container button--bottom" *ngIf="vacationForm && vacationForm.valid">
+            <div class="vacations-and-dates__btn-container button--bottom" *ngIf="vacationForm">
 
-                <button type="button" ButtonType="basic" class="vacations-and-dates__continue-btn" (click)="goNext()">
+                <button type="button" [disabled]="vacationForm.invalid" ButtonType="basic" class="vacations-and-dates__continue-btn" (click)="goNext()">
           Continue
         </button>
             </div>

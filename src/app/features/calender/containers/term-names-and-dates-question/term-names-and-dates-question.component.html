@@ -1,41 +1,30 @@
 <div class="main">
-  <h1 class="header">What are the term names and dates?</h1>
-  <p class="desc">
-    Note: we will assume that all days between terms are considered holidays
-  </p>
+    <h1 class="header">What are the term names and dates?</h1>
+    <p class="desc">
+        Note: we will assume that all days between terms are considered holidays
+    </p>
 
-  <form
-    *ngIf="termsAndDatesForm"
-    [formGroup]="termsAndDatesForm"
-    class="pos-relative"
-  >
-    <div
-      class="scrollable-content"
-      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
-      #scrollableEl
-    >
-      <div
-        formArrayName="termsAndDates"
-        *ngFor="
+    <form *ngIf="termsAndDatesForm" [formGroup]="termsAndDatesForm" class="pos-relative">
+        <div class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" #scrollableEl>
+            <div formArrayName="termsAndDates" *ngFor="
           let schoolTerm of (calendarData | async).termsAndDates;
           let i = index
-        "
-      >
-        <div [formGroupName]="i" class="terms-and-dates__item">
-          <edu-input formControlName="termName" alignment="center"> </edu-input>
-          <edu-datepicker formControlName="startDate" alignment="center">
-            <span class="edu-label">Starts from</span>
-            <div class="edu-suffix" InputAffix>
-              <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-            </div>
-          </edu-datepicker>
-          <edu-datepicker formControlName="endDate" alignment="center">
-            <span class="edu-label">Ends on</span>
-            <div class="edu-suffix" InputAffix>
-              <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-            </div>
-          </edu-datepicker>
-          <!-- 
+        ">
+                <div [formGroupName]="i" class="terms-and-dates__item">
+                    <edu-input formControlName="termName" alignment="center"> </edu-input>
+                    <edu-datepicker formControlName="startDate" alignment="center">
+                        <span class="edu-label">Starts from</span>
+                        <div class="edu-suffix" InputAffix>
+                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                        </div>
+                    </edu-datepicker>
+                    <edu-datepicker formControlName="endDate" alignment="center">
+                        <span class="edu-label">Ends on</span>
+                        <div class="edu-suffix" InputAffix>
+                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                        </div>
+                    </edu-datepicker>
+                    <!-- 
           <div
             class="terms-and-dates__errors"
             *ngIf="
@@ -50,21 +39,14 @@
               {{ error }}
             </span>
           </div> -->
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </form>
+    </form>
 
-  <div
-    class="terms-and-dates__btn-container  button--bottom"
-    *ngIf="termsAndDatesForm && termsAndDatesForm.valid"
-  >
-    <button
-      ButtonType="basic"
-      class="terms-and-dates__continue-btn   "
-      (click)="goNext()"
-    >
+    <div class="terms-and-dates__btn-container  button--bottom" *ngIf="termsAndDatesForm">
+        <button ButtonType="basic" [disabled]="termsAndDatesForm.invalid" class="terms-and-dates__continue-btn   " (click)="goNext()">
       Continue
     </button>
-  </div>
+    </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { fetchClassesAndGroups, toggleClassesGroupActive, getAllClassesRequest, reassignClass } from '../../ngrx/actions/calendar.actions';
+import { fetchClassesAndGroups, toggleClassesGroupActive, getAllClassesRequest, reassignClass, addClassesGroup } from '../../ngrx/actions/calendar.actions';
 import { Observable, of } from 'rxjs';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { selectClassesAndGroups, selectTeachingDays, selectAllClasses } from '../../ngrx/selectors';
@@ -9,6 +9,7 @@ import { TeachingDay } from '../../models/teaching-day.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { v4 as uuid44} from 'uuid';
 
 @Component({
   selector: 'edu-teaching-day-for-class-question',
@@ -50,7 +51,8 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
     this.store.dispatch(toggleClassesGroupActive({day, classesGroup}))
   }
   addGroup() {
-    alert('hello')
+    // alert('hello')
+    this.store.dispatch(addClassesGroup({generatedGroupId: uuid44()}))
   }
   asObservable(item) {
     return of(item);
