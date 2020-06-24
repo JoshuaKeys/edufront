@@ -43,29 +43,48 @@
               </span>
             </edu-input>
 
-            <edu-select
+            <edu-icon-select
               ><span class="edu-label">
                 Day
               </span>
-              <edu-option
-                *ngFor="let item of timeArr; let i = index"
-                OptionValue="i"
-              >
-                {{ i + 1 }} mins
-              </edu-option>
-            </edu-select>
+              <edu-popover>
+                <div class="badges">
+                  <edu-option
+                    *ngFor="let day of dayArr; let i = index"
+                    OptionValue="day"
+                    class="badge"
+                  >
+                    {{ day }}
+                  </edu-option>
+                </div>
+                <edu-tick-button
+                  [ClosePopover]="popoverState"
+                  (click)="closePopover()"
+                ></edu-tick-button>
+              </edu-popover>
+            </edu-icon-select>
 
-            <edu-select
+            <edu-icon-select
               ><span class="edu-label">
                 After
               </span>
-              <edu-option
-                *ngFor="let item of timeArr; let i = index"
-                OptionValue="i"
-              >
-                {{ i + 1 }} mins
-              </edu-option>
-            </edu-select>
+              <edu-popover>
+                <div class="badges">
+                  <edu-option
+                    *ngFor="let period of periodArr; let i = index"
+                    OptionValue="period"
+                    class="badge"
+                  >
+                    {{ period }}
+                  </edu-option>
+                </div>
+                <edu-tick-button
+                  [ClosePopover]="popoverState"
+                  (click)="closePopover()"
+                ></edu-tick-button>
+              </edu-popover>
+            </edu-icon-select>
+
             <edu-input>
               <span class="edu-label">
                 Duration

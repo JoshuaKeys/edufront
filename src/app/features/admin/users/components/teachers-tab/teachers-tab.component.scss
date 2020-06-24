@@ -1,0 +1,154 @@
+@import 'src/assets/styles/mixins/alignment';
+@import 'src/assets/styles/colors';
+
+:host {
+  @include displayFlex(flex-start, flex-start, column);
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+.header {
+  height: 56px;
+  width: 100%;
+  @include displayFlex(flex-start, center);
+  border-bottom: 1px solid #e6e9f3;
+  flex-shrink: 0;
+  padding: 8px 20px;
+}
+.main {
+  @include displayFlex(flex-start, stretch, row);
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  //   @include displayFlex(flex-start, flex-start, column);
+  width: 100%;
+  padding: 20px;
+  flex-grow: 1;
+  height: 100%;
+  max-height: calc(100vh - 126px);
+  overflow-y: auto;
+  &.sidepanel-active {
+    margin-right: 485px;
+  }
+}
+.aside {
+  flex-shrink: 0;
+  border-left: 1px solid #e6e9f3;
+  width: 238px;
+  overflow-y: auto;
+  max-height: calc(100vh - 126px);
+  padding: 20px 16px;
+  &.sidepanel-active {
+    width: 0px;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  .download-excel {
+    padding: 0px;
+    img {
+      margin-right: 10px;
+    }
+    font: 500 12px/24px Raleway;
+  }
+}
+
+//round buttons
+.button {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-right: 13px;
+  position: relative;
+  border-width: 1px;
+  &.active {
+    border-color: $blue;
+    background-color: $blue;
+  }
+  &--add {
+    border-color: $blue;
+  }
+  &--add.active {
+    background: $blue;
+    img {
+      content: url('/assets/user-settings/top-nav_plus-white.svg');
+    }
+  }
+  &--sort > img {
+    width: 16px;
+    height: 16px;
+    @include absoluteCenter();
+  }
+}
+
+//for search
+.search {
+  &__wrapper.sidepanel-active {
+    margin-right: 470px;
+  }
+  &__wrapper {
+    border-radius: 100px;
+    background: #fbfbfc;
+    width: 100%;
+    margin-right: 222px;
+    height: 40px;
+    position: relative;
+    @include displayFlex(flex-start);
+  }
+  &__wrapper:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url('/assets/user-settings/search.svg') no-repeat no-repeat
+      center center;
+    background-size: contain;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &__input {
+    background: transparent;
+    border: 0px;
+    font: 400 14px/22px Raleway;
+    color: $ash;
+    width: calc(100% - 50px);
+    margin-left: 34px;
+    text-overflow: ellipsis;
+
+    // @include absoluteCenter();
+    &:focus {
+      outline: none;
+    }
+  }
+  &__label {
+    font: 400 14px/22px Raleway;
+    color: $ash;
+    @include absoluteCenter();
+  }
+}
+
+.sidePanel {
+  border-left: 1px solid #e6e9f3;
+  position: absolute;
+  //   transform: translateX(100%);
+  right: 0;
+  overflow: hidden;
+  opacity: 0;
+  width: 0px;
+  height: 100%;
+  &.active {
+    opacity: 1;
+    width: 480px;
+    transform: unset;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  z-index: -1;
+}

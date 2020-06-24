@@ -9,26 +9,35 @@
 <input type="text" name="" id="" />
 
 <form [formGroup]="loginForm" (ngSubmit)="formSubmit()">
-  <edu-select
+  <edu-icon-select
     [(ngModel)]="modelTest"
     formControlName="f1"
     (onValueChange)="updateValue($event)"
+    (edu-change)="log($event)"
+    (edu-keydown)="log($event)"
   >
-    <div class="edu-select__prefix" InputAffix>
+    <div class=" prefix" InputAffix>
       <img src="assets/user-settings/modal_india.svg" alt="" srcset="" />
     </div>
     <span class="edu-label">
       numbers <span class="ashcolor optional">123</span>
     </span>
-    <edu-option OptionValue="1123123"> o89798ne </edu-option>
-    <edu-option OptionValue="2"> two </edu-option>
-    <edu-option OptionValue="3"> three </edu-option>
-    <edu-option OptionValue="4"> four </edu-option>
-    <edu-option OptionValue="5"> five </edu-option>
-    <edu-option OptionValue="6"> six </edu-option>
-  </edu-select>
+    <edu-popover>
+      <edu-option OptionValue="1123123"> o89798ne </edu-option>
+      <edu-option OptionValue="2">two </edu-option>
+      <edu-option OptionValue="3"> three </edu-option>
+      <edu-option OptionValue="4"> four </edu-option>
+      <edu-option OptionValue="5"> five </edu-option>
+      <edu-option OptionValue="6"> six </edu-option>
+    </edu-popover>
+  </edu-icon-select>
   <br />
-  <edu-select formControlName="f2" (onValueChange)="updateValue($event)">
+  <edu-select
+    formControlName="f2"
+    (onValueChange)="updateValue($event)"
+    (edu-change)="log($event)"
+    (edu-keydown)="log($event)"
+  >
     <span class="edu-label">
       numbers <span class="ashcolor optional">123</span>
     </span>

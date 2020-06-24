@@ -13,9 +13,9 @@ import {
   QueryList
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
-import { SelectService } from '../select.service';
+import { SelectService } from '../../_shared/select.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionComponent } from '../option/option.component';
+import { OptionComponent } from '../../option/option.component';
 import { filter } from 'rxjs/operators';
 // import { OptionValueDirective } from "../option-value.directive"
 
@@ -37,6 +37,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Output() onValueChange = new EventEmitter<any>();
   @Input('alignment') alignment = 'center'; //left right center
   @Input('disabled') disabled = false;
+  @Input('labelIsPlaceholder') labelIsPlaceholder = false;
+  @Input('hideChevron') hideChevron = false;
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
 
@@ -53,6 +55,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   UP_ARROW_KEY_CODE = 38;
   ESCAPE_KEY_CODE = 27;
   TAB_KEY_CODE = 9;
+
+  @Output('edu-keydown') elkeydown = new EventEmitter();
+  @Output('edu-change') elchange = new EventEmitter();
 
   constructor(
     private selectService: SelectService,
@@ -95,6 +100,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         this.activeOptionIndex = optionComp.indexInParent;
         // console.log(this.activeOptionIndex)
         this.onValueChange.emit(this.value);
+        this.elchange.emit(this.value);
         this.onChange(this.value);
         this.cd.markForCheck();
       });
@@ -161,6 +167,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   keyboardEvent(keyCode, shiftPressed, event) {
+    this.elkeydown.emit(event);
+
     let newIndex;
     switch (keyCode) {
       case this.ENTER_KEY_CODE:

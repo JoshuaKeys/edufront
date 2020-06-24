@@ -17,14 +17,19 @@ export class P98Component implements OnInit {
   ngOnInit(): void {}
 
   timeArr = Array(60).fill('');
-
+  dayArr = ['All', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  periodArr = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
   popoverArr = Array(12).fill('');
+  popoverState = false;
   classArr = [
     {
       break: [0]
     }
   ];
 
+  closePopover() {
+    this.popoverState = !this.popoverState;
+  }
   addBreakArr(index) {
     this.classArr[index].break.push(1);
   }

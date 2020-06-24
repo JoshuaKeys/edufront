@@ -29,7 +29,8 @@
       class="{{ alignment }}"
       [ngClass]="{
         'label--active': isLabelActive(),
-        'label--focus': inputElIsFocus
+        'label--focus': inputElIsFocus,
+        labelIsPlaceholder: labelIsPlaceholder
       }"
       class="form__label "
       [for]="elementId"
@@ -41,13 +42,15 @@
 
   <div class="prefix">
     <ng-content select=".edu-input__prefix"></ng-content>
+    <ng-content select=".prefix"></ng-content>
   </div>
 
   <div class="suffix">
     <ng-content select=".edu-input__suffix"></ng-content>
+    <ng-content select=".suffix"></ng-content>
   </div>
 </div>
 
 <div #validator class="validator">
-  <ng-content select="[Validator]"></ng-content>
+  <ng-content select="[validator]"></ng-content>
 </div>

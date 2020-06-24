@@ -4,34 +4,9 @@
   [model]="model"
   specialPeriodHeight="2"
 >
-  <!-- template used to to populate timetable -->
   <ng-template #periodTemplate let-key="key" let-value="value">
     <div class="templateContainer ">
-      <!-- contentOnChange = {{key}} is requried to identify block in the model -->
-      <!-- template must output a onChange event to update the model object -->
-      <!-- <edu-cb
-        *ngFor="let item of getEmptyArr(value)"
-        TimetableKey="{{ key }}"
-        [initialValue]="value"
-        [id]="key"
-      ></edu-cb> -->
-
       {{ value }}
-
-      <!-- <div class="drop-zone">
-        <div class="chip chip--subject">
-          <img
-            class="chip__img"
-            src="../../../assets/pill-blue-icon.svg"
-            alt=""
-          />
-          <span class="chip__text">General Science</span>
-        </div>
-
-        <div class="chip chip--pink">
-          <span class="chip__desc">Claudia Bradley</span>
-        </div>
-      </div> -->
     </div>
   </ng-template>
 </edu-timetable>

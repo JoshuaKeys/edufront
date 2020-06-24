@@ -23,13 +23,16 @@
     border-radius: 8px;
     border: 1px solid $blue;
   }
-  .input-wrapper-border--active.input-wrapper-border--error.wrapper {
-    background-color: rgba($red, 0.1);
+  .wrapper.input-wrapper-border--error.wrapper {
+    &.input-wrapper-border--active {
+      background-color: rgba($red, 0.1);
+    }
     &:hover {
       background-color: rgba($red, 0.1);
     }
   }
   .input-wrapper-border--error.wrapper {
+    border-radius: 8px;
     border-color: $red !important;
 
     label {
@@ -61,6 +64,7 @@ input:focus {
 }
 
 .wrapper {
+  min-height: inherit;
   padding: 0 12px;
   border-color: #e6e9f3;
   margin: auto;
@@ -113,6 +117,11 @@ label {
     align-self: flex-end;
   }
 }
+
+//form wrapper overwrite
+.labelIsPlaceholder.label--active {
+  display: none;
+}
 .label--active {
   .label__shrink-wrapper {
     font-size: 0.85em;
@@ -134,6 +143,7 @@ label {
 
 .label-input__wrapper {
   //main wrapper for both input and label
+
   position: relative;
   flex-grow: 1;
   @include displayFlex(center, center, column);

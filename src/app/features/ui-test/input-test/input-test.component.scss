@@ -1,5 +1,7 @@
-.f1 ::ng-deep {
-  height: 54px;
+.f1 ::ng-deep,
+.f2 ::ng-deep {
+  min-height: 54px;
+  height: auto;
   //   background: green;
   input {
     font-size: 20px;

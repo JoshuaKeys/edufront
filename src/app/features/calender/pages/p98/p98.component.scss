@@ -74,6 +74,7 @@ div.group--row.break > * {
 }
 
 edu-input,
+edu-icon-select,
 edu-select {
   height: 54px;
   width: 160px;
@@ -81,6 +82,39 @@ edu-select {
   &::ng-deep input,
   &::ng-deep label {
     font-size: 16px;
+  }
+}
+edu-icon-select edu-popover {
+  width: 160px;
+  min-height: 172px;
+  @include displayFlex(flex-start, flex-start);
+  display: inline-flex;
+  flex-wrap: wrap;
+  edu-option ::ng-deep {
+    display: inline-block;
+    .option__wrapper {
+      padding: 0;
+    }
+  }
+  .badges {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 126px;
+    margin: 22px auto;
+  }
+  .badge {
+    display: block;
+    margin: 5px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #e6e9f3;
+    @include displayFlex();
+    font: 500 10px/20px Roboto;
+  }
+  .badge.selected {
+    background: $blue;
+    color: white;
+    border-color: $blue;
   }
 }
 

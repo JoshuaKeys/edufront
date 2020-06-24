@@ -1,6 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from  '@angular/forms';
- 
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'edu-select-test',
@@ -9,51 +13,44 @@ import { FormBuilder, FormGroup, Validators } from  '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectTestComponent implements OnInit {
-
-  constructor(private formBuilder:FormBuilder, private cd : ChangeDetectorRef) { }
- 
+  constructor(
+    private formBuilder: FormBuilder,
+    private cd: ChangeDetectorRef
+  ) {}
 
   modelTest;
   ngOnInit(): void {
-
-    this.loginForm  =  this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       f1: ['', Validators.required],
       f2: [4, Validators.required]
-   
     });
- 
-
   }
   f1model;
 
-  get formControls() { return this.loginForm.controls; }
+  get formControls() {
+    return this.loginForm.controls;
+  }
   loginForm: FormGroup;
-  isSubmitted  =  false;
+  isSubmitted = false;
   updatedValue;
 
+  log(param) {
+    console.log(param);
+  }
 
-
-
-  
-  toggleF1(){
-    if(this.formControls.f1.disabled){
+  toggleF1() {
+    if (this.formControls.f1.disabled) {
       this.formControls.f1.enable();
-    }else{
+    } else {
       this.formControls.f1.disable();
     }
   }
 
-  formSubmit(){
-    
+  formSubmit() {
     console.log(this.formControls);
   }
 
-  updateValue(val){
-    
-      this.updatedValue = val;
-    
- 
+  updateValue(val) {
+    this.updatedValue = val;
   }
-
- 
 }

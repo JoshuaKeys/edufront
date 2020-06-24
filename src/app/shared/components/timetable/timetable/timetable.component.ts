@@ -109,6 +109,10 @@ export class TimetableComponent implements OnInit {
 
   initSpecialPeriods() {
     //rework this
+    console.log('initspecialperiods');
+    console.log(this.specialPeriods);
+    console.log(this.days);
+    let lowerCaseDays = this.days.map(day => day.toLowerCase());
     this.specialPeriods.forEach((_sp, i) => {
       // _sp.classes = [];
 
@@ -136,14 +140,15 @@ export class TimetableComponent implements OnInit {
           `r${this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf)}`
         );
       }
-
+      console.log(_sp.start);
+      console.log(this.days.indexOf(_sp.start));
       this.SpecialPeriodClasses[i] = this.assignToClassArr(
         this.SpecialPeriodClasses[i],
-        `c${this.days.indexOf(_sp.start) + 1}`
+        `c${lowerCaseDays.indexOf(_sp.start) + 1}`
       );
       this.SpecialPeriodClasses[i] = this.assignToClassArr(
         this.SpecialPeriodClasses[i],
-        `ce${this.days.indexOf(_sp.end) + 1}`
+        `ce${lowerCaseDays.indexOf(_sp.end) + 1}`
       );
 
       this.setSpecialPeriodColor(_sp, i);

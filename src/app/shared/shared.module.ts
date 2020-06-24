@@ -20,8 +20,9 @@ import { PhoneIconFieldComponent } from './components/phone-icon-field/phone-ico
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
 
-import { datePickerModule } from './components/datepicker/datepicker.module';
-import { Datepicker2Module } from './components/datepicker2/datepicker2.module';
+// import { datePickerModule } from './components/datepicker/datepicker.module';
+// import { datePickerModule } from './components/form-components/datepicker/datepicker.module';
+// import { Datepicker2Module } from './components/form-components/datepicker2/datepicker2.module';
 
 import { TimetableModule } from './components/timetable/timetable.module';
 import { SubjectsService } from './services/subjects.service';
@@ -30,8 +31,8 @@ import { CountryFieldComponent } from './components/country-field/country-field.
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
 import { ButtonComponent } from './components/button/button.component';
-import { PopoverComponent } from './components/popover/popover.component';
-import { PopoverOptionDirective } from './components/popover/popover-option.directive';
+// import { PopoverComponent } from './components/popover/popover.component';
+// import { PopoverOptionDirective } from './components/popover/popover-option.directive';
 
 import { FormComponentsModule } from './components/form-components/form-component.module';
 import { SelectModule } from './components/form-components/select/select.module';
@@ -40,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadV3Component } from './components/image-upload-v3/image-upload-v3.component';
 import { ImgAuthPipe } from './pipes/img-auth.pipe';
 import { PreviewAnimateDirective } from './directives/preview-animate.directive';
+import { StopEventBubbleDirective } from './directives/stop-event-bubble.directive';
 
 @NgModule({
   declarations: [
@@ -62,11 +64,12 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     ImgUploadV2Component,
     PhoneFieldComponent,
     ButtonComponent,
-    PopoverComponent,
-    PopoverOptionDirective,
+    // PopoverComponent,
+    // PopoverOptionDirective,
     StudentsFormComponent,
     ImgAuthPipe,
-    PreviewAnimateDirective
+    PreviewAnimateDirective,
+    StopEventBubbleDirective
   ],
   imports: [
     ImageCropperModule,
@@ -74,23 +77,21 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    datePickerModule,
+    // datePickerModule,
     SelectModule,
     TimetableModule,
-    RouterModule,
-    Datepicker2Module
+    RouterModule
   ],
   exports: [
-    Datepicker2Module,
     PreviewAnimateDirective,
     FormComponentsModule,
-    PopoverOptionDirective,
+    // PopoverOptionDirective,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
     HeaderNavComponent,
     ButtonComponent,
-    datePickerModule,
+    // datePickerModule,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
@@ -106,9 +107,10 @@ import { PreviewAnimateDirective } from './directives/preview-animate.directive'
     ImgUploadV2Component,
     CountryFieldComponent,
     PhoneFieldComponent,
-    PopoverComponent,
+    // PopoverComponent,
     StudentsFormComponent,
-    ImgAuthPipe
+    ImgAuthPipe,
+    StopEventBubbleDirective
   ],
   providers: [ClassesService, SubjectsService]
 })
