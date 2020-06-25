@@ -1,6 +1,30 @@
 @import 'src/assets/styles/mixins/alignment';
 @import 'src/assets/styles/colors';
 
+.hideBtns ng-image-slider ::ng-deep {
+  .next.icons.next-icon,
+  .prev.icons.prev-icon {
+    display: none;
+  }
+}
+.leftDisabled ng-image-slider ::ng-deep .prev.icons.prev-icon {
+  background-color: #e6e9f3 !important;
+  border-color: #e6e9f3 !important;
+
+  img {
+    content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
+  }
+}
+
+.rightDisabled ng-image-slider ::ng-deep .next.icons.next-icon {
+  background-color: #e6e9f3 !important;
+  border-color: #e6e9f3 !important;
+
+  img {
+    content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
+  }
+}
+
 :host {
   position: relative;
   display: block;
@@ -40,6 +64,16 @@
       top: 50%;
       user-select: none;
       cursor: pointer;
+
+      &.disable {
+        opacity: 1;
+        // background-color: #e6e9f3 !important;
+        // border-color: #e6e9f3 !important;
+
+        // img {
+        //   content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
+        // }
+      }
 
       img {
         @include absoluteCenter();

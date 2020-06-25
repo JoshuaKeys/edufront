@@ -10,7 +10,7 @@ export class SliderTestComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-  testArr = new Array(5);
+  testArr = new Array(3);
   log(param) {
     console.log(param);
   }

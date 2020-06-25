@@ -1,13 +1,25 @@
-<ng-image-slider
-  [images]="imageObject"
-  [imageSize]="imageSize"
-  [imagePopup]="imagePopup"
-  arrowKeyMove="true"
-  [animationSpeed]="animationSpeed"
-  [infinite]="infinite"
-  showArrow="false"
-  (arrowClick)="onArrowClickEvent($event)"
-  #nav
-></ng-image-slider>
+<div
+  [ngClass]="{
+    leftDisabled: leftDisabled,
+    rightDisabled: rightDisabled,
+    hideBtns: hideBtns
+  }"
+>
+  <ng-image-slider
+    [images]="imageObject"
+    [imageSize]="imageSize"
+    [imagePopup]="imagePopup"
+    arrowKeyMove="true"
+    [animationSpeed]="animationSpeed"
+    [infinite]="infinite"
+    showArrow="false"
+    (arrowClick)="onArrowClickEvent()"
+    #nav
+  ></ng-image-slider>
 
-<ng-content select="[sliderChildren]"></ng-content>
+  <ng-content select="[sliderChildren]"></ng-content>
+</div>
+
+<!-- leftDisabled: {{ leftDisabled }} rightDisabled: {{ rightDisabled }} hideBtns{{
+  hideBtns
+}} -->

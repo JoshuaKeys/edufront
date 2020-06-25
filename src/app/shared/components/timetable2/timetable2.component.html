@@ -1,0 +1,90 @@
+<div class="calendar">
+  <div class="empty__placeholder r0 c0"></div>
+  <div
+    [ngClass]="timeClasses[i]"
+    [ngStyle]="timeStyles[i]"
+    class="time"
+    *ngFor="let t of time; index as i"
+  >
+    {{ t.value }}
+  </div>
+  <div class="day r0 c{{ i + 1 }}" *ngFor="let day of days; index as i">
+    {{ day }}
+  </div>
+
+  <div
+    class="special-period"
+    [ngClass]="SpecialPeriodClasses[i]"
+    [ngStyle]="SpecialPeriodStyles[i]"
+    *ngFor="let specialPeriod of specialPeriods; index as i"
+  >
+    {{ specialPeriod.text }}
+  </div>
+
+  <!-- defining lesson for mon - sun -->
+
+  <ng-container *ngFor="let day of days; index as i">
+    <div
+      ngClass="c{{ i + 1 }}"
+      class=" dual-row"
+      *ngFor="let period of model[day]"
+    >
+      <ng-container
+        *ngTemplateOutlet="
+          periodTemplate;
+          context: { key: period.key, value: period.value, onChange: onChange }
+        "
+      >
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- <div class="c2 dual-row" *ngFor="let tPeriod of model.tue"> 
+        <ng-container
+        (onTemplateChange) = "templateOnChangeEvent()"
+        *ngIf="periodTemplate"
+        [ngTemplateOutlet]="periodTemplate"
+         >
+        </ng-container> 
+    </div>
+    <div class="c3 dual-row" *ngFor="let wPeriod of model.wed"> 
+        <ng-container
+        (onTemplateChange) = "templateOnChangeEvent()"
+        *ngIf="periodTemplate"
+        [ngTemplateOutlet]="periodTemplate"
+         >
+        </ng-container>
+    </div>
+    <div class="c4 dual-row" *ngFor="let thPeriod of model.thu"> 
+        <ng-container
+        (onTemplateChange) = "templateOnChangeEvent()"
+        *ngIf="periodTemplate"
+        [ngTemplateOutlet]="periodTemplate"
+         >
+        </ng-container>
+    </div>
+    <div class="c5 dual-row" *ngFor="let fPeriod of model.fri"> 
+        <ng-container
+        (onTemplateChange) = "templateOnChangeEvent()"
+        *ngIf="periodTemplate"
+        [ngTemplateOutlet]="periodTemplate"
+         >
+        </ng-container>
+    </div>
+    <div class="c6 dual-row" *ngFor="let saPeriod of model.sat"> 
+        <ng-container
+        (onTemplateChange) = "templateOnChangeEvent()"
+        *ngIf="periodTemplate"
+        [ngTemplateOutlet]="periodTemplate"
+         >
+        </ng-container>
+    </div>
+    <div class="c7 dual-row" *ngFor="let suPeriod of model.sun"> 
+        <ng-container
+        (onTemplateChange) = "templateOnChangeEvent()"
+        *ngIf="periodTemplate"
+        [ngTemplateOutlet]="periodTemplate"
+         >
+        </ng-container>
+    </div> -->
+</div>
