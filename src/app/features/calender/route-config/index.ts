@@ -48,7 +48,7 @@ export const calenderNavigation = {
   },
   'teaching-periods-per-day': {
     previous: 'number-of-periods',
-    next: ''
+    next: null //edited this
   }
 };
 

@@ -7,10 +7,13 @@ import {
   Renderer2,
   AfterViewInit,
   ContentChildren,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef,
+  ApplicationRef
 } from '@angular/core';
 import { SliderChildrenDirective } from './slider-children.directive';
 import { NgImageSliderComponent } from 'ng-image-slider';
+import { toggleClassInSubject } from 'src/app/features/staffs/ngrx/actions';
 
 @Component({
   selector: 'edu-image-slider',
@@ -19,17 +22,37 @@ import { NgImageSliderComponent } from 'ng-image-slider';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageSliderComponent implements OnInit, AfterViewInit {
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private appRef: ApplicationRef
+  ) {}
   @Input() imagePopup = false;
   @Input() infinite = false;
   @Input() animationSpeed = 0.3;
-
+  afterViewInit = false;
   ngOnInit(): void {}
   ngAfterViewInit() {
-    this.injectBtnImg();
-    console.log('ngContentEls');
-    console.log(this.ngContentEls);
-    this.injectNgContent();
+    this.ngContentEls.forEach((element: SliderChildrenDirective) => {
+      element.onInit.subscribe(() => {
+        console.log('child created');
+      });
+    });
+    // if (!this.afterViewInit) {
+    // this.populateImgObj(this.ngContentEls.length);
+    // console.log('ngContentEls' + this.ngContentEls.length);
+    // console.log(this.ngContentEls);
+    // console.log(this.imageObject);
+    // this.cd.markForCheck();
+    // this.appRef.tick();
+    // this.afterViewInit = true;
+    // setTimeout(() => {
+    // this.injectBtnImg();
+    // this.injectNgContent();
+    // }, 100);
+
+    // }
   }
   imageSize = { width: '400px', height: '300px', space: 2 };
   @ViewChild('nav') slider: NgImageSliderComponent;
@@ -48,6 +71,14 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
 
     console.log(next_el);
     console.log(next_el.childNodes[0]);
+  }
+
+  populateImgObj(lengthOfObj) {
+    this.imageObject = [];
+    let tempImage = this.placeholderImageTemplate;
+    for (let i = 0; i < lengthOfObj + 1; i++) {
+      this.imageObject.push(this.placeholderImageTemplate);
+    }
   }
   onArrowClickEvent(event) {
     console.log(event);
@@ -71,49 +102,10 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
     console.log(containers);
     // this.renderer.
   }
-  imageObject: Array<object> = [
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of image1'
-      // title: 'title of image'
-    },
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of images2'
-      // title: 'title of image'
-    },
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of image3'
-      // title: 'title of image'
-    },
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of image4'
-      // title: 'title of image'
-    },
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of image5'
-      // title: 'title of image'
-    },
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of image6'
-      // title: 'title of image'
-    },
-
-    {
-      image: 'assets/school-logox2.png1',
-      thumbImage: 'assets/school-logox2.1png',
-      alt: 'alt of image7'
-      // title: 'title of image'
-    }
-  ];
+  placeholderImageTemplate = {
+    image: 'assets/school-logox2.png1',
+    thumbImage: 'assets/school-logox2.1png',
+    alt: 'alt of image '
+  };
+  imageObject: Array<object> = [this.placeholderImageTemplate];
 }

@@ -351,7 +351,7 @@ let newState: CalendarModel[] = [
         duration: '30'
       }
     ],
-    assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
+    assembly: { name: 'assembly1', startingAt: '07:30', duration: '' }
   },
   {
     day: 'Wed',
@@ -368,7 +368,7 @@ let newState: CalendarModel[] = [
         duration: '30'
       }
     ],
-    assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
+    assembly: { name: 'assembly1', startingAt: '07:30', duration: '' }
   },
   {
     day: 'Thu',
@@ -392,7 +392,7 @@ let newState: CalendarModel[] = [
         duration: '30'
       }
     ],
-    assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
+    assembly: { name: 'assembly1', startingAt: '07:30', duration: '' }
   },
   {
     day: 'Fri',
@@ -416,6 +416,6 @@ let newState: CalendarModel[] = [
         duration: '30'
       }
     ],
-    assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
+    assembly: { name: 'assembly1', startingAt: '07:30', duration: '' }
   }
 ];
