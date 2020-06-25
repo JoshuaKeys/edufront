@@ -1,7 +1,7 @@
 @import 'src/assets/scss/mixins/alignment';
 @import 'src/assets/scss/colors';
 
-@for $i from 0 through 50 {
+@for $i from 0 through 80 {
   .r#{$i} {
     grid-row-start: #{$i + 1};
   }
@@ -22,7 +22,9 @@
     grid-row-start: #{$i + 1};
   }
 }
-
+.grid__cell {
+  position: relative;
+}
 .calendar > div {
   @include displayFlex();
 }

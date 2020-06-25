@@ -25,14 +25,24 @@
 
   <ng-container *ngFor="let day of days; index as i">
     <div
-      ngClass="c{{ i + 1 }}"
-      class=" dual-row"
+      [ngClass]="[
+        setColumn(i),
+        setRowStart(period.startTime),
+        setRowEnd(period.endTime)
+      ]"
+      class="grid__cell"
       *ngFor="let period of model[day]"
     >
       <ng-container
         *ngTemplateOutlet="
           periodTemplate;
-          context: { key: period.key, value: period.value, onChange: onChange }
+          context: {
+            key: period.key,
+            value: period.value,
+            startTime: period.startTime,
+            endTime: period.endTime,
+            onChange: onChange
+          }
         "
       >
       </ng-container>

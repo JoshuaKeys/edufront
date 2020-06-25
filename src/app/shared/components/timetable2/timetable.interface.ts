@@ -1,5 +1,6 @@
 export interface SpecialPeriod {
-  time: string;
+  startTime: string;
+  endTime: string;
   text: string;
 
   color?: string;
@@ -13,6 +14,8 @@ export interface SpecialPeriod {
 export interface Period {
   key: any;
   value: any;
+  startTime: string;
+  endTime: string;
 }
 export interface TimetableModel {
   mon?: Period[];

@@ -8,7 +8,8 @@ import {
 import {
   SpecialPeriod,
   Day,
-  TimetableModel
+  TimetableModel,
+  Period
 } from '../../../shared/components/timetable/timetable.interface';
 import {
   CalendarModel,
@@ -19,6 +20,7 @@ import {
 } from './data';
 import * as fromData from './data';
 import { Output, EventEmitter, HostListener } from '@angular/core';
+import { PeriodModel } from '../../calender/models/period.model';
 @Component({
   selector: 'edu-timetable-test2',
   templateUrl: './timetable-test.component.html',
@@ -31,8 +33,7 @@ export class TimeTableTestComponent2 implements OnInit {
   ngOnInit(): void {
     this.elValue = fromData.newState;
   }
-
-  day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  periodDurationDefined = false;
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
   tempTimeArr = [];
 
@@ -47,9 +48,10 @@ export class TimeTableTestComponent2 implements OnInit {
     this.parseElValue(val);
     this.setTime();
     this.addBlankToStartOfClass(val);
-    this.addBlanks(val);
-    this.logStuff();
+    // this.addBlanks(val);
     this.setSpecialPeriod();
+
+    // this.logStuff();
 
     // this.cd.markForCheck();
 
@@ -87,6 +89,10 @@ export class TimeTableTestComponent2 implements OnInit {
       this.tempTimeArr.push(time);
     }
   }
+  parseTimeToMin(inputTime: number) {
+    return Math.floor(inputTime / 100) * 60 + (inputTime % 100);
+  }
+
   parseTimeToInt(inputTimeString: string) {
     let indexOfColon = inputTimeString.indexOf(':');
     let hr = 0;
@@ -118,107 +124,11 @@ export class TimeTableTestComponent2 implements OnInit {
     return res;
   }
 
-  convertBlankAtStartToSpecialPeriod(
-    startTimeArr: blankPeriod[],
-    val: CalendarModel[]
-  ) {
-    val.forEach((val, index) => {
-      let blankPeriod: any = startTimeArr.filter(
-        startTime => startTime.startTime === val.startTime
-      );
-      blankPeriod = blankPeriod[0].blankPeriod;
-      for (let i = 0; i < blankPeriod; i++) {
-        this.addToTempSpecialPeriod(
-          startTimeArr[i].startTimeInt,
-          val.day,
-          '',
-          null
-        );
-      }
-    });
-  }
-  addBlanks(val: CalendarModel[]) {
-    val.forEach(dayData => {
-      let breaks = dayData.breaks;
-      let dayStartTime = this.parseTimeToInt(dayData.startTime);
-      let periodDuration = this.parseTimeToInt(dayData.periodDuration);
-      let intervaBtwPeriods = this.parseTimeToInt(dayData.intervaBtwPeriods);
-      let totalBreakTime = 0;
-      let blankPeriodBtwStartAndEnd = 0;
-      let prevStartTime = 0;
-
-      dayData.periods.forEach((period, index) => {
-        let currentPeriodStartTime = this.addTime(
-          this.convertMinsToTime(
-            (intervaBtwPeriods + periodDuration) * index + totalBreakTime
-          ),
-          dayStartTime
-        );
-        let currentPeriodEndTime = this.addTime(
-          this.convertMinsToTime(
-            (intervaBtwPeriods + periodDuration) * (index + 1) + totalBreakTime
-          ),
-          dayStartTime
-        );
-
-        // console.log(
-        //   `[${dayData.day} ,  ${period}] - adding blanks (${blankPeriodBtwStartAndEnd})`
-        // );
-
-        if (index > 0) {
-          for (let i = 0; i < blankPeriodBtwStartAndEnd; i++) {
-            // console.log('addblank prevStartTime - ' + prevStartTime);
-            let indexOfPrevTime = this.tempTimeArr.indexOf(prevStartTime);
-            // console.log('addblank indexOfPrevTime - ' + indexOfPrevTime);
-            let timeToAddBlank = this.tempTimeArr[indexOfPrevTime + i + 1];
-            // console.log('addblank timeToAddBlank - ' + timeToAddBlank);
-            this.addToTempSpecialPeriod(timeToAddBlank, dayData.day, '', null);
-          }
-        }
-        //pass to next iteration
-        prevStartTime = currentPeriodStartTime;
-        // console.log('prevStartTime - ' + prevStartTime);
-        blankPeriodBtwStartAndEnd =
-          this.tempTimeArr.indexOf(currentPeriodEndTime) -
-          this.tempTimeArr.indexOf(currentPeriodStartTime) -
-          1;
-        // console.log(
-        //   `[${dayData.day} , previously ${period}] - blanks (${blankPeriodBtwStartAndEnd})`
-        // );
-        breaks
-          .filter(_break => _break.after == period)
-          .map(_break => {
-            let breakDuration = this.parseTimeToInt(_break.duration);
-            let breakStartTime = currentPeriodEndTime;
-            let breakEndTime = this.addTime(breakStartTime, breakDuration);
-            let blankPeriods =
-              this.tempTimeArr.indexOf(breakEndTime) -
-              this.tempTimeArr.indexOf(breakStartTime) -
-              1;
-
-            for (let i = 0; i < blankPeriodBtwStartAndEnd; i++) {
-              // console.log('addblank prevStartTime - ' + prevStartTime);
-              let indexOfPrevTime = this.tempTimeArr.indexOf(prevStartTime);
-              // console.log('addblank indexOfPrevTime - ' + indexOfPrevTime);
-              let timeToAddBlank = this.tempTimeArr[indexOfPrevTime + i + 1];
-              // console.log('addblank timeToAddBlank - ' + timeToAddBlank);
-              this.addToTempSpecialPeriod(
-                timeToAddBlank,
-                dayData.day,
-                '',
-                null
-              );
-            }
-            prevStartTime = breakStartTime;
-            // console.log('break prevStartTime - ' + prevStartTime);
-            blankPeriodBtwStartAndEnd = blankPeriods;
-            // console.log('breakblankPeriods - ' + blankPeriods);
-            totalBreakTime += breakDuration;
-          });
-      });
-    });
-  }
   addBlankToStartOfClass(val: CalendarModel[]) {
+    if (this.periodDurationIsSet) {
+      return;
+    }
+
     let startTimeArr: blankPeriod[] = [];
     let tempTimeArr = [];
     let periodDuration = 0;
@@ -226,7 +136,6 @@ export class TimeTableTestComponent2 implements OnInit {
       if (tempTimeArr.indexOf(val.startTime) == -1) {
         let startTime = val.startTime;
         let startTimeInt = this.parseTimeToInt(startTime);
-
         periodDuration = this.parseTimeToInt(val.periodDuration);
         tempTimeArr.push(startTime);
         startTimeArr.push({ startTime, blankPeriod: 0, startTimeInt });
@@ -236,20 +145,9 @@ export class TimeTableTestComponent2 implements OnInit {
     earliestStartTime.reduce((a, b) => {
       return a.startTimeInt > b.startTimeInt ? b : a;
     });
-
     earliestStartTime.sort((a, b) => a.startTimeInt - b.startTimeInt);
     earliestStartTime = earliestStartTime[0].startTimeInt;
     let indexOfEarliestStartTime = this.tempTimeArr.indexOf(earliestStartTime);
-    console.log('earliestStartTime');
-    console.log(earliestStartTime);
-    console.log(startTimeArr);
-    // startTimeArr.forEach((element, index) => {
-    //   let indexOfCurrentTime = this.tempTimeArr.indexOf(element.startTimeInt);
-
-    //   element.blankPeriod = indexOfCurrentTime - indexOfEarliestStartTime;
-    // });
-
-    console.log(startTimeArr);
     val
       .filter(dayData => {
         let res = false;
@@ -265,15 +163,11 @@ export class TimeTableTestComponent2 implements OnInit {
         let startTimeInInt = this.parseTimeToInt(dayData.startTime);
         let indexOfCurrentTime = this.tempTimeArr.indexOf(startTimeInInt);
         let noOfBlanks = indexOfCurrentTime - indexOfEarliestStartTime;
-        console.log('noOfBlanks - ' + noOfBlanks);
         for (let i = 0; i < noOfBlanks; i++) {
           let time = this.tempTimeArr[indexOfEarliestStartTime + i];
-          console.log('time - ' + time);
-          this.addToTempSpecialPeriod(time, dayData.day, '', null);
+          this.addToTempSpecialPeriod(time, time, dayData.day, '', null);
         }
       });
-
-    // this.convertBlankAtStartToSpecialPeriod(startTimeArr, val);
   }
 
   addTime(time1: number, time2: number) {
@@ -289,9 +183,16 @@ export class TimeTableTestComponent2 implements OnInit {
     return Math.floor(min / 60) * 100 + (min % 60);
   }
 
-  addToTempSpecialPeriod(time, day, text, color: string = '#F2B269') {
+  addToTempSpecialPeriod(
+    startTime,
+    endTime,
+    day,
+    text,
+    color: string = '#F2B269'
+  ) {
     let specialPeriodDetails: tempSpecialPeriodModel = {
-      time,
+      startTime,
+      endTime,
       day,
       text,
       color
@@ -299,38 +200,11 @@ export class TimeTableTestComponent2 implements OnInit {
     if (color == null) {
       delete specialPeriodDetails.color;
     }
+    this.addToTempTimeArr(startTime);
+    this.addToTempTimeArr(endTime);
     this.tempSpecialPeriod.push(specialPeriodDetails);
   }
-  checkForAssembly(assembly: AssemblyModel, day, color: string) {
-    if (assembly.startingAt.length > 0) {
-      let startTime = this.parseTimeToInt(assembly.startingAt);
-      this.addToTempTimeArr(startTime);
-      this.addToTempSpecialPeriod(startTime, day, assembly.name, color);
-    }
-  }
-  checkForBreaks(
-    currentPeriod,
-    currentPeriodEndTime,
-    day,
-    breaks: BreakModel[]
-  ) {
-    let breakDuration = 0;
-    breaks.forEach((_break, index) => {
-      if (_break.after === currentPeriod) {
-        this.addToTempSpecialPeriod(currentPeriodEndTime, day, _break.name);
 
-        breakDuration = this.convertMinsToTime(
-          this.parseTimeToInt(_break.duration)
-        );
-
-        let breakEndTime = this.addTime(currentPeriodEndTime, breakDuration);
-
-        this.addToTempTimeArr(breakEndTime);
-        return breakDuration;
-      }
-    });
-    return breakDuration;
-  }
   formatTime(time) {
     let m = time % 100;
     let h = Math.floor(time / 100);
@@ -339,93 +213,6 @@ export class TimeTableTestComponent2 implements OnInit {
     return `${_h}:${_m}`;
   }
 
-  setSpecialPeriod() {
-    let specialPeriodTimes = [];
-    let tempArr2 = [];
-    this.specialPeriods = [];
-
-    this.tempSpecialPeriod.forEach((_sp, index) => {
-      if (specialPeriodTimes.indexOf(_sp.time) == -1) {
-        specialPeriodTimes.push(_sp.time);
-      }
-    });
-    // console.log(specialPeriodTimes);
-    specialPeriodTimes.forEach(time => {
-      let daysActive = [];
-      let text = [];
-      let color = [];
-      this.tempSpecialPeriod.forEach((_sp, index) => {
-        if (_sp.time === time) {
-          daysActive.push(_sp.day);
-          text.push(_sp.text);
-          color.push(_sp.color);
-        }
-      });
-
-      let specialPeriodAtTime = this.parseSpecialPeriodObj(
-        time,
-        text,
-        daysActive,
-        color
-      );
-
-      this.specialPeriods = [...this.specialPeriods, ...specialPeriodAtTime];
-
-      tempArr2.push({
-        time,
-        text: text[0],
-        daysActive
-      });
-    });
-  }
-
-  parseSpecialPeriodObj(time, text: string[], days: string[], color: string[]) {
-    let res = [];
-    let isNewPeriod = true;
-    let parsedTime = this.formatTime(time);
-    let tempPeriodObj = { time, text: '', start: '', end: '', color: '' };
-    let lowerCaseDays = days.map(day => day.toLowerCase());
-    let prevText = '';
-    // console.log(text);
-    this.day.forEach((day, index) => {
-      let indexOfParam = lowerCaseDays.indexOf(day.toLowerCase());
-      let isSameText = index > 0 ? prevText == text[indexOfParam] : false;
-      let dayExistOnSpecialPeriod = indexOfParam !== -1;
-
-      if (!isNewPeriod && dayExistOnSpecialPeriod && !isSameText) {
-        res.push(JSON.parse(JSON.stringify(tempPeriodObj)));
-        isNewPeriod = true;
-      }
-
-      if (dayExistOnSpecialPeriod && isNewPeriod) {
-        tempPeriodObj = {
-          time: parsedTime,
-          text: text[indexOfParam],
-          start: day.toLowerCase(),
-          end: day.toLowerCase(),
-          color: color[indexOfParam]
-        };
-        // console.log(text[index]);
-        // console.log(index);
-        // console.log(tempPeriodObj);
-        isNewPeriod = false;
-      } else if (dayExistOnSpecialPeriod && isSameText) {
-        // console.log(
-        //   'isSameText when dayExistOnSpecialPeriod [' +
-        //     day +
-        //     '] - ' +
-        //     isSameText
-        // );
-        tempPeriodObj.end = day.toLowerCase();
-      } else if (!isNewPeriod) {
-        res.push(JSON.parse(JSON.stringify(tempPeriodObj)));
-        isNewPeriod = true;
-      }
-      prevText = indexOfParam != -1 ? text[indexOfParam] : prevText;
-    });
-    // console.log(res);
-    return res;
-  }
   setTime() {
     let _tempTimeArr = this.tempTimeArr.sort((a, b) => a - b);
     this.time = [];
@@ -438,13 +225,142 @@ export class TimeTableTestComponent2 implements OnInit {
     }
   }
 
+  getSpecialPeriodIdentifier(p) {
+    return `st${p.startTime}et${p.endTime}t${p.text}c${p.color}`;
+  }
+
+  setBlankBeforeClass() {
+    this.specialPeriods = [];
+    this.tempSpecialPeriod.forEach(sp => {
+      let _sp: any = {
+        startTime: this.formatTime(sp.startTime),
+        endTime: this.formatTime(sp.endTime),
+        start: sp.day.toLowerCase(),
+        end: sp.day.toLowerCase(),
+        text: ''
+      };
+      this.specialPeriods.push(_sp);
+    });
+  }
+  setSpecialPeriod() {
+    //startTime ,endTime,text,Color all has to be the same
+
+    if (!this.periodDurationIsSet) {
+      this.setBlankBeforeClass();
+      return;
+    }
+
+    let uniqueIdentifierArr = [];
+    let specialPeriodValueArr = [];
+    let day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    //filtering out unique special periods across the week
+    this.tempSpecialPeriod.forEach((period, periodIndex) => {
+      let identifier = this.getSpecialPeriodIdentifier(period);
+      if (uniqueIdentifierArr.indexOf(identifier) == -1) {
+        uniqueIdentifierArr.push(identifier);
+        specialPeriodValueArr.push(period);
+      }
+    });
+
+    uniqueIdentifierArr.forEach(uid => {
+      let hasStarted = false;
+      let tempResults = null;
+      day.forEach((_day, _dayIndex) => {
+        this.tempSpecialPeriod
+
+          .filter(p => {
+            let isSameUid = this.getSpecialPeriodIdentifier(p) == uid;
+            let isSameDay = p.day.toLocaleLowerCase() == _day;
+            return isSameUid && isSameDay;
+          })
+          .map((p, periodIndex) => {
+            // console.log(this.getSpecialPeriodIdentifier(p));
+            if (!hasStarted && tempResults == null) {
+              // console.log('init');
+              tempResults = {
+                startTime: this.formatTime(p.startTime),
+                endTime: this.formatTime(p.endTime),
+                color: p.color,
+                text: p.text,
+                start: _day.toLowerCase(),
+                end: _day.toLowerCase()
+              };
+
+              hasStarted = true;
+            } else if (tempResults !== null) {
+              // console.log('changing the day');
+              tempResults.end = _day.toLocaleLowerCase();
+            } else {
+              // console.log('end');
+              this.specialPeriods.push(tempResults);
+              tempResults = null;
+              hasStarted = false;
+            }
+          });
+      });
+      if (tempResults != null) {
+        // console.log('PUSHING');
+
+        this.specialPeriods.push(tempResults);
+        tempResults = null;
+        hasStarted = false;
+      }
+    });
+
+    // console.log(uniqueIdentifierArr);
+    // console.log(specialPeriodValueArr);
+  }
+  checkForAssembly(assembly: AssemblyModel, day, color: string) {
+    if (assembly.startingAt.length > 0) {
+      let startTime = this.parseTimeToInt(assembly.startingAt);
+      let endTime = this.addTime(
+        startTime,
+        this.parseTimeToInt(assembly.duration)
+      );
+      // this.addToTempTimeArr(startTime);
+      // this.addToTempTimeArr(endTime);
+      this.addToTempSpecialPeriod(
+        startTime,
+        endTime,
+        day,
+        assembly.name,
+        color
+      );
+    }
+  }
+  checkForBreaks(
+    currentPeriod,
+    currentPeriodEndTime,
+    day,
+    breaks: BreakModel[]
+  ) {
+    let breakDuration = 0;
+    breaks.forEach((_break, index) => {
+      if (_break.after === currentPeriod) {
+        breakDuration = this.parseTimeToInt(_break.duration);
+        let breakEndTime = this.addTime(currentPeriodEndTime, breakDuration);
+
+        this.addToTempSpecialPeriod(
+          currentPeriodEndTime,
+          breakEndTime,
+          day,
+          _break.name
+        );
+
+        // this.addToTempTimeArr(breakEndTime);
+        breakDuration = this.parseTimeToMin(breakDuration);
+        return breakDuration;
+      }
+    });
+    return breakDuration;
+  }
   parseElValue(val: CalendarModel[]) {
     //set time,specialPeriod, model
     this.tempTimeArr = [];
-
+    let day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
     val.forEach((dayData, index) => {
       let totalBreakTime = 0;
-      if (this.day.indexOf(dayData.day.toLowerCase()) > -1) {
+      if (day.indexOf(dayData.day.toLowerCase()) > -1) {
         //add starting time of first period
         let firstPeriodStartTime;
 
@@ -456,48 +372,65 @@ export class TimeTableTestComponent2 implements OnInit {
         //reseting model for this particular day
         this.model[dayData.day] = [];
 
-        this.checkForAssembly(dayData.assembly, dayData.day, '#69A9F2');
         dayData.periods.forEach((period, periodindex) => {
           let key = `${dayData.day}${periodindex}`;
           let value = period;
-          this.model[dayData.day].push({ key, value });
 
-          let intervalBetweenPeriods = this.parseTimeToInt(
-            dayData.intervaBtwPeriods
+          let intervalBtwPeriods = this.parseTimeToMin(
+            this.parseTimeToInt(dayData.intervaBtwPeriods)
           );
-          let durationBtnPeriod = this.parseTimeToInt(dayData.periodDuration);
-          // console.log(
-          //   dayData.day + ' intervalBetweenPeriods - ' + intervalBetweenPeriods
-          // );
-          let firstPeriodStartToEndOfCurrent =
-            (durationBtnPeriod + intervalBetweenPeriods) * (periodindex + 1) +
+          let periodDuration = this.parseTimeToMin(
+            this.parseTimeToInt(dayData.periodDuration)
+          );
+          intervalBtwPeriods = periodDuration == 0 ? 0 : intervalBtwPeriods;
+
+          let firstPeriodStartToStartOfCurrentPeriod =
+            (periodDuration + intervalBtwPeriods) * periodindex +
             totalBreakTime;
-          // console.log(
-          //   'firstPeriodStartToEndOfCurrent - ' + firstPeriodStartToEndOfCurrent
-          // );
-          firstPeriodStartToEndOfCurrent = this.convertMinsToTime(
-            firstPeriodStartToEndOfCurrent
+          firstPeriodStartToStartOfCurrentPeriod = this.convertMinsToTime(
+            firstPeriodStartToStartOfCurrentPeriod
           );
-          // console.log(
-          //   'firstPeriodStartToEndOfCurrent in time - ' +
-          //     firstPeriodStartToEndOfCurrent
-          // );
-          let periodEndTime = this.addTime(
-            firstPeriodStartTime,
-            firstPeriodStartToEndOfCurrent
-          );
-          // console.log('periodEndTime - ' + periodEndTime);
-          this.addToTempTimeArr(periodEndTime);
-          let breakTime = this.checkForBreaks(
-            period,
-            periodEndTime,
-            dayData.day,
-            dayData.breaks
-          );
-          totalBreakTime += breakTime;
+          // console.log(`[${dayData.day}, (${period})]`);
+          // console.log(` periodDuration- ${periodDuration}`);
+          // console.log(` intervalBtwPeriods- ${intervalBtwPeriods}`);
+          // console.log(`totalBreakTime - ${totalBreakTime}`);
 
+          // console.log(
+          //   `firstPeriodStartToStartOfCurrentPeriod - ${firstPeriodStartToStartOfCurrentPeriod}`
+          // );
+          let startTime = this.addTime(
+            firstPeriodStartTime,
+            firstPeriodStartToStartOfCurrentPeriod
+          );
+          let endTime = this.addTime(
+            startTime,
+            periodDuration + intervalBtwPeriods
+          );
+          // console.log(`startTime - ${startTime}`);
+          // console.log(`endTime - ${endTime}`);
+          this.model[dayData.day].push({
+            key,
+            value,
+            startTime: this.formatTime(startTime),
+            endTime: this.formatTime(endTime)
+          });
+          // console.log('endTime - ' + endTime);
+          this.addToTempTimeArr(endTime);
           this.periodDurationIsSet =
             this.parseTimeToInt(dayData.periodDuration) > 0;
+          if (this.periodDurationIsSet) {
+            this.checkForAssembly(dayData.assembly, dayData.day, '#69A9F2');
+
+            let breakDuration = this.checkForBreaks(
+              period,
+              endTime,
+              dayData.day,
+              dayData.breaks
+            );
+            // console.log(`breakDuration - ${breakDuration}`);
+            totalBreakTime += breakDuration;
+            // console.log(`totalBreakTime - ${totalBreakTime}`);
+          }
         });
       }
     });

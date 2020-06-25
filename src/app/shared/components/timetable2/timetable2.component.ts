@@ -25,6 +25,7 @@ import { skip } from 'rxjs/operators';
 })
 export class TimetableComponent2 implements OnInit {
   _model;
+  @Input() periodDurationDefined;
   @Input() set model(_model: TimetableModel) {
     this._model = _model;
     if (this.initHookHasPassed) {
@@ -50,6 +51,7 @@ export class TimetableComponent2 implements OnInit {
   _specialPeriods;
   @Input() set specialPeriods(val: SpecialPeriod[]) {
     // console.log('setter');
+    // console.log(val);
     this._specialPeriods = val;
 
     if (this.initHookHasPassed) {
@@ -57,6 +59,7 @@ export class TimetableComponent2 implements OnInit {
         []
       );
       this.SpecialPeriodStyles = new Array(this.specialPeriods.length).fill({});
+      // console.log(val);
       this.initSpecialPeriods();
     }
   }
@@ -137,7 +140,7 @@ export class TimetableComponent2 implements OnInit {
       if (time.isSingleRow) {
         let style = {};
         this.specialPeriods.map((_sp, i) => {
-          if (_sp.time == time.value && _sp.color != undefined) {
+          if (_sp.startTime == time.value && _sp.color != undefined) {
             style = { color: _sp.color };
           }
         });
@@ -146,46 +149,62 @@ export class TimetableComponent2 implements OnInit {
     });
     // console.log(this.timeStyles);
   }
+  setColumn(index) {
+    return `c${index + 1}`;
+  }
+
+  setRowStart(time) {
+    if (this.periodDurationDefined) {
+      let rowIndex = this.getRowIndex(time);
+      return `r${rowIndex * 2 + 1}`;
+    }
+    return ``;
+  }
+  setRowEnd(time) {
+    if (this.periodDurationDefined) {
+      let rowIndex = this.getRowIndex(time);
+      return `re${rowIndex * 2}`;
+    }
+    return `dual-row`;
+  }
 
   initSpecialPeriods() {
-    //rework this
-    // console.log('initspecialperiods');
-    // console.log(this.specialPeriods);
-    // console.log(this.days);
     let lowerCaseDays = this.days.map(day => day.toLowerCase());
     this.specialPeriods.forEach((_sp, i) => {
-      // _sp.classes = [];
+      // console.log(this.getRowIndex(_sp.startTime));
+      let rowStart =
+        this.getSpecialPeriodRow(_sp.startTime, _sp.inFirstHalf) - 1;
+      let rowEnd = this.getSpecialPeriodRow(_sp.endTime, _sp.inFirstHalf) - 1;
 
-      let rowCount = 0;
-      this.timeClasses.forEach(() => {});
-
-      // _sp.classes.push(
-      //   `r${this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf)}`
-      // );
-      // _sp.classes.push(`c${this.days.indexOf(_sp.start) + 1}`);
-      // _sp.classes.push(`ce${this.days.indexOf(_sp.end) + 1}`);
-      if (this.specialPeriodHeight == 2) {
-        let rowStart = this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf) - 1;
+      let periodNotSet = _sp.text == '' && _sp.startTime === _sp.endTime;
+      console.log(_sp);
+      console.log(rowStart);
+      if (periodNotSet) {
+        console.log('NOT SET!');
         this.SpecialPeriodClasses[i] = this.assignToClassArr(
           this.SpecialPeriodClasses[i],
           `r${rowStart}`
         );
         this.SpecialPeriodClasses[i] = this.assignToClassArr(
           this.SpecialPeriodClasses[i],
-          `re${rowStart + 1}`
+          `dual-row`
         );
       } else {
         this.SpecialPeriodClasses[i] = this.assignToClassArr(
           this.SpecialPeriodClasses[i],
-          `r${this.getSpecialPeriodRow(_sp.time, _sp.inFirstHalf)}`
+          `r${rowStart}`
+        );
+        this.SpecialPeriodClasses[i] = this.assignToClassArr(
+          this.SpecialPeriodClasses[i],
+          `re${rowEnd - 1}`
         );
       }
-      // console.log(_sp.start);
-      // console.log(this.days.indexOf(_sp.start));
+
       this.SpecialPeriodClasses[i] = this.assignToClassArr(
         this.SpecialPeriodClasses[i],
         `c${lowerCaseDays.indexOf(_sp.start) + 1}`
       );
+      // console.log(`${lowerCaseDays.indexOf(_sp.start) + 1}`);
       this.SpecialPeriodClasses[i] = this.assignToClassArr(
         this.SpecialPeriodClasses[i],
         `ce${lowerCaseDays.indexOf(_sp.end) + 1}`
@@ -223,6 +242,18 @@ export class TimetableComponent2 implements OnInit {
           b: parseInt(result[3], 16)
         }
       : null;
+  }
+
+  getRowIndex(_time) {
+    // console.log(_time);
+    let res = -1;
+    this.time.forEach(({ value }, index) => {
+      if (value == _time) {
+        res = index;
+        return index;
+      }
+    });
+    return res;
   }
 
   getSpecialPeriodRow(_time: string, isInFirstHalf: boolean) {

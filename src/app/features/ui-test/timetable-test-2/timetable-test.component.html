@@ -2,11 +2,19 @@
   [time]="time"
   [specialPeriods]="specialPeriods"
   [model]="model"
+  [periodDurationDefined]="periodDurationIsSet"
   specialPeriodHeight="2"
 >
-  <ng-template #periodTemplate let-key="key" let-value="value">
+  <ng-template
+    #periodTemplate
+    let-key="key"
+    let-value="value"
+    let-startTime="startTime"
+    let-endTime="endTime"
+  >
     <div class="templateContainer ">
-      {{ value }}
+      {{ startTime }}
+      {{ endTime }}
     </div>
   </ng-template>
 </edu-timetable2>
