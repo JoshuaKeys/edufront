@@ -38,8 +38,10 @@
   grid-auto-flow: column dense;
 }
 .special-period {
-  font: 400 12px/20px Roboto;
+  text-align: center;
+  font: 400 12px/14px Roboto;
   border-radius: 4px;
+  overflow: hidden;
 }
 .empty-placeholder {
   grid-row: 1;

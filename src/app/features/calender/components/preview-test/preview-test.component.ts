@@ -45,7 +45,7 @@ let testData: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
     startTime: '09:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -54,7 +54,7 @@ let testData: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '10:00',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -63,7 +63,7 @@ let testData: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -72,7 +72,7 @@ let testData: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -81,7 +81,7 @@ let testData: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -91,7 +91,7 @@ let testData: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   }
@@ -103,7 +103,7 @@ let testData2: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -112,7 +112,7 @@ let testData2: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -121,7 +121,7 @@ let testData2: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -130,7 +130,7 @@ let testData2: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -139,7 +139,7 @@ let testData2: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -149,7 +149,7 @@ let testData2: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   }
@@ -160,7 +160,7 @@ let testData3: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -169,7 +169,7 @@ let testData3: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -178,7 +178,7 @@ let testData3: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -187,7 +187,7 @@ let testData3: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -196,7 +196,7 @@ let testData3: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
@@ -206,7 +206,7 @@ let testData3: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   }
@@ -218,7 +218,7 @@ let testData4: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -227,7 +227,7 @@ let testData4: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '09:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -236,7 +236,7 @@ let testData4: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '09:00',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -245,7 +245,7 @@ let testData4: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '09:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -254,7 +254,7 @@ let testData4: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -264,7 +264,7 @@ let testData4: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '08:30',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   }
@@ -276,7 +276,7 @@ let testData5: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -285,7 +285,7 @@ let testData5: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -294,7 +294,7 @@ let testData5: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -303,7 +303,7 @@ let testData5: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -312,7 +312,7 @@ let testData5: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   },
@@ -322,7 +322,7 @@ let testData5: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
     startTime: '',
     periodDuration: '0',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '0',
     breaks: [],
     assembly: { name: '', startingAt: '', duration: '' }
   }
@@ -330,19 +330,21 @@ let testData5: CalendarModel[] = [
 
 let newState: CalendarModel[] = [
   {
-    day: 'Mon',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'],
-    startTime: '08:30',
+    day: 'Tue',
+    periods: ['P1', 'P2', 'P3'],
+    startTime: '09:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '10',
     breaks: [
       {
+        name: 'break 1123123 overflwo ',
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '45'
+        duration: '30'
       },
       {
+        name: 'break 2',
         firstBreak: '',
         day: '',
         after: 'P5',
@@ -352,45 +354,18 @@ let newState: CalendarModel[] = [
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
   },
   {
-    day: 'Tue',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '08:30',
-    breaks: [
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '45'
-      },
-      {
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '45'
-      }
-    ],
-    assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
-  },
-  {
     day: 'Wed',
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
-    startTime: '08:30',
+    startTime: '09:10',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '10',
     breaks: [
       {
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '45'
-      },
-      {
+        name: 'break 2 ',
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '45'
+        duration: '30'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
@@ -400,19 +375,21 @@ let newState: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '10',
     breaks: [
       {
+        name: 'break 1 ',
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '45'
+        duration: '30'
       },
       {
+        name: 'break 2 ',
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '45'
+        duration: '30'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
@@ -422,19 +399,21 @@ let newState: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '08:30',
+    intervaBtwPeriods: '10',
     breaks: [
       {
+        name: 'break 1 ',
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '45'
+        duration: '30'
       },
       {
+        name: 'break 2 ',
         firstBreak: '',
         day: '',
         after: 'P5',
-        duration: '45'
+        duration: '30'
       }
     ],
     assembly: { name: 'assembly', startingAt: '07:30', duration: '' }
