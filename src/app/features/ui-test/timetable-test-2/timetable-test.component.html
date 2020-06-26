@@ -1,21 +1,21 @@
-<edu-timetable
+<edu-timetable2
   [time]="time"
   [specialPeriods]="specialPeriods"
   [model]="model"
+  [periodDurationDefined]="periodDurationIsSet"
   specialPeriodHeight="2"
 >
-  <ng-template #periodTemplate let-key="key" let-value="value">
+  <ng-template
+    #periodTemplate
+    let-key="key"
+    let-value="value"
+    let-startTime="startTime"
+    let-endTime="endTime"
+  >
     <div class="templateContainer ">
       {{ value }}
     </div>
   </ng-template>
-</edu-timetable>
+</edu-timetable2>
 
 <h5>model object</h5>
-<p>{{ prettyPrint(model.mon) }}</p>
-<p>{{ prettyPrint(model.tue) }}</p>
-<p>{{ prettyPrint(model.wed) }}</p>
-<p>{{ prettyPrint(model.thu) }}</p>
-<p>{{ prettyPrint(model.fri) }}</p>
-<p>{{ prettyPrint(model.sat) }}</p>
-<p>{{ prettyPrint(model.sun) }}</p>

@@ -8,21 +8,22 @@
 }
 edu-input ::ng-deep {
   height: 100%;
-
+  width: 100%;
   .label-input__wrapper {
     position: static;
   }
-  label {
-    position: absolute;
+  label.center {
+    padding-right: 56px;
+    // position: absolute;
 
-    left: 50%;
-    transform: translate(-50%);
+    // left: 50%;
+    // transform: translate(-50%);0
   }
   .label--active {
     top: 0;
   }
 
-  input {
+  input.center {
     padding-right: 56px;
   }
 }
@@ -178,6 +179,9 @@ aside {
 // .popup .icon__img {
 //   width: 30px;
 // }
+.icon {
+  cursor: pointer;
+}
 .icon__content {
   display: flex;
   align-items: center;

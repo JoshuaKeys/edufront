@@ -58,7 +58,20 @@
 }
 
 .break {
+  position: relative;
   margin-bottom: 20px;
+  &:hover .delete-vacation-btn {
+    opacity: 1;
+  }
+}
+.delete-vacation-btn {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  height: 100%;
+  width: 30px;
+  transform: translate(30px, -50%);
 }
 button.button--bottom {
   margin: 0px auto 40px auto !important;

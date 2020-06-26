@@ -238,6 +238,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   writeValue(value: any) {
     console.log(JSON.stringify(value));
     this.selectService.setActiveValue(value);
+    this.cd.markForCheck();
     // this.selectService.setActiveOption(value);
   }
 

@@ -21,7 +21,8 @@
       <button
         ButtonType="outline"
         class="form__button form__button--white"
-        (click)="goToLogoPage()">
+        (click)="goToLogoPage()"
+      >
         Back
       </button>
       <button ButtonType="basic" class="form__button" (click)="submit()">
@@ -30,8 +31,9 @@
     </div>
   </section>
 </main>
-<edu-modal
+<edu-modal-v2
   *ngIf="(modalState | async).endModal"
+  class="complete"
   [description]="getModalBody()"
   btnText="GOT IT"
   header="School Profile Complete"
@@ -41,4 +43,4 @@
   rightBtn="GO TO CLASS CREATION"
   (leftBtnClicked)="goToDashboard()"
   (rightBtnClicked)="goToClassCreation()"
-></edu-modal>
+></edu-modal-v2>

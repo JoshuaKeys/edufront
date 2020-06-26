@@ -38,12 +38,16 @@ import { NumberOfPeriodsComponent } from './containers/number-of-periods/number-
 import { PeriodsPerDayComponent } from './components/periods-per-day/periods-per-day.component';
 import { PeriodsPreviewComponent } from './components/periods-preview/periods-preview.component';
 import { TimetablePreviewComponent } from './components/timetable-preview/timetable-preview.component';
+import { TimetablePreview2Component } from './components/timetable-preview2/timetable-preview2.component';
+import { TimetableCardComponent } from './components/timetable-card/timetable-card.component';
 import { PreviewTestComponent } from './components/preview-test/preview-test.component';
 import { pages } from './pages';
 @NgModule({
   declarations: [
     ...pages,
     TimetablePreviewComponent,
+    TimetablePreview2Component,
+    TimetableCardComponent,
     PreviewTestComponent,
     TeachingDayForClassQuestionComponent,
     AcademicYearQuestionComponent,

@@ -1,1 +1,33 @@
-<p>p101 works!</p>
+<div class="main">
+  <div class="content">
+    <h1 class="header">
+      Are these correct?
+    </h1>
+
+    <div
+      #scrollableEl
+      class="scrollable-content"
+      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
+    >
+      <edu-image-slider [imageSize]="imageSize">
+        <edu-timetable-card
+          sliderChildren
+          [edu-value]="timetable"
+          [edu-id]="i"
+          [edu-title]="'test123'"
+          (edu-edit)="onEdit($event)"
+          (edu-tick)="onTick($event)"
+          *ngFor="let timetable of timetableArr; let i = index"
+        ></edu-timetable-card>
+      </edu-image-slider>
+    </div>
+  </div>
+  <div class="button--bottom">
+    <button ButtonType="outline">
+      Back
+    </button>
+    <button ButtonType="basic" disabled>
+      Confirm
+    </button>
+  </div>
+</div>

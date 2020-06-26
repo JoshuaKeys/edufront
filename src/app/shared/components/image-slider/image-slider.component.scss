@@ -1,14 +1,60 @@
 @import 'src/assets/styles/mixins/alignment';
 @import 'src/assets/styles/colors';
+.hideBtns {
+  .nav__button {
+    display: none;
+  }
+
+  // &::ng-deep .main-inner {
+  // margin-left: unset;
+  // margin: auto !important;
+  // padding: 0 8px;
+  // }
+}
+.leftDisabled .nav__button--prev {
+  background-color: #e6e9f3 !important;
+  border-color: #e6e9f3 !important;
+
+  img {
+    content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
+  }
+}
+
+.rightDisabled .nav__button--next {
+  background-color: #e6e9f3 !important;
+  border-color: #e6e9f3 !important;
+
+  img {
+    content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
+  }
+}
 
 :host {
   position: relative;
   display: block;
   padding: 0 86px;
+  width: 100%;
   ng-image-slider ::ng-deep {
     display: block;
     width: 100%;
     // position: relative;
+
+    .img-div {
+      margin: 0 20px !important;
+      box-shadow: unset !important;
+      border: 0px;
+    }
+
+    .main-inner {
+      @include displayFlex(flex-start, flex-start);
+      padding: 0 1px !important;
+    }
+
+    .custom-image-main,
+    .ng-image-slider-error,
+    custom-img {
+      display: none;
+    }
 
     .ng-image-slider,
     .ng-image-slider-container,
@@ -18,6 +64,12 @@
 
     .next.icons.next-icon,
     .prev.icons.prev-icon {
+      &.disable {
+        opacity: 1;
+      }
+
+      display: none;
+      font-size: 0;
       width: 64px;
       background: white;
       border: 2px solid #e6e9f3;
@@ -27,11 +79,18 @@
       position: relative;
       position: absolute;
       top: 50%;
+      user-select: none;
+      cursor: pointer;
+
+      img {
+        @include absoluteCenter();
+        content: url('/assets/form-components/slider-arrow-left-grey.svg');
+      }
 
       &:hover {
         border-color: $blue;
         img {
-          content: url('/assets/form-components/slider-arrow-right-blue.svg');
+          content: url('/assets/form-components/slider-arrow-left-blue.svg');
         }
       }
       &:active {
@@ -57,7 +116,7 @@
   }
 }
 
-.button {
+.nav__button {
   width: 64px;
   background: white;
   border: 2px solid #e6e9f3;
@@ -72,11 +131,12 @@
   }
   img {
     @include absoluteCenter();
+    content: url('/assets/form-components/slider-arrow-left-grey.svg');
   }
   &:hover {
     border-color: $blue;
     img {
-      content: url('/assets/form-components/slider-arrow-right-blue.svg');
+      content: url('/assets/form-components/slider-arrow-left-blue.svg');
     }
   }
   &:active {
@@ -86,13 +146,14 @@
       content: url('/assets/form-components/slider-arrow-left-white.svg');
     }
   }
-}
-.left {
-  left: 15px;
-  transform: translateY(-50%);
-}
-.right {
-  transform-origin: center center;
-  right: 15px;
-  transform: translateY(-50%) rotate(180deg);
+
+  &--prev {
+    left: 15px;
+    transform: translateY(-50%);
+  }
+  &--next {
+    transform-origin: center center;
+    right: 15px;
+    transform: translateY(-50%) rotate(180deg);
+  }
 }

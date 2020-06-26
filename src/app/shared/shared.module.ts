@@ -25,6 +25,7 @@ import { CustomPlainSelectComponent } from './components/custom-plain-select/cus
 // import { Datepicker2Module } from './components/form-components/datepicker2/datepicker2.module';
 
 import { TimetableModule } from './components/timetable/timetable.module';
+import { TimetableModule2 } from './components/timetable2/timetable2.module';
 import { SubjectsService } from './services/subjects.service';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { CountryFieldComponent } from './components/country-field/country-field.component';
@@ -82,6 +83,7 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     // datePickerModule,
     SelectModule,
     TimetableModule,
+    TimetableModule2,
     RouterModule
   ],
   exports: [
@@ -101,6 +103,7 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     ImageUploadV3Component,
     PreviewComponent,
     TimetableModule,
+    TimetableModule2,
     ImageUploadComponent,
     IconFieldComponent,
     PhoneIconFieldComponent,

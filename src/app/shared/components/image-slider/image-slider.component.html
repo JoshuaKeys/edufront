@@ -1,18 +1,31 @@
-<p>image-slider works!</p>
-<ng-image-slider
-  [images]="imageObject"
-  [imageSize]="imageSize"
-  [imagePopup]="imagePopup"
-  arrowKeyMove="true"
-  [animationSpeed]="animationSpeed"
-  [infinite]="infinite"
-  showArrow="false"
-  #nav
-></ng-image-slider>
+<div
+  [ngClass]="{
+    leftDisabled: leftDisabled,
+    rightDisabled: rightDisabled,
+    hideBtns: hideBtns
+  }"
+>
+  <ng-image-slider
+    [images]="imageObject"
+    [imageSize]="imageSize"
+    [imagePopup]="imagePopup"
+    arrowKeyMove="true"
+    [animationSpeed]="animationSpeed"
+    [infinite]="infinite"
+    showArrow="false"
+    (arrowClick)="onArrowClickEvent()"
+    #nav
+  ></ng-image-slider>
 
-<!-- <button class="left button" (click)="prevImageClick()">
-  <img src="assets/form-components/slider-arrow-left-grey.svg" alt="" />
-</button>
-<button class="right button" (click)="nextImageClick()">
-  <img src="assets/form-components/slider-arrow-left-grey.svg" alt="" />
-</button> -->
+  <ng-content select="[sliderChildren]"></ng-content>
+
+  <button class="nav__button nav__button--prev" (click)="prev()">
+    <img src="" alt="" />
+  </button>
+  <button class="nav__button nav__button--next" (click)="next()">
+    <img src="" alt="" />
+  </button>
+</div>
+<!-- leftDisabled: {{ leftDisabled }} rightDisabled: {{ rightDisabled }} hideBtns{{
+  hideBtns
+}} -->

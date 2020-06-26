@@ -1,0 +1,37 @@
+//for styling of individual period (box with dashed line, you can repurpose this for your dropzone)
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/mixins/alignment';
+.templateContainer.active {
+  border-color: $blue;
+  &::after {
+    background: $blue;
+    border-color: $blue;
+  }
+  &::before {
+    background: url('/assets/timetable-tick-white.svg') no-repeat no-repeat
+      center center;
+  }
+}
+
+.templateContainer {
+  top: 6px;
+  position: absolute;
+}
+//test for preview panel
+edu-timetable2 ::ng-deep .calendar {
+  grid-template-columns: unset;
+  grid-template-rows: unset;
+  grid-auto-rows: 12px;
+  grid-auto-columns: 40px;
+  column-gap: 8px;
+  row-gap: 8px;
+
+  .day,
+  .time {
+    font: 600 12px/14px Raleway;
+  }
+
+  .time {
+    color: $black;
+  }
+}

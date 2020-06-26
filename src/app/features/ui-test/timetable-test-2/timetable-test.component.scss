@@ -29,6 +29,11 @@ edu-timetable ::ng-deep .calendar {
     color: $black;
   }
 }
+
+.templateContainer {
+  position: absolute;
+  top: 12px;
+}
 // .templateContainer {
 //   border: 1px dashed #e6e9f3;
 //   border-radius: 12px;
