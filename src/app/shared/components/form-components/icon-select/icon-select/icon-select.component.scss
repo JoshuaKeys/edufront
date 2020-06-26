@@ -58,93 +58,6 @@
 }
 
 //popup style
-.popup {
-  transition: none;
-
-  cursor: pointer;
-  position: absolute;
-  background: white;
-  z-index: 4;
-
-  border: 1px solid $blue;
-  border-radius: 6px;
-
-  white-space: nowrap;
-  // padding: $y-padding $x-padding;
-  text-align: left;
-  border-color: $blue;
-
-  //hiding popover
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  bottom: -8px;
-  left: 0;
-  top: unset;
-  position: absolute;
-  transform: translate(0, 100%);
-
-  &.active {
-    min-width: 100%;
-    width: auto;
-    height: auto;
-    overflow: unset;
-    opacity: 1;
-  }
-
-  .pointer {
-    position: absolute;
-    top: 0;
-    transform: translateY(-100%);
-    left: 10px;
-
-    &::before,
-    &::after {
-      //triangle ??
-      // position: absolute;
-      content: '';
-      display: block;
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 7px solid $blue;
-    }
-    &::after {
-      //triangle ??
-      position: absolute;
-      top: 0px;
-      left: 0px;
-
-      border-bottom: 7px solid white;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      transform-origin: center bottom;
-      transform: scale(0.8);
-    }
-  }
-}
-
-.popup__content-wrapper {
-  // to prevent overflow of edges
-  overflow: hidden;
-
-  max-height: 170px;
-  overflow-y: scroll;
-  border-radius: 6px;
-  &::-webkit-scrollbar-track-piece:end {
-    background: transparent;
-    margin: 0;
-    margin-bottom: 5px;
-  }
-
-  &::-webkit-scrollbar-track-piece:start {
-    background: transparent;
-    margin: 0;
-    margin-top: 5px;
-  }
-}
 
 .select {
   //form__input--select is a checkbox used to toggle "select" element
@@ -172,14 +85,6 @@
         center center;
     }
   }
-  &__checkbox {
-    cursor: pointer;
-    z-index: 2;
-    width: 100%;
-    position: absolute;
-    height: 100%;
-    opacity: 0;
-  }
 
   &__label {
     font-family: Raleway;
@@ -202,7 +107,9 @@
     // border-bottom: 1px solid $grey-blue;
 
     color: transparent;
-
+    &:focus {
+      outline: none;
+    }
     &::placeholder {
       color: transparent;
     }
@@ -295,4 +202,46 @@ input {
   input {
     text-align: right;
   }
+}
+
+//for popover
+edu-popover ::ng-deep {
+  padding: 0;
+}
+.badges {
+  margin: 17px auto;
+  margin-top: 12px;
+  width: 145px;
+  // height: 190px;
+  @include displayFlex();
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.badge {
+  user-select: none;
+  transition: none;
+  cursor: pointer;
+  margin: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  color: #c7ccdb;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  border: 2px solid #e6e9f3;
+  position: relative;
+}
+.badge__value {
+  transition: none;
+  display: inline-block;
+  @include absoluteCenter();
+  line-height: 1;
+}
+.badge.active {
+  color: white;
+  background: #69a9f2;
+  border: 2px solid #69a9f2;
 }

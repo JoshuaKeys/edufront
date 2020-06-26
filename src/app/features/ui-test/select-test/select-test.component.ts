@@ -54,4 +54,62 @@ export class SelectTestComponent implements OnInit {
   updateValue(val) {
     this.updatedValue = val;
   }
+
+  f1Value = '';
+  setDisplayValue(arr) {
+    let isAllSelected = arr[0].state == 'active';
+    if (isAllSelected) {
+      arr = arr.map((val, index) => {
+        if (index == 0) {
+          return val;
+        }
+        val.state = '';
+        return val;
+      });
+      this.options = arr;
+      console.log(arr);
+    }
+    arr = arr.filter(val => val.state === 'active');
+    if (arr.length === 0) {
+      this.f1Value = '';
+    } else {
+      let temp = arr
+        .map(element => {
+          return this.attachSuffix(element.value);
+        })
+        .reduce((a, b) => `${a},${b}`);
+      this.f1Value = `${temp} period`;
+    }
+  }
+
+  attachSuffix(number) {
+    let suffix;
+
+    if (typeof number === 'string' && number.toLowerCase() === 'all') {
+      return `${number}`;
+    }
+
+    if (number == 1) {
+      suffix = 'st';
+    } else if (number == 2) {
+      suffix = 'nd';
+    } else if (number == 3) {
+      suffix = 'rd';
+    } else {
+      suffix = 'th';
+    }
+    return `${number}${suffix}`;
+  }
+
+  options = [
+    { value: 'all', display: 'All', state: '' },
+    { value: 1, display: 'P1', state: 'active' },
+    { value: 2, display: 'P2', state: '' },
+    { value: 3, display: 'P3', state: '' },
+    { value: 4, display: 'P4', state: '' },
+    { value: 5, display: 'P5', state: '' },
+    { value: 6, display: 'P6', state: '' },
+    { value: 7, display: 'P7', state: '' },
+    { value: 8, display: 'P8', state: '' }
+  ];
 }

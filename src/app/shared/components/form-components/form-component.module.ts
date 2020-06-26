@@ -8,7 +8,7 @@ import { SelectModule } from './select/select.module';
 
 import { InputComponent } from './input/input.component';
 import { InputAffixDirective } from './input/directives/input-affix.directive';
-import { TickButtonComponent } from './tick-button/tick-button.component';
+import { TickButtonModule } from './tick-button/tick-button.module';
 import { IconSelectModule } from './icon-select/icon-select.module';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { ImgUploadComponent } from './img-upload/img-upload.component';
@@ -17,12 +17,13 @@ import { datePickerModule } from './datepicker/datepicker.module';
 import { Datepicker2Module } from './datepicker2/datepicker2.module';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { PhonePrefixComponent } from './phone-prefix/phone-prefix.component';
-import { PopoverComponent } from './popover/popover.component';
-import { PopoverOptionDirective } from './popover/popover-option.directive';
+import { PopoverModule } from './popover/popover.module';
+// import { PopoverComponent } from './popover/popover.component';
+// import { PopoverOptionDirective } from './popover/popover-option.directive';
 let components = [
-  TickButtonComponent,
-  PopoverComponent,
-  PopoverOptionDirective,
+  // TickButtonComponent,
+  // PopoverComponent,
+  // PopoverOptionDirective,
   PhonePrefixComponent,
   InputComponent,
   InputAffixDirective,
@@ -31,24 +32,20 @@ let components = [
   TooltipComponent
 ];
 
+let customModules = [
+  TickButtonModule,
+  SelectModule,
+  IconSelectModule,
+  ValidatorModule,
+  datePickerModule,
+  Datepicker2Module,
+  PopoverModule
+];
+
+Datepicker2Module;
 @NgModule({
   declarations: [...components],
-  imports: [
-    CommonModule,
-    SelectModule,
-    IconSelectModule,
-    FormsModule,
-    ValidatorModule,
-    datePickerModule,
-    Datepicker2Module
-  ],
-  exports: [
-    ...components,
-    SelectModule,
-    IconSelectModule,
-    datePickerModule,
-    ValidatorModule,
-    Datepicker2Module
-  ]
+  imports: [CommonModule, FormsModule, ...customModules],
+  exports: [...components, ...customModules]
 })
 export class FormComponentsModule {}
