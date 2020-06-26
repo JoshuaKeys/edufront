@@ -10,7 +10,8 @@ import {
   ElementRef,
   ChangeDetectorRef,
   ApplicationRef,
-  HostListener
+  HostListener,
+  AfterViewChecked
 } from '@angular/core';
 import { SliderChildrenDirective } from './slider-children.directive';
 import { NgImageSliderComponent } from 'ng-image-slider';
@@ -22,7 +23,8 @@ import { ImageSliderService } from './image-slider.service';
   styleUrls: ['./image-slider.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImageSliderComponent implements OnInit, AfterViewInit {
+export class ImageSliderComponent
+  implements OnInit, AfterViewInit, AfterViewChecked {
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
@@ -55,18 +57,17 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
     );
 
     //might have to redo this on resize
-    this.hideBtns = this.mainEl.offsetWidth > this.mainInnerEl.offsetWidth;
-    window.addEventListener('resize', () => {
-      this.hideBtns = this.mainEl.offsetWidth > this.mainInnerEl.offsetWidth;
-    });
   }
-
+  ngAfterViewChecked() {
+    this.hideBtns = this.mainEl.offsetWidth > this.mainInnerEl.offsetWidth;
+    // console.log(this.hideBtns);
+  }
   indexInContainer = 0;
   mainEl;
   mainInnerEl;
   leftDisabled = true;
   rightDisabled = false;
-  hideBtns = true;
+  hideBtns = false;
   @ViewChild('nav') slider: NgImageSliderComponent;
   @ContentChildren(SliderChildrenDirective) ngContentEls;
   injectBtnImg() {
@@ -78,6 +79,7 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
 
     this.renderer.appendChild(next_el, newImgEl2);
     this.renderer.appendChild(prev_el, newImgEl);
+    this.cd.markForCheck();
   }
 
   populateImgObj(lengthOfObj) {
@@ -93,16 +95,23 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
       let marginLeftValue = this.mainInnerEl.style['margin-left'];
       this.leftDisabled = marginLeftValue == '0px';
       let marginLeftInt = Math.abs(parseInt(marginLeftValue.replace('px', '')));
+      let mainElWidth = this.mainEl.offsetWidth;
       this.rightDisabled =
-        marginLeftInt ===
-        this.mainInnerEl.offsetWidth - this.mainEl.offsetWidth;
+        mainElWidth === this.mainInnerEl.offsetWidth - marginLeftInt;
 
-      console.log(this.mainEl.offsetWidth);
-      console.log(Math.abs(parseInt(marginLeftValue.replace('px', ''))));
-      console.log(this.mainInnerEl.offsetWidth - this.mainEl.offsetWidth);
+      // let padding = this.mainEl.style['padding'].replace('px', '');
+
+      // console.log(this.mainEl.getBoundingClientRect());
+      // console.log(this.mainEl);
+      // console.log('mainEl - ' + mainElWidth);
+      // console.log(':mainInnerEl - ' + this.mainInnerEl.offsetWidth);
+      // console.log(
+      //   'marginleft - ' + Math.abs(parseInt(marginLeftValue.replace('px', '')))
+      // );
+      // console.log(this.mainInnerEl.offsetWidth - mainElWidth);
 
       this.cd.markForCheck();
-      console.log(marginLeftValue);
+      // console.log(marginLeftValue);
     });
   }
   injectNgContent(index, el: ElementRef) {
@@ -120,5 +129,6 @@ export class ImageSliderComponent implements OnInit, AfterViewInit {
     alt: 'alt of image '
   };
   //this is needed for the slider to work, as it always display one less
-  imageObject: Array<object> = [this.placeholderImageTemplate];
+  // imageObject: Array<object> = [this.placeholderImageTemplate];
+  imageObject: Array<object> = [];
 }

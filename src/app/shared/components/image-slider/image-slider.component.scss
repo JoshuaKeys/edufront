@@ -1,6 +1,5 @@
 @import 'src/assets/styles/mixins/alignment';
 @import 'src/assets/styles/colors';
-
 .hideBtns ng-image-slider ::ng-deep {
   .next.icons.next-icon,
   .prev.icons.prev-icon {
@@ -29,6 +28,7 @@
   position: relative;
   display: block;
   padding: 0 86px;
+  width: 100%;
   ng-image-slider ::ng-deep {
     display: block;
     width: 100%;
@@ -36,6 +36,10 @@
 
     .img-div {
       margin: 0 14px !important;
+    }
+
+    .main-inner {
+      @include displayFlex();
     }
 
     .custom-image-main,
@@ -66,6 +70,12 @@
       cursor: pointer;
 
       &.disable {
+        // background-color: #e6e9f3 !important;
+        // border-color: #e6e9f3 !important;
+
+        // img {
+        //   content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
+        // }
         opacity: 1;
         // background-color: #e6e9f3 !important;
         // border-color: #e6e9f3 !important;

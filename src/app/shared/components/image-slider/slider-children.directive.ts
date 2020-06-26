@@ -17,8 +17,8 @@ export class SliderChildrenDirective implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private sliderService: ImageSliderService
   ) {
-    this.renderer.setStyle(this.el.nativeElement, 'position', 'absolute');
-    this.renderer.setStyle(this.el.nativeElement, 'z-index', '2');
+    // this.renderer.setStyle(this.el.nativeElement, 'position', 'absolute');
+    // this.renderer.setStyle(this.el.nativeElement, 'z-index', '2');
     // this.renderer.setStyle(this.el.nativeElement, 'top', '50%');
     // this.renderer.setStyle(this.el.nativeElement, 'left', '50%');
     // this.renderer.setStyle(

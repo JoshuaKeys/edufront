@@ -9,7 +9,7 @@ import {
 import { CalendarModel } from './calendar.interface';
 
 @Component({
-  selector: 'edu-timetable-preview',
+  selector: 'edu-timetable-preview-temp',
   templateUrl: './timetable-preview.component.html',
   styleUrls: ['./timetable-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

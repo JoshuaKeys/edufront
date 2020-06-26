@@ -177,10 +177,10 @@ export class TimetableComponent2 implements OnInit {
       let rowEnd = this.getSpecialPeriodRow(_sp.endTime, _sp.inFirstHalf) - 1;
 
       let periodNotSet = _sp.text == '' && _sp.startTime === _sp.endTime;
-      console.log(_sp);
-      console.log(rowStart);
+      // console.log(_sp);
+      // console.log(rowStart);
       if (periodNotSet) {
-        console.log('NOT SET!');
+        // console.log('NOT SET!');
         this.SpecialPeriodClasses[i] = this.assignToClassArr(
           this.SpecialPeriodClasses[i],
           `r${rowStart}`

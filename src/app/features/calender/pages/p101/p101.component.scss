@@ -1,0 +1,28 @@
+@import '../../scss-fixes.scss';
+.header {
+  // margin-top: 290px;
+  font-size: 26px;
+  color: #212121;
+  line-height: 40px;
+  max-width: 484px;
+  margin-bottom: 30px;
+}
+.scrollable-content {
+  //   @include displayFlex();
+  height: 100%;
+  max-height: calc(100vh - 300px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.button--bottom {
+  @include displayFlex();
+}
+.button--bottom > button {
+  width: 200px;
+}
+
+edu-image-slider {
+  width: 100%;
+}

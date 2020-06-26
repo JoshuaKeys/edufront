@@ -1,0 +1,31 @@
+<h4 class="card__title">
+  {{ eduTitle }}
+
+  <button class="button--edit" ButtonType="text" (click)="editClick()">
+    <span>Edit</span> <img src="assets/form-components/edit.svg" alt="" />
+  </button>
+</h4>
+
+<edu-timetable2
+  [time]="time"
+  [specialPeriods]="specialPeriods"
+  [model]="model"
+  [periodDurationDefined]="periodDurationIsSet"
+  specialPeriodHeight="2"
+>
+  <ng-template
+    #periodTemplate
+    let-key="key"
+    let-value="value"
+    let-startTime="startTime"
+    let-endTime="endTime"
+  >
+    <div class="templateContainer ">
+      {{ value }}
+      <!-- {{ startTime }}
+      {{ endTime }}  -->
+    </div>
+  </ng-template>
+</edu-timetable2>
+
+<edu-tick-button></edu-tick-button>

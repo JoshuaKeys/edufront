@@ -1,0 +1,54 @@
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/mixins/alignment';
+
+//test for preview panel
+edu-timetable2 ::ng-deep .calendar {
+  grid-template-columns: unset;
+  grid-template-rows: unset;
+  grid-auto-rows: 12px;
+  grid-auto-columns: 40px;
+  column-gap: 8px;
+  row-gap: 8px;
+
+  .day,
+  .time {
+    font: 600 12px/14px Raleway;
+  }
+
+  .time {
+    color: $black;
+  }
+}
+
+:host {
+  display: block;
+  position: relative;
+  padding: 0 20px;
+}
+.card__title {
+  max-width: 80%;
+  margin: auto;
+
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 20px;
+  font: 600 12px/20px Raleway;
+  // position: relative;
+}
+
+.button--edit {
+  @include displayFlex(flex-start, flex-start);
+  display: inline-flex;
+  font: 600 12px/20px Raleway;
+  position: absolute;
+  right: 20px;
+  color: #a5aec7;
+
+  img {
+    width: unset !important ;
+    height: unset !important;
+    position: static !important;
+    margin: 0px !important;
+    margin-left: 10px !important;
+  }
+}

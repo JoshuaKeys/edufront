@@ -1,12 +1,14 @@
 <p>slider-test works!</p>
-<edu-image-slider>
-  <div
-    *ngFor="let item of testArr; let i = index"
-    sliderChildren
-    class="test123"
-  >
-    {{ i }}
+<div class="tempcontainer">
+  <edu-image-slider>
+    <div
+      *ngFor="let item of testArr; let i = index"
+      sliderChildren
+      class="test123"
+    >
+      {{ i }}
 
-    <button (click)="log(i)">click</button>
-  </div>
-</edu-image-slider>
+      <button (click)="log(i)">click</button>
+    </div>
+  </edu-image-slider>
+</div>
