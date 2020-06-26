@@ -8,22 +8,47 @@
 >
   <!-- main group for label and actual input El -->
   <div class="label-input__wrapper">
-    <input
-      class="form__input  "
-      [(ngModel)]="val"
-      [id]="elementId"
-      #inputEl
-      class="{{ alignment }}"
+    <div
+      class="input__wrapper {{ alignment }}"
       [ngClass]="{
-        'input--active': isLabelActive(),
-        'input__border--active': inputIsActive
+        focus: inputElIsFocus,
+        blur: !inputElIsFocus,
+        heightzero: !isLabelActive()
       }"
-      type="{{ config.isPassword ? 'password' : 'text' }}"
-      [disabled]="disabled"
-      (focus)="focusInput()"
-      (blur)="blurInput()"
-      (input)="inputFn($event.target.value)"
-    />
+    >
+      <div
+        class="input__view-component"
+        [ngStyle]="{
+          'font-size': fontSize,
+          'line-height': lineHeight,
+          'font-family': fontFamily,
+          'letter-spacing': letterSpacing,
+          'font-weight': fontWeight
+        }"
+      >
+        <span>{{ val }}</span
+        ><span class="input__view-component--suffix">
+          <ng-content select=".inline-suffix"></ng-content
+        ></span>
+      </div>
+
+      <input
+        class="form__input  "
+        [(ngModel)]="val"
+        [id]="elementId"
+        #inputEl
+        class="{{ alignment }}"
+        [ngClass]="{
+          'input--active': isLabelActive(),
+          'input__border--active': inputIsActive
+        }"
+        type="{{ config.isPassword ? 'password' : 'text' }}"
+        [disabled]="disabled"
+        (focus)="focusInput()"
+        (blur)="blurInput()"
+        (input)="inputFn($event.target.value)"
+      />
+    </div>
 
     <label
       class="{{ alignment }}"

@@ -130,6 +130,7 @@ export class IconSelectComponent implements OnInit, ControlValueAccessor {
     //change to rxjs operator later
     setTimeout(() => {
       if (!this.el.nativeElement.contains(document.activeElement)) {
+        console.log(document.activeElement);
         // this.selectService.setActiveOption(this.optionEls.toArray()[this.activeOptionIndex].OptionValue);
         // this.selectService.setElementIsOpenState(false);
         this.selectState = 'inactive';

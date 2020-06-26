@@ -53,9 +53,10 @@
 
 <br />
 <h1>ngmodel suffix test: {{ modelTest }}</h1>
-<edu-input [(ngModel)]="modelTest" alignment="left" elementId="'test132'">
+<edu-input [(ngModel)]="modelTest" alignment="center" elementId="'test132'">
   <span class="edu-label"> suffix test </span>
-  <!-- <edu-cb-test class="edu-input__suffix" InputAffix></edu-cb-test> -->
+  <span class="inline-suffix suffixtest">mins</span>
+  <!-- <edu-cb-test class="suffix" InputAffix></edu-cb-test> -->
 </edu-input>
 
 <h1>ngmodel prefix test: {{ modelTest2 }}</h1>

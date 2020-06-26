@@ -26,6 +26,9 @@ edu-input ::ng-deep {
   input.center {
     padding-right: 56px;
   }
+  .center .input__view-component {
+    padding-right: 56px;
+  }
 }
 .edu-input__prefix {
   // position: absolute;

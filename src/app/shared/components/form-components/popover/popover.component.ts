@@ -48,15 +48,18 @@ export class PopoverComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     this.popoverOptionDir.forEach(dir => {
-      console.log('subscribe');
+      // console.log('subscribe');
       dir.closePopoverEvent.subscribe(close => {
-        this.renderer.removeClass(this.el.nativeElement, 'active');
-        console.log('close?');
+        this.togglePopoverState();
+        // this.renderer.removeClass(this.el.nativeElement, 'active');
+        // console.log('close?');
         this.cd.markForCheck();
       });
     });
   }
   @Output('close') onClose = new EventEmitter();
+  @Output('edu-open') openEvent = new EventEmitter();
+  @Output('edu-close') closeEvent = new EventEmitter();
   @ContentChildren(PopoverOptionDirective) popoverOptionDir: QueryList<
     PopoverOptionDirective
   >;
@@ -68,8 +71,12 @@ export class PopoverComponent implements OnInit, AfterContentInit {
   @HostListener('document:click', ['$event']) clickedOutside($event) {
     //close element when click is from outside
     if (!this.el.nativeElement.parentElement.contains($event.srcElement)) {
-      this.renderer.removeClass(this.el.nativeElement, 'active');
-      this.onClose.emit();
+      // this.togglePopoverState();
+      if (this.el.nativeElement.classList.contains('active')) {
+        this.togglePopoverState();
+        // this.renderer.removeClass(this.el.nativeElement, 'active');
+        this.onClose.emit();
+      }
     }
   }
   @HostListener('click', ['$event']) onClick($event) {
@@ -83,9 +90,13 @@ export class PopoverComponent implements OnInit, AfterContentInit {
     let hasActiveClass = this.el.nativeElement.classList.contains('active');
     if (hasActiveClass) {
       this.renderer.removeClass(this.el.nativeElement, 'active');
+      // console.log('inactive');
       this.onClose.emit();
+      this.closeEvent.emit();
     } else {
       this.renderer.addClass(this.el.nativeElement, 'active');
+      // console.log('active');
+      this.openEvent.emit();
     }
   }
 }

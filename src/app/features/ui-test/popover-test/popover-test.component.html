@@ -2,7 +2,12 @@
   <button ButtonType="basic">
     popover top left
 
-    <edu-popover alignment="top" pointerAlignment="left">
+    <edu-popover
+      alignment="top"
+      pointerAlignment="left"
+      (edu-open)="log('opening popover')"
+      (edu-close)="log('closing popover')"
+    >
       <button [ClosePopover]="btnTest">test {{ btnTest }}</button>
 
       <p>
