@@ -1,6 +1,9 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectAll } from '../reducers/holidays-reducer';
+import { SelectedPeriodModel } from '../../models/selected-period.model';
+import { PeriodModel } from '../../models/period.model';
+import { SelectedPeriods } from '../../models/selected-periods.model';
 
 const calendarFeatureState = createFeatureSelector<CalendarStateModel>('calendar');
 
@@ -18,14 +21,15 @@ export const selectClassesAndGroups = createSelector(calendarFeatureState, feat 
 export const selectAllClasses = createSelector(calendarFeatureState, feat => feat.teaching.classes);
 export const getAllSelectedClassPeriods = createSelector(calendarFeatureState, feat => {
     return feat.teaching.classesAndGroups.map(classesGroup => {
-        const selectedTeachingDays = classesGroup.teachingDays.filter(teachingDay => teachingDay.periodSelected);
-        if(selectedTeachingDays.length > 0) {
+        const selectedPeriods: PeriodModel[] = classesGroup.periods ? classesGroup.periods.filter(period => period.periodSelected) :[];
+        if(selectedPeriods.length > 0) {
             return {
                 groupId: classesGroup.id,
-                teachingDays: selectedTeachingDays
-            }
+                periods: selectedPeriods
+            } as SelectedPeriods
         }else {
             return null;
         }
     }).filter(items => items)
+    
 })

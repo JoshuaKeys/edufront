@@ -9,7 +9,7 @@ import { of, Observable } from 'rxjs';
 import { selectClassesAndGroups, selectTeaching, selectAllClasses } from '../../ngrx/selectors';
 import { map } from 'rxjs/operators';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest, addClassesGroup } from '../../ngrx/actions/calendar.actions';
+import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest, addClassesGroup, addPeriodsToGroup } from '../../ngrx/actions/calendar.actions';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { v4 as uuid44} from 'uuid';
 @Component({
@@ -59,12 +59,16 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   }
   addGroup() {
     // alert('hello')
-    this.store.dispatch(addClassesGroup({generatedGroupId: uuid44()}))
+    const generatedGroupId = uuid44();
+    this.store.dispatch(addClassesGroup({generatedGroupId}))
+    this.store.dispatch(addPeriodsToGroup({generatedGroupId}))
+
   }
   selectPeriod($event: SelectedPeriodModel) {
     this.store.dispatch(selectTeachingDay($event))
   }
   updateSelectedDays(updateTo: number) {
+    alert('Hello')
     this.store.dispatch(updateSelectedTeachingDaysRequest({updateTo}));
   }
 }

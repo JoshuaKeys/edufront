@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { PreviewModel } from '../../models/preview.model';
 import { TermsAndDates } from '../../models/terms-and-date.model'
-import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, updateSelectedTeachingDays, assignPeriodsToTeachingDates, addClassesGroup } from '../actions/calendar.actions';
+import { setPreviewAcademicYearStartDate, setPreviewAcademicYearEndDate, setSchoolTerms, toggleSelectedTerms, setTermStartDate, initializeTermsAndDates, setTermEndDate, setTermName, initializeVacations, addVacation, setVacationEndDate, setVacationName, setVacationStartDate, toggleSelectedDay, setDefaultTeachingDays, fetchClassesAndGroupsSuccess, toggleClassesGroupActive, reassignClass, setNumberOfPeriods, assignPeriodsToTeachingDates, addClassesGroup } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { clearClassOffGroups } from '../../utilities';
@@ -40,14 +40,23 @@ export const previewReducer = createReducer(initialState,
     on(setNumberOfPeriods, (state, action) => {
         const teachingDays = state.teachingDays.items;
         const periodsArr = [];
+        const period = {
+            day: null,
+              periods: [],
+              startTime: '',
+              periodDuration: '',
+              intervaBtwPeriods: '',
+              breaks: [],
+              assembly: { name: '', startingAt: '', duration: '' }
+        }
         for(let i = 1; i <= action.numberOfPeriods; i++) {
-            periodsArr.push('P' + i)
+            period.periods.push('P' + i)
         }
         const periodsObjs = teachingDays.filter(teachingDay => teachingDay.selected)
             .map(teachingDay=> {
                 return {
+                    ...period,
                     day: teachingDay.day,
-                    periods: periodsArr
                 }
             })
         const classesAndGroupsCopy: ClassGroupModel[] = JSON.parse(JSON.stringify(state.teachingDays.classesAndGroupItems))
@@ -84,7 +93,12 @@ export const previewReducer = createReducer(initialState,
             const periodsArr: PeriodModel[] = classAndGroup.teachingDays.map(teachingDay=> {
                 const period: PeriodModel = {
                     day: null,
-                    periods: []
+              periods: [],
+              startTime: '09:30',
+              periodDuration: '0',
+              intervaBtwPeriods: '08:30',
+              breaks: [],
+              assembly: { name: '', startingAt: '', duration: '' }
                 };
                 if(teachingDay.selected) {
   

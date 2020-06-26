@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { fetchHolidaysRequest, fetchHolidaysResponse, fetchClassesAndGroups, fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse, updateSelectedTeachingDaysRequest, updateSelectedTeachingDays } from '../actions/calendar.actions';
+import { fetchHolidaysRequest,
+    fetchHolidaysResponse, fetchClassesAndGroups, fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse, updateSelectedTeachingDaysRequest, updateSelectedPeriods } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
@@ -39,9 +40,8 @@ export class CalendarEffects {
     updateSelectedTeachingDaysRequest$ = createEffect(() => this.actions$.pipe(
         ofType(updateSelectedTeachingDaysRequest),
         withLatestFrom(this.store.select(getAllSelectedClassPeriods)),
-        map(([action, selectedTeachingDates]) => {
-            console.log(selectTeachingDays)
-            return updateSelectedTeachingDays({updateTo: action.updateTo, selectedTeachingDates})
+        map(([action, selectedPeriods]) => {
+            return updateSelectedPeriods({updateTo: action.updateTo, selectedPeriods});
         })
     ))
     constructor(private actions$: Actions,

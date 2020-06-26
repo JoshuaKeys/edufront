@@ -6,7 +6,8 @@ import { ClassGroupModel } from '../../models/class-group.model'
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { Day } from 'src/app/shared/components/timetable/timetable.interface';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-import { SelectedTeachingDaysModel } from '../../models/selected-teaching-days.model';
+import { PeriodModel } from '../../models/period.model';
+import { SelectedPeriods } from '../../models/selected-periods.model';
 export const setPreviewAcademicYearStartDate = createAction(
     '[AcademicYearQuestionComponent] setPreviewAcademicYearStartDate',
     props<{startDate: string}>()
@@ -136,7 +137,11 @@ export const updateSelectedTeachingDaysRequest = createAction(
     '[TeachingPeriodsPerDayComponent] updateSelectedTeachingDaysRequest',
     props<{updateTo: number}>()
 )
-export const updateSelectedTeachingDays = createAction(
+export const updateSelectedPeriods = createAction(
     '[TeachingPeriodsPerDayComponent] updateSelectedTeachingDays',
-    props<{updateTo: number, selectedTeachingDates: SelectedTeachingDaysModel[]}>()
-)
+    props<{updateTo: number, selectedPeriods: SelectedPeriods[]}>()
+);
+export const addPeriodsToGroup = createAction(
+    '[TeachingPeriodsPerDayComponent] addPeriodsToGroup',
+    props<{generatedGroupId: string}>()
+);

@@ -11,6 +11,7 @@ import { CalendarModel } from '../../models/calendar.model';
 import { selectCalendar } from '../../ngrx/selectors';
 import { first, take, skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 import {
   addVacation,
   setVacationName,
