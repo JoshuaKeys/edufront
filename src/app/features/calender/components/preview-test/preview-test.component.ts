@@ -46,7 +46,7 @@ let newState: CalendarModel[] = [
     intervaBtwPeriods: '10',
     breaks: [
       {
-        name: 'break 2 ',
+        name: 'break 2',
         firstBreak: '',
         day: '',
         after: 'P5',
@@ -63,14 +63,14 @@ let newState: CalendarModel[] = [
     intervaBtwPeriods: '10',
     breaks: [
       {
-        name: 'break 1123 ',
+        name: 'break 1',
         firstBreak: '',
         day: '',
         after: 'P1',
         duration: '90'
       },
       {
-        name: 'break 2 ',
+        name: 'break 2',
         firstBreak: '',
         day: '',
         after: 'P5',
@@ -87,14 +87,14 @@ let newState: CalendarModel[] = [
     intervaBtwPeriods: '10',
     breaks: [
       {
-        name: 'break 1 ',
+        name: 'break 1',
         firstBreak: '',
         day: '',
         after: 'P1',
         duration: '90'
       },
       {
-        name: 'break 2 ',
+        name: 'break 2',
         firstBreak: '',
         day: '',
         after: 'P5',

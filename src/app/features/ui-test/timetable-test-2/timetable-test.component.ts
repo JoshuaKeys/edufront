@@ -35,6 +35,7 @@ export class TimeTableTestComponent2 implements OnInit {
   }
   periodDurationDefined = false;
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
+  specialPeriodIDarr = [];
   tempTimeArr = [];
 
   time = [];
@@ -67,6 +68,7 @@ export class TimeTableTestComponent2 implements OnInit {
 
     this.tempTimeArr = [];
     this.tempSpecialPeriod = [];
+    this.specialPeriodIDarr = [];
   }
 
   logStuff() {
@@ -119,7 +121,7 @@ export class TimeTableTestComponent2 implements OnInit {
 
     let res = (h1 / 100) * 60 - (h2 / 100) * 60 + min1 - min2;
 
-    console.log(res);
+    // console.log(res);
 
     return res;
   }
@@ -190,6 +192,11 @@ export class TimeTableTestComponent2 implements OnInit {
     text,
     color: string = '#F2B269'
   ) {
+    let uid = `st${startTime}et${endTime}day${day.toLowerCase()}tx${text}col${color}`;
+    if (this.specialPeriodIDarr.indexOf(uid) != -1) {
+      return;
+    }
+    // console.log(uid);
     let specialPeriodDetails: tempSpecialPeriodModel = {
       startTime,
       endTime,
@@ -202,6 +209,7 @@ export class TimeTableTestComponent2 implements OnInit {
     }
     this.addToTempTimeArr(startTime);
     this.addToTempTimeArr(endTime);
+    this.specialPeriodIDarr.push(uid);
     this.tempSpecialPeriod.push(specialPeriodDetails);
   }
 
@@ -265,6 +273,7 @@ export class TimeTableTestComponent2 implements OnInit {
     uniqueIdentifierArr.forEach(uid => {
       let hasStarted = false;
       let tempResults = null;
+      let prevDayIndex = 0;
       day.forEach((_day, _dayIndex) => {
         this.tempSpecialPeriod
 
@@ -274,6 +283,14 @@ export class TimeTableTestComponent2 implements OnInit {
             return isSameUid && isSameDay;
           })
           .map((p, periodIndex) => {
+            // console.log(`prevDayIndex ${prevDayIndex} _dayIndex ${_dayIndex}`);
+
+            if (_dayIndex - prevDayIndex > 1 && tempResults !== null) {
+              this.specialPeriods.push(tempResults);
+              tempResults = null;
+              hasStarted = false;
+            }
+
             // console.log(this.getSpecialPeriodIdentifier(p));
             if (!hasStarted && tempResults == null) {
               // console.log('init');
@@ -285,11 +302,12 @@ export class TimeTableTestComponent2 implements OnInit {
                 start: _day.toLowerCase(),
                 end: _day.toLowerCase()
               };
-
+              prevDayIndex = _dayIndex;
               hasStarted = true;
             } else if (tempResults !== null) {
               // console.log('changing the day');
               tempResults.end = _day.toLocaleLowerCase();
+              prevDayIndex = _dayIndex;
             } else {
               // console.log('end');
               this.specialPeriods.push(tempResults);
