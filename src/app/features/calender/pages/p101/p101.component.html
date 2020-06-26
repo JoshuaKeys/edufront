@@ -16,6 +16,7 @@
           [edu-id]="i"
           [edu-title]="'test123'"
           (edu-edit)="onEdit($event)"
+          (edu-tick)="onTick($event)"
           *ngFor="let timetable of timetableArr; let i = index"
         ></edu-timetable-card>
       </edu-image-slider>

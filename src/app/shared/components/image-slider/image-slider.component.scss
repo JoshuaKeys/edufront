@@ -1,12 +1,17 @@
 @import 'src/assets/styles/mixins/alignment';
 @import 'src/assets/styles/colors';
-.hideBtns ng-image-slider ::ng-deep {
-  .next.icons.next-icon,
-  .prev.icons.prev-icon {
+.hideBtns {
+  .nav__button {
     display: none;
   }
+
+  // &::ng-deep .main-inner {
+  // margin-left: unset;
+  // margin: auto !important;
+  // padding: 0 8px;
+  // }
 }
-.leftDisabled ng-image-slider ::ng-deep .prev.icons.prev-icon {
+.leftDisabled .nav__button--prev {
   background-color: #e6e9f3 !important;
   border-color: #e6e9f3 !important;
 
@@ -15,7 +20,7 @@
   }
 }
 
-.rightDisabled ng-image-slider ::ng-deep .next.icons.next-icon {
+.rightDisabled .nav__button--next {
   background-color: #e6e9f3 !important;
   border-color: #e6e9f3 !important;
 
@@ -35,11 +40,14 @@
     // position: relative;
 
     .img-div {
-      margin: 0 14px !important;
+      margin: 0 20px !important;
+      box-shadow: unset !important;
+      border: 0px;
     }
 
     .main-inner {
-      @include displayFlex();
+      @include displayFlex(flex-start, flex-start);
+      padding: 0 1px !important;
     }
 
     .custom-image-main,
@@ -56,6 +64,11 @@
 
     .next.icons.next-icon,
     .prev.icons.prev-icon {
+      &.disable {
+        opacity: 1;
+      }
+
+      display: none;
       font-size: 0;
       width: 64px;
       background: white;
@@ -68,22 +81,6 @@
       top: 50%;
       user-select: none;
       cursor: pointer;
-
-      &.disable {
-        // background-color: #e6e9f3 !important;
-        // border-color: #e6e9f3 !important;
-
-        // img {
-        //   content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
-        // }
-        opacity: 1;
-        // background-color: #e6e9f3 !important;
-        // border-color: #e6e9f3 !important;
-
-        // img {
-        //   content: url('/assets/form-components/slider-arrow-left-white.svg') !important;
-        // }
-      }
 
       img {
         @include absoluteCenter();
@@ -119,7 +116,7 @@
   }
 }
 
-.button {
+.nav__button {
   width: 64px;
   background: white;
   border: 2px solid #e6e9f3;
@@ -134,11 +131,12 @@
   }
   img {
     @include absoluteCenter();
+    content: url('/assets/form-components/slider-arrow-left-grey.svg');
   }
   &:hover {
     border-color: $blue;
     img {
-      content: url('/assets/form-components/slider-arrow-right-blue.svg');
+      content: url('/assets/form-components/slider-arrow-left-blue.svg');
     }
   }
   &:active {
@@ -148,13 +146,14 @@
       content: url('/assets/form-components/slider-arrow-left-white.svg');
     }
   }
-}
-.left {
-  left: 15px;
-  transform: translateY(-50%);
-}
-.right {
-  transform-origin: center center;
-  right: 15px;
-  transform: translateY(-50%) rotate(180deg);
+
+  &--prev {
+    left: 15px;
+    transform: translateY(-50%);
+  }
+  &--next {
+    transform-origin: center center;
+    right: 15px;
+    transform: translateY(-50%) rotate(180deg);
+  }
 }

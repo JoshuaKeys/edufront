@@ -10,10 +10,11 @@
 .scrollable-content {
   //   @include displayFlex();
   height: 100%;
-  max-height: calc(100vh - 300px);
+  max-height: calc(100vh - 278px);
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 .button--bottom {
@@ -23,6 +24,19 @@
   width: 200px;
 }
 
-edu-image-slider {
+edu-image-slider ::ng-deep {
   width: 100%;
+
+  edu-timetable-card {
+    margin-top: 5px;
+    margin-bottom: 23px;
+    // height: 415px;
+  }
+  .ng-image-slider,
+  .ng-image-slider-container,
+  .ng-image-slider-container > .main {
+    height: 100% !important;
+    max-height: calc(100vh - 286px);
+    overflow-y: hidden;
+  }
 }

@@ -48,7 +48,7 @@ export class ImageSliderComponent
     });
   }
   ngAfterViewInit() {
-    this.injectBtnImg();
+    // this.injectBtnImg();
     // this.registerClickEvent();
 
     this.mainInnerEl = this.el.nativeElement.querySelector('.main-inner');
@@ -57,6 +57,15 @@ export class ImageSliderComponent
     );
 
     //might have to redo this on resize
+  }
+
+  prev() {
+    this.slider.prevImg();
+    this.onArrowClickEvent();
+  }
+  next() {
+    this.slider.nextImg();
+    this.onArrowClickEvent();
   }
   ngAfterViewChecked() {
     this.hideBtns = this.mainEl.offsetWidth > this.mainInnerEl.offsetWidth;

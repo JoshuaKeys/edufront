@@ -17,15 +17,20 @@ export class P101Component implements OnInit {
 
   ngOnInit(): void {}
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
+  timetableArr2 = [weirdData, testData]; //tempDisplayData
+
   timetableArr = new Array(15).fill(testData);
 
   imageSize = {
-    width: '370px',
-    height: '415px'
+    width: '380px',
+    height: '456px'
   };
 
   onEdit(index) {
     console.log(`editing @ ${index}`);
+  }
+  onTick(index) {
+    console.log(`tick @ ${index}`);
   }
 
   startScroll(el) {
@@ -47,6 +52,35 @@ export class P101Component implements OnInit {
   }
 }
 
+let weirdData = [
+  {
+    day: 'Mon',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
+    startTime: '09:15',
+    periodDuration: '30',
+    intervaBtwPeriods: '10',
+    breaks: [],
+    assembly: { name: 'ass1', startingAt: '07:00', duration: '60' }
+  },
+  {
+    day: 'Tue',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '08:30',
+    periodDuration: '30',
+    intervaBtwPeriods: '10',
+    breaks: [],
+    assembly: { name: 'ass1', startingAt: '07:00', duration: '60' }
+  },
+  {
+    day: 'Wed',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
+    startTime: '08:30',
+    periodDuration: '30',
+    intervaBtwPeriods: '10',
+    breaks: [],
+    assembly: { name: 'ass1', startingAt: '07:00', duration: '60' }
+  }
+];
 let testData = [
   {
     day: 'Mon',

@@ -34,6 +34,7 @@ export class TimetableCardComponent implements OnInit {
   specialPeriods = [];
   model = {};
   @Output('edu-edit') editClickEvent = new EventEmitter();
+  @Output('edu-tick') tickClickEvent = new EventEmitter();
   @Input('edu-title') eduTitle;
   @Input('edu-id') eduId;
   @Input('edu-value') set elValue(val: CalendarModel[]) {
@@ -54,7 +55,9 @@ export class TimetableCardComponent implements OnInit {
   }
 
   periodDurationIsSet = false;
-
+  tickClick() {
+    this.tickClickEvent.emit(this.eduId);
+  }
   editClick() {
     this.editClickEvent.emit(this.eduId);
   }

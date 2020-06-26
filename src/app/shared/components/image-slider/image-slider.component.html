@@ -18,8 +18,14 @@
   ></ng-image-slider>
 
   <ng-content select="[sliderChildren]"></ng-content>
-</div>
 
+  <button class="nav__button nav__button--prev" (click)="prev()">
+    <img src="" alt="" />
+  </button>
+  <button class="nav__button nav__button--next" (click)="next()">
+    <img src="" alt="" />
+  </button>
+</div>
 <!-- leftDisabled: {{ leftDisabled }} rightDisabled: {{ rightDisabled }} hideBtns{{
   hideBtns
 }} -->

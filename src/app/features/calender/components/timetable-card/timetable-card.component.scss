@@ -6,10 +6,11 @@ edu-timetable2 ::ng-deep .calendar {
   grid-template-columns: unset;
   grid-template-rows: unset;
   grid-auto-rows: 12px;
-  grid-auto-columns: 40px;
+  grid-template-columns: 40px auto;
+  grid-auto-columns: auto;
   column-gap: 8px;
   row-gap: 8px;
-
+  width: 100%;
   .day,
   .time {
     font: 600 12px/14px Raleway;
@@ -20,17 +21,31 @@ edu-timetable2 ::ng-deep .calendar {
   }
 }
 
+.templateContainer {
+  position: absolute;
+  top: 6px;
+}
 :host {
   display: block;
   position: relative;
-  padding: 0 20px;
+  padding: 20px;
+  border: 1px solid $black;
+  border-radius: 15px;
+  & ::ng-deep edu-timetable2 {
+    @include displayFlex(center, flex-start);
+    height: 310px;
+    max-height: calc(100vh - 395px);
+    position: relative;
+    // display: block;
+    overflow-y: scroll;
+  }
 }
 .card__title {
   max-width: 80%;
   margin: auto;
-
+  color: $black;
   text-align: center;
-  margin-top: 32px;
+  // padding-top: 20px;
   margin-bottom: 20px;
   font: 600 12px/20px Raleway;
   // position: relative;
@@ -42,7 +57,7 @@ edu-timetable2 ::ng-deep .calendar {
   font: 600 12px/20px Raleway;
   position: absolute;
   right: 20px;
-  color: #a5aec7;
+  color: $ash;
 
   img {
     width: unset !important ;
@@ -51,4 +66,14 @@ edu-timetable2 ::ng-deep .calendar {
     margin: 0px !important;
     margin-left: 10px !important;
   }
+}
+
+edu-tick-button::ng-deep img {
+  top: 50% !important;
+  left: 50% !important;
+  width: 20px !important;
+  height: unset !important;
+  transform: translate(-50%, -50%) !important;
+  right: unset !important;
+  bottom: unset !important;
 }
