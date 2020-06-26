@@ -34,20 +34,41 @@ export class IconFieldComponent implements OnInit, ControlValueAccessor {
   @Input() icons: IconModel[];
   @Input() mode: string;
   isOpen = false;
+  filteredIcons;
   constructor(private renderer: Renderer2) {}
   value: string;
   activeIcon: string;
   popOverIsOpened = false;
+  _searchValue = '';
+  set searchValue(val) {
+    this._searchValue = val;
+    let cleanSearch = this.cleanText(val);
+    this.filteredIcons = this.icons.filter(icon =>
+      this.cleanText(icon.item).includes(cleanSearch)
+    );
+    // console.log(this.icons);
+    // console.log(this.filteredIcons);
+  }
+  get searchValue() {
+    return this._searchValue;
+  }
+
   @Output() valueChanged = new EventEmitter<IconModel>();
   @ViewChild('fieldNameEl') fieldNameEl: ElementRef<HTMLInputElement>;
   onValueChange: (any) => any;
   ngOnInit(): void {
-    console.log(this.fieldName);
-    console.log(this.icons);
+    this.filteredIcons = this.icons;
+    // console.log(this.fieldName);
+    // console.log(this.icons);
   }
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
+
+  cleanText(text) {
+    return text.toLowerCase().replace(' ', '');
+  }
+
   writeValue(val: IconModel) {
     console.log('called');
     if (val === null) {

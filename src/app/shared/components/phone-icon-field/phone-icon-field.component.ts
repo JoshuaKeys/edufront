@@ -28,6 +28,7 @@ import { PhoneIconModel } from '../../models/phone-icon.model';
 })
 export class PhoneIconFieldComponent implements OnInit {
   @Input() fieldName: string;
+  @Input() alignment: string = 'center';
   @Input() icons: PhoneIconModel[];
   @Input() mode: string;
   isOpen = false;

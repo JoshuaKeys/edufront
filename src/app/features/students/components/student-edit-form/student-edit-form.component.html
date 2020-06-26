@@ -2,7 +2,7 @@
   <div class="modal__overlay">
     <div class="modal">
       <h2 class="modal__title">
-        Add/Edit Students
+        Edit Students
       </h2>
       <form
         *ngIf="addEditForm"
@@ -56,20 +56,20 @@
           </div>
 
           <div class="group--row form--row">
-            <!-- <edu-icon-field
+            <edu-icon-field
               formControlName="country"
               [fieldName]="'Country'"
               [icons]="countryIconMap"
               (valueChanged)="updateCountry($event)"
               mode="select"
-            ></edu-icon-field> -->
-            <edu-country-field
+            ></edu-icon-field>
+            <!-- <edu-country-field
               formControlName="country"
               [fieldName]="'Country'"
               [icons]="countryIconMap"
               (valueChanged)="updateCountry($event)"
               mode="select"
-            ></edu-country-field>
+            ></edu-country-field> -->
 
             <edu-input alignment="left" formControlName="address">
               <span class="edu-label"> Address</span>
@@ -149,6 +149,7 @@
           ></edu-phone-field> -->
           <div class="group--row form--row">
             <edu-phone-icon-field
+              alignment="left"
               formControlName="phone"
               fieldName="Phone"
               [icons]="countryIconMap"

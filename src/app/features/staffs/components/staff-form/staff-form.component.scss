@@ -57,7 +57,8 @@ edu-subjects-area ::ng-deep .group--3 > .group--row {
 
 edu-phone-icon-field ::ng-deep,
 edu-icon-field ::ng-deep {
-  width: calc(50% - 10px) !important;
+  width: 100%;
+  // width: calc(50% - 10px) !important;
   display: flex;
   height: 54px;
   margin-right: 10px;

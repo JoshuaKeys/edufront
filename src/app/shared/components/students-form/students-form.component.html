@@ -59,14 +59,22 @@
           </div>
 
           <div class="group--row form--row">
-            <edu-country-field
+            <edu-icon-field
               formControlName="country"
               [fieldName]="'Country'"
               [icons]="countryIconMap"
               (valueChanged)="updateCountry($event)"
               [mode]="'select'"
             >
-            </edu-country-field>
+            </edu-icon-field>
+            <!-- <edu-country-field
+              formControlName="country"
+              [fieldName]="'Country'"
+              [icons]="countryIconMap"
+              (valueChanged)="updateCountry($event)"
+              [mode]="'select'"
+            >
+            </edu-country-field> -->
 
             <!-- <edu-icon-field
               formControlName="country"
@@ -160,6 +168,7 @@
           ></edu-phone-field> -->
           <div class="group--row form--row">
             <edu-phone-icon-field
+              alignment="left"
               formControlName="phone"
               fieldName="Phone"
               [icons]="countryIconMap"
