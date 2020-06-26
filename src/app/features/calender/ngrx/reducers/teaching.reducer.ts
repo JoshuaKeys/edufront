@@ -31,7 +31,10 @@ const initialState: TeachingStateModel = {
   ],
   classes: [],
   classesAndGroups: [],
-  periods: []
+  periods: [],
+  selection: {
+    selectionState: 'ended'
+  }
 };
 export const teachingReducer = createReducer(
   initialState,
