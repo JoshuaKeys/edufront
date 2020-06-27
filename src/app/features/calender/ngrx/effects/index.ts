@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { fetchHolidaysRequest,
-    fetchHolidaysResponse, fetchClassesAndGroups, fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse, updateSelectedTeachingDaysRequest, updateSelectedPeriods } from '../actions/calendar.actions';
+    fetchHolidaysResponse, fetchClassesAndGroups, 
+    fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
+    updateSelectedTeachingDaysRequest,
+    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeachingDays, getAllSelectedClassPeriods } from '../selectors';
+import { selectTeachingDays, getAllSelectedClassPeriods, selectCreateCalendarData } from '../selectors';
 
 @Injectable()
 export class CalendarEffects {
@@ -43,6 +46,13 @@ export class CalendarEffects {
         map(([action, selectedPeriods]) => {
             return updateSelectedPeriods({updateTo: action.updateTo, selectedPeriods});
         })
+    ));
+    createCalendarRequest$ = createEffect(() => this.actions$.pipe(
+        ofType(createCalendarRequest),
+        withLatestFrom(this.store.select(selectCreateCalendarData)),
+        mergeMap(([action, calendarCreate])=> this.calendarService.createCalendar(calendarCreate).pipe(
+            map(calendarResponse => createCalendarSuccess({calendarResponse}))
+        ))
     ))
     constructor(private actions$: Actions,
         private store: Store<CalendarStateModel>,

@@ -4,6 +4,6 @@ import { VacationCreateModel } from './vacation-create.model';
 
 export interface CalendarCreateModel {
     holidays: HolidayCreateModel[];
-    term: TermCreateModel,
-    vacations: VacationCreateModel[]
+    term: TermCreateModel;
+    vacations: VacationCreateModel[];
 }

@@ -1,5 +1,5 @@
 export interface TermDetailsDtoModel {
-    termId: string;
+    termId?: string;
     academicYearId?: string
     termTitle: string;
     termStart: string;

@@ -9,6 +9,7 @@ import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { PeriodModel } from '../../models/period.model';
 import { SelectedPeriods } from '../../models/selected-periods.model';
 import { CalendarCreateModel } from '../../models/calendar-create.model';
+import { HolidayCreateResponseModel } from '../../models/holiday-create-response.model';
 export const setPreviewAcademicYearStartDate = createAction(
     '[AcademicYearQuestionComponent] setPreviewAcademicYearStartDate',
     props<{startDate: string}>()
@@ -155,5 +156,5 @@ export const createCalendarRequest = createAction(
 );
 export const createCalendarSuccess = createAction(
     '[CalendarEffects] createCalendarSuccess',
-    props<{calendarResponse: CalendarCreateModel}>()
+    props<{calendarResponse: HolidayCreateResponseModel}>()
 )
