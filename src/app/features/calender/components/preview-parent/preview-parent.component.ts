@@ -39,6 +39,9 @@ export class PreviewParentComponent implements OnInit {
   }
   
   stripOffEmptyPeriods(periods: PeriodModel[]) {
-    return periods.filter(period => period.periods.length)
+
+    const res= periods.filter(period => period.periods.length)
+    console.log(res);
+    return periods
   }
 }
