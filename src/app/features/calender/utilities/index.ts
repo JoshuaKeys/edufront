@@ -46,3 +46,32 @@ export function generatePeriodFromNumber(num: number) {
     }
     return periodArr;
 }
+
+function buildRangePipe(items: number[]) {
+    const res: {start: number; end?: number}[] = [];
+    let currentIdx = 0;
+    for(let i = 0; i < items.length; i++) {
+        if(i === 0) {
+            res.push({start: items[0]});
+        }else 
+        if(items[i] - 1 === items[i - 1]) {
+            res[currentIdx].end = items[i];
+        } else {
+            res.push({start: items[i], end: null});
+            currentIdx+= 1;
+        }
+    }
+
+    res.reduce((prev, curr, idx, arr)=> {
+        if(curr.start && curr.end) {
+            if(arr.length - 1 !== idx) {
+                return prev += `${curr.start}-${curr.end},`
+            }
+            return prev += `${curr.start}-${curr.end}`
+            
+        }else if(curr.start && !curr.end) {
+            return prev += `${curr.start}`
+        }
+    }, '')
+    return res;
+}

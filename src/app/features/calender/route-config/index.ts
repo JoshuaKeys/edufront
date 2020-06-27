@@ -52,11 +52,15 @@ export const calenderNavigation = {
   },
   'same-periods-per-time': {
       previous: 'teaching-periods-per-day',
-      next: 'start-time-of-first-period'
+      next: 'start-time-of-first-period',
   },
   'start-time-of-first-period': {
       previous: 'same-periods-per-time',
       next: ''
+  },
+  'start-time-of-each-period': {
+    previous: 'same-periods-per-time',
+    next: ''
   }
 };
 
@@ -84,5 +88,6 @@ export const calenderRouteToComponentMap = {
   'teaching-periods-per-day':
     fromCalenderContainer.TeachingPeriodsPerDayComponent,
     'same-periods-per-time': fromCalenderContainer.SamePeriodsPerTimeComponent,
-    'start-time-of-first-period': fromCalenderContainer.StartTimeOfFirstPeriodComponent
+    'start-time-of-first-period': fromCalenderContainer.StartTimeOfFirstPeriodComponent,
+    'start-time-of-each-period': fromCalenderContainer.StartTimeOfEachPeriodComponent
 };

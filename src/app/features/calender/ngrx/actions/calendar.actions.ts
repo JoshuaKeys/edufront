@@ -157,4 +157,12 @@ export const createCalendarRequest = createAction(
 export const createCalendarSuccess = createAction(
     '[CalendarEffects] createCalendarSuccess',
     props<{calendarResponse: HolidayCreateResponseModel}>()
+);
+export const setAllStartTime = createAction(
+    '[StartTimeOfFirstPeriodComponent] setAllStartTime',
+    props<{startTime: string}>()
+)
+export const setStartTime = createAction(
+    '[StartTimeOfFirstPeriodComponent] setStartTime',
+    props<{startTime: string}>()
 )

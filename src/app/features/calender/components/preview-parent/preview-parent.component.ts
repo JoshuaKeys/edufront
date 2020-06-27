@@ -44,4 +44,15 @@ export class PreviewParentComponent implements OnInit {
     console.log(res);
     return periods
   }
+  getTitle(classesAndGroups: ClassGroupModel) {
+    let title = '';
+    for(let i = 0; i < classesAndGroups.classes.length; i++) {
+      if(i < classesAndGroups.classes.length - 1) {
+        title += classesAndGroups.classes[i].grade + '|'
+      }else {
+        title += classesAndGroups.classes[i].grade
+      }
+    }
+    return title;
+  }
 }

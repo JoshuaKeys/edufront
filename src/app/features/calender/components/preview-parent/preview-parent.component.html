@@ -1,8 +1,8 @@
 <ul class="preview-parent" *ngIf="previewState | async as preview">
     <li class="preview-parent__item" *ngIf="preview.periods.items" [routerLink]="preview.periods.route">
-        <edu-timetable-preview *ngIf="isUniform(preview.teachingDays.classesAndGroupItems); else nonUniform" [edu-value]="stripOffEmptyPeriods(preview.teachingDays.classesAndGroupItems[0].periods)"></edu-timetable-preview>
+        <edu-timetable-preview *ngIf="isUniform(preview.teachingDays.classesAndGroupItems); else nonUniform" edu-title="All classes" [edu-value]="stripOffEmptyPeriods(preview.teachingDays.classesAndGroupItems[0].periods)"></edu-timetable-preview>
         <ng-template #nonUniform>
-            <edu-timetable-preview *ngFor="let periods of preview.teachingDays.classesAndGroupItems" [edu-value]="stripOffEmptyPeriods(periods.periods)"></edu-timetable-preview>
+            <edu-timetable-preview *ngFor="let periods of preview.teachingDays.classesAndGroupItems" [edu-title]="getTitle(periods)" [edu-value]="stripOffEmptyPeriods(periods.periods)"></edu-timetable-preview>
         </ng-template>
     </li>
     <li class="preview-parent__item" *ngIf="(previewState | async).teachingDays.items && hasSelectedTeachingDays((previewState | async).teachingDays.items)" [routerLink]="(previewState | async).teachingDays.route">

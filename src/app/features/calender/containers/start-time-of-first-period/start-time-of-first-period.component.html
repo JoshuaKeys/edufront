@@ -3,13 +3,13 @@
         <h1 class="header">
             What time does the first period in a day start?
         </h1>
-        <!-- <form [formGroup]="firstPeriodForm"> -->
-        <edu-datepicker [elementId]="'elementId'" alignment="center">
-            <span class="edu-label">Start Time</span>
-            <div class="edu-suffix" InputAffix>
-                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-            </div>
-        </edu-datepicker>
-        <!-- </form> -->
+        <form *ngIf="startTimeForm" [formGroup]="startTimeForm">
+            <input formControlName="startTime" type="time" (change)="setStartTime($event)">
+        </form>
+        <div class="start-time__btn-container button--bottom" *ngIf="startTimeForm">
+            <button ButtonType="basic" [disabled]="startTimeForm.invalid" class="start-time__continue-btn" [routerLink]="['../', activatedRouteData.next]">
+              Continue
+            </button>
+        </div>
     </div>
 </div>

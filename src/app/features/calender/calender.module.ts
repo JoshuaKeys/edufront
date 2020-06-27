@@ -75,7 +75,8 @@ import { pages } from './pages';
     PeriodsPerDayComponent,
     PeriodsPreviewComponent,
     SamePeriodsPerTimeComponent,
-    StartTimeOfFirstPeriodComponent
+    StartTimeOfFirstPeriodComponent,
+    SamePeriodsPerTimeComponent
   ],
   imports: [
     CommonModule,

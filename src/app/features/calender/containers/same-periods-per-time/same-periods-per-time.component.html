@@ -10,7 +10,7 @@
         <div class="btns-container">
             <button ButtonType="round-basic" [routerLink]="['../', activatedRouteData.next]">
           Yes</button
-        ><button ButtonType="round">No</button>
+        ><button ButtonType="round" (click)="goToUpperNext()">No</button>
         </div>
     </div>
 </div>

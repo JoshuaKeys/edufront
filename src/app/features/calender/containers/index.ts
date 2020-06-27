@@ -13,3 +13,4 @@ export * from './number-of-periods/number-of-periods.component';
 export * from './teaching-periods-per-day/teaching-periods-per-day.component';
 export * from './same-periods-per-time/same-periods-per-time.component';
 export * from './start-time-of-first-period/start-time-of-first-period.component';
+export * from './start-time-of-each-period/start-time-of-each-period.component';

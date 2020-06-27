@@ -12,7 +12,9 @@ import {
   selectTeachingDay,
   addClassesGroup,
   addPeriodsToGroup,
-  updateSelectedPeriods
+  updateSelectedPeriods,
+  setStartTime,
+  setAllStartTime
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -111,6 +113,20 @@ export const teachingReducer = createReducer(
     })
  
     stateCopy.classesAndGroups[groupIdx].periods = periods;
+    return stateCopy;
+  }),
+
+  on(setAllStartTime, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
+      const updatedPeriods = classesAndGroup.periods.map(period =>{
+        period.startTime = action.startTime
+        return period;
+      })
+      classesAndGroup.periods = updatedPeriods;
+      return classesAndGroup;
+    })
+    stateCopy.classesAndGroups = updatedClassesAndGroups;
     return stateCopy;
   }),
   on(addClassesGroup, (state, action) => {

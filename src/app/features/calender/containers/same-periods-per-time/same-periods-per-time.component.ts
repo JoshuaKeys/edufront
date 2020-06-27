@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'edu-same-periods-per-time',
@@ -11,5 +11,10 @@ export class SamePeriodsPerTimeComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data
   ngOnInit(): void {
   }
-  constructor(private activatedRoute: ActivatedRoute) { }
+  goToUpperNext() {
+    this.router.navigateByUrl('/calendar/start-time-of-each-period')
+  }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 }
