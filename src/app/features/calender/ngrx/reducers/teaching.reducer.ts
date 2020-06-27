@@ -33,7 +33,8 @@ const initialState: TeachingStateModel = {
   classesAndGroups: [],
   periods: [],
   selection: {
-    selectionState: 'ended'
+    selectionState:  'ended',
+    periodSelected: undefined
   }
 };
 export const teachingReducer = createReducer(
@@ -101,9 +102,9 @@ export const teachingReducer = createReducer(
       periods.push({
         day: teachingDay.day,
         periods: [],
-        startTime: '09:30',
+        startTime: '0',
         periodDuration: '0',
-        intervaBtwPeriods: '08:30',
+        intervaBtwPeriods: '0',
         breaks: [],
         assembly: { name: '', startingAt: '', duration: '' }
       });
@@ -130,9 +131,9 @@ export const teachingReducer = createReducer(
       const period: PeriodModel = {
         day: teachingDay.day,
         periods: [],
-        startTime: '09:30',
+        startTime: '0',
         periodDuration: '0',
-        intervaBtwPeriods: '08:30',
+        intervaBtwPeriods: '0',
         breaks: [],
         assembly: { name: '', startingAt: '', duration: '' }
       };
@@ -217,9 +218,9 @@ export const teachingReducer = createReducer(
             const period: PeriodModel = {
               day: null,
               periods: [],
-              startTime: '09:30',
+              startTime: '0',
               periodDuration: '0',
-              intervaBtwPeriods: '08:30',
+              intervaBtwPeriods: '0',
               breaks: [],
               assembly: { name: '', startingAt: '', duration: '' }
             };
@@ -244,7 +245,14 @@ export const teachingReducer = createReducer(
     };
   }),
   on(selectTeachingDay, (state, action) => {
-    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    let stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    if(stateCopy.selection.selectionState === 'ended') {
+      // clear all previous selections
+      stateCopy = clearClassesAndGroups(stateCopy)
+      stateCopy.selection.selectionState = 'started';
+      delete stateCopy.selection.periodSelected
+    }
+
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
       classAndGroup => {
         const periods = classAndGroup.periods.map(period => {
@@ -258,7 +266,6 @@ export const teachingReducer = createReducer(
               period.periodSelected = true;
             }
           }
-
           return period;
         });
         classAndGroup.periods = periods;
@@ -298,7 +305,24 @@ export const teachingReducer = createReducer(
         }
       }
     }
-
+    stateCopy.selection.selectionState = 'ended';
+    stateCopy.selection.periodSelected = updateTo;
     return stateCopy;
   })
 );
+
+function clearClassesAndGroups(stateCopy: TeachingStateModel) {
+
+  const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+    classAndGroup => {
+      const clearedPeriods = classAndGroup.periods.map(period => {
+        period.periodSelected = false
+        return period;
+      })
+      classAndGroup.periods = clearedPeriods;
+      return classAndGroup;
+    }
+  );
+  stateCopy.classesAndGroups = updatedClassesAndGroups;
+  return stateCopy;
+}

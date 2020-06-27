@@ -7,7 +7,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef
 } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CalendarModel } from '../../models/calendar.model';
 import { Store } from '@ngrx/store';
@@ -81,7 +81,8 @@ export class TermNamesAndDatesQuestionComponent
         return new FormGroup(
           {
             termName: new FormControl(termAndDate.termName, {
-              updateOn: 'blur'
+              updateOn: 'blur',
+              validators: Validators.required
             }),
             startDate: new FormControl(termAndDate.startDate),
             endDate: new FormControl(termAndDate.endDate)
@@ -102,7 +103,7 @@ export class TermNamesAndDatesQuestionComponent
               if (startDate && startDate.length && endDate && endDate.length) {
                 const startDateObj = new Date(startDate);
                 const endDateObj = new Date(endDate);
-                if (startDateObj.getTime() > endDateObj.getTime()) {
+                if (startDateObj.getTime() >= endDateObj.getTime()) {
                   errors.msg.push('End Date must be more than start date');
                 }
               }

@@ -62,7 +62,6 @@ export const calenderNavigation = {
 
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-//   'dates-of-academic-year': TimetablePreviewComponent,
 
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':

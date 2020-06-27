@@ -22,6 +22,7 @@ export class HolidayAddComponent implements OnInit {
   addHoliday(){
     console.log(this.addHolidayForm.value)
     this.add.emit(this.addHolidayForm.value);
+    this.addHolidayForm.reset();
   }
   editHoliday() {
     this.edit.emit(this.editHolidayForm.value);

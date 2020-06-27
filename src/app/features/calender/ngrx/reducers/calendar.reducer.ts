@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
-import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate, initializeVacations, addVacation, setVacationName, setVacationEndDate, setVacationStartDate, setNumberOfPeriods, toggleSelectedDay } from '../actions/calendar.actions';
+import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate, initializeVacations, addVacation, setVacationName, setVacationEndDate, setVacationStartDate, setNumberOfPeriods, toggleSelectedDay, removeVacation } from '../actions/calendar.actions';
 import { TermsAndDates } from '../../models/terms-and-date.model';
 import { VacationModel } from '../../models/vacation.model';
 import { CalendarStateModel } from '../../models/calender-state.model';
@@ -107,6 +107,15 @@ export const calendarReducer = createReducer(initialState,
             startDate: '',
             endDate: ''
         })
+        return {
+            ...stateCopy,
+            vacations
+        }
+    }),
+    on(removeVacation, (state, action)=> {
+        const stateCopy: CalendarModel = JSON.parse(JSON.stringify(state))
+        let vacations = stateCopy.vacations;
+        vacations.splice(action.index, 1);
         return {
             ...stateCopy,
             vacations

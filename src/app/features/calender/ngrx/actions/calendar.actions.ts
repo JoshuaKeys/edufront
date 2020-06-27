@@ -145,3 +145,7 @@ export const addPeriodsToGroup = createAction(
     '[TeachingPeriodsPerDayComponent] addPeriodsToGroup',
     props<{generatedGroupId: string}>()
 );
+export const removeVacation = createAction(
+    '[VacationNamesAndDatesComponent] removeVacation',
+    props<{index: number}>()
+)

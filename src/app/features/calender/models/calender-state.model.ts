@@ -8,6 +8,7 @@ import { TeachingDay } from './teaching-day.model';
 import { ClassGroupModel } from './class-group.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { PeriodModel } from './period.model';
+import { TeachingStateModel } from './teaching-state.model';
 
 export interface CalendarStateModel {
     modal: CalendarModalModel,
@@ -17,11 +18,11 @@ export interface CalendarStateModel {
         holidayList: EntityState<HolidayModel>;
         holidayEdit: HolidayEditModel
     },
-    teaching: {
-        teachingDays?: TeachingDay[],
-        classesAndGroups: ClassGroupModel[],
-        classes: ClassModel[],
-        periods: PeriodModel[],
-    }
-
+    // teaching: {
+    //     teachingDays?: TeachingDay[],
+    //     classesAndGroups: ClassGroupModel[],
+    //     classes: ClassModel[],
+    //     periods: PeriodModel[],
+    // }
+    teaching: TeachingStateModel
 }

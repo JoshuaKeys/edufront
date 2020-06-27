@@ -60,10 +60,10 @@
 
             <div class="card period-menu">
                 <h5 class="card-title">Select Periods</h5>
-                <div class="badges flex-wrap">
+                <div class="badges flex-wrap" *ngIf="selection | async as selection">
                     <div *ngFor="let period of periods" (click)="updateSelectedDays(period)" class="badge badge--small badge--inactive" [ngClass]="{
               'badge--inactive':
-                calendarData.periods[0].periods.length !== period
+                period !== selection.periodSelected
             }">
                         {{ period }}
                     </div>

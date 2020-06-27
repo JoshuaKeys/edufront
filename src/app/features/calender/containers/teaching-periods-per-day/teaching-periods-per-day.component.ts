@@ -6,12 +6,13 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { of, Observable } from 'rxjs';
-import { selectClassesAndGroups, selectTeaching, selectAllClasses } from '../../ngrx/selectors';
+import { selectClassesAndGroups, selectTeaching, selectAllClasses, selectPeriodSelected } from '../../ngrx/selectors';
 import { map } from 'rxjs/operators';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest, addClassesGroup, addPeriodsToGroup } from '../../ngrx/actions/calendar.actions';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { v4 as uuid44} from 'uuid';
+import { SelectionModel } from '../../models/selection.model';
 @Component({
   selector: 'edu-teaching-periods-per-day',
   templateUrl: './teaching-periods-per-day.component.html',
@@ -21,6 +22,7 @@ import { v4 as uuid44} from 'uuid';
 export class TeachingPeriodsPerDayComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   classesAndGroups: Observable<ClassGroupModel[]>;
+  selection: Observable<SelectionModel>;
   calendarData: Observable<TeachingStateModel>;
   allClasses: Observable<ClassModel[]>;
   periods = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -29,6 +31,7 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   ngOnInit(): void {
     this.calendarData = this.store.select(selectTeaching);
     this.classesAndGroups = this.store.select(selectClassesAndGroups);
+    this.selection = this.store.select(selectPeriodSelected)
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
         const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
@@ -68,7 +71,6 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
     this.store.dispatch(selectTeachingDay($event))
   }
   updateSelectedDays(updateTo: number) {
-    alert('Hello')
     this.store.dispatch(updateSelectedTeachingDaysRequest({updateTo}));
   }
 }

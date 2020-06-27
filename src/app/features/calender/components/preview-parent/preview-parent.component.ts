@@ -5,6 +5,7 @@ import { CalendarModel } from '../../models/calendar.model';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { periodUniformity } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
+import { PeriodModel } from '../../models/period.model';
 
 @Component({
   selector: 'edu-preview-parent',
@@ -37,5 +38,7 @@ export class PreviewParentComponent implements OnInit {
     return periodUniformity(periods);
   }
   
-
+  stripOffEmptyPeriods(periods: PeriodModel[]) {
+    return periods.filter(period => period.periods.length)
+  }
 }

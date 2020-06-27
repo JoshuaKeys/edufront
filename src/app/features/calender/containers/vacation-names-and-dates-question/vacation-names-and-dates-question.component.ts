@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
 import { selectCalendar } from '../../ngrx/selectors';
@@ -16,7 +16,8 @@ import {
   addVacation,
   setVacationName,
   setVacationStartDate,
-  setVacationEndDate
+  setVacationEndDate,
+  removeVacation
 } from '../../ngrx/actions/calendar.actions';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -49,11 +50,7 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
     );
     var scrollableHeight = this.scrollableEl.nativeElement.offsetHeight;
     var maxHeight = vh - 330;
-    // console.log(
-    //   'maxHeight - ' + maxHeight + ',scrollable - ' + scrollableHeight
-    // );
     let res = scrollableHeight >= maxHeight - 10;
-    // console.log(res);
     return res;
   }
 
@@ -68,7 +65,8 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
           return new FormGroup(
             {
               vacationName: new FormControl(vacation.vacationName, {
-                updateOn: 'blur'
+                updateOn: 'blur',
+                validators: Validators.required
               }),
               startDate: new FormControl(vacation.startDate),
               endDate: new FormControl(vacation.endDate)
@@ -94,7 +92,7 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
                 ) {
                   const startDateObj = new Date(startDate);
                   const endDateObj = new Date(endDate);
-                  if (startDateObj.getTime() > endDateObj.getTime()) {
+                  if (startDateObj.getTime() >= endDateObj.getTime()) {
                     errors.msg.push('End Date must be more than start date');
                   }
                 }
@@ -111,7 +109,6 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
         });
         this.vacationForm.controls.vacationsAndDates['controls'].forEach(
           (formGroup: FormGroup, idx) => {
-            // formGroup.controls.termName.updateOn
             formGroup.controls.vacationName.valueChanges.subscribe(
               vacationName => {
                 this.store.dispatch(setVacationName({ idx, vacationName }));
@@ -127,6 +124,10 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
         );
         console.log(this.vacationForm);
       });
+  }
+  removeItem(i: number) {
+    this.store.dispatch(removeVacation({index: i}));
+    (this.vacationForm.controls.vacationsAndDates as FormArray).removeAt(i)
   }
   constructor(
     private store: Store<CalendarModel>,

@@ -32,4 +32,7 @@ export const getAllSelectedClassPeriods = createSelector(calendarFeatureState, f
         }
     }).filter(items => items)
     
+});
+export const selectPeriodSelected = createSelector(calendarFeatureState, feat => {
+    return feat.teaching.selection;
 })

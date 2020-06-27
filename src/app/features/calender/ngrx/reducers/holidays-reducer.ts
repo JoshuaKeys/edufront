@@ -24,7 +24,7 @@ export const holidayListReducer = createReducer(initialState,
     }),
     on(editHoliday, (state, action)=> {
         const update: Update<HolidayModel> = {
-            id: action.holiday.id,
+            id: action.holiday.date,
             changes: {
                 ...action.holiday
             }

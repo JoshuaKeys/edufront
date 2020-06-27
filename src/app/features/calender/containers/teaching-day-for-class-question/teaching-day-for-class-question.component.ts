@@ -52,7 +52,9 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
   }
   addGroup() {
     // alert('hello')
-    this.store.dispatch(addClassesGroup({generatedGroupId: uuid44()}))
+    // this.store.dispatch(addClassesGroup({generatedGroupId: uuid44()}))
+    const generatedGroupId = uuid44();
+    this.store.dispatch(addClassesGroup({generatedGroupId}))
   }
   asObservable(item) {
     return of(item);

@@ -1,63 +1,39 @@
 <div class="main">
-  <div class="content">
-    <h1 class="header">
-      What are the dates of the current<br />academic year?
-    </h1>
-    <div class="academic-year">
-      <form
-        action=""
-        *ngIf="academicYearForm"
-        class="academic-year__form"
-        [formGroup]="academicYearForm"
-        (ngSubmit)="formSubmit()"
-      >
-        <edu-datepicker
-          formControlName="startDate"
-          alignment="center"
-          (onDateDataChanged)="onDateDataChanged($event)"
-        >
-          <span class="edu-label">Start Date</span>
-          <div class="edu-suffix" InputAffix>
-            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-          </div>
-        </edu-datepicker>
+    <div class="content">
+        <h1 class="header">
+            What are the dates of the current<br />academic year?
+        </h1>
+        <div class="academic-year">
+            <form action="" *ngIf="academicYearForm" class="academic-year__form" [formGroup]="academicYearForm" (ngSubmit)="formSubmit()">
+                <edu-datepicker formControlName="startDate" alignment="center" (onDateDataChanged)="onDateDataChanged($event)">
+                    <span class="edu-label">Start Date</span>
+                    <div class="edu-suffix" InputAffix>
+                        <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                    </div>
+                </edu-datepicker>
 
-        <edu-datepicker formControlName="endDate" alignment="center">
-          <span class="edu-label">End Date</span>
-          <div class="edu-suffix" InputAffix>
-            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-          </div>
-        </edu-datepicker>
-      </form>
+                <edu-datepicker formControlName="endDate" alignment="center">
+                    <span class="edu-label">End Date</span>
+                    <div class="edu-suffix" InputAffix>
+                        <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                    </div>
+                </edu-datepicker>
+            </form>
+        </div>
     </div>
-  </div>
 
-  <div
-    class="academic-year__btn-container button--bottom"
-    *ngIf="academicYearForm && academicYearForm.valid"
-  >
-    <button
-      ButtonType="basic"
-      class="academic-year__continue-btn"
-      (click)="goNext()"
-    >
+    <div class="academic-year__btn-container button--bottom">
+        <button ButtonType="basic" class="academic-year__continue-btn" (click)="goNext()" [disabled]="academicYearForm && academicYearForm.invalid">
       Continue
     </button>
-  </div>
+    </div>
 </div>
-<edu-modal-v2
-  *ngIf="
+<edu-modal-v2 *ngIf="
     (calendarModalState | async) && (calendarModalState | async).startModal
-  "
-  class="intro"
-  icon="assets/calendar-start.svg"
-  btnText="GOT IT"
-  header="Calendar Set Up"
-  (btnClicked)="closeStartModal()"
->
-  The rest of the work from here is all about
-  <b><span class="orangeColor">calendars</span></b> and
-  <b><span class="orangeColor">timetables</span></b
+  " class="intro" icon="assets/calendar-start.svg" btnText="GOT IT" header="Calendar Set Up" (btnClicked)="closeStartModal()">
+    The rest of the work from here is all about
+    <b><span class="orangeColor">calendars</span></b> and
+    <b><span class="orangeColor">timetables</span></b
   >.<br />
   This step will provide a clear picture of your operating times/dates, and<br />
   what the structure of the section timetables.
