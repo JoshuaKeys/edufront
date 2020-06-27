@@ -8,6 +8,7 @@ import { Day } from 'src/app/shared/components/timetable/timetable.interface';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { PeriodModel } from '../../models/period.model';
 import { SelectedPeriods } from '../../models/selected-periods.model';
+import { CalendarCreateModel } from '../../models/calendar-create.model';
 export const setPreviewAcademicYearStartDate = createAction(
     '[AcademicYearQuestionComponent] setPreviewAcademicYearStartDate',
     props<{startDate: string}>()
@@ -148,4 +149,11 @@ export const addPeriodsToGroup = createAction(
 export const removeVacation = createAction(
     '[VacationNamesAndDatesComponent] removeVacation',
     props<{index: number}>()
+);
+export const createCalendarRequest = createAction(
+    '[HolidayListComponent] createCalendarRequest'
+);
+export const createCalendarSuccess = createAction(
+    '[CalendarEffects] createCalendarSuccess',
+    props<{calendarResponse: CalendarCreateModel}>()
 )
