@@ -62,11 +62,8 @@ export const calenderNavigation = {
 
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-<<<<<<< HEAD
-=======
   // 'dates-of-academic-year': fromPages.P101Component,
   // 'dates-of-academic-year': PreviewTestComponent,
->>>>>>> 4737-Calender-Setup
 
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
