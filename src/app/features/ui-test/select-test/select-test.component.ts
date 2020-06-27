@@ -21,7 +21,7 @@ export class SelectTestComponent implements OnInit {
   modelTest;
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      f1: ['', Validators.required],
+      f1: [[1, 2, 3, 4], Validators.required],
       f2: ['4', Validators.required],
       f3: [4, Validators.required]
     });
@@ -54,4 +54,44 @@ export class SelectTestComponent implements OnInit {
   updateValue(val) {
     this.updatedValue = val;
   }
+
+  setDisplayValue(arr) {
+    // console.log(arr);
+    let displayValue = '';
+
+    let temp = arr
+      .map(number => {
+        let suffix;
+        if (typeof number === 'string' && number.toLowerCase() === 'all') {
+          return `${number}`;
+        }
+
+        if (number == 1) {
+          suffix = 'st';
+        } else if (number == 2) {
+          suffix = 'nd';
+        } else if (number == 3) {
+          suffix = 'rd';
+        } else {
+          suffix = 'th';
+        }
+        return `${number}${suffix}`;
+      })
+      .reduce((a, b) => `${a},${b}`);
+    displayValue = `${temp} period`;
+    // }
+    return displayValue;
+  }
+
+  options = [
+    { value: 'all', display: 'All', state: '' },
+    { value: 1, display: 'P1', state: '' },
+    { value: 2, display: 'P2', state: '' },
+    { value: 3, display: 'P3', state: '' },
+    { value: 4, display: 'P4', state: '' },
+    { value: 5, display: 'P5', state: '' },
+    { value: 6, display: 'P6', state: '' },
+    { value: 7, display: 'P7', state: '' },
+    { value: 8, display: 'P8', state: '' }
+  ];
 }

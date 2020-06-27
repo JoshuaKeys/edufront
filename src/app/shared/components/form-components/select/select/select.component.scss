@@ -232,6 +232,7 @@
   }
   //(1) text displayed when selected by element
   &__input {
+    text-overflow: ellipsis;
     background: unset;
     line-height: 1;
     text-align: center;

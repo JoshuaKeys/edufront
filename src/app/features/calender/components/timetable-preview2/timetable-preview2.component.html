@@ -1,3 +1,7 @@
+<div class="card__title" *ngIf="titleText.length > 0">
+  {{ titleText }}
+</div>
+
 <edu-timetable2
   [time]="time"
   [specialPeriods]="specialPeriods"

@@ -35,7 +35,7 @@ export class TimetablePreview2Component implements OnInit {
   time = [];
   specialPeriods: any = [];
   model: any = {};
-
+  @Input('edu-title') titleText = '';
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
     this.resetMainValues();

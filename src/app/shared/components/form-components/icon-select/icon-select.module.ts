@@ -4,9 +4,13 @@ import { IconSelectComponent } from './icon-select/icon-select.component';
 // import { OptionComponent } from './option/option.component';
 import { FormsModule } from '@angular/forms';
 import { OptionModule } from '../option/option.module';
+import { PopoverModule } from '../popover/popover.module';
+import { TickButtonModule } from '../tick-button/tick-button.module';
+
+let requiredModules = [OptionModule, PopoverModule, TickButtonModule];
 @NgModule({
   declarations: [IconSelectComponent],
-  imports: [CommonModule, FormsModule, OptionModule],
+  imports: [CommonModule, FormsModule, ...requiredModules],
   exports: [[IconSelectComponent, OptionModule]]
 })
 export class IconSelectModule {}

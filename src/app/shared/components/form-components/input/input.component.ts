@@ -13,7 +13,8 @@ import {
   QueryList,
   ChangeDetectorRef,
   Renderer2,
-  HostListener
+  HostListener,
+  AfterViewInit
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputAffixDirective } from './directives/input-affix.directive';
@@ -34,7 +35,7 @@ import { ValidatorService } from '../validator/validator.service';
   ]
 })
 export class InputComponent
-  implements OnInit, AfterContentInit, ControlValueAccessor {
+  implements OnInit, AfterContentInit, AfterViewInit, ControlValueAccessor {
   constructor(
     private cd: ChangeDetectorRef,
     private el: ElementRef,
@@ -52,12 +53,25 @@ export class InputComponent
   ngAfterContentInit() {
     this.subscribeToAffixDirectives();
   }
+  ngAfterViewInit() {
+    this.fontSize = getComputedStyle(this.inputEl.nativeElement).fontSize;
+    this.lineHeight = getComputedStyle(this.inputEl.nativeElement).lineHeight;
+    this.fontFamily = getComputedStyle(this.inputEl.nativeElement).fontFamily;
+    this.fontWeight = getComputedStyle(this.inputEl.nativeElement).fontWeight;
+    this.letterSpacing = getComputedStyle(
+      this.inputEl.nativeElement
+    ).letterSpacing;
+  }
   config;
   inputElIsFocus = false;
 
   inputIsActive: boolean = false;
   // disabled: boolean; //for ControlValueAccessor implmentation
-
+  fontSize;
+  fontWeight;
+  lineHeight;
+  fontFamily;
+  letterSpacing;
   @Input('disabled') disabled = false;
   @Input('elementId') elementId;
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
@@ -77,6 +91,8 @@ export class InputComponent
   @HostListener('keydown', ['$event']) EventKeydown(event) {
     // console.log(event);
     this.elkeydown.emit(event);
+
+    // console.log(getComputedStyle(this.inputEl.nativeElement));
   }
 
   setElementID() {
