@@ -55,6 +55,7 @@ export class Datepicker2Component
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('elementId') elementId = 'tempDatepickerId123';
   @Output() onDateDataChanged = new EventEmitter<string>();
+  @Output('edu-change') onEduChange = new EventEmitter<string>();
   @Input('disabled') set disabled(disabled) {
     this._disabled = disabled;
   }
@@ -198,6 +199,7 @@ export class Datepicker2Component
     this.onChange(val);
     // this.onDateDataChanged.emit(val);
     this.onTouched();
+    this.onEduChange.emit(val);
     // this.onTouched(val)
   }
   get value() {
