@@ -14,7 +14,8 @@ import {
   addPeriodsToGroup,
   updateSelectedPeriods,
   setStartTime,
-  setAllStartTime
+  setAllStartTime,
+  selectStartTime
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -260,6 +261,37 @@ export const teachingReducer = createReducer(
       classesAndGroups: updatedClassesAndGroups
     };
   }),
+  on(selectStartTime, (state, action)=> {
+    let stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    if(stateCopy.selection.selectionState === 'ended') {
+      stateCopy = clearStartTimes(stateCopy);
+      stateCopy.selection.selectionState = 'started';
+    }
+
+      const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+        classAndGroup => {
+          const periods = classAndGroup.periods.map(period => {
+            if (
+              period.day === action.day.day &&
+              classAndGroup.id === action.classGroup.id
+            ) {
+              if (period.startTimeSelected) {
+                period.startTimeSelected = false;
+              } else {
+                period.startTimeSelected = true;
+              }
+            }
+            return period;
+          });
+          classAndGroup.periods = periods;
+          return classAndGroup;
+        }
+      );
+      return {
+        ...stateCopy,
+        classesAndGroups: updatedClassesAndGroups
+      };
+  }),
   on(selectTeachingDay, (state, action) => {
     let stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     if(stateCopy.selection.selectionState === 'ended') {
@@ -333,6 +365,21 @@ function clearClassesAndGroups(stateCopy: TeachingStateModel) {
     classAndGroup => {
       const clearedPeriods = classAndGroup.periods.map(period => {
         period.periodSelected = false
+        return period;
+      })
+      classAndGroup.periods = clearedPeriods;
+      return classAndGroup;
+    }
+  );
+  stateCopy.classesAndGroups = updatedClassesAndGroups;
+  return stateCopy;
+}
+function clearStartTimes(stateCopy: TeachingStateModel) {
+
+  const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+    classAndGroup => {
+      const clearedPeriods = classAndGroup.periods.map(period => {
+        period.startTimeSelected = false
         return period;
       })
       classAndGroup.periods = clearedPeriods;

@@ -441,3 +441,33 @@ edu-popover ::ng-deep {
         outline: none;
     }
 }
+
+edu-periods-per-day ::ng-deep .day {
+    display: none;
+}
+
+edu-periods-per-day ::ng-deep .startTimes {
+    padding: 0;
+    margin: 0;
+}
+
+.main {
+    justify-content: flex-start;
+}
+
+.startTimes--header {
+    align-self: flex-end;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-right: 8px;
+    margin-bottom: 15px;
+    @include displayFlex(flex-end, center);
+    font: 600 16px/20px Quicksand;
+    color: $ash;
+    li {
+        width: 64px;
+        margin: 0 10px;
+        text-align: center;
+    }
+}

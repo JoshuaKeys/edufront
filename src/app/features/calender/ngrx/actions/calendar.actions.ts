@@ -165,4 +165,8 @@ export const setAllStartTime = createAction(
 export const setStartTime = createAction(
     '[StartTimeOfFirstPeriodComponent] setStartTime',
     props<{startTime: string}>()
+);
+export const selectStartTime = createAction(
+    '[StartTimeOfEachPeriod] selectStartTime',
+    props<SelectedPeriodModel>()
 )

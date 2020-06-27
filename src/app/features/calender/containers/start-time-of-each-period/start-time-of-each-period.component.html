@@ -17,29 +17,35 @@
                 </ul>
                 <div class="badges scrollable-content">
                     <div class="badges--inlineflex">
-                        <div class="container">
+                        <div class="container" *ngIf="teachingData | async as teachingData">
                             <div>
-                                <div class="group--row line-entry" *ngFor="let item of tempArr">
+                                <div class="group--row line-entry" *ngFor="let item of teachingData.classesAndGroups">
                                     <div class="card ">
                                         <h4 class="card__title">
                                             Classes
                                         </h4>
-                                        <p class="card__desc">
+                                        <!-- <p class="card__desc">
                                             12 | 13
+                                        </p> -->
+                                        <p class="card__desc">
+                                            <ng-container *ngFor="let class of item.classes; let i = index">
+                                                {{ class.grade }}
+                                                <span *ngIf="!(i === item.classes.length - 1)">|</span>
+                                            </ng-container>
                                         </p>
                                         <edu-popover>
                                             <div class="classes">
-                                                <div class="badge badge--class" *ngFor="let item of popoverArr; let i = index">
+                                                <div class="badge badge--class" (click)="toggleActiveClass(classItem, item)" *ngFor="let item of popoverArr; let i = index">
                                                     {{ i }}
                                                 </div>
                                             </div>
                                         </edu-popover>
                                     </div>
                                     <div class="days">
-                                        <!-- add .badge--inactive  for inanctive class-->
-                                        <div class="badge badge--time {{ isWeekend(i) }}" *ngFor="let time of timeArr; let i = index">
-                                            {{ time }}
-                                        </div>
+                                        <!-- <div class="badge badge--time {{ isWeekend(i) }}" [ngClass]="{'badge--inactive': !period.startTimeSelected}" *ngFor="let period of item.periods; let i = index">
+                                            {{ period.startTime }}
+                                        </div> -->
+                                        <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="asObservable(item)"></edu-start-time-per-day>
                                     </div>
                                 </div>
                             </div>
@@ -56,25 +62,25 @@
 
             <div class="card period-menu">
                 <h5 class="card-title">Select Time</h5>
-                <div class="group--row timeSelector">
-                    <edu-select class="timeSelector--hr">
+                <form [formGroup]="selectTimeForm" class="group--row timeSelector">
+                    <edu-select class="timeSelector--hr" (edu-change)="onHourChange($event)">
                         <span class="edu-label">Hr</span>
                         <edu-option *ngFor="let hr of hrSelector; let i = index" [OptionValue]="i + 7">
                             {{ display2Digit(i + 7) }}
                         </edu-option>
                     </edu-select>
-                    <edu-select class="timeSelector--min">
+                    <edu-select class="timeSelector--min" (edu-change)="onMinutesChange($event)">
                         <span class="edu-label">Min</span>
                         <edu-option *ngFor="let min of minSelector; let i = index" [OptionValue]="i">
                             {{ display2Digit(i) }}
                         </edu-option>
                     </edu-select>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <button class="button--bottom" ButtonType="basic">
+    <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
       continue
     </button>
 </div>

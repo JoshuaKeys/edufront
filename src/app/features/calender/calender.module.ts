@@ -15,7 +15,8 @@ import {
   SamePeriodsForClassesQuestionComponent,
   TeachingPeriodsPerDayComponent,
   SamePeriodsPerTimeComponent,
-  StartTimeOfFirstPeriodComponent
+  StartTimeOfFirstPeriodComponent,
+  StartTimeOfEachPeriodComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
@@ -42,6 +43,7 @@ import { TimetablePreview2Component } from './components/timetable-preview2/time
 import { TimetableCardComponent } from './components/timetable-card/timetable-card.component';
 import { PreviewTestComponent } from './components/preview-test/preview-test.component';
 import { pages } from './pages';
+import { StartTimePerDayComponent } from './components/start-time-per-day/start-time-per-day.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -76,7 +78,9 @@ import { pages } from './pages';
     PeriodsPreviewComponent,
     SamePeriodsPerTimeComponent,
     StartTimeOfFirstPeriodComponent,
-    SamePeriodsPerTimeComponent
+    SamePeriodsPerTimeComponent,
+    StartTimeOfEachPeriodComponent,
+    StartTimePerDayComponent
   ],
   imports: [
     CommonModule,

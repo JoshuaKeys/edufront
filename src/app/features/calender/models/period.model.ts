@@ -9,4 +9,5 @@ export interface PeriodModel {
   breaks: string[];
   assembly: { name: string; startingAt: string; duration: string };
   periodSelected?: boolean;
+  startTimeSelected?: boolean;
 }
