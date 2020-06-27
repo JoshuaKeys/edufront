@@ -37,13 +37,31 @@
             class="group--row break"
             *ngFor="let item of class.break; let i = index"
           >
-            <edu-input>
+            <edu-input elementId="title">
               <span class="edu-label">
                 Title
               </span>
             </edu-input>
+            <edu-icon-select
+              [textParserFn]="parseDayValue"
+              elementId="f1"
+              [valueOptions]="dayOptions"
+            >
+              <span class="edu-label">
+                Day
+              </span>
+            </edu-icon-select>
 
             <edu-icon-select
+              [textParserFn]="parsePeriodValue"
+              elementId="f2"
+              [valueOptions]="periodOption"
+            >
+              <span class="edu-label">
+                After
+              </span>
+            </edu-icon-select>
+            <!-- <edu-icon-select
               ><span class="edu-label">
                 Day
               </span>
@@ -62,33 +80,14 @@
                   (click)="closePopover()"
                 ></edu-tick-button>
               </edu-popover>
-            </edu-icon-select>
+            </edu-icon-select> -->
 
-            <edu-icon-select
-              ><span class="edu-label">
-                After
-              </span>
-              <edu-popover>
-                <div class="badges">
-                  <edu-option
-                    *ngFor="let period of periodArr; let i = index"
-                    OptionValue="period"
-                    class="badge"
-                  >
-                    {{ period }}
-                  </edu-option>
-                </div>
-                <edu-tick-button
-                  [ClosePopover]="popoverState"
-                  (click)="closePopover()"
-                ></edu-tick-button>
-              </edu-popover>
-            </edu-icon-select>
-
-            <edu-input>
+            <edu-input elementId="duration">
               <span class="edu-label">
                 Duration
               </span>
+
+              <span class="inline-suffix duration__suffix">mins</span>
             </edu-input>
 
             <button class="delete-vacation-btn" ButtonType="icon">

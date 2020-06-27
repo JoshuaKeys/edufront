@@ -151,12 +151,14 @@ label {
 
 .input {
   &__wrapper.heightzero {
+    transition: none;
     height: 0px;
   }
   &__view-component--suffix {
     flex-shrink: 0;
   }
   &__wrapper {
+    transition: none;
     width: 100%;
     position: relative;
     &.center > .input__view-component {

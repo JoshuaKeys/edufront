@@ -7,14 +7,12 @@
 <h1>disabled : {{ loginForm.get('f1').disabled }}</h1>
 
 <input type="text" name="" id="" />
-
+{{ modelTest }}
 <form [formGroup]="loginForm" (ngSubmit)="formSubmit()">
   <edu-icon-select
-    [(ngModel)]="modelTest"
+    [textParserFn]="setDisplayValue"
     formControlName="f1"
-    [displayValue]="f1Value"
     [valueOptions]="options"
-    (edu-tick)="setDisplayValue($event)"
   >
     <div class=" prefix" InputAffix>
       <img src="assets/user-settings/modal_india.svg" alt="" srcset="" />

@@ -8,19 +8,13 @@ import {
   HostListener,
   forwardRef,
   ChangeDetectorRef,
-  ContentChildren,
-  QueryList,
-  ContentChild,
   AfterViewInit,
   ViewChild
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
 import { SelectService } from '../../_shared/select.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionComponent } from '../../option/option.component';
 import { PopoverComponent } from '../../popover/popover.component';
-import { filter } from 'rxjs/operators';
-// import { OptionValueDirective } from "../option-value.directive"
 
 @Component({
   selector: 'edu-icon-select',
@@ -42,13 +36,37 @@ export class IconSelectComponent
   @Input('alignment') alignment = 'center'; //left right center
   @Input('disabled') disabled = false;
   @Input('valueOptions') valueOptions = [];
-  @Input('displayValue') displayValue = '';
+  // _valueOptions = [];
+  // @Input('valueOptions') set valueOptions(param) {
+  //   console.log('VALUEOPTIONS');
+  //   console.log(param);
+  //   this._valueOptions = param;
+  //   this.displayBadges = param;
+  //   console.log(this.displayBadges);
+  // }
+  // get valueOptions() {
+  //   return this._valueOptions;
+  // }
+
+  @Input('textParserFn') textParserFn: Function = param => param;
   @Output('edu-tick') onTick = new EventEmitter<any>();
 
   // @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
   @ViewChild(PopoverComponent) popover: PopoverComponent;
-
-  value = ''; //value that gets pushed out
+  displayText = '';
+  _value: any = ''; //value that gets pushed out
+  set value(param) {
+    if (param == null || param == '') {
+      param = [''];
+    }
+    this._value = param;
+    this.setDisplayBadges(param);
+    this.displayText = this.textParserFn(param);
+    this.cd.markForCheck();
+  }
+  get value() {
+    return this._value;
+  }
   // inputValue = '';
   elementId;
   selectIsActive; // controls the checkbox, responsible for toggling dropdown
@@ -61,17 +79,23 @@ export class IconSelectComponent
     private el: ElementRef
   ) {}
 
+  isAfterOnInit = false;
+
   ngOnInit() {
+    this.setDisplayBadges(this.value);
+    this.isAfterOnInit = true;
     this.setElementId();
   }
 
   ngAfterViewInit() {
     this.popover.openEvent.subscribe(() => {
+      console.log('popover event');
       this.selectState = 'active';
       this.cd.markForCheck();
     });
 
     this.popover.closeEvent.subscribe(() => {
+      console.log('popover event');
       this.selectState = 'inactive';
       this.cd.markForCheck();
     });
@@ -80,7 +104,7 @@ export class IconSelectComponent
   isLabelActive() {
     return (
       this.selectState === 'active' ||
-      (this.displayValue != '' && this.displayValue)
+      (this.displayText != '' && this.displayText)
     );
   }
 
@@ -108,26 +132,90 @@ export class IconSelectComponent
   //   { value: 8, display: 'P8', state: '' },
   //   { value: 9, display: 'P9', state: '' }
   // ];
-  prevState = []; //temp for holding only
+  displayBadges = []; //
+  tempDisplayBadges = []; //temp for holding only
   popoverToogleVar = false;
+  setDisplayBadges(activeValues: any[]) {
+    // console.log('Setting display state - ' + JSON.stringify(activeValues));
+    this.displayBadges = this.valueOptions.map(option => {
+      let state = { state: '' };
+      state.state = activeValues.indexOf(option.value) == -1 ? '' : 'active';
+
+      return { ...option, ...state };
+    });
+    // console.log(JSON.stringify(this.displayBadges));
+    this.tempDisplayBadges = JSON.parse(JSON.stringify(this.displayBadges));
+  }
+
   popoverOpen() {
-    this.prevState = JSON.parse(JSON.stringify(this.valueOptions));
+    // console.log('popover opening - \n' + JSON.stringify(this.displayBadges));
+    this.tempDisplayBadges = JSON.parse(JSON.stringify(this.displayBadges));
+    this.cd.markForCheck();
   }
   popoverClose() {
-    this.valueOptions = JSON.parse(JSON.stringify(this.prevState));
+    // console.log('popover closing - \n' + JSON.stringify(this.tempDisplayBadges));
+    this.displayBadges = JSON.parse(JSON.stringify(this.tempDisplayBadges));
+    let activeArr = this.displayBadges
+      .filter(badge => badge.state == 'active')
+      .map(badge => badge.value);
+    this.displayText = this.textParserFn(activeArr);
+    this.cd.markForCheck();
   }
   confirmState() {
-    this.prevState = JSON.parse(JSON.stringify(this.valueOptions));
-    this.onTick.emit(this.prevState);
     this.popoverToogleVar = !this.popoverToogleVar;
+
+    this.value = this.displayBadges
+      .filter(option => option.state == 'active')
+      .map(option => option.value);
+    this.onTick.emit(this.value);
+    // console.log(this.value);
+  }
+
+  getAllBadgeIndex() {
+    let index = -1;
+    this.displayBadges.forEach((badge, badgeIndex) => {
+      let value = badge.value;
+      if (typeof value == 'string' && value.toLowerCase().trim() === 'all') {
+        index = badgeIndex;
+        return index;
+      }
+    });
+
+    return index;
   }
 
   setActiveBadge(index: number) {
-    if (this.valueOptions[index].state === '') {
-      this.valueOptions[index].state = 'active';
+    // can put in oninit or a setter later
+    let allBadgeIndex = this.getAllBadgeIndex();
+
+    if (allBadgeIndex === index) {
+      let allIsInactive = this.displayBadges[index].state !== 'active';
+      if (allIsInactive) {
+        this.displayBadges.forEach((badge, badgeIndex) => {
+          if (badgeIndex !== allBadgeIndex) {
+            this.displayBadges[badgeIndex].state = '';
+          }
+        });
+      }
     } else {
-      this.valueOptions[index].state = '';
+      if (allBadgeIndex != -1) {
+        this.displayBadges[allBadgeIndex].state = '';
+      }
     }
+
+    if (this.displayBadges) {
+      if (this.displayBadges[index].state === '') {
+        this.displayBadges[index].state = 'active';
+      } else {
+        this.displayBadges[index].state = '';
+      }
+    }
+
+    let activeArr = this.displayBadges
+      .filter(badge => badge.state === 'active')
+      .map(badge => badge.value);
+
+    this.displayText = this.textParserFn(activeArr);
   }
 
   //Control value accessor implementation
@@ -136,8 +224,7 @@ export class IconSelectComponent
   onTouched: any = () => {};
 
   writeValue(value: any) {
-    console.log(JSON.stringify(value));
-    this.selectService.setActiveValue(value);
+    this.value = value;
   }
 
   registerOnChange(fn: any) {

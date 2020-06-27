@@ -11,7 +11,8 @@ import {
   ContentChildren,
   QueryList,
   Output,
-  EventEmitter
+  EventEmitter,
+  AfterViewInit
 } from '@angular/core';
 import { PopoverOptionDirective } from './popover-option.directive';
 @Component({
@@ -20,7 +21,8 @@ import { PopoverOptionDirective } from './popover-option.directive';
   styleUrls: ['./popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PopoverComponent implements OnInit, AfterContentInit {
+export class PopoverComponent
+  implements OnInit, AfterContentInit, AfterViewInit {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
@@ -35,15 +37,18 @@ export class PopoverComponent implements OnInit, AfterContentInit {
       `pointer-${this.pointerAlignment}`
     );
     this.renderer.addClass(this.el.nativeElement, this.alignment);
-
-    this.renderer.listen(
-      this.el.nativeElement.parentElement,
-      'click',
-      $event => {
-        this.togglePopoverState();
-        this.cd.markForCheck();
-      }
-    );
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.renderer.listen(
+        this.el.nativeElement.parentElement,
+        'click',
+        $event => {
+          this.togglePopoverState();
+          this.cd.markForCheck();
+        }
+      );
+    });
   }
 
   ngAfterContentInit() {

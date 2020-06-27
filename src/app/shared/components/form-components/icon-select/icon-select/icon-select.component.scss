@@ -94,6 +94,7 @@
   }
   //(1) text displayed when selected by element
   &__input {
+    text-overflow: ellipsis;
     background: unset;
     line-height: 1;
     text-align: center;
@@ -209,11 +210,12 @@ edu-popover ::ng-deep {
   padding: 0;
 }
 .badges {
-  margin: 17px auto;
-  margin-top: 12px;
-  width: 145px;
+  margin: 12px 9.5px 17px 9.5px;
+  width: 134px;
+  height: 126px;
+  overflow-y: auto;
   // height: 190px;
-  @include displayFlex();
+  @include displayFlex(flex-start);
   flex-wrap: wrap;
   align-content: flex-start;
 }
@@ -222,6 +224,7 @@ edu-popover ::ng-deep {
   user-select: none;
   transition: none;
   cursor: pointer;
+  font: 500 11px/12px Roboto;
   margin: 5px;
   width: 32px;
   height: 32px;

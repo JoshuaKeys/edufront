@@ -1,6 +1,22 @@
 //for styling of individual period (box with dashed line, you can repurpose this for your dropzone)
 @import 'src/assets/scss/colors';
 @import 'src/assets/scss/mixins/alignment';
+
+:host {
+  @include displayFlex(flex-start, center, column);
+  width: 500px;
+}
+.card__title {
+  max-width: 80%;
+  margin: auto;
+  color: $black;
+  text-align: center;
+  // padding-top: 20px;
+  margin-bottom: 20px;
+  font: 600 12px/20px Raleway;
+  // position: relative;
+}
+
 .templateContainer.active {
   border-color: $blue;
   &::after {
@@ -18,11 +34,17 @@
   position: absolute;
 }
 //test for preview panel
+edu-timetable2 {
+  display: block;
+  width: 100%;
+}
+
 edu-timetable2 ::ng-deep .calendar {
   grid-template-columns: unset;
   grid-template-rows: unset;
   grid-auto-rows: 12px;
-  grid-auto-columns: 40px;
+  grid-template-columns: 40px auto;
+  grid-auto-columns: auto;
   column-gap: 8px;
   row-gap: 8px;
 

@@ -1,5 +1,3 @@
-{{ selectState }}
-
 <div
   [ngClass]="{ disabled: disabled }"
   role="listbox"
@@ -9,13 +7,13 @@
     <input
       tabindex="-1"
       class="  select__input"
-      [(ngModel)]="displayValue"
+      [(ngModel)]="displayText"
       name="{{ elementId }}-input"
       #input
       [ngClass]="{ 'input--active': isLabelActive() }"
       type="text"
       placeholder="-"
-      [disabled]="disabled"
+      disabled
     />
     <!-- <div
       class="  select__input"
@@ -39,7 +37,7 @@
   <edu-popover (edu-open)="popoverOpen()" (edu-close)="popoverClose()">
     <div class="badges">
       <div
-        *ngFor="let option of valueOptions; let i = index"
+        *ngFor="let option of displayBadges; let i = index"
         (click)="setActiveBadge(i)"
         class="badge {{ option.state }}"
       >

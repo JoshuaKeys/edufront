@@ -92,7 +92,7 @@ export class InputComponent
     // console.log(event);
     this.elkeydown.emit(event);
 
-    console.log(getComputedStyle(this.inputEl.nativeElement));
+    // console.log(getComputedStyle(this.inputEl.nativeElement));
   }
 
   setElementID() {
