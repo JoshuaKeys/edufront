@@ -28,7 +28,11 @@ import {
   updateSelectedPeriods,
   addPeriodsToGroup,
   setStartTime,
-  setAllStartTime
+  setAllStartTime,
+  selectStartTime,
+  setPeriodDuration,
+  setPeriodInterval,
+  setAssemblyData
 } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
@@ -161,6 +165,51 @@ export const previewReducer = createReducer(
       }
     };
   }),
+  on(setStartTime, (state, action)=> {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(classesAndGroup => {
+      const updatedPeriods = classesAndGroup.periods.map((period: PeriodModel) => {
+        if(period.startTimeSelected) {
+          period.startTime = action.startTime
+          period.startTimeSelected = false;
+        }
+        return period;
+      })
+      classesAndGroup.periods = updatedPeriods;
+      return classesAndGroup;
+    })
+    stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    return stateCopy;
+  }),
+  on(selectStartTime, (state, action)=> {
+    let stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+      const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
+        classAndGroup => {
+          const periods = classAndGroup.periods.map(period => {
+            if (
+              period.day === action.day.day &&
+              classAndGroup.id === action.classGroup.id
+            ) {
+              if (period.startTimeSelected) {
+                period.startTimeSelected = false;
+              } else {
+                period.startTimeSelected = true;
+              }
+            }
+            return period;
+          });
+          classAndGroup.periods = periods;
+          return classAndGroup;
+        }
+      );
+      return {
+        ...stateCopy,
+        teachingDays: {
+          ...stateCopy.teachingDays,
+          classesAndGroupItems: updatedClassesAndGroups
+        }
+      };
+  }),
   on(setAllStartTime, (state, action)=> {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(classesAndGroup => {
@@ -241,6 +290,32 @@ export const previewReducer = createReducer(
     stateCopy.teachingDays.classesAndGroupItems[groupIdx].periods = periods;
     return stateCopy;
   }),
+  on(setPeriodDuration, (state, action)=> {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map((classesGroup: ClassGroupModel)=> {
+      const updatedPeriods = classesGroup.periods.map(period => {
+        period.periodDuration = action.periodDuration + '';
+        return period;
+      })
+      classesGroup.periods = updatedPeriods;
+      return classesGroup;
+    })
+    stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    return stateCopy;
+  }),
+  on(setPeriodInterval, (state, action)=> {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map((classesGroup: ClassGroupModel)=> {
+      const updatedPeriods = classesGroup.periods.map(period => {
+        period.intervaBtwPeriods = action.periodInterval + '';
+        return period;
+      })
+      classesGroup.periods = updatedPeriods;
+      return classesGroup;
+    })
+    stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    return stateCopy;
+  }),
   on(toggleClassesGroupActive, (state, action) => {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const groupsState = stateCopy.teachingDays.classesAndGroupItems;
@@ -262,6 +337,19 @@ export const previewReducer = createReducer(
         classesAndGroupItems: groupsState
       }
     };
+  }),
+  on(setAssemblyData, (state, action)=> {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map((classesGroup: ClassGroupModel)=> {
+      const updatedPeriods = classesGroup.periods.map(period => {
+        period.assembly[action.field] = action.value + '';
+        return period;
+      })
+      classesGroup.periods = updatedPeriods;
+      return classesGroup;
+    })
+    stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    return stateCopy;
   }),
   on(addClassesGroup, (state, action) => {
     const prevGroupLength = state.teachingDays.classesAndGroupItems.length;

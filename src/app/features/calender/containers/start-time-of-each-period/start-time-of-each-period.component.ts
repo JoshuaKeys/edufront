@@ -7,10 +7,11 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ClassGroupModel } from '../../models/class-group.model';
-import { reassignClass, selectStartTime } from '../../ngrx/actions/calendar.actions';
+import { reassignClass, selectStartTime, addClassesGroup, addPeriodsToGroup, setStartTime } from '../../ngrx/actions/calendar.actions';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { v4 as uuid44} from 'uuid';
 
 @Component({
   selector: 'edu-start-time-of-each-period',
@@ -23,14 +24,15 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
   teachingData: Observable<TeachingStateModel>;
   selectTimeForm: FormGroup;
   activatedRouteData = this.activatedRoute.snapshot.data;
-
+  hr = '07';
+  min = '00';
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
-    this.selectTimeForm = new FormGroup({
-      timeSelect: new FormControl('')
-    })
-  }
 
+  }
+  onSubmit() {
+    console.log('Hello');
+  }
   tempArr = Array(20).fill('');
   timeArr = Array(7).fill('08:00');
   popoverArr = Array(12).fill('');
@@ -41,16 +43,34 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
     return of(item);
   }
   addToTempArr() {
-    this.tempArr.push('');
-  }
-  onTimeChange(timeChange) {
-    console.log(timeChange);
+    const generatedGroupId = uuid44();
+    this.store.dispatch(addClassesGroup({generatedGroupId}))
+    this.store.dispatch(addPeriodsToGroup({generatedGroupId}))
   }
   selectStartTime($event: SelectedPeriodModel) {
     this.store.dispatch(selectStartTime($event))
   }
+  onHourChange(timeChange) {
+    let stringRepOfHour = '';
+    if(timeChange < 10) {
+      stringRepOfHour = '0' + timeChange;
+    }else {
+      stringRepOfHour = timeChange;
+    }
+    const startTime = `${stringRepOfHour}:${this.min}`
+    this.hr = stringRepOfHour;
+    this.store.dispatch(setStartTime({startTime}))
+  }
   onMinutesChange(timeChange) {
-    console.log(timeChange);
+    let stringRepOfMin = '';
+    if(timeChange < 10) {
+      stringRepOfMin = '0' + timeChange;
+    }else {
+      stringRepOfMin = timeChange;
+    }
+    const startTime = `${this.hr}:${stringRepOfMin}`
+    this.min = stringRepOfMin
+    this.store.dispatch(setStartTime({startTime}))
   }
   isWeekend(index) {
     if (index > 4) {

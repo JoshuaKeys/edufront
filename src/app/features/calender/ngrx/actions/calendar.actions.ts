@@ -169,4 +169,16 @@ export const setStartTime = createAction(
 export const selectStartTime = createAction(
     '[StartTimeOfEachPeriod] selectStartTime',
     props<SelectedPeriodModel>()
+);
+export const setPeriodDuration = createAction(
+    '[PeriodDurationComponent] setPeriodDuration',
+    props<{periodDuration: number}>()
+);
+export const setPeriodInterval = createAction(
+    '[PeriodIntervalComponent] setPeriodInterval',
+    props<{periodInterval: number}>()
+);
+export const setAssemblyData = createAction(
+    '[AssemblyDetailsComponent] setAssemblyData',
+    props<{field: 'startingAt'|'duration'|'name', value: number|string}>()
 )

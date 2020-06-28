@@ -31,7 +31,7 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   ngOnInit(): void {
     this.calendarData = this.store.select(selectTeaching);
     this.classesAndGroups = this.store.select(selectClassesAndGroups);
-    this.selection = this.store.select(selectPeriodSelected)
+    this.selection = this.store.select(selectPeriodSelected);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
         const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))

@@ -15,7 +15,10 @@ import {
   updateSelectedPeriods,
   setStartTime,
   setAllStartTime,
-  selectStartTime
+  selectStartTime,
+  setPeriodDuration,
+  setPeriodInterval,
+  setAssemblyData
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -122,6 +125,22 @@ export const teachingReducer = createReducer(
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
       const updatedPeriods = classesAndGroup.periods.map(period =>{
         period.startTime = action.startTime
+        return period;
+      })
+      classesAndGroup.periods = updatedPeriods;
+      return classesAndGroup;
+    })
+    stateCopy.classesAndGroups = updatedClassesAndGroups;
+    return stateCopy;
+  }),
+  on(setStartTime, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
+      const updatedPeriods = classesAndGroup.periods.map((period: PeriodModel) => {
+        if(period.startTimeSelected) {
+          period.startTime = action.startTime
+          period.startTimeSelected = false;
+        }
         return period;
       })
       classesAndGroup.periods = updatedPeriods;
@@ -324,6 +343,45 @@ export const teachingReducer = createReducer(
       ...stateCopy,
       classesAndGroups: updatedClassesAndGroups
     };
+  }),
+  on(setAssemblyData, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map((classesGroup: ClassGroupModel)=> {
+      const updatedPeriods = classesGroup.periods.map(period => {
+        period.assembly[action.field] = action.value + '';
+        return period;
+      })
+      classesGroup.periods = updatedPeriods;
+      return classesGroup;
+    })
+    stateCopy.classesAndGroups = updatedClassesAndGroups;
+    return stateCopy;
+  }),
+  on(setPeriodDuration, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map((classesGroup: ClassGroupModel)=> {
+      const updatedPeriods = classesGroup.periods.map(period => {
+        period.periodDuration = action.periodDuration + '';
+        return period;
+      })
+      classesGroup.periods = updatedPeriods;
+      return classesGroup;
+    })
+    stateCopy.classesAndGroups = updatedClassesAndGroups;
+    return stateCopy;
+  }),
+  on(setPeriodInterval, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map((classesGroup: ClassGroupModel)=> {
+      const updatedPeriods = classesGroup.periods.map(period => {
+        period.intervaBtwPeriods = action.periodInterval + '';
+        return period;
+      })
+      classesGroup.periods = updatedPeriods;
+      return classesGroup;
+    })
+    stateCopy.classesAndGroups = updatedClassesAndGroups;
+    return stateCopy;
   }),
   on(updateSelectedPeriods, (state, action) => {
     const { updateTo, selectedPeriods } = action;

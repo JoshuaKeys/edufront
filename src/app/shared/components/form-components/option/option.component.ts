@@ -11,7 +11,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { SelectService } from '../_shared/select.service';
-import { filter } from 'rxjs/operators';
 @Component({
   selector: 'edu-option',
   templateUrl: './option.component.html',

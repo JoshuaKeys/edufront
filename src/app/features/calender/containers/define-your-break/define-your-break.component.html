@@ -1,0 +1,49 @@
+<div class="main">
+    <div class="content">
+        <h1 class="header">
+            Define your breaks
+        </h1>
+
+        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
+            <div class="group--row break" *ngFor="let item of formArr">
+                <edu-input>
+                    <span class="edu-label">
+              Name
+            </span>
+                </edu-input>
+
+                <edu-select><span class="edu-label">
+              Starting at
+            </span>
+                    <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
+                        {{ i + 1 }} mins
+                    </edu-option>
+                </edu-select>
+
+                <edu-select><span class="edu-label">
+              Assembly Duration
+            </span>
+                    <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
+                        {{ i + 1 }} mins
+                    </edu-option>
+                </edu-select>
+                <edu-input>
+                    <span class="edu-label">
+              Duration
+            </span>
+                </edu-input>
+
+                <button class="delete-vacation-btn" ButtonType="icon">
+            <img src="assets/form-components/cross-red.svg" alt="" />
+          </button>
+            </div>
+
+            <button class="break__btn" (click)="addformArr()">
+          <img src="assets/32pxplusblue.svg" />
+        </button>
+        </div>
+    </div>
+    <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
+      continue
+    </button>
+</div>

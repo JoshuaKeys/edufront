@@ -56,10 +56,38 @@ export const calenderNavigation = {
   },
   'start-time-of-first-period': {
       previous: 'same-periods-per-time',
-      next: ''
+      next: 'period-duration'
   },
   'start-time-of-each-period': {
     previous: 'same-periods-per-time',
+    next: 'period-duration'
+  },
+  'period-duration': {
+    previous: 'start-time-of-each-period',
+    next: 'period-interval'
+  },
+  'period-interval': {
+    previous: 'period-duration',
+    next: 'common-assembly-question'
+  },
+  'common-assembly-question': {
+    previous: 'period-interval',
+    next: 'assembly-details',
+  },
+  'assembly-details': {
+    previous: 'common-assembly-question',
+    next: 'break-schedule-question'
+  },
+  'break-schedule-question': {
+    previous: 'common-assembly-question',
+    next: 'break-definition'
+  },
+  'break-definition': {
+    previous: 'break-schedule-question',
+    next: 'calendar-confirmation'
+  },
+  'calendar-confirmation': {
+    previous: 'break-definition',
     next: ''
   }
 };
@@ -89,5 +117,12 @@ export const calenderRouteToComponentMap = {
     fromCalenderContainer.TeachingPeriodsPerDayComponent,
     'same-periods-per-time': fromCalenderContainer.SamePeriodsPerTimeComponent,
     'start-time-of-first-period': fromCalenderContainer.StartTimeOfFirstPeriodComponent,
-    'start-time-of-each-period': fromCalenderContainer.StartTimeOfEachPeriodComponent
+    'start-time-of-each-period': fromCalenderContainer.StartTimeOfEachPeriodComponent,
+    'period-duration': fromCalenderContainer.PeriodDurationComponent,
+    'period-interval': fromCalenderContainer.PeriodIntervalComponent,
+    'common-assembly-question': fromCalenderContainer.CommonAssemblyQuestionComponent,
+    'assembly-details': fromCalenderContainer.AssemblyDetailsComponent,
+    'break-schedule-question': fromCalenderContainer.BreakScheduleQuestionComponent,
+    'break-definition': fromCalenderContainer.DefineYourBreakComponent,
+    'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent
 };

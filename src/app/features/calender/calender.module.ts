@@ -16,7 +16,10 @@ import {
   TeachingPeriodsPerDayComponent,
   SamePeriodsPerTimeComponent,
   StartTimeOfFirstPeriodComponent,
-  StartTimeOfEachPeriodComponent
+  StartTimeOfEachPeriodComponent,
+  PeriodDurationComponent,
+  CommonAssemblyQuestionComponent,
+  CalendarConfirmationComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
@@ -44,6 +47,10 @@ import { TimetableCardComponent } from './components/timetable-card/timetable-ca
 import { PreviewTestComponent } from './components/preview-test/preview-test.component';
 import { pages } from './pages';
 import { StartTimePerDayComponent } from './components/start-time-per-day/start-time-per-day.component';
+import { BreakScheduleQuestionComponent } from './containers/break-schedule-question/break-schedule-question.component';
+import { AssemblyDetailsComponent } from './containers/assembly-details/assembly-details.component';
+import { DefineYourBreakComponent } from './containers/define-your-break/define-your-break.component';
+import { PeriodIntervalComponent } from './containers/period-interval/period-interval.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -80,7 +87,14 @@ import { StartTimePerDayComponent } from './components/start-time-per-day/start-
     StartTimeOfFirstPeriodComponent,
     SamePeriodsPerTimeComponent,
     StartTimeOfEachPeriodComponent,
-    StartTimePerDayComponent
+    StartTimePerDayComponent,
+    PeriodDurationComponent,
+    BreakScheduleQuestionComponent,
+    AssemblyDetailsComponent,
+    DefineYourBreakComponent,
+    PeriodIntervalComponent,
+    CommonAssemblyQuestionComponent,
+    CalendarConfirmationComponent
   ],
   imports: [
     CommonModule,
