@@ -52,6 +52,7 @@ import { AssemblyDetailsComponent } from './containers/assembly-details/assembly
 import { DefineYourBreakComponent } from './containers/define-your-break/define-your-break.component';
 import { PeriodIntervalComponent } from './containers/period-interval/period-interval.component';
 import { PopoverModule } from 'src/app/shared/components/form-components/popover/popover.module';
+import { FormComponentsModule } from 'src/app/shared/components/form-components/form-component.module';
 @NgModule({
   declarations: [
     ...pages,
@@ -102,6 +103,7 @@ import { PopoverModule } from 'src/app/shared/components/form-components/popover
     CalenderRoutingModule,
     SharedModule,
     PopoverModule,
+    FormComponentsModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([CalendarEffects]),
     StoreModule.forFeature('calendar', calenderReducer)

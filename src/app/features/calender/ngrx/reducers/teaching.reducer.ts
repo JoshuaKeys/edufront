@@ -21,7 +21,10 @@ import {
   setAssemblyData,
   setGroupTeachingDays,
   setGroupPeriods,
-  setGroupStartTime
+  setGroupStartTime,
+  addBreak,
+  removeBreak,
+  updateBreakData
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -67,6 +70,43 @@ export const teachingReducer = createReducer(
     const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
     stateCopy.classesAndGroups[groupIdx].periods = stateCopy.periods;
     console.log(stateCopy.periods)
+    return stateCopy;
+  }),
+  on(addBreak, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
+
+      period.breaks.push({
+        name: 'Break ' + period.breaks.length + 1,
+        firstBreak: '',
+        day: '',
+        after: '',
+        duration: ''
+      })
+      return period;
+    })
+    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
+    return stateCopy;
+  }),
+  on(removeBreak, (state, action)=>{
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
+      period.breaks.splice(action.breakIndex, 1)
+      return period;
+    })
+    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
+    return stateCopy;
+  }),
+  on(updateBreakData, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
+      period.breaks[action.index][action.field] = action.value;
+      return period;
+    });
+    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
     return stateCopy;
   }),
   on(setGroupStartTime, (state, action) => {

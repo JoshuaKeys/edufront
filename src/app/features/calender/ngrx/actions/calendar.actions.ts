@@ -194,3 +194,15 @@ export const setGroupStartTime = createAction(
     '[StartTimeForEachPeriodComponent] setGroupStartTime',
     props<{groupId: string}>()
 );
+export const addBreak = createAction(
+    '[DefineYourBreakComponent] addBreak',
+    props<{groupId: string}>()
+);
+export const removeBreak = createAction(
+    '[DefineYourBreakComponent] removeBreak',
+    props<{groupId: string, breakIndex: number}>()
+);
+export const updateBreakData = createAction(
+    '[DefineYourBreakComponent] updateBreakData',
+    props<{groupId: string, index: number, field: 'title'|'day'|'after'|'duration', value: string}>()
+)

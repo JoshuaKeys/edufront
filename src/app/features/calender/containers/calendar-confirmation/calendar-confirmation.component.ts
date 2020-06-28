@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
+import { ActivatedRoute } from '@angular/router';
 let weirdData = [
   {
     day: 'Mon',
@@ -100,7 +101,10 @@ let testData = [
 })
 export class CalendarConfirmationComponent implements OnInit {
   teachingData: Observable<TeachingStateModel>;
-  constructor(private store: Store<CalendarStateModel>) { }
+  constructor(
+    private store: Store<CalendarStateModel>,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
