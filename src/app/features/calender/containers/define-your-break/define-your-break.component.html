@@ -1,5 +1,5 @@
 <div class="main">
-    <div class="content">
+    <div class="content" *ngIf="teachingState | async as teachingData">
         <h1 class="header">
             Define your breaks
         </h1>
@@ -13,18 +13,18 @@
                 </edu-input>
 
                 <edu-select><span class="edu-label">
-              Starting at
+              Day
             </span>
-                    <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
-                        {{ i + 1 }} mins
+                    <edu-option *ngFor="let day of teachingData.teachingDays; let i = index" [OptionValue]="day.day">
+                        {{day.day}}
                     </edu-option>
                 </edu-select>
 
                 <edu-select><span class="edu-label">
-              Assembly Duration
+              After
             </span>
-                    <edu-option *ngFor="let item of timeArr; let i = index" OptionValue="i">
-                        {{ i + 1 }} mins
+                    <edu-option *ngFor="let period of teachingData.periods[0].periods; let i = index" [OptionValue]="period">
+                        {{period}}
                     </edu-option>
                 </edu-select>
                 <edu-input>

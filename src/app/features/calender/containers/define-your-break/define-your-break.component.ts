@@ -1,5 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { TeachingStateModel } from '../../models/teaching-state.model';
+import { Store } from '@ngrx/store';
+import { CalendarStateModel } from '../../models/calender-state.model';
+import { selectTeaching } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-define-your-break',
@@ -9,9 +14,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DefineYourBreakComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
-  constructor(private activatedRoute: ActivatedRoute) { }
+  teachingState: Observable<TeachingStateModel>;
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<CalendarStateModel>) { }
 
   ngOnInit(): void {
+    this.teachingState = this.store.select(selectTeaching);
   }
   timeArr = Array(60).fill('');
   formArr = [0];

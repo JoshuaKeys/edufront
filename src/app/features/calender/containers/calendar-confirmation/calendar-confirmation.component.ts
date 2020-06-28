@@ -1,4 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TeachingStateModel } from '../../models/teaching-state.model';
+import { Store } from '@ngrx/store';
+import { CalendarStateModel } from '../../models/calender-state.model';
+import { selectTeaching } from '../../ngrx/selectors';
+import { ClassGroupModel } from '../../models/class-group.model';
 let weirdData = [
   {
     day: 'Mon',
@@ -93,10 +99,22 @@ let testData = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalendarConfirmationComponent implements OnInit {
-
-  constructor() { }
+  teachingData: Observable<TeachingStateModel>;
+  constructor(private store: Store<CalendarStateModel>) { }
 
   ngOnInit(): void {
+    this.teachingData = this.store.select(selectTeaching);
+  }
+  computeClassName(classGroup: ClassGroupModel) {
+    let classes = '';
+    for(let i=0; i < classGroup.classes.length; i++) {
+      if(i < classGroup.classes.length-1){
+        classes += classGroup.classes[i].name + '|';
+      }else {
+        classes += classGroup.classes[i].name;
+      }
+    }
+    return classes;
   }
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   timetableArr2 = [weirdData, testData]; //tempDisplayData

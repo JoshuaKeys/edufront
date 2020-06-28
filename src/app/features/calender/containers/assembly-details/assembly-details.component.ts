@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { setAssemblyData } from '../../ngrx/actions/calendar.actions';
 import { selectTeaching } from '../../ngrx/selectors';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-assembly-details',
@@ -27,7 +28,9 @@ export class AssemblyDetailsComponent implements OnInit {
       this.durations.push({duration: i + 1, text: `${i + 1} mins`})
     }
     this.teachingState = this.store.select(selectTeaching);
-    this.teachingState.subscribe(teachingState=> {
+    this.teachingState.pipe(
+      take(1)
+    ).subscribe(teachingState=> {
       const startingAtObjIdx = this.durations.findIndex(duration=> {
         duration.duration+'' === (teachingState.classesAndGroups[0] as ClassGroupModel).periods[0].assembly.startingAt
       });
@@ -52,10 +55,12 @@ export class AssemblyDetailsComponent implements OnInit {
       return;
     }
     this.store.dispatch(setAssemblyData({field: 'name', value: (value as string)}))
+    console.log(this.assemblyDetailsForm.value)
   }
   updateAssemblyName($event) {
     const name = $event.target.value;
     this.updateAssemblyData('name', name);
+    console.log(this.assemblyDetailsForm.value)
   }
   constructor(
     private store: Store<CalendarStateModel>,
