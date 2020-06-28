@@ -33,9 +33,21 @@
                 </div>
 
                 <div class="group--row line-entry">
-                    <div class="card card--dashed break__btn" (click)="addGroup()">
+                    <div class="card card--dashed break__btn">
                         <img src="/assets/search-plus.svg" alt="" srcset="" />
+                        <edu-popover>
+                            <div class="classes">
+                                <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async; ">
+                                    {{ classItem.grade }}
+                                </div>
+                            </div>
+                        </edu-popover>
                     </div>
+                    <!-- <button class="break__btn card">
+                        <img src="assets/32pxplusblue.svg" />
+                    </button> -->
+                    <!-- (click)="addGroup()" -->
+
                 </div>
             </div>
         </div>

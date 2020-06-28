@@ -32,7 +32,10 @@ import {
   selectStartTime,
   setPeriodDuration,
   setPeriodInterval,
-  setAssemblyData
+  setAssemblyData,
+  setGroupTeachingDays,
+  setGroupPeriods,
+  setGroupStartTime
 } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
@@ -210,17 +213,39 @@ export const previewReducer = createReducer(
         }
       };
   }),
+  on(setGroupStartTime, (state, action) => {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.teachingDays.classesAndGroupItems.findIndex(group=> group.id === action.groupId);
+    // stateCopy.classesAndGroups[groupIdx].periods = stateCopy.periods;
+    const updatedPeriods = stateCopy.teachingDays.classesAndGroupItems[groupIdx].periods.map(period => {
+      const teachingDaysSelected = stateCopy.teachingDays.classesAndGroupItems[groupIdx].teachingDays.find(teachingDay=> {
+        return teachingDay.day === period.day && teachingDay.selected
+      })
+      if(teachingDaysSelected) {
+        period.startTime = state.teachingDays.startTime
+      }
+      return period;
+    })
+    stateCopy.teachingDays.classesAndGroupItems[groupIdx].periods = updatedPeriods
+    return stateCopy;
+  }),
   on(setAllStartTime, (state, action)=> {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(classesAndGroup => {
       const updatedPeriods = classesAndGroup.periods.map(period =>{
-        period.startTime = action.startTime
+        const teachingDaysSelected = classesAndGroup.teachingDays.find(teachingDay=> {
+          return teachingDay.day === period.day && teachingDay.selected
+        })
+        if(teachingDaysSelected) {
+          period.startTime = action.startTime
+        }
         return period;
       })
       classesAndGroup.periods = updatedPeriods;
       return classesAndGroup;
     })
     stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    stateCopy.teachingDays.startTime = action.startTime;
     return stateCopy;
   }),
   on(assignPeriodsToTeachingDates, (state, action) => {
@@ -375,13 +400,32 @@ export const previewReducer = createReducer(
     stateCopy.teachingDays.classesAndGroupItems.push(newGroupObj);
     return stateCopy;
   }),
+  on(setGroupTeachingDays, (state, action)=> {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.teachingDays.classesAndGroupItems.findIndex(group=> group.id === action.groupId);
+    stateCopy.teachingDays.classesAndGroupItems[groupIdx].teachingDays = stateCopy.teachingDays.items
+    return stateCopy;
+  }),
+  on(setGroupPeriods, (state, action)=> {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.teachingDays.classesAndGroupItems.findIndex(group=> group.id === action.groupId);
+    stateCopy.teachingDays.classesAndGroupItems[groupIdx].periods = stateCopy.periods.items;
+    return stateCopy;
+  }),
   on(reassignClass, (state, action) => {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const groupsState = stateCopy.teachingDays.classesAndGroupItems;
-    console.log(action.classesGroup, groupsState);
-    const groupIdx = groupsState.findIndex(
-      groupItem => groupItem.id === action.classesGroup.id
-    );
+    let groupIdx;
+    if(action.classesGroup) {
+      groupIdx = groupsState.findIndex(
+        groupItem => groupItem.id === action.classesGroup.id
+      );
+    }else {
+      groupIdx = groupsState.findIndex(
+        groupItem => groupItem.id === action.groupId
+      )
+    }
+
     const clickedClassIdx = groupsState[groupIdx].classes.findIndex(
       classItem => classItem.id === action.class.id
     );
@@ -393,11 +437,12 @@ export const previewReducer = createReducer(
       }
     } else {
       groupsState[groupIdx].classes.push(action.class);
+      
     }
     const adjustedGroups = clearClassOffGroups(
       action.class,
       groupsState,
-      action.classesGroup
+      groupsState[groupIdx].id
     );
     return {
       ...state,

@@ -4,8 +4,8 @@ import { fetchHolidaysRequest,
     fetchHolidaysResponse, fetchClassesAndGroups, 
     fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
     updateSelectedTeachingDaysRequest,
-    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess } from '../actions/calendar.actions';
-import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
+    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup } from '../actions/calendar.actions';
+import { mergeMap, map, withLatestFrom, tap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
@@ -54,6 +54,12 @@ export class CalendarEffects {
             map(calendarResponse => createCalendarSuccess({calendarResponse}))
         ))
     ))
+    looseFocus$ = createEffect(() => this.actions$.pipe(
+        ofType(addClassesGroup),
+        tap(()=> {
+            document.body.click();
+        })
+    ), {dispatch: false})
     constructor(private actions$: Actions,
         private store: Store<CalendarStateModel>,
         private calendarService: CalendarService

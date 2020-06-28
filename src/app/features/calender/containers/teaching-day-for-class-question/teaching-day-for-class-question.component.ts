@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { fetchClassesAndGroups, toggleClassesGroupActive, getAllClassesRequest, reassignClass, addClassesGroup } from '../../ngrx/actions/calendar.actions';
+import { fetchClassesAndGroups, toggleClassesGroupActive, getAllClassesRequest, reassignClass, addClassesGroup, setGroupTeachingDays } from '../../ngrx/actions/calendar.actions';
 import { Observable, of } from 'rxjs';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { selectClassesAndGroups, selectTeachingDays, selectAllClasses } from '../../ngrx/selectors';
@@ -56,6 +56,12 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
     const generatedGroupId = uuid44();
     this.store.dispatch(addClassesGroup({generatedGroupId}))
   }
+  addNewGroup(classItem: ClassModel) {
+    const generatedGroupId = uuid44();
+    this.store.dispatch(addClassesGroup({generatedGroupId}))
+    this.store.dispatch(reassignClass({class: classItem, groupId: generatedGroupId}))
+    this.store.dispatch(setGroupTeachingDays({groupId: generatedGroupId}))
+  } 
   asObservable(item) {
     return of(item);
   }

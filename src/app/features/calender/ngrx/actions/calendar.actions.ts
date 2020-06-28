@@ -117,7 +117,7 @@ export const getAllClassesResponse = createAction(
 );
 export const reassignClass = createAction(
     '[TeachingDayForClassQuestion] reassignClass',
-    props<{class: ClassModel, classesGroup: ClassGroupModel}>()
+    props<{class: ClassModel, classesGroup?: ClassGroupModel, groupId?: string}>()
 );
 export const addClassesGroup = createAction(
     '[TeachingDayForClassQuestion] addClassesGroup',
@@ -181,4 +181,16 @@ export const setPeriodInterval = createAction(
 export const setAssemblyData = createAction(
     '[AssemblyDetailsComponent] setAssemblyData',
     props<{field: 'startingAt'|'duration'|'name', value: number|string}>()
-)
+);
+export const setGroupTeachingDays = createAction(
+    '[TeachingDayForClassQuestionComponent] setGroupTeachingDays',
+    props<{groupId: string}>()
+);
+export const setGroupPeriods = createAction(
+    '[TeachingPeriodsPerDayComponent] setGroupPeriods',
+    props<{groupId: string}>()
+);
+export const setGroupStartTime = createAction(
+    '[StartTimeForEachPeriodComponent] setGroupStartTime',
+    props<{groupId: string}>()
+);

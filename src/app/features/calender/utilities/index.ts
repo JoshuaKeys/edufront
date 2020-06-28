@@ -4,19 +4,23 @@ import { PeriodModel } from '../models/period.model';
 import { PeriodsPerDayComponent } from '../components/periods-per-day/periods-per-day.component';
 import { DayModel } from '../models/day.model';
 
-export function clearClassOffGroups(classItem: ClassModel, groups: ClassGroupModel[], skipGroup: ClassGroupModel) {
+export function clearClassOffGroups(classItem: ClassModel, groups: ClassGroupModel[], skipGroupId: string) {
+    console.log(groups);
     return groups.map(group=> {
-        if(group.id !== skipGroup.id) {
-            const filteredClasses = group.classes.map(groupClassItem=> {
-                if(classItem.id === groupClassItem.id) {
-                    return undefined;
-                }
-                return groupClassItem
-            }).filter(item => item)
-            group.classes = filteredClasses
-        }
+        // if(skipGroup) {
+            console.log(group.id, skipGroupId)
+            if(group.id !== skipGroupId) {
+                const filteredClasses = group.classes.map(groupClassItem=> {
+                    if(classItem.id === groupClassItem.id) {
+                        return undefined;
+                    }
+                    return groupClassItem
+                }).filter(item => item)
+                group.classes = filteredClasses
+            }
+        // }
         return group;
-    })
+    }).filter(group=> group.classes.length > 0)
 }
 export function periodUniformity(periods: PeriodModel[][]) {
     for(let i = 0; i < periods.length; i++) {

@@ -9,5 +9,6 @@ export interface TeachingStateModel {
     periods?: PeriodModel[];
     classesAndGroups?: ClassGroupModel[];
     classes?: ClassModel[];
-    selection?: SelectionModel
+    selection?: SelectionModel;
+    startTime?: string;
 }

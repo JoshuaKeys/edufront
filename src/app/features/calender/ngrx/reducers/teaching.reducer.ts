@@ -18,7 +18,10 @@ import {
   selectStartTime,
   setPeriodDuration,
   setPeriodInterval,
-  setAssemblyData
+  setAssemblyData,
+  setGroupTeachingDays,
+  setGroupPeriods,
+  setGroupStartTime
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -51,6 +54,38 @@ export const teachingReducer = createReducer(
       classesAndGroups: action.classesAndGroups
     };
   }),
+  on(setGroupTeachingDays, (state, action)=> {
+    // alert('hello')
+    console.log(state.teachingDays)
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    stateCopy.classesAndGroups[groupIdx].teachingDays = stateCopy.teachingDays
+    return stateCopy;
+  }),
+  on(setGroupPeriods, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    stateCopy.classesAndGroups[groupIdx].periods = stateCopy.periods;
+    console.log(stateCopy.periods)
+    return stateCopy;
+  }),
+  on(setGroupStartTime, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    // stateCopy.classesAndGroups[groupIdx].periods = stateCopy.periods;
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
+      const teachingDaysSelected = stateCopy.classesAndGroups[groupIdx].teachingDays.find(teachingDay=> {
+        return teachingDay.day === period.day && teachingDay.selected
+      })
+      if(teachingDaysSelected) {
+        period.startTime = state.startTime
+      }
+      return period;
+    })
+    
+    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods
+    return stateCopy;
+  }),
   on(toggleClassesGroupActive, (state, action) => {
     const classGroupIdx = state.classesAndGroups.findIndex(
       classGroupItem => classGroupItem.id === action.classesGroup.id
@@ -73,13 +108,21 @@ export const teachingReducer = createReducer(
     const stateCopy: ClassGroupModel[] = JSON.parse(
       JSON.stringify(state.classesAndGroups)
     );
-
-    const groupIdx = stateCopy.findIndex(
-      groupItem => groupItem.id === action.classesGroup.id
-    );
+    let groupIdx
+    if(action.classesGroup) {
+       groupIdx = stateCopy.findIndex(
+        groupItem => groupItem.id === action.classesGroup.id
+      );
+    }else {
+      groupIdx = stateCopy.findIndex(
+        grooupItem => grooupItem.id === action.groupId
+      )
+    }
+    
     const clickedClassIdx = stateCopy[groupIdx].classes.findIndex(
       classItem => classItem.id === action.class.id
     );
+
     if (clickedClassIdx > -1) {
       stateCopy[groupIdx].classes.splice(clickedClassIdx, 1);
       if (stateCopy[groupIdx].classes.length === 0) {
@@ -91,7 +134,7 @@ export const teachingReducer = createReducer(
     const adjustedGroups = clearClassOffGroups(
       action.class,
       stateCopy,
-      action.classesGroup
+      stateCopy[groupIdx].id
     );
     return {
       ...state,
@@ -124,15 +167,22 @@ export const teachingReducer = createReducer(
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
       const updatedPeriods = classesAndGroup.periods.map(period =>{
-        period.startTime = action.startTime
+        const teachingDaysSelected = classesAndGroup.teachingDays.find(teachingDay=> {
+          return teachingDay.day === period.day && teachingDay.selected
+        })
+        if(teachingDaysSelected) {
+          period.startTime = action.startTime
+        }
         return period;
       })
       classesAndGroup.periods = updatedPeriods;
       return classesAndGroup;
     })
     stateCopy.classesAndGroups = updatedClassesAndGroups;
+    stateCopy.startTime = action.startTime;
     return stateCopy;
   }),
+
   on(setStartTime, (state, action)=> {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
@@ -167,9 +217,9 @@ export const teachingReducer = createReducer(
       const period: PeriodModel = {
         day: teachingDay.day,
         periods: [],
-        startTime: '0',
-        periodDuration: '0',
-        intervaBtwPeriods: '0',
+        startTime: '',
+        periodDuration: '',
+        intervaBtwPeriods: '',
         breaks: [],
         assembly: { name: '', startingAt: '', duration: '' }
       };
@@ -184,7 +234,6 @@ export const teachingReducer = createReducer(
       teachingDays,
       periods: periodsArr
     };
-
     stateCopy.classesAndGroups.push(newGroupObj);
     return stateCopy;
   }),
@@ -227,11 +276,11 @@ export const teachingReducer = createReducer(
       periodsArr.push('P' + i);
     }
     const periodsObjs = stateCopy.teachingDays
-      .filter(teachingDay => teachingDay.selected)
+      // .filter(teachingDay => teachingDay.selected)
       .map(teachingDay => {
         return {
           day: teachingDay.day,
-          periods: periodsArr,
+          periods: teachingDay.selected? periodsArr: [],
           startTime: '',
           periodDuration: '0',
           intervaBtwPeriods: '0',
@@ -254,7 +303,7 @@ export const teachingReducer = createReducer(
             const period: PeriodModel = {
               day: null,
               periods: [],
-              startTime: '0',
+              startTime: '',
               periodDuration: '0',
               intervaBtwPeriods: '0',
               breaks: [],

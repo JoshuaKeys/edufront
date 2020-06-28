@@ -44,11 +44,18 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- (click)="addToTempArr()" -->
                         <div class="group--row line-entry">
-                            <button class="break__btn card" (click)="addToTempArr()">
-                  <img src="assets/32pxplusblue.svg" />
-                </button>
+                            <div class="card card--dashed break__btn">
+                                <img src="/assets/search-plus.svg" alt="" srcset="" />
+                                <edu-popover>
+                                    <div class="classes">
+                                        <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async; ">
+                                            {{ classItem.grade }}
+                                        </div>
+                                    </div>
+                                </edu-popover>
+                            </div>
                         </div>
                     </div>
                 </div>

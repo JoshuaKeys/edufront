@@ -15,6 +15,8 @@ export class StartTimePerDayComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    this.classGroup.subscribe(console.log);
   }
   selectTime(day, group) {
     this.onSelectTime.emit({day, classGroup: group})
