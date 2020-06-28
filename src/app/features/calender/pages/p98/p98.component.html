@@ -1,67 +1,46 @@
 <div class="main">
-  <div class="content">
-    <h1 class="header">
-      Define your breaks
-    </h1>
+    <div class="content">
+        <h1 class="header">
+            Define your breaks
+        </h1>
 
-    <div
-      #scrollableEl
-      class="scrollable-content"
-      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
-    >
-      <div
-        class="group--row class"
-        *ngFor="let class of classArr; let classIndex = index"
-      >
-        <div class="card ">
-          <h4 class="card__title">
-            Classes
-          </h4>
-          <p class="card__desc">
-            12 | 13
-          </p>
-          <edu-popover>
-            <div class="classes">
-              <!-- toggle between badge--active and badge--inactiveto get the necesary -->
-              <div
-                class="badge badge--class badge--active"
-                *ngFor="let item of popoverArr; let i = index"
-              >
-                {{ i }}
-              </div>
-            </div>
-          </edu-popover>
-        </div>
-        <div class="group--column">
-          <div
-            class="group--row break"
-            *ngFor="let item of class.break; let i = index"
-          >
-            <edu-input elementId="title">
-              <span class="edu-label">
+        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
+            <div class="group--row class" *ngFor="let class of classArr; let classIndex = index">
+                <div class="card ">
+                    <h4 class="card__title">
+                        Classes
+                    </h4>
+                    <p class="card__desc">
+                        12 | 13
+                    </p>
+                    <edu-popover>
+                        <div class="classes">
+                            <!-- toggle between badge--active and badge--inactiveto get the necesary -->
+                            <div class="badge badge--class badge--active" *ngFor="let item of popoverArr; let i = index">
+                                {{ i }}
+                            </div>
+                        </div>
+                    </edu-popover>
+                </div>
+                <div class="group--column">
+                    <div class="group--row break" *ngFor="let item of class.break; let i = index">
+                        <edu-input elementId="title">
+                            <span class="edu-label">
                 Title
               </span>
-            </edu-input>
-            <edu-icon-select
-              [textParserFn]="parseDayValue"
-              elementId="f1"
-              [valueOptions]="dayOptions"
-            >
-              <span class="edu-label">
+                        </edu-input>
+                        <edu-icon-select [textParserFn]="parseDayValue" elementId="f1" [valueOptions]="dayOptions">
+                            <span class="edu-label">
                 Day
               </span>
-            </edu-icon-select>
+                        </edu-icon-select>
 
-            <edu-icon-select
-              [textParserFn]="parsePeriodValue"
-              elementId="f2"
-              [valueOptions]="periodOption"
-            >
-              <span class="edu-label">
+                        <edu-icon-select [textParserFn]="parsePeriodValue" elementId="f2" [valueOptions]="periodOption">
+                            <span class="edu-label">
                 After
               </span>
-            </edu-icon-select>
-            <!-- <edu-icon-select
+                        </edu-icon-select>
+                        <!-- <edu-icon-select
               ><span class="edu-label">
                 Day
               </span>
@@ -82,29 +61,30 @@
               </edu-popover>
             </edu-icon-select> -->
 
-            <edu-input elementId="duration">
-              <span class="edu-label">
+
+                        <edu-input elementId="duration">
+                            <span class="edu-label">
                 Duration
               </span>
 
-              <span class="inline-suffix duration__suffix">mins</span>
-            </edu-input>
+                            <span class="inline-suffix duration__suffix">mins</span>
+                        </edu-input>
 
-            <button class="delete-vacation-btn" ButtonType="icon">
+                        <button class="delete-vacation-btn" ButtonType="icon">
               <img src="assets/form-components/cross-red.svg" alt="" />
             </button>
-          </div>
-          <button class="break__btn" (click)="addBreakArr(classIndex)">
+                    </div>
+                    <button class="break__btn" (click)="addBreakArr(classIndex)">
             <img src="assets/32pxplusblue.svg" />
           </button>
-        </div>
-      </div>
-      <button class="break__btn card" (click)="addClassArr()">
+                </div>
+            </div>
+            <button class="break__btn card" (click)="addClassArr()">
         <img src="assets/32pxplusblue.svg" />
       </button>
+        </div>
     </div>
-  </div>
-  <button class="button--bottom" ButtonType="basic">
+    <button class="button--bottom" ButtonType="basic">
     continue
   </button>
 </div>
