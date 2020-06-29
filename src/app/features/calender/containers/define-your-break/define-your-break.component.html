@@ -1,83 +1,115 @@
 <div class="main">
-    <div class="content" *ngIf="(teachingState | async) as teachingData">
-        <h1 class="header">
-            Define your breaks
-        </h1>
+  <div class="content" *ngIf="teachingState | async as teachingData">
+    <h1 class="header">
+      Define your breaks
+    </h1>
 
-        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
-            <div class="group--row class" *ngFor="let item of teachingData.classesAndGroups;">
-                <div class="card ">
-                    <h4 class="card__title">
-                        Classes
-                    </h4>
-                    <p class="card__desc">
-                        <ng-container *ngFor="let class of item.classes; let i = index">
-                            {{ class.grade }}
-                            <span *ngIf="!(i === item.classes.length - 1)">|</span>
-                        </ng-container>
-                    </p>
-                    <edu-popover>
-                        <div class="classes">
-                            <div class="badge badge--class badge--active" [ngClass]="{
-                                'badge--active': isPresent(item.classes, classItem)
-                              }" (click)="toggleActiveClass(classItem, item)" *ngFor="
-                            let classItem of allClasses | async as allClasses">
-                                {{ classItem.grade }}
-                            </div>
-                        </div>
-                    </edu-popover>
-                </div>
-                <div class="group--column">
-                    <div class="group--row break" *ngFor="let breakItem of item.periods[0].breaks; let i = index">
-                        <edu-input elementId="title">
-                            <span class="edu-label">
-                                Title
-                            </span>
-                        </edu-input>
-                        <edu-icon-select [textParserFn]="parseDayValue" elementId="f1" [valueOptions]="dayOptions">
-                            <span class="edu-label">
-                                Day
-                            </span>
-                        </edu-icon-select>
-                        <edu-icon-select [textParserFn]="parsePeriodValue" elementId="f2" [valueOptions]="periodOption">
-                            <span class="edu-label">
-                                After
-                            </span>
-                        </edu-icon-select>
-                        <edu-input elementId="duration">
-                            <span class="edu-label">
-                                Duration
-                                </span>
-                            <span class="inline-suffix duration__suffix">mins</span>
-                        </edu-input>
-
-                        <button class="delete-vacation-btn" ButtonType="icon" (click)="removeBreak(item.id, i)">
-                            <img src="assets/form-components/cross-red.svg" alt="" />
-                        </button>
-                    </div>
-                    <button class="break__btn" (click)="addBreakArr(item.id)">
-                        <img src="assets/32pxplusblue.svg" />
-                    </button>
-                </div>
+    <div
+      #scrollableEl
+      class="scrollable-content"
+      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
+    >
+      <div
+        class="group--row class"
+        *ngFor="let item of teachingData.classesAndGroups"
+      >
+        <div class="card ">
+          <h4 class="card__title">
+            Classes
+          </h4>
+          <p class="card__desc">
+            <ng-container *ngFor="let class of item.classes; let i = index">
+              {{ class.grade }}
+              <span *ngIf="!(i === item.classes.length - 1)">|</span>
+            </ng-container>
+          </p>
+          <edu-popover>
+            <div class="classes">
+              <div
+                class="badge badge--class badge--active"
+                [ngClass]="{
+                  'badge--active': isPresent(item.classes, classItem)
+                }"
+                (click)="toggleActiveClass(classItem, item)"
+                *ngFor="let classItem of allClasses | async as allClasses"
+              >
+                {{ classItem.grade }}
+              </div>
             </div>
-            <!-- <button class="break__btn card" (click)="addClassArr()">
+          </edu-popover>
+        </div>
+        <div class="group--column">
+          <div
+            class="group--row break"
+            *ngFor="let breakItem of item.periods[0].breaks; let i = index"
+          >
+            <edu-input elementId="title" [(ngModel)]="testData.title">
+              <span class="edu-label">
+                Title
+              </span>
+            </edu-input>
+            <edu-icon-select
+              [textParserFn]="parseDayValue"
+              elementId="f1"
+              [valueOptions]="dayOptions"
+              [(ngModel)]="testData.day"
+            >
+              <span class="edu-label">
+                Day
+              </span>
+            </edu-icon-select>
+            <edu-icon-select
+              [textParserFn]="parsePeriodValue"
+              elementId="f2"
+              [valueOptions]="periodOption"
+              [(ngModel)]="testData.after"
+            >
+              <span class="edu-label">
+                After
+              </span>
+            </edu-icon-select>
+            <edu-input elementId="duration" [(ngModel)]="testData.duration">
+              <span class="edu-label">
+                Duration
+              </span>
+              <span class="inline-suffix duration__suffix">mins</span>
+            </edu-input>
+
+            <button
+              class="delete-vacation-btn"
+              ButtonType="icon"
+              (click)="removeBreak(item.id, i)"
+            >
+              <img src="assets/form-components/cross-red.svg" alt="" />
+            </button>
+          </div>
+          <button class="break__btn" (click)="addBreakArr(item.id)">
+            <img src="assets/32pxplusblue.svg" />
+          </button>
+        </div>
+      </div>
+      <!-- <button class="break__btn card" (click)="addClassArr()">
         <img src="assets/32pxplusblue.svg" />
       </button> -->
-            <div class="group--row line-entry">
-                <div class="card card--dashed break__btn">
-                    <img src="/assets/search-plus.svg" alt="" srcset="" />
-                    <edu-popover>
-                        <div class="classes">
-                            <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async; ">
-                                {{ classItem.grade }}
-                            </div>
-                        </div>
-                    </edu-popover>
-                </div>
+      <div class="group--row line-entry">
+        <div class="card card--dashed break__btn">
+          <img src="/assets/search-plus.svg" alt="" srcset="" />
+          <edu-popover>
+            <div class="classes">
+              <div
+                class="badge badge--class"
+                (click)="addNewGroup(classItem)"
+                *ngFor="let classItem of allClasses | async"
+              >
+                {{ classItem.grade }}
+              </div>
             </div>
+          </edu-popover>
         </div>
+      </div>
     </div>
-    <button class="button--bottom" ButtonType="basic">
+  </div>
+  <button class="button--bottom" ButtonType="basic">
     continue
   </button>
 </div>

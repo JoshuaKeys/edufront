@@ -25,7 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
 import { AcademicYearPreviewComponent } from './components/academic-year-preview/academic-year-preview.component';
 import { SchoolTermsPreviewComponent } from './components/school-terms-preview/school-terms-preview.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TermsComponent } from './components/terms/terms.component';
 import { TermsDatesPreviewComponent } from './components/terms-dates-preview/terms-dates-preview.component';
 import { VacationDatesPreviewComponent } from './components/vacation-dates-preview/vacation-dates-preview.component';
@@ -105,6 +105,7 @@ import { DefineSameBreaksComponent } from './containers/define-same-breaks/defin
     CalenderRoutingModule,
     SharedModule,
     PopoverModule,
+    FormsModule,
     FormComponentsModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([CalendarEffects]),

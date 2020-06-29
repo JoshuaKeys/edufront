@@ -1,12 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeaching, selectAllClasses } from '../../ngrx/selectors';
-import { addBreak, removeBreak, addClassesGroup, reassignClass, setGroupTeachingDays, setGroupPeriods, setGroupStartTime } from '../../ngrx/actions/calendar.actions';
-import { v4 as uuid44} from 'uuid';
+import {
+  addBreak,
+  removeBreak,
+  addClassesGroup,
+  reassignClass,
+  setGroupTeachingDays,
+  setGroupPeriods,
+  setGroupStartTime
+} from '../../ngrx/actions/calendar.actions';
+import { v4 as uuid44 } from 'uuid';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -20,17 +34,27 @@ import { FormGroup, FormArray } from '@angular/forms';
 })
 export class DefineYourBreakComponent implements OnInit {
   // fix
+  testData = {
+    title: 'testTitle',
+    day: ['Mon', 'Tue'],
+    after: [1, 2],
+    duration: 10
+  };
+
   activatedRouteData = this.activatedRoute.snapshot.data;
   teachingState: Observable<TeachingStateModel>;
   allClasses: Observable<ClassModel[]>;
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<CalendarStateModel>) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private store: Store<CalendarStateModel>
+  ) {}
   toggleActiveClass(classItem: ClassModel, classesGroup: ClassGroupModel) {
-    this.store.dispatch(reassignClass({class: classItem, classesGroup}))
+    this.store.dispatch(reassignClass({ class: classItem, classesGroup }));
   }
   isPresent(classes: ClassModel[], classItem: ClassModel) {
-    for(let i = 0; i < classes.length; i++) {
-      if(classes[i].id === classItem.id) {
-        return true
+    for (let i = 0; i < classes.length; i++) {
+      if (classes[i].id === classItem.id) {
+        return true;
       }
     }
     return false;
@@ -39,10 +63,14 @@ export class DefineYourBreakComponent implements OnInit {
     this.teachingState = this.store.select(selectTeaching);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
-        const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
-        return unsortedClassesCopy.sort((itemA, itemB)=> itemA.grade - itemB.grade)
+        const unsortedClassesCopy: ClassModel[] = JSON.parse(
+          JSON.stringify(unsortedClasses)
+        );
+        return unsortedClassesCopy.sort(
+          (itemA, itemB) => itemA.grade - itemB.grade
+        );
       })
-    )
+    );
   }
 
   timeArr = Array(60).fill('');
@@ -60,13 +88,13 @@ export class DefineYourBreakComponent implements OnInit {
     this.popoverState = !this.popoverState;
   }
   addBreakArr(index) {
-    this.store.dispatch(addBreak({groupId: index}))
+    this.store.dispatch(addBreak({ groupId: index }));
   }
   addClassArr() {
     this.classArr.push({ break: [0] });
   }
   removeBreak(groupId, idx) {
-    this.store.dispatch(removeBreak({groupId, breakIndex: idx}));
+    this.store.dispatch(removeBreak({ groupId, breakIndex: idx }));
   }
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   startScroll(el) {
@@ -84,13 +112,14 @@ export class DefineYourBreakComponent implements OnInit {
   }
   addNewGroup(classItem: ClassModel) {
     const generatedGroupId = uuid44();
-    this.store.dispatch(addClassesGroup({generatedGroupId}))
-    this.store.dispatch(reassignClass
-      ({class: classItem, groupId: generatedGroupId}))
-    this.store.dispatch(setGroupTeachingDays({groupId: generatedGroupId}))
-    this.store.dispatch(setGroupPeriods({groupId: generatedGroupId}))
-    this.store.dispatch(setGroupStartTime({groupId: generatedGroupId}))
-  } 
+    this.store.dispatch(addClassesGroup({ generatedGroupId }));
+    this.store.dispatch(
+      reassignClass({ class: classItem, groupId: generatedGroupId })
+    );
+    this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
+    this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
+    this.store.dispatch(setGroupStartTime({ groupId: generatedGroupId }));
+  }
   parsePeriodValue(arr) {
     if (arr.length == 0) {
       console.log('period return');
@@ -121,9 +150,7 @@ export class DefineYourBreakComponent implements OnInit {
     // }
     return displayValue;
   }
-  test() {
-
-  }
+  test() {}
   parseDayValue(arr) {
     console.log(arr);
     let displayValue = '';
@@ -159,5 +186,4 @@ export class DefineYourBreakComponent implements OnInit {
     { value: 'Sat', display: 'Sat' },
     { value: 'Sun', display: 'Sun' }
   ];
-  
 }
