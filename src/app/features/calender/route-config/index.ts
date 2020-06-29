@@ -51,12 +51,12 @@ export const calenderNavigation = {
     next: 'same-periods-per-time'
   },
   'same-periods-per-time': {
-      previous: 'teaching-periods-per-day',
-      next: 'start-time-of-first-period',
+    previous: 'teaching-periods-per-day',
+    next: 'start-time-of-first-period'
   },
   'start-time-of-first-period': {
-      previous: 'same-periods-per-time',
-      next: 'period-duration'
+    previous: 'same-periods-per-time',
+    next: 'period-duration'
   },
   'start-time-of-each-period': {
     previous: 'same-periods-per-time',
@@ -72,7 +72,7 @@ export const calenderNavigation = {
   },
   'common-assembly-question': {
     previous: 'period-interval',
-    next: 'assembly-details',
+    next: 'assembly-details'
   },
   'assembly-details': {
     previous: 'common-assembly-question',
@@ -86,7 +86,7 @@ export const calenderNavigation = {
     previous: 'break-schedule-question',
     next: 'calendar-confirmation'
   },
-  'same-break-definition':{
+  'same-break-definition': {
     previous: 'break-schedule-question',
     next: 'calendar-confiration'
   },
@@ -119,15 +119,19 @@ export const calenderRouteToComponentMap = {
   'number-of-periods': fromCalenderContainer.NumberOfPeriodsComponent,
   'teaching-periods-per-day':
     fromCalenderContainer.TeachingPeriodsPerDayComponent,
-    'same-periods-per-time': fromCalenderContainer.SamePeriodsPerTimeComponent,
-    'start-time-of-first-period': fromCalenderContainer.StartTimeOfFirstPeriodComponent,
-    'start-time-of-each-period': fromCalenderContainer.StartTimeOfEachPeriodComponent,
-    'period-duration': fromCalenderContainer.PeriodDurationComponent,
-    'period-interval': fromCalenderContainer.PeriodIntervalComponent,
-    'common-assembly-question': fromCalenderContainer.CommonAssemblyQuestionComponent,
-    'assembly-details': fromCalenderContainer.AssemblyDetailsComponent,
-    'break-schedule-question': fromCalenderContainer.BreakScheduleQuestionComponent,
-    'break-definition': fromCalenderContainer.DefineYourBreakComponent,
-    'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent,
-    'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent
+  'same-periods-per-time': fromCalenderContainer.SamePeriodsPerTimeComponent,
+  'start-time-of-first-period':
+    fromCalenderContainer.StartTimeOfFirstPeriodComponent,
+  'start-time-of-each-period':
+    fromCalenderContainer.StartTimeOfEachPeriodComponent,
+  'period-duration': fromCalenderContainer.PeriodDurationComponent,
+  'period-interval': fromCalenderContainer.PeriodIntervalComponent,
+  'common-assembly-question':
+    fromCalenderContainer.CommonAssemblyQuestionComponent,
+  'assembly-details': fromCalenderContainer.AssemblyDetailsComponent,
+  'break-schedule-question':
+    fromCalenderContainer.BreakScheduleQuestionComponent,
+  'break-definition': fromCalenderContainer.DefineYourBreakComponent,
+  'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent,
+  'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent
 };

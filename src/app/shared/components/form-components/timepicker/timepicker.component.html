@@ -1,0 +1,66 @@
+<div
+  [ngClass]="{ disabled: disabled }"
+  role="listbox"
+  class="{{ alignment }} {{ elState }} wrapper  select__wrapper"
+>
+  <div class="input-label">
+    <input
+      tabindex="-1"
+      class="  select__input"
+      [(ngModel)]="displayText"
+      name="{{ elementId }}-input"
+      #input
+      [ngClass]="{ 'input--active': isLabelActive() }"
+      type="text"
+      placeholder="-"
+      disabled
+    />
+    <!-- <div
+      class="  select__input"
+      [ngClass]="{ 'input--active': isLabelActive() }"
+    >
+      {{ displayValue }}
+    </div> -->
+    <label
+      [ngClass]="{ 'label--active': isLabelActive() }"
+      class="select__label "
+    >
+      <div class="label__shrink-wrap">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
+    </label>
+  </div>
+
+  <div class="prefix">
+    <ng-content select=".edu-select__prefix"></ng-content>
+  </div>
+  <edu-popover (edu-open)="popoverOpen()" (edu-close)="popoverClose()">
+    <div class="time">
+      <div>
+        <div>hr</div>
+        <ul class=" time__hour">
+          <li
+            [ngClass]="{ active: isActive('hour', i) }"
+            *ngFor="let _hour of hour; let i = index"
+            (click)="setActiveTime('hour', i)"
+          >
+            {{ formatTimeToDoubleDigit(i) }}
+          </li>
+        </ul>
+      </div>
+      <span>:</span>
+      <div>
+        <div>min</div>
+        <ul class=" time__min">
+          <li
+            [ngClass]="{ active: isActive('min', i) }"
+            *ngFor="let _min of min; let i = index"
+            (click)="setActiveTime('min', i)"
+          >
+            {{ formatTimeToDoubleDigit(i) }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </edu-popover>
+</div>

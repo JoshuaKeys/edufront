@@ -25,21 +25,28 @@ export class TimetablePreviewComponent implements OnInit {
   ngOnInit(): void {}
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
+
+    let cleanData = this.removeDaysWithEmptyPeriod(val);
+    console.log(cleanData);
     this.resetMainValues();
 
-    this.parseElValue(val);
+    this.parseElValue(cleanData);
     this.setTime();
-    this.addBlankToStartOfClass(val);
-    this.addBlanks(val);
+    this.addBlankToStartOfClass(cleanData);
+    this.addBlanks(cleanData);
     this.logStuff();
     this.setSpecialPeriod();
 
     // this.cd.markForCheck();
 
-    // this.logStuff();
+    this.logStuff();
   }
 
   periodDurationIsSet = false;
+
+  removeDaysWithEmptyPeriod(val: CalendarModel[]) {
+    return val.filter(_val => _val.periods.length > 0);
+  }
 
   resetMainValues() {
     this.time = [];
@@ -144,17 +151,17 @@ export class TimetablePreviewComponent implements OnInit {
           dayStartTime
         );
 
-        // console.log(
-        //   `[${dayData.day} ,  ${period}] - adding blanks (${blankPeriodBtwStartAndEnd})`
-        // );
+        console.log(
+          `[${dayData.day} ,  ${period}] - adding blanks (${blankPeriodBtwStartAndEnd})`
+        );
 
         if (index > 0) {
           for (let i = 0; i < blankPeriodBtwStartAndEnd; i++) {
-            // console.log('addblank prevStartTime - ' + prevStartTime);
+            console.log('addblank prevStartTime - ' + prevStartTime);
             let indexOfPrevTime = this.tempTimeArr.indexOf(prevStartTime);
-            // console.log('addblank indexOfPrevTime - ' + indexOfPrevTime);
+            console.log('addblank indexOfPrevTime - ' + indexOfPrevTime);
             let timeToAddBlank = this.tempTimeArr[indexOfPrevTime + i + 1];
-            // console.log('addblank timeToAddBlank - ' + timeToAddBlank);
+            console.log('addblank timeToAddBlank - ' + timeToAddBlank);
             this.addToTempSpecialPeriod(timeToAddBlank, dayData.day, '', null);
           }
         }

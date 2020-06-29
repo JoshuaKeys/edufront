@@ -4,7 +4,9 @@
 
 :host {
   @include displayFlex(flex-start, center, column);
-  width: 500px;
+  // width: 500px;
+  width: calc(100% - 40px);
+  margin: 0 20px;
 }
 .card__title {
   max-width: 80%;

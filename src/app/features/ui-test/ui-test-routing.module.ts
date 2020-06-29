@@ -9,7 +9,9 @@ import { TimeTableTestComponent2 } from './timetable-test-2/timetable-test.compo
 import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
 import { SliderTestComponent } from './slider-test/slider-test.component';
+import { TimepickerTestComponent } from './timepicker-test/timepicker-test.component';
 const routes: Routes = [
+  { path: 'time', component: TimepickerTestComponent },
   {
     path: 'date',
     component: DatepickerTestComponent

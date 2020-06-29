@@ -10,7 +10,7 @@ export class PreviewTestComponent implements OnInit {
   constructor() {}
   data;
   ngOnInit(): void {
-    this.data = newState;
+    this.data = testData1;
   }
 }
 let newState: CalendarModel[] = [
@@ -102,5 +102,197 @@ let newState: CalendarModel[] = [
       }
     ],
     assembly: { name: 'assembly1', startingAt: '07:30', duration: '60' }
+  }
+];
+
+let testData2 = [
+  {
+    day: 'Mon',
+    periods: ['P1', 'P2', 'P3', 'P4'],
+    startTime: '08:20',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Tue',
+    periods: ['P1', 'P2', 'P3'],
+    startTime: '08:00',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    },
+    periodSelected: true
+  },
+  {
+    day: 'Wed',
+    periods: ['P1', 'P2', 'P3', 'P4'],
+    startTime: '08:00',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Thu',
+    periods: ['P1', 'P2', 'P3', 'P4'],
+    startTime: '08:00',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Fri',
+    periods: ['P1', 'P2', 'P3', 'P4'],
+    startTime: '08:00',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Sat',
+    periods: [],
+    startTime: '',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Sun',
+    periods: [],
+    startTime: '',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  }
+];
+
+let testData1 = [
+  {
+    day: 'Mon',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5'],
+    startTime: '20:41',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    },
+    periodSelected: true
+  },
+  {
+    day: 'Tue',
+    periods: ['P1', 'P2'],
+    startTime: '20:41',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Wed',
+    periods: ['P1', 'P2', 'P3', 'P4'],
+    startTime: '20:41',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    },
+    periodSelected: true
+  },
+  {
+    day: 'Thu',
+    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'],
+    startTime: '20:41',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    },
+    periodSelected: true
+  },
+  {
+    day: 'Fri',
+    periods: ['P1', 'P2'],
+    startTime: '20:41',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Sat',
+    periods: [],
+    startTime: '',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
+  },
+  {
+    day: 'Sun',
+    periods: [],
+    startTime: '',
+    periodDuration: '',
+    intervaBtwPeriods: '',
+    breaks: [],
+    assembly: {
+      name: '',
+      startingAt: '',
+      duration: ''
+    }
   }
 ];

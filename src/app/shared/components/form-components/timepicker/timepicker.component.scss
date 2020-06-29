@@ -1,0 +1,238 @@
+@import 'src/assets/styles/colors';
+// @import "src/assets/styles/form-general"; //remove dependency on this soon
+@import 'src/assets/styles/mixins/components';
+
+//default color >> $grey-blue
+
+//animations
+:host {
+  // [active, inactive( default ), focus, disabled ]
+  .wrapper {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+
+  .wrapper:hover {
+    background: #f8f9fa;
+
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+  }
+
+  .focus.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+  }
+
+  .active.wrapper {
+    background-color: #e6f3fd;
+    border-color: $blue;
+    border-radius: 8px;
+    border: 1px solid $blue;
+
+    &:before {
+      // transform-origin: top center;
+      transform: rotate(180deg) translateY(-50%);
+    }
+  }
+
+  .wrapper.disabled:hover {
+    background: transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-radius: 0px;
+  }
+}
+
+:host {
+  display: block;
+  position: relative;
+  margin: auto;
+  width: 380px;
+  cursor: pointer;
+  height: 44px;
+}
+
+//popup style
+
+.select {
+  //form__input--select is a checkbox used to toggle "select" element
+
+  &__wrapper {
+    @include displayFlex();
+    position: relative;
+    border-bottom: 1px solid $grey-blue;
+    height: 100%;
+    width: 100%;
+    &.active {
+      border-color: $blue;
+    }
+    &:before {
+      transform-origin: top center;
+      width: 16px;
+      height: 16px;
+      right: 12.5px;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: url('/assets/iconfinder_chevron-up.svg') no-repeat no-repeat
+        center center;
+    }
+  }
+
+  &__label {
+    font-family: Raleway;
+    font-size: 14px;
+    line-height: 1.45;
+    order: -1;
+  }
+  //(1) text displayed when selected by element
+  &__input {
+    text-overflow: ellipsis;
+    background: unset;
+    line-height: 1;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-family: Raleway;
+    font-size: 14px;
+    line-height: 1.45;
+    height: 0;
+    // border-bottom: 1px solid $grey-blue;
+
+    color: transparent;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: transparent;
+    }
+  }
+}
+
+.input--active {
+  height: auto;
+  color: $black;
+  &::placeholder {
+    color: $black;
+  }
+}
+
+.input-label {
+  //wrapper for both input and label
+  // position: relative;
+  @include displayFlex(center, center, column);
+  position: relative;
+  flex-grow: 1;
+  align-self: stretch;
+  input {
+    margin: 0;
+  }
+}
+
+.prefix {
+  order: -1;
+}
+
+.focus,
+.active {
+  &.select__wrapper:before {
+    background: url('/assets/iconfinder_chevron-up-blue.svg') no-repeat
+      no-repeat center center;
+  }
+  &.select__wrapper {
+    border-color: $blue;
+  }
+}
+
+//disabled state
+.disabled {
+  input,
+  input::placeholder,
+  label {
+    color: $ash;
+  }
+}
+
+//form wrapper overwrite
+
+.label--active {
+  top: 0;
+  // transform: scale(0.8);
+  text-align: center;
+  .optional {
+    font-size: 0;
+  }
+  .label__shrink-wrap {
+    font-size: 0.85em;
+  }
+}
+
+input {
+  border: none;
+  align-self: flex-end;
+  margin-bottom: 10px;
+  font: 400 20px/24px Raleway;
+  padding: 0;
+}
+.center {
+  label,
+  input {
+    text-align: center;
+  }
+}
+.left {
+  label {
+    align-self: flex-start;
+  }
+  input {
+    text-align: left;
+  }
+}
+.right {
+  label {
+    align-self: flex-end;
+  }
+  input {
+    text-align: right;
+  }
+}
+
+//for popover
+edu-popover ::ng-deep {
+  padding: 0;
+}
+
+.time {
+  margin: 7px 5px;
+  @include displayFlex(flex-start, flex-start);
+  text-align: center;
+  &__hour,
+  &__min {
+    max-height: 180px;
+    overflow-y: auto;
+    min-width: 50px;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px;
+
+    li.active {
+      color: $blue;
+    }
+    li {
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+    }
+    li:hover {
+      background: #fafbfc;
+    }
+  }
+}

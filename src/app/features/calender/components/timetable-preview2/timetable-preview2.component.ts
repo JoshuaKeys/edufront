@@ -39,10 +39,11 @@ export class TimetablePreview2Component implements OnInit {
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
     this.resetMainValues();
+    let cleanData = this.removeDaysWithEmptyPeriod(val);
 
-    this.parseElValue(val);
+    this.parseElValue(cleanData);
     this.setTime();
-    this.addBlankToStartOfClass(val);
+    this.addBlankToStartOfClass(cleanData);
     // this.addBlanks(val);
     this.setSpecialPeriod();
 
@@ -54,7 +55,9 @@ export class TimetablePreview2Component implements OnInit {
   }
 
   periodDurationIsSet = false;
-
+  removeDaysWithEmptyPeriod(val: CalendarModel[]) {
+    return val.filter(_val => _val.periods.length > 0);
+  }
   resetMainValues() {
     this.time = [];
     this.specialPeriods = [];
@@ -78,7 +81,7 @@ export class TimetablePreview2Component implements OnInit {
   }
 
   addToTempTimeArr(time: number) {
-    if (Number.isNaN(time)) {
+    if (Number.isNaN(time) || time == undefined) {
       return;
     }
     if (this.tempTimeArr.indexOf(time) == -1) {
@@ -132,18 +135,27 @@ export class TimetablePreview2Component implements OnInit {
       if (tempTimeArr.indexOf(val.startTime) == -1) {
         let startTime = val.startTime;
         let startTimeInt = this.parseTimeToInt(startTime);
+        let isValidTime = !Number.isNaN(startTimeInt);
         periodDuration = this.parseTimeToInt(val.periodDuration);
-        tempTimeArr.push(startTime);
-        startTimeArr.push({ startTime, blankPeriod: 0, startTimeInt });
+        if (isValidTime) {
+          tempTimeArr.push(startTime);
+          startTimeArr.push({ startTime, blankPeriod: 0, startTimeInt });
+        }
       }
     });
+    console.log(startTimeArr);
+    console.log(this.tempTimeArr);
     let earliestStartTime = JSON.parse(JSON.stringify(startTimeArr));
+
     earliestStartTime.reduce((a, b) => {
       return a.startTimeInt > b.startTimeInt ? b : a;
     });
     earliestStartTime.sort((a, b) => a.startTimeInt - b.startTimeInt);
     earliestStartTime = earliestStartTime[0].startTimeInt;
     let indexOfEarliestStartTime = this.tempTimeArr.indexOf(earliestStartTime);
+
+    console.log('indexOfEarliestStartTime ' + indexOfEarliestStartTime);
+
     val
       .filter(dayData => {
         let res = false;
@@ -159,6 +171,7 @@ export class TimetablePreview2Component implements OnInit {
         let startTimeInInt = this.parseTimeToInt(dayData.startTime);
         let indexOfCurrentTime = this.tempTimeArr.indexOf(startTimeInInt);
         let noOfBlanks = indexOfCurrentTime - indexOfEarliestStartTime;
+        console.log(noOfBlanks);
         for (let i = 0; i < noOfBlanks; i++) {
           let time = this.tempTimeArr[indexOfEarliestStartTime + i];
           this.addToTempSpecialPeriod(time, time, dayData.day, '', null);
