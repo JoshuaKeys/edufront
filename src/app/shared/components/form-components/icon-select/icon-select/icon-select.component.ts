@@ -12,7 +12,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
-import { SelectService } from '../../_shared/select.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PopoverComponent } from '../../popover/popover.component';
 
@@ -21,7 +20,6 @@ import { PopoverComponent } from '../../popover/popover.component';
   templateUrl: './icon-select.component.html',
   styleUrls: ['./icon-select.component.scss'],
   providers: [
-    SelectService,
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
@@ -49,6 +47,7 @@ export class IconSelectComponent
   // }
 
   @Input('textParserFn') textParserFn: Function = param => param;
+  @Input('elementId') elementId: string = 'iconselect';
   @Output('edu-tick') onTick = new EventEmitter<any>();
 
   // @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
@@ -69,16 +68,11 @@ export class IconSelectComponent
     return this._value;
   }
   // inputValue = '';
-  elementId;
   selectIsActive; // controls the checkbox, responsible for toggling dropdown
   selectState = 'inactive'; // state [active, inactive( default ), focus, disabled ]
   activeOptionIndex = 0;
 
-  constructor(
-    private selectService: SelectService,
-    private cd: ChangeDetectorRef,
-    private el: ElementRef
-  ) {}
+  constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
 
   isAfterOnInit = false;
 

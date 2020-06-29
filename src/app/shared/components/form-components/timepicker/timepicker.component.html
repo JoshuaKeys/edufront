@@ -1,0 +1,46 @@
+<div
+  [ngClass]="{ disabled: disabled }"
+  role="listbox"
+  class="{{ alignment }} {{ elState }} wrapper  select__wrapper"
+>
+  <div class="input-label">
+    <input
+      tabindex="-1"
+      class="  select__input"
+      [(ngModel)]="displayText"
+      name="{{ elementId }}-input"
+      #input
+      [ngClass]="{ 'input--active': isLabelActive() }"
+      type="text"
+      placeholder="-"
+      disabled
+    />
+    <!-- <div
+      class="  select__input"
+      [ngClass]="{ 'input--active': isLabelActive() }"
+    >
+      {{ displayValue }}
+    </div> -->
+    <label
+      [ngClass]="{ 'label--active': isLabelActive() }"
+      class="select__label "
+    >
+      <div class="label__shrink-wrap">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
+    </label>
+  </div>
+
+  <div class="prefix">
+    <ng-content select=".edu-select__prefix"></ng-content>
+  </div>
+  <edu-popover (edu-close)="popoverClose()">
+    <ul class="time time--hour">
+      <li *ngFor="let _hour of hour; let i = index">{{ i }}</li>
+    </ul>
+    <ul class="time time--min">
+      <li *ngFor="let _min of min; let i = index">{{ i }}</li>
+    </ul>
+    <edu-tick-button [ClosePopover]="popoverToogleVar"></edu-tick-button>
+  </edu-popover>
+</div>
