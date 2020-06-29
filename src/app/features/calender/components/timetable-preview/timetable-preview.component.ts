@@ -25,12 +25,15 @@ export class TimetablePreviewComponent implements OnInit {
   ngOnInit(): void {}
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
+
+    let cleanData = this.removeDaysWithEmptyPeriod(val);
+    console.log(cleanData);
     this.resetMainValues();
 
-    this.parseElValue(val);
+    this.parseElValue(cleanData);
     this.setTime();
-    this.addBlankToStartOfClass(val);
-    this.addBlanks(val);
+    this.addBlankToStartOfClass(cleanData);
+    this.addBlanks(cleanData);
     this.logStuff();
     this.setSpecialPeriod();
 
@@ -40,6 +43,10 @@ export class TimetablePreviewComponent implements OnInit {
   }
 
   periodDurationIsSet = false;
+
+  removeDaysWithEmptyPeriod(val: CalendarModel[]) {
+    return val.filter(_val => _val.periods.length > 0);
+  }
 
   resetMainValues() {
     this.time = [];

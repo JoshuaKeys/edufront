@@ -39,10 +39,11 @@ export class TimetablePreview2Component implements OnInit {
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
     this.resetMainValues();
+    let cleanData = this.removeDaysWithEmptyPeriod(val);
 
-    this.parseElValue(val);
+    this.parseElValue(cleanData);
     this.setTime();
-    this.addBlankToStartOfClass(val);
+    this.addBlankToStartOfClass(cleanData);
     // this.addBlanks(val);
     this.setSpecialPeriod();
 
@@ -54,7 +55,9 @@ export class TimetablePreview2Component implements OnInit {
   }
 
   periodDurationIsSet = false;
-
+  removeDaysWithEmptyPeriod(val: CalendarModel[]) {
+    return val.filter(_val => _val.periods.length > 0);
+  }
   resetMainValues() {
     this.time = [];
     this.specialPeriods = [];
