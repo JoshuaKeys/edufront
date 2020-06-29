@@ -1,4 +1,8 @@
- <div #optionEl role="option" class = "option__wrapper  "  [ngClass]="{active: isActive}" >
-     <!-- <input class ="option__checkbox" type="checkbox"> -->
-    <ng-content ></ng-content>
+<div
+  #optionEl
+  role="option"
+  class="option__wrapper  "
+  [ngClass]="{ active: isActive }"
+>
+  <ng-content></ng-content>
 </div>

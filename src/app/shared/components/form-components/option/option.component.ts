@@ -28,12 +28,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
     this.indexInParent = Array.from(
       this.el.nativeElement.parentElement.children
     ).indexOf(this.el.nativeElement);
-    // console.log('testing', this.OptionValue);
-    //  this.selectService.activeOption
-    // .subscribe((activeOption)=>{
-    //   this.isActive = (activeOption === this.OptionValue);
-    //   this.cd.markForCheck();
-    // });
+
     if (this.isActive) {
       this.selectService.activeOptionIndex.next(this.indexInParent);
     }
@@ -71,13 +66,12 @@ export class OptionComponent implements OnInit, AfterViewInit {
         ? ''
         : displayedValue.nodeValue;
     this.displayedValue = displayedValue;
+    console.log(this.displayedValue);
+    console.log(JSON.stringify(this.selectService.activeValue));
 
-    // console.log(JSON.stringify(this.selectService.activeOption));
-    // console.log(
-    //   `selet vs opt - ${this.selectService.activeValue} ${this.OptionValue}`
-    // );
-    // console.log(this.selectService.activeValue);
     if (this.selectService.activeValue == this.OptionValue) {
+      console.log('this is active component');
+      console.log(this);
       this.selectService.activeOptionComponent.next(this);
     }
   }
@@ -94,11 +88,4 @@ export class OptionComponent implements OnInit, AfterViewInit {
     this.selectService.optionClicked.next();
     this.selectService.activeOptionComponent.next(this);
   }
-
-  // @HostListener("valueChange",["$event"]) onValueChange($event){ //listenting to  directive
-  //   this.selectService.setActiveOption($event);
-  // }
-  // @HostListener("initValue",["$event"]) onInitValue($event){ //listenting to  directive
-  //   this.value = $event;
-  // }
 }

@@ -29,12 +29,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
     this.indexInParent = Array.from(
       this.el.nativeElement.parentElement.children
     ).indexOf(this.el.nativeElement);
-    // console.log('testing', this.OptionValue);
-    //  this.selectService.activeOption
-    // .subscribe((activeOption)=>{
-    //   this.isActive = (activeOption === this.OptionValue);
-    //   this.cd.markForCheck();
-    // });
+
     if (this.isActive) {
       this.selectService.activeOptionIndex.next(this.indexInParent);
     }
@@ -72,6 +67,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
         ? ''
         : displayedValue.nodeValue;
     this.displayedValue = displayedValue;
+    console.log(displayedValue);
 
     // console.log(JSON.stringify(this.selectService.activeOption));
     // console.log(

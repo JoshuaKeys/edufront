@@ -10,7 +10,8 @@ import {
   ChangeDetectorRef,
   ViewChild,
   ContentChildren,
-  QueryList
+  QueryList,
+  AfterViewInit
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
 import { SelectService } from '../../_shared/select.service';
@@ -42,8 +43,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input('elementId') elementId = 'selectcomp';
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
-
-  value = ''; //value that gets pushed out
+  _value = '';
+  set value(param) {
+    console.log('VALUE __' + param);
+    this._value = param;
+  }
+  get value() {
+    return this._value;
+  }
   inputValue = '';
   selectIsActive; // controls the checkbox, responsible for toggling dropdown
   selectState = 'inactive'; // state [active, inactive( default ), focus, disabled ]
@@ -67,44 +74,28 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.setElementId();
-    // this.selectService.activeOption.subscribe((val)=>{
 
-    //   this.onValueChange.emit(val);
-    //   this.onChange(val);
+    // this.selectService.optionClicked.subscribe(() => {
+    //   this.selectState = 'focus';
+    //   this.selectIsActive = false;
+    //   this.checkboxEl.nativeElement.focus();
+    // });
 
-    //   this.value = val;
-
-    //   this.cd.markForCheck();
-
-    //  })
-
-    this.selectService.optionClicked.subscribe(() => {
-      this.selectState = 'focus';
-      this.selectIsActive = false;
-      this.checkboxEl.nativeElement.focus();
-    });
-
-    // this.selectService.activeOptionIndex.subscribe((index)=>{
-    //   this.activeOptionIndex = index;
-    //   if(this.optionEls){
-    //     this.value = this.optionEls.toArray()[index].OptionValue;
+    // this.selectService.activeOptionComponent
+    //   .pipe(filter(optionValue => optionValue))
+    //   .subscribe((optionComp: OptionComponent) => {
+    //     this.inputValue = optionComp.displayedValue;
+    //     this.value = optionComp.OptionValue;
+    //     this.activeOptionIndex = optionComp.indexInParent;
+    //     console.log(this.value);
+    //     console.log(this.inputValue);
+    //     this.onValueChange.emit(this.value);
+    //     this.elchange.emit(this.value);
+    //     this.onChange(this.value);
     //     this.cd.markForCheck();
-    //   }
-    // })
-
-    this.selectService.activeOptionComponent
-      .pipe(filter(optionValue => optionValue))
-      .subscribe((optionComp: OptionComponent) => {
-        this.inputValue = optionComp.displayedValue;
-        this.value = optionComp.OptionValue;
-        this.activeOptionIndex = optionComp.indexInParent;
-        // console.log(this.activeOptionIndex)
-        this.onValueChange.emit(this.value);
-        this.elchange.emit(this.value);
-        this.onChange(this.value);
-        this.cd.markForCheck();
-      });
+    //   });
   }
+
   isLabelActive() {
     return this.selectIsActive || (this.value != '' && this.value);
   }
@@ -113,18 +104,11 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     this.selectIsActive = false;
   }
   @HostListener('click', ['$event']) onClick($event) {
-    //stops propagation on lower layers
-    // $event.preventDefault();
     $event.stopPropagation();
   }
 
   @HostListener('keydown', ['$event']) onKeydown($event) {
-    //stops propagation on lower layers
-
     this.keyboardEvent($event.keyCode, $event.shiftKey, $event);
-    // $event.preventDefault();
-    //need able this but include support for tab out
-    // $event.stopPropagation();
   }
 
   setElementId() {
@@ -154,11 +138,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     //change to rxjs operator later
     setTimeout(() => {
       if (!this.el.nativeElement.contains(document.activeElement)) {
-        // this.selectService.setActiveOption(this.optionEls.toArray()[this.activeOptionIndex].OptionValue);
-        // this.selectService.setElementIsOpenState(false);
         this.selectState = 'inactive';
         this.selectIsActive = false;
-        // this.selectService.resetOptionIndex();
         this.onTouched();
 
         this.cd.markForCheck();
