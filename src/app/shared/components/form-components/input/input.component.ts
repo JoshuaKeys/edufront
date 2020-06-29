@@ -80,6 +80,7 @@ export class InputComponent
   @ViewChild('inputEl') inputEl: ElementRef;
   @Output('edu-keydown') elkeydown = new EventEmitter();
   @Output('edu-change') elchange = new EventEmitter();
+  @Output('edu-blur') elBlur = new EventEmitter();
   @ContentChildren(InputAffixDirective) InputAffixDirectives: QueryList<
     InputAffixDirective
   >;
@@ -146,6 +147,8 @@ export class InputComponent
     this.inputElIsFocus = true;
   }
   blurInput() {
+    this.elBlur.emit(this.value);
+
     this.inputElIsFocus = false;
     this.onTouched();
     this.onChange(this.val);
