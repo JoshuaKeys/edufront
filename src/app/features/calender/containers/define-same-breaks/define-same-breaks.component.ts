@@ -82,7 +82,12 @@ export class DefineSameBreaksComponent implements OnInit {
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);
-    displayValue = `${temp} period`;
+    if (arr.length == 1 && arr[0] == '') {
+      displayValue = '';
+    } else {
+      displayValue = `${temp} period`;
+    }
+    // displayValue = `${temp} period`;
     // }
     return displayValue;
   }

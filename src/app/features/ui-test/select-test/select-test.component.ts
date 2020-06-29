@@ -21,7 +21,7 @@ export class SelectTestComponent implements OnInit {
   modelTest;
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      f1: [[1, 2, 3, 4], Validators.required],
+      f1: [2, Validators.required],
       f2: ['4', Validators.required],
       f3: [4, Validators.required]
     });
@@ -58,7 +58,6 @@ export class SelectTestComponent implements OnInit {
   setDisplayValue(arr) {
     // console.log(arr);
     let displayValue = '';
-
     let temp = arr
       .map(number => {
         let suffix;
@@ -78,7 +77,11 @@ export class SelectTestComponent implements OnInit {
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);
-    displayValue = `${temp} period`;
+    if (arr.length == 1 && arr[0] == '') {
+      displayValue = '';
+    } else {
+      displayValue = `${temp} period`;
+    }
     // }
     return displayValue;
   }

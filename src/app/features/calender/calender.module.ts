@@ -41,6 +41,7 @@ import { DaysOfWeekPreviewComponent } from './components/days-of-week-preview/da
 import { NumberOfPeriodsComponent } from './containers/number-of-periods/number-of-periods.component';
 import { PeriodsPerDayComponent } from './components/periods-per-day/periods-per-day.component';
 import { PeriodsPreviewComponent } from './components/periods-preview/periods-preview.component';
+import { TimepickerBlockComponent } from './components/timepicker-block/timepicker-block.component';
 import { TimetablePreviewComponent } from './components/timetable-preview/timetable-preview.component';
 import { TimetablePreview2Component } from './components/timetable-preview2/timetable-preview2.component';
 import { TimetableCardComponent } from './components/timetable-card/timetable-card.component';
@@ -57,6 +58,7 @@ import { DefineSameBreaksComponent } from './containers/define-same-breaks/defin
 @NgModule({
   declarations: [
     ...pages,
+    TimepickerBlockComponent,
     TimetablePreviewComponent,
     TimetablePreview2Component,
     TimetableCardComponent,

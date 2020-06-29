@@ -1,0 +1,29 @@
+<div class="card period-menu">
+  <h5 class="card-title">Select Time</h5>
+  <div class="group--row timeSelector">
+    <edu-select
+      [elementId]="getElId('hr')"
+      [(ngModel)]="activeTime.hour"
+      class="timeSelector--hr"
+      (edu-change)="updateHour($event)"
+    >
+      <span class="edu-label">Hr</span>
+      <edu-option *ngFor="let hr of hour; let i = index" [OptionValue]="i">
+        {{ display2Digit(i) }}
+      </edu-option>
+    </edu-select>
+    <edu-select
+      [elementId]="getElId('min')"
+      [(ngModel)]="activeTime.min"
+      class="timeSelector--min"
+      (edu-change)="updateMin($event)"
+    >
+      <span class="edu-label">Min</span>
+      <edu-option *ngFor="let min of min; let i = index" [OptionValue]="i">
+        {{ display2Digit(i) }}
+      </edu-option>
+    </edu-select>
+  </div>
+</div>
+
+{{ activeTime.hour }}: {{ activeTime.min }}

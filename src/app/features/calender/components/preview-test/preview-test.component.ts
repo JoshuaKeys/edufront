@@ -9,6 +9,7 @@ import { CalendarModel } from '../timetable-preview/calendar.interface';
 export class PreviewTestComponent implements OnInit {
   constructor() {}
   data;
+  modelTest = '08:30';
   ngOnInit(): void {
     this.data = testData1;
   }
