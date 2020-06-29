@@ -205,4 +205,14 @@ export const removeBreak = createAction(
 export const updateBreakData = createAction(
     '[DefineYourBreakComponent] updateBreakData',
     props<{groupId: string, index: number, field: 'title'|'day'|'after'|'duration', value: string}>()
+);
+export const initializeSameBreaks = createAction(
+    '[BreakScheduleQuestion] initializeSameBreaks'
+);
+export const addSameBreak = createAction(
+    '[DefineSameBreakComponent] addSameBreak'
+);
+export const updateSameBreakData = createAction(
+    '[DefineSameBreakComponent] updateSameBreakData',
+    props<{index: number, field: 'title'|'day'|'after'|'duration', value: string}>()
 )

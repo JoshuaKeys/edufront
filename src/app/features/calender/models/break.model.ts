@@ -1,7 +1,7 @@
 export interface BreakModel {
-    name: string;
+    title: string;
     firstBreak: string;
-    day: string;
-    after: string;
+    day: Array<'Mon'|'Tue'|'Wed'|'Thu'|'Fri'|'Sat'|'Sun'>;
+    after: Array<number>;
     duration: string;
 }

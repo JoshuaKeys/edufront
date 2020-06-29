@@ -5,6 +5,12 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { CalendarStateModel } from '../../models/calender-state.model';
+import { Observable } from 'rxjs';
+import { TeachingStateModel } from '../../models/teaching-state.model';
+import { selectTeaching } from '../../ngrx/selectors';
+import { addSameBreak, updateSameBreakData } from '../../ngrx/actions/calendar.actions';
 
 @Component({
   selector: 'edu-define-same-breaks',
@@ -13,7 +19,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefineSameBreaksComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store<CalendarStateModel>) {}
+  teachingData: Observable<TeachingStateModel>;
   testDataArr = [
     {
       title: 'testTitle',
@@ -29,14 +36,38 @@ export class DefineSameBreaksComponent implements OnInit {
     }
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.teachingData = this.store.select(selectTeaching);
+  }
   timeArr = Array(60).fill('');
   formArr = [0];
 
   addformArr() {
     this.formArr.push(0);
   }
-
+  addSameBreaks() {
+    this.store.dispatch(addSameBreak())
+  }
+  updateBreakData(field: 'title'|'day'|'after'|'duration', value: any, index: number) {
+    this.store.dispatch(updateSameBreakData({index, field, value}));
+  }
+  updateTitle($event, idx: number) {
+    console.log(idx);
+    // this.updateBreakData('title', $event, idx)
+  }
+  updateDay($event, idx: number) {
+    this.updateBreakData('day', $event, idx)
+  }
+  computeName(name:string, idx: number) {
+    return `name-${idx}`
+  }
+  updateAfter($event, idx: number) {
+    this.updateBreakData('after', $event, idx);
+  }
+  updateDuration($event, idx: number) {
+    console.log(idx);
+    // this.updateBreakData('duration', $event, idx);
+  }
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
@@ -58,18 +89,15 @@ export class DefineSameBreaksComponent implements OnInit {
 
   parsePeriodValue(arr) {
     if (arr.length == 0) {
-      console.log('period return');
       return '';
     }
     let displayValue = '';
-
     let temp = arr
       .map(number => {
         let suffix;
         if (typeof number === 'string' && number.toLowerCase() === 'all') {
           return `${number}`;
         }
-
         if (number == 1) {
           suffix = 'st';
         } else if (number == 2) {
@@ -83,12 +111,12 @@ export class DefineSameBreaksComponent implements OnInit {
       })
       .reduce((a, b) => `${a},${b}`);
     displayValue = `${temp} period`;
-    // }
     return displayValue;
   }
-  test() {}
+  test(data) {
+    console.log(data);
+  }
   parseDayValue(arr) {
-    console.log(arr);
     let displayValue = '';
     if (arr.length == 0) {
       return '';
