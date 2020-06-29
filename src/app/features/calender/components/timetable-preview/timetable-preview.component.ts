@@ -36,7 +36,7 @@ export class TimetablePreviewComponent implements OnInit {
 
     // this.cd.markForCheck();
 
-    // this.logStuff();
+    this.logStuff();
   }
 
   periodDurationIsSet = false;
@@ -144,17 +144,17 @@ export class TimetablePreviewComponent implements OnInit {
           dayStartTime
         );
 
-        // console.log(
-        //   `[${dayData.day} ,  ${period}] - adding blanks (${blankPeriodBtwStartAndEnd})`
-        // );
+        console.log(
+          `[${dayData.day} ,  ${period}] - adding blanks (${blankPeriodBtwStartAndEnd})`
+        );
 
         if (index > 0) {
           for (let i = 0; i < blankPeriodBtwStartAndEnd; i++) {
-            // console.log('addblank prevStartTime - ' + prevStartTime);
+            console.log('addblank prevStartTime - ' + prevStartTime);
             let indexOfPrevTime = this.tempTimeArr.indexOf(prevStartTime);
-            // console.log('addblank indexOfPrevTime - ' + indexOfPrevTime);
+            console.log('addblank indexOfPrevTime - ' + indexOfPrevTime);
             let timeToAddBlank = this.tempTimeArr[indexOfPrevTime + i + 1];
-            // console.log('addblank timeToAddBlank - ' + timeToAddBlank);
+            console.log('addblank timeToAddBlank - ' + timeToAddBlank);
             this.addToTempSpecialPeriod(timeToAddBlank, dayData.day, '', null);
           }
         }
