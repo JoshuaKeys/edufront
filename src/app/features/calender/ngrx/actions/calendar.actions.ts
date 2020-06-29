@@ -194,6 +194,9 @@ export const setGroupStartTime = createAction(
     '[StartTimeForEachPeriodComponent] setGroupStartTime',
     props<{groupId: string}>()
 );
+export const initializeBreaks = createAction(
+    '[DefineYourBreakComponent] initializeBreaks'
+)
 export const addBreak = createAction(
     '[DefineYourBreakComponent] addBreak',
     props<{groupId: string}>()
@@ -205,4 +208,18 @@ export const removeBreak = createAction(
 export const updateBreakData = createAction(
     '[DefineYourBreakComponent] updateBreakData',
     props<{groupId: string, index: number, field: 'title'|'day'|'after'|'duration', value: string}>()
+);
+export const initializeSameBreaks = createAction(
+    '[BreakScheduleQuestion] initializeSameBreaks'
+);
+export const addSameBreak = createAction(
+    '[DefineSameBreakComponent] addSameBreak'
+);
+export const updateSameBreakData = createAction(
+    '[DefineSameBreakComponent] updateSameBreakData',
+    props<{index: number, field: 'title'|'day'|'after'|'duration', value: string}>()
+);
+export const removeSameBreak = createAction(
+    '[DefineSameBreakSomponent] removeSameBreak',
+    props<{breakIndex: number}>()
 )
