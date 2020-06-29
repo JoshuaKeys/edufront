@@ -5,7 +5,7 @@
         </h1>
 
         <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
-            <div class="group--row class" *ngFor="let item of teachingData.classesAndGroups;">
+            <div class="group--row class" *ngFor="let item of teachingData.classesAndGroups; let i = index">
                 <div class="card ">
                     <h4 class="card__title">
                         Classes
