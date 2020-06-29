@@ -62,6 +62,7 @@ export class IconSelectComponent
     this._value = param;
     this.setDisplayBadges(param);
     this.displayText = this.textParserFn(param);
+    this.onChange(param);
     this.cd.markForCheck();
   }
   get value() {
