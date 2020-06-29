@@ -1,3 +1,7 @@
-<p>timepicker-test works!</p>
+<p>testModel : {{ testModel }}</p>
 
-<edu-timepicker></edu-timepicker>
+<edu-timepicker [(ngModel)]="testModel">
+  <span class="edu-label">timepicker</span>
+</edu-timepicker>
+
+<input type="text" [(ngModel)]="testModel" />

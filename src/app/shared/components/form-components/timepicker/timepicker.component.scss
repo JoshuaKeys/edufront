@@ -209,3 +209,30 @@ input {
 edu-popover ::ng-deep {
   padding: 0;
 }
+
+.time {
+  margin: 7px 5px;
+  @include displayFlex(flex-start, flex-start);
+  text-align: center;
+  &__hour,
+  &__min {
+    max-height: 180px;
+    overflow-y: auto;
+    min-width: 50px;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px;
+
+    li.active {
+      color: $blue;
+    }
+    li {
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+    }
+    li:hover {
+      background: #fafbfc;
+    }
+  }
+}

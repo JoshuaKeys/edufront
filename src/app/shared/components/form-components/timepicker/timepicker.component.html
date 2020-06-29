@@ -34,13 +34,33 @@
   <div class="prefix">
     <ng-content select=".edu-select__prefix"></ng-content>
   </div>
-  <edu-popover (edu-close)="popoverClose()">
-    <ul class="time time--hour">
-      <li *ngFor="let _hour of hour; let i = index">{{ i }}</li>
-    </ul>
-    <ul class="time time--min">
-      <li *ngFor="let _min of min; let i = index">{{ i }}</li>
-    </ul>
-    <edu-tick-button [ClosePopover]="popoverToogleVar"></edu-tick-button>
+  <edu-popover (edu-open)="popoverOpen()" (edu-close)="popoverClose()">
+    <div class="time">
+      <div>
+        <div>hr</div>
+        <ul class=" time__hour">
+          <li
+            [ngClass]="{ active: isActive('hour', i) }"
+            *ngFor="let _hour of hour; let i = index"
+            (click)="setActiveTime('hour', i)"
+          >
+            {{ formatTimeToDoubleDigit(i) }}
+          </li>
+        </ul>
+      </div>
+      <span>:</span>
+      <div>
+        <div>min</div>
+        <ul class=" time__min">
+          <li
+            [ngClass]="{ active: isActive('min', i) }"
+            *ngFor="let _min of min; let i = index"
+            (click)="setActiveTime('min', i)"
+          >
+            {{ formatTimeToDoubleDigit(i) }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </edu-popover>
 </div>
