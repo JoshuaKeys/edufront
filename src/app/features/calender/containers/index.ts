@@ -21,3 +21,4 @@ export * from './common-assembly-question/common-assembly-question.component';
 export * from './break-schedule-question/break-schedule-question.component';
 export * from './period-interval/period-interval.component';
 export * from './calendar-confirmation/calendar-confirmation.component';
+export * from './define-same-breaks/define-same-breaks.component';

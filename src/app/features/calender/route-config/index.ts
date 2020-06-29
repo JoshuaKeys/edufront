@@ -86,6 +86,10 @@ export const calenderNavigation = {
     previous: 'break-schedule-question',
     next: 'calendar-confirmation'
   },
+  'same-break-definition':{
+    previous: 'break-schedule-question',
+    next: 'calendar-confiration'
+  },
   'calendar-confirmation': {
     previous: 'break-definition',
     next: ''
@@ -124,5 +128,6 @@ export const calenderRouteToComponentMap = {
     'assembly-details': fromCalenderContainer.AssemblyDetailsComponent,
     'break-schedule-question': fromCalenderContainer.BreakScheduleQuestionComponent,
     'break-definition': fromCalenderContainer.DefineYourBreakComponent,
-    'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent
+    'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent,
+    'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent
 };

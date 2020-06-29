@@ -53,6 +53,7 @@ import { DefineYourBreakComponent } from './containers/define-your-break/define-
 import { PeriodIntervalComponent } from './containers/period-interval/period-interval.component';
 import { PopoverModule } from 'src/app/shared/components/form-components/popover/popover.module';
 import { FormComponentsModule } from 'src/app/shared/components/form-components/form-component.module';
+import { DefineSameBreaksComponent } from './containers/define-same-breaks/define-same-breaks.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -94,6 +95,7 @@ import { FormComponentsModule } from 'src/app/shared/components/form-components/
     BreakScheduleQuestionComponent,
     AssemblyDetailsComponent,
     DefineYourBreakComponent,
+    DefineSameBreaksComponent,
     PeriodIntervalComponent,
     CommonAssemblyQuestionComponent,
     CalendarConfirmationComponent

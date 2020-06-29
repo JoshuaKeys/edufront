@@ -60,7 +60,6 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
       .select(selectCalendar)
       // .pipe(skip(1))
       .subscribe(calendarState => {
-        console.log(calendarState);
         const formGroups = calendarState.vacations.map(vacation => {
           return new FormGroup(
             {

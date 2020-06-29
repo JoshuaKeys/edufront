@@ -10,7 +10,7 @@ import { v4 as uuid44} from 'uuid';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
 import { ClassGroupModel } from '../../models/class-group.model';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'edu-define-your-break',
@@ -23,7 +23,6 @@ export class DefineYourBreakComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   teachingState: Observable<TeachingStateModel>;
   allClasses: Observable<ClassModel[]>;
-  breaksForm: FormGroup;
   constructor(private activatedRoute: ActivatedRoute, private store: Store<CalendarStateModel>) { }
   toggleActiveClass(classItem: ClassModel, classesGroup: ClassGroupModel) {
     this.store.dispatch(reassignClass({class: classItem, classesGroup}))
@@ -38,7 +37,6 @@ export class DefineYourBreakComponent implements OnInit {
   }
   ngOnInit(): void {
     this.teachingState = this.store.select(selectTeaching);
-
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
         const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
