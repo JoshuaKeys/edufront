@@ -19,7 +19,7 @@ import { FormGroup, FormArray } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefineYourBreakComponent implements OnInit {
-  text="one"
+  // fix
   activatedRouteData = this.activatedRoute.snapshot.data;
   teachingState: Observable<TeachingStateModel>;
   allClasses: Observable<ClassModel[]>;
