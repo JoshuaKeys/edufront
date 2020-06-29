@@ -88,7 +88,7 @@ export const calenderNavigation = {
   },
   'same-break-definition': {
     previous: 'break-schedule-question',
-    next: 'calendar-confiration'
+    next: 'calendar-confirmation'
   },
   'calendar-confirmation': {
     previous: 'break-definition',

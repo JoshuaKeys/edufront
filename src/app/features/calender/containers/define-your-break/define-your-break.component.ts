@@ -18,7 +18,8 @@ import {
   reassignClass,
   setGroupTeachingDays,
   setGroupPeriods,
-  setGroupStartTime
+  setGroupStartTime,
+  updateBreakData
 } from '../../ngrx/actions/calendar.actions';
 import { v4 as uuid44 } from 'uuid';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -58,6 +59,21 @@ export class DefineYourBreakComponent implements OnInit {
       }
     }
     return false;
+  }
+  updateBreakData(groupId: string, field: 'title'|'day'|'after'|'duration', value: any, index: number) {
+    this.store.dispatch(updateBreakData({groupId,index, field, value}));
+  }
+  updateTitle($event, idx: number, groupId: string) {
+    this.updateBreakData(groupId, 'title', $event, idx)
+  }
+  updateDay($event, idx: number, groupId: string) {
+    this.updateBreakData(groupId,'day', $event, idx)
+  }
+  updateAfter($event, idx: number, groupId: string) {
+    this.updateBreakData(groupId, 'after', $event, idx);
+  }
+  updateDuration($event, idx: number, groupId: string) {
+    this.updateBreakData(groupId, 'duration', $event, idx);
   }
   ngOnInit(): void {
     this.teachingState = this.store.select(selectTeaching);

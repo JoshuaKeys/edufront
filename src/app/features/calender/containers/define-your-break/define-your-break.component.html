@@ -19,8 +19,8 @@
                     <edu-popover>
                         <div class="classes">
                             <div class="badge badge--class badge--active" [ngClass]="{
-                  'badge--active': isPresent(item.classes, classItem)
-                }" (click)="toggleActiveClass(classItem, item)" *ngFor="let classItem of allClasses | async as allClasses">
+                                'badge--active': isPresent(item.classes, classItem)
+                                }" (click)="toggleActiveClass(classItem, item)" *ngFor="let classItem of allClasses | async as allClasses">
                                 {{ classItem.grade }}
                             </div>
                         </div>
@@ -28,22 +28,22 @@
                 </div>
                 <div class="group--column">
                     <div class="group--row break" *ngFor="let breakItem of item.periods[0].breaks; let i = index">
-                        <edu-input elementId="title" [(ngModel)]="testData.title">
+                        <edu-input (edu-blur)="updateTitle($event, i, item.id)" [elementId]="'title-'+ i" [ngModel]="breakItem.title">
                             <span class="edu-label">
                 Title
               </span>
                         </edu-input>
-                        <edu-icon-select [textParserFn]="parseDayValue" elementId="f1" [valueOptions]="dayOptions" [(ngModel)]="testData.day">
+                        <edu-icon-select (edu-tick)="updateDay($event, i, item.id)" [textParserFn]="parseDayValue" [elementId]="'day-' + i" [valueOptions]="dayOptions" [ngModel]="breakItem.day">
                             <span class="edu-label">
                 Day
               </span>
                         </edu-icon-select>
-                        <edu-icon-select [textParserFn]="parsePeriodValue" elementId="f2" [valueOptions]="periodOption" [(ngModel)]="testData.after">
+                        <edu-icon-select (edu-tick)="updateAfter($event, i, item.id)" [textParserFn]="parsePeriodValue" [elementId]="'after-' + i" [valueOptions]="periodOption" [ngModel]="breakItem.after">
                             <span class="edu-label">
                 After
               </span>
                         </edu-icon-select>
-                        <edu-input elementId="duration" [(ngModel)]="testData.duration">
+                        <edu-input (edu-blur)="updateDuration($event, i, item.id)" [elementId]="'duration-'+i" [ngModel]="breakItem.duration">
                             <span class="edu-label">
                 Duration
               </span>
@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    <button class="button--bottom" ButtonType="basic">
+    <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
     continue
   </button>
 </div>

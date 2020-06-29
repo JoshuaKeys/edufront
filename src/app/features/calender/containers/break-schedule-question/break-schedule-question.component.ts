@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { initializeSameBreaks } from '../../ngrx/actions/calendar.actions';
+import { initializeSameBreaks, initializeBreaks } from '../../ngrx/actions/calendar.actions';
 
 @Component({
   selector: 'edu-break-schedule-question',
@@ -15,6 +15,7 @@ export class BreakScheduleQuestionComponent implements OnInit {
   ngOnInit(): void {
   }
   goNext() {
+    this.store.dispatch(initializeBreaks())
     this.router.navigate(['../', this.activatedRouteData.next], {relativeTo: this.activatedRoute})
   }
   goToSameBreaks() {

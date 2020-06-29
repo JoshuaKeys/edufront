@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import { addSameBreak, updateSameBreakData } from '../../ngrx/actions/calendar.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'edu-define-same-breaks',
@@ -19,7 +20,8 @@ import { addSameBreak, updateSameBreakData } from '../../ngrx/actions/calendar.a
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefineSameBreaksComponent implements OnInit {
-  constructor(private store: Store<CalendarStateModel>) {}
+  activatedRouteData = this.activatedRoute.snapshot.data;
+  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
   teachingData: Observable<TeachingStateModel>;
   testDataArr = [
     {
@@ -52,8 +54,7 @@ export class DefineSameBreaksComponent implements OnInit {
     this.store.dispatch(updateSameBreakData({index, field, value}));
   }
   updateTitle($event, idx: number) {
-    console.log(idx);
-    // this.updateBreakData('title', $event, idx)
+    this.updateBreakData('title', $event, idx)
   }
   updateDay($event, idx: number) {
     this.updateBreakData('day', $event, idx)
@@ -65,8 +66,7 @@ export class DefineSameBreaksComponent implements OnInit {
     this.updateBreakData('after', $event, idx);
   }
   updateDuration($event, idx: number) {
-    console.log(idx);
-    // this.updateBreakData('duration', $event, idx);
+    this.updateBreakData('duration', $event, idx);
   }
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   startScroll(el) {
