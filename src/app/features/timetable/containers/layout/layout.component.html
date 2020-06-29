@@ -1,0 +1,73 @@
+<div class="shell">
+  <edu-header-nav>
+    <ng-template #selectedTemplate>
+      <img
+        class="nav__active-module-img"
+        src="assets/nav-timetable.svg"
+        alt=""
+      />
+      <span>Timetable</span>
+    </ng-template>
+  </edu-header-nav>
+  <main>
+    <section class="section">
+      <button class="section__back-btn" [routerLink]="['/dashboard']">
+        <img src="../../../assets/chevron-left.svg" alt="" /> Back
+      </button>
+      <div class="content">
+        <div class="content-wrapper">
+          <h2 class="content__title">
+            Assign Teacher and Subject
+          </h2>
+          <p class="content__desc">
+            Please select a class and section from the menu on the left to get
+            going
+          </p>
+
+          <div class="timetable-wrapper">
+            <div class="timetable__classes">
+              <edu-timetable-options
+                (clicked)="onClassClicked($event)"
+                [classes]="classes | async"
+                [style]="{
+                  width: '44px',
+                  height: '44px',
+                  margin: '4px',
+                  border: '2px solid #e6e9f3',
+                  fontSize: '12px'
+                }"
+              ></edu-timetable-options>
+            </div>
+            <div class="timetable__timetable">
+              timetable here
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+    </section>
+    <aside class="aside">
+      <edu-timetable-search searchPlaceholder="Search Subjects">
+        Subjects result
+      </edu-timetable-search>
+      <edu-timetable-search searchPlaceholder="Search Teachers">
+        Teachers result
+      </edu-timetable-search>
+    </aside>
+  </main>
+</div>
+
+<edu-modal-v2
+  *ngIf="false"
+  class="intro"
+  btnText="GOT IT"
+  header="Timetable Filling"
+  icon="assets/nav-timetable.svg"
+  (btnClicked)="onModalBtnClicked()"
+>
+  This is the <b class="orangecolor">final</b> step. All you have to do is fill
+  the periods of the sections with a <b class="orangecolor">subject</b> and a
+  <b class="orangecolor">teacher</b> from the available lists. Only available
+  teachers for that subject and class level will be shown to help you go faster!
+</edu-modal-v2>
