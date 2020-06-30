@@ -50,7 +50,7 @@ export class ImageSliderComponent
   ngAfterViewInit() {
     // this.injectBtnImg();
     // this.registerClickEvent();
-
+    this.displayNgContent = true;
     this.mainInnerEl = this.el.nativeElement.querySelector('.main-inner');
     this.mainEl = this.el.nativeElement.querySelector(
       '.ng-image-slider-container > .main'
@@ -77,19 +77,20 @@ export class ImageSliderComponent
   leftDisabled = true;
   rightDisabled = false;
   hideBtns = false;
+  displayNgContent = false;
   @ViewChild('nav') slider: NgImageSliderComponent;
   @ContentChildren(SliderChildrenDirective) ngContentEls;
-  injectBtnImg() {
-    let next_el = this.el.nativeElement.querySelector('.next.icons.next-icon');
-    let prev_el = this.el.nativeElement.querySelector('.prev.icons.prev-icon');
+  // injectBtnImg() {
+  //   let next_el = this.el.nativeElement.querySelector('.next.icons.next-icon');
+  //   let prev_el = this.el.nativeElement.querySelector('.prev.icons.prev-icon');
 
-    let newImgEl = this.renderer.createElement('img');
-    let newImgEl2 = this.renderer.createElement('img');
+  //   let newImgEl = this.renderer.createElement('img');
+  //   let newImgEl2 = this.renderer.createElement('img');
 
-    this.renderer.appendChild(next_el, newImgEl2);
-    this.renderer.appendChild(prev_el, newImgEl);
-    this.cd.markForCheck();
-  }
+  //   this.renderer.appendChild(next_el, newImgEl2);
+  //   this.renderer.appendChild(prev_el, newImgEl);
+  //   this.cd.markForCheck();
+  // }
 
   populateImgObj(lengthOfObj) {
     this.imageObject = [];
@@ -133,8 +134,8 @@ export class ImageSliderComponent
 
   //default value that gets injected as placeholder
   placeholderImageTemplate = {
-    image: 'assets/school-logox2.png1',
-    thumbImage: 'assets/school-logox2.1png',
+    image: 'assets/form-components/blank.png',
+    thumbImage: 'assets/form-components/blank.png',
     alt: 'alt of image '
   };
   //this is needed for the slider to work, as it always display one less
