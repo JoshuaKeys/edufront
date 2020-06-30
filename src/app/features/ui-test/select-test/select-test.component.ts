@@ -18,11 +18,12 @@ export class SelectTestComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  modelTest = 4;
+  testVal = 0;
+  modelTest = 'abd';
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      f1: [2, Validators.required],
-      f2: [2, Validators.required],
+      f1: [[2, 3], Validators.required],
+      f2: [null, Validators.required],
       f3: [4, Validators.required]
     });
   }

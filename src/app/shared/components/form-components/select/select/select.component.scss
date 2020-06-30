@@ -311,6 +311,7 @@
     font-size: 0;
   }
   .label__shrink-wrap {
+    transition: none;
     font-size: 0.85em;
   }
 }

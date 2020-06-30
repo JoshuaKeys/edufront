@@ -33,16 +33,6 @@ export class OptionComponent implements OnInit, AfterViewInit {
       this.selectService.activeOptionIndex.next(this.indexInParent);
     }
 
-    // this.selectService.activeOptionIndex.subscribe((activeIndex)=>{
-    //   if(this.indexInParent === activeIndex){
-    //     this.isActive = true;
-    //     this.renderer.addClass(this.el.nativeElement, "selected");
-    //   }else{
-    //     this.isActive = false;
-    //     this.renderer.removeClass(this.el.nativeElement, "selected");
-    //   }
-    //   this.cd.markForCheck();
-    // })
     this.selectService.activeOptionComponent.subscribe(activeComp => {
       if (this === activeComp) {
         this.isActive = true;
@@ -70,8 +60,6 @@ export class OptionComponent implements OnInit, AfterViewInit {
     console.log(JSON.stringify(this.selectService.activeValue));
 
     if (this.selectService.activeValue == this.OptionValue) {
-      console.log('this is active component');
-      console.log(this);
       this.selectService.activeOptionComponent.next(this);
     }
   }
@@ -84,7 +72,7 @@ export class OptionComponent implements OnInit, AfterViewInit {
 
   @HostListener('click') onClick() {
     // this.selectService.setActiveOption(this.OptionValue);
-    console.log('CLICK ED ' + this.displayedValue);
+    // console.log('CLICK ED ' + this.displayedValue);
     this.selectService.optionClicked.next();
     this.selectService.activeOptionComponent.next(this);
   }

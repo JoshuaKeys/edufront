@@ -1,6 +1,6 @@
 <p>testModel : {{ testModel }}</p>
 
-<edu-timepicker [(ngModel)]="testModel">
+<edu-timepicker (edu-change)="log($event)" [(ngModel)]="testModel">
   <span class="edu-label">timepicker</span>
 </edu-timepicker>
 

@@ -50,12 +50,17 @@ export class TimepickerBlockComponent
     console.log(param);
     param = this.sanitizeNullAndUndefined(param);
     this.activeTime = this.parseStringToTime(param);
-    this.cd.markForCheck();
+    this.activeHour = this.activeTime.hour;
+    this.activeMin = this.activeTime.min;
+
     console.log(this.activeTime);
+    console.log(`h:m ${this.activeHour}:${this.activeMin}`);
     let timeInString = this.getActiveTimeInString();
-    this.onChange(timeInString);
-    this._value = timeInString;
-    // this.onEduChange.emit(param);
+
+    this.onChange(param);
+    this._value = param;
+    this.onEduChange.emit(param);
+    this.cd.markForCheck();
   }
   get value() {
     return this._value;
@@ -65,6 +70,8 @@ export class TimepickerBlockComponent
   hour = new Array(24);
   min = new Array(60);
   activeTime: any = { hour: null, min: null };
+  activeHour = null;
+  activeMin = null;
   tempValue = {};
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
@@ -85,10 +92,18 @@ export class TimepickerBlockComponent
   }
 
   updateMin(min) {
+    console.log('new values updting h');
     this.activeTime.min = min;
+    if (this.activeTime.hour != null) {
+      this.value = this.getActiveTimeInString();
+    }
   }
   updateHour(hour) {
+    console.log('new values updting m');
     this.activeTime.hour = hour;
+    if (this.activeTime.min != null) {
+      this.value = this.getActiveTimeInString();
+    }
   }
 
   sanitizeNullAndUndefined(value) {

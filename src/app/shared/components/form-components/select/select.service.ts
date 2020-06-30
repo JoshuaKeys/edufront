@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-
+import { OptionComponent } from './option/option.component';
 @Injectable({
   providedIn: 'root'
 })
 export class SelectService {
   constructor() {}
-  activeOption = new BehaviorSubject('');
-  // elementIsOpened = new BehaviorSubject(false);
-  activeOptionIndex = new BehaviorSubject(null);
+  activeValue = new BehaviorSubject('');
 
   optionClicked = new Subject();
-  activeValue = '';
 
   activeOptionComponent = new BehaviorSubject(null);
 
-  setActiveOption(value) {
-    this.activeOption.next(value);
+  setActiveOption(value: OptionComponent) {
+    // console.log(`SETTING ACTIVE OPTIOM - ${value.displayedValue}`);
+    this.activeOptionComponent.next(value);
   }
 
   setActiveValue(val) {
-    console.log('ACTIVE SELET VALUE -- ' + val);
-    this.activeValue = val;
-  }
-
-  // setElementIsOpenState(isOpened:boolean){
-  //   this.elementIsOpened.next(isOpened);
-  // }
-
-  resetOptionIndex() {
-    this.activeOptionIndex.next(0);
+    this.activeValue.next(val);
   }
 }

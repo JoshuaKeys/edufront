@@ -7,7 +7,7 @@
 <h1>disabled : {{ loginForm.get('f1').disabled }}</h1>
 
 <edu-select
-  elementId="f2"
+  elementId="f22"
   [(ngModel)]="modelTest"
   (onValueChange)="updateValue($event)"
   (edu-change)="log($event)"
@@ -16,19 +16,18 @@
   <span class="edu-label">
     numbers <span class="ashcolor optional">123</span>
   </span>
-  <edu-option OptionValue="1"> 1 </edu-option>
-  <edu-option OptionValue="2"> 2 </edu-option>
+  <edu-option OptionValue="1"> 1 as s</edu-option>
+  <edu-option [OptionValue]="testVal"> 2 </edu-option>
   <edu-option OptionValue="3"> 3 </edu-option>
   <edu-option OptionValue="4"> 4 </edu-option>
   <edu-option OptionValue="5"> 5 </edu-option>
   <edu-option OptionValue="6"> 6 </edu-option>
 </edu-select>
 {{ modelTest }}
-<!-- <form [formGroup]="loginForm" (ngSubmit)="formSubmit()">
+<form [formGroup]="loginForm" (ngSubmit)="formSubmit()">
   <edu-icon-select
     [textParserFn]="setDisplayValue"
     formControlName="f1"
-    isSingleSelect="true"
     [valueOptions]="options"
     (edu-tick)="log($event)"
   >
@@ -42,6 +41,7 @@
   <br />
   <edu-select
     formControlName="f2"
+    alignment="center"
     (onValueChange)="updateValue($event)"
     (edu-change)="log($event)"
     (edu-keydown)="log($event)"
@@ -49,7 +49,7 @@
     <span class="edu-label">
       numbers <span class="ashcolor optional">123</span>
     </span>
-    <edu-option OptionValue="1"> 1 </edu-option>
+    <edu-option [OptionValue]="testVal"> 0 </edu-option>
     <edu-option OptionValue="2"> 2 </edu-option>
     <edu-option OptionValue="3"> 3 </edu-option>
     <edu-option OptionValue="4"> 4 </edu-option>
@@ -58,7 +58,7 @@
   </edu-select>
 
   <br />
-  <edu-select
+  <!-- <edu-select
     formControlName="f3"
     (onValueChange)="updateValue($event)"
     (edu-change)="log($event)"
@@ -73,10 +73,10 @@
     <edu-option OptionValue="4"> 4 </edu-option>
     <edu-option OptionValue="5"> 5 </edu-option>
     <edu-option OptionValue="6"> 6 </edu-option>
-  </edu-select>
+  </edu-select> -->
 
   <br />
-</form> -->
+</form>
 
 <br />
 <div class="group-row just-space">

@@ -12,4 +12,8 @@ export class TimepickerTestComponent implements OnInit {
   ngOnInit(): void {}
 
   testModel;
+
+  log(param) {
+    console.log(param);
+  }
 }

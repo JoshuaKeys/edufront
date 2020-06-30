@@ -9,7 +9,7 @@ import { CalendarModel } from '../timetable-preview/calendar.interface';
 export class PreviewTestComponent implements OnInit {
   constructor() {}
   data;
-  modelTest = '08:30';
+  modelTest = '';
   ngOnInit(): void {
     this.data = testData1;
   }
@@ -110,7 +110,7 @@ let testData2 = [
   {
     day: 'Mon',
     periods: ['P1', 'P2', 'P3', 'P4'],
-    startTime: '08:20',
+    startTime: '',
     periodDuration: '',
     intervaBtwPeriods: '',
     breaks: [],
@@ -123,7 +123,7 @@ let testData2 = [
   {
     day: 'Tue',
     periods: ['P1', 'P2', 'P3'],
-    startTime: '08:00',
+    startTime: '',
     periodDuration: '',
     intervaBtwPeriods: '',
     breaks: [],
@@ -137,7 +137,7 @@ let testData2 = [
   {
     day: 'Wed',
     periods: ['P1', 'P2', 'P3', 'P4'],
-    startTime: '08:00',
+    startTime: '',
     periodDuration: '',
     intervaBtwPeriods: '',
     breaks: [],
@@ -150,7 +150,7 @@ let testData2 = [
   {
     day: 'Thu',
     periods: ['P1', 'P2', 'P3', 'P4'],
-    startTime: '08:00',
+    startTime: '08:20',
     periodDuration: '',
     intervaBtwPeriods: '',
     breaks: [],

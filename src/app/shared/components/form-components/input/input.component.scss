@@ -180,7 +180,7 @@ label {
       opacity: 1;
     }
     input {
-      color: transparent;
+      color: transparent !important;
     }
   }
 
@@ -237,8 +237,9 @@ label {
 
 //disabled state
 .disabled {
-  input,
-  input::placeholder,
+  .input__view-component,
+  input.form__input,
+  input.form__input::placeholder,
   label {
     color: $ash;
   }

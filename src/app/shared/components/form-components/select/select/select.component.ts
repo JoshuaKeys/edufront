@@ -14,12 +14,11 @@ import {
   AfterViewInit
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
-import { SelectService } from '../../_shared/select.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OptionComponent } from '../../option/option.component';
-import { filter } from 'rxjs/operators';
+import { SelectService } from '../select.service';
 // import { OptionValueDirective } from "../option-value.directive"
-
+import { filter, distinctUntilChanged, map, distinct } from 'rxjs/operators';
 @Component({
   selector: 'edu-select',
   templateUrl: './select.component.html',
@@ -45,8 +44,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
   _value = '';
   set value(param) {
-    console.log('VALUE __' + param);
+    // console.log(`set value ${param}`);
+    this.selectService.setActiveValue(param);
     this._value = param;
+    this.onValueChange.emit(param);
+    this.elchange.emit(param);
+    this.onChange(param);
   }
   get value() {
     return this._value;
@@ -75,29 +78,49 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     this.setElementId();
 
+    //register to events here
+
     // this.selectService.optionClicked.subscribe(() => {
     //   this.selectState = 'focus';
     //   this.selectIsActive = false;
     //   this.checkboxEl.nativeElement.focus();
     // });
+    this.selectService.activeOptionComponent
+      .pipe(
+        filter(val => val != null),
+        distinctUntilChanged()
+      )
+      .subscribe((optionComp: OptionComponent) => {
+        // console.log('SETTING DISPLAY VALUE');
+        // console.log(optionComp);
+        // if (optionComp !== null) {
+        setTimeout(() => {
+          this.inputValue = optionComp.displayedValue;
+          // console.log(`inputValue - ${this.inputValue}`);
+          this.value = optionComp.OptionValue;
+          this.cd.markForCheck();
+        });
+        // } else {
+        // console.log('OPTION COM IS NUL ??');
+        // }
 
-    // this.selectService.activeOptionComponent
-    //   .pipe(filter(optionValue => optionValue))
-    //   .subscribe((optionComp: OptionComponent) => {
-    //     this.inputValue = optionComp.displayedValue;
-    //     this.value = optionComp.OptionValue;
-    //     this.activeOptionIndex = optionComp.indexInParent;
-    //     console.log(this.value);
-    //     console.log(this.inputValue);
-    //     this.onValueChange.emit(this.value);
-    //     this.elchange.emit(this.value);
-    //     this.onChange(this.value);
-    //     this.cd.markForCheck();
-    //   });
+        //     this.activeOptionIndex = optionComp.indexInParent;
+        //     console.log(this.value);
+        //     console.log(this.inputValue);
+        //     this.onValueChange.emit(this.value);
+        //     this.elchange.emit(this.value);
+        //     this.onChange(this.value);
+        //     this.cd.markForCheck();
+      });
   }
 
   isLabelActive() {
-    return this.selectIsActive || (this.value != '' && this.value);
+    return (
+      this.selectIsActive ||
+      (this.value !== '' &&
+        this.value !== null &&
+        typeof this.value !== 'undefined')
+    );
   }
 
   @HostListener('document:click', ['$event']) clickedOutside($event) {
@@ -217,9 +240,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => {};
 
   writeValue(value: any) {
-    console.log(JSON.stringify(value));
-    this.selectService.setActiveValue(value);
     this.cd.markForCheck();
+    this.value = value;
     // this.selectService.setActiveOption(value);
   }
 
