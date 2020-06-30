@@ -10,7 +10,10 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
-import { addSameBreak, updateSameBreakData } from '../../ngrx/actions/calendar.actions';
+import {
+  addSameBreak,
+  updateSameBreakData
+} from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -21,7 +24,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DefineSameBreaksComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
-  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private store: Store<CalendarStateModel>,
+    private activatedRoute: ActivatedRoute
+  ) {}
   teachingData: Observable<TeachingStateModel>;
   testDataArr = [
     {
@@ -48,19 +54,23 @@ export class DefineSameBreaksComponent implements OnInit {
     this.formArr.push(0);
   }
   addSameBreaks() {
-    this.store.dispatch(addSameBreak())
+    this.store.dispatch(addSameBreak());
   }
-  updateBreakData(field: 'title'|'day'|'after'|'duration', value: any, index: number) {
-    this.store.dispatch(updateSameBreakData({index, field, value}));
+  updateBreakData(
+    field: 'title' | 'day' | 'after' | 'duration',
+    value: any,
+    index: number
+  ) {
+    this.store.dispatch(updateSameBreakData({ index, field, value }));
   }
   updateTitle($event, idx: number) {
-    this.updateBreakData('title', $event, idx)
+    this.updateBreakData('title', $event, idx);
   }
   updateDay($event, idx: number) {
-    this.updateBreakData('day', $event, idx)
+    this.updateBreakData('day', $event, idx);
   }
-  computeName(name:string, idx: number) {
-    return `name-${idx}`
+  computeName(name: string, idx: number) {
+    return `name-${idx}`;
   }
   updateAfter($event, idx: number) {
     this.updateBreakData('after', $event, idx);
@@ -110,7 +120,13 @@ export class DefineSameBreaksComponent implements OnInit {
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);
-    displayValue = `${temp} period`;
+    if (arr.length == 1 && arr[0] == '') {
+      displayValue = '';
+    } else {
+      displayValue = `${temp} period`;
+    }
+    // displayValue = `${temp} period`;
+    // }
     return displayValue;
   }
   test(data) {

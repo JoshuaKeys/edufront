@@ -48,6 +48,7 @@ export class IconSelectComponent
 
   @Input('textParserFn') textParserFn: Function = param => param;
   @Input('elementId') elementId: string = 'iconselect';
+  @Input('isSingleSelect') isSingleSelect: boolean = false;
   @Output('edu-tick') onTick = new EventEmitter<any>();
 
   // @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
@@ -55,13 +56,25 @@ export class IconSelectComponent
   displayText = '';
   _value: any = ''; //value that gets pushed out
   set value(param) {
-    if (param == null || param == '') {
-      param = [''];
+    if (!this.isSingleSelect) {
+      if (param == null || param == '') {
+        param = [''];
+      }
+      this._value = param;
+      this.setDisplayBadges(param);
+      this.displayText = this.textParserFn(param);
+      this.onChange(param);
+    } else {
+      if (param == null || param == undefined) {
+        param = '';
+      }
+      // console.log(param);
+      this._value = param;
+      this.setDisplayBadges([param]);
+      this.displayText = this.textParserFn([param]);
+      // console.log(this.displayText);
+      this.onChange(param);
     }
-    this._value = param;
-    this.setDisplayBadges(param);
-    this.displayText = this.textParserFn(param);
-    this.onChange(param);
     this.cd.markForCheck();
   }
   get value() {
@@ -84,13 +97,13 @@ export class IconSelectComponent
 
   ngAfterViewInit() {
     this.popover.openEvent.subscribe(() => {
-      console.log('popover event');
+      // console.log('popover event');
       this.selectState = 'active';
       this.cd.markForCheck();
     });
 
     this.popover.closeEvent.subscribe(() => {
-      console.log('popover event');
+      // console.log('popover event');
       this.selectState = 'inactive';
       this.cd.markForCheck();
     });
@@ -158,11 +171,17 @@ export class IconSelectComponent
   }
   confirmState() {
     this.popoverToogleVar = !this.popoverToogleVar;
-
-    this.value = this.displayBadges
-      .filter(option => option.state == 'active')
-      .map(option => option.value);
+    if (this.isSingleSelect) {
+      this.value = this.displayBadges
+        .filter(option => option.state == 'active')
+        .map(option => option.value)[0];
+    } else {
+      this.value = this.displayBadges
+        .filter(option => option.state == 'active')
+        .map(option => option.value);
+    }
     this.onTick.emit(this.value);
+
     // console.log(this.value);
   }
 
@@ -199,10 +218,21 @@ export class IconSelectComponent
     }
 
     if (this.displayBadges) {
-      if (this.displayBadges[index].state === '') {
-        this.displayBadges[index].state = 'active';
+      if (this.isSingleSelect) {
+        this.displayBadges = this.displayBadges.map((val, badgeIndex) => {
+          if (index !== badgeIndex) {
+            val.state = '';
+          } else {
+            val.state = val.state == 'active' ? '' : 'active';
+          }
+          return val;
+        });
       } else {
-        this.displayBadges[index].state = '';
+        if (this.displayBadges[index].state === '') {
+          this.displayBadges[index].state = 'active';
+        } else {
+          this.displayBadges[index].state = '';
+        }
       }
     }
 

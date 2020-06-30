@@ -39,12 +39,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input('disabled') disabled = false;
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('hideChevron') hideChevron = false;
+  @Input('elementId') elementId = 'selectcomp';
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
 
   value = ''; //value that gets pushed out
   inputValue = '';
-  elementId;
   selectIsActive; // controls the checkbox, responsible for toggling dropdown
   selectState = 'inactive'; // state [active, inactive( default ), focus, disabled ]
   activeOptionIndex = 0;

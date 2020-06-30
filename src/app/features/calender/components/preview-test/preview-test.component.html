@@ -1,7 +1,13 @@
-<edu-timetable-preview
+<!-- <edu-timetable-preview
   [edu-title]="'class'"
   [edu-value]="data"
-></edu-timetable-preview>
+></edu-timetable-preview> -->
 
+<h1>modelTest : {{ modelTest }}</h1>
+<edu-timepicker-block
+  elementId="timepicker-block-biatch"
+  [ngModel]="modelTest"
+></edu-timepicker-block>
+<input [(ngModel)]="modelTest" type="text" />
 <!-- <button ButtonType="basic" (click)="resetComponent()">reset component</button>
 {{ this.activeindex }} -->
