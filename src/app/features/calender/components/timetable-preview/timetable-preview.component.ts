@@ -24,8 +24,6 @@ export class TimetablePreviewComponent implements OnInit {
   tempTimeArr = [];
   ngOnInit(): void {}
   @Input('edu-value') set elValue(val: CalendarModel[]) {
-    // console.log('SETTING EL VALUE');
-
     let cleanData = this.removeDaysWithEmptyPeriod(val);
     console.log(cleanData);
     this.resetMainValues();

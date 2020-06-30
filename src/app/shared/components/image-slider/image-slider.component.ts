@@ -128,8 +128,14 @@ export class ImageSliderComponent
     let containers = this.el.nativeElement.querySelectorAll(
       '.main-inner .img-div'
     );
+    try {
+      this.renderer.appendChild(containers[index], el.nativeElement);
+    } catch (err) {
+      console.log('image slider error -- ' + err);
+    }
 
-    this.renderer.appendChild(containers[index], el.nativeElement);
+    // console.log(containers);
+    // console.log(containers.length);
   }
 
   //default value that gets injected as placeholder

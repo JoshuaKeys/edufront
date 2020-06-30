@@ -37,7 +37,8 @@ export class TimetablePreview2Component implements OnInit {
   model: any = {};
   @Input('edu-title') titleText = '';
   @Input('edu-value') set elValue(val: CalendarModel[]) {
-    // console.log('SETTING EL VALUE');
+    // console.log('SETTING EL VALUE for - ' + this.titleText);
+    // console.log(val);
     this.resetMainValues();
     let cleanData = this.removeDaysWithEmptyPeriod(val);
 
