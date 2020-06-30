@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CalendarModel } from '../timetable-preview/calendar.interface';
+import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'edu-preview-test',
   templateUrl: './preview-test.component.html',
@@ -7,13 +8,18 @@ import { CalendarModel } from '../timetable-preview/calendar.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewTestComponent implements OnInit {
-  constructor() {}
+  constructor(private formBuilder: FormBuilder) {}
   data;
   modelTest = '';
+  testForm: FormGroup;
   ngOnInit(): void {
     this.data = testData1;
+    this.testForm = this.formBuilder.group({
+      f1: ['23:2']
+    });
   }
 }
+
 let newState: CalendarModel[] = [
   {
     day: 'Tue',

@@ -19,6 +19,7 @@ import { OptionComponent } from '../../option/option.component';
 import { SelectService } from '../select.service';
 // import { OptionValueDirective } from "../option-value.directive"
 import { filter, distinctUntilChanged, map, distinct } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'edu-select',
   templateUrl: './select.component.html',
@@ -42,14 +43,13 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input('elementId') elementId = 'selectcomp';
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
   @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
+
+  $value = new BehaviorSubject('');
   _value = '';
   set value(param) {
+    // console.log('SET IN SELECT');
+    this.$value.next(param);
     // console.log(`set value ${param}`);
-    this.selectService.setActiveValue(param);
-    this._value = param;
-    this.onValueChange.emit(param);
-    this.elchange.emit(param);
-    this.onChange(param);
   }
   get value() {
     return this._value;
@@ -77,7 +77,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.setElementId();
-
+    this.$value.pipe(distinctUntilChanged()).subscribe(param => {
+      // console.log('CHANGE IN SELECT - ' + param);
+      this.selectService.setActiveValue(param);
+      this._value = param;
+      this.onValueChange.emit(param);
+      this.elchange.emit(param);
+      this.onChange(param);
+    });
     //register to events here
 
     // this.selectService.optionClicked.subscribe(() => {

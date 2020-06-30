@@ -3,7 +3,7 @@
   <div class="group--row timeSelector">
     <edu-select
       [elementId]="getElId('hr')"
-      [ngModel]="activeHour"
+      [(ngModel)]="activeHour"
       class="timeSelector--hr"
       (edu-change)="updateHour($event)"
     >
@@ -14,7 +14,7 @@
     </edu-select>
     <edu-select
       [elementId]="getElId('min')"
-      [ngModel]="activeMin"
+      [(ngModel)]="activeMin"
       class="timeSelector--min"
       (edu-change)="updateMin($event)"
     >
