@@ -53,7 +53,7 @@ export class Datepicker2Component
   @ViewChild('validator') validator: any;
   @Input('alignment') alignment = 'center';
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
-  @Input('elementId') elementId = 'tempDatepickerId123';
+  @Input('elementId') elementId = eid;
   @Output() onDateDataChanged = new EventEmitter<string>();
   @Output('edu-change') onEduChange = new EventEmitter<string>();
   @Input('disabled') set disabled(disabled) {
@@ -119,7 +119,10 @@ export class Datepicker2Component
   }
 
   setElementID() {
-    if (this.el.nativeElement.getAttribute('formcontrolname') !== undefined) {
+    let elementIdDefined = this.elementId !== eid;
+    let formcontrolnamedefined =
+      this.el.nativeElement.getAttribute('formcontrolname') !== undefined;
+    if (!elementIdDefined && formcontrolnamedefined) {
       this.elementId = this.el.nativeElement.getAttribute('formcontrolname');
     }
   }
@@ -391,3 +394,4 @@ export class Datepicker2Component
     this.disabled = isDisabled;
   }
 }
+const eid = 'datepickerEID';

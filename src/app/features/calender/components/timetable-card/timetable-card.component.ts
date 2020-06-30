@@ -40,10 +40,10 @@ export class TimetableCardComponent implements OnInit {
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
     this.resetMainValues();
-
-    this.parseElValue(val);
+    let cleanValues = this.removeDaysWithEmptyPeriod(val);
+    this.parseElValue(cleanValues);
     this.setTime();
-    this.addBlankToStartOfClass(val);
+    this.addBlankToStartOfClass(cleanValues);
     // this.addBlanks(val);
     this.setSpecialPeriod();
 
@@ -54,6 +54,9 @@ export class TimetableCardComponent implements OnInit {
     // this.logStuff();
   }
 
+  removeDaysWithEmptyPeriod(val: CalendarModel[]) {
+    return val.filter(_val => _val.periods.length > 0);
+  }
   periodDurationIsSet = false;
   tickClick() {
     this.tickClickEvent.emit(this.eduId);

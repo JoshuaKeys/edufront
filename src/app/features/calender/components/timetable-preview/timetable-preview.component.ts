@@ -438,8 +438,9 @@ export class TimetablePreviewComponent implements OnInit {
         //add starting time of first period
         let firstPeriodStartTime;
 
-        if (dayData.periods.length > 0) {
+        if (dayData.periods.length > 0 && dayData.startTime != '0') {
           firstPeriodStartTime = this.parseTimeToInt(dayData.startTime);
+          console.log(firstPeriodStartTime);
           this.addToTempTimeArr(firstPeriodStartTime);
         }
 
