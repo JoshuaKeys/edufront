@@ -9,6 +9,7 @@ import { VacationCreateModel } from '../../models/vacation-create.model';
 import { TermCreateModel } from '../../models/term-create.model';
 import { TermDetailsDtoModel } from '../../models/term-details-dto.model';
 import { CalendarCreateModel } from '../../models/calendar-create.model';
+import { getOrphanedClasses } from '../../utilities';
 
 const calendarFeatureState = createFeatureSelector<CalendarStateModel>(
   'calendar'
@@ -75,6 +76,15 @@ export const selectPeriodSelected = createSelector(
     return feat.teaching.selection;
   }
 );
+export const selectOrphanedClasses = createSelector(
+  calendarFeatureState, feat => {
+    const allClasses = feat.teaching.classes;
+    const classesAndGroups = feat.teaching.classesAndGroups;
+    return getOrphanedClasses(allClasses, classesAndGroups).sort((classA, classB)=> {
+      return classA.grade - classB.grade
+    });
+  }
+)
 export const selectCreateCalendarData = createSelector(
   calendarFeatureState,
   feat => {

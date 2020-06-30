@@ -4,7 +4,7 @@ import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeaching, selectAllClasses } from '../../ngrx/selectors';
+import { selectTeaching, selectAllClasses, selectOrphanedClasses } from '../../ngrx/selectors';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { reassignClass, selectStartTime, addClassesGroup, addPeriodsToGroup, setStartTime, setGroupTeachingDays, setGroupPeriods, setGroupStartTime } from '../../ngrx/actions/calendar.actions';
@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartTimeOfEachPeriodComponent implements OnInit {
+  orphanedClasses: Observable<ClassModel[]>;
   constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
   allClasses: Observable<ClassModel[]>;
   teachingData: Observable<TeachingStateModel>;
@@ -39,7 +40,16 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
   toggleActiveClass(classItem: ClassModel, classesGroup: ClassGroupModel) {
     this.store.dispatch(reassignClass({class: classItem, classesGroup}))
   }
+  isPresent(classes: ClassModel[], classItem: ClassModel) {
+    for(let i = 0; i < classes.length; i++) {
+      if(classes[i].id === classItem.id) {
+        return true
+      }
+    }
+    return false;
+  }
   ngOnInit(): void {
+    this.orphanedClasses = this.store.select(selectOrphanedClasses)
     this.teachingData = this.store.select(selectTeaching);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {

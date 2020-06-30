@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeaching, selectAllClasses } from '../../ngrx/selectors';
+import { selectTeaching, selectAllClasses, selectOrphanedClasses } from '../../ngrx/selectors';
 import {
   addBreak,
   removeBreak,
@@ -41,7 +41,7 @@ export class DefineYourBreakComponent implements OnInit {
     after: [1, 2],
     duration: 10
   };
-
+  orphanedClasses: Observable<ClassModel[]>;
   activatedRouteData = this.activatedRoute.snapshot.data;
   teachingState: Observable<TeachingStateModel>;
   allClasses: Observable<ClassModel[]>;
@@ -76,6 +76,7 @@ export class DefineYourBreakComponent implements OnInit {
     this.updateBreakData(groupId, 'duration', $event, idx);
   }
   ngOnInit(): void {
+    this.orphanedClasses = this.store.select(selectOrphanedClasses)
     this.teachingState = this.store.select(selectTeaching);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {

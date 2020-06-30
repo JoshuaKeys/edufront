@@ -4,7 +4,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { fetchClassesAndGroups, toggleClassesGroupActive, getAllClassesRequest, reassignClass, addClassesGroup, setGroupTeachingDays } from '../../ngrx/actions/calendar.actions';
 import { Observable, of } from 'rxjs';
 import { ClassGroupModel } from '../../models/class-group.model';
-import { selectClassesAndGroups, selectTeachingDays, selectAllClasses } from '../../ngrx/selectors';
+import { selectClassesAndGroups, selectTeachingDays, selectAllClasses, selectOrphanedClasses } from '../../ngrx/selectors';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
@@ -19,6 +19,7 @@ import { v4 as uuid44} from 'uuid';
 })
 export class TeachingDayForClassQuestionComponent implements OnInit {
   classesAndGroups: Observable<ClassGroupModel[]>;
+  orphanedClasses: Observable<ClassModel[]>;
   teachingDays: Observable<TeachingDay[]>;
   allClasses: Observable<ClassModel[]>;
   activatedRouteData = this.activatedRoute.snapshot.data;
@@ -27,6 +28,8 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(fetchClassesAndGroups())
     this.store.dispatch(getAllClassesRequest())
+    this.orphanedClasses = this.store.select(selectOrphanedClasses)
+
     this.classesAndGroups = this.store.select(selectClassesAndGroups);
     this.teachingDays = this.store.select(selectTeachingDays);
     this.allClasses = this.store.select(selectAllClasses).pipe(

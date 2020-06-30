@@ -19,27 +19,38 @@
                     <div class="badges--inlineflex">
                         <div class="container" *ngIf="teachingData | async as teachingData">
                             <div>
-                                <div class="group--row line-entry" *ngFor="let classItem of teachingData.classesAndGroups">
+                                <div class="group--row line-entry" *ngFor="let item of teachingData.classesAndGroups">
                                     <div class="card ">
                                         <h4 class="card__title">
                                             Classes
                                         </h4>
                                         <p class="card__desc">
-                                            <ng-container *ngFor="let class of classItem.classes; let i = index">
+                                            <ng-container *ngFor="let class of item.classes; let i = index">
                                                 {{ class.grade }}
-                                                <span *ngIf="!(i === classItem.classes.length - 1)">|</span>
+                                                <span *ngIf="!(i === item.classes.length - 1)">|</span>
                                             </ng-container>
                                         </p>
-                                        <edu-popover>
+                                        <!-- <edu-popover>
                                             <div class="classes">
                                                 <div class="badge badge--class" (click)="toggleActiveClass(classItem, classItem)" *ngFor="let item of popoverArr; let i = index">
-                                                    {{ i }}
+                                                    {{ item }}
+                                                </div>
+                                            </div>
+                                        </edu-popover> -->
+                                        <edu-popover>
+                                            <div class="classes">
+                                                <div (click)="toggleActiveClass(classItem, item)" *ngFor="
+                            let classItem of allClasses | async as allClasses
+                          " class="badge badge--class" [ngClass]="{
+                            'badge--active': isPresent(item.classes, classItem)
+                          }">
+                                                    {{ classItem.grade }}
                                                 </div>
                                             </div>
                                         </edu-popover>
                                     </div>
                                     <div class="days">
-                                        <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="asObservable(classItem)"></edu-start-time-per-day>
+                                        <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="asObservable(item)"></edu-start-time-per-day>
                                     </div>
                                 </div>
                             </div>
@@ -80,8 +91,8 @@
             </div>
         </div>
     </div>
-
-    <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
+    <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
+    <button [disabled]="(orphanedClasses | async).length" [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
       continue
     </button>
 </div>

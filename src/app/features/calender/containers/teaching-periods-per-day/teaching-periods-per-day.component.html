@@ -81,8 +81,9 @@
             </div>
         </div>
     </div>
+    <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
+    <button [disabled]="(orphanedClasses | async).length" class="button--bottom" ButtonType="basic" [routerLink]="['../', activatedRouteData.next]">
+        continue
+      </button>
 
-    <button class="button--bottom" ButtonType="basic" [routerLink]="['../', activatedRouteData.next]">
-    continue
-  </button>
 </div>
