@@ -16,7 +16,9 @@ import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
 import { TimepickerTestComponent } from './timepicker-test/timepicker-test.component';
 import { SliderTestComponent } from './slider-test/slider-test.component';
+import { ModalTestComponent } from './modal-test/modal-test.component';
 const components = [
+  ModalTestComponent,
   TimepickerTestComponent,
   SliderTestComponent,
   TimeTableTestComponent2,

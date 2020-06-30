@@ -10,8 +10,10 @@ import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
 import { SliderTestComponent } from './slider-test/slider-test.component';
 import { TimepickerTestComponent } from './timepicker-test/timepicker-test.component';
+import { ModalTestComponent } from './modal-test/modal-test.component';
 const routes: Routes = [
   { path: 'time', component: TimepickerTestComponent },
+  { path: 'modal', component: ModalTestComponent },
   {
     path: 'date',
     component: DatepickerTestComponent

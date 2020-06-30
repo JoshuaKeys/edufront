@@ -1,28 +1,5 @@
-<main>
-  <div class="modal__overlay">
-    <div class="modal">
-      <img class="modal__img" [src]="icon" alt="" />
-      <h2 class="modal__title">
-        {{ header }}
-      </h2>
-      <div>
-        <p class="modal__desc">
-          {{ description }}
-        </p>
-      </div>
-      <div class="modal__btns" *ngIf="completeModal; else startModalBtn">
-        <button class="modal__btn" (click)="onLeftBtnClicked()">
-          {{ leftBtn }}
-        </button>
-        <button class="modal__btn" (click)="onRightBtnClicked()">
-          {{ rightBtn }}
-        </button>
-      </div>
-      <ng-template #startModalBtn>
-        <button class="modal__btn" (click)="onBtnClick()">
-          {{ btnText }}
-        </button>
-      </ng-template>
-    </div>
+<div class="modal__overlay" (click)="closeModal()">
+  <div class="modal" stopEventBubble="click">
+    <ng-content></ng-content>
   </div>
-</main>
+</div>

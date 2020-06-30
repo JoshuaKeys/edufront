@@ -97,8 +97,8 @@ export const calenderNavigation = {
 };
 
 export const calenderRouteToComponentMap = {
-  // 'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  'dates-of-academic-year': fromPages.P102Component,
+  'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
+  // 'dates-of-academic-year': fromPages.P102Component,
   // 'dates-of-academic-year': PreviewTestComponent,
 
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
