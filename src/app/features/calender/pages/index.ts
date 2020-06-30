@@ -11,11 +11,13 @@ import { P96Component } from './p96/p96.component';
 import { P97Component } from './p97/p97.component';
 import { P98Component } from './p98/p98.component';
 import { P101Component } from './p101/p101.component';
+import { P102Component } from './p102/p102.component';
 let pages = [
   P87Component,
   P88Component,
   P89Component,
   P90Component,
+  P102Component,
   P91Component,
   // P92Component,
   P93Component,
@@ -41,5 +43,6 @@ export {
   P96Component,
   P97Component,
   P98Component,
-  P101Component
+  P101Component,
+  P102Component
 };
