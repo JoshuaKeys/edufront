@@ -8,7 +8,6 @@ export function clearClassOffGroups(classItem: ClassModel, groups: ClassGroupMod
     console.log(groups);
     return groups.map(group=> {
         // if(skipGroup) {
-            console.log(group.id, skipGroupId)
             if(group.id !== skipGroupId) {
                 const filteredClasses = group.classes.map(groupClassItem=> {
                     if(classItem.id === groupClassItem.id) {
@@ -78,4 +77,26 @@ function buildRangePipe(items: number[]) {
         }
     }, '')
     return res;
+}
+
+export function getOrphanedClasses(allClasses: ClassModel[], classesAndGroups: ClassGroupModel[]) {
+    let orphanedClasses: ClassModel[] = [];
+    allClasses.forEach(classItem => {
+        let classFound: boolean;
+        for(let i = 0; i < classesAndGroups.length; i++) {
+            for(let j = 0; j < classesAndGroups[i].classes.length; j++) {
+                if(classItem.id === classesAndGroups[i].classes[j].id) {
+                    classFound = true;
+                    break;
+                }
+            }
+            if(classFound) {
+                break;
+            }
+        }
+        if(!classFound) {
+            orphanedClasses.push(classItem);
+        }
+    })
+    return orphanedClasses;
 }

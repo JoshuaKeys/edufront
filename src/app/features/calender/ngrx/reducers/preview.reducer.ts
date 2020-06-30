@@ -286,7 +286,7 @@ export const previewReducer = createReducer(
     const period = {
       day: null,
       periods: [],
-      startTime: '',
+      startTime: '0',
       periodDuration: '',
       intervaBtwPeriods: '',
       breaks: [],
@@ -363,7 +363,6 @@ export const previewReducer = createReducer(
   on(setGroupStartTime, (state, action) => {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const groupIdx = stateCopy.teachingDays.classesAndGroupItems.findIndex(group=> group.id === action.groupId);
-    // stateCopy.classesAndGroups[groupIdx].periods = stateCopy.periods;
     const updatedPeriods = stateCopy.teachingDays.classesAndGroupItems[groupIdx].periods.map(period => {
       const teachingDaysSelected = stateCopy.teachingDays.classesAndGroupItems[groupIdx].teachingDays.find(teachingDay=> {
         return teachingDay.day === period.day && teachingDay.selected
@@ -404,7 +403,7 @@ export const previewReducer = createReducer(
             const period: PeriodModel = {
               day: teachingDay.day,
               periods: [],
-              startTime: '',
+              startTime: '0',
               periodDuration: '',
               intervaBtwPeriods: '',
               breaks: [],
@@ -451,7 +450,7 @@ export const previewReducer = createReducer(
       periods.push({
         day: teachingDay.day,
         periods: [],
-        startTime: '',
+        startTime: '0',
         periodDuration: '',
         intervaBtwPeriods: '',
         breaks: [],

@@ -363,7 +363,7 @@ export const teachingReducer = createReducer(
       const period: PeriodModel = {
         day: teachingDay.day,
         periods: [],
-        startTime: '',
+        startTime: '0',
         periodDuration: '',
         intervaBtwPeriods: '',
         breaks: [],
@@ -427,7 +427,7 @@ export const teachingReducer = createReducer(
         return {
           day: teachingDay.day,
           periods: teachingDay.selected? periodsArr: [],
-          startTime: '',
+          startTime: '0',
           periodDuration: '0',
           intervaBtwPeriods: '0',
           breaks: [],
@@ -449,7 +449,7 @@ export const teachingReducer = createReducer(
             const period: PeriodModel = {
               day: null,
               periods: [],
-              startTime: '',
+              startTime: '0',
               periodDuration: '0',
               intervaBtwPeriods: '0',
               breaks: [],

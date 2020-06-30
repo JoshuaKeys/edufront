@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { of, Observable } from 'rxjs';
-import { selectClassesAndGroups, selectTeaching, selectAllClasses, selectPeriodSelected } from '../../ngrx/selectors';
+import { selectClassesAndGroups, selectTeaching, selectAllClasses, selectPeriodSelected, selectOrphanedClasses } from '../../ngrx/selectors';
 import { map } from 'rxjs/operators';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest, addClassesGroup, addPeriodsToGroup, setGroupTeachingDays, setGroupPeriods } from '../../ngrx/actions/calendar.actions';
@@ -20,6 +20,7 @@ import { SelectionModel } from '../../models/selection.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TeachingPeriodsPerDayComponent implements OnInit {
+  orphanedClasses: Observable<ClassModel[]>;
   activatedRouteData = this.activatedRoute.snapshot.data;
   classesAndGroups: Observable<ClassGroupModel[]>;
   selection: Observable<SelectionModel>;
@@ -29,6 +30,7 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.orphanedClasses = this.store.select(selectOrphanedClasses)
     this.calendarData = this.store.select(selectTeaching);
     this.classesAndGroups = this.store.select(selectClassesAndGroups);
     this.selection = this.store.select(selectPeriodSelected);

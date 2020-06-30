@@ -54,6 +54,7 @@ import { PeriodIntervalComponent } from './containers/period-interval/period-int
 import { PopoverModule } from 'src/app/shared/components/form-components/popover/popover.module';
 import { FormComponentsModule } from 'src/app/shared/components/form-components/form-component.module';
 import { DefineSameBreaksComponent } from './containers/define-same-breaks/define-same-breaks.component';
+import { OrphanClassesComponent } from './components/orphan-classes/orphan-classes.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -98,7 +99,8 @@ import { DefineSameBreaksComponent } from './containers/define-same-breaks/defin
     DefineSameBreaksComponent,
     PeriodIntervalComponent,
     CommonAssemblyQuestionComponent,
-    CalendarConfirmationComponent
+    CalendarConfirmationComponent,
+    OrphanClassesComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,6 @@
     <li class="day-container" (click)="selectTime(day, group)" *ngFor="let day of group.periods;
         let index=i">
         <!-- <span class="day">{{day.day}}</span> -->
-        <span class="value" [ngClass]="{'active': day.startTimeSelected}">{{day.startTime ? day.startTime : 'X'}}</span>
+        <span class="value" [ngClass]="{'active': day.startTimeSelected}">{{day.startTime != '0' ? day.startTime : 'X'}}</span>
     </li>
 </ul>

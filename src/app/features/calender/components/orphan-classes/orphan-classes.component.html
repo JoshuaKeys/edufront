@@ -1,0 +1,25 @@
+<ng-container *ngIf="(orphanedClasses | async) as orphanedClasses">
+    <div class="validation-msg" *ngIf="orphanedClasses.length">
+        <span *ngIf="orphanedClasses.length > 1; else multipleClasses">Classes</span>
+        <ng-template #multipleClasses>
+            <span>Class</span>
+        </ng-template>
+        <span class="orphanedClass" *ngFor="let orphan of orphanedClasses; let i = index">
+            <span class="orangeColor" *ngIf="orphanedClasses.length === 1; else moreThanOne">
+                {{orphan.name}}
+        </span>
+        <ng-template #moreThanOne>
+            <span *ngIf="i === 0" else multiple>
+                    <span class="orangeColor">{{orphan.name}}</span>
+            </span>
+            <span *ngIf="i !== orphanedClasses.length -1 && i !== 0">
+                    <span class="orangeColor">, {{orphan.name}}</span>
+            </span>
+            <span *ngIf="i === orphanedClasses.length -1">
+                    & <span class="orangeColor">{{orphan.name}}</span>
+            </span>
+        </ng-template>
+        </span>
+        needs to be defined
+    </div>
+</ng-container>
