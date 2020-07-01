@@ -1,6 +1,4 @@
 import * as fromCalenderContainer from '../containers';
-import * as fromPages from '../pages';
-import { PreviewTestComponent } from '../components/preview-test/preview-test.component';
 export const calenderNavigation = {
   'dates-of-academic-year': {
     previous: null,

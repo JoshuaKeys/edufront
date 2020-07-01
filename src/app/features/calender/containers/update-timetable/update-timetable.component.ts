@@ -48,6 +48,9 @@ export class UpdateTimetableComponent implements OnInit {
   asObservable(item) {
     return of(item);
   }
+  selectStartTime(event) {
+    
+  }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
       return true;
