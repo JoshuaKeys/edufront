@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { ClassModel } from '../../models/class.model';
 import { map } from 'rxjs/operators';
-interface ClassesStyle {
+export interface ClassesStyle {
   fontSize: string;
   width: string;
   height: string;

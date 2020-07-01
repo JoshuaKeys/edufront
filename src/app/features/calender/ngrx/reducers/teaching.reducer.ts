@@ -71,22 +71,31 @@ export const teachingReducer = createReducer(
   on(editCalendar, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const classes: ClassModel[] = [];
-    stateCopy.classes.forEach(classItem => {
+    // stateCopy.classes.forEach(classItem => {
 
+    //   let copy: ClassModel;
+    //   for(let i = 0; i < action.group.classes.length; i++) {
+    //     copy = {...action.group.classes[i]}
+    //     if(action.group.classes[i].id === classItem.id) {
+    //       copy.selected = true;
+    //       break;
+    //     }
+    //   }
+    //   classes.push(copy);
+
+    // });
+    const newClasses = JSON.parse(JSON.stringify(stateCopy.classes));
+    for(let i = 0; i < newClasses.length; i++) {
       let copy: ClassModel;
-      for(let i = 0; i < action.group.classes.length; i++) {
-        copy = {...action.group.classes[i]}
-        if(action.group.classes[i].id === classItem.id) {
-          copy.selected = true;
-          break;
+      for(let j = 0; j < action.group.classes.length; j++) {
+        if(newClasses[i].id === action.group.classes[j].id) {
+          newClasses[i].selected = true;
         }
       }
-      classes.push(copy);
-
-    });
+    }
     console.log(classes);
     const editState: CalendarUpdateModel = {
-      classes,
+      classes: newClasses,
       teachingDays: action.group.teachingDays,
       teachingPeriods: action.group.periods
     };

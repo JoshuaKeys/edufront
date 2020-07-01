@@ -13,13 +13,13 @@
                     Classes
                 </div>
                 <div class="line-item__content">
-                    <edu-classes [classes]="allClasses"></edu-classes>
+                    <edu-classes-update [classes]="teachingState.classes"></edu-classes-update>
                 </div>
             </div>
             <div class=" line-item">
                 <div class="line-item__title">Teaching Days</div>
                 <div class="line-item__content">
-                    <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="asObservable(teachingState.calendarEdit.teachingDays)"></edu-days-of-week>
+                    <!-- <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="asObservable(teachingState.calendarEdit.teachingDays)"></edu-days-of-week> -->
                 </div>
             </div>
             <div class=" line-item">
