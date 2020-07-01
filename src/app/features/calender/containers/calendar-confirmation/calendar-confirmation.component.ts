@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 let weirdData = [
   {
     day: 'Mon',
@@ -101,9 +101,11 @@ let testData = [
 })
 export class CalendarConfirmationComponent implements OnInit {
   teachingData: Observable<TeachingStateModel>;
+  activatedRouteData = this.activatedRoute.snapshot.data;
   constructor(
     private store: Store<CalendarStateModel>,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -130,8 +132,11 @@ export class CalendarConfirmationComponent implements OnInit {
     height: '456px'
   };
 
-  onEdit(index) {
+  onEdit(index, groupId) {
     console.log(`editing @ ${index}`);
+    this.router.navigate(['../', this.activatedRouteData.next], {relativeTo: this.activatedRoute, queryParams: {
+      groupId
+    }})
   }
   onTick(index) {
     console.log(`tick @ ${index}`);

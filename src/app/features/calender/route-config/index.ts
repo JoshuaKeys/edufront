@@ -92,15 +92,17 @@ export const calenderNavigation = {
   },
   'calendar-confirmation': {
     previous: 'break-definition',
-    next: ''
-  }
+    next: 'update-timetable'
+  },
+    'update-timetable': {
+      previous: 'calendar-confirmation',
+      next: ''
+    }
+  
 };
 
 export const calenderRouteToComponentMap = {
-  // 'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  'dates-of-academic-year': fromPages.P102Component,
-  // 'dates-of-academic-year': PreviewTestComponent,
-
+  'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
     fromCalenderContainer.TermNamesAndDatesQuestionComponent,
@@ -133,5 +135,6 @@ export const calenderRouteToComponentMap = {
     fromCalenderContainer.BreakScheduleQuestionComponent,
   'break-definition': fromCalenderContainer.DefineYourBreakComponent,
   'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent,
-  'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent
+  'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent,
+  'update-timetable': fromCalenderContainer.UpdateTimetableComponent
 };
