@@ -24,7 +24,7 @@
   <div class="input-label">
     <input
       tabindex="-1"
-      class="  select__input"
+      class="  select__input input"
       [(ngModel)]="inputValue"
       name="{{ elementId }}-input"
       #input
@@ -39,7 +39,7 @@
         'label--active': isLabelActive(),
         labelIsPlaceholder: labelIsPlaceholder
       }"
-      class="select__label "
+      class="select__label label"
       [for]="elementId"
     >
       <div class="label__shrink-wrap">

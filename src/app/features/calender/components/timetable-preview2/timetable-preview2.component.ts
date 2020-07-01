@@ -15,6 +15,7 @@ import {
 } from './data';
 import * as fromData from './data';
 import { Output, EventEmitter, HostListener } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
 @Component({
   selector: 'edu-timetable-preview',
   templateUrl: './timetable-preview2.component.html',
@@ -41,7 +42,7 @@ export class TimetablePreview2Component implements OnInit {
     // console.log(val);
     this.resetMainValues();
     let cleanData = this.removeDaysWithEmptyPeriod(val);
-
+    this.setDays(cleanData);
     this.parseElValue(cleanData);
     this.setTime();
     this.addBlankToStartOfClass(cleanData);
@@ -55,6 +56,7 @@ export class TimetablePreview2Component implements OnInit {
     // this.logStuff();
   }
 
+  days = [];
   periodDurationIsSet = false;
   removeDaysWithEmptyPeriod(val: CalendarModel[]) {
     return val.filter(_val => _val.periods.length > 0);
@@ -246,6 +248,19 @@ export class TimetablePreview2Component implements OnInit {
     return `st${p.startTime}et${p.endTime}t${p.text}c${p.color}`;
   }
 
+  setDays(values: CalendarModel[]) {
+    let AllPossibleDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    AllPossibleDays.forEach(activeDay => {
+      let filteredValues = values.filter(
+        value => value.day.toLowerCase() === activeDay
+      );
+      // console.log(filteredValues);
+      if (filteredValues.length > 0) {
+        this.days.push(activeDay);
+      }
+    });
+  }
+
   setBlankBeforeClass() {
     this.specialPeriods = [];
     this.tempSpecialPeriod.forEach(sp => {
@@ -269,7 +284,9 @@ export class TimetablePreview2Component implements OnInit {
 
     let uniqueIdentifierArr = [];
     let specialPeriodValueArr = [];
-    let day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    // let day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    let day = this.days;
+    // console.log(day);
     //filtering out unique special periods across the week
     this.tempSpecialPeriod.forEach((period, periodIndex) => {
       let identifier = this.getSpecialPeriodIdentifier(period);
@@ -384,7 +401,8 @@ export class TimetablePreview2Component implements OnInit {
   parseElValue(val: CalendarModel[]) {
     //set time,specialPeriod, model
     this.tempTimeArr = [];
-    let day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    // let day = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    let day = this.days;
     val.forEach((dayData, index) => {
       let totalBreakTime = 0;
       if (day.indexOf(dayData.day.toLowerCase()) > -1) {

@@ -40,8 +40,8 @@ edu-subjects-area ::ng-deep .group--3 > .group--row {
       .wrapper {
         padding: 0 15px;
       }
-      label,
-      input {
+      .label,
+      .input {
         font: 400 16px/24px Raleway;
       }
     }
@@ -74,8 +74,8 @@ edu-icon-field ::ng-deep {
     height: 22px;
   }
 
-  label,
-  input {
+  .label,
+  .input {
     font: 400 16px/24px Raleway;
   }
 }

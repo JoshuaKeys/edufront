@@ -11,7 +11,7 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '90'
+        duration: '15'
       },
       {
         name: 'break 2',

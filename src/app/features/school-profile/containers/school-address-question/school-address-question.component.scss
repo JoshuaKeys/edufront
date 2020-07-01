@@ -20,8 +20,8 @@ edu-icon-field ::ng-deep,
 edu-input ::ng-deep {
   width: 377px;
   height: 54px;
-  input,
-  label {
+  .input,
+  .label {
     font-size: 16px;
   }
   margin: auto;

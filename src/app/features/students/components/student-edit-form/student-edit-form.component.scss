@@ -32,8 +32,8 @@
       .wrapper {
         padding: 0 15px;
       }
-      label,
-      input {
+      .label,
+      .input {
         font: 400 16px/24px Raleway;
       }
     }
@@ -59,8 +59,8 @@ edu-country-field ::ng-deep {
     height: 22px;
   }
 
-  label,
-  input {
+  .label,
+  .input {
     font: 400 16px/24px Raleway;
   }
 }

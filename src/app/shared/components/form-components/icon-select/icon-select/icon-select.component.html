@@ -6,7 +6,7 @@
   <div class="input-label">
     <input
       tabindex="-1"
-      class="  select__input"
+      class="  select__input input"
       [(ngModel)]="displayText"
       name="{{ elementId }}-input"
       #input
@@ -23,7 +23,7 @@
     </div> -->
     <label
       [ngClass]="{ 'label--active': isLabelActive() }"
-      class="select__label "
+      class="select__label label"
     >
       <div class="label__shrink-wrap">
         <ng-content select=".edu-label"></ng-content>

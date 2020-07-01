@@ -33,7 +33,7 @@ let newState: CalendarModel[] = [
         firstBreak: '',
         day: '',
         after: 'P1',
-        duration: '90'
+        duration: '15'
       },
       {
         name: 'break 2',
@@ -62,30 +62,30 @@ let newState: CalendarModel[] = [
     ],
     assembly: { name: 'assembly1', startingAt: '07:30', duration: '60' }
   },
-  {
-    day: 'Thu',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '',
-    breaks: [
-      {
-        name: 'break 1',
-        firstBreak: '',
-        day: '',
-        after: 'P1',
-        duration: '90'
-      },
-      {
-        name: 'break 2',
-        firstBreak: '',
-        day: '',
-        after: 'P5',
-        duration: '90'
-      }
-    ],
-    assembly: { name: 'assembly1', startingAt: '07:30', duration: '60' }
-  },
+  // {
+  //   day: 'Thu',
+  //   periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
+  //   startTime: '08:30',
+  //   periodDuration: '30',
+  //   intervaBtwPeriods: '',
+  //   breaks: [
+  //     {
+  //       name: 'break 1',
+  //       firstBreak: '',
+  //       day: '',
+  //       after: 'P1',
+  //       duration: '90'
+  //     },
+  //     {
+  //       name: 'break 2',
+  //       firstBreak: '',
+  //       day: '',
+  //       after: 'P5',
+  //       duration: '90'
+  //     }
+  //   ],
+  //   assembly: { name: 'assembly1', startingAt: '07:30', duration: '60' }
+  // },
   {
     day: 'Fri',
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
