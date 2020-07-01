@@ -1,15 +1,23 @@
 <div class="main">
-    <div class="content">
-        <h1 class="header">
-            What time does the first period in a day start?
-        </h1>
-        <form *ngIf="startTimeForm" [formGroup]="startTimeForm">
-            <input formControlName="startTime" type="time" (change)="setStartTime($event)">
-        </form>
-        <div class="start-time__btn-container button--bottom" *ngIf="startTimeForm">
-            <button ButtonType="basic" [disabled]="startTimeForm.invalid" class="start-time__continue-btn" [routerLink]="['../', activatedRouteData.next]">
-              Continue
-            </button>
-        </div>
+  <div class="content">
+    <h1 class="header">
+      What time does the first period in a day start?
+    </h1>
+    <form *ngIf="startTimeForm" [formGroup]="startTimeForm">
+      <edu-timepicker (edu-change)="setStartTime($event)">
+        <span class="edu-label">Start Time</span>
+      </edu-timepicker>
+      <!-- <input formControlName="startTime" type="time" (change)="setStartTime($event)"> -->
+    </form>
+    <div class="start-time__btn-container button--bottom" *ngIf="startTimeForm">
+      <button
+        ButtonType="basic"
+        [disabled]="startTimeForm.invalid"
+        class="start-time__continue-btn"
+        [routerLink]="['../', activatedRouteData.next]"
+      >
+        Continue
+      </button>
     </div>
+  </div>
 </div>

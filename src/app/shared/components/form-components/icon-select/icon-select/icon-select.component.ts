@@ -98,6 +98,7 @@ export class IconSelectComponent
   ngAfterViewInit() {
     this.popover.openEvent.subscribe(() => {
       // console.log('popover event');
+
       this.selectState = 'active';
       this.cd.markForCheck();
     });
@@ -117,7 +118,13 @@ export class IconSelectComponent
   }
 
   @HostListener('click', ['$event']) onClick($event) {
-    $event.stopPropagation();
+    // this.cbElement.nativeElement.focus();
+    // console.log(document.activeElement);
+    // $event.stopPropagation();
+  }
+
+  getId(prefix) {
+    return `${prefix}-${this.elementId}`;
   }
 
   setElementId() {

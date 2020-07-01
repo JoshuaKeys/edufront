@@ -4,6 +4,7 @@
 @import 'src/assets/styles/mixins/containers';
 @include group();
 .scrollable-content {
+  padding: 0 1%;
   max-height: calc(100vh - 335px);
   overflow-y: scroll;
   align-items: flex-start !important;

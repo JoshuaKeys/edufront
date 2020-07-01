@@ -13,6 +13,8 @@ import {
 import { Renderer2, ElementRef } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-timepicker-block',
@@ -36,7 +38,7 @@ export class TimepickerBlockComponent
   @Output('edu-change') onEduChange = new EventEmitter<any>();
 
   _value;
-
+  $value = new BehaviorSubject('');
   display2Digit(value: number) {
     if (value < 10) {
       return `0${value}`;
@@ -46,21 +48,7 @@ export class TimepickerBlockComponent
   }
 
   set value(param) {
-    console.log('SET VAL');
-    console.log(param);
-    param = this.sanitizeNullAndUndefined(param);
-    this.activeTime = this.parseStringToTime(param);
-    this.activeHour = this.activeTime.hour;
-    this.activeMin = this.activeTime.min;
-
-    console.log(this.activeTime);
-    console.log(`h:m ${this.activeHour}:${this.activeMin}`);
-    let timeInString = this.getActiveTimeInString();
-
-    this.onChange(param);
-    this._value = param;
-    this.onEduChange.emit(param);
-    this.cd.markForCheck();
+    this.$value.next(param);
   }
   get value() {
     return this._value;
@@ -78,6 +66,23 @@ export class TimepickerBlockComponent
 
   ngOnInit(): void {
     this.setElementId();
+    this.$value.pipe(distinctUntilChanged()).subscribe(param => {
+      setTimeout(() => {
+        // console.log('update here - ' + param);
+
+        param = this.sanitizeNullAndUndefined(param);
+        this.activeTime = this.parseStringToTime(param);
+        this.activeHour = this.activeTime.hour;
+        this.activeMin = this.activeTime.min;
+
+        let timeInString = this.getActiveTimeInString();
+
+        this.onChange(param);
+        this._value = param;
+        this.onEduChange.emit(param);
+        this.cd.markForCheck();
+      });
+    });
   }
   ngAfterViewInit() {}
   setElementId() {
@@ -92,24 +97,35 @@ export class TimepickerBlockComponent
   }
 
   updateMin(min) {
-    console.log('new values updting h');
     this.activeTime.min = min;
     if (this.activeTime.hour != null) {
       this.value = this.getActiveTimeInString();
     }
   }
   updateHour(hour) {
-    console.log('new values updting m');
     this.activeTime.hour = hour;
     if (this.activeTime.min != null) {
       this.value = this.getActiveTimeInString();
     }
   }
 
-  sanitizeNullAndUndefined(value) {
-    if (value === null || value == undefined) {
+  sanitizeNullAndUndefined(value: string) {
+    if (
+      value === null ||
+      value == undefined ||
+      value.length > 5 ||
+      value == ''
+    ) {
       return '';
     }
+    let indexOfColon = value.indexOf(':');
+    let h = parseInt(value.substring(0, indexOfColon));
+    let min = parseInt(value.substring(indexOfColon + 1, value.length + 1));
+    if (h > 23 || h < 0 || min < 0 || min > 60) {
+      // console.log('returning blank');
+      return '';
+    }
+
     return value;
   }
 

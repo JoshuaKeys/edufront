@@ -17,8 +17,17 @@ export class P102Component implements OnInit {
   constructor() {}
 
   emptyArr = new Array(100);
-
+  modalIsActive = true;
   ngOnInit(): void {}
+
+  openModal() {
+    this.modalIsActive = true;
+  }
+
+  closeModal() {
+    this.modalIsActive = false;
+  }
+
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
       return true;

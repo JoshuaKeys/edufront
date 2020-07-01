@@ -37,7 +37,8 @@ export class TimetablePreview2Component implements OnInit {
   model: any = {};
   @Input('edu-title') titleText = '';
   @Input('edu-value') set elValue(val: CalendarModel[]) {
-    // console.log('SETTING EL VALUE');
+    // console.log('SETTING EL VALUE for - ' + this.titleText);
+    // console.log(val);
     this.resetMainValues();
     let cleanData = this.removeDaysWithEmptyPeriod(val);
 
@@ -389,7 +390,7 @@ export class TimetablePreview2Component implements OnInit {
         //add starting time of first period
         let firstPeriodStartTime;
 
-        if (dayData.periods.length > 0) {
+        if (dayData.periods.length > 0 && dayData.startTime != '0') {
           firstPeriodStartTime = this.parseTimeToInt(dayData.startTime);
           this.addToTempTimeArr(firstPeriodStartTime);
         }

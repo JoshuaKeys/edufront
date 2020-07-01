@@ -44,6 +44,10 @@ export class TermNamesAndDatesQuestionComponent
     // console.log(item);
   }
 
+  setElementId(index, value) {
+    return `${value}--${index}`;
+  }
+
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {

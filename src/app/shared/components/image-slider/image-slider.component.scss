@@ -11,6 +11,11 @@
   // padding: 0 8px;
   // }
 }
+
+.hidden {
+  display: none !important;
+}
+
 .leftDisabled .nav__button--prev {
   background-color: #e6e9f3 !important;
   border-color: #e6e9f3 !important;

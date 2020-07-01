@@ -21,6 +21,6 @@ export class TickButtonComponent implements OnInit {
   @Input() alignment = 'bottomright';
 
   ngOnInit(): void {
-    console.log('tick' + this.alignment);
+    // console.log('tick' + this.alignment);
   }
 }

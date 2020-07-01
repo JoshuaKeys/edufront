@@ -19,7 +19,7 @@ export class SelectTestComponent implements OnInit {
   ) {}
 
   testVal = 0;
-  modelTest = 'abd';
+  modelTest = 'a';
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       f1: [[2, 3], Validators.required],

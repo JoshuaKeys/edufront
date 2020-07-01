@@ -4,10 +4,12 @@
 ></edu-timetable-preview> -->
 
 <h1>modelTest : {{ modelTest }}</h1>
-<edu-timepicker-block
-  elementId="timepicker-block-biatch"
-  [ngModel]="modelTest"
-></edu-timepicker-block>
+<div [formGroup]="testForm">
+  <edu-timepicker-block
+    formControlName="f1"
+    [(ngModel)]="modelTest"
+  ></edu-timepicker-block>
+</div>
 <input [(ngModel)]="modelTest" type="text" />
 <!-- <button ButtonType="basic" (click)="resetComponent()">reset component</button>
 {{ this.activeindex }} -->
