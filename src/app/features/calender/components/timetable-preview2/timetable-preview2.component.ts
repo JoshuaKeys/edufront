@@ -106,7 +106,8 @@ export class TimetablePreview2Component implements OnInit {
       min = parseInt(inputTimeString);
       min = min > 60 ? this.convertMinsToTime(min) : min;
     }
-
+    hr = Number.isNaN(hr) ? 0 : hr;
+    min = Number.isNaN(min) ? 0 : min;
     return hr + min;
   }
 
