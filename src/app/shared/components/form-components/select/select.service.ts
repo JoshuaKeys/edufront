@@ -7,6 +7,7 @@ import { OptionComponent } from './option/option.component';
 export class SelectService {
   constructor() {}
   activeValue = new BehaviorSubject('');
+  validOptionValues$ = new Subject();
 
   optionClicked = new Subject();
 

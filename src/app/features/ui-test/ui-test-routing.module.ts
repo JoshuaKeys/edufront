@@ -11,7 +11,9 @@ import { ImgTestComponent } from './img-test/img-test.component';
 import { SliderTestComponent } from './slider-test/slider-test.component';
 import { TimepickerTestComponent } from './timepicker-test/timepicker-test.component';
 import { ModalTestComponent } from './modal-test/modal-test.component';
+import { NgmodelTestComponent } from './ngmodel-test/ngmodel-test.component';
 const routes: Routes = [
+  { path: 'test', component: NgmodelTestComponent },
   { path: 'time', component: TimepickerTestComponent },
   { path: 'modal', component: ModalTestComponent },
   {

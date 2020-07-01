@@ -58,7 +58,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   selectIsActive; // controls the checkbox, responsible for toggling dropdown
   selectState = 'inactive'; // state [active, inactive( default ), focus, disabled ]
   activeOptionIndex = 0;
-
+  validOptionValues = [];
   //for keyboard accessbility
   ENTER_KEY_CODE = 13;
   DOWN_ARROW_KEY_CODE = 40;
@@ -76,15 +76,26 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   ) {}
 
   ngOnInit() {
-    this.setElementId();
-    this.$value.pipe(distinctUntilChanged()).subscribe(param => {
-      // console.log('CHANGE IN SELECT - ' + param);
-      this.selectService.setActiveValue(param);
-      this._value = param;
-      this.onValueChange.emit(param);
-      this.elchange.emit(param);
-      this.onChange(param);
+    // console.log('select init');
+    this.selectService.validOptionValues$.subscribe(values => {
+      // console.log(this.validOptionValues);
+      this.validOptionValues.push(values);
     });
+
+    this.setElementId();
+    this.$value
+      .pipe(
+        filter(param => this.isValidOption(param)),
+        distinctUntilChanged()
+      )
+      .subscribe(param => {
+        console.log('CHANGE IN SELECT - ' + param);
+        this.selectService.setActiveValue(param);
+        this._value = param;
+        this.onValueChange.emit(param);
+        this.elchange.emit(param);
+        this.onChange(param);
+      });
     //register to events here
 
     // this.selectService.optionClicked.subscribe(() => {
@@ -119,6 +130,13 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         //     this.onChange(this.value);
         //     this.cd.markForCheck();
       });
+  }
+
+  isValidOption(option) {
+    console.log(option);
+    console.log(typeof this.validOptionValues);
+    console.log(this.validOptionValues);
+    return this.validOptionValues.indexOf(option) != -1;
   }
 
   isLabelActive() {
