@@ -1,0 +1,59 @@
+<div class="main">
+    <div class="content" *ngIf="teachingState | async as teachingState">
+        <h1 class="header">
+            Update Timetable for Class 1-12
+        </h1>
+        <p class="content__desc">
+            Select the Class/Classes you wish to <b class="orangecolor">edit</b>
+        </p>
+
+        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
+            <div class=" line-item">
+                <div class="line-item__title">
+                    Classes
+                </div>
+                <div class="line-item__content">
+                    <edu-classes [classes]="allClasses"></edu-classes>
+                </div>
+            </div>
+            <div class=" line-item">
+                <div class="line-item__title">Teaching Days</div>
+                <div class="line-item__content">
+                    <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="asObservable(teachingState.teachingDays)"></edu-days-of-week>
+                </div>
+            </div>
+            <div class=" line-item">
+                <div class="line-item__title">Teaching Periods</div>
+                <div class="line-item__content">
+                    <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="getGroup(teachingState.classesAndGroups)"></edu-periods-per-day>
+                </div>
+            </div>
+            <div class=" line-item">
+                <div class="line-item__title">Period Start Time</div>
+                <div class="line-item__content">
+                    <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="getGroup(teachingState.classesAndGroups)"></edu-start-time-per-day>
+                </div>
+            </div>
+            <div class=" line-item">
+                <div class="line-item__title">Period Duration And Interval</div>
+                <div class="line-item__content">
+                    <!-- <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="getGroup(teachingState.classesAndGroups)"></edu-start-time-per-day> -->
+                </div>
+            </div>
+            <div class=" line-item">
+                <div class="line-item__title">Break Schedule</div>
+                <div class="line-item__content">
+                    <!-- <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="getGroup(teachingState.classesAndGroups)"></edu-start-time-per-day> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="button--bottom button__wrapper">
+        <button ButtonType="outline" class="button--cancel">
+        cancel
+      </button>
+        <button ButtonType="basic" class="button--update">
+        Update Timetable
+      </button>
+    </div>
+</div>

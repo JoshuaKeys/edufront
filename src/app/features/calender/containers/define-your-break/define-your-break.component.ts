@@ -34,7 +34,6 @@ import { FormGroup, FormArray } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefineYourBreakComponent implements OnInit {
-  // fix
   testData = {
     title: 'testTitle',
     day: ['Mon', 'Tue'],
@@ -169,8 +168,6 @@ export class DefineYourBreakComponent implements OnInit {
     } else {
       displayValue = `${temp} period`;
     }
-    // displayValue = `${temp} period`;
-    // }
     return displayValue;
   }
   test() {}

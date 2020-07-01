@@ -6,7 +6,7 @@
 
         <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" *ngIf="teachingData | async as teachingData">
             <edu-image-slider [imageSize]="imageSize">
-                <edu-timetable-card sliderChildren [edu-value]="timetable.periods" [edu-id]="i" [edu-title]="computeClassName(timetable)" (edu-edit)="onEdit($event)" (edu-tick)="onTick($event)" *ngFor="let timetable of teachingData.classesAndGroups; let i = index"></edu-timetable-card>
+                <edu-timetable-card sliderChildren [edu-value]="timetable.periods" [edu-id]="i" [edu-title]="computeClassName(timetable)" (edu-edit)="onEdit($event, timetable.id)" (edu-tick)="onTick($event)" *ngFor="let timetable of teachingData.classesAndGroups; let i = index"></edu-timetable-card>
             </edu-image-slider>
         </div>
     </div>

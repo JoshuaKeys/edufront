@@ -1,6 +1,4 @@
 import * as fromCalenderContainer from '../containers';
-import * as fromPages from '../pages';
-import { PreviewTestComponent } from '../components/preview-test/preview-test.component';
 export const calenderNavigation = {
   'dates-of-academic-year': {
     previous: null,
@@ -92,15 +90,17 @@ export const calenderNavigation = {
   },
   'calendar-confirmation': {
     previous: 'break-definition',
-    next: ''
-  }
+    next: 'update-timetable'
+  },
+    'update-timetable': {
+      previous: 'calendar-confirmation',
+      next: ''
+    }
+  
 };
 
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  // 'dates-of-academic-year': fromPages.P101Component,
-  // 'dates-of-academic-year': PreviewTestComponent,
-
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
     fromCalenderContainer.TermNamesAndDatesQuestionComponent,
@@ -133,5 +133,6 @@ export const calenderRouteToComponentMap = {
     fromCalenderContainer.BreakScheduleQuestionComponent,
   'break-definition': fromCalenderContainer.DefineYourBreakComponent,
   'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent,
-  'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent
+  'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent,
+  'update-timetable': fromCalenderContainer.UpdateTimetableComponent
 };

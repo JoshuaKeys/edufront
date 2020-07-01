@@ -56,6 +56,7 @@ import { PopoverModule } from 'src/app/shared/components/form-components/popover
 import { FormComponentsModule } from 'src/app/shared/components/form-components/form-component.module';
 import { DefineSameBreaksComponent } from './containers/define-same-breaks/define-same-breaks.component';
 import { OrphanClassesComponent } from './components/orphan-classes/orphan-classes.component';
+import { UpdateTimetableComponent } from './containers/update-timetable/update-timetable.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -102,7 +103,8 @@ import { OrphanClassesComponent } from './components/orphan-classes/orphan-class
     PeriodIntervalComponent,
     CommonAssemblyQuestionComponent,
     CalendarConfirmationComponent,
-    OrphanClassesComponent
+    OrphanClassesComponent,
+    UpdateTimetableComponent
   ],
   imports: [
     CommonModule,

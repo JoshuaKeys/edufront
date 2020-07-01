@@ -33,15 +33,21 @@ export class PeriodDurationComponent implements OnInit {
     // this.periodDurationForm = new FormGroup({
     //   duration: new FormControl(this.periodDurations[1])
     // })
+    this.periodDurationForm = new FormGroup({
+      duration: new FormControl(null, {validators: Validators.required})
+    });
     this.teachingState.subscribe(
       teachingState => {
         const duration = (teachingState.classesAndGroups[0] as ClassGroupModel).periods[0].periodDuration
         const durationObjIdx = this.periodDurations.findIndex(_duration => _duration.duration === +duration)
-        this.periodDurationForm = new FormGroup({
-          duration: new FormControl(this.periodDurations[durationObjIdx]? 
-            this.periodDurations[durationObjIdx]: null,
-            {validators: Validators.required})
+        this.periodDurationForm.patchValue({
+          duration: this.periodDurations[durationObjIdx]? this.periodDurations[durationObjIdx]: null,
         })
+    //     this.periodDurationForm.patchValue({
+
+    //     {validators: Validators.required})
+    // }
+    //     })
       }
     )
   }
