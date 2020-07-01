@@ -13,7 +13,7 @@ export class PreviewTestComponent implements OnInit {
   modelTest = '';
   testForm: FormGroup;
   ngOnInit(): void {
-    this.data = testData1;
+    this.data = newState;
     this.testForm = this.formBuilder.group({
       f1: ['23:2']
     });
@@ -26,7 +26,7 @@ let newState: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '10',
+    intervaBtwPeriods: '',
     breaks: [
       {
         name: 'break 1',
@@ -50,7 +50,7 @@ let newState: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '10',
+    intervaBtwPeriods: '',
     breaks: [
       {
         name: 'break 2',
@@ -67,7 +67,7 @@ let newState: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '10',
+    intervaBtwPeriods: '',
     breaks: [
       {
         name: 'break 1',
@@ -91,7 +91,7 @@ let newState: CalendarModel[] = [
     periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
     startTime: '08:30',
     periodDuration: '30',
-    intervaBtwPeriods: '10',
+    intervaBtwPeriods: '',
     breaks: [
       {
         name: 'break 1',
