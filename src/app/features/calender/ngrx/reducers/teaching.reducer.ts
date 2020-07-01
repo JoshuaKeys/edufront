@@ -29,13 +29,17 @@ import {
   addSameBreak,
   updateSameBreakData,
   removeSameBreak,
-  initializeBreaks
+  initializeBreaks,
+  editCalendar
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { clearClassOffGroups, generatePeriodFromNumber } from '../../utilities';
 import { PeriodModel } from '../../models/period.model';
 import { BreakModel } from '../../models/break.model';
+import { CalendarUpdateModel } from '../../models/calendar-update.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
+import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 
 const initialState: TeachingStateModel = {
   teachingDays: [
@@ -51,9 +55,10 @@ const initialState: TeachingStateModel = {
   classesAndGroups: [],
   periods: [],
   selection: {
-    selectionState:  'ended',
+    selectionState: 'ended',
     periodSelected: undefined
-  }
+  },
+  calendarEdit: undefined
 };
 export const teachingReducer = createReducer(
   initialState,
@@ -63,35 +68,63 @@ export const teachingReducer = createReducer(
       classesAndGroups: action.classesAndGroups
     };
   }),
-  on(setGroupTeachingDays, (state, action)=> {
-    // alert('hello')
-    console.log(state.teachingDays)
+  on(editCalendar, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
-    stateCopy.classesAndGroups[groupIdx].teachingDays = stateCopy.teachingDays
+    const classes: ClassModel[] = [];
+    stateCopy.classes.forEach(classItem => {
+
+      let copy: ClassModel;
+      for(let i = 0; i < action.group.classes.length; i++) {
+        copy = {...action.group.classes[i]}
+        if(action.group.classes[i].id === classItem.id) {
+          copy.selected = true;
+          break;
+        }
+      }
+      classes.push(copy);
+
+    });
+    console.log(classes);
+    const editState: CalendarUpdateModel = {
+      classes,
+      teachingDays: action.group.teachingDays,
+      teachingPeriods: action.group.periods
+    };
+    stateCopy.calendarEdit = editState;
+    return stateCopy;
+  }),
+  on(setGroupTeachingDays, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.findIndex(
+      group => group.id === action.groupId
+    );
+    stateCopy.classesAndGroups[groupIdx].teachingDays = stateCopy.teachingDays;
     return stateCopy;
   }),
   on(setGroupPeriods, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
+    const groupIdx = stateCopy.classesAndGroups.findIndex(
+      group => group.id === action.groupId
+    );
     stateCopy.classesAndGroups[groupIdx].periods = stateCopy.periods;
-    console.log(stateCopy.periods)
+    console.log(stateCopy.periods);
     return stateCopy;
   }),
-  on(addSameBreak, (state, action)=> {
+  on(addSameBreak, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.periods.map(period => {
       period.breaks.push({
         title: 'Break ' + (period.breaks.length + 1),
-          firstBreak: '',
-          day: [],
-          after: [],
-          duration: ''
-      })
+        firstBreak: '',
+        day: [],
+        after: [],
+        duration: ''
+      });
       return period;
     });
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesGroup=> {
-      const updatedPeriods = classesGroup.periods.map(period=> {
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classesGroup => {
+        const updatedPeriods = classesGroup.periods.map(period => {
           period.breaks.push({
             title: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
@@ -99,37 +132,40 @@ export const teachingReducer = createReducer(
             after: [],
             duration: ''
           });
-        return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup;
-    })
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     stateCopy.periods = updatedPeriods;
     return stateCopy;
   }),
-  on(removeSameBreak, (state, action)=> {
+  on(removeSameBreak, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.periods.map(period => {
       period.breaks.splice(action.breakIndex, 1);
       return period;
-    })
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesGroup=> {
-      const updatedPeriods = classesGroup.periods.map(period => {
-        period.breaks.splice(action.breakIndex, 1);
-        return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup;
     });
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classesGroup => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          period.breaks.splice(action.breakIndex, 1);
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     stateCopy.periods = updatedPeriods;
     return stateCopy;
   }),
-  on(initializeSameBreaks, initializeBreaks, (state, action)=> {
+  on(initializeSameBreaks, initializeBreaks, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedperiods = stateCopy.periods.map(period => {
-      if(!period.breaks.length) {
+      if (!period.breaks.length) {
         period.breaks.push({
           title: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
@@ -139,74 +175,89 @@ export const teachingReducer = createReducer(
         });
       }
       return period;
-    })
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesGroup=> {
-      const updatedPeriods = classesGroup.periods.map(period=> {
-        if(!period.breaks.length) {
-          period.breaks.push({
-            title: 'Break ' + period.breaks.length + 1,
-            firstBreak: '',
-            day: [],
-            after: [],
-            duration: ''
-          });
-        }
-        return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup;
-    })
+    });
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classesGroup => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          if (!period.breaks.length) {
+            period.breaks.push({
+              title: 'Break ' + period.breaks.length + 1,
+              firstBreak: '',
+              day: [],
+              after: [],
+              duration: ''
+            });
+          }
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     stateCopy.periods = updatedperiods;
     return stateCopy;
   }),
-  on(addBreak, (state, action)=> {
+  on(addBreak, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
-    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
-
-      period.breaks.push({
-        title: 'Break ' + (period.breaks.length + 1),
-        firstBreak: '',
-        day: [],
-        after: [],
-        duration: ''
-      } as BreakModel)
-      return period;
-    })
+    const groupIdx = stateCopy.classesAndGroups.findIndex(
+      group => group.id === action.groupId
+    );
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(
+      period => {
+        period.breaks.push({
+          title: 'Break ' + (period.breaks.length + 1),
+          firstBreak: '',
+          day: [],
+          after: [],
+          duration: ''
+        } as BreakModel);
+        return period;
+      }
+    );
     stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
     return stateCopy;
   }),
-  on(removeBreak, (state, action)=>{
+  on(removeBreak, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
-    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
-      period.breaks.splice(action.breakIndex, 1)
-      return period;
-    })
+    const groupIdx = stateCopy.classesAndGroups.findIndex(
+      group => group.id === action.groupId
+    );
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(
+      period => {
+        period.breaks.splice(action.breakIndex, 1);
+        return period;
+      }
+    );
     stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
     return stateCopy;
   }),
-  on(updateBreakData, (state, action)=> {
+  on(updateBreakData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
-    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
-      period.breaks[action.index][action.field] = action.value as any;
-      return period;
-    });
-    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
-    return stateCopy;
-  }),
-  on(updateSameBreakData, (state, action)=> {
-    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesGroup => {
-      const updatedPeriods = classesGroup.periods.map(period => {
+    const groupIdx = stateCopy.classesAndGroups.findIndex(
+      group => group.id === action.groupId
+    );
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(
+      period => {
         period.breaks[action.index][action.field] = action.value as any;
         return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup
-    })
+      }
+    );
+    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
+    return stateCopy;
+  }),
+  on(updateSameBreakData, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classesGroup => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          period.breaks[action.index][action.field] = action.value as any;
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
 
     const updatedPeriods = stateCopy.periods.map(period => {
       period.breaks[action.index][action.field] = action.value as any;
@@ -218,18 +269,24 @@ export const teachingReducer = createReducer(
   }),
   on(setGroupStartTime, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const groupIdx = stateCopy.classesAndGroups.findIndex(group=> group.id === action.groupId);
-    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(period => {
-      const teachingDaysSelected = stateCopy.classesAndGroups[groupIdx].teachingDays.find(teachingDay=> {
-        return teachingDay.day === period.day && teachingDay.selected
-      })
-      if(teachingDaysSelected) {
-        period.startTime = state.startTime
+    const groupIdx = stateCopy.classesAndGroups.findIndex(
+      group => group.id === action.groupId
+    );
+    const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(
+      period => {
+        const teachingDaysSelected = stateCopy.classesAndGroups[
+          groupIdx
+        ].teachingDays.find(teachingDay => {
+          return teachingDay.day === period.day && teachingDay.selected;
+        });
+        if (teachingDaysSelected) {
+          period.startTime = state.startTime;
+        }
+        return period;
       }
-      return period;
-    })
-    
-    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods
+    );
+
+    stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
     return stateCopy;
   }),
   on(toggleClassesGroupActive, (state, action) => {
@@ -254,17 +311,17 @@ export const teachingReducer = createReducer(
     const stateCopy: ClassGroupModel[] = JSON.parse(
       JSON.stringify(state.classesAndGroups)
     );
-    let groupIdx
-    if(action.classesGroup) {
-       groupIdx = stateCopy.findIndex(
+    let groupIdx;
+    if (action.classesGroup) {
+      groupIdx = stateCopy.findIndex(
         groupItem => groupItem.id === action.classesGroup.id
       );
-    }else {
+    } else {
       groupIdx = stateCopy.findIndex(
         grooupItem => grooupItem.id === action.groupId
-      )
+      );
     }
-    
+
     const clickedClassIdx = stateCopy[groupIdx].classes.findIndex(
       classItem => classItem.id === action.class.id
     );
@@ -303,45 +360,53 @@ export const teachingReducer = createReducer(
         breaks: [],
         assembly: { name: '', startingAt: '', duration: '' }
       });
-    })
- 
+    });
+
     stateCopy.classesAndGroups[groupIdx].periods = periods;
     return stateCopy;
   }),
 
-  on(setAllStartTime, (state, action)=> {
+  on(setAllStartTime, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
-      const updatedPeriods = classesAndGroup.periods.map(period =>{
-        const teachingDaysSelected = classesAndGroup.teachingDays.find(teachingDay=> {
-          return teachingDay.day === period.day && teachingDay.selected
-        })
-        if(teachingDaysSelected) {
-          period.startTime = action.startTime
-        }
-        return period;
-      })
-      classesAndGroup.periods = updatedPeriods;
-      return classesAndGroup;
-    })
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classesAndGroup => {
+        const updatedPeriods = classesAndGroup.periods.map(period => {
+          const teachingDaysSelected = classesAndGroup.teachingDays.find(
+            teachingDay => {
+              return teachingDay.day === period.day && teachingDay.selected;
+            }
+          );
+          if (teachingDaysSelected) {
+            period.startTime = action.startTime;
+          }
+          return period;
+        });
+        classesAndGroup.periods = updatedPeriods;
+        return classesAndGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     stateCopy.startTime = action.startTime;
     return stateCopy;
   }),
 
-  on(setStartTime, (state, action)=> {
+  on(setStartTime, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(classesAndGroup => {
-      const updatedPeriods = classesAndGroup.periods.map((period: PeriodModel) => {
-        if(period.startTimeSelected) {
-          period.startTime = action.startTime
-          period.startTimeSelected = false;
-        }
-        return period;
-      })
-      classesAndGroup.periods = updatedPeriods;
-      return classesAndGroup;
-    })
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classesAndGroup => {
+        const updatedPeriods = classesAndGroup.periods.map(
+          (period: PeriodModel) => {
+            if (period.startTimeSelected) {
+              period.startTime = action.startTime;
+              period.startTimeSelected = false;
+            }
+            return period;
+          }
+        );
+        classesAndGroup.periods = updatedPeriods;
+        return classesAndGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     return stateCopy;
   }),
@@ -371,7 +436,6 @@ export const teachingReducer = createReducer(
       };
       return period;
     });
-
 
     const newGroupObj: ClassGroupModel = {
       id: action.generatedGroupId,
@@ -426,7 +490,7 @@ export const teachingReducer = createReducer(
       .map(teachingDay => {
         return {
           day: teachingDay.day,
-          periods: teachingDay.selected? periodsArr: [],
+          periods: teachingDay.selected ? periodsArr : [],
           startTime: '0',
           periodDuration: '0',
           intervaBtwPeriods: '0',
@@ -475,44 +539,44 @@ export const teachingReducer = createReducer(
       classesAndGroups: updatedClassesAndGroups
     };
   }),
-  on(selectStartTime, (state, action)=> {
+  on(selectStartTime, (state, action) => {
     let stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    if(stateCopy.selection.selectionState === 'ended') {
+    if (stateCopy.selection.selectionState === 'ended') {
       stateCopy = clearStartTimes(stateCopy);
       stateCopy.selection.selectionState = 'started';
     }
 
-      const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
-        classAndGroup => {
-          const periods = classAndGroup.periods.map(period => {
-            if (
-              period.day === action.day.day &&
-              classAndGroup.id === action.classGroup.id
-            ) {
-              if (period.startTimeSelected) {
-                period.startTimeSelected = false;
-              } else {
-                period.startTimeSelected = true;
-              }
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      classAndGroup => {
+        const periods = classAndGroup.periods.map(period => {
+          if (
+            period.day === action.day.day &&
+            classAndGroup.id === action.classGroup.id
+          ) {
+            if (period.startTimeSelected) {
+              period.startTimeSelected = false;
+            } else {
+              period.startTimeSelected = true;
             }
-            return period;
-          });
-          classAndGroup.periods = periods;
-          return classAndGroup;
-        }
-      );
-      return {
-        ...stateCopy,
-        classesAndGroups: updatedClassesAndGroups
-      };
+          }
+          return period;
+        });
+        classAndGroup.periods = periods;
+        return classAndGroup;
+      }
+    );
+    return {
+      ...stateCopy,
+      classesAndGroups: updatedClassesAndGroups
+    };
   }),
   on(selectTeachingDay, (state, action) => {
     let stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    if(stateCopy.selection.selectionState === 'ended') {
+    if (stateCopy.selection.selectionState === 'ended') {
       // clear all previous selections
-      stateCopy = clearClassesAndGroups(stateCopy)
+      stateCopy = clearClassesAndGroups(stateCopy);
       stateCopy.selection.selectionState = 'started';
-      delete stateCopy.selection.periodSelected
+      delete stateCopy.selection.periodSelected;
     }
 
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
@@ -539,42 +603,48 @@ export const teachingReducer = createReducer(
       classesAndGroups: updatedClassesAndGroups
     };
   }),
-  on(setAssemblyData, (state, action)=> {
+  on(setAssemblyData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map((classesGroup: ClassGroupModel)=> {
-      const updatedPeriods = classesGroup.periods.map(period => {
-        period.assembly[action.field] = action.value + '';
-        return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup;
-    })
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      (classesGroup: ClassGroupModel) => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          period.assembly[action.field] = action.value + '';
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     return stateCopy;
   }),
-  on(setPeriodDuration, (state, action)=> {
+  on(setPeriodDuration, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map((classesGroup: ClassGroupModel)=> {
-      const updatedPeriods = classesGroup.periods.map(period => {
-        period.periodDuration = action.periodDuration + '';
-        return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup;
-    })
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      (classesGroup: ClassGroupModel) => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          period.periodDuration = action.periodDuration + '';
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     return stateCopy;
   }),
-  on(setPeriodInterval, (state, action)=> {
+  on(setPeriodInterval, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const updatedClassesAndGroups = stateCopy.classesAndGroups.map((classesGroup: ClassGroupModel)=> {
-      const updatedPeriods = classesGroup.periods.map(period => {
-        period.intervaBtwPeriods = action.periodInterval + '';
-        return period;
-      })
-      classesGroup.periods = updatedPeriods;
-      return classesGroup;
-    })
+    const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+      (classesGroup: ClassGroupModel) => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          period.intervaBtwPeriods = action.periodInterval + '';
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
     return stateCopy;
   }),
@@ -584,20 +654,11 @@ export const teachingReducer = createReducer(
     for (let i = 0; i < action.selectedPeriods.length; i++) {
       for (let j = 0; j < stateCopy.classesAndGroups.length; j++) {
         if (
-          action.selectedPeriods[i].groupId ===
-          stateCopy.classesAndGroups[j].id
+          action.selectedPeriods[i].groupId === stateCopy.classesAndGroups[j].id
         ) {
-          for (
-            let k = 0;
-            k < action.selectedPeriods[i].periods.length;
-            k++
-          ) {
-            let periodDayIdx = stateCopy.classesAndGroups[
-              j
-            ].periods.findIndex(
-              period =>
-                period.day ===
-                action.selectedPeriods[i].periods[k].day
+          for (let k = 0; k < action.selectedPeriods[i].periods.length; k++) {
+            let periodDayIdx = stateCopy.classesAndGroups[j].periods.findIndex(
+              period => period.day === action.selectedPeriods[i].periods[k].day
             );
             stateCopy.classesAndGroups[j].periods[
               periodDayIdx
@@ -613,13 +674,12 @@ export const teachingReducer = createReducer(
 );
 
 function clearClassesAndGroups(stateCopy: TeachingStateModel) {
-
   const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
     classAndGroup => {
       const clearedPeriods = classAndGroup.periods.map(period => {
-        period.periodSelected = false
+        period.periodSelected = false;
         return period;
-      })
+      });
       classAndGroup.periods = clearedPeriods;
       return classAndGroup;
     }
@@ -628,13 +688,12 @@ function clearClassesAndGroups(stateCopy: TeachingStateModel) {
   return stateCopy;
 }
 function clearStartTimes(stateCopy: TeachingStateModel) {
-
   const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
     classAndGroup => {
       const clearedPeriods = classAndGroup.periods.map(period => {
-        period.startTimeSelected = false
+        period.startTimeSelected = false;
         return period;
-      })
+      });
       classAndGroup.periods = clearedPeriods;
       return classAndGroup;
     }

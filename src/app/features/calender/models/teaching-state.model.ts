@@ -3,6 +3,7 @@ import { ClassGroupModel } from './class-group.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { PeriodModel } from './period.model';
 import { SelectionModel } from './selection.model';
+import { CalendarUpdateModel } from './calendar-update.model';
 
 export interface TeachingStateModel {
     teachingDays?: TeachingDay[];
@@ -11,4 +12,5 @@ export interface TeachingStateModel {
     classes?: ClassModel[];
     selection?: SelectionModel;
     startTime?: string;
+    calendarEdit: CalendarUpdateModel
 }

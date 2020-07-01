@@ -19,19 +19,19 @@
             <div class=" line-item">
                 <div class="line-item__title">Teaching Days</div>
                 <div class="line-item__content">
-                    <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="asObservable(teachingState.teachingDays)"></edu-days-of-week>
+                    <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="asObservable(teachingState.calendarEdit.teachingDays)"></edu-days-of-week>
                 </div>
             </div>
             <div class=" line-item">
                 <div class="line-item__title">Teaching Periods</div>
                 <div class="line-item__content">
-                    <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="getGroup(teachingState.classesAndGroups)"></edu-periods-per-day>
+                    <!-- <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="getGroup(teachingState.calendarEdit)"></edu-periods-per-day> -->
                 </div>
             </div>
             <div class=" line-item">
                 <div class="line-item__title">Period Start Time</div>
                 <div class="line-item__content">
-                    <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="getGroup(teachingState.classesAndGroups)"></edu-start-time-per-day>
+                    <!-- <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="getGroup(teachingState.calendarEdit)"></edu-start-time-per-day> -->
                 </div>
             </div>
             <div class=" line-item">

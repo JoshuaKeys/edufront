@@ -7,7 +7,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-import { selectTeachingDay } from '../../ngrx/actions/calendar.actions';
+import { selectTeachingDay, editCalendar } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';

@@ -84,7 +84,7 @@ export const selectOrphanedClasses = createSelector(
       return classA.grade - classB.grade
     });
   }
-)
+);
 export const selectCreateCalendarData = createSelector(
   calendarFeatureState,
   feat => {

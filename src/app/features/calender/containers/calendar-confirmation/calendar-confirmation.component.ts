@@ -6,6 +6,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { editCalendar } from '../../ngrx/actions/calendar.actions';
 let weirdData = [
   {
     day: 'Mon',
@@ -132,10 +133,10 @@ export class CalendarConfirmationComponent implements OnInit {
     height: '456px'
   };
 
-  onEdit(index, groupId) {
-    console.log(`editing @ ${index}`);
+  onEdit(index, group: ClassGroupModel) {
+    this.store.dispatch(editCalendar({group}));
     this.router.navigate(['../', this.activatedRouteData.next], {relativeTo: this.activatedRoute, queryParams: {
-      groupId
+      groupId: group.id
     }})
   }
   onTick(index) {
