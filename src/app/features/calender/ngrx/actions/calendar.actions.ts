@@ -222,4 +222,8 @@ export const updateSameBreakData = createAction(
 export const removeSameBreak = createAction(
     '[DefineSameBreakSomponent] removeSameBreak',
     props<{breakIndex: number}>()
+);
+export const editCalendar = createAction(
+    '[UpdateTimetableComponent] editCalendar',
+    props<{group: ClassGroupModel}>()
 )

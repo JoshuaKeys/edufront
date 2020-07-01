@@ -5,15 +5,16 @@ import { ExtendedClassModel } from '../../subjects/models/extend-class.model';
 export interface ClassGroupModel {
     id: string;
     groupName: string;
-    classes: {
-        classGroupId?: string;
-        grade: number;
-        id: string;
-        name: string;
-        selected?: boolean;
-        subjectIds?: string[],
-        teacherIds?: [],
-    }[],
+    // classes: {
+    //     classGroupId?: string;
+    //     grade: number;
+    //     id: string;
+    //     name: string;
+    //     selected?: boolean;
+    //     subjectIds?: string[],
+    //     teacherIds?: [],
+    // }[],
+    classes: ExtendedClassModel[]
     teachingDays?: TeachingDay[],
     periods?: PeriodModel[]
 }

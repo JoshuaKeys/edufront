@@ -31,6 +31,9 @@ export class PeriodIntervalComponent implements OnInit {
     for (let i = 0; i < this.timeArr.length; i++) {
       this.intervals.push({ duration: i + 1, text: `${i + 1} mins` });
     }
+    this.periodIntervalForm = new FormGroup({
+      interval: new FormControl( null, { validators: Validators.required })
+    });
     this.teachingState = this.store.select(selectTeaching);
     this.teachingState.subscribe(teachingState => {
       const _intervalObjIdx = this.intervals.findIndex(
@@ -39,14 +42,11 @@ export class PeriodIntervalComponent implements OnInit {
           (teachingState.classesAndGroups[0] as ClassGroupModel).periods[0]
             .intervaBtwPeriods
       );
-      this.periodIntervalForm = new FormGroup({
-        interval: new FormControl(
-          this.intervals[_intervalObjIdx]
-            ? this.intervals[_intervalObjIdx]
-            : null,
-          { validators: Validators.required }
-        )
-      });
+      this.periodIntervalForm.patchValue({
+        interval:  this.intervals[_intervalObjIdx]
+        ? this.intervals[_intervalObjIdx]
+        : null
+      })
     });
   }
   constructor(
