@@ -54,79 +54,141 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
     return res;
   }
 
+  getNewVacationForm(vacationName, startDate, endDate) {
+    return new FormGroup(
+      {
+        vacationName: new FormControl(vacationName, {
+          validators: Validators.required
+        }),
+        startDate: new FormControl(startDate),
+        endDate: new FormControl(endDate)
+      },
+      {
+        validators: vacationForm => {
+          const startDate = vacationForm.value.startDate;
+          const endDate = vacationForm.value.endDate;
+          let errors = {
+            msg: []
+          };
+          if (!startDate || startDate.length === 0) {
+            errors.msg.push('Start Date is Empty');
+          }
+          if (!endDate || endDate.length === 0) {
+            errors.msg.push('End Date is Empty');
+          }
+          if (startDate && startDate.length && endDate && endDate.length) {
+            const startDateObj = new Date(startDate);
+            const endDateObj = new Date(endDate);
+            if (startDateObj.getTime() >= endDateObj.getTime()) {
+              errors.msg.push('End Date must be more than start date');
+            }
+          }
+          if (!errors.msg.length) {
+            errors = null;
+          }
+          return errors;
+        }
+      }
+    );
+  }
   ngOnInit(): void {
     this.calendarData = this.store.select(selectCalendar);
-    this.store
-      .select(selectCalendar)
-      // .pipe(skip(1))
-      .subscribe(calendarState => {
-        const formGroups = calendarState.vacations.map(vacation => {
-          return new FormGroup(
-            {
-              vacationName: new FormControl(vacation.vacationName, {
-                updateOn: 'blur',
-                validators: Validators.required
-              }),
-              startDate: new FormControl(vacation.startDate),
-              endDate: new FormControl(vacation.endDate)
-            },
-            {
-              validators: vacationForm => {
-                const startDate = vacationForm.value.startDate;
-                const endDate = vacationForm.value.endDate;
-                let errors = {
-                  msg: []
-                };
-                if (!startDate || startDate.length === 0) {
-                  errors.msg.push('Start Date is Empty');
-                }
-                if (!endDate || endDate.length === 0) {
-                  errors.msg.push('End Date is Empty');
-                }
-                if (
-                  startDate &&
-                  startDate.length &&
-                  endDate &&
-                  endDate.length
-                ) {
-                  const startDateObj = new Date(startDate);
-                  const endDateObj = new Date(endDate);
-                  if (startDateObj.getTime() >= endDateObj.getTime()) {
-                    errors.msg.push('End Date must be more than start date');
-                  }
-                }
-                if (!errors.msg.length) {
-                  errors = null;
-                }
-                return errors;
+    this.vacationForm = new FormGroup({
+      vacationsAndDates: new FormArray([this.getNewVacationForm('', '', '')])
+    });
+    this.store.select(selectCalendar).subscribe(calendarState => {
+      const formGroups = calendarState.vacations.map(vacation => {
+        return new FormGroup(
+          {
+            vacationName: new FormControl(vacation.vacationName, {
+              validators: Validators.required
+            }),
+            startDate: new FormControl(vacation.startDate),
+            endDate: new FormControl(vacation.endDate)
+          },
+          {
+            validators: vacationForm => {
+              const startDate = vacationForm.value.startDate;
+              const endDate = vacationForm.value.endDate;
+              let errors = {
+                msg: []
+              };
+              if (!startDate || startDate.length === 0) {
+                errors.msg.push('Start Date is Empty');
               }
+              if (!endDate || endDate.length === 0) {
+                errors.msg.push('End Date is Empty');
+              }
+              if (startDate && startDate.length && endDate && endDate.length) {
+                const startDateObj = new Date(startDate);
+                const endDateObj = new Date(endDate);
+                if (startDateObj.getTime() >= endDateObj.getTime()) {
+                  errors.msg.push('End Date must be more than start date');
+                }
+              }
+              if (!errors.msg.length) {
+                errors = null;
+              }
+              return errors;
             }
-          );
-        });
-        this.vacationForm = new FormGroup({
-          vacationsAndDates: new FormArray(formGroups)
-        });
-        this.vacationForm.controls.vacationsAndDates['controls'].forEach(
-          (formGroup: FormGroup, idx) => {
-            formGroup.controls.vacationName.valueChanges.subscribe(
-              vacationName => {
-                this.store.dispatch(setVacationName({ idx, vacationName }));
-              }
-            );
-            formGroup.controls.startDate.valueChanges.subscribe(startDate =>
-              this.store.dispatch(setVacationStartDate({ idx, startDate }))
-            );
-            formGroup.controls.endDate.valueChanges.subscribe(endDate =>
-              this.store.dispatch(setVacationEndDate({ idx, endDate }))
-            );
           }
         );
-        console.log(this.vacationForm);
       });
+      this.vacationForm.controls.vacationsAndDates = new FormArray(formGroups);
+      // this.vacationForm = new FormGroup({
+      //   vacationsAndDates: new FormArray(formGroups)
+      // });
+      // this.vacationForm.controls.vacationsAndDates['controls'].forEach(
+      //   (formGroup: FormGroup, idx) => {
+      //     formGroup.controls.vacationName.valueChanges.subscribe(
+      //       vacationName => {
+      //         this.store.dispatch(setVacationName({ idx, vacationName }));
+      //       }
+      //     );
+      //     formGroup.controls.startDate.valueChanges.subscribe(startDate =>
+      //       this.store.dispatch(setVacationStartDate({ idx, startDate }))
+      //     );
+      //     formGroup.controls.endDate.valueChanges.subscribe(endDate =>
+      //       this.store.dispatch(setVacationEndDate({ idx, endDate }))
+      //     );
+      //   }
+      // );
+      console.log(this.vacationForm);
+    });
   }
+
+  isFormInvalid() {
+    let res = [];
+    this.vacationForm.controls.vacationsAndDates['controls'].forEach(fg => {
+      // console.log(fg);
+      // console.log(fg.invalid);
+      let invalidity = fg.invalid == undefined ? false : fg.invalid;
+      res.push(invalidity);
+    });
+
+    // console.log(res);
+    return res.reduce((a, b) => a || b);
+  }
+  updateTitle(vacationName, idx) {
+    // console.log('update title' + ` idx ${idx}, vacationName ${vacationName}`);
+    this.store.dispatch(setVacationName({ idx, vacationName }));
+  }
+  updateStart(startDate, idx) {
+    // console.log('update updateStart' + ` idx ${idx}, startDate ${startDate}`);
+    this.store.dispatch(setVacationStartDate({ idx, startDate }));
+  }
+  updateEnd(endDate, idx) {
+    // console.log('update updateEnd' + ` idx ${idx}, endDate ${endDate}`);
+    this.store.dispatch(setVacationEndDate({ idx, endDate }));
+  }
+
+  getElementId(index, value) {
+    return `${value}--${index}`;
+  }
+
   removeItem(i: number) {
-    this.store.dispatch(removeVacation({index: i}));
-    (this.vacationForm.controls.vacationsAndDates as FormArray).removeAt(i)
+    this.store.dispatch(removeVacation({ index: i }));
+    (this.vacationForm.controls.vacationsAndDates as FormArray).removeAt(i);
   }
   constructor(
     private store: Store<CalendarModel>,

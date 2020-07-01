@@ -41,12 +41,16 @@ export class Datepicker2Component
   ) {}
 
   ngOnInit(): void {
+    // console.log('datepicker init - ' + this.value);
     this.setElementID();
     this.registerHasErrorEvent();
   }
   ngAfterViewInit() {
+    // console.log('after init - ' + this.value);
+    this.ngafterViewHookPassed = true;
     // console.log(this.inputEl);
   }
+  ngafterViewHookPassed = false;
   TAB_KEY_CODE = 9;
   @ViewChild('dp') dp: any;
   @ViewChild('inputEl') inputEl;
@@ -198,11 +202,16 @@ export class Datepicker2Component
   //value should be yyyy-mm-dd
   set value(val) {
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    // console.log('EDU CHANGE DATEPICKER - ' + val);
     this.val = val;
-    this.onChange(val);
+
+    if (this.ngafterViewHookPassed) {
+      this.onChange(val);
+      this.onEduChange.emit(val);
+      this.onTouched();
+    }
+
     // this.onDateDataChanged.emit(val);
-    this.onTouched();
-    this.onEduChange.emit(val);
     // this.onTouched(val)
   }
   get value() {
@@ -373,6 +382,7 @@ export class Datepicker2Component
   onTouched: any = () => {};
   // disabled: boolean = false;
   writeValue(value: any) {
+    // console.log('writevalue');
     if (value != null && value.length === 10) {
       this.value = value;
       // console.log(this.value);

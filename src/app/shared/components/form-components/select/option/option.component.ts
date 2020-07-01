@@ -58,6 +58,8 @@ export class OptionComponent implements OnInit, AfterViewInit {
     // this.selectService.optionClicked.subscribe(() => {
     //   this.renderer.removeClass(this.el.nativeElement, 'selected');
     // });
+    // console.log('option init');
+    this.selectService.validOptionValues$.next(this.OptionValue);
   }
   ngAfterViewInit() {
     let displayedValue = this.optionEl.nativeElement.childNodes[0];
