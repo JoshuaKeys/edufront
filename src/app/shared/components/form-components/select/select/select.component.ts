@@ -48,8 +48,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   _value = '';
   set value(param) {
     // console.log('SET IN SELECT');
+    console.log(`set select value ${param}`);
+
     this.$value.next(param);
-    // console.log(`set value ${param}`);
   }
   get value() {
     return this._value;
@@ -76,7 +77,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   ) {}
 
   ngOnInit() {
-    // console.log('select init');
+    console.log('select init');
     this.selectService.validOptionValues$.subscribe(values => {
       // console.log(this.validOptionValues);
       this.validOptionValues.push(values);
@@ -84,12 +85,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
     this.setElementId();
     this.$value
-      .pipe(
-        filter(param => this.isValidOption(param)),
-        distinctUntilChanged()
-      )
+      .pipe
+      // distinctUntilChanged(),
+      // filter(param => this.isValidOption(param))
+      ()
       .subscribe(param => {
-        console.log('CHANGE IN SELECT - ' + param);
+        // console.log('CHANGE IN SELECT - ' + param);
         this.selectService.setActiveValue(param);
         this._value = param;
         this.onValueChange.emit(param);
@@ -133,9 +134,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   isValidOption(option) {
-    console.log(option);
-    console.log(typeof this.validOptionValues);
-    console.log(this.validOptionValues);
+    // console.log(option);
+    // console.log(typeof this.validOptionValues);
+    // console.log(this.validOptionValues);
     return this.validOptionValues.indexOf(option) != -1;
   }
 
