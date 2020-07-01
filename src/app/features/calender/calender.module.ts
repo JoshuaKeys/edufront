@@ -57,6 +57,7 @@ import { FormComponentsModule } from 'src/app/shared/components/form-components/
 import { DefineSameBreaksComponent } from './containers/define-same-breaks/define-same-breaks.component';
 import { OrphanClassesComponent } from './components/orphan-classes/orphan-classes.component';
 import { UpdateTimetableComponent } from './containers/update-timetable/update-timetable.component';
+import { ClassesUpdateComponent } from './components/classes-update/classes-update.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -104,7 +105,8 @@ import { UpdateTimetableComponent } from './containers/update-timetable/update-t
     CommonAssemblyQuestionComponent,
     CalendarConfirmationComponent,
     OrphanClassesComponent,
-    UpdateTimetableComponent
+    UpdateTimetableComponent,
+    ClassesUpdateComponent
   ],
   imports: [
     CommonModule,
