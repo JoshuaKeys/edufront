@@ -44,6 +44,7 @@ export class InputComponent
   ) {}
 
   ngOnInit(): void {
+    // console.log('input init');
     this.initConfig();
     this.setElementID();
     this.registerHasErrorEvent();
@@ -54,30 +55,41 @@ export class InputComponent
     this.subscribeToAffixDirectives();
   }
   ngAfterViewInit() {
-    this.fontSize = getComputedStyle(this.inputEl.nativeElement).fontSize;
-    this.lineHeight = getComputedStyle(this.inputEl.nativeElement).lineHeight;
-    this.fontFamily = getComputedStyle(this.inputEl.nativeElement).fontFamily;
-    this.fontWeight = getComputedStyle(this.inputEl.nativeElement).fontWeight;
-    this.letterSpacing = getComputedStyle(
-      this.inputEl.nativeElement
-    ).letterSpacing;
+    // console.log('input after view init ');
+    // let tempStyles = JSON.parse(
+    //   JSON.stringify(getComputedStyle(this.inputEl.nativeElement))
+    // );
+    // let tempStyles = getComputedStyle(this.inputEl.nativeElement);
+    // console.log(tempStyles[58]);
+    // console.log(tempStyles.fontSize);
+    // console.log(Array.isArray(getComputedStyle(this.inputEl.nativeElement)));
+    // let fontsize = JSON.parse(JSON.stringify(tempStyles.fontSize));
+    // console.log(fontsize);
+
+    // let fontSize = styles.fontSize;
+    // let lineHeight = styles.lineHeight;
+    // let fontFamily = styles.fontFamily;
+    // let fontWeight = styles.letterSpacing;
+    this.ngafterViewHookPassed = true;
   }
   config;
   inputElIsFocus = false;
-
+  ngafterViewHookPassed = false;
   inputIsActive: boolean = false;
   // disabled: boolean; //for ControlValueAccessor implmentation
-  fontSize;
-  fontWeight;
-  lineHeight;
-  fontFamily;
-  letterSpacing;
+  tempStyles: any = 'inherit';
+  fontSize = 'inherit';
+  fontWeight = 'inherit';
+  lineHeight = 'inherit';
+  fontFamily = 'inherit';
+  letterSpacing = 'inherit';
   @Input('disabled') disabled = false;
-  @Input('elementId') elementId;
+  @Input('elementId') elementId = eid;
   @Input('labelIsPlaceholder') labelIsPlaceholder = false;
   @Input('alignment') alignment = 'center'; //center (default ),left,right
   @Input('isPassword') isPassword = false;
   @ViewChild('inputEl') inputEl: ElementRef;
+  @ViewChild('inputElDisplay') inputElDisplay: ElementRef;
   @Output('edu-keydown') elkeydown = new EventEmitter();
   @Output('edu-change') elchange = new EventEmitter();
   @Output('edu-blur') elBlur = new EventEmitter();
@@ -95,12 +107,11 @@ export class InputComponent
 
     // console.log(getComputedStyle(this.inputEl.nativeElement));
   }
-
   setElementID() {
-    if (
-      this.elementId == undefined &&
-      this.el.nativeElement.getAttribute('formcontrolname') !== undefined
-    ) {
+    let elementIdDefined = this.elementId !== eid;
+    let formcontrolnamedefined =
+      this.el.nativeElement.getAttribute('formcontrolname') !== undefined;
+    if (!elementIdDefined && formcontrolnamedefined) {
       this.elementId = this.el.nativeElement.getAttribute('formcontrolname');
     }
   }
@@ -131,7 +142,7 @@ export class InputComponent
         !this.validator.nativeElement.classList.contains(position)
       ) {
         this.validator.nativeElement.classList.add(position);
-        console.log(this.validator.nativeElement.classList);
+        // console.log(this.validator.nativeElement.classList);
       }
     });
   }
@@ -147,16 +158,17 @@ export class InputComponent
     this.inputElIsFocus = true;
   }
   blurInput() {
+    // console.log('BLUR INPUT');
     this.elBlur.emit(this.value);
 
     this.inputElIsFocus = false;
     this.onTouched();
-    this.onChange(this.val);
+    // this.onChange(this.val);
   }
   inputFn(val) {
     this.value = val;
 
-    this.onChange(val);
+    // this.onChange(val);
   }
 
   isLabelActive() {
@@ -170,17 +182,20 @@ export class InputComponent
     return this.val;
   }
   set value(val) {
-    // console.log(`setValue --` + val);
-    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    // console.log(`input setValue --` + val);
     if (val === null) {
-      // console.log('is null');
-      val = '';
+      this.val = '';
+    } else {
+      this.val = val;
     }
-    this.val = val;
-    // this.valLen = this.val.length;
-    this.elchange.emit(val);
-    this.onChange(val);
-    this.cd.markForCheck();
+
+    if (this.ngafterViewHookPassed) {
+      // console.log('AFTER VIEW INIT');
+      this.elchange.emit(val);
+      this.onChange(val);
+      // this.cd.markForCheck();
+    }
+
     // this.onTouched(val)
   }
   //Control value accessor implementation
@@ -189,6 +204,7 @@ export class InputComponent
   onTouched: any = () => {};
 
   writeValue(value: any) {
+    // console.log('input write value ');
     // console.log('write value -- ' + value);
     this.value = value;
   }
@@ -207,3 +223,5 @@ export class InputComponent
     // }
   }
 }
+
+const eid = 'inputComponent';

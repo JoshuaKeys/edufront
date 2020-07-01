@@ -1,55 +1,81 @@
-<div [ngClass]="{
+<div
+  [ngClass]="{
     disabled: disabled,
     'input-wrapper-border--active': inputElIsFocus,
     'input-wrapper-border--error': config.hasError
-  }" class="wrapper">
-    <!-- main group for label and actual input El -->
-    <div class="label-input__wrapper">
-        <div class="input__wrapper {{ alignment }}" [ngClass]="{
+  }"
+  class="wrapper"
+>
+  <!-- main group for label and actual input El -->
+  <div class="label-input__wrapper">
+    <div
+      class="input__wrapper {{ alignment }}"
+      [ngClass]="{
         focus: inputElIsFocus,
         blur: !inputElIsFocus,
         heightzero: !isLabelActive()
-      }">
-            <div class="input__view-component" [ngStyle]="{
+      }"
+    >
+      <!-- <div
+        class="input__view-component"
+        [ngStyle]="{
           'font-size': fontSize,
           'line-height': lineHeight,
           'font-family': fontFamily,
           'letter-spacing': letterSpacing,
           'font-weight': fontWeight
-        }">
-                <span>{{ val }}</span
+        }"
+      > -->
+      <div #inputElDisplay class="input__view-component">
+        <span>{{ val }}</span
         ><span class="input__view-component--suffix">
           <ng-content select=".inline-suffix"></ng-content
         ></span>
-            </div>
+      </div>
 
-            <input class="form__input  " [(ngModel)]="val" [id]="elementId" #inputEl class="{{ alignment }}" [ngClass]="{
+      <input
+        class="form__input  "
+        [(ngModel)]="value"
+        [id]="elementId"
+        #inputEl
+        class="{{ alignment }}"
+        [ngClass]="{
           'input--active': isLabelActive(),
           'input__border--active': inputIsActive
-        }" type="{{ config.isPassword ? 'password' : 'text' }}" [disabled]="disabled" (focus)="focusInput()" (blur)="blurInput()" (input)="inputFn($event.target.value)" />
-        </div>
+        }"
+        type="{{ config.isPassword ? 'password' : 'text' }}"
+        [disabled]="disabled"
+        (focus)="focusInput()"
+        (blur)="blurInput()"
+      />
+    </div>
 
-        <label class="{{ alignment }}" [ngClass]="{
+    <label
+      class="{{ alignment }}"
+      [ngClass]="{
         'label--active': isLabelActive(),
         'label--focus': inputElIsFocus,
         labelIsPlaceholder: labelIsPlaceholder
-      }" class="form__label " [for]="elementId"><div class="label__shrink-wrapper">
+      }"
+      class="form__label "
+      [for]="elementId"
+      ><div class="label__shrink-wrapper">
         <ng-content select=".edu-label"></ng-content>
       </div>
     </label>
-    </div>
+  </div>
 
-    <div class="prefix">
-        <ng-content select=".edu-input__prefix"></ng-content>
-        <ng-content select=".prefix"></ng-content>
-    </div>
+  <div class="prefix">
+    <ng-content select=".edu-input__prefix"></ng-content>
+    <ng-content select=".prefix"></ng-content>
+  </div>
 
-    <div class="suffix">
-        <ng-content select=".edu-input__suffix"></ng-content>
-        <ng-content select=".suffix"></ng-content>
-    </div>
+  <div class="suffix">
+    <ng-content select=".edu-input__suffix"></ng-content>
+    <ng-content select=".suffix"></ng-content>
+  </div>
 </div>
 
 <div #validator class="validator">
-    <ng-content select="[validator]"></ng-content>
+  <ng-content select="[validator]"></ng-content>
 </div>

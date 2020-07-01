@@ -44,7 +44,7 @@ export class TermNamesAndDatesQuestionComponent
     // console.log(item);
   }
 
-  setElementId(index, value) {
+  getElementId(index, value) {
     return `${value}--${index}`;
   }
 
@@ -85,7 +85,6 @@ export class TermNamesAndDatesQuestionComponent
         return new FormGroup(
           {
             termName: new FormControl(termAndDate.termName, {
-              updateOn: 'blur',
               validators: Validators.required
             }),
             startDate: new FormControl(termAndDate.startDate),
@@ -124,20 +123,32 @@ export class TermNamesAndDatesQuestionComponent
       this.termsAndDatesForm = new FormGroup({
         termsAndDates: new FormArray(formGroups)
       });
-      this.termsAndDatesForm.controls.termsAndDates['controls'].forEach(
-        (formGroup: FormGroup, idx) => {
-          // formGroup.controls.termName.updateOn
-          formGroup.controls.termName.valueChanges.subscribe(termName => {
-            this.store.dispatch(setTermName({ idx, termName }));
-          });
-          formGroup.controls.startDate.valueChanges.subscribe(startDate =>
-            this.store.dispatch(setTermStartDate({ idx, startDate }))
-          );
-          formGroup.controls.endDate.valueChanges.subscribe(endDate =>
-            this.store.dispatch(setTermEndDate({ idx, endDate }))
-          );
-        }
-      );
+      // this.termsAndDatesForm.controls.termsAndDates['controls'].forEach(
+      //   (formGroup: FormGroup, idx) => {
+      //     // formGroup.controls.termName.updateOn
+      //     formGroup.controls.termName.valueChanges.subscribe(termName => {
+      //       this.store.dispatch(setTermName({ idx, termName }));
+      //     });
+      //     formGroup.controls.startDate.valueChanges.subscribe(startDate =>
+      //       this.store.dispatch(setTermStartDate({ idx, startDate }))
+      //     );
+      //     formGroup.controls.endDate.valueChanges.subscribe(endDate =>
+      //       this.store.dispatch(setTermEndDate({ idx, endDate }))
+      //     );
+      //   }
+      // );
     });
+  }
+  updateTitle(termName, idx) {
+    console.log('update title' + ` idx ${idx}, termname ${termName}`);
+    this.store.dispatch(setTermName({ idx, termName }));
+  }
+  updateStart(startDate, idx) {
+    console.log('update updateStart' + ` idx ${idx}, startDate ${startDate}`);
+    this.store.dispatch(setTermStartDate({ idx, startDate }));
+  }
+  updateEnd(endDate, idx) {
+    console.log('update updateEnd' + ` idx ${idx}, endDate ${endDate}`);
+    this.store.dispatch(setTermEndDate({ idx, endDate }));
   }
 }

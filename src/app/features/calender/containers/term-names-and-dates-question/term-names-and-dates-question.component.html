@@ -23,15 +23,18 @@
       >
         <div [formGroupName]="i" class="terms-and-dates__item">
           <edu-input
-            [elementId]="setElementId(i, 'termName')"
+            [elementId]="getElementId(i, 'termName')"
             formControlName="termName"
             alignment="center"
+            (edu-blur)="updateTitle($event, i)"
           >
           </edu-input>
+
           <edu-datepicker
-            [elementId]="setElementId(i, 'startDate')"
+            [elementId]="getElementId(i, 'startDate')"
             formControlName="startDate"
             alignment="center"
+            (edu-change)="updateStart($event, i)"
           >
             <span class="edu-label">Starts from</span>
             <div class="edu-suffix" InputAffix>
@@ -39,9 +42,10 @@
             </div>
           </edu-datepicker>
           <edu-datepicker
-            [elementId]="setElementId(i, 'endDate')"
+            [elementId]="getElementId(i, 'endDate')"
             formControlName="endDate"
             alignment="center"
+            (edu-change)="updateEnd($event, i)"
           >
             <span class="edu-label">Ends on</span>
             <div class="edu-suffix" InputAffix>

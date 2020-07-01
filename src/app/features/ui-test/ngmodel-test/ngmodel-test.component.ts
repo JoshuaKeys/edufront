@@ -29,8 +29,13 @@ export class NgmodelTestComponent implements OnInit {
   selectOptions = [];
   // selectOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+  prettyPrint(val) {
+    return val.map(_val => _val.value);
+  }
+
   singelArrValue = 2;
   updateSelectArr(value, index) {
+    console.log('updating select -- ' + value + ' @ index: ' + index);
     this.selectArr[index] = value;
     this.selectArr$.next([...this.selectArr]);
   }

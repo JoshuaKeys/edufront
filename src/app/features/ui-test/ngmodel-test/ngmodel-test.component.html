@@ -1,5 +1,5 @@
 <p>ngmodel-test works! 123</p>
-<h4>selectArr: {{ selectArr }}</h4>
+<h4>selectArr: {{ selectArr$ | async }}</h4>
 <ng-container *ngFor="let item of selectArr$ | async; let i = index">
   <edu-select [ngModel]="item" (edu-change)="updateSelectArr($event, i)">
     <span class="edu-label"> select no. {{ i }} {{ item }}</span>
