@@ -7,7 +7,7 @@ import { DayModel } from '../models/day.model';
 export function clearClassOffGroups(classItem: ClassModel, groups: ClassGroupModel[], skipGroupId: string) {
     console.log(groups);
     return groups.map(group=> {
-        // if(skipGroup) {
+        if(skipGroupId) {
             if(group.id !== skipGroupId) {
                 const filteredClasses = group.classes.map(groupClassItem=> {
                     if(classItem.id === groupClassItem.id) {
@@ -17,7 +17,7 @@ export function clearClassOffGroups(classItem: ClassModel, groups: ClassGroupMod
                 }).filter(item => item)
                 group.classes = filteredClasses
             }
-        // }
+        }
         return group;
     }).filter(group=> group.classes.length > 0)
 }

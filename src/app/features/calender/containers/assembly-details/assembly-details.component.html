@@ -1,24 +1,17 @@
 <div class="main">
-  <form
-    *ngIf="assemblyDetailsForm"
-    [formGroup]="assemblyDetailsForm"
-    class="content"
-  >
-    <h1 class="header">
-      Tell us more about the assembly
-    </h1>
+    <form *ngIf="assemblyDetailsForm" [formGroup]="assemblyDetailsForm" class="content">
+        <h1 class="header">
+            Tell us more about the assembly
+        </h1>
 
-    <div class="group--row">
-      <edu-input
-        (input)="updateAssemblyName($event)"
-        formControlName="assemblyName"
-      >
-        <span class="edu-label">
+        <div class="group--row">
+            <edu-input (input)="updateAssemblyName($event)" formControlName="assemblyName">
+                <span class="edu-label">
           Name
         </span>
-      </edu-input>
+            </edu-input>
 
-      <!-- <edu-timepicker
+            <!-- <edu-timepicker
         formControlName="startingAt"
         (edu-change)="updateAssemblyData('startingAt', $event)"
       >
@@ -26,7 +19,7 @@
           Starting at
         </span>
       </edu-timepicker> -->
-      <edu-select formControlName="startingAt">
+            <!-- <edu-select formControlName="startingAt">
         <span class="edu-label">
           Starting at
         </span>
@@ -37,29 +30,20 @@
         >
           {{ duration.text }}
         </edu-option>
-      </edu-select>
-
-      <edu-select formControlName="assemblyDuration"
-        ><span class="edu-label">
+      </edu-select> -->
+            <edu-timepicker formControlName="startingAt" (edu-change)="updateStartTime($event,'startingAt')">
+                <span class="edu-label">Start Time</span>
+            </edu-timepicker>
+            <edu-select formControlName="assemblyDuration"><span class="edu-label">
           Assembly Duration
         </span>
-        <edu-option
-          (click)="updateAssemblyData('duration', duration)"
-          *ngFor="let duration of durations; let i = index"
-          [OptionValue]="duration.duration"
-        >
-          {{ duration.text }}
-        </edu-option>
-      </edu-select>
-    </div>
-  </form>
-  <button
-    *ngIf="assemblyDetailsForm"
-    [disabled]="assemblyDetailsForm.invalid"
-    [routerLink]="['../', activatedRouteData.next]"
-    class="button--bottom"
-    ButtonType="basic"
-  >
+                <edu-option (click)="updateAssemblyData('duration', duration)" *ngFor="let duration of durations; let i = index" [OptionValue]="duration.duration">
+                    {{ duration.text }}
+                </edu-option>
+            </edu-select>
+        </div>
+    </form>
+    <button *ngIf="assemblyDetailsForm" [disabled]="assemblyDetailsForm.invalid" [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
     continue
   </button>
 </div>

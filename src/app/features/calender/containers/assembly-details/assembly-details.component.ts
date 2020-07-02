@@ -22,7 +22,10 @@ export class AssemblyDetailsComponent implements OnInit {
   assemblyDetailsForm: FormGroup;
   timeArr = Array(60);
   durations: {duration: number; text: string}[] = []
-
+  updateStartTime(event, field) {
+    console.log(event);
+    this.updateAssemblyData(field, {duration: event, text: event});
+  }
   ngOnInit(): void {
     for(let i = 0; i < this.timeArr.length; i++) {
       this.durations.push({duration: i + 1, text: `${i + 1} mins`})
@@ -50,6 +53,7 @@ export class AssemblyDetailsComponent implements OnInit {
     })
   }
   updateAssemblyData(field: 'startingAt'|'duration'|'name', value: {duration: number; text: string} | string) {
+    console.log(value);
     if(field !== 'name') {
       this.store.dispatch(setAssemblyData({field, value: (value as {duration: number; text: string}).duration}))
       return;
