@@ -23,6 +23,7 @@ export class UpdateTimetableComponent implements OnInit {
   teachingState: Observable<TeachingStateModel>;
   intervals: { duration: number; text: string }[] = [];
   timeArr = Array(60);
+  modalIsActive = true;
   durations: {duration: number; text: string}[] = []
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   periodDurations = [
@@ -111,6 +112,12 @@ export class UpdateTimetableComponent implements OnInit {
   }
   selectStartTime(event) {
     
+  }
+  computeModifications() {
+
+  }
+  closeModal(){
+
   }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {

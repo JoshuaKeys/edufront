@@ -409,7 +409,7 @@ export const teachingReducer = createReducer(
     const adjustedGroups = clearClassOffGroups(
       action.class,
       stateCopy,
-      stateCopy[groupIdx].id
+      stateCopy[groupIdx] ? stateCopy[groupIdx].id : null
     );
     return {
       ...state,

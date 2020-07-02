@@ -656,7 +656,9 @@ export const previewReducer = createReducer(
     const clickedClassIdx = groupsState[groupIdx].classes.findIndex(
       classItem => classItem.id === action.class.id
     );
+    console.log(clickedClassIdx);
     if (clickedClassIdx > -1) {
+      console.log(groupsState[groupIdx])
       groupsState[groupIdx].classes.splice(clickedClassIdx, 1);
       if (groupsState[groupIdx].classes.length === 0) {
         console.log(groupsState);
@@ -668,8 +670,8 @@ export const previewReducer = createReducer(
     const adjustedGroups = clearClassOffGroups(
       action.class,
       groupsState,
-      groupsState[groupIdx].id
-    );
+      groupsState[groupIdx] ? groupsState[groupIdx].id : null
+     );
     return {
       ...state,
       teachingDays: {

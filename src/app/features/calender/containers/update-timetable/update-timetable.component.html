@@ -133,8 +133,42 @@
         <button ButtonType="outline" class="button--cancel">
         cancel
       </button>
-        <button ButtonType="basic" class="button--update">
+        <button ButtonType="basic" class="button--update" (click)="computeModifications()">
         Update Timetable
       </button>
     </div>
 </div>
+<edu-modal [(ngModel)]="modalIsActive">
+    <div class="modal__content">
+        <h3>These are the consequences:</h3>
+        <div class="consequences">
+            <div class="consequence">
+                <span>All <b>XXX</b> students currently assigned to this class</span>
+            </div>
+            <div class="consequence">
+                <span>All <b>XXX</b> students currently assigned to this class</span>
+            </div>
+            <div class="consequence">
+                <span>All <b>XXX</b> students currently assigned to this class</span>
+            </div>
+            <div class="consequence">
+                <span>All <b>XXX</b> students currently assigned to this class</span>
+            </div>
+            <div class="consequence">
+                <span>All <b>XXX</b> students currently assigned to this class</span>
+            </div>
+            <div class="consequence">
+                <span>All <b>XXX</b> students currently assigned to this class</span>
+            </div>
+        </div>
+        <h3>Are you sure you wish to continue?</h3>
+        <div class="button__wrapper">
+            <button class="button button--cancel" ButtonType="outline" (click)="closeModal()">
+          cancel
+        </button>
+            <button class="button button--update" ButtonType="basic" (click)="closeModal()">
+          update
+        </button>
+        </div>
+    </div>
+</edu-modal>
