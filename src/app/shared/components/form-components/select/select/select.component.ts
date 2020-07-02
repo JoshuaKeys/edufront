@@ -34,7 +34,8 @@ import { BehaviorSubject } from 'rxjs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class SelectComponent
+  implements OnInit, AfterViewInit, ControlValueAccessor {
   @Output() onValueChange = new EventEmitter<any>();
   @Input('alignment') alignment = 'center'; //left right center
   @Input('disabled') disabled = false;
@@ -48,7 +49,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   _value = '';
   set value(param) {
     // console.log('SET IN SELECT');
-    console.log(`set select value ${param}`);
+    // console.log(`set select value ${param}`);
+    this._value = param;
+    this.selectService.setActiveValue(param);
 
     this.$value.next(param);
   }
@@ -59,6 +62,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   selectIsActive; // controls the checkbox, responsible for toggling dropdown
   selectState = 'inactive'; // state [active, inactive( default ), focus, disabled ]
   activeOptionIndex = 0;
+  ngafterViewHookPassed = false;
   validOptionValues = [];
   //for keyboard accessbility
   ENTER_KEY_CODE = 13;
@@ -85,14 +89,15 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
     this.setElementId();
     this.$value
-      .pipe
-      // distinctUntilChanged(),
-      // filter(param => this.isValidOption(param))
-      ()
+      .pipe(
+        filter(() => this.ngafterViewHookPassed),
+        filter(param => this.isValidOption(param))
+      )
+
       .subscribe(param => {
         // console.log('CHANGE IN SELECT - ' + param);
-        this.selectService.setActiveValue(param);
-        this._value = param;
+        // this._value = param;
+
         this.onValueChange.emit(param);
         this.elchange.emit(param);
         this.onChange(param);
@@ -132,7 +137,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         //     this.cd.markForCheck();
       });
   }
-
+  ngAfterViewInit() {
+    this.ngafterViewHookPassed = true;
+  }
   isValidOption(option) {
     // console.log(option);
     // console.log(typeof this.validOptionValues);

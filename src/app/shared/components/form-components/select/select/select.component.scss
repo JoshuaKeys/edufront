@@ -311,6 +311,9 @@
     font-size: 0;
   }
   .label__shrink-wrap {
+    &::ng-deep .edu-label {
+      transition: none;
+    }
     transition: none;
     font-size: 0.85em;
   }

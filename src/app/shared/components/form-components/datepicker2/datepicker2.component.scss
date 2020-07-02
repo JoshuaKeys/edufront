@@ -94,6 +94,10 @@
   //   }
 
   &__label {
+    &::ng-deep .edu-label {
+      transition: none;
+    }
+    transition: none;
     font-family: Raleway;
     font-size: 14px;
     line-height: 1.45;

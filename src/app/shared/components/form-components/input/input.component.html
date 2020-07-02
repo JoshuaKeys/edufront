@@ -26,7 +26,7 @@
           'font-weight': fontWeight
         }"
       > -->
-      <div #inputElDisplay class="input__view-component">
+      <div #inputElDisplay class="input__view-component input">
         <span>{{ val }}</span
         ><span class="input__view-component--suffix">
           <ng-content select=".inline-suffix"></ng-content
@@ -34,7 +34,7 @@
       </div>
 
       <input
-        class="form__input  "
+        class="form__input input "
         [(ngModel)]="value"
         [id]="elementId"
         #inputEl
@@ -57,7 +57,7 @@
         'label--focus': inputElIsFocus,
         labelIsPlaceholder: labelIsPlaceholder
       }"
-      class="form__label "
+      class="form__label label"
       [for]="elementId"
       ><div class="label__shrink-wrapper">
         <ng-content select=".edu-label"></ng-content>

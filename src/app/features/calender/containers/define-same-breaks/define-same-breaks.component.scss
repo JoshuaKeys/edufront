@@ -89,8 +89,8 @@ edu-select {
   height: 54px;
   width: 200px;
   margin: 0;
-  &::ng-deep input,
-  &::ng-deep label {
+  &::ng-deep .input,
+  &::ng-deep .label {
     font-size: 16px;
   }
 }
