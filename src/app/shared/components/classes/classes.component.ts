@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClassModel } from '../../models/class.model';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 export interface ClassesStyle {
   fontSize: string;
   width: string;
@@ -19,7 +19,7 @@ export interface ClassesStyle {
   selector: 'edu-classes',
   templateUrl: './classes.component.html',
   styleUrls: ['./classes.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClassesComponent implements OnInit {
   @Input() classes: Observable<ClassModel[]>;
@@ -31,9 +31,13 @@ export class ClassesComponent implements OnInit {
   ngOnInit(): void {
     this.sortedClasses$ = this.classes.pipe(
       map(_classes => {
-        return _classes.sort(this.sortingFn);
+        console.log(_classes)
+        return _classes//.sort(this.sortingFn);
       })
     );
+  }
+  debug(item) {
+    console.log(item);
   }
   processClicked(name: string) {
     this.classClicked.emit(name);

@@ -73,7 +73,7 @@ export class DefineSameBreaksComponent implements OnInit {
     return `name-${idx}`;
   }
   updateAfter($event, idx: number) {
-    this.updateBreakData('after', $event, idx);
+    this.updateBreakData('after', 'P'+$event, idx);
   }
   updateDuration($event, idx: number) {
     this.updateBreakData('duration', $event, idx);

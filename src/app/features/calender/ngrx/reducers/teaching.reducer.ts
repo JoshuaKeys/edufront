@@ -30,7 +30,15 @@ import {
   updateSameBreakData,
   removeSameBreak,
   initializeBreaks,
-  editCalendar
+  editCalendar,
+  toggleEditClassActive,
+  toggleEditTeachingActive,
+  updateCalendarPeriodData,
+  addEditSameBreak,
+  updateEditBreakData,
+  removeEditBreak,
+  setAssemblyEnabledMode,
+  setEditAssemblyData
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -68,22 +76,40 @@ export const teachingReducer = createReducer(
       classesAndGroups: action.classesAndGroups
     };
   }),
+  on(updateCalendarPeriodData, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedPeriod = stateCopy.calendarEdit.teachingPeriods.map(period => {
+      period[action.field] = action.value;
+      return period;
+    })
+    stateCopy.calendarEdit.teachingPeriods = updatedPeriod;
+    return stateCopy;
+  }),
+  on(setAssemblyEnabledMode, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.calendarEdit.isAssemblyIncluded = action.isEnabled
+    return stateCopy;
+  }),
+  on(toggleEditTeachingActive, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const classToEdit = stateCopy.calendarEdit.teachingDays.findIndex(day => {
+      return day.day === action.day
+    });
+    stateCopy.calendarEdit.teachingDays[classToEdit].selected = !action.selected;
+    return stateCopy;
+  }),
+  on(toggleEditClassActive, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const classToEdit = stateCopy.calendarEdit.classes.findIndex(classItem => {
+      return classItem.name === action.name
+    });
+    stateCopy.calendarEdit.classes[classToEdit].selected = !stateCopy.calendarEdit.classes[classToEdit].selected;
+    return stateCopy;
+  }),
   on(editCalendar, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const classes: ClassModel[] = [];
-    // stateCopy.classes.forEach(classItem => {
 
-    //   let copy: ClassModel;
-    //   for(let i = 0; i < action.group.classes.length; i++) {
-    //     copy = {...action.group.classes[i]}
-    //     if(action.group.classes[i].id === classItem.id) {
-    //       copy.selected = true;
-    //       break;
-    //     }
-    //   }
-    //   classes.push(copy);
-
-    // });
     const newClasses = JSON.parse(JSON.stringify(stateCopy.classes));
     for(let i = 0; i < newClasses.length; i++) {
       let copy: ClassModel;
@@ -93,11 +119,12 @@ export const teachingReducer = createReducer(
         }
       }
     }
-    console.log(classes);
     const editState: CalendarUpdateModel = {
       classes: newClasses,
       teachingDays: action.group.teachingDays,
-      teachingPeriods: action.group.periods
+      teachingPeriods: action.group.periods,
+      group: action.group,
+      isAssemblyIncluded: true
     };
     stateCopy.calendarEdit = editState;
     return stateCopy;
@@ -148,6 +175,21 @@ export const teachingReducer = createReducer(
       }
     );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
+    stateCopy.periods = updatedPeriods;
+    return stateCopy;
+  }),
+  on(addEditSameBreak, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedPeriods = stateCopy.calendarEdit.teachingPeriods.map(period => {
+      period.breaks.push({
+        title: 'Break ' + (period.breaks.length + 1),
+        firstBreak: '',
+        day: [],
+        after: [],
+        duration: ''
+      });
+      return period;
+    });
     stateCopy.periods = updatedPeriods;
     return stateCopy;
   }),
@@ -241,6 +283,17 @@ export const teachingReducer = createReducer(
     stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
     return stateCopy;
   }),
+  on(removeEditBreak, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedPeriods = stateCopy.calendarEdit.teachingPeriods.map(
+      period => {
+        period.breaks.splice(action.breakIndex, 1);
+        return period;
+      }
+    );
+    stateCopy.calendarEdit.teachingPeriods = updatedPeriods;
+    return stateCopy;
+  }),
   on(updateBreakData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const groupIdx = stateCopy.classesAndGroups.findIndex(
@@ -255,6 +308,17 @@ export const teachingReducer = createReducer(
     stateCopy.classesAndGroups[groupIdx].periods = updatedPeriods;
     return stateCopy;
   }),
+  on(updateEditBreakData, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedPeriods = stateCopy.calendarEdit.teachingPeriods.map(
+      period => {
+        period.breaks[action.index][action.field] = action.value as any;
+        return period;
+      }
+    );
+    stateCopy.calendarEdit.teachingPeriods = updatedPeriods;
+    return stateCopy;
+  }),
   on(updateSameBreakData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
@@ -267,7 +331,6 @@ export const teachingReducer = createReducer(
         return classesGroup;
       }
     );
-
     const updatedPeriods = stateCopy.periods.map(period => {
       period.breaks[action.index][action.field] = action.value as any;
       return period;
@@ -611,6 +674,15 @@ export const teachingReducer = createReducer(
       ...stateCopy,
       classesAndGroups: updatedClassesAndGroups
     };
+  }),
+  on(setEditAssemblyData, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const updatedPeriods = stateCopy.calendarEdit.teachingPeriods.map(period => {
+      period.assembly[action.field] = action.value as any;
+      return period;
+    })
+    stateCopy.calendarEdit.teachingPeriods = updatedPeriods;
+    return stateCopy;
   }),
   on(setAssemblyData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));

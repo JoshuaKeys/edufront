@@ -59,6 +59,38 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   toggleActive(day: TeachingDay, classesGroup: ClassGroupModel) {
     // this.store.dispatch(toggleClassesGroupActive({day, classesGroup}))
   }
+  parsePeriodValue(arr) {
+    if (arr.length == 0) {
+      return '';
+    }
+    let displayValue = '';
+    let temp = arr
+      .map(number => {
+        let suffix;
+        if (typeof number === 'string' && number.toLowerCase() === 'all') {
+          return `${number}`;
+        }
+        if (number == 1) {
+          suffix = 'st';
+        } else if (number == 2) {
+          suffix = 'nd';
+        } else if (number == 3) {
+          suffix = 'rd';
+        } else {
+          suffix = 'th';
+        }
+        return `${number}${suffix}`;
+      })
+      .reduce((a, b) => `${a},${b}`);
+    if (arr.length == 1 && arr[0] == '') {
+      displayValue = '';
+    } else {
+      displayValue = `${temp} period`;
+    }
+    // displayValue = `${temp} period`;
+    // }
+    return displayValue;
+  }
   asObservable(item) {
     return of(item);
   }

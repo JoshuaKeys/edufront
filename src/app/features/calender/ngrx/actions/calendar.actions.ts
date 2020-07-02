@@ -226,4 +226,35 @@ export const removeSameBreak = createAction(
 export const editCalendar = createAction(
     '[UpdateTimetableComponent] editCalendar',
     props<{group: ClassGroupModel}>()
+);
+export const toggleEditClassActive = createAction(
+     '[UpdateTimetableComponent] toggleEditClassActive',
+     props<{name: string}>()
+);
+export const toggleEditTeachingActive = createAction(
+    '[UpdateTimetableComponent] toggleEditTeachingActive',
+    props<TeachingDay>()
+);
+export const updateCalendarPeriodData = createAction(
+    '[UpdateTimetableComponent] updateCalendarPeriodData',
+    props<{field: string; value: any}>()
+);
+export const addEditSameBreak = createAction(
+    '[UpdateTimetableComponent] addEditSameBreak'
+);
+export const updateEditBreakData = createAction(
+    '[UpdateTimetableComponent] updateEditBreakData',
+    props<{index: number, field: 'title'|'day'|'after'|'duration', value: string}>()
+);
+export const removeEditBreak = createAction(
+    '[DefineSameBreakSomponent] removeEditBreak',
+    props<{breakIndex: number}>()
+);
+export const setAssemblyEnabledMode = createAction(
+    '[DefineSameBreakComponent] setAssemblyEnabledMode',
+    props<{isEnabled: boolean}>()
 )
+export const setEditAssemblyData = createAction(
+    '[AssemblyDetailsComponent] setEditAssemblyData',
+    props<{field: 'startingAt'|'duration'|'name', value: number|string}>()
+);

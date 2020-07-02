@@ -17,7 +17,7 @@
             Day
           </span>
                 </edu-icon-select>
-                <edu-icon-select (edu-tick)="updateAfter($event, i)" [textParserFn]="parsePeriodValue" elementId="after" [valueOptions]="periodOption" [ngModel]="break.after">
+                <edu-icon-select [isSingleSelect]="true" (edu-tick)="updateAfter($event, i)" [textParserFn]="parsePeriodValue" elementId="after" [valueOptions]="periodOption" [ngModel]="break.after">
                     <span class="edu-label">
             After
           </span>
@@ -30,13 +30,13 @@
                 </edu-input>
 
                 <button class="delete-vacation-btn" ButtonType="icon">
-          <img src="assets/form-components/cross-red.svg" alt="" />
-        </button>
+                  <img src="assets/form-components/cross-red.svg" alt="" />
+                </button>
             </div>
 
             <button class="break__btn" (click)="addSameBreaks()">
-        <img src="assets/32pxplusblue.svg" />
-      </button>
+              <img src="assets/32pxplusblue.svg" />
+            </button>
         </div>
     </div>
     <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
