@@ -6,7 +6,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { editCalendar } from '../../ngrx/actions/calendar.actions';
+import { editCalendar, sendCalendarData } from '../../ngrx/actions/calendar.actions';
 let weirdData = [
   {
     day: 'Mon',
@@ -111,6 +111,10 @@ export class CalendarConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
+    this.teachingData.subscribe(x => console.log('yyyyyyyyaaaaaay', x))
+  }
+  sendCalendarData() {
+    this.store.dispatch(sendCalendarData())
   }
   computeClassName(classGroup: ClassGroupModel) {
     let classes = '';

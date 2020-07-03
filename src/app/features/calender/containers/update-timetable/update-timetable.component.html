@@ -108,14 +108,6 @@
                                     Name
                                 </span>
                         </edu-input>
-                        <!-- <edu-select elementId="startingAt" [ngModel]="(teachingState | async).calendarEdit.teachingPeriods[0].assembly.startingAt">
-                            <span class="edu-label">
-                                    Starting at
-                                </span>
-                            <edu-option (click)="updateAssemblyData('startingAt', duration)" *ngFor="let duration of durations; let i = index" [OptionValue]="duration.duration">
-                                {{ duration.text }}
-                            </edu-option>
-                        </edu-select> -->
                         <edu-timepicker elementId="startingAt" [ngModel]="(teachingState | async).calendarEdit.teachingPeriods[0].assembly.startingAt" (edu-change)="updateStartTime($event,'startingAt')">
                             <span class="edu-label">Start Time</span>
                         </edu-timepicker>

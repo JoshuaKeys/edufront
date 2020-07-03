@@ -22,6 +22,7 @@ import {
   initializeVacations
 } from '../../ngrx/actions/calendar.actions';
 import { Router, ActivatedRoute } from '@angular/router';
+import { validateTermsAndDates } from '../../utilities';
 
 @Component({
   selector: 'edu-term-names-and-dates-question',
@@ -40,9 +41,6 @@ export class TermNamesAndDatesQuestionComponent
     private router: Router,
     private cd: ChangeDetectorRef
   ) {}
-  log(item) {
-    // console.log(item);
-  }
 
   getElementId(index, value) {
     return `${value}--${index}`;
@@ -59,11 +57,7 @@ export class TermNamesAndDatesQuestionComponent
     );
     var scrollableHeight = this.scrollableEl.nativeElement.offsetHeight;
     var maxHeight = vh - 330;
-    // console.log(
-    //   'maxHeight - ' + maxHeight + ',scrollable - ' + scrollableHeight
-    // );
     let res = scrollableHeight >= maxHeight - 10;
-    // console.log(res);
     return res;
   }
 
@@ -73,14 +67,15 @@ export class TermNamesAndDatesQuestionComponent
       relativeTo: this.activatedRoute
     });
   }
-
+  getValues(item) {
+    return Object.values(item)
+  }
   ngAfterViewInit() {
     this.cd.markForCheck();
   }
   ngOnInit(): void {
     this.calendarData = this.store.select(selectCalendar);
-    this.calendarData.pipe(first()).subscribe(calendarData => {
-      console.log(calendarData);
+    this.calendarData.subscribe(calendarData => {
       const formGroups = calendarData.termsAndDates.map(termAndDate => {
         return new FormGroup(
           {
@@ -89,54 +84,25 @@ export class TermNamesAndDatesQuestionComponent
             }),
             startDate: new FormControl(termAndDate.startDate),
             endDate: new FormControl(termAndDate.endDate)
-          },
-          {
-            validators: termsandDatesForm => {
-              const startDate = termsandDatesForm.value.startDate;
-              const endDate = termsandDatesForm.value.endDate;
-              let errors = {
-                msg: []
-              };
-              if (!startDate || startDate.length === 0) {
-                errors.msg.push('Start Date is Empty');
-              }
-              if (!endDate || endDate.length === 0) {
-                errors.msg.push('End Date is Empty');
-              }
-              if (startDate && startDate.length && endDate && endDate.length) {
-                const startDateObj = new Date(startDate);
-                const endDateObj = new Date(endDate);
-                if (startDateObj.getTime() >= endDateObj.getTime()) {
-                  errors.msg.push('End Date must be more than start date');
-                }
-              }
-
-              if (!errors.msg.length) {
-                errors = null;
-              }
-              return errors;
-            }
           }
         );
       });
 
       this.termsAndDatesForm = new FormGroup({
-        termsAndDates: new FormArray(formGroups)
+        termsAndDates: new FormArray(formGroups, {
+          validators: (formArray: FormArray) => {
+            let result = [];
+            formArray.controls.forEach((formGroup, index)=> {
+              const msg = validateTermsAndDates(formGroup, calendarData, index, 'Term');
+              if(msg)
+              result.push(
+                msg.msg
+              )
+            })
+            return result;
+          }
+        })
       });
-      // this.termsAndDatesForm.controls.termsAndDates['controls'].forEach(
-      //   (formGroup: FormGroup, idx) => {
-      //     // formGroup.controls.termName.updateOn
-      //     formGroup.controls.termName.valueChanges.subscribe(termName => {
-      //       this.store.dispatch(setTermName({ idx, termName }));
-      //     });
-      //     formGroup.controls.startDate.valueChanges.subscribe(startDate =>
-      //       this.store.dispatch(setTermStartDate({ idx, startDate }))
-      //     );
-      //     formGroup.controls.endDate.valueChanges.subscribe(endDate =>
-      //       this.store.dispatch(setTermEndDate({ idx, endDate }))
-      //     );
-      //   }
-      // );
     });
   }
   updateTitle(termName, idx) {

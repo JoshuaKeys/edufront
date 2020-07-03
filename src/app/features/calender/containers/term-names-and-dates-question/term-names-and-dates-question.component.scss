@@ -1,88 +1,107 @@
 @import 'src/assets/styles/mixins/alignment';
 @import '../../scss-fixes.scss';
 :host {
-  @include displayFlex(center, center, column);
-  width: 100%;
-  flex-grow: 1;
-  height: 100%;
+    @include displayFlex(center, center, column);
+    width: 100%;
+    flex-grow: 1;
+    height: 100%;
 }
+
 form {
-  // height: 100% !important;
+    // height: 100% !important;
 }
+
 .main {
-  overflow: hidden;
+    overflow: hidden;
 }
+
 .overflowVisible {
-  overflow: visible !important;
+    overflow: visible !important;
 }
 
 .scrollable-content {
-  flex-grow: 1;
-  // height: 100%;
-  @include displayFlex(flex-start, center, column);
-  max-height: calc(100vh - 330px);
+    flex-grow: 1;
+    // height: 100%;
+    @include displayFlex(flex-start, center, column);
+    max-height: calc(100vh - 330px);
 }
 
 .header {
-  font-size: 26px;
-  color: #212121;
+    font-size: 26px;
+    color: #212121;
 }
-.desc {
-  margin-bottom: 30px;
-}
-.terms-and-dates {
-  display: flex;
 
-  &__item {
-    margin: auto;
-    margin-bottom: 20px;
+.desc {
+    margin-bottom: 30px;
+}
+
+.terms-and-dates {
     display: flex;
-    * {
-      //   width: 25%;
+    &__item {
+        margin: auto;
+        margin-bottom: 20px;
+        display: flex;
+        * {
+            //   width: 25%;
+        }
     }
-  }
 }
+
 .terms-and-dates__errors {
-  display: flex;
-  justify-content: center;
-  span {
-    color: red;
-    font-weight: 700;
-  }
+    display: flex;
+    justify-content: center;
+    span {
+        color: red;
+        font-weight: 700;
+    }
 }
+
 edu-input,
 edu-datepicker {
-  width: 240px;
-  height: 54px;
-  max-width: 30%;
-  margin: 0 10px;
-  flex-shrink: 0;
-  img {
-    margin-right: 10px;
-  }
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
-  }
+    width: 240px;
+    height: 54px;
+    max-width: 30%;
+    margin: 0 10px;
+    flex-shrink: 0;
+    img {
+        margin-right: 10px;
+    }
+    &:first-child {
+        margin-left: 0;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
 }
+
 .terms-and-dates__btn-container {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
 .terms-and-dates__continue-btn {
-  height: 52px;
-  border-radius: 100px;
-  background: #69a9f2 0% 0% no-repeat padding-box;
-  width: 250px;
-  margin-top: 230px;
-  text-transform: uppercase;
-  text-align: center;
-  color: #fff;
-  border: none;
-  &:active,
-  &:focus {
-    outline: none;
-  }
+    height: 52px;
+    border-radius: 100px;
+    background: #69a9f2 0% 0% no-repeat padding-box;
+    width: 250px;
+    margin-top: 230px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    border: none;
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+.validation-errors {
+    padding: 0;
+}
+
+.validation-error {
+    list-style-type: none;
+    color: red;
+    font-weight: bold;
 }

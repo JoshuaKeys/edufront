@@ -4,12 +4,17 @@ import { fetchHolidaysRequest,
     fetchHolidaysResponse, fetchClassesAndGroups, 
     fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
     updateSelectedTeachingDaysRequest,
-    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup } from '../actions/calendar.actions';
-import { mergeMap, map, withLatestFrom, tap } from 'rxjs/operators';
+    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup } from '../actions/calendar.actions';
+import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeachingDays, getAllSelectedClassPeriods, selectCreateCalendarData } from '../selectors';
+import { selectTeachingDays, getAllSelectedClassPeriods, selectCreateCalendarData, selectTeaching } from '../selectors';
+import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly } from '../../utilities';
+import { ClassGroupModel } from '../../models/class-group.model';
+import { PeriodModel } from '../../models/period.model';
+import { v4 as uuid44 } from 'uuid';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CalendarEffects {
@@ -40,6 +45,41 @@ export class CalendarEffects {
             map(classes=> getAllClassesResponse({classes}))
         ))
     ))
+    computeModifications$ = createEffect(() => this.actions$.pipe(
+        ofType(computeModifications),
+        withLatestFrom(this.store.select(selectTeaching)),
+        switchMap(([action, teachingState]) => {
+            const classes = teachingState.calendarEdit.classes.filter(classItem => classItem.selected)
+            const parentClasses = teachingState.calendarEdit.group.classes;
+            let teachingPeriods: PeriodModel[];
+            if(!teachingState.calendarEdit.isAssemblyIncluded) {
+                teachingPeriods = removeAssembly(teachingState.calendarEdit.teachingPeriods)
+            }else {
+                teachingPeriods = teachingState.calendarEdit.teachingPeriods
+            }
+            const subtractedClasses = getSubtractedClasses(
+                teachingState.calendarEdit.group,
+                classes
+            );
+            const modifiedGroup: ClassGroupModel = {
+                ...teachingState.calendarEdit.group,
+                classes,
+                teachingDays: teachingState.calendarEdit.teachingDays,
+                periods: teachingPeriods
+            }
+            this.router.navigateByUrl('/calendar/calendar-confirmation');
+            if(!subtractedClasses.length) {
+                return [computedModifications({modifiedGroup})]
+            }else {
+                const newGroup: ClassGroupModel = {
+                    ...teachingState.calendarEdit.group,
+                    id: uuid44(),
+                    groupName: `Default_Group ${teachingState.classesAndGroups.length}`
+                }
+                return [computedModifications({modifiedGroup}), computeNewGroup({newGroup})]
+            }
+        })
+    ))
     updateSelectedTeachingDaysRequest$ = createEffect(() => this.actions$.pipe(
         ofType(updateSelectedTeachingDaysRequest),
         withLatestFrom(this.store.select(getAllSelectedClassPeriods)),
@@ -62,6 +102,7 @@ export class CalendarEffects {
     ), {dispatch: false})
     constructor(private actions$: Actions,
         private store: Store<CalendarStateModel>,
-        private calendarService: CalendarService
+        private calendarService: CalendarService,
+        private router: Router
     ){}
 }

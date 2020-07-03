@@ -107,7 +107,7 @@ export const previewReducer = createReducer(
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.periods.items.map(period => {
       period.breaks.push({
-        title: 'Break ' + (period.breaks.length + 1),
+        name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
         after: [],
@@ -119,7 +119,7 @@ export const previewReducer = createReducer(
       classesGroup => {
         const updatedPeriods = classesGroup.periods.map(period => {
           period.breaks.push({
-            title: 'Break ' + (period.breaks.length + 1),
+            name: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
             day: [],
             after: [],
@@ -164,7 +164,7 @@ export const previewReducer = createReducer(
       groupIdx
     ].periods.map(period => {
       period.breaks.push({
-        title: 'Break ' + (period.breaks.length + 1),
+        name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
         after: [],
@@ -214,7 +214,7 @@ export const previewReducer = createReducer(
     const updatedperiods = stateCopy.periods.items.map(period => {
       if (!period.breaks.length) {
         period.breaks.push({
-          title: 'Break ' + period.breaks.length + 1,
+          name: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
           day: [],
           after: [],
@@ -228,7 +228,7 @@ export const previewReducer = createReducer(
         const updatedPeriods = classesGroup.periods.map(period => {
           if (!period.breaks.length) {
             period.breaks.push({
-              title: 'Break ' + period.breaks.length + 1,
+              name: 'Break ' + period.breaks.length + 1,
               firstBreak: '',
               day: [],
               after: [],

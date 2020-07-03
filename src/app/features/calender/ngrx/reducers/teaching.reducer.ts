@@ -38,7 +38,10 @@ import {
   updateEditBreakData,
   removeEditBreak,
   setAssemblyEnabledMode,
-  setEditAssemblyData
+  setEditAssemblyData,
+  computeModifications,
+  computeNewGroup,
+  computedModifications
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -150,7 +153,7 @@ export const teachingReducer = createReducer(
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.periods.map(period => {
       period.breaks.push({
-        title: 'Break ' + (period.breaks.length + 1),
+        name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
         after: [],
@@ -162,7 +165,7 @@ export const teachingReducer = createReducer(
       classesGroup => {
         const updatedPeriods = classesGroup.periods.map(period => {
           period.breaks.push({
-            title: 'Break ' + (period.breaks.length + 1),
+            name: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
             day: [],
             after: [],
@@ -182,7 +185,7 @@ export const teachingReducer = createReducer(
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.calendarEdit.teachingPeriods.map(period => {
       period.breaks.push({
-        title: 'Break ' + (period.breaks.length + 1),
+        name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
         after: [],
@@ -213,12 +216,30 @@ export const teachingReducer = createReducer(
     stateCopy.periods = updatedPeriods;
     return stateCopy;
   }),
+  on(computedModifications, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const classes = action.modifiedGroup.classes;
+    let adjustedGroups: ClassGroupModel[];
+    classes.forEach(classItem => {
+      adjustedGroups = clearClassOffGroups(classItem, stateCopy.classesAndGroups, action.modifiedGroup.id);
+    })
+    const modifiedIdx = adjustedGroups.findIndex(classGroup => classGroup.id === action.modifiedGroup.id);
+    adjustedGroups[modifiedIdx] = action.modifiedGroup;
+    console.log(adjustedGroups);
+    stateCopy.classesAndGroups = adjustedGroups
+    return stateCopy;
+  }),
+  on(computeNewGroup, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.classesAndGroups.push(action.newGroup);
+    return stateCopy;
+  }),
   on(initializeSameBreaks, initializeBreaks, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedperiods = stateCopy.periods.map(period => {
       if (!period.breaks.length) {
         period.breaks.push({
-          title: 'Break ' + period.breaks.length + 1,
+          name: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
           day: [],
           after: [],
@@ -232,7 +253,7 @@ export const teachingReducer = createReducer(
         const updatedPeriods = classesGroup.periods.map(period => {
           if (!period.breaks.length) {
             period.breaks.push({
-              title: 'Break ' + period.breaks.length + 1,
+              name: 'Break ' + period.breaks.length + 1,
               firstBreak: '',
               day: [],
               after: [],
@@ -257,7 +278,7 @@ export const teachingReducer = createReducer(
     const updatedPeriods = stateCopy.classesAndGroups[groupIdx].periods.map(
       period => {
         period.breaks.push({
-          title: 'Break ' + (period.breaks.length + 1),
+          name: 'Break ' + (period.breaks.length + 1),
           firstBreak: '',
           day: [],
           after: [],

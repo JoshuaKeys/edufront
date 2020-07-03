@@ -258,3 +258,18 @@ export const setEditAssemblyData = createAction(
     '[AssemblyDetailsComponent] setEditAssemblyData',
     props<{field: 'startingAt'|'duration'|'name', value: number|string}>()
 );
+export const computeModifications = createAction(
+    '[AssemblyDetailsComponent] computeModifications'
+);
+export const computedModifications = createAction(
+    '[CalendarEffects] computedModifications',
+    props<{modifiedGroup: ClassGroupModel}>()
+);
+export const computeNewGroup = createAction(
+    '[CalendarEffects] computeNewGroup',
+    props<{newGroup: ClassGroupModel}>()
+);
+export const sendCalendarData = createAction(
+    '[CalendarConfirmationComponent] sendCalendarData',
+    // props<{}>()
+)
