@@ -1,73 +1,47 @@
 <div class="main">
-  <h1 class="header">What are the term names and dates?</h1>
-  <p class="desc">
-    Note: we will assume that all days between terms are considered holidays
-  </p>
+    <h1 class="header">What are the term names and dates?</h1>
+    <p class="desc">
+        Note: we will assume that all days between terms are considered holidays
+    </p>
 
-  <form
-    *ngIf="termsAndDatesForm"
-    [formGroup]="termsAndDatesForm"
-    class="pos-relative"
-  >
-    <div
-      class="scrollable-content"
-      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
-      #scrollableEl
-    >
-      <div
-        formArrayName="termsAndDates"
-        *ngFor="
+    <form *ngIf="termsAndDatesForm" [formGroup]="termsAndDatesForm" class="pos-relative">
+        <div class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" #scrollableEl>
+            <div formArrayName="termsAndDates" *ngFor="
           let schoolTerm of (calendarData | async).termsAndDates;
           let i = index
-        "
-      >
-        <div [formGroupName]="i" class="terms-and-dates__item">
-          <edu-input
-            [elementId]="getElementId(i, 'termName')"
-            formControlName="termName"
-            alignment="center"
-            (edu-blur)="updateTitle($event, i)"
-          >
-          </edu-input>
+        ">
+                <div [formGroupName]="i" class="terms-and-dates__item">
+                    <edu-input [elementId]="getElementId(i, 'termName')" formControlName="termName" alignment="center" (edu-blur)="updateTitle($event, i)">
+                    </edu-input>
 
-          <edu-datepicker
-            [elementId]="getElementId(i, 'startDate')"
-            formControlName="startDate"
-            alignment="center"
-            (edu-change)="updateStart($event, i)"
-          >
-            <span class="edu-label">Starts from</span>
-            <div class="edu-suffix" InputAffix>
-              <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                    <edu-datepicker [elementId]="getElementId(i, 'startDate')" formControlName="startDate" alignment="center" (edu-change)="updateStart($event, i)">
+                        <span class="edu-label">Starts from</span>
+                        <div class="edu-suffix" InputAffix>
+                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                        </div>
+                    </edu-datepicker>
+                    <edu-datepicker [elementId]="getElementId(i, 'endDate')" formControlName="endDate" alignment="center" (edu-change)="updateEnd($event, i)">
+                        <span class="edu-label">Ends on</span>
+                        <div class="edu-suffix" InputAffix>
+                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+                        </div>
+                    </edu-datepicker>
+                </div>
             </div>
-          </edu-datepicker>
-          <edu-datepicker
-            [elementId]="getElementId(i, 'endDate')"
-            formControlName="endDate"
-            alignment="center"
-            (edu-change)="updateEnd($event, i)"
-          >
-            <span class="edu-label">Ends on</span>
-            <div class="edu-suffix" InputAffix>
-              <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-            </div>
-          </edu-datepicker>
         </div>
-      </div>
-    </div>
-  </form>
+    </form>
 
-  <div
-    class="terms-and-dates__btn-container  button--bottom"
-    *ngIf="termsAndDatesForm"
-  >
-    <button
-      ButtonType="basic"
-      [disabled]="termsAndDatesForm.invalid"
-      class="terms-and-dates__continue-btn   "
-      (click)="goNext()"
-    >
+    <div class="terms-and-dates__btn-container  button--bottom" *ngIf="termsAndDatesForm">
+        <ng-container class="validation-errors" *ngIf="termsAndDatesForm.invalid">
+            <ul class="validation-errors" *ngFor="let errorGroup of getValues(termsAndDatesForm.controls.termsAndDates.errors)">
+                <li class="validation-error" *ngFor="let error of errorGroup">
+                    {{error}}
+                </li>
+            </ul>
+        </ng-container>
+
+        <button ButtonType="basic" [disabled]="termsAndDatesForm.invalid" class="terms-and-dates__continue-btn   " (click)="goNext()">
       Continue
     </button>
-  </div>
+    </div>
 </div>

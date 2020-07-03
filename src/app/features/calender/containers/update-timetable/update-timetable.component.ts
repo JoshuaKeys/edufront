@@ -7,7 +7,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-import { selectTeachingDay, editCalendar, toggleEditClassActive,setEditAssemblyData,toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode } from '../../ngrx/actions/calendar.actions';
+import { selectTeachingDay, editCalendar, toggleEditClassActive,setEditAssemblyData,toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode, computeModifications } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
@@ -23,7 +23,7 @@ export class UpdateTimetableComponent implements OnInit {
   teachingState: Observable<TeachingStateModel>;
   intervals: { duration: number; text: string }[] = [];
   timeArr = Array(60);
-  modalIsActive = true;
+  modalIsActive = false;
   durations: {duration: number; text: string}[] = []
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   periodDurations = [
@@ -118,7 +118,7 @@ export class UpdateTimetableComponent implements OnInit {
     
   }
   computeModifications() {
-
+    this.store.dispatch(computeModifications())
   }
   closeModal(){
 
