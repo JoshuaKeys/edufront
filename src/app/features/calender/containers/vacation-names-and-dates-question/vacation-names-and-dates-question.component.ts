@@ -3,7 +3,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  AfterViewInit
 } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -28,7 +29,8 @@ import { validateTermsAndDates } from '../../utilities';
   styleUrls: ['./vacation-names-and-dates-question.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VacationNamesAndDatesQuestionComponent implements OnInit {
+export class VacationNamesAndDatesQuestionComponent
+  implements OnInit, AfterViewInit {
   vacationForm: FormGroup;
   calendarData: Observable<CalendarModel>;
   goNext() {
@@ -39,12 +41,14 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
   addVacation() {
     this.store.dispatch(addVacation());
   }
-  getValues(item){
+  getValues(item) {
     console.log(item);
     return Object.values(item);
   }
+  shouldScroll = false;
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
-  startScroll(el) {
+  @ViewChild('errors') errors: ElementRef;
+  startScroll() {
     if (typeof this.scrollableEl === 'undefined') {
       return true;
     }
@@ -53,11 +57,19 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
       window.innerHeight || 0
     );
     var scrollableHeight = this.scrollableEl.nativeElement.offsetHeight;
+    var errorHeight = this.errors.nativeElement.offsetHeight + 28;
     var maxHeight = vh - 330;
-    let res = scrollableHeight >= maxHeight - 10;
+
+    // console.log('scrollableHeight - ' + scrollableHeight);
+    // console.log('maxHeight - ' + maxHeight);
+    // console.log('errorHeight - ' + errorHeight);
+    let res = scrollableHeight + errorHeight + 20 >= maxHeight;
     return res;
   }
-
+  setShouldScroll() {
+    this.shouldScroll = !this.startScroll();
+    console.log(this.shouldScroll);
+  }
   getNewVacationForm(vacationName, startDate, endDate) {
     return new FormGroup(
       {
@@ -102,27 +114,37 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
     });
     this.store.select(selectCalendar).subscribe(calendarState => {
       const formGroups = calendarState.vacations.map(vacation => {
-        return new FormGroup(
-          {
-            vacationName: new FormControl(vacation.vacationName, {
-              validators: Validators.required
-            }),
-            startDate: new FormControl(vacation.startDate),
-            endDate: new FormControl(vacation.endDate)
-          },
-        );
+        return new FormGroup({
+          vacationName: new FormControl(vacation.vacationName, {
+            validators: Validators.required
+          }),
+          startDate: new FormControl(vacation.startDate),
+          endDate: new FormControl(vacation.endDate)
+        });
       });
-      this.vacationForm.controls.vacationsAndDates = new FormArray(formGroups, { validators: (formArray: FormArray) => {
-        let result = [];
-        formArray.controls.forEach((formGroup, index)=> {
-          let msg = validateTermsAndDates(formGroup, calendarState, index, 'Vacation');
-          if(msg){
-            result.push(msg.msg);
-          }
-        })
-        return result;
-      }});
+      this.vacationForm.controls.vacationsAndDates = new FormArray(formGroups, {
+        validators: (formArray: FormArray) => {
+          let result = [];
+          formArray.controls.forEach((formGroup, index) => {
+            let msg = validateTermsAndDates(
+              formGroup,
+              calendarState,
+              index,
+              'Vacation'
+            );
+            if (msg) {
+              result.push(msg.msg);
+            }
+          });
+          return result;
+        }
+      });
+      this.setShouldScroll();
     });
+  }
+
+  ngAfterViewInit() {
+    this.setShouldScroll();
   }
 
   isFormInvalid() {
@@ -134,10 +156,12 @@ export class VacationNamesAndDatesQuestionComponent implements OnInit {
   }
   updateStart(startDate, idx) {
     // console.log('update updateStart' + ` idx ${idx}, startDate ${startDate}`);
+
     this.store.dispatch(setVacationStartDate({ idx, startDate }));
   }
   updateEnd(endDate, idx) {
     // console.log('update updateEnd' + ` idx ${idx}, endDate ${endDate}`);
+
     this.store.dispatch(setVacationEndDate({ idx, endDate }));
   }
 
