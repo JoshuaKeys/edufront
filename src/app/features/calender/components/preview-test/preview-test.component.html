@@ -1,4 +1,21 @@
-<edu-timetable-preview
+<!-- <edu-timetable-preview
   [edu-title]="'class'"
   [edu-value]="data"
-></edu-timetable-preview>
+></edu-timetable-preview> -->
+
+<h1>
+  timepicker block
+  <edu-timepicker-popover
+    [time]="time"
+    (edu-change)="log($event)"
+  ></edu-timepicker-popover>
+</h1>
+
+<h1>
+  class popover
+  <edu-period-popover
+    [badges]="badges"
+    [activeBadge]="activeBadge"
+    (edu-change)="log($event)"
+  ></edu-period-popover>
+</h1>

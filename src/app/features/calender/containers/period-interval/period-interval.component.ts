@@ -32,7 +32,7 @@ export class PeriodIntervalComponent implements OnInit {
       this.intervals.push({ duration: i + 1, text: `${i + 1} mins` });
     }
     this.periodIntervalForm = new FormGroup({
-      interval: new FormControl( null, { validators: Validators.required })
+      interval: new FormControl(null, { validators: Validators.required })
     });
     this.teachingState = this.store.select(selectTeaching);
     this.teachingState.subscribe(teachingState => {
@@ -42,11 +42,13 @@ export class PeriodIntervalComponent implements OnInit {
           (teachingState.classesAndGroups[0] as ClassGroupModel).periods[0]
             .intervaBtwPeriods
       );
+      // console.log('interval duration !!');
+      // console.log(this.intervals[_intervalObjIdx]);
       this.periodIntervalForm.patchValue({
-        interval:  this.intervals[_intervalObjIdx]
-        ? this.intervals[_intervalObjIdx]
-        : null
-      })
+        interval: this.intervals[_intervalObjIdx]
+          ? this.intervals[_intervalObjIdx].duration
+          : null
+      });
     });
   }
   constructor(

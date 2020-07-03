@@ -195,7 +195,7 @@ export class InputComponent
       this.onChange(val);
       // this.cd.markForCheck();
     }
-
+    this.cd.markForCheck();
     // this.onTouched(val)
   }
   //Control value accessor implementation

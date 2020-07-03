@@ -10,7 +10,11 @@ import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeaching, selectAllClasses, selectOrphanedClasses } from '../../ngrx/selectors';
+import {
+  selectTeaching,
+  selectAllClasses,
+  selectOrphanedClasses
+} from '../../ngrx/selectors';
 import {
   addBreak,
   removeBreak,
@@ -59,14 +63,19 @@ export class DefineYourBreakComponent implements OnInit {
     }
     return false;
   }
-  updateBreakData(groupId: string, field: 'title'|'day'|'after'|'duration', value: any, index: number) {
-    this.store.dispatch(updateBreakData({groupId,index, field, value}));
+  updateBreakData(
+    groupId: string,
+    field: 'title' | 'day' | 'after' | 'duration',
+    value: any,
+    index: number
+  ) {
+    this.store.dispatch(updateBreakData({ groupId, index, field, value }));
   }
   updateTitle($event, idx: number, groupId: string) {
-    this.updateBreakData(groupId, 'title', $event, idx)
+    this.updateBreakData(groupId, 'title', $event, idx);
   }
   updateDay($event, idx: number, groupId: string) {
-    this.updateBreakData(groupId,'day', $event, idx)
+    this.updateBreakData(groupId, 'day', $event, idx);
   }
   updateAfter($event, idx: number, groupId: string) {
     this.updateBreakData(groupId, 'after', $event, idx);
@@ -75,7 +84,7 @@ export class DefineYourBreakComponent implements OnInit {
     this.updateBreakData(groupId, 'duration', $event, idx);
   }
   ngOnInit(): void {
-    this.orphanedClasses = this.store.select(selectOrphanedClasses)
+    this.orphanedClasses = this.store.select(selectOrphanedClasses);
     this.teachingState = this.store.select(selectTeaching);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
@@ -137,6 +146,7 @@ export class DefineYourBreakComponent implements OnInit {
     this.store.dispatch(setGroupStartTime({ groupId: generatedGroupId }));
   }
   parsePeriodValue(arr) {
+    // console.log(arr);
     if (arr.length == 0) {
       console.log('period return');
       return '';

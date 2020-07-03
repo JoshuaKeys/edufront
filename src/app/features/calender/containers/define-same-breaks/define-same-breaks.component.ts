@@ -73,7 +73,7 @@ export class DefineSameBreaksComponent implements OnInit {
     return `name-${idx}`;
   }
   updateAfter($event, idx: number) {
-    this.updateBreakData('after', 'P'+$event, idx);
+    this.updateBreakData('after', 'P' + $event, idx);
   }
   updateDuration($event, idx: number) {
     this.updateBreakData('duration', $event, idx);
@@ -98,6 +98,7 @@ export class DefineSameBreaksComponent implements OnInit {
   }
 
   parsePeriodValue(arr) {
+    console.log(arr);
     if (arr.length == 0) {
       return '';
     }
@@ -117,6 +118,7 @@ export class DefineSameBreaksComponent implements OnInit {
         } else {
           suffix = 'th';
         }
+        number = `${number}`.replace('P', '');
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);

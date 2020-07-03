@@ -18,6 +18,14 @@ export class PreviewTestComponent implements OnInit {
       f1: ['23:2']
     });
   }
+
+  time = '02:10';
+  badges = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  activeBadge = [1, 9];
+
+  log(param) {
+    console.log(param);
+  }
 }
 
 let newState: CalendarModel[] = [
@@ -52,6 +60,13 @@ let newState: CalendarModel[] = [
     periodDuration: '30',
     intervaBtwPeriods: '',
     breaks: [
+      {
+        name: 'break 1',
+        firstBreak: '',
+        day: '',
+        after: 'P1',
+        duration: '15'
+      },
       {
         name: 'break 2',
         firstBreak: '',
