@@ -1,55 +1,41 @@
 import {
   Component,
   OnInit,
+  ChangeDetectionStrategy,
   Output,
+  ViewChild,
   Input,
   EventEmitter,
-  ChangeDetectionStrategy,
-  AfterViewInit,
-  forwardRef,
   ChangeDetectorRef,
-  ViewChild
+  ElementRef
 } from '@angular/core';
-import { Renderer2, ElementRef } from '@angular/core';
+import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
 
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PopoverComponent } from '../popover/popover.component';
 @Component({
-  selector: 'edu-timepicker',
-  templateUrl: './timepicker.component.html',
-  styleUrls: ['./timepicker.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => TimepickerComponent)
-    }
-  ],
+  selector: 'edu-timepicker-popover',
+  templateUrl: './timepicker-popover.component.html',
+  styleUrls: ['./timepicker-popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimepickerComponent
-  implements OnInit, AfterViewInit, ControlValueAccessor {
+export class TimepickerPopoverComponent implements OnInit {
   @Output() onValueChange = new EventEmitter<any>();
-  @Input('alignment') alignment = 'center'; //left right center
-  @Input('disabled') disabled = false;
-  @Input('elementId') elementId = 'timepicker';
+
   @Output('edu-change') onEduChange = new EventEmitter<any>();
   @ViewChild(PopoverComponent) popover: PopoverComponent;
 
-  displayText = '';
-  _value;
-  set value(param) {
+  displayText;
+  _time;
+  @Input('time') set time(param) {
     // console.log('SET VAL');
-    // console.log(param);
     param = this.sanitizeNullAndUndefined(param);
     this.activeTime = this.parseStringToTime(param);
-    this.onChange(param);
-    this._value = param;
+
+    this._time = param;
     this.onEduChange.emit(param);
     this.setDisplayText();
   }
-  get value() {
-    return this._value;
+  get time() {
+    return this._time;
   }
   elState;
   popoverToogleVar = false;
@@ -61,24 +47,6 @@ export class TimepickerComponent
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
 
   ngOnInit(): void {}
-  ngAfterViewInit() {
-    // this.popover.openEvent.subscribe(() => {
-    //   console.log('popover event');
-    //   this.elState = 'active';
-    //   this.cd.markForCheck();
-    // });
-    // this.popover.closeEvent.subscribe(() => {
-    //   console.log('popover event');
-    //   this.elState = 'inactive';
-    //   this.cd.markForCheck();
-    // });
-  }
-  setElementId() {
-    let elId = this.el.nativeElement.getAttribute('formcontrolname');
-    if (this.el != undefined) {
-      this.elementId = elId;
-    }
-  }
 
   sanitizeNullAndUndefined(value) {
     if (value === null || value == undefined) {
@@ -105,7 +73,6 @@ export class TimepickerComponent
   }
 
   setDisplayText() {
-    // console.log(this.activeTime);
     if (JSON.stringify(this.activeTime) === `{}`) {
       this.displayText = ``;
     } else {
@@ -140,7 +107,7 @@ export class TimepickerComponent
 
   popoverClose() {
     if (JSON.stringify(this.tempValue) !== JSON.stringify(this.activeTime)) {
-      this.value = this.displayText;
+      this.time = this.displayText;
     }
   }
   popoverOpen() {
@@ -148,25 +115,6 @@ export class TimepickerComponent
       this.activeTime = { hour: 0, min: 0 };
     }
     this.tempValue = JSON.parse(JSON.stringify(this.activeTime));
-    this.cd.markForCheck();
-  }
-  onChange: any = () => {};
-  onTouched: any = () => {};
-
-  writeValue(value: any) {
-    this.value = value;
-  }
-
-  registerOnChange(fn: any) {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any) {
-    this.onTouched = fn;
-  }
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-    this.elState = 'disabled';
     this.cd.markForCheck();
   }
 }

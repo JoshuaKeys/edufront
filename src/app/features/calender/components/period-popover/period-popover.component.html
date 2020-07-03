@@ -1,0 +1,14 @@
+<edu-popover class="class-popover">
+  <div class="classes">
+    <div
+      (click)="toggleactiveBadge(classItem)"
+      *ngFor="let classItem of badges"
+      class="badge badge--class"
+      [ngClass]="{
+        'badge--active': isPresent(classItem)
+      }"
+    >
+      <span>{{ classItem }}</span>
+    </div>
+  </div>
+</edu-popover>

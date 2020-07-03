@@ -1,16 +1,13 @@
 @import 'src/assets/styles/mixins/alignment';
-h1 {
-  position: relative;
-}
 
-edu-popover.popover__timepicker ::ng-deep {
-  padding: 0;
+:host {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: block;
 }
-.popover__timepicker edu-timepicker-block ::ng-deep .card.period-menu {
-  margin: 0;
-  border: 0px;
-}
-
 edu-popover.class-popover ::ng-deep {
   padding: 0px;
 }

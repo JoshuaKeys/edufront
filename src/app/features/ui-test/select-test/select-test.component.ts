@@ -23,7 +23,7 @@ export class SelectTestComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       f1: ['d', Validators.required],
-      f2: [[1, 2], Validators.required],
+      f2: ['1', Validators.required],
       f3: [4, Validators.required]
     });
   }
@@ -89,13 +89,13 @@ export class SelectTestComponent implements OnInit {
 
   options = [
     { value: 'all', display: 'All', state: '' },
-    { value: 1, display: 'P1', state: '' },
-    { value: 2, display: 'P2', state: '' },
-    { value: 3, display: 'P3', state: '' },
-    { value: 4, display: 'P4', state: '' },
-    { value: 5, display: 'P5', state: '' },
-    { value: 6, display: 'P6', state: '' },
-    { value: 7, display: 'P7', state: '' },
-    { value: 8, display: 'P8', state: '' }
+    { value: '1', display: 'P0', state: '' },
+    { value: '2', display: 'P2', state: '' },
+    { value: '3', display: 'P3', state: '' },
+    { value: '4', display: 'P4', state: '' },
+    { value: '5', display: 'P5', state: '' },
+    { value: '6', display: 'P6', state: '' },
+    { value: '7', display: 'P7', state: '' },
+    { value: '8', display: 'P8', state: '' }
   ];
 }

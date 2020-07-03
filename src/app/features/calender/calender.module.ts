@@ -58,9 +58,13 @@ import { DefineSameBreaksComponent } from './containers/define-same-breaks/defin
 import { OrphanClassesComponent } from './components/orphan-classes/orphan-classes.component';
 import { UpdateTimetableComponent } from './containers/update-timetable/update-timetable.component';
 import { ClassUpdateComponent } from './components/class-update/class-update.component';
+import { PeriodPopoverComponent } from './components/period-popover/period-popover.component';
+import { TimepickerPopoverComponent } from './components/timepicker-popover/timepicker-popover.component';
 @NgModule({
   declarations: [
     ...pages,
+    TimepickerPopoverComponent,
+    PeriodPopoverComponent,
     TimepickerBlockComponent,
     TimetablePreviewComponent,
     TimetablePreview2Component,

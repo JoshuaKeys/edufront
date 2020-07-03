@@ -216,9 +216,9 @@ edu-popover ::ng-deep {
   text-align: center;
   &__hour,
   &__min {
-    max-height: 180px;
+    max-height: 145px;
     overflow-y: auto;
-    min-width: 50px;
+    min-width: 60px;
     list-style-type: none;
     padding: 0;
     margin: 5px;
