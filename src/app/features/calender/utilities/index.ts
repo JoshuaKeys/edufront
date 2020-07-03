@@ -3,9 +3,8 @@ import { ClassGroupModel } from '../models/class-group.model';
 import { PeriodModel } from '../models/period.model';
 import { PeriodsPerDayComponent } from '../components/periods-per-day/periods-per-day.component';
 import { DayModel } from '../models/day.model';
-import { CalendarModel } from '../models/calendar.model'
+import { CalendarModel } from '../models/calendar.model';
 import { CalendarUpdateModel } from '../models/calendar-update.model';
-
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -152,8 +151,8 @@ export function findModifiedClassesFromGroups(
   return modifiedClasses;
 }
 interface ModifiedClasses {
-    classItem: ClassModel;
-    group: ClassGroupModel
+  classItem: ClassModel;
+  group: ClassGroupModel;
 }
 export function computeDifference(
   modifiedClass: ClassModel,
@@ -166,7 +165,6 @@ export function computeChanges(
   modifiedClasses: ModifiedClasses[],
   editState: CalendarUpdateModel
 ) {
-
   let changes: {
     classObj: ClassModel;
     teachingDays: Array<string>;
@@ -180,7 +178,7 @@ export function computeChanges(
       teachingDay => teachingDay.selected
     );
     if (previousTeachingDays.length !== currentTeachingDays.length) {
-        setTeachingDays(changes, modifiedClasses,i, currentTeachingDays)
+      setTeachingDays(changes, modifiedClasses, i, currentTeachingDays);
     } else {
       if (isUniform(previousTeachingDays, currentTeachingDays)) {
         changes.push({
@@ -188,35 +186,45 @@ export function computeChanges(
           teachingDays: null
         });
       } else {
-        setTeachingDays(changes, modifiedClasses,i, currentTeachingDays)
+        setTeachingDays(changes, modifiedClasses, i, currentTeachingDays);
       }
     }
 
-    const previousTeachingPeriods = modifiedClasses[i].group.periods.filter(period => period.periods.length)
-    const currentTeachingPeriods = editState.teachingPeriods.filter(period => period.periods.length);
+    const previousTeachingPeriods = modifiedClasses[i].group.periods.filter(
+      period => period.periods.length
+    );
+    const currentTeachingPeriods = editState.teachingPeriods.filter(
+      period => period.periods.length
+    );
     setTeachingPeriods(changes, modifiedClasses, i, currentTeachingPeriods);
   }
 
   return changes;
 }
-function setTeachingDays(changes, modifiedClasses: ModifiedClasses[], idx, currentTeachingDays) {
-    const changeIdx = changes.findIndex(
-        change => change.classObj.id === modifiedClasses[idx].classItem.id
-      );
-      if (changeIdx < 0) {
-        changes.push({
-          classObj: modifiedClasses[idx].classItem,
-          teachingDays: currentTeachingDays.map(day => day.day)
-        });
-      } else {
-        changes[changeIdx].teachingDays = currentTeachingDays.map(
-          day => day.day
-        );
-      }
+function setTeachingDays(
+  changes,
+  modifiedClasses: ModifiedClasses[],
+  idx,
+  currentTeachingDays
+) {
+  const changeIdx = changes.findIndex(
+    change => change.classObj.id === modifiedClasses[idx].classItem.id
+  );
+  if (changeIdx < 0) {
+    changes.push({
+      classObj: modifiedClasses[idx].classItem,
+      teachingDays: currentTeachingDays.map(day => day.day)
+    });
+  } else {
+    changes[changeIdx].teachingDays = currentTeachingDays.map(day => day.day);
+  }
 }
-function setTeachingPeriods(changes, modifiedClasses: ModifiedClasses[], idx, currentTeachingPeriods) {
-    
-}
+function setTeachingPeriods(
+  changes,
+  modifiedClasses: ModifiedClasses[],
+  idx,
+  currentTeachingPeriods
+) {}
 function isUniform(previous, current) {
   for (let i = 0; i < previous.length; i++) {
     let found = false;
@@ -232,12 +240,17 @@ function isUniform(previous, current) {
   }
   return true;
 }
-export function getSubtractedClasses(group: ClassGroupModel, classes: ClassModel[]) {
+export function getSubtractedClasses(
+  group: ClassGroupModel,
+  classes: ClassModel[]
+) {
   const subtractedClasses: ClassModel[] = [];
-  for(let i = 0; i < group.classes.length; i++) {
-    let index = classes.findIndex(classItem => classItem.id === group.classes[i].id);
-    if(index < 0) {
-      subtractedClasses.push(group.classes[i])
+  for (let i = 0; i < group.classes.length; i++) {
+    let index = classes.findIndex(
+      classItem => classItem.id === group.classes[i].id
+    );
+    if (index < 0) {
+      subtractedClasses.push(group.classes[i]);
     }
   }
   return subtractedClasses;
@@ -246,10 +259,13 @@ export function removeAssembly(periods: PeriodModel[]) {
   return periods.map(period => {
     delete period.assembly;
     return period;
-  })
+  });
 }
 export function inRange(date: Date, lowerBound: Date, upperBound: Date) {
-  return date.getTime() >= lowerBound.getTime() && date.getTime() <= upperBound.getTime()
+  return (
+    date.getTime() >= lowerBound.getTime() &&
+    date.getTime() <= upperBound.getTime()
+  );
 }
 export function isGreater(date: Date, lowerBound: Date) {
   return date.getTime() > lowerBound.getTime();
@@ -257,45 +273,54 @@ export function isGreater(date: Date, lowerBound: Date) {
 export function isEqual(dateA: Date, dateB: Date) {
   return dateA.getTime() === dateB.getTime();
 }
-export function validateTermsAndDates(termsAndDatesForm, termsAndDates: CalendarModel, index, field) {
-    const startDate = termsAndDatesForm.value.startDate;
-    const endDate = termsAndDatesForm.value.endDate;
-    let errors = {
-      msg: []
-    };
-    if (!startDate || startDate.length === 0) {
-      errors.msg.push(`${field} ${index + 1}'s Start Date is Empty`);
+export function validateTermsAndDates(
+  termsAndDatesForm,
+  termsAndDates: CalendarModel,
+  index,
+  field
+) {
+  const startDate = termsAndDatesForm.value.startDate;
+  const endDate = termsAndDatesForm.value.endDate;
+  let errors = {
+    msg: []
+  };
+  if (!startDate || startDate.length === 0) {
+    errors.msg.push(`${field} ${index + 1}'s Start Date is Empty`);
+  }
+  if (!endDate || endDate.length === 0) {
+    errors.msg.push(`${field} ${index + 1}'s End Date is Empty`);
+  }
+  if (startDate && startDate.length && endDate && endDate.length) {
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    const academicStart = new Date(termsAndDates.currentAcademicYear.startDate);
+    const academicEnd = new Date(termsAndDates.currentAcademicYear.endDate);
+    if (startDateObj.getTime() >= endDateObj.getTime()) {
+      errors.msg.push('End Date must be more than start date');
     }
-    if (!endDate || endDate.length === 0) {
-      errors.msg.push(`${field} ${index + 1}'s End Date is Empty`);
+    if (!inRange(startDateObj, academicStart, academicEnd)) {
+      errors.msg.push(`${field} ${index + 1}'s start time is out of range`);
     }
-    if (startDate && startDate.length && endDate && endDate.length) {
-      const startDateObj = new Date(startDate);
-      const endDateObj = new Date(endDate);
-      const academicStart = new Date(termsAndDates.currentAcademicYear.startDate);
-      const academicEnd = new Date(termsAndDates.currentAcademicYear.endDate)
-      if (startDateObj.getTime() >= endDateObj.getTime()) {
-        errors.msg.push('End Date must be more than start date');
-      }
-      if(!inRange(startDateObj, academicStart,academicEnd)) {
-        errors.msg.push(`${field} ${index + 1}'s start time is out of range`);
-      }
-      if(!inRange(endDateObj, academicStart,academicEnd)) {
-        errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
-      }
-      if(index > 0) {
-        console.log(termsAndDates.termsAndDates)
-        const previousEndDate = new Date(termsAndDates.termsAndDates[index -1].endDate);
-        if(!isGreater(startDateObj, previousEndDate)) {
-          errors.msg.push(`${field} ${index + 1}'s start time overlaps with ${field} ${index}`);
-        }else {
-          console.log(startDateObj.getTime(), previousEndDate.getTime())
-        }
+    if (!inRange(endDateObj, academicStart, academicEnd)) {
+      errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
+    }
+    if (index > 0) {
+      // console.log(termsAndDates.termsAndDates)
+      const previousEndDate = new Date(
+        termsAndDates.termsAndDates[index - 1].endDate
+      );
+      if (!isGreater(startDateObj, previousEndDate)) {
+        errors.msg.push(
+          `${field} ${index + 1}'s start time overlaps with ${field} ${index}`
+        );
+      } else {
+        // console.log(startDateObj.getTime(), previousEndDate.getTime())
       }
     }
-    console.log(errors);
-    if (!errors.msg.length) {
-      errors = null;
-    }
-    return errors;
+  }
+  // console.log(errors);
+  if (!errors.msg.length) {
+    errors = null;
+  }
+  return errors;
 }

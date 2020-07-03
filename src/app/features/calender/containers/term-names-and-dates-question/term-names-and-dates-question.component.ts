@@ -46,8 +46,10 @@ export class TermNamesAndDatesQuestionComponent
     return `${value}--${index}`;
   }
 
+  shouldScroll = false;
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
-  startScroll(el) {
+  @ViewChild('errors') errors: ElementRef;
+  startScroll() {
     if (typeof this.scrollableEl === 'undefined') {
       return true;
     }
@@ -56,8 +58,13 @@ export class TermNamesAndDatesQuestionComponent
       window.innerHeight || 0
     );
     var scrollableHeight = this.scrollableEl.nativeElement.offsetHeight;
+    var errorHeight = this.errors.nativeElement.offsetHeight + 28;
     var maxHeight = vh - 330;
-    let res = scrollableHeight >= maxHeight - 10;
+
+    // console.log('scrollableHeight - ' + scrollableHeight);
+    // console.log('maxHeight - ' + maxHeight);
+    // console.log('errorHeight - ' + errorHeight);
+    let res = scrollableHeight + errorHeight + 20 >= maxHeight;
     return res;
   }
 
@@ -68,42 +75,49 @@ export class TermNamesAndDatesQuestionComponent
     });
   }
   getValues(item) {
-    return Object.values(item)
+    return Object.values(item);
   }
   ngAfterViewInit() {
     this.cd.markForCheck();
+
+    this.setShouldScroll();
   }
   ngOnInit(): void {
     this.calendarData = this.store.select(selectCalendar);
     this.calendarData.subscribe(calendarData => {
       const formGroups = calendarData.termsAndDates.map(termAndDate => {
-        return new FormGroup(
-          {
-            termName: new FormControl(termAndDate.termName, {
-              validators: Validators.required
-            }),
-            startDate: new FormControl(termAndDate.startDate),
-            endDate: new FormControl(termAndDate.endDate)
-          }
-        );
+        return new FormGroup({
+          termName: new FormControl(termAndDate.termName, {
+            validators: Validators.required
+          }),
+          startDate: new FormControl(termAndDate.startDate),
+          endDate: new FormControl(termAndDate.endDate)
+        });
       });
 
       this.termsAndDatesForm = new FormGroup({
         termsAndDates: new FormArray(formGroups, {
           validators: (formArray: FormArray) => {
             let result = [];
-            formArray.controls.forEach((formGroup, index)=> {
-              const msg = validateTermsAndDates(formGroup, calendarData, index, 'Term');
-              if(msg)
-              result.push(
-                msg.msg
-              )
-            })
+            formArray.controls.forEach((formGroup, index) => {
+              const msg = validateTermsAndDates(
+                formGroup,
+                calendarData,
+                index,
+                'Term'
+              );
+              if (msg) result.push(msg.msg);
+            });
             return result;
           }
         })
       });
     });
+  }
+
+  setShouldScroll() {
+    this.shouldScroll = !this.startScroll();
+    console.log(this.shouldScroll);
   }
   updateTitle(termName, idx) {
     console.log('update title' + ` idx ${idx}, termname ${termName}`);
