@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="group--row assembly" *ngIf="(teachingState | async).calendarEdit.isAssemblyIncluded">
-                        <edu-input (input)="updateAssemblyName($event)" [ngModel]="
+                        <edu-input (edu-blur)="updateAssemblyName($event)" [ngModel]="
                   (teachingState | async).calendarEdit.teachingPeriods[0].assembly
                     .name
                 " elementId="assemblyName">
