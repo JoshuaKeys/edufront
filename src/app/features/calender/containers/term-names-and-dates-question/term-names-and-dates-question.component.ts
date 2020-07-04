@@ -107,7 +107,9 @@ export class TermNamesAndDatesQuestionComponent
                 formGroup,
                 calendarData,
                 index,
-                'Term'
+                'Term',
+
+                'termAndDates'
               );
               if (msg) result.push(msg.msg);
             });

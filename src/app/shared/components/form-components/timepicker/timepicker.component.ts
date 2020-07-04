@@ -10,10 +10,13 @@ import {
   ChangeDetectorRef,
   ViewChild
 } from '@angular/core';
+
 import { Renderer2, ElementRef } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PopoverComponent } from '../popover/popover.component';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'edu-timepicker',
   templateUrl: './timepicker.component.html',
@@ -37,6 +40,7 @@ export class TimepickerComponent
   @ViewChild(PopoverComponent) popover: PopoverComponent;
 
   displayText = '';
+  value$ = new Subject();
   _value;
   set value(param) {
     // console.log('SET VAL');
@@ -44,11 +48,8 @@ export class TimepickerComponent
     param = this.sanitizeNullAndUndefined(param);
     this.activeTime = this.parseStringToTime(param);
     this._value = param;
-    this.setDisplayText();
-    if (this.isAfterViewInit) {
-      this.onChange(param);
-      this.onEduChange.emit(param);
-    }
+
+    this.value$.next(param);
   }
   get value() {
     return this._value;
@@ -62,7 +63,16 @@ export class TimepickerComponent
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
   isAfterViewInit = false;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.value$.pipe(distinctUntilChanged()).subscribe(param => {
+      this.setDisplayText();
+      if (this.isAfterViewInit) {
+        console.log('pushing change to after view init');
+        this.onChange(param);
+        this.onEduChange.emit(param);
+      }
+    });
+  }
   ngAfterViewInit() {
     this.isAfterViewInit = true;
     // this.popover.openEvent.subscribe(() => {
