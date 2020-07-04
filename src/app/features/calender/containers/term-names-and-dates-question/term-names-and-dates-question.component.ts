@@ -83,6 +83,9 @@ export class TermNamesAndDatesQuestionComponent
     this.setShouldScroll();
   }
   ngOnInit(): void {
+    this.termsAndDatesForm = new FormGroup({
+      termsAndDates: new FormArray([])
+    });
     this.calendarData = this.store.select(selectCalendar);
     this.calendarData.subscribe(calendarData => {
       const formGroups = calendarData.termsAndDates.map(termAndDate => {

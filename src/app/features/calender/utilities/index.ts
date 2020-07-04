@@ -284,7 +284,8 @@ export function validateTermsAndDates(
   termsAndDatesForm,
   termsAndDates: CalendarModel,
   index,
-  field
+  field,
+  formType: string
 ) {
   const startDate = termsAndDatesForm.value.startDate;
   const endDate = termsAndDatesForm.value.endDate;
@@ -312,32 +313,23 @@ export function validateTermsAndDates(
       errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
     }
     if (index > 0) {
-<<<<<<< HEAD
-      console.log(termsAndDates.termsAndDates);
-=======
-      // console.log(termsAndDates.termsAndDates)
->>>>>>> acc2659b8ba686b436a014266aa92a760ccea0b3
+      console.log(termsAndDates.termsAndDates)
+      console.log(index);
       const previousEndDate = new Date(
-        termsAndDates.termsAndDates[index - 1].endDate
+        termsAndDates[formType][index - 1].endDate
       );
       if (!isGreater(startDateObj, previousEndDate)) {
+        console.log(startDateObj)
+        console.log(previousEndDate)
         errors.msg.push(
           `${field} ${index + 1}'s start time overlaps with ${field} ${index}`
         );
       } else {
-<<<<<<< HEAD
-        console.log(startDateObj.getTime(), previousEndDate.getTime());
-      }
-    }
-  }
-  console.log(errors);
-=======
         // console.log(startDateObj.getTime(), previousEndDate.getTime())
       }
     }
   }
   // console.log(errors);
->>>>>>> acc2659b8ba686b436a014266aa92a760ccea0b3
   if (!errors.msg.length) {
     errors = null;
   }
