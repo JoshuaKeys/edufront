@@ -13,6 +13,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { v4 as uuid44} from 'uuid';
 import { map } from 'rxjs/operators';
+import { buildRangePipe } from '../../utilities';
 
 @Component({
   selector: 'edu-start-time-of-each-period',
@@ -47,6 +48,11 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
       }
     }
     return false;
+  }
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    return result
   }
   ngOnInit(): void {
     this.orphanedClasses = this.store.select(selectOrphanedClasses)

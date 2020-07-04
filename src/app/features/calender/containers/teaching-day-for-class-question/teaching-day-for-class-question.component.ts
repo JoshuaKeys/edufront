@@ -10,6 +10,7 @@ import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { v4 as uuid44} from 'uuid';
+import { buildRangePipe } from '../../utilities';
 
 @Component({
   selector: 'edu-teaching-day-for-class-question',
@@ -24,7 +25,13 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
   allClasses: Observable<ClassModel[]>;
   activatedRouteData = this.activatedRoute.snapshot.data;
   constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
-
+  
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    console.log(result)
+    return result
+  }
   ngOnInit(): void {
     this.store.dispatch(fetchClassesAndGroups())
     this.store.dispatch(getAllClassesRequest())

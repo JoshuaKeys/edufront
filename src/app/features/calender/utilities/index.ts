@@ -60,7 +60,7 @@ export function generatePeriodFromNumber(num: number) {
   return periodArr;
 }
 
-function buildRangePipe(items: number[]) {
+export function buildRangePipe(items: number[]) {
   const res: { start: number; end?: number }[] = [];
   let currentIdx = 0;
   for (let i = 0; i < items.length; i++) {
@@ -74,17 +74,24 @@ function buildRangePipe(items: number[]) {
     }
   }
 
-  res.reduce((prev, curr, idx, arr) => {
+  return res.reduce((prev, curr, idx, arr) => {
     if (curr.start && curr.end) {
       if (arr.length - 1 !== idx) {
-        return (prev += `${curr.start}-${curr.end},`);
+        if (curr.end - curr.start > 1) {
+          return (prev += `${curr.start}-${curr.end}|`);
+        }else if (curr.end - curr.start === 1) {
+          return (prev += `${curr.start}|${curr.end}|`);
+        }
+        return (prev += `${curr.start}|${curr.end}|`);
+      }
+      if (curr.end - curr.start === 1) {
+        return (prev += `${curr.start}|${curr.end}`);
       }
       return (prev += `${curr.start}-${curr.end}`);
     } else if (curr.start && !curr.end) {
       return (prev += `${curr.start}`);
     }
   }, '');
-  return res;
 }
 
 export function getOrphanedClasses(
@@ -277,7 +284,8 @@ export function validateTermsAndDates(
   termsAndDatesForm,
   termsAndDates: CalendarModel,
   index,
-  field
+  field,
+  formType: string
 ) {
   const startDate = termsAndDatesForm.value.startDate;
   const endDate = termsAndDatesForm.value.endDate;
@@ -305,11 +313,14 @@ export function validateTermsAndDates(
       errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
     }
     if (index > 0) {
-      // console.log(termsAndDates.termsAndDates)
+      console.log(termsAndDates.termsAndDates)
+      console.log(index);
       const previousEndDate = new Date(
-        termsAndDates.termsAndDates[index - 1].endDate
+        termsAndDates[formType][index - 1].endDate
       );
       if (!isGreater(startDateObj, previousEndDate)) {
+        console.log(startDateObj)
+        console.log(previousEndDate)
         errors.msg.push(
           `${field} ${index + 1}'s start time overlaps with ${field} ${index}`
         );

@@ -7,6 +7,8 @@ import { selectTeaching } from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { editCalendar, sendCalendarData } from '../../ngrx/actions/calendar.actions';
+import { ClassModel } from 'src/app/shared/models/class.model';
+import { buildRangePipe } from '../../utilities';
 let weirdData = [
   {
     day: 'Mon',
@@ -111,10 +113,14 @@ export class CalendarConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
-    this.teachingData.subscribe(x => console.log('yyyyyyyyaaaaaay', x))
   }
   sendCalendarData() {
     this.store.dispatch(sendCalendarData())
+  }
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    return result
   }
   computeClassName(classGroup: ClassGroupModel) {
     let classes = '';

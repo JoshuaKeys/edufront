@@ -42,7 +42,6 @@ export class VacationNamesAndDatesQuestionComponent
     this.store.dispatch(addVacation());
   }
   getValues(item) {
-    console.log(item);
     return Object.values(item);
   }
   shouldScroll = false;
@@ -60,15 +59,13 @@ export class VacationNamesAndDatesQuestionComponent
     var errorHeight = this.errors.nativeElement.offsetHeight + 28;
     var maxHeight = vh - 330;
 
-    // console.log('scrollableHeight - ' + scrollableHeight);
-    // console.log('maxHeight - ' + maxHeight);
-    // console.log('errorHeight - ' + errorHeight);
+
     let res = scrollableHeight + errorHeight + 20 >= maxHeight;
     return res;
   }
   setShouldScroll() {
     this.shouldScroll = !this.startScroll();
-    console.log(this.shouldScroll);
+
   }
   getNewVacationForm(vacationName, startDate, endDate) {
     return new FormGroup(
@@ -130,7 +127,8 @@ export class VacationNamesAndDatesQuestionComponent
               formGroup,
               calendarState,
               index,
-              'Vacation'
+              'Vacation',
+              'vacations'
             );
             if (msg) {
               result.push(msg.msg);

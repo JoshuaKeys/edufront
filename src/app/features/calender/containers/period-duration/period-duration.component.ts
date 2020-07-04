@@ -13,7 +13,7 @@ import { selectTeaching } from '../../ngrx/selectors';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { setPeriodDuration } from '../../ngrx/actions/calendar.actions';
-import { map, reduce } from 'rxjs/operators';
+import { map, reduce, take } from 'rxjs/operators';
 @Component({
   selector: 'edu-period-duration',
   templateUrl: './period-duration.component.html',
@@ -43,7 +43,7 @@ export class PeriodDurationComponent implements OnInit {
       duration: new FormControl(null, { validators: Validators.required })
     });
 
-    this.teachingState.subscribe(teachingState => {
+    this.teachingState.pipe(take(1)).subscribe(teachingState => {
       const duration = (teachingState.classesAndGroups[0] as ClassGroupModel)
         .periods[0].periodDuration;
       const durationObjIdx = this.periodDurations.findIndex(
