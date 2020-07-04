@@ -56,9 +56,9 @@ export class UpdateTimetableComponent implements OnInit {
   constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
 
   emptyArr = new Array(100);
-  updateStartTime(event, field) {
+  updateStartTime(event) {
     console.log(event);
-    this.updateAssemblyData(field, {duration: event, text: event});
+    this.updateAssemblyData('startingAt', {duration: event, text: event});
   }
   ngOnInit(): void {
     for(let i = 0; i < this.timeArr.length; i++) {

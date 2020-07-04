@@ -108,7 +108,6 @@ export class TermNamesAndDatesQuestionComponent
                 calendarData,
                 index,
                 'Term',
-
                 'termAndDates'
               );
               if (msg) result.push(msg.msg);

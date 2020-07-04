@@ -67,7 +67,7 @@ export class TimepickerComponent
     this.value$.pipe(distinctUntilChanged()).subscribe(param => {
       this.setDisplayText();
       if (this.isAfterViewInit) {
-        console.log('pushing change to after view init');
+        console.log('pushing change to after view init', param);
         this.onChange(param);
         this.onEduChange.emit(param);
       }

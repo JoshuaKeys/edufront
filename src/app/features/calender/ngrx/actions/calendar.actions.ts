@@ -78,10 +78,18 @@ export const deleteHoliday = createAction(
     '[HolidayListComponent] deleteHoliday',
     props<{holiday: HolidayModel}>()
 );
+export const deleteHolidaySuccess = createAction(
+    '[CalendarEffects] deleteHolidaySuccess',
+    props<{holiday: HolidayModel}>()
+)
 export const editHoliday = createAction(
     '[HolidayListComponent] editHoliday',
     props<{holiday: HolidayModel}>()
 );
+export const editHolidaySuccess = createAction(
+    '[CalendarEffects] editHolidaySuccess',
+    props<{holiday: HolidayModel}>()
+)
 export const editHolidayRequest = createAction(
     '[HolidayListComponent] editHolidayRequest',
     props<{holiday: HolidayModel}>()
