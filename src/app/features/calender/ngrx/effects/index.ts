@@ -4,7 +4,7 @@ import { fetchHolidaysRequest,
     fetchHolidaysResponse, fetchClassesAndGroups, 
     fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
     updateSelectedTeachingDaysRequest,
-    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup } from '../actions/calendar.actions';
+    updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
@@ -15,6 +15,8 @@ import { ClassGroupModel } from '../../models/class-group.model';
 import { PeriodModel } from '../../models/period.model';
 import { v4 as uuid44 } from 'uuid';
 import { Router } from '@angular/router';
+import { HolidayModel } from '../../models/holiday.model';
+import { of } from 'rxjs';
 
 @Injectable()
 export class CalendarEffects {
@@ -78,6 +80,29 @@ export class CalendarEffects {
                 }
                 return [computedModifications({modifiedGroup}), computeNewGroup({newGroup})]
             }
+        })
+    ))
+    editHoliday$ = createEffect(() => this.actions$.pipe(
+        ofType(editHoliday),
+        mergeMap(action => {
+            if(action.holiday.id) {
+                return this.calendarService.editHoliday(action.holiday).pipe(
+                    map((holiday: HolidayModel)=> editHolidaySuccess({holiday}))
+                )
+            }else {
+                return of(editHolidaySuccess({holiday: action.holiday}))
+            }
+        })
+    ))
+    deleteHoliday$ = createEffect(() => this.actions$.pipe(
+        ofType(deleteHoliday),
+        mergeMap(action => {
+            if(action.holiday.id) {
+                return this.calendarService.deleteHoliday(action.holiday).pipe(
+                    map(() => deleteHolidaySuccess({holiday: action.holiday}))
+                )
+            }
+            return of(deleteHolidaySuccess({holiday: action.holiday}));
         })
     ))
     updateSelectedTeachingDaysRequest$ = createEffect(() => this.actions$.pipe(

@@ -22,5 +22,11 @@ export class CalendarService {
   createCalendar(calendarData: CalendarCreateModel) {
     return this.httpClient.post<HolidayCreateResponseModel>('/api/v1/school/calendarCreate', calendarData);
   }
+  editHoliday(holiday: HolidayModel) {
+    return this.httpClient.put<HolidayModel>(`/api/v1/holiday/${holiday.id}`, holiday);
+  }
+  deleteHoliday(holiday: HolidayModel) {
+    return this.httpClient.delete(`/api/v1/holiday/${holiday.id}`)
+  }
   constructor(private httpClient: HttpClient) {}
 }
