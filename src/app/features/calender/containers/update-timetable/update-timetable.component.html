@@ -1,235 +1,303 @@
 <div class="main">
-    <div class="content" *ngIf="teachingState | async">
-        <h1 class="header">
-            Update Timetable for Class 1-12
-        </h1>
-        <p class="content__desc">
-            Select the Class/Classes you wish to <b class="orangecolor">edit</b>
-        </p>
-        <!--       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" -->
-        <div #scrollableEl class="scrollable-content">
-            <div class=" line-item item--1">
-                <div class="line-item__title">
-                    Classes
-                </div>
-                <div class="line-item__content ">
-                    <edu-class-update (classClicked)="toggleClassActive($event)" [teachingState]="teachingState" [classes]="(teachingState | async).calendarEdit.classes"></edu-class-update>
-                </div>
-            </div>
+  <div class="content" *ngIf="teachingState | async">
+    <h1 class="header">
+      Update Timetable for Class 1-12
+    </h1>
+    <p class="content__desc">
+      Select the Class/Classes you wish to <b class="orangecolor">edit</b>
+    </p>
+    <!--       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" -->
+    <div #scrollableEl class="scrollable-content">
+      <div class=" line-item item--1">
+        <div class="line-item__title">
+          Classes
+        </div>
+        <div class="line-item__content ">
+          <edu-class-update
+            (classClicked)="toggleClassActive($event)"
+            [teachingState]="teachingState"
+            [classes]="(teachingState | async).calendarEdit.classes"
+          ></edu-class-update>
+        </div>
+      </div>
 
-            <div class=" line-item item--2">
-                <div class="line-item__title">Teaching Days</div>
-                <div class="line-item__content">
-                    <edu-days-of-week (toggleActive)="toggleActive($event)" [teachingDays]="
+      <div class=" line-item item--2">
+        <div class="line-item__title">Teaching Days</div>
+        <div class="line-item__content">
+          <edu-days-of-week
+            (toggleActive)="toggleActive($event)"
+            [teachingDays]="
               asObservable((teachingState | async).calendarEdit.teachingDays)
-            "></edu-days-of-week>
-                </div>
-            </div>
+            "
+          ></edu-days-of-week>
+        </div>
+      </div>
 
-            <div class=" line-item item--3">
-                <div class="line-item__title">Teaching Periods</div>
-                <div class="line-item__content">
-                    <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="
+      <div class=" line-item item--3">
+        <div class="line-item__title">Teaching Periods</div>
+        <div class="line-item__content">
+          <edu-periods-per-day
+            (onSelectPeriod)="selectPeriod($event)"
+            [classGroup]="
               asObservable((teachingState | async).calendarEdit.group)
-            "></edu-periods-per-day>
-                </div>
-            </div>
+            "
+          ></edu-periods-per-day>
+        </div>
+      </div>
 
-            <div class=" line-item item--4">
-                <div class="line-item__title">Period Start Time</div>
-                <div class="line-item__content">
-                    <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="
+      <div class=" line-item item--4">
+        <div class="line-item__title">Period Start Time</div>
+        <div class="line-item__content">
+          <edu-start-time-per-day
+            (onSelectTime)="selectStartTime($event)"
+            [classGroup]="
               asObservable((teachingState | async).calendarEdit.group)
-            "></edu-start-time-per-day>
-                </div>
-            </div>
-            <div class=" line-item item--5">
-                <div class="line-item__title ">Period Duration And Interval</div>
-                <div class="line-item__content period-duration">
-                    <edu-select elementId="duration" [ngModel]="
+            "
+          ></edu-start-time-per-day>
+        </div>
+      </div>
+      <div class=" line-item item--5">
+        <div class="line-item__title ">Period Duration And Interval</div>
+        <div class="line-item__content period-duration">
+          <edu-select
+            elementId="duration"
+            [ngModel]="
               (teachingState | async).calendarEdit.teachingPeriods[0]
                 .periodDuration
-            ">
-                        <span class="edu-label">
+            "
+          >
+            <span class="edu-label">
               Period Duration
             </span>
-                        <edu-option *ngFor="let duration of periodDurations" (click)="onUpdatePeriodDuration(duration)" [OptionValue]="duration.duration">{{ duration.text }}</edu-option>
-                    </edu-select>
-                    <edu-select elementId="interval" [ngModel]="
+            <edu-option
+              *ngFor="let duration of periodDurations"
+              (click)="onUpdatePeriodDuration(duration)"
+              [OptionValue]="duration.duration"
+              >{{ duration.text }}</edu-option
+            >
+          </edu-select>
+          <edu-select
+            elementId="interval"
+            [ngModel]="
               (teachingState | async).calendarEdit.teachingPeriods[0]
                 .intervaBtwPeriods
-            ">
-                        <span class="edu-label">
+            "
+          >
+            <span class="edu-label">
               Interval Duration
             </span>
-                        <edu-option (click)="onUpdateInterval(interval)" *ngFor="let interval of intervals; let i = index" [OptionValue]="interval.duration">
-                            {{ interval.text }}
-                        </edu-option>
-                    </edu-select>
-                </div>
-            </div>
-            <div class=" line-item item--6">
-                <div class="line-item__title">Break Schedule</div>
-                <div class="line-item__content">
-                    <div class="">
-                        <div class="group--row break" *ngFor="
+            <edu-option
+              (click)="onUpdateInterval(interval)"
+              *ngFor="let interval of intervals; let i = index"
+              [OptionValue]="interval.duration"
+            >
+              {{ interval.text }}
+            </edu-option>
+          </edu-select>
+        </div>
+      </div>
+      <div class=" line-item item--6">
+        <div class="line-item__title">Break Schedule</div>
+        <div class="line-item__content">
+          <div class="">
+            <div
+              class="group--row break"
+              *ngFor="
                 let break of (teachingState | async).calendarEdit
                   .teachingPeriods[0].breaks;
                 let i = index
-              ">
-                            <edu-input (edu-blur)="updateTitle($event, i)" [elementId]="'title-' + i" [ngModel]="break.title">
-                                <span class="edu-label">
+              "
+            >
+              <edu-input
+                (edu-blur)="updateTitle($event, i)"
+                [elementId]="'title-' + i"
+                [ngModel]="break.title"
+              >
+                <span class="edu-label">
                   Title
                 </span>
-                            </edu-input>
-                            <edu-icon-select (edu-tick)="updateDay($event, i)" [textParserFn]="parseDayValue" [elementId]="'day'" [valueOptions]="dayOptions" [ngModel]="break.day">
-                                <span class="edu-label">
+              </edu-input>
+              <edu-icon-select
+                (edu-tick)="updateDay($event, i)"
+                [textParserFn]="parseDayValue"
+                [elementId]="'day'"
+                [valueOptions]="dayOptions"
+                [ngModel]="break.day"
+              >
+                <span class="edu-label">
                   Day
                 </span>
-                            </edu-icon-select>
-                            <edu-icon-select (edu-tick)="updateAfter($event, i)" [isSingleSelect]="true" [textParserFn]="parsePeriodValue" elementId="after" [valueOptions]="periodOption" [ngModel]="break.after">
-                                <span class="edu-label">
+              </edu-icon-select>
+              <edu-icon-select
+                (edu-tick)="updateAfter($event, i)"
+                [isSingleSelect]="true"
+                [textParserFn]="parsePeriodValue"
+                elementId="after"
+                [valueOptions]="periodOption"
+                [ngModel]="break.after"
+              >
+                <span class="edu-label">
                   After
                 </span>
-                            </edu-icon-select>
-                            <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
-                                <span class="edu-label">
+              </edu-icon-select>
+              <edu-input
+                (edu-blur)="updateDuration($event, i)"
+                [elementId]="computeName('duration', i)"
+                [ngModel]="break.duration"
+              >
+                <span class="edu-label">
                   Duration
                 </span>
-                                <span class="inline-suffix duration__suffix">mins</span>
-                            </edu-input>
+                <span class="inline-suffix duration__suffix">mins</span>
+              </edu-input>
 
-                            <button class="delete-vacation-btn" *ngIf="(teachingState | async).calendarEdit.group.id as groupId" ButtonType="icon" (click)="removeBreak(groupId, i)">
+              <button
+                class="delete-vacation-btn"
+                *ngIf="(teachingState | async).calendarEdit.group.id as groupId"
+                ButtonType="icon"
+                (click)="removeBreak(groupId, i)"
+              >
                 <img src="assets/form-components/cross-red.svg" alt="" />
               </button>
-                        </div>
-                        <div class=" line-item">
-                            <div class="line-item__title">School Assembly</div>
-                            <div class="line-item__content">
-                                <div class="group--row">
-                                    <div class="btns-container">
-                                        <button ButtonType="round round-basic" class="round" (click)="setAssemblyDisplay(true)" [ngClass]="{'round-basic': (teachingState|async).calendarEdit.isAssemblyIncluded}">Yes</button>
-                                        <button ButtonType="round" (click)="setAssemblyDisplay(false)" class="round" [ngClass]="{'round-basic': !(teachingState|async).calendarEdit.isAssemblyIncluded}">No</button>
-                                    </div>
-                                </div>
-                                <div class="group--row assembly" *ngIf="(teachingState | async).calendarEdit.isAssemblyIncluded">
-                                    <edu-input (input)="updateAssemblyName($event)" [ngModel]="(teachingState | async).calendarEdit.teachingPeriods[0].assembly.name" elementId="assemblyName">
-                                        <span class="edu-label">
-                                    Name
-                                </span>
-                                    </edu-input>
-                                    <edu-timepicker elementId="startingAt" [ngModel]="(teachingState | async).calendarEdit.teachingPeriods[0].assembly.startingAt" (edu-change)="updateStartTime($event,'startingAt')">
-                                        <span class="edu-label">Start Time</span>
-                                    </edu-timepicker>
-                                    <edu-select elementId="assemblyDuration" [ngModel]="(teachingState | async).calendarEdit.teachingPeriods[0].assembly.duration"><span class="edu-label">
-                                Assembly Duration
-                            </span>
-                                        <edu-option (click)="updateAssemblyData('duration', duration)" *ngFor="let duration of durations; let i = index" [OptionValue]="duration.duration">
-                                            {{ duration.text }}
-                                        </edu-option>
-                                    </edu-select>
-                                </div>
-                            </div>
-
-                            <div class="btn__container">
-                                <button class="break__btn" (click)="addSameBreaks()">
+            </div>
+            <div class="btn__container">
+              <button class="break__btn" (click)="addSameBreaks()">
                 <img src="assets/32pxplusblue.svg" />
               </button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class=" line-item item--7">
-                    <div class="line-item__title">School Assembly</div>
-                    <div class="line-item__content">
-                        <div class="group--row">
-                            <div class="btns-container">
-                                <button ButtonType="round round-basic" class="round" (click)="setAssemblyDisplay(true)" [ngClass]="{
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" line-item item--7">
+        <div class="line-item__title">School Assembly</div>
+        <div class="line-item__content">
+          <div class="group--row">
+            <div class="btns-container">
+              <button
+                ButtonType="round-basic"
+                class="round"
+                (click)="setAssemblyDisplay(true)"
+                [ngClass]="{
                   'round-basic': (teachingState | async).calendarEdit
                     .isAssemblyIncluded
-                }">
+                }"
+              >
                 Yes
               </button>
-                                <button ButtonType="round" (click)="setAssemblyDisplay(false)" class="round" [ngClass]="{
+              <button
+                ButtonType="round"
+                (click)="setAssemblyDisplay(false)"
+                class="round"
+                [ngClass]="{
                   'round-basic': !(teachingState | async).calendarEdit
                     .isAssemblyIncluded
-                }">
+                }"
+              >
                 No
               </button>
-                            </div>
-                        </div>
-                        <div class="group--row assembly" *ngIf="(teachingState | async).calendarEdit.isAssemblyIncluded">
-                            <edu-input (input)="updateAssemblyName($event)" [ngModel]="
+            </div>
+          </div>
+          <div
+            class="group--row assembly"
+            *ngIf="(teachingState | async).calendarEdit.isAssemblyIncluded"
+          >
+            <edu-input
+              (input)="updateAssemblyName($event)"
+              [ngModel]="
                 (teachingState | async).calendarEdit.teachingPeriods[0].assembly
                   .name
-              " elementId="assemblyName">
-                                <span class="edu-label">
+              "
+              elementId="assemblyName"
+            >
+              <span class="edu-label">
                 Name
               </span>
-                            </edu-input>
+            </edu-input>
 
-                            <edu-timepicker elementId="startingAt" [ngModel]="
+            <edu-timepicker
+              elementId="startingAt"
+              [ngModel]="
                 (teachingState | async).calendarEdit.teachingPeriods[0].assembly
                   .startingAt
-              " (edu-change)="updateStartTime($event, 'startingAt')">
-                                <span class="edu-label">Start Time</span>
-                            </edu-timepicker>
-                            <edu-select elementId="assemblyDuration" [ngModel]="
+              "
+              (edu-change)="updateStartTime($event, 'startingAt')"
+            >
+              <span class="edu-label">Start Time</span>
+            </edu-timepicker>
+            <edu-select
+              elementId="assemblyDuration"
+              [ngModel]="
                 (teachingState | async).calendarEdit.teachingPeriods[0].assembly
                   .duration
-              "><span class="edu-label">
+              "
+              ><span class="edu-label">
                 Duration
               </span>
-                                <edu-option (click)="updateAssemblyData('duration', duration)" *ngFor="let duration of durations; let i = index" [OptionValue]="duration.duration">
-                                    {{ duration.text }}
-                                </edu-option>
-                            </edu-select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <edu-option
+                (click)="updateAssemblyData('duration', duration)"
+                *ngFor="let duration of durations; let i = index"
+                [OptionValue]="duration.duration"
+              >
+                {{ duration.text }}
+              </edu-option>
+            </edu-select>
+          </div>
         </div>
-        <div class="button--bottom button__wrapper">
-            <button ButtonType="outline" class="button--cancel">
+      </div>
+    </div>
+  </div>
+  <div class="button--bottom button__wrapper">
+    <button ButtonType="outline" class="button--cancel">
       cancel
     </button>
-            <button ButtonType="basic" class="button--update" (click)="computeModifications()">
+    <button
+      ButtonType="basic"
+      class="button--update"
+      (click)="computeModifications()"
+    >
       Update Timetable
     </button>
-        </div>
+  </div>
+</div>
+<edu-modal [(ngModel)]="modalIsActive">
+  <div class="modal__content">
+    <h3>These are the consequences:</h3>
+    <div class="consequences">
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
     </div>
-    <edu-modal [(ngModel)]="modalIsActive">
-        <div class="modal__content">
-            <h3>These are the consequences:</h3>
-            <div class="consequences">
-                <div class="consequence">
-                    <span>All <b>XXX</b> students currently assigned to this class</span>
-                </div>
-                <div class="consequence">
-                    <span>All <b>XXX</b> students currently assigned to this class</span>
-                </div>
-                <div class="consequence">
-                    <span>All <b>XXX</b> students currently assigned to this class</span>
-                </div>
-                <div class="consequence">
-                    <span>All <b>XXX</b> students currently assigned to this class</span>
-                </div>
-                <div class="consequence">
-                    <span>All <b>XXX</b> students currently assigned to this class</span>
-                </div>
-                <div class="consequence">
-                    <span>All <b>XXX</b> students currently assigned to this class</span>
-                </div>
-            </div>
-            <h3>Are you sure you wish to continue?</h3>
-            <div class="button__wrapper">
-                <button class="button button--cancel" ButtonType="outline" (click)="closeModal()">
+    <h3>Are you sure you wish to continue?</h3>
+    <div class="button__wrapper">
+      <button
+        class="button button--cancel"
+        ButtonType="outline"
+        (click)="closeModal()"
+      >
         cancel
       </button>
-                <button class="button button--update" ButtonType="basic" (click)="closeModal()">
+      <button
+        class="button button--update"
+        ButtonType="basic"
+        (click)="closeModal()"
+      >
         update
       </button>
-            </div>
-        </div>
-    </edu-modal>
+    </div>
+  </div>
+</edu-modal>
