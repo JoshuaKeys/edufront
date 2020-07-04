@@ -108,7 +108,7 @@
                             <div class="line-item__content">
                                 <div class="group--row">
                                     <div class="btns-container">
-                                        <button ButtonType="round round-basic" class="round" (click)="setAssemblyDisplay(true)" [ngClass]="{'round-basic': (teachingState|async).calendarEdit.isAssemblyIncluded}">Yes</button>
+                                        <button ButtonType="round" class="round" (click)="setAssemblyDisplay(true)" [ngClass]="{'round-basic': (teachingState|async).calendarEdit.isAssemblyIncluded}">Yes</button>
                                         <button ButtonType="round" (click)="setAssemblyDisplay(false)" class="round" [ngClass]="{'round-basic': !(teachingState|async).calendarEdit.isAssemblyIncluded}">No</button>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
                     <div class="line-item__content">
                         <div class="group--row">
                             <div class="btns-container">
-                                <button ButtonType="round round-basic" class="round" (click)="setAssemblyDisplay(true)" [ngClass]="{
+                                <button ButtonType="round" class="round" (click)="setAssemblyDisplay(true)" [ngClass]="{
                   'round-basic': (teachingState | async).calendarEdit
                     .isAssemblyIncluded
                 }">
