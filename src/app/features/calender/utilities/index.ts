@@ -312,7 +312,11 @@ export function validateTermsAndDates(
       errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
     }
     if (index > 0) {
+<<<<<<< HEAD
       console.log(termsAndDates.termsAndDates);
+=======
+      // console.log(termsAndDates.termsAndDates)
+>>>>>>> acc2659b8ba686b436a014266aa92a760ccea0b3
       const previousEndDate = new Date(
         termsAndDates.termsAndDates[index - 1].endDate
       );
@@ -321,11 +325,19 @@ export function validateTermsAndDates(
           `${field} ${index + 1}'s start time overlaps with ${field} ${index}`
         );
       } else {
+<<<<<<< HEAD
         console.log(startDateObj.getTime(), previousEndDate.getTime());
       }
     }
   }
   console.log(errors);
+=======
+        // console.log(startDateObj.getTime(), previousEndDate.getTime())
+      }
+    }
+  }
+  // console.log(errors);
+>>>>>>> acc2659b8ba686b436a014266aa92a760ccea0b3
   if (!errors.msg.length) {
     errors = null;
   }

@@ -19,9 +19,9 @@ export class PreviewTestComponent implements OnInit {
     });
   }
 
-  time = '02:10';
-  badges = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  activeBadge = [1, 9];
+  time = '02:05';
+  // badges = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  activeBadge = 8;
 
   log(param) {
     console.log(param);
