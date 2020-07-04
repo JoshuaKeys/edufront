@@ -137,7 +137,7 @@
                         </edu-input>
                         <edu-timepicker elementId="startingAt" [ngModel]="
                   (teachingState | async).calendarEdit.teachingPeriods[0].assembly
-                    .startingAt" (edu-change)="updateStartTime($event)">
+                    .startingAt['duration']" (edu-change)="updateStartTime($event)">
                             <span class="edu-label">Start Time</span>
                         </edu-timepicker>
                         <edu-select elementId="assemblyDuration" [ngModel]="
