@@ -3,9 +3,10 @@ import { Observable } from 'rxjs';
 import { PreviewModel } from '../../models/preview.model';
 import { CalendarModel } from '../../models/calendar.model';
 import { TeachingDay } from '../../models/teaching-day.model';
-import { periodUniformity } from '../../utilities';
+import { periodUniformity, buildRangePipe } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { PeriodModel } from '../../models/period.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 @Component({
   selector: 'edu-preview-parent',
@@ -44,15 +45,10 @@ export class PreviewParentComponent implements OnInit {
     console.log(res);
     return periods
   }
-  getTitle(classesAndGroups: ClassGroupModel) {
-    let title = '';
-    for(let i = 0; i < classesAndGroups.classes.length; i++) {
-      if(i < classesAndGroups.classes.length - 1) {
-        title += classesAndGroups.classes[i].grade + '|'
-      }else {
-        title += classesAndGroups.classes[i].grade
-      }
-    }
-    return title;
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    console.log(result)
+    return result
   }
 }

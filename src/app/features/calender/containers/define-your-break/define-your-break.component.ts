@@ -30,6 +30,7 @@ import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { FormGroup, FormArray } from '@angular/forms';
+import { buildRangePipe } from '../../utilities';
 
 @Component({
   selector: 'edu-define-your-break',
@@ -144,6 +145,11 @@ export class DefineYourBreakComponent implements OnInit {
     this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
     this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
     this.store.dispatch(setGroupStartTime({ groupId: generatedGroupId }));
+  }
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    return result
   }
   parsePeriodValue(arr) {
     // console.log(arr);

@@ -1,3 +1,5 @@
+import { buildRangePipe } from "src/app/features/calender/utilities";
+
 const classes = [
     {"name":"12","grade":12,"classGroupId":"7807e313-32d1-4953-a1d9-b87c60d5d8d9","id":"0b0a55e2-8df7-11ea-9726-57ffaf54a22e","teachers":[],"subjects":[]},
     {"name":"6","grade":6,"classGroupId":"fcf5ac48-49d3-43a6-81df-ad437663fad5","id":"b96a53c2-8df6-11ea-9720-1323d471c03e","teachers":[],"subjects":[]},
@@ -19,3 +21,4 @@ const testClasses = [
     {"name":"7","grade":7,"classGroupId":"3f44677c-0c74-48cf-8052-0dfa7e134bb6","id":"c57c06ba-8df6-11ea-9721-a773ed0f79c6","teachers":[],"subjects":[]},
     {"name":"11","grade":11,"classGroupId":"7807e313-32d1-4953-a1d9-b87c60d5d8d9","id":"f7966d8e-8df6-11ea-9725-1ba133b5817d","teachers":[],"subjects":[]},
 ]
+console.log(buildRangePipe([1, 4, 5, 2, 3, 6, 9, 7, 8, 10]));

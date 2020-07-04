@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 import { Observable } from 'rxjs';
 import { PreviewModel } from '../../models/preview.model';
 import { map, tap } from 'rxjs/operators';
+import { ClassModel } from 'src/app/shared/models/class.model';
+import { buildRangePipe } from '../../utilities';
 
 @Component({
   selector: 'edu-days-of-week-preview',
@@ -14,6 +16,11 @@ export class DaysOfWeekPreviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    return result
   }
   allIsUniform() {
     return this.previewState.pipe(

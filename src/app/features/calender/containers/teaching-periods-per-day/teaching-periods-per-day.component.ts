@@ -13,6 +13,7 @@ import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest, a
 import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { v4 as uuid44} from 'uuid';
 import { SelectionModel } from '../../models/selection.model';
+import { buildRangePipe } from '../../utilities';
 @Component({
   selector: 'edu-teaching-periods-per-day',
   templateUrl: './teaching-periods-per-day.component.html',
@@ -93,6 +94,11 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   }
   asObservable(item) {
     return of(item);
+  }
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    return result
   }
   addGroup() {
     // alert('hello')

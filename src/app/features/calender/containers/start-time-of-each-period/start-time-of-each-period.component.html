@@ -25,18 +25,8 @@
                                             Classes
                                         </h4>
                                         <p class="card__desc">
-                                            <ng-container *ngFor="let class of item.classes; let i = index">
-                                                {{ class.grade }}
-                                                <span *ngIf="!(i === item.classes.length - 1)">|</span>
-                                            </ng-container>
+                                            {{computeClasses(item.classes)}}
                                         </p>
-                                        <!-- <edu-popover>
-                                            <div class="classes">
-                                                <div class="badge badge--class" (click)="toggleActiveClass(classItem, classItem)" *ngFor="let item of popoverArr; let i = index">
-                                                    {{ item }}
-                                                </div>
-                                            </div>
-                                        </edu-popover> -->
                                         <edu-popover>
                                             <div class="classes">
                                                 <div (click)="toggleActiveClass(classItem, item)" *ngFor="

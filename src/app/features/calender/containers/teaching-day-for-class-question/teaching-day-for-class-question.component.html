@@ -11,10 +11,11 @@
                             Classes
                         </h4>
                         <p class="card__desc">
-                            <ng-container *ngFor="let class of item.classes; let i = index">
+                            {{computeClasses(item.classes)}}
+                            <!-- <ng-container *ngFor="let class of item.classes; let i = index">
                                 {{ class.grade }}
                                 <span *ngIf="!(i === item.classes.length - 1)">|</span>
-                            </ng-container>
+                            </ng-container> -->
                         </p>
                         <edu-popover>
                             <div class="classes">

@@ -1,16 +1,12 @@
 <div class="main">
-  <div class="content">
-    <h1 class="header">
-      Do all classes have the same number of<br />
-      periods every day?
-    </h1>
-    <div class="btns-container">
-      <button
-        ButtonType="round-basic"
-        [routerLink]="['../', activatedRouteData.next]"
-      >
+    <div class="content">
+        <h1 class="header">
+            Do all classes have the same number of<br /> periods every day?
+        </h1>
+        <div class="btns-container">
+            <button ButtonType="round-basic" [routerLink]="['../', activatedRouteData.next]">
         Yes</button
-      ><button ButtonType="round">No</button>
+      ><button ButtonType="round" (click)="assignDefaultPeriods()">No</button>
+        </div>
     </div>
-  </div>
 </div>

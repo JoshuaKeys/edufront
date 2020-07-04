@@ -1,33 +1,19 @@
 <div class="main">
-  <form
-    *ngIf="periodDurationForm"
-    [formGroup]="periodDurationForm"
-    class="content"
-  >
-    <h1 class="header">
-      Define the period duration
-    </h1>
+    <form *ngIf="periodDurationForm" [formGroup]="periodDurationForm" class="content">
+        <h1 class="header">
+            Define the period duration
+        </h1>
 
-    <edu-select formControlName="duration">
-      <span class="edu-label">
+        <edu-select formControlName="duration">
+            <span class="edu-label">
         Period Duration
       </span>
-      <edu-option
-        *ngFor="let duration of periodDurations"
-        (click)="onSetPeriodDuration(duration)"
-        [OptionValue]="duration.duration"
-        >{{ duration.text }}</edu-option
-      >
-    </edu-select>
-  </form>
-  <ng-container *ngIf="periodDurationForm">
-    <button
-      [disabled]="periodDurationForm.invalid"
-      [routerLink]="['../', activatedRouteData.next]"
-      class="button--bottom"
-      ButtonType="basic"
-    >
+            <edu-option *ngFor="let duration of periodDurations" (click)="onSetPeriodDuration(duration)" [OptionValue]="duration.duration">{{ duration.text }}</edu-option>
+        </edu-select>
+    </form>
+    <ng-container *ngIf="periodDurationForm">
+        <button [disabled]="periodDurationForm.invalid" [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
       continue
     </button>
-  </ng-container>
+    </ng-container>
 </div>

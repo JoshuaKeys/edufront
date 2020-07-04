@@ -19,3 +19,34 @@ const testClasses = [
     { "name": "7", "grade": 7, "classGroupId": "3f44677c-0c74-48cf-8052-0dfa7e134bb6", "id": "c57c06ba-8df6-11ea-9721-a773ed0f79c6", "teachers": [], "subjects": [] },
     { "name": "11", "grade": 11, "classGroupId": "7807e313-32d1-4953-a1d9-b87c60d5d8d9", "id": "f7966d8e-8df6-11ea-9725-1ba133b5817d", "teachers": [], "subjects": [] },
 ]
+
+function buildRangePipe(items) {
+    const res = [];
+    let currentIdx = 0;
+    for (let i = 0; i < items.length; i++) {
+        if (i === 0) {
+            res.push({ start: items[0] });
+        } else if (items[i] - 1 === items[i - 1]) {
+            res[currentIdx].end = items[i];
+        } else {
+            res.push({ start: items[i], end: null });
+            currentIdx += 1;
+        }
+    }
+
+    return res.reduce((prev, curr, idx, arr) => {
+        if (curr.start && curr.end) {
+            if (arr.length - 1 !== idx) {
+                if (curr.end - curr.start > 1) {
+                    return (prev += `${curr.start}-${curr.end}|`);
+                }
+                return (prev += `${curr.start}|${curr.end}|`)
+            }
+            return (prev += `${curr.start}-${curr.end}`);
+        } else if (curr.start && !curr.end) {
+            return (prev += `${curr.start}`);
+        }
+    }, '');
+}
+
+console.log(buildRangePipe([1, 2, 3, 4, 5, 6, 8, 9, 11]));
