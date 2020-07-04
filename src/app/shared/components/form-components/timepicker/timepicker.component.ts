@@ -43,10 +43,12 @@ export class TimepickerComponent
     // console.log(param);
     param = this.sanitizeNullAndUndefined(param);
     this.activeTime = this.parseStringToTime(param);
-    this.onChange(param);
     this._value = param;
-    this.onEduChange.emit(param);
     this.setDisplayText();
+    if (this.isAfterViewInit) {
+      this.onChange(param);
+      this.onEduChange.emit(param);
+    }
   }
   get value() {
     return this._value;
@@ -59,9 +61,10 @@ export class TimepickerComponent
   tempValue = {};
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
-
+  isAfterViewInit = false;
   ngOnInit(): void {}
   ngAfterViewInit() {
+    this.isAfterViewInit = true;
     // this.popover.openEvent.subscribe(() => {
     //   console.log('popover event');
     //   this.elState = 'active';
