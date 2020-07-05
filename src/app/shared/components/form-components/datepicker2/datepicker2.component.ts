@@ -202,15 +202,18 @@ export class Datepicker2Component
   //value should be yyyy-mm-dd
   set value(val) {
     // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
-    // console.log('EDU CHANGE DATEPICKER - ' + val);
+    console.log('EDU CHANGE DATEPICKER - ' + val);
+    val = this.cleanInputValue(val);
+
     this.val = val;
+    this.displayedValue = this.convertValuetoDisplayedValue(val);
 
     if (this.ngafterViewHookPassed) {
       this.onChange(val);
       this.onEduChange.emit(val);
       this.onTouched();
     }
-
+    this.cd.markForCheck();
     // this.onDateDataChanged.emit(val);
     // this.onTouched(val)
   }
@@ -229,7 +232,13 @@ export class Datepicker2Component
   get displayedValue() {
     return this.displayedVal;
   }
-
+  cleanInputValue(val) {
+    if (typeof val != 'string' || val.length != 10) {
+      return '';
+    } else {
+      return val;
+    }
+  }
   formatDayMonth(param) {
     return param < 10 ? `0${param}` : `${param}`;
   }
@@ -238,12 +247,16 @@ export class Datepicker2Component
   }
 
   convertValuetoDisplayedValue(value: string) {
-    const day = value.substring(8, 10);
-    const month = value.substring(5, 7);
-    const year = value.substring(2, 4);
+    if (value.length == 10) {
+      const day = value.substring(8, 10);
+      const month = value.substring(5, 7);
+      const year = value.substring(2, 4);
 
-    // console.log(`${day}/${month}/${year}`);
-    return `${day}/${month}/${year}`;
+      console.log(`${day}/${month}/${year}`);
+      return `${day}/${month}/${year}`;
+    } else {
+      return '';
+    }
   }
 
   myDatePickerOptions: IAngularMyDpOptions = {
@@ -383,14 +396,13 @@ export class Datepicker2Component
   // disabled: boolean = false;
   writeValue(value: any) {
     // console.log('writevalue');
-    if (value != null && value.length === 10) {
-      this.value = value;
-      // console.log(this.value);
-      //need parse value > displayedValue
+    // if (value != null && value.length === 10) {
+    this.value = value;
+    // console.log(this.value);
+    //need parse value > displayedValue
 
-      this.displayedValue = this.convertValuetoDisplayedValue(value);
-      this.updateDatePickerModel();
-    }
+    // this.updateDatePickerModel();
+    // }
   }
 
   registerOnChange(fn: any) {

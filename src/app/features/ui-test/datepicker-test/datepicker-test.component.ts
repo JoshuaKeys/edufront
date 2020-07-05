@@ -19,6 +19,10 @@ export class DatepickerTestComponent implements OnInit {
     });
   }
 
+  clearAll() {
+    this.testForm.reset();
+    console.log(this.testForm);
+  }
   get formControls() {
     return this.testForm.controls;
   }
