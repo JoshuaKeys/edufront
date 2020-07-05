@@ -41,7 +41,8 @@ import {
   setEditAssemblyData,
   computeModifications,
   computeNewGroup,
-  computedModifications
+  computedModifications,
+  updateEditStartTime
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -130,6 +131,13 @@ export const teachingReducer = createReducer(
       isAssemblyIncluded: true
     };
     stateCopy.calendarEdit = editState;
+    return stateCopy;
+  }),
+  on(updateEditStartTime, (state, action)=> {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    // const specificPeriodIdx = stateCopy.calendarEdit.teachingPeriods.findIndex(period => period.day === action.update.day)
+    // stateCopy.calendarEdit.teachingPeriods[specificPeriodIdx].startTime = action.update.value;
+    console.log(action);
     return stateCopy;
   }),
   on(setGroupTeachingDays, (state, action) => {

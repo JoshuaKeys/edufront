@@ -60,6 +60,10 @@ import { UpdateTimetableComponent } from './containers/update-timetable/update-t
 import { ClassUpdateComponent } from './components/class-update/class-update.component';
 import { PeriodPopoverComponent } from './components/period-popover/period-popover.component';
 import { TimepickerPopoverComponent } from './components/timepicker-popover/timepicker-popover.component';
+import { PeriodUpdateComponent } from './components/period-update/period-update.component';
+import { UpdateStartTimeComponent } from './components/update-start-time/update-start-time.component';
+import { UpdateTeachingPeriodsComponent } from './components/update-teaching-periods/update-teaching-periods.component';
+import { StartTimeUpdateComponent } from './components/start-time-update/start-time-update.component';
 @NgModule({
   declarations: [
     ...pages,
@@ -110,7 +114,11 @@ import { TimepickerPopoverComponent } from './components/timepicker-popover/time
     CalendarConfirmationComponent,
     OrphanClassesComponent,
     UpdateTimetableComponent,
-    ClassUpdateComponent
+    ClassUpdateComponent,
+    PeriodUpdateComponent,
+    UpdateStartTimeComponent,
+    UpdateTeachingPeriodsComponent,
+    StartTimeUpdateComponent
   ],
   imports: [
     CommonModule,

@@ -6,7 +6,6 @@
         <p class="content__desc">
             Select the Class/Classes you wish to <b class="orangecolor">edit</b>
         </p>
-        <!--       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" -->
         <div #scrollableEl class="scrollable-content">
             <div class=" line-item item--1">
                 <div class="line-item__title">
@@ -27,17 +26,18 @@
             <div class=" line-item item--3">
                 <div class="line-item__title">Teaching Periods</div>
                 <div class="line-item__content">
-                    <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="
+                    <!-- <edu-periods-per-day (onSelectPeriod)="selectPeriod($event)" [classGroup]="
                 asObservable((teachingState | async).calendarEdit.group)
-              "></edu-periods-per-day>
+              "></edu-periods-per-day> -->
+                    <edu-update-teaching-periods (onSelectTime)="updateTeachingPeriod($event)" [classGroup]="
+              asObservable((teachingState | async).calendarEdit.group)"></edu-update-teaching-periods>
                 </div>
             </div>
             <div class=" line-item item--4">
                 <div class="line-item__title">Period Start Time</div>
                 <div class="line-item__content">
-                    <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="
-                asObservable((teachingState | async).calendarEdit.group)
-              "></edu-start-time-per-day>
+                    <edu-update-start-time (onSelectTime)="selectStartTime($event)" [classGroup]="
+              asObservable((teachingState | async).calendarEdit.group)"></edu-update-start-time>
                 </div>
             </div>
             <div class=" line-item item--5">

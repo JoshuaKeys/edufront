@@ -7,7 +7,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-import { selectTeachingDay, editCalendar, toggleEditClassActive,setEditAssemblyData,toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode, computeModifications } from '../../ngrx/actions/calendar.actions';
+import { selectTeachingDay, editCalendar, toggleEditClassActive,setEditAssemblyData,toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode, computeModifications, updateEditStartTime } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
@@ -54,7 +54,7 @@ export class UpdateTimetableComponent implements OnInit {
     { value: 'Sun', display: 'Sun' }
   ];
   constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
-
+  activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
     console.log(event);
@@ -115,10 +115,13 @@ export class UpdateTimetableComponent implements OnInit {
     return of(item);
   }
   selectStartTime(event) {
-    
+    // this.store.dispatch(updateEditStartTime(event));
+  }
+  updateTeachingPeriod(event) {
+    console.log(event);
   }
   computeModifications() {
-    this.store.dispatch(computeModifications())
+    this.store.dispatch(computeModifications());
   }
   closeModal(){
 

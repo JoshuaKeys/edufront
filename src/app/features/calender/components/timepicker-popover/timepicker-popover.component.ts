@@ -7,10 +7,13 @@ import {
   Input,
   EventEmitter,
   ChangeDetectorRef,
-  ElementRef
+  ElementRef,
+  OnDestroy,
+  forwardRef
 } from '@angular/core';
 import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
 import { Subject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-timepicker-popover',
@@ -18,12 +21,13 @@ import { Subject } from 'rxjs';
   styleUrls: ['./timepicker-popover.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimepickerPopoverComponent implements OnInit {
+export class TimepickerPopoverComponent implements OnInit, OnDestroy {
+  value$ = new Subject();
+
   @Output() onValueChange = new EventEmitter<any>();
 
   @Output('edu-change') onEduChange = new EventEmitter<any>();
   @ViewChild(PopoverComponent) popover: PopoverComponent;
-
   displayText;
   _time;
   $time = new Subject();
@@ -45,7 +49,7 @@ export class TimepickerPopoverComponent implements OnInit {
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
 
   ngOnInit(): void {
-    this.$time.subscribe((param: string) => {
+    this.$time.pipe(distinctUntilChanged()).subscribe((param: string) => {
       this.activeTime = this.parseStringToTime(param);
 
       this._time = param;
@@ -122,5 +126,10 @@ export class TimepickerPopoverComponent implements OnInit {
     }
     this.tempValue = JSON.parse(JSON.stringify(this.activeTime));
     this.cd.markForCheck();
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.value$.unsubscribe();
   }
 }

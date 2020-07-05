@@ -1,0 +1,7 @@
+<div class="start-time-update">
+    <span class="day">{{day}}</span>
+    <div class="day__value-container">
+        <span class="day__value">{{time != '0' ? time : 'X'}}</span>
+    </div>
+    <edu-timepicker-popover *ngIf="time != '0'" (edu-change)="updateTime($event, day)" [time]="time"></edu-timepicker-popover>
+</div>

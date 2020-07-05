@@ -1,0 +1,10 @@
+.days {
+    display: flex;
+    padding: 0;
+    width: 100%;
+    max-width: 580px;
+    justify-content: space-between;
+    &__container {
+        list-style-type: none;
+    }
+}

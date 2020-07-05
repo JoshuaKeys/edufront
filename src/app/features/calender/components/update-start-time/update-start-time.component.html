@@ -1,0 +1,8 @@
+<ul class="days" *ngIf="(classGroup | async) as group">
+    <li class="days__container" (click)="selectTime(day, group)" *ngFor="let day of group.periods;
+        let index=i">
+        <edu-start-time-update (timeChanged)="onTimeChanged($event)" [time]="day.startTime" [day]="day.day"></edu-start-time-update>
+        <!-- <span class="day">{{day.day}}</span>
+        <span class="value" [ngClass]="{'active': day.startTimeSelected}">{{day.startTime != '0' ? day.startTime : 'X'}}</span> -->
+    </li>
+</ul>

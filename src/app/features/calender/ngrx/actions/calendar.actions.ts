@@ -280,4 +280,8 @@ export const computeNewGroup = createAction(
 export const sendCalendarData = createAction(
     '[CalendarConfirmationComponent] sendCalendarData',
     // props<{}>()
+);
+export const updateEditStartTime = createAction(
+    '[UpdateTimetableComponent] updateEditStartTime',
+    props<{update: {value: string; day: string}}>()
 )
