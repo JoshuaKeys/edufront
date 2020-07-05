@@ -124,7 +124,10 @@ export class CalendarEffects {
         tap(()=> {
             document.body.click();
         })
-    ), {dispatch: false})
+    ), {dispatch: false});
+    // sendCalendarData = createEffect(() => this.actions$.pipe(
+    //     mergeMap(actgion => this.calendarService.createCalendar)
+    // ))
     constructor(private actions$: Actions,
         private store: Store<CalendarStateModel>,
         private calendarService: CalendarService,

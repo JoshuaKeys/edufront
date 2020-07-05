@@ -54,7 +54,7 @@ export class UpdateTimetableComponent implements OnInit {
     { value: 'Sun', display: 'Sun' }
   ];
   constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
-
+  activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
     console.log(event);

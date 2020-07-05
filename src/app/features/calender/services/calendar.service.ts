@@ -28,5 +28,8 @@ export class CalendarService {
   deleteHoliday(holiday: HolidayModel) {
     return this.httpClient.delete(`/api/v1/holiday/${holiday.id}`)
   }
+  createTimetablePlanner(timetable) {
+    
+  }
   constructor(private httpClient: HttpClient) {}
 }
