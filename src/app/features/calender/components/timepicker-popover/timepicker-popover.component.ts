@@ -10,6 +10,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'edu-timepicker-popover',
@@ -25,14 +26,11 @@ export class TimepickerPopoverComponent implements OnInit {
 
   displayText;
   _time;
+  $time = new Subject();
   @Input('time') set time(param) {
     // console.log('SET VAL');
     param = this.sanitizeNullAndUndefined(param);
-    this.activeTime = this.parseStringToTime(param);
-
-    this._time = param;
-    this.onEduChange.emit(param);
-    this.setDisplayText();
+    this.$time.next(param);
   }
   get time() {
     return this._time;
@@ -46,7 +44,14 @@ export class TimepickerPopoverComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.$time.subscribe((param: string) => {
+      this.activeTime = this.parseStringToTime(param);
+
+      this._time = param;
+      this.setDisplayText();
+    });
+  }
 
   sanitizeNullAndUndefined(value) {
     if (value === null || value == undefined) {
@@ -108,6 +113,7 @@ export class TimepickerPopoverComponent implements OnInit {
   popoverClose() {
     if (JSON.stringify(this.tempValue) !== JSON.stringify(this.activeTime)) {
       this.time = this.displayText;
+      this.onEduChange.emit(this.time);
     }
   }
   popoverOpen() {
