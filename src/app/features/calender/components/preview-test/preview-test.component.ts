@@ -26,6 +26,14 @@ export class PreviewTestComponent implements OnInit {
   log(param) {
     console.log(param);
   }
+  updateTime(param) {
+    this.time = param;
+    console.log(param);
+  }
+  updateBadge(param) {
+    this.activeBadge = param;
+    console.log(param);
+  }
 }
 
 let newState: CalendarModel[] = [

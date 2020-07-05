@@ -4,7 +4,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectorRef
 } from '@angular/core';
 import { min } from 'moment';
 
@@ -15,25 +16,31 @@ import { min } from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PeriodPopoverComponent implements OnInit {
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
   @Input() badges = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  @Input() activeBadge = 1;
+  @Input() activeBadge = null;
+
   @Output('edu-change') onEduChange = new EventEmitter();
 
-  isPresent(classes) {
-    return this.activeBadge === classes;
+  isPresent(badg) {
+    return this.activeBadge === badg;
   }
-  toggleactiveBadge(classes) {
-    // console.log(classes);
-    this.onEduChange.emit(this.activeBadge);
-
-    if (this.activeBadge === classes) {
+  setActiveBadge(badge) {
+    if (this.activeBadge === badge) {
       this.activeBadge = null;
     } else {
-      this.activeBadge = classes;
+      this.activeBadge = badge;
     }
+  }
+
+  popoverOpen() {
+    // console.log('popover open - ' + this.activeBadge);
+    // this.cd.markForCheck();
+  }
+  popoverClose() {
+    this.onEduChange.emit(this.activeBadge);
   }
 }
