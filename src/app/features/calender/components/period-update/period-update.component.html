@@ -1,1 +1,7 @@
-<p>period-update works!</p>
+<div class="period-update">
+    <span class="day">{{day}}</span>
+    <div class="day__value-container">
+        <span class="day__value">{{activeBadge != 0 ? activeBadge: 'X'}}</span>
+    </div>
+    <edu-period-popover (edu-change)="updatePeriod($event, day)" *ngIf="activeBadge != 0" [activeBadge]="activeBadge"></edu-period-popover>
+</div>

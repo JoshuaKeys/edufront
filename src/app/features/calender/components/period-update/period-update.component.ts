@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'edu-period-update',
@@ -9,8 +9,14 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class PeriodUpdateComponent implements OnInit {
 
   constructor() { }
-  @Input() activeBadge: number
+  @Input() activeBadge: number;
+  @Input() day: string;
+  @Input() type: string;
+  @Input() time: string;
+  // @Output() periodSelected = new EventEmitter<>()
   ngOnInit(): void {
   }
-
+  updatePeriod(event, period) {
+    console.log(event, period);
+  }
 }
