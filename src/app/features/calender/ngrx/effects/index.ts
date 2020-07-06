@@ -131,9 +131,9 @@ export class CalendarEffects {
   ), { dispatch: false });
   // sendCalendarData = createEffect(() => this.actions$.pipe(
   //   withLatestFrom(this.store.select(selectCalendar)),
-  //   mergeMap(([action, calendarState]) => {
+  //   map(([action, calendarState]) => {
   //     // return this.calendarService.createCalendar;
-  //     return of(toggleEndModal())
+  //     return toggleEndModal()
   //   })
   // ))
   constructor(private actions$: Actions,

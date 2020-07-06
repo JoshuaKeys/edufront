@@ -10,6 +10,7 @@ import { editCalendar, sendCalendarData } from '../../ngrx/actions/calendar.acti
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { buildRangePipe } from '../../utilities';
 import { CalendarModalModel } from '../../models/calender-modal.model';
+import { toggleEndModal } from '../../ngrx/actions';
 let weirdData = [
   {
     day: 'Mon',
@@ -115,10 +116,10 @@ export class CalendarConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
-    // this.modalState = this.store.select(selectCalendarModalState);
+    this.modalState = this.store.select(selectCalendarModalState);
   }
   sendCalendarData() {
-    this.store.dispatch(sendCalendarData())
+    this.store.dispatch(toggleEndModal())
   }
   computeClasses(classes: ClassModel[]) {
     const grades = classes.map(classItem => classItem.grade).sort((a, b) => a - b);
