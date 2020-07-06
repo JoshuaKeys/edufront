@@ -51,6 +51,9 @@ export class InputTestComponent implements OnInit {
   log(param) {
     console.log(param);
   }
+  logInput(param) {
+    console.log('input -- ', param);
+  }
   prettifyJSON(obj) {
     return JSON.stringify(obj, null, 2);
   }

@@ -28,10 +28,10 @@
     alignment="center"
     name="name"
     formControlName="f1"
-    (edu-blur)="log($event)"
+    (edu-input)="logInput($event)"
     (edu-change)="log($event)"
-    (edu-keydown)="log($event)"
   >
+    <!-- (edu-blur)="log($event)" -->
     <span class="edu-label"> input 1 </span>
 
     <!-- for validation only need [validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->
