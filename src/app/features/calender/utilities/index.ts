@@ -91,7 +91,10 @@ export function buildRangePipe(items: number[]) {
         return (prev += `${curr.start}|${curr.end}`);
       }
       return (prev += `${curr.start}-${curr.end}`);
+    } else if (curr.start && !curr.end && arr.length > 1 && idx !== arr.length - 1) {
+      return (prev += `${curr.start}|`);
     } else if (curr.start && !curr.end) {
+      console.log(curr, arr);
       return (prev += `${curr.start}`);
     }
   }, '');
@@ -317,6 +320,7 @@ export function validateTermsAndDates(
     }
     if (index > 0) {
       console.log(termsAndDates.termsAndDates)
+      console.log(termsAndDates[formType])
       console.log(index);
       console.log(formType)
       const previousEndDate = new Date(
@@ -339,39 +343,3 @@ export function validateTermsAndDates(
   }
   return errors;
 }
-
-// function getTimetablePlannerData(calendarState: CalendarStateModel): TimeTablePlanner[] {
-//   const academicYearId = localStorage.getItem('academicYearId');
-//   const termId = localStorage.getItem('termId');
-//   if(!academicYearId || !termId) {
-//     return null;
-//   }
-//   const timetablePlanner: TeachingDayPlannerModel[] = calendarState.teaching.classesAndGroups.map(
-//     group => {
-//       return group.classes.map(classItem =>{
-//         return {
-//           classGroupId: group.id,
-//           classId: classItem.id,
-//           weekday: group
-//         }
-
-//       })
-//     }
-//   )
-// }
-// classGroupId: string;
-// classId: string;
-// weekday: string;
-// noOfPeriod: number;
-// assemblyStartTime: string;
-// assemblyDuration: number;
-// periodPlanners: {
-//   duration: number;
-//   name: string;
-//   index: number;
-// }[];
-// breaks: {
-//   breakTitle: string;
-//   periodIntervalDuration: number;
-//   endPeriod: number;
-// }[];
