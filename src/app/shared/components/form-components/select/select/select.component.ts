@@ -168,10 +168,16 @@ export class SelectComponent
   }
 
   setElementId() {
-    let elId = this.el.nativeElement.getAttribute('formcontrolname');
-    if (this.el != undefined) {
-      this.elementId = elId;
+    let elementIdNotDefined = this.elementId === eid;
+    let formcontrolnamedefined =
+      this.el.nativeElement.getAttribute('formcontrolname') !== undefined;
+    if (elementIdNotDefined && formcontrolnamedefined) {
+      this.elementId = this.el.nativeElement.getAttribute('formcontrolname');
     }
+    // let elId = this.el.nativeElement.getAttribute('formcontrolname');
+    // if (this.el != undefined) {
+    //   this.elementId = elId;
+    // }
   }
 
   cbChange() {
@@ -293,3 +299,5 @@ export class SelectComponent
     this.cd.markForCheck();
   }
 }
+
+const eid = 'selectId';
