@@ -318,6 +318,7 @@ export function validateTermsAndDates(
     if (index > 0) {
       console.log(termsAndDates.termsAndDates)
       console.log(index);
+      console.log(formType)
       const previousEndDate = new Date(
         termsAndDates[formType][index - 1].endDate
       );
