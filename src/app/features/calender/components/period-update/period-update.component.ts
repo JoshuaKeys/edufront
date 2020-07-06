@@ -13,10 +13,10 @@ export class PeriodUpdateComponent implements OnInit {
   @Input() day: string;
   @Input() type: string;
   @Input() time: string;
-  // @Output() periodSelected = new EventEmitter<>()
+  @Output() periodSelected = new EventEmitter<{ day: string; value: string }>()
   ngOnInit(): void {
   }
   updatePeriod(event, period) {
-    console.log(event, period);
+    this.periodSelected.emit({ value: event, day: period })
   }
 }

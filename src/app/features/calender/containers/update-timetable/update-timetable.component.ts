@@ -7,7 +7,7 @@ import { CalendarStateModel } from '../../models/calender-state.model';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-import { selectTeachingDay, editCalendar, toggleEditClassActive,setEditAssemblyData,toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode, computeModifications, updateEditStartTime } from '../../ngrx/actions/calendar.actions';
+import { selectTeachingDay, editCalendar, toggleEditClassActive, setEditAssemblyData, toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode, computeModifications, updateEditStartTime, updateTeachingPeriod } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
@@ -24,7 +24,7 @@ export class UpdateTimetableComponent implements OnInit {
   intervals: { duration: number; text: string }[] = [];
   timeArr = Array(60);
   modalIsActive = false;
-  durations: {duration: number; text: string}[] = []
+  durations: { duration: number; text: string }[] = []
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   periodDurations = [
     { duration: 10, text: '10 minutes' },
@@ -53,26 +53,26 @@ export class UpdateTimetableComponent implements OnInit {
     { value: 'Sat', display: 'Sat' },
     { value: 'Sun', display: 'Sun' }
   ];
-  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
+  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) { }
   activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
     console.log(event);
-    this.updateAssemblyData('startingAt', {duration: event, text: event});
+    this.updateAssemblyData('startingAt', { duration: event, text: event });
   }
   ngOnInit(): void {
-    for(let i = 0; i < this.timeArr.length; i++) {
-      this.durations.push({duration: i + 1, text: `${i + 1} mins`})
+    for (let i = 0; i < this.timeArr.length; i++) {
+      this.durations.push({ duration: i + 1, text: `${i + 1} mins` })
     }
     for (let i = 0; i < this.timeArr.length; i++) {
       this.intervals.push({ duration: i + 1, text: `${i + 1} mins` });
     }
-    this.teachingState= this.store.select(selectTeaching);
+    this.teachingState = this.store.select(selectTeaching);
     // this.teachingState.subscribe(x => console.log(x, 'yaaaaaaaaaaaaaaaaay'))
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
         const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
-        return unsortedClassesCopy.sort((itemA, itemB)=> itemA.grade - itemB.grade)
+        return unsortedClassesCopy.sort((itemA, itemB) => itemA.grade - itemB.grade)
       })
     )
   }
@@ -83,7 +83,7 @@ export class UpdateTimetableComponent implements OnInit {
 
   }
   toggleClassActive(event) {
-    this.store.dispatch(toggleEditClassActive({name: event}))
+    this.store.dispatch(toggleEditClassActive({ name: event }))
   }
   toggleActive(event) {
     this.store.dispatch(toggleEditTeachingActive(event))
@@ -93,20 +93,20 @@ export class UpdateTimetableComponent implements OnInit {
   }
 
   updateAssemblyData(data, duration) {
-    this.store.dispatch(setEditAssemblyData({field: data,  value: duration}))
+    this.store.dispatch(setEditAssemblyData({ field: data, value: duration }))
   }
   onUpdatePeriodDuration(duration) {
-    this.store.dispatch(updateCalendarPeriodData({field: 'periodDuration', value: duration.duration.duration}))
+    this.store.dispatch(updateCalendarPeriodData({ field: 'periodDuration', value: duration.duration.duration }))
   }
   onUpdateInterval(interval) {
-    this.store.dispatch(updateCalendarPeriodData({field: 'intervaBtwPeriods', value: interval.duration.duration}))
+    this.store.dispatch(updateCalendarPeriodData({ field: 'intervaBtwPeriods', value: interval.duration.duration }))
   }
   updateAssemblyName(data) {
     console.log(data);
-    this.store.dispatch(setEditAssemblyData({field: 'name', value: data.target.value}))
+    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data.target.value }))
   }
   getGroup(groups: ClassGroupModel[]) {
-    return of(groups.find(group=> group.id === this.activatedRoute.snapshot.queryParams.groupId));
+    return of(groups.find(group => group.id === this.activatedRoute.snapshot.queryParams.groupId));
   }
   selectPeriod($event: SelectedPeriodModel) {
     // this.store.dispatch(selectTeachingDay($event))
@@ -115,15 +115,16 @@ export class UpdateTimetableComponent implements OnInit {
     return of(item);
   }
   selectStartTime(event) {
-    // this.store.dispatch(updateEditStartTime(event));
+    this.store.dispatch(updateEditStartTime(event));
   }
   updateTeachingPeriod(event) {
-    console.log(event);
+    console.log(event)
+    this.store.dispatch(updateTeachingPeriod(event))
   }
   computeModifications() {
     this.store.dispatch(computeModifications());
   }
-  closeModal(){
+  closeModal() {
 
   }
   startScroll(el) {
@@ -174,10 +175,10 @@ export class UpdateTimetableComponent implements OnInit {
     this.store.dispatch(updateEditBreakData({ index: idx, field: 'title', value: item }));
   }
   removeBreak(item, idx) {
-    this.store.dispatch(removeEditBreak({breakIndex: idx}))
+    this.store.dispatch(removeEditBreak({ breakIndex: idx }))
   }
   updateAfter(item, idx) {
-    this.store.dispatch(updateEditBreakData({ index: idx, field: 'after', value: 'P'+item }));
+    this.store.dispatch(updateEditBreakData({ index: idx, field: 'after', value: 'P' + item }));
   }
   updateDuration(item, idx) {
     this.store.dispatch(updateEditBreakData({ index: idx, field: 'duration', value: item }));
@@ -189,7 +190,7 @@ export class UpdateTimetableComponent implements OnInit {
     this.store.dispatch(addEditSameBreak());
   }
   setAssemblyDisplay(isEnabled) {
-    this.store.dispatch(setAssemblyEnabledMode({isEnabled}))
+    this.store.dispatch(setAssemblyEnabledMode({ isEnabled }))
   }
   computeName(name: string, idx: number) {
     return `name-${idx}`;

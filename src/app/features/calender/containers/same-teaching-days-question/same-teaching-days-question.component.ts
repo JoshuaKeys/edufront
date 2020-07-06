@@ -12,10 +12,11 @@ import { setDefaultTeachingDays } from '../../ngrx/actions/calendar.actions';
 })
 export class SameTeachingDaysQuestionComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   goToDaysDefinition() {
     this.store.dispatch(setDefaultTeachingDays())
     this.router.navigateByUrl('/calendar/teaching-day-for-class-question')
+
   }
   goToTeachingDays() {
     this.router.navigate(['../', this.activatedRouteData.next], {
@@ -25,8 +26,8 @@ export class SameTeachingDaysQuestionComponent implements OnInit {
   constructor(private router: Router,
     private store: Store<CalendarStateModel>,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
-  goToPrepopulatedHolidayList() {}
-  goToHolidayList() {}
+  goToPrepopulatedHolidayList() { }
+  goToHolidayList() { }
 }

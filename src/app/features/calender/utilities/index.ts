@@ -5,6 +5,9 @@ import { PeriodsPerDayComponent } from '../components/periods-per-day/periods-pe
 import { DayModel } from '../models/day.model';
 import { CalendarModel } from '../models/calendar.model';
 import { CalendarUpdateModel } from '../models/calendar-update.model';
+import { CalendarStateModel } from '../models/calender-state.model';
+import { TimeTablePlanner } from '../models/time-table-planner.model';
+import { TeachingDayPlannerModel } from '../models/teaching-day-planner.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -79,7 +82,7 @@ export function buildRangePipe(items: number[]) {
       if (arr.length - 1 !== idx) {
         if (curr.end - curr.start > 1) {
           return (prev += `${curr.start}-${curr.end}|`);
-        }else if (curr.end - curr.start === 1) {
+        } else if (curr.end - curr.start === 1) {
           return (prev += `${curr.start}|${curr.end}|`);
         }
         return (prev += `${curr.start}|${curr.end}|`);
@@ -231,7 +234,7 @@ function setTeachingPeriods(
   modifiedClasses: ModifiedClasses[],
   idx,
   currentTeachingPeriods
-) {}
+) { }
 function isUniform(previous, current) {
   for (let i = 0; i < previous.length; i++) {
     let found = false;
@@ -335,3 +338,39 @@ export function validateTermsAndDates(
   }
   return errors;
 }
+
+// function getTimetablePlannerData(calendarState: CalendarStateModel): TimeTablePlanner[] {
+//   const academicYearId = localStorage.getItem('academicYearId');
+//   const termId = localStorage.getItem('termId');
+//   if(!academicYearId || !termId) {
+//     return null;
+//   }
+//   const timetablePlanner: TeachingDayPlannerModel[] = calendarState.teaching.classesAndGroups.map(
+//     group => {
+//       return group.classes.map(classItem =>{
+//         return {
+//           classGroupId: group.id,
+//           classId: classItem.id,
+//           weekday: group
+//         }
+
+//       })
+//     }
+//   )
+// }
+// classGroupId: string;
+// classId: string;
+// weekday: string;
+// noOfPeriod: number;
+// assemblyStartTime: string;
+// assemblyDuration: number;
+// periodPlanners: {
+//   duration: number;
+//   name: string;
+//   index: number;
+// }[];
+// breaks: {
+//   breakTitle: string;
+//   periodIntervalDuration: number;
+//   endPeriod: number;
+// }[];

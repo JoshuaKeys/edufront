@@ -11,13 +11,14 @@ export class StartTimeUpdateComponent implements OnInit {
   constructor() { }
   @Input() time: string;
   @Input() day: string;
-  @Output() timeChanged = new EventEmitter<{day:string; value: string}>();
+  @Output() timeChanged = new EventEmitter<{ day: string; value: string }>();
   ngOnInit(): void {
+    console.log(this.time);
   }
   updateTime(event, day) {
-    // console.log('updated');
-    // console.log(event, day);
-    this.timeChanged.emit({value: event, day})
+    console.log('updated');
+    console.log(event, day);
+    this.timeChanged.emit({ value: event, day })
   }
-  
+
 }

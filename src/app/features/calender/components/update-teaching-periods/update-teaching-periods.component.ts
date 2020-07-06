@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { Observable } from 'rxjs';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
+import { PeriodModel } from '../../models/period.model';
 
 @Component({
   selector: 'edu-update-teaching-periods',
@@ -10,13 +11,13 @@ import { SelectedPeriodModel } from '../../models/selected-period.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateTeachingPeriodsComponent implements OnInit {
-  @Input() classGroup: Observable<ClassGroupModel>;
-  @Output() onSelectTime = new EventEmitter<SelectedPeriodModel>()
+  @Input() teachingPeriods: Observable<PeriodModel[]>;
+  @Output() onUpdatePeriod = new EventEmitter<{ day: string; value: string }>()
   constructor() { }
 
   ngOnInit(): void {
   }
-  selectTime(day, classGroup) {
-    this.onSelectTime.emit({day, classGroup})
+  updatePeriod(event) {
+    this.onUpdatePeriod.emit(event);
   }
 }

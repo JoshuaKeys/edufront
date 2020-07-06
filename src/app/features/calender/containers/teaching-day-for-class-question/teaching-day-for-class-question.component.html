@@ -1,62 +1,73 @@
 <div class="main">
-    <div class="content">
-        <h2 class="content__title">
-            Please define the teaching days for the relevant classes
-        </h2>
-        <div class="badges scrollable-content ">
-            <div class="badges--inlineflex">
-                <div class="group--row line-entry" *ngFor="let item of classesAndGroups | async">
-                    <div class="card ">
-                        <h4 class="card__title">
-                            Classes
-                        </h4>
-                        <p class="card__desc">
-                            {{computeClasses(item.classes)}}
-                            <!-- <ng-container *ngFor="let class of item.classes; let i = index">
-                                {{ class.grade }}
-                                <span *ngIf="!(i === item.classes.length - 1)">|</span>
-                            </ng-container> -->
-                        </p>
-                        <edu-popover>
-                            <div class="classes">
-                                <div (click)="toggleActiveClass(classItem, item)" *ngFor="let classItem of allClasses | async as allClasses" class="badge badge--class" [ngClass]="{
+  <div class="content">
+    <h2 class="content__title">
+      Please define the teaching days for the relevant classes
+    </h2>
+    <div class="badges scrollable-content ">
+      <div class="badges--inlineflex">
+        <div
+          class="group--row line-entry"
+          *ngFor="let item of classesAndGroups | async"
+        >
+          <div class="card ">
+            <h4 class="card__title">
+              Classes
+            </h4>
+            <p class="card__desc">
+              {{ computeClasses(item.classes) }}
+            </p>
+            <edu-popover>
+              <div class="classes">
+                <div
+                  (click)="toggleActiveClass(classItem, item)"
+                  *ngFor="let classItem of allClasses | async as allClasses"
+                  class="badge badge--class"
+                  [ngClass]="{
                     'badge--active': isPresent(item.classes, classItem)
-                  }">
-                                    {{ classItem.grade }}
-                                </div>
-                            </div>
-                        </edu-popover>
-                    </div>
-
-                    <div class="days">
-                        <edu-days-of-week (toggleActive)="toggleActive($event, item)" [teachingDays]="asObservable(item.teachingDays)"></edu-days-of-week>
-                    </div>
+                  }"
+                >
+                  {{ classItem.grade }}
                 </div>
+              </div>
+            </edu-popover>
+          </div>
 
-                <div class="group--row line-entry">
-                    <div class="card card--dashed break__btn">
-                        <img src="/assets/search-plus.svg" alt="" srcset="" />
-                        <edu-popover>
-                            <div class="classes">
-                                <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async; ">
-                                    {{ classItem.grade }}
-                                </div>
-                            </div>
-                        </edu-popover>
-                    </div>
-                    <!-- <button class="break__btn card">
-                        <img src="assets/32pxplusblue.svg" />
-                    </button> -->
-                    <!-- (click)="addGroup()" -->
-
-                </div>
-            </div>
+          <div class="days">
+            <edu-days-of-week
+              (toggleActive)="toggleActive($event, item)"
+              [teachingDays]="asObservable(item.teachingDays)"
+            ></edu-days-of-week>
+          </div>
         </div>
+
+        <div class="group--row line-entry">
+          <div class="card card--dashed break__btn">
+            <img src="/assets/search-plus.svg" alt="" srcset="" />
+            <edu-popover>
+              <div class="classes">
+                <div
+                  class="badge badge--class"
+                  (click)="addNewGroup(classItem)"
+                  *ngFor="let classItem of allClasses | async"
+                >
+                  {{ classItem.grade }}
+                </div>
+              </div>
+            </edu-popover>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
+  <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
 
-    <button class="button--bottom" [disabled]="(orphanedClasses | async).length" ButtonType="basic" [routerLink]="['../', activatedRouteData.next]">
+  <button
+    class="button--bottom"
+    [disabled]="(orphanedClasses | async).length"
+    ButtonType="basic"
+    [routerLink]="['../', activatedRouteData.next]"
+  >
     continue
   </button>
 </div>

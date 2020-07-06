@@ -1,21 +1,50 @@
 <div class="main">
-    <div class="content">
-        <h1 class="header">
-            Are these correct?
-        </h1>
+  <div class="content">
+    <h1 class="header">
+      Are these correct?
+    </h1>
 
-        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" *ngIf="teachingData | async as teachingData">
-            <edu-image-slider [imageSize]="imageSize">
-                <edu-timetable-card sliderChildren [edu-value]="timetable.periods" [edu-id]="i" [edu-title]="computeClasses(timetable.classes)" (edu-edit)="onEdit($event, timetable)" (edu-tick)="onTick($event)" *ngFor="let timetable of teachingData.classesAndGroups; let i = index"></edu-timetable-card>
-            </edu-image-slider>
-        </div>
+    <div
+      #scrollableEl
+      class="scrollable-content"
+      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
+      *ngIf="teachingData | async as teachingData"
+    >
+      <edu-image-slider [imageSize]="imageSize">
+        <edu-timetable-card
+          sliderChildren
+          [edu-value]="timetable.periods"
+          [edu-id]="i"
+          [edu-title]="computeClasses(timetable.classes)"
+          (edu-edit)="onEdit($event, timetable)"
+          (edu-tick)="onTick($event)"
+          *ngFor="let timetable of teachingData.classesAndGroups; let i = index"
+        ></edu-timetable-card>
+      </edu-image-slider>
     </div>
-    <div class="button--bottom">
-        <button ButtonType="outline">
-        Back
-      </button>
-        <button ButtonType="basic" (click)="sendCalendarData()">
-        Confirm
-      </button>
-    </div>
+  </div>
+  <div class="button--bottom">
+    <button ButtonType="outline">
+      Back
+    </button>
+    <button ButtonType="basic" (click)="sendCalendarData()">
+      Confirm
+    </button>
+  </div>
 </div>
+<!-- <edu-modal-v2
+  *ngIf="(modalState | async).endModal"
+  class="complete"
+  header="Calendar Setup Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO DASHBOARD"
+  rightBtn="TAKE ME TO TIMETABLE"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goNext()"
+>
+  <div class="modal__text--complete">
+    Nicely Done! Now you can either move on to telling us all about what
+    subjects are taught, or return to the dashboard.
+  </div>
+</edu-modal-v2> -->
