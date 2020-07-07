@@ -12,14 +12,14 @@ import { HolidayModel } from '../../models/holiday.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HolidayAddComponent implements OnInit {
-  @Input() mode: Observable<HolidayEditModel|'addMode'>;
+  @Input() mode: Observable<HolidayEditModel | 'addMode'>;
   @Output() edit = new EventEmitter<HolidayModel>();
   @Output() add = new EventEmitter<HolidayModel>();
 
   addHolidayForm: FormGroup;
   editHolidayForm: FormGroup;
   constructor() { }
-  addHoliday(){
+  addHoliday() {
     console.log(this.addHolidayForm.value)
     this.add.emit(this.addHolidayForm.value);
     this.addHolidayForm.reset();
@@ -33,8 +33,9 @@ export class HolidayAddComponent implements OnInit {
       date: new FormControl('')
     })
     this.mode.subscribe((mode: HolidayEditModel) => {
-      if(mode.editedHoliday) {
+      if (mode.editedHoliday) {
         this.editHolidayForm = new FormGroup({
+          mockId: new FormControl(mode.editedHoliday.mockId),
           id: new FormControl(mode.editedHoliday.id),
           name: new FormControl(mode.editedHoliday.name),
           date: new FormControl(mode.editedHoliday.date),

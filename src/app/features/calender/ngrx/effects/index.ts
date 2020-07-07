@@ -32,18 +32,23 @@ export class CalendarEffects {
   ))
   fetchClassesAndGroupsRequest = createEffect(() => this.actions$.pipe(
     ofType(fetchClassesAndGroups),
-    withLatestFrom(this.store.select(selectTeachingDays)),
-    mergeMap(([action, teachingDays]) => this.calendarService.getClassesAndGroups().pipe(
-      map(_classesAndGroups => {
-        const classesAndGroups = _classesAndGroups.filter(item => item.classes.length).map(
-          classAndGroup => {
-            classAndGroup.teachingDays = teachingDays
-            return classAndGroup
-          }
-        )
-        return fetchClassesAndGroupsSuccess({ classesAndGroups })
-      })
-    ))
+    withLatestFrom(this.store.select(selectTeachingDays), this.store.select(selectTeaching)),
+    mergeMap(([action, teachingDays, teachingState]) => {
+      if (teachingState.classesAndGroups.length > 0) {
+        return of(fetchClassesAndGroupsSuccess({ classesAndGroups: teachingState.classesAndGroups }))
+      }
+      return this.calendarService.getClassesAndGroups().pipe(
+        map(_classesAndGroups => {
+          const classesAndGroups = _classesAndGroups.filter(item => item.classes.length).map(
+            classAndGroup => {
+              classAndGroup.teachingDays = teachingDays
+              return classAndGroup
+            }
+          )
+          return fetchClassesAndGroupsSuccess({ classesAndGroups })
+        })
+      )
+    })
   ))
   getAllClassesRequest$ = createEffect(() => this.actions$.pipe(
     ofType(getAllClassesRequest),
@@ -91,7 +96,11 @@ export class CalendarEffects {
     mergeMap(action => {
       if (action.holiday.id) {
         return this.calendarService.editHoliday(action.holiday).pipe(
-          map((holiday: HolidayModel) => editHolidaySuccess({ holiday }))
+          map((holiday: HolidayModel) => {
+            holiday.mockId = action.holiday.mockId
+            console.log(holiday.mockId)
+            return editHolidaySuccess({ holiday })
+          })
         )
       } else {
         return of(editHolidaySuccess({ holiday: action.holiday }))
