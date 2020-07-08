@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { SelectModule } from './select/select.module';
+import { SelectModuleV2 } from './select-v2/select.module';
 
 // import { datePickerModule } from '../datepicker/datepicker.module';
 
@@ -41,7 +42,8 @@ let customModules = [
   ValidatorModule,
   datePickerModule,
   Datepicker2Module,
-  PopoverModule
+  PopoverModule,
+  SelectModuleV2
 ];
 
 Datepicker2Module;

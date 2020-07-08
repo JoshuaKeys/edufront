@@ -74,7 +74,7 @@
                 After
               </span>
             </edu-icon-select>
-            <edu-select
+            <edu-select-v2
               (edu-change)="updateDuration($event, i, item.id)"
               [elementId]="'duration-' + i + '-ci-' + classIndex"
               [ngModel]="breakItem.duration"
@@ -82,12 +82,12 @@
               <span class="edu-label">
                 Duration
               </span>
-              <edu-option
+              <edu-option-v2
                 [OptionValue]="1 + i"
                 *ngFor="let time of timeArr; let i = index"
-                >{{ i + 1 }} mins</edu-option
+                >{{ i + 1 }} mins</edu-option-v2
               >
-            </edu-select>
+            </edu-select-v2>
             <!-- <edu-input
               (edu-blur)="updateDuration($event, i, item.id)"
               [elementId]="'duration-' + i + '-ci-' + classIndex"
