@@ -86,6 +86,9 @@ export class DefineYourBreakComponent implements OnInit {
     console.log(groupId, 'duration', $event, idx);
     this.updateBreakData(groupId, 'duration', $event, idx);
   }
+  getMinInString(val) {
+    return `${val}`;
+  }
 
   ngOnInit(): void {
     this.orphanedClasses = this.store.select(selectOrphanedClasses);

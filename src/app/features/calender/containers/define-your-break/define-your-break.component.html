@@ -83,7 +83,7 @@
                 Duration
               </span>
               <edu-option-v2
-                [OptionValue]="1 + i"
+                [OptionValue]="getMinInString(1 + i)"
                 *ngFor="let time of timeArr; let i = index"
                 >{{ i + 1 }} mins</edu-option-v2
               >

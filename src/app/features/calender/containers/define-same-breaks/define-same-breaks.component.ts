@@ -50,6 +50,10 @@ export class DefineSameBreaksComponent implements OnInit {
   timeArr = Array(60).fill('');
   formArr = [0];
 
+  getMinInString(val) {
+    return `${val}`;
+  }
+
   addformArr() {
     this.formArr.push(0);
   }
