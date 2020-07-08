@@ -3,12 +3,14 @@ import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeaching } from '../../ngrx/selectors';
+import { selectTeaching, selectCalendar, selectCalendarModalState } from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { editCalendar, sendCalendarData } from '../../ngrx/actions/calendar.actions';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { buildRangePipe } from '../../utilities';
+import { CalendarModalModel } from '../../models/calender-modal.model';
+import { toggleEndModal } from '../../ngrx/actions';
 let weirdData = [
   {
     day: 'Mon',
@@ -105,6 +107,7 @@ let testData = [
 export class CalendarConfirmationComponent implements OnInit {
   teachingData: Observable<TeachingStateModel>;
   activatedRouteData = this.activatedRoute.snapshot.data;
+  modalState: Observable<CalendarModalModel>;
   constructor(
     private store: Store<CalendarStateModel>,
     private activatedRoute: ActivatedRoute,
@@ -113,21 +116,28 @@ export class CalendarConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
+    this.modalState = this.store.select(selectCalendarModalState);
   }
   sendCalendarData() {
-    this.store.dispatch(sendCalendarData())
+    this.store.dispatch(toggleEndModal())
   }
-  computeClasses(classes: ClassModel[]){
-    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+  computeClasses(classes: ClassModel[]) {
+    const grades = classes.map(classItem => classItem.grade).sort((a, b) => a - b);
     const result = buildRangePipe(grades);
     return result
   }
+  goToDashboard() {
+
+  }
+  goNext() {
+
+  }
   computeClassName(classGroup: ClassGroupModel) {
     let classes = '';
-    for(let i=0; i < classGroup.classes.length; i++) {
-      if(i < classGroup.classes.length-1){
+    for (let i = 0; i < classGroup.classes.length; i++) {
+      if (i < classGroup.classes.length - 1) {
         classes += classGroup.classes[i].name + '|';
-      }else {
+      } else {
         classes += classGroup.classes[i].name;
       }
     }
@@ -144,10 +154,12 @@ export class CalendarConfirmationComponent implements OnInit {
   };
 
   onEdit(index, group: ClassGroupModel) {
-    this.store.dispatch(editCalendar({group}));
-    this.router.navigate(['../', this.activatedRouteData.next], {relativeTo: this.activatedRoute, queryParams: {
-      groupId: group.id
-    }})
+    this.store.dispatch(editCalendar({ group }));
+    this.router.navigate(['../', this.activatedRouteData.next], {
+      relativeTo: this.activatedRoute, queryParams: {
+        groupId: group.id
+      }
+    })
   }
   onTick(index) {
     console.log(`tick @ ${index}`);

@@ -42,7 +42,8 @@ import {
   computeModifications,
   computeNewGroup,
   computedModifications,
-  updateEditStartTime
+  updateEditStartTime,
+  updateTeachingPeriod
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -80,7 +81,7 @@ export const teachingReducer = createReducer(
       classesAndGroups: action.classesAndGroups
     };
   }),
-  on(updateCalendarPeriodData, (state, action)=> {
+  on(updateCalendarPeriodData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedPeriod = stateCopy.calendarEdit.teachingPeriods.map(period => {
       period[action.field] = action.value;
@@ -89,20 +90,40 @@ export const teachingReducer = createReducer(
     stateCopy.calendarEdit.teachingPeriods = updatedPeriod;
     return stateCopy;
   }),
-  on(setAssemblyEnabledMode, (state, action)=> {
+  on(setAssemblyEnabledMode, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     stateCopy.calendarEdit.isAssemblyIncluded = action.isEnabled
     return stateCopy;
   }),
-  on(toggleEditTeachingActive, (state, action)=> {
+  on(toggleEditTeachingActive, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const classToEdit = stateCopy.calendarEdit.teachingDays.findIndex(day => {
       return day.day === action.day
     });
+    const periodToEdit = stateCopy.calendarEdit.teachingPeriods.findIndex(period => {
+      return period.day === action.day;
+    })
+
+    // Affect periods start time
+    if (stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime != '0') {
+      stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime = '0'
+    } else {
+      stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime = stateCopy.startTime;
+    }
+
+    // Affect teaching period
+    if (stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods.length > 0) {
+      stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods = [];
+    } else {
+      // Change this:
+      // const periodNumber = stateCopy.teachingDays[periodToEdit].periods.length;
+      stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods = generatePeriodFromNumber(8)
+    }
+
     stateCopy.calendarEdit.teachingDays[classToEdit].selected = !action.selected;
     return stateCopy;
   }),
-  on(toggleEditClassActive, (state, action)=> {
+  on(toggleEditClassActive, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const classToEdit = stateCopy.calendarEdit.classes.findIndex(classItem => {
       return classItem.name === action.name
@@ -115,10 +136,10 @@ export const teachingReducer = createReducer(
     const classes: ClassModel[] = [];
 
     const newClasses = JSON.parse(JSON.stringify(stateCopy.classes));
-    for(let i = 0; i < newClasses.length; i++) {
+    for (let i = 0; i < newClasses.length; i++) {
       let copy: ClassModel;
-      for(let j = 0; j < action.group.classes.length; j++) {
-        if(newClasses[i].id === action.group.classes[j].id) {
+      for (let j = 0; j < action.group.classes.length; j++) {
+        if (newClasses[i].id === action.group.classes[j].id) {
           newClasses[i].selected = true;
         }
       }
@@ -133,11 +154,17 @@ export const teachingReducer = createReducer(
     stateCopy.calendarEdit = editState;
     return stateCopy;
   }),
-  on(updateEditStartTime, (state, action)=> {
+  on(updateEditStartTime, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    // const specificPeriodIdx = stateCopy.calendarEdit.teachingPeriods.findIndex(period => period.day === action.update.day)
-    // stateCopy.calendarEdit.teachingPeriods[specificPeriodIdx].startTime = action.update.value;
-    console.log(action);
+    const specificPeriodIdx = stateCopy.calendarEdit.teachingPeriods.findIndex(period => period.day === action.day)
+    stateCopy.calendarEdit.teachingPeriods[specificPeriodIdx].startTime = action.value;
+    return stateCopy;
+  }),
+  on(updateTeachingPeriod, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    const teachingPeriodIdx = stateCopy.calendarEdit.teachingPeriods.findIndex(period => period.day === action.day)
+    stateCopy.calendarEdit.teachingPeriods[teachingPeriodIdx].periods = generatePeriodFromNumber(action.value);
+    console.log(stateCopy.calendarEdit.teachingPeriods[teachingPeriodIdx].periods)
     return stateCopy;
   }),
   on(setGroupTeachingDays, (state, action) => {
@@ -224,7 +251,7 @@ export const teachingReducer = createReducer(
     stateCopy.periods = updatedPeriods;
     return stateCopy;
   }),
-  on(computedModifications, (state, action)=> {
+  on(computedModifications, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const classes = action.modifiedGroup.classes;
     let adjustedGroups: ClassGroupModel[];
@@ -237,7 +264,7 @@ export const teachingReducer = createReducer(
     stateCopy.classesAndGroups = adjustedGroups
     return stateCopy;
   }),
-  on(computeNewGroup, (state, action)=> {
+  on(computeNewGroup, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     stateCopy.classesAndGroups.push(action.newGroup);
     return stateCopy;
@@ -704,7 +731,7 @@ export const teachingReducer = createReducer(
       classesAndGroups: updatedClassesAndGroups
     };
   }),
-  on(setEditAssemblyData, (state, action)=> {
+  on(setEditAssemblyData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.calendarEdit.teachingPeriods.map(period => {
       period.assembly[action.field] = action.value as any;

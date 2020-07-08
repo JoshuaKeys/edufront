@@ -79,14 +79,17 @@ export class HolidayListComponent implements OnInit {
     this.store.dispatch(deleteHoliday({ holiday }));
   }
   onEditHoliday(holiday: HolidayModel) {
+    console.log(holiday);
+
     this.store.dispatch(editHoliday({ holiday }));
   }
   onEditHolidayRequest(holiday: HolidayModel) {
+    console.log(holiday);
     this.store.dispatch(editHolidayRequest({ holiday }));
   }
   constructor(
     private store: Store<CalendarStateModel>,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 }

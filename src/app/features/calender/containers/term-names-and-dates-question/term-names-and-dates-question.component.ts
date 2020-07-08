@@ -40,7 +40,7 @@ export class TermNamesAndDatesQuestionComponent
     private store: Store<CalendarStateModel>,
     private router: Router,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   getElementId(index, value) {
     return `${value}--${index}`;
@@ -108,7 +108,7 @@ export class TermNamesAndDatesQuestionComponent
                 calendarData,
                 index,
                 'Term',
-                'termAndDates'
+                'termsAndDates'
               );
               if (msg) result.push(msg.msg);
             });

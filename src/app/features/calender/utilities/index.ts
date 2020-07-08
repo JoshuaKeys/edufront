@@ -5,6 +5,9 @@ import { PeriodsPerDayComponent } from '../components/periods-per-day/periods-pe
 import { DayModel } from '../models/day.model';
 import { CalendarModel } from '../models/calendar.model';
 import { CalendarUpdateModel } from '../models/calendar-update.model';
+import { CalendarStateModel } from '../models/calender-state.model';
+import { TimeTablePlanner } from '../models/time-table-planner.model';
+import { TeachingDayPlannerModel } from '../models/teaching-day-planner.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -79,7 +82,7 @@ export function buildRangePipe(items: number[]) {
       if (arr.length - 1 !== idx) {
         if (curr.end - curr.start > 1) {
           return (prev += `${curr.start}-${curr.end}|`);
-        }else if (curr.end - curr.start === 1) {
+        } else if (curr.end - curr.start === 1) {
           return (prev += `${curr.start}|${curr.end}|`);
         }
         return (prev += `${curr.start}|${curr.end}|`);
@@ -88,7 +91,10 @@ export function buildRangePipe(items: number[]) {
         return (prev += `${curr.start}|${curr.end}`);
       }
       return (prev += `${curr.start}-${curr.end}`);
+    } else if (curr.start && !curr.end && arr.length > 1 && idx !== arr.length - 1) {
+      return (prev += `${curr.start}|`);
     } else if (curr.start && !curr.end) {
+      console.log(curr, arr);
       return (prev += `${curr.start}`);
     }
   }, '');
@@ -231,7 +237,7 @@ function setTeachingPeriods(
   modifiedClasses: ModifiedClasses[],
   idx,
   currentTeachingPeriods
-) {}
+) { }
 function isUniform(previous, current) {
   for (let i = 0; i < previous.length; i++) {
     let found = false;
@@ -314,7 +320,9 @@ export function validateTermsAndDates(
     }
     if (index > 0) {
       console.log(termsAndDates.termsAndDates)
+      console.log(termsAndDates[formType])
       console.log(index);
+      console.log(formType)
       const previousEndDate = new Date(
         termsAndDates[formType][index - 1].endDate
       );
