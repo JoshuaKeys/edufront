@@ -91,6 +91,7 @@ export class InputComponent
   @ViewChild('inputEl') inputEl: ElementRef;
   @ViewChild('inputElDisplay') inputElDisplay: ElementRef;
   @Output('edu-keydown') elkeydown = new EventEmitter();
+  @Output('edu-input') elinput = new EventEmitter();
   @Output('edu-change') elchange = new EventEmitter();
   @Output('edu-blur') elBlur = new EventEmitter();
   @ContentChildren(InputAffixDirective) InputAffixDirectives: QueryList<
@@ -108,10 +109,10 @@ export class InputComponent
     // console.log(getComputedStyle(this.inputEl.nativeElement));
   }
   setElementID() {
-    let elementIdDefined = this.elementId !== eid;
+    let elementIdNotDefined = this.elementId === eid;
     let formcontrolnamedefined =
       this.el.nativeElement.getAttribute('formcontrolname') !== undefined;
-    if (!elementIdDefined && formcontrolnamedefined) {
+    if (elementIdNotDefined && formcontrolnamedefined) {
       this.elementId = this.el.nativeElement.getAttribute('formcontrolname');
     }
   }
@@ -154,6 +155,13 @@ export class InputComponent
       prefixValue: '' //might have to delete this later, was meant to prefix existing value in input
     };
   }
+  elChange() {
+    this.elchange.emit(this.value);
+    this.onChange(this.value);
+  }
+  elInput() {
+    this.elinput.emit(this.value);
+  }
   focusInput() {
     this.inputElIsFocus = true;
   }
@@ -191,8 +199,8 @@ export class InputComponent
 
     if (this.ngafterViewHookPassed) {
       // console.log('AFTER VIEW INIT');
-      this.elchange.emit(val);
-      this.onChange(val);
+      // this.elchange.emit(val);
+      // this.onChange(val);
       // this.cd.markForCheck();
     }
     this.cd.markForCheck();

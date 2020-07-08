@@ -1,45 +1,90 @@
 <div class="main">
-    <div class="content">
-        <h1 class="header">
-            Define your breaks
-        </h1>
+  <div class="content">
+    <h1 class="header">
+      Define your breaks
+    </h1>
 
-        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
-            <!-- <div class="group--row break" *ngFor="let item of formArr"> -->
-            <div class="group--row break" *ngFor="let break of (teachingData | async).periods[0].breaks; let i = index">
-                <edu-input (edu-blur)="updateTitle($event, i)" [elementId]="'title-' + i" [ngModel]="break.title">
-                    <span class="edu-label">
+    <div
+      #scrollableEl
+      class="scrollable-content"
+      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
+    >
+      <!-- <div class="group--row break" *ngFor="let item of formArr"> -->
+      <div
+        class="group--row break"
+        *ngFor="
+          let break of (teachingData | async).periods[0].breaks;
+          let i = index
+        "
+      >
+        <edu-input
+          (edu-blur)="updateTitle($event, i)"
+          [elementId]="'title-' + i"
+          [ngModel]="break.title"
+        >
+          <span class="edu-label">
             Title
           </span>
-                </edu-input>
-                <edu-icon-select (edu-tick)="updateDay($event, i)" [textParserFn]="parseDayValue" [elementId]="'day'" [valueOptions]="dayOptions" [ngModel]="break.day">
-                    <span class="edu-label">
+        </edu-input>
+        <edu-icon-select
+          (edu-tick)="updateDay($event, i)"
+          [textParserFn]="parseDayValue"
+          [elementId]="'day'"
+          [valueOptions]="dayOptions"
+          [ngModel]="break.day"
+        >
+          <span class="edu-label">
             Day
           </span>
-                </edu-icon-select>
-                <edu-icon-select [isSingleSelect]="true" (edu-tick)="updateAfter($event, i)" [textParserFn]="parsePeriodValue" elementId="after" [valueOptions]="periodOption" [ngModel]="break.after">
-                    <span class="edu-label">
+        </edu-icon-select>
+        <edu-icon-select
+          [isSingleSelect]="true"
+          (edu-tick)="updateAfter($event, i)"
+          [textParserFn]="parsePeriodValue"
+          elementId="after"
+          [valueOptions]="periodOption"
+          [ngModel]="break.after"
+        >
+          <span class="edu-label">
             After
           </span>
-                </edu-icon-select>
-                <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
+        </edu-icon-select>
+        <edu-select-v2
+          (edu-change)="updateDuration($event, i)"
+          [elementId]="computeName('duration', i)"
+          [ngModel]="break.duration"
+        >
+          <span class="edu-label">
+            Duration
+          </span>
+          <edu-option-v2
+            [OptionValue]="getMinInString(1 + i)"
+            *ngFor="let time of timeArr; let i = index"
+            >{{ i + 1 }} mins</edu-option-v2
+          >
+        </edu-select-v2>
+        <!-- <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
                     <span class="edu-label">
             Duration
           </span>
                     <span class="inline-suffix duration__suffix">mins</span>
-                </edu-input>
+                </edu-input> -->
 
-                <button class="delete-vacation-btn" ButtonType="icon">
-                  <img src="assets/form-components/cross-red.svg" alt="" />
-                </button>
-            </div>
+        <button class="delete-vacation-btn" ButtonType="icon">
+          <img src="assets/form-components/cross-red.svg" alt="" />
+        </button>
+      </div>
 
-            <button class="break__btn" (click)="addSameBreaks()">
-              <img src="assets/32pxplusblue.svg" />
-            </button>
-        </div>
+      <button class="break__btn" (click)="addSameBreaks()">
+        <img src="assets/32pxplusblue.svg" />
+      </button>
     </div>
-    <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
+  </div>
+  <button
+    [routerLink]="['../', activatedRouteData.next]"
+    class="button--bottom"
+    ButtonType="basic"
+  >
     continue
   </button>
 </div>

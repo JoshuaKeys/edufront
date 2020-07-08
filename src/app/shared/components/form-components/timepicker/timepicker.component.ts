@@ -152,9 +152,11 @@ export class TimepickerComponent
   }
 
   popoverClose() {
-    if (JSON.stringify(this.tempValue) !== JSON.stringify(this.activeTime)) {
-      this.value = this.displayText;
-    }
+    // console.log('popover closing', this.tempValue);
+    // console.log('popover closing', this.activeTime);
+    // if (JSON.stringify(this.tempValue) !== JSON.stringify(this.activeTime)) {
+    this.value = this.displayText;
+    // }
   }
   popoverOpen() {
     if (Object.keys(this.activeTime).length == 0) {

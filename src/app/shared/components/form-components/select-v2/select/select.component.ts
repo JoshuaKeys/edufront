@@ -15,13 +15,20 @@ import {
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionComponent } from '../../option/option.component';
+import { OptionComponent2 } from '../option/option.component';
 import { SelectService } from '../select.service';
 // import { OptionValueDirective } from "../option-value.directive"
-import { filter, distinctUntilChanged, map, distinct } from 'rxjs/operators';
+import {
+  filter,
+  distinctUntilChanged,
+  map,
+  distinct,
+  mergeMap,
+  sample
+} from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 @Component({
-  selector: 'edu-select',
+  selector: 'edu-select-v2',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   providers: [
@@ -29,12 +36,12 @@ import { BehaviorSubject } from 'rxjs';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => SelectComponent)
+      useExisting: forwardRef(() => SelectComponent2)
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent
+export class SelectComponent2
   implements OnInit, AfterViewInit, ControlValueAccessor {
   @Output() onValueChange = new EventEmitter<any>();
   @Input('alignment') alignment = 'center'; //left right center
@@ -43,7 +50,7 @@ export class SelectComponent
   @Input('hideChevron') hideChevron = false;
   @Input('elementId') elementId = 'selectcomp';
   @ViewChild('checkboxEl') checkboxEl: ElementRef;
-  @ContentChildren(OptionComponent) optionEls: QueryList<OptionComponent>;
+  @ContentChildren(OptionComponent2) optionEls: QueryList<OptionComponent2>;
 
   $value = new BehaviorSubject('');
   _value = '';
@@ -51,9 +58,13 @@ export class SelectComponent
     // console.log('SET IN SELECT');
     // console.log(`set select value ${param}`);
     this._value = param;
-    this.selectService.setActiveValue(param);
+    if (param == null) {
+      this.inputValue = '';
+    } else {
+      this.$value.next(param);
+    }
 
-    this.$value.next(param);
+    console.log(`selectid value setter ${this.elementId} - ${param}`);
   }
   get value() {
     return this._value;
@@ -91,16 +102,13 @@ export class SelectComponent
     this.$value
       .pipe(
         filter(() => this.ngafterViewHookPassed),
-        filter(param => this.isValidOption(param))
+        filter(param => this.isValidOption(param)),
+        distinctUntilChanged()
       )
 
       .subscribe(param => {
-        // console.log('CHANGE IN SELECT - ' + param);
         // this._value = param;
-
-        this.onValueChange.emit(param);
-        this.elchange.emit(param);
-        this.onChange(param);
+        this.selectService.setActiveValue(param);
       });
     //register to events here
 
@@ -110,20 +118,29 @@ export class SelectComponent
     //   this.checkboxEl.nativeElement.focus();
     // });
     this.selectService.activeOptionComponent
+      .pipe(sample(this.selectService.optionClicked))
+      .subscribe((optionComp: OptionComponent2) => {
+        let value = optionComp.OptionValue;
+        this.onValueChange.emit(value);
+        this.elchange.emit(value);
+        this.onChange(value);
+      });
+    this.selectService.activeOptionComponent
       .pipe(
         filter(val => val != null),
         distinctUntilChanged()
       )
-      .subscribe((optionComp: OptionComponent) => {
+      .subscribe((optionComp: OptionComponent2) => {
         // console.log('SETTING DISPLAY VALUE');
         // console.log(optionComp);
         // if (optionComp !== null) {
-        setTimeout(() => {
-          this.inputValue = optionComp.displayedValue;
-          // console.log(`inputValue - ${this.inputValue}`);
-          this.value = optionComp.OptionValue;
-          this.cd.markForCheck();
-        });
+
+        this.inputValue = optionComp.displayedValue;
+        // console.log(`inputValue - ${this.inputValue}`);
+        this.value = optionComp.OptionValue;
+
+        this.cd.markForCheck();
+
         // } else {
         // console.log('OPTION COM IS NUL ??');
         // }
@@ -140,9 +157,13 @@ export class SelectComponent
   ngAfterViewInit() {
     this.ngafterViewHookPassed = true;
   }
+
   isValidOption(option) {
     // console.log(option);
-    // console.log(typeof this.validOptionValues);
+
+    if (option === null) {
+      return false;
+    }
     // console.log(this.validOptionValues);
     return this.validOptionValues.indexOf(option) != -1;
   }

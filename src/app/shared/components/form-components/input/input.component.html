@@ -46,6 +46,8 @@
         type="{{ config.isPassword ? 'password' : 'text' }}"
         [disabled]="disabled"
         (focus)="focusInput()"
+        (change)="elChange()"
+        (input)="elInput()"
         (blur)="blurInput()"
       />
     </div>
