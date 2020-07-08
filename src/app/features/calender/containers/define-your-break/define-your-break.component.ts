@@ -73,6 +73,7 @@ export class DefineYourBreakComponent implements OnInit {
     this.store.dispatch(updateBreakData({ groupId, index, field, value }));
   }
   updateTitle($event, idx: number, groupId: string) {
+    // console.log(groupId, 'title', $event, idx);
     this.updateBreakData(groupId, 'title', $event, idx);
   }
   updateDay($event, idx: number, groupId: string) {
@@ -82,11 +83,14 @@ export class DefineYourBreakComponent implements OnInit {
     this.updateBreakData(groupId, 'after', $event, idx);
   }
   updateDuration($event, idx: number, groupId: string) {
+    console.log(groupId, 'duration', $event, idx);
     this.updateBreakData(groupId, 'duration', $event, idx);
   }
+
   ngOnInit(): void {
     this.orphanedClasses = this.store.select(selectOrphanedClasses);
     this.teachingState = this.store.select(selectTeaching);
+
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
         const unsortedClassesCopy: ClassModel[] = JSON.parse(
@@ -146,10 +150,12 @@ export class DefineYourBreakComponent implements OnInit {
     this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
     this.store.dispatch(setGroupStartTime({ groupId: generatedGroupId }));
   }
-  computeClasses(classes: ClassModel[]){
-    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+  computeClasses(classes: ClassModel[]) {
+    const grades = classes
+      .map(classItem => classItem.grade)
+      .sort((a, b) => a - b);
     const result = buildRangePipe(grades);
-    return result
+    return result;
   }
   parsePeriodValue(arr) {
     // console.log(arr);

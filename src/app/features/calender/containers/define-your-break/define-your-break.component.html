@@ -1,81 +1,146 @@
 <div class="main">
-    <div class="content" *ngIf="teachingState | async as teachingData">
-        <h1 class="header">
-            Define your breaks
-        </h1>
+  <div class="content" *ngIf="teachingState | async as teachingData">
+    <h1 class="header">
+      Define your breaks
+    </h1>
 
-        <div #scrollableEl class="scrollable-content" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }">
-            <div class="group--row class" *ngFor="let item of teachingData.classesAndGroups">
-                <div class="card ">
-                    <h4 class="card__title">
-                        Classes
-                    </h4>
-                    <p class="card__desc">
-                        {{computeClasses(item.classes)}}
-                    </p>
-                    <edu-popover>
-                        <div class="classes">
-                            <div class="badge badge--class badge--active" [ngClass]="{
-                                'badge--active': isPresent(item.classes, classItem)
-                                }" (click)="toggleActiveClass(classItem, item)" *ngFor="let classItem of allClasses | async as allClasses">
-                                {{ classItem.grade }}
-                            </div>
-                        </div>
-                    </edu-popover>
-                </div>
-                <div class="group--column">
-                    <div class="group--row break" *ngFor="let breakItem of item.periods[0].breaks; let i = index">
-                        <edu-input (edu-blur)="updateTitle($event, i, item.id)" [elementId]="'title-'+ i" [ngModel]="breakItem.name">
-                            <span class="edu-label">
+    <div
+      #scrollableEl
+      class="scrollable-content"
+      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
+    >
+      <div
+        class="group--row class"
+        *ngFor="
+          let item of teachingData.classesAndGroups;
+          let classIndex = index
+        "
+      >
+        <div class="card ">
+          <h4 class="card__title">
+            Classes
+          </h4>
+          <p class="card__desc">
+            {{ computeClasses(item.classes) }}
+          </p>
+          <edu-popover>
+            <div class="classes">
+              <div
+                class="badge badge--class badge--active"
+                [ngClass]="{
+                  'badge--active': isPresent(item.classes, classItem)
+                }"
+                (click)="toggleActiveClass(classItem, item)"
+                *ngFor="let classItem of allClasses | async as allClasses"
+              >
+                {{ classItem.grade }}
+              </div>
+            </div>
+          </edu-popover>
+        </div>
+        <div class="group--column">
+          <div
+            class="group--row break"
+            *ngFor="let breakItem of item.periods[0].breaks; let i = index"
+          >
+            <edu-input
+              (edu-blur)="updateTitle($event, i, item.id)"
+              [elementId]="'title-' + i + '-ci-' + classIndex"
+              [ngModel]="breakItem.title"
+            >
+              <span class="edu-label">
                 Title
               </span>
-                        </edu-input>
-                        <edu-icon-select (edu-tick)="updateDay($event, i, item.id)" [textParserFn]="parseDayValue" [elementId]="'day-' + i" [valueOptions]="dayOptions" [ngModel]="breakItem.day">
-                            <span class="edu-label">
+            </edu-input>
+            <edu-icon-select
+              (edu-tick)="updateDay($event, i, item.id)"
+              [textParserFn]="parseDayValue"
+              [elementId]="'day-' + i + '-ci-' + classIndex"
+              [valueOptions]="dayOptions"
+              [ngModel]="breakItem.day"
+            >
+              <span class="edu-label">
                 Day
               </span>
-                        </edu-icon-select>
-                        <edu-icon-select (edu-tick)="updateAfter($event, i, item.id)" [textParserFn]="parsePeriodValue" [elementId]="'after-' + i" [valueOptions]="periodOption" [ngModel]="breakItem.after">
-                            <span class="edu-label">
+            </edu-icon-select>
+            <edu-icon-select
+              (edu-tick)="updateAfter($event, i, item.id)"
+              [textParserFn]="parsePeriodValue"
+              [elementId]="'after-' + i + '-ci-' + classIndex"
+              [valueOptions]="periodOption"
+              [ngModel]="breakItem.after"
+            >
+              <span class="edu-label">
                 After
               </span>
-                        </edu-icon-select>
-                        <edu-input (edu-blur)="updateDuration($event, i, item.id)" [elementId]="'duration-'+i" [ngModel]="breakItem.duration">
-                            <span class="edu-label">
+            </edu-icon-select>
+            <edu-select
+              (edu-change)="updateDuration($event, i, item.id)"
+              [elementId]="'duration-' + i + '-ci-' + classIndex"
+              [ngModel]="breakItem.duration"
+            >
+              <span class="edu-label">
                 Duration
               </span>
-                            <span class="inline-suffix duration__suffix">mins</span>
-                        </edu-input>
+              <edu-option
+                [OptionValue]="1 + i"
+                *ngFor="let time of timeArr; let i = index"
+                >{{ i + 1 }} mins</edu-option
+              >
+            </edu-select>
+            <!-- <edu-input
+              (edu-blur)="updateDuration($event, i, item.id)"
+              [elementId]="'duration-' + i + '-ci-' + classIndex"
+              [ngModel]="breakItem.duration"
+            >
+              <span class="edu-label">
+                Duration
+              </span>
+              <span class="inline-suffix duration__suffix">mins</span>
+            </edu-input> -->
 
-                        <button class="delete-vacation-btn" ButtonType="icon" (click)="removeBreak(item.id, i)">
+            <button
+              class="delete-vacation-btn"
+              ButtonType="icon"
+              (click)="removeBreak(item.id, i)"
+            >
               <img src="assets/form-components/cross-red.svg" alt="" />
             </button>
-                    </div>
-                    <button class="break__btn" (click)="addBreakArr(item.id)">
+          </div>
+          <button class="break__btn" (click)="addBreakArr(item.id)">
             <img src="assets/32pxplusblue.svg" />
           </button>
-                </div>
-            </div>
-            <!-- <button class="break__btn card" (click)="addClassArr()">
+        </div>
+      </div>
+      <!-- <button class="break__btn card" (click)="addClassArr()">
         <img src="assets/32pxplusblue.svg" />
       </button> -->
-            <div class="group--row line-entry">
-                <div class="card card--dashed break__btn">
-                    <img src="/assets/search-plus.svg" alt="" srcset="" />
-                    <edu-popover>
-                        <div class="classes">
-                            <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async">
-                                {{ classItem.grade }}
-                            </div>
-                        </div>
-                    </edu-popover>
-                </div>
+      <div class="group--row line-entry">
+        <div class="card card--dashed break__btn">
+          <img src="/assets/search-plus.svg" alt="" srcset="" />
+          <edu-popover>
+            <div class="classes">
+              <div
+                class="badge badge--class"
+                (click)="addNewGroup(classItem)"
+                *ngFor="let classItem of allClasses | async"
+              >
+                {{ classItem.grade }}
+              </div>
             </div>
+          </edu-popover>
         </div>
+      </div>
     </div>
-    <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
+  </div>
+  <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
 
-    <button class="button--bottom" [disabled]="(orphanedClasses | async).length" ButtonType="basic" [routerLink]="['../', activatedRouteData.next]">
+  <button
+    class="button--bottom"
+    [disabled]="(orphanedClasses | async).length"
+    ButtonType="basic"
+    [routerLink]="['../', activatedRouteData.next]"
+  >
     continue
   </button>
 </div>
