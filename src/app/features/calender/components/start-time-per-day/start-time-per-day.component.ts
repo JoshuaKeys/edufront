@@ -19,6 +19,8 @@ export class StartTimePerDayComponent implements OnInit {
     this.classGroup.subscribe(console.log);
   }
   selectTime(day, group) {
-    this.onSelectTime.emit({day, classGroup: group})
+    if (day.startTime != '0') {
+      this.onSelectTime.emit({ day, classGroup: group })
+    }
   }
 }

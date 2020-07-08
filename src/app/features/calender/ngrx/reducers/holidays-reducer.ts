@@ -25,18 +25,17 @@ export const holidayListReducer = createReducer(initialState,
     const stateCopy = JSON.parse(JSON.stringify(state));
     const holiday = JSON.parse(JSON.stringify(action.holiday));
     holiday.mockId = uuid44();
-    console.log(holiday.mockId)
     if (hasId > -1) {
       return state;
     }
     return holidayAdapter.addOne(holiday, state)
   }),
   on(editHolidaySuccess, (state, action) => {
-    console.log(action.holiday)
+    const holiday = JSON.parse(JSON.stringify(action.holiday));
     const update: Update<HolidayModel> = {
       id: action.holiday.mockId,
       changes: {
-        ...action.holiday
+        ...holiday
       }
     }
     return holidayAdapter.updateOne(update, state);

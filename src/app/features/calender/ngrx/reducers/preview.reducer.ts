@@ -43,7 +43,8 @@ import {
   addBreak,
   removeBreak,
   updateBreakData,
-  updateSameBreakData
+  updateSameBreakData,
+  computedModifications
 } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
@@ -271,6 +272,19 @@ export const previewReducer = createReducer(
         }
       }
     }
+    return stateCopy;
+  }),
+  on(computedModifications, (state, action) => {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const classes = action.modifiedGroup.classes;
+    let adjustedGroups: ClassGroupModel[];
+    classes.forEach(classItem => {
+      adjustedGroups = clearClassOffGroups(classItem, stateCopy.teachingDays.classesAndGroupItems, action.modifiedGroup.id);
+    })
+    const modifiedIdx = adjustedGroups.findIndex(classGroup => classGroup.id === action.modifiedGroup.id);
+    adjustedGroups[modifiedIdx] = action.modifiedGroup;
+    console.log(adjustedGroups);
+    stateCopy.teachingDays.classesAndGroupItems = adjustedGroups
     return stateCopy;
   }),
   on(selectTeachingDay, (state, action) => {
@@ -671,7 +685,7 @@ export const previewReducer = createReducer(
       action.class,
       groupsState,
       groupsState[groupIdx] ? groupsState[groupIdx].id : null
-     );
+    );
     return {
       ...state,
       teachingDays: {

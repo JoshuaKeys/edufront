@@ -22,6 +22,8 @@ export class PeriodsPerDayComponent implements OnInit {
     this.classGroup.subscribe(console.log);
   }
   selectPeriod(day: TeachingDay, group: ClassGroupModel) {
-    this.onSelectPeriod.emit({day, classGroup: group})
+    if (day.periods.length) {
+      this.onSelectPeriod.emit({ day, classGroup: group })
+    }
   }
 }

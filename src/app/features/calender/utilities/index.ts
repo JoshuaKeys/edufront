@@ -343,3 +343,13 @@ export function validateTermsAndDates(
   }
   return errors;
 }
+
+export function extractTimetableData(calendarState: CalendarStateModel) {
+  const nonEmptyPeriod = calendarState.teaching.periods.findIndex(period => period.periodDuration);
+  const academicYearId = localStorage.getItem('academicYearId');
+  const termId = localStorage.getItem('termId');
+  const requestObj = {
+    intervalDuration: calendarState.teaching.periods[nonEmptyPeriod].periodDuration
+
+  }
+}

@@ -138,13 +138,14 @@ export class CalendarEffects {
       document.body.click();
     })
   ), { dispatch: false });
-  // sendCalendarData = createEffect(() => this.actions$.pipe(
-  //   withLatestFrom(this.store.select(selectCalendar)),
-  //   map(([action, calendarState]) => {
-  //     // return this.calendarService.createCalendar;
-  //     return toggleEndModal()
-  //   })
-  // ))
+  sendCalendarData = createEffect(() => this.actions$.pipe(
+    withLatestFrom(this.store.select(selectCalendar)),
+    map(([action, calendarState]) => {
+      // return this.calendarService.createCalendar;
+      // return toggleEndModal()
+      return this.calendarService.createTimetablePlanner()
+    })
+  ), { dispatch: false })
   constructor(private actions$: Actions,
     private store: Store<CalendarStateModel>,
     private calendarService: CalendarService,
