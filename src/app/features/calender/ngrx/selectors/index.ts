@@ -77,63 +77,97 @@ export const selectPeriodSelected = createSelector(
   }
 );
 export const selectOrphanedClasses = createSelector(
-  calendarFeatureState, feat => {
+  calendarFeatureState,
+  feat => {
     const allClasses = feat.teaching.classes;
     const classesAndGroups = feat.teaching.classesAndGroups;
-    return getOrphanedClasses(allClasses, classesAndGroups).sort((classA, classB)=> {
-      return classA.grade - classB.grade
-    });
+    return getOrphanedClasses(allClasses, classesAndGroups).sort(
+      (classA, classB) => {
+        return classA.grade - classB.grade;
+      }
+    );
   }
 );
 export const selectCreateCalendarData = createSelector(
   calendarFeatureState,
   feat => {
-      if(Object.keys(feat.calendarData).length >= 4) {
-        const holidays: HolidayCreateModel[] = selectAll(
-            feat.holidays.holidayList
-          ).map(holiday => {
-            return {
-              name: holiday.name,
-              isNationalHoliday: holiday.nationalHoliday,
-              date: holiday.date,
-              nationalCalendarId: holiday.nationalCalendarId
-                ? holiday.nationalCalendarId
-                : undefined
-            };
-          });
-      
-          const vacations: VacationCreateModel[] = feat.calendarData.vacations.map(
-            vacation => ({
-              vacationStart: vacation.startDate,
-              vacationEnd: vacation.endDate,
-              vacationName: vacation.vacationName
-            })
-          );
-      
-          const termDetailsDto: TermDetailsDtoModel[] = feat.calendarData.termsAndDates.map(
-            termAndDate => {
-              return {
-                termTitle: termAndDate.termName,
-                termStart: termAndDate.startDate,
-                termEnd: termAndDate.endDate
-              }
-            }
-          );
-          let schoolId = localStorage.getItem('schoolId');
-          schoolId = schoolId ? schoolId :undefined;
-          const term: TermCreateModel = {
-              acadimicStart: feat.calendarData.currentAcademicYear.startDate,
-              acadimicEnd: feat.calendarData.currentAcademicYear.endDate,
-              noOfTerm: feat.calendarData.schoolTerms,
-              schoolId: schoolId,
-              termDetailsDtos: termDetailsDto,
-          };
+    if (Object.keys(feat.calendarData).length >= 4) {
+      const holidays: HolidayCreateModel[] = selectAll(
+        feat.holidays.holidayList
+      ).map(holiday => {
+        return {
+          name: holiday.name,
+          isNationalHoliday: holiday.nationalHoliday,
+          date: holiday.date,
+          nationalCalendarId: holiday.nationalCalendarId
+            ? holiday.nationalCalendarId
+            : undefined
+        };
+      });
+
+      const vacations: VacationCreateModel[] = feat.calendarData.vacations.map(
+        vacation => ({
+          vacationStart: vacation.startDate,
+          vacationEnd: vacation.endDate,
+          vacationName: vacation.vacationName
+        })
+      );
+
+      const termDetailsDto: TermDetailsDtoModel[] = feat.calendarData.termsAndDates.map(
+        termAndDate => {
           return {
-              holidays,
-              term,
-              vacations
-          } as CalendarCreateModel;
-      }
-    return null
+            termTitle: termAndDate.termName,
+            termStart: termAndDate.startDate,
+            termEnd: termAndDate.endDate
+          };
+        }
+      );
+      let schoolId = localStorage.getItem('schoolId');
+      schoolId = schoolId ? schoolId : undefined;
+      const term: TermCreateModel = {
+        acadimicStart: feat.calendarData.currentAcademicYear.startDate,
+        acadimicEnd: feat.calendarData.currentAcademicYear.endDate,
+        noOfTerm: feat.calendarData.schoolTerms,
+        schoolId: schoolId,
+        termDetailsDtos: termDetailsDto
+      };
+      return {
+        holidays,
+        term,
+        vacations
+      } as CalendarCreateModel;
+    }
+    return null;
   }
 );
+
+export const getEarliestStartTime = createSelector(
+  selectTeaching,
+  teachingState => {
+    let earliestStartTimeArr: number[] = teachingState.classesAndGroups.map(
+      classAndGroup => {
+        let startTimeIntArr: number[] = classAndGroup.periods.map(period =>
+          convertTimeToInt(period.startTime)
+        );
+        let earliestStartTime = startTimeIntArr.reduce((prev, current) =>
+          prev > current ? current : prev
+        );
+        return earliestStartTime;
+      }
+    );
+
+    return earliestStartTimeArr.reduce((prev, current) =>
+      prev > current ? current : prev
+    );
+  }
+);
+
+function convertTimeToInt(time: string): number {
+  if (time.length !== 5) {
+    return 1000000;
+  } else {
+    let h = parseInt(time.substring(0, 2)) * 100;
+    let m = parseInt(time.substring(3, 5));
+    return h + m;
+  }
+}

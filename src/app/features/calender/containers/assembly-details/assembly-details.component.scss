@@ -63,3 +63,35 @@ edu-select {
   text-align: center;
   font-size: 14px;
 }
+
+.errors {
+  flex-shrink: 0;
+  padding: 0;
+  position: absolute;
+  min-width: 500px;
+  width: 100%;
+  bottom: 0;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  text-align: center;
+  list-style-type: none;
+  font: 400 14px/20px Raleway;
+  color: $ash;
+
+  li {
+    padding: 0;
+  }
+  &.hidden {
+    opacity: 0;
+    user-select: none;
+    color: transparent;
+  }
+  &.display {
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+  }
+}
