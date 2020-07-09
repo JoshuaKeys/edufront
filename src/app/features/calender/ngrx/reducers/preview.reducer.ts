@@ -43,7 +43,8 @@ import {
   addBreak,
   removeBreak,
   updateBreakData,
-  updateSameBreakData
+  updateSameBreakData,
+  computedModifications
 } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
@@ -87,7 +88,7 @@ export const previewReducer = createReducer(
     const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
       classesGroup => {
         const updatedPeriods = classesGroup.periods.map(period => {
-          period.breaks[action.index][action.field] = action.value as any;
+          period.breaks[action.index][action.field as any] = action.value as any;
           return period;
         });
         classesGroup.periods = updatedPeriods;
@@ -96,7 +97,7 @@ export const previewReducer = createReducer(
     );
 
     const updatedPeriods = stateCopy.periods.items.map(period => {
-      period.breaks[action.index][action.field] = action.value as any;
+      period.breaks[action.index][action.field as any] = action.value as any;
       return period;
     });
     stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
@@ -110,7 +111,7 @@ export const previewReducer = createReducer(
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
-        after: [],
+        after: null,
         duration: ''
       });
       return period;
@@ -122,7 +123,7 @@ export const previewReducer = createReducer(
             name: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
             day: [],
-            after: [],
+            after: null,
             duration: ''
           });
           return period;
@@ -167,7 +168,7 @@ export const previewReducer = createReducer(
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
-        after: [],
+        after: null,
         duration: ''
       } as BreakModel);
       return period;
@@ -217,7 +218,7 @@ export const previewReducer = createReducer(
           name: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
           day: [],
-          after: [],
+          after: null,
           duration: ''
         });
       }
@@ -231,7 +232,7 @@ export const previewReducer = createReducer(
               name: 'Break ' + period.breaks.length + 1,
               firstBreak: '',
               day: [],
-              after: [],
+              after: null,
               duration: ''
             });
           }
@@ -271,6 +272,19 @@ export const previewReducer = createReducer(
         }
       }
     }
+    return stateCopy;
+  }),
+  on(computedModifications, (state, action) => {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const classes = action.modifiedGroup.classes;
+    let adjustedGroups: ClassGroupModel[];
+    classes.forEach(classItem => {
+      adjustedGroups = clearClassOffGroups(classItem, stateCopy.teachingDays.classesAndGroupItems, action.modifiedGroup.id);
+    })
+    const modifiedIdx = adjustedGroups.findIndex(classGroup => classGroup.id === action.modifiedGroup.id);
+    adjustedGroups[modifiedIdx] = action.modifiedGroup;
+    console.log(adjustedGroups);
+    stateCopy.teachingDays.classesAndGroupItems = adjustedGroups
     return stateCopy;
   }),
   on(selectTeachingDay, (state, action) => {
@@ -671,7 +685,7 @@ export const previewReducer = createReducer(
       action.class,
       groupsState,
       groupsState[groupIdx] ? groupsState[groupIdx].id : null
-     );
+    );
     return {
       ...state,
       teachingDays: {

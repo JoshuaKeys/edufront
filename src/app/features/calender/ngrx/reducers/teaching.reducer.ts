@@ -191,7 +191,7 @@ export const teachingReducer = createReducer(
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
-        after: [],
+        after: null,
         duration: ''
       });
       return period;
@@ -203,7 +203,7 @@ export const teachingReducer = createReducer(
             name: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
             day: [],
-            after: [],
+            after: null,
             duration: ''
           });
           return period;
@@ -223,7 +223,7 @@ export const teachingReducer = createReducer(
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
-        after: [],
+        after: null,
         duration: ''
       });
       return period;
@@ -277,7 +277,7 @@ export const teachingReducer = createReducer(
           name: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
           day: [],
-          after: [],
+          after: null,
           duration: ''
         });
       }
@@ -291,7 +291,7 @@ export const teachingReducer = createReducer(
               name: 'Break ' + period.breaks.length + 1,
               firstBreak: '',
               day: [],
-              after: [],
+              after: null,
               duration: ''
             });
           }
@@ -316,7 +316,7 @@ export const teachingReducer = createReducer(
           name: 'Break ' + (period.breaks.length + 1),
           firstBreak: '',
           day: [],
-          after: [],
+          after: null,
           duration: ''
         } as BreakModel);
         return period;
@@ -380,7 +380,8 @@ export const teachingReducer = createReducer(
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
       classesGroup => {
         const updatedPeriods = classesGroup.periods.map(period => {
-          period.breaks[action.index][action.field] = action.value as any;
+          period.breaks[action.index][action.field as any] = action.value
+          period.breaks[action.index][action.field as any] = action.value
           return period;
         });
         classesGroup.periods = updatedPeriods;
@@ -388,7 +389,7 @@ export const teachingReducer = createReducer(
       }
     );
     const updatedPeriods = stateCopy.periods.map(period => {
-      period.breaks[action.index][action.field] = action.value as any;
+      period.breaks[action.index][action.field as any] = action.value;
       return period;
     });
     stateCopy.classesAndGroups = updatedClassesAndGroups;

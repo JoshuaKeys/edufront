@@ -46,7 +46,7 @@
             <edu-input
               (edu-blur)="updateTitle($event, i, item.id)"
               [elementId]="'title-' + i + '-ci-' + classIndex"
-              [ngModel]="breakItem.title"
+              [ngModel]="breakItem.name"
             >
               <span class="edu-label">
                 Title
@@ -54,6 +54,7 @@
             </edu-input>
             <edu-icon-select
               (edu-tick)="updateDay($event, i, item.id)"
+              [isSingleSelect]="true"
               [textParserFn]="parseDayValue"
               [elementId]="'day-' + i + '-ci-' + classIndex"
               [valueOptions]="dayOptions"

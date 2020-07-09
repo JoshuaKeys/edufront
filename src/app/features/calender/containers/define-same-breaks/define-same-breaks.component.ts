@@ -27,7 +27,7 @@ export class DefineSameBreaksComponent implements OnInit {
   constructor(
     private store: Store<CalendarStateModel>,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   teachingData: Observable<TeachingStateModel>;
   testDataArr = [
     {
@@ -61,14 +61,14 @@ export class DefineSameBreaksComponent implements OnInit {
     this.store.dispatch(addSameBreak());
   }
   updateBreakData(
-    field: 'title' | 'day' | 'after' | 'duration',
+    field: 'name' | 'day' | 'after' | 'duration',
     value: any,
     index: number
   ) {
     this.store.dispatch(updateSameBreakData({ index, field, value }));
   }
   updateTitle($event, idx: number) {
-    this.updateBreakData('title', $event, idx);
+    this.updateBreakData('name', $event, idx);
   }
   updateDay($event, idx: number) {
     this.updateBreakData('day', $event, idx);

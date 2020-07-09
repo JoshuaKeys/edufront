@@ -8,6 +8,7 @@ import { CalendarUpdateModel } from '../models/calendar-update.model';
 import { CalendarStateModel } from '../models/calender-state.model';
 import { TimeTablePlanner } from '../models/time-table-planner.model';
 import { TeachingDayPlannerModel } from '../models/teaching-day-planner.model';
+import { TeachingStateModel } from '../models/teaching-state.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -342,4 +343,77 @@ export function validateTermsAndDates(
     errors = null;
   }
   return errors;
+}
+
+export function extractTimetableData(teachingState: TeachingStateModel) {
+  const acadimicYearId = localStorage.getItem('academicYearId');
+  const termId = localStorage.getItem('termId');
+  let requestObj;
+  if (acadimicYearId) {
+    requestObj = {
+      intervalDuration: teachingState.classesAndGroups[0] && teachingState.classesAndGroups[0].periods ? +teachingState.classesAndGroups[0].periods[0].intervaBtwPeriods : undefined,
+      acadimicYearId,
+    };
+    console.log(teachingState.classesAndGroups[0].periods[0])
+    if (termId) {
+      // requestObj.termId = "c330412d-81b2-4d0f-b862-46567140e04b";
+    }
+    requestObj.teachingDayPlanner = getWeekdays(teachingState.classesAndGroups);
+  }
+  console.log(requestObj);
+  return requestObj;
+}
+function getWeekdays(classesAndGroups: ClassGroupModel[]) {
+  let period = [];
+  for (let i = 0; i < classesAndGroups.length; i++) {
+    const periods = classesAndGroups[i].periods ? classesAndGroups[i].periods : [];
+    for (let j = 0; j < periods.length; j++) {
+      let breaks = [];
+      classesAndGroups[i].periods.map(period => {
+        // no endDate
+        const periodCopy = JSON.parse(JSON.stringify(period));
+        const updatedPeriods = periodCopy.breaks.map(breakItem => {
+          console.log()
+          return {
+            breakTitle: breakItem.name,
+            periodIntervalDuration: breakItem.duration,
+            endPeriod: +breakItem.after.substring(1)
+          }
+        })
+        breaks.push(updatedPeriods);
+      })
+      console.log(breaks);
+      const periodPlanners = classesAndGroups[i].periods[j].periods.map((period, index) => {
+        return {
+          name: period,
+          duration: +classesAndGroups[i].periods[j].periodDuration,
+          index: index + 1
+        }
+      })
+      const assemblyStartTime = classesAndGroups[i].periods[j].assembly.startingAt;
+      const assemblyDuration = classesAndGroups[i].periods[j].assembly.duration;
+      period.push({
+        classGroupId: classesAndGroups[i].id,
+        weekday: transformToFullDay(classesAndGroups[i].periods[j].day),
+        noOfPeriod: classesAndGroups[i].periods.length,
+        periodStartTime: classesAndGroups[i].periods[j].startTime,
+        assemblyStartTime: assemblyStartTime ? assemblyStartTime : undefined,
+        assemblyDuration: assemblyDuration ? assemblyDuration : undefined,
+        breaks: breaks[0],
+        periodPlanners
+      })
+    }
+  }
+  return period.filter(period => period.periodPlanners.length);
+}
+function transformToFullDay(day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun') {
+  const fullDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+  for (let i = 0; i < fullDays.length; i++) {
+    if (fullDays[i].substr(0, 3).toLowerCase() === day.toLowerCase()) {
+
+      return fullDays[i];
+    } else {
+      console.log(fullDays[i].substr(0, 2).toLowerCase(), day.toLowerCase())
+    }
+  }
 }
