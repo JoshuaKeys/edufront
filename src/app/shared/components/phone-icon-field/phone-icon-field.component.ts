@@ -32,6 +32,7 @@ export class PhoneIconFieldComponent implements OnInit {
   @Input() icons: PhoneIconModel[];
   @Input() mode: string;
   isOpen = false;
+  phoneNumber = '';
   constructor(private renderer: Renderer2) {}
   value: string;
   activeIcon: string;
@@ -54,23 +55,26 @@ export class PhoneIconFieldComponent implements OnInit {
       this.activeIcon = this.icons[0].icon;
       this.phonePrefix = this.icons[0].phonePrefix;
       this.item = this.icons[0].item;
-      this.value = '';
+      this.phoneNumber = '';
       return;
     }
-    this.value = val.phoneNum ? val.phoneNum : '';
+    this.phoneNumber = val.phoneNum ? val.phoneNum : '';
     this.phonePrefix = val.phonePrefix;
     this.activeIcon = val.icon;
     this.item = val.item;
   }
   filterIcons(icons: PhoneIconModel[], filter: string) {
-    return icons.filter(icon => icon.item.match(filter));
+    // return icons.filter(icon => icon.item.match(filter));
+    return icons.filter(icon =>
+      icon.item.toLowerCase().match(filter.toLowerCase())
+    );
   }
   onSearchItems(input) {
     this.filteredIcons = this.filterIcons(this.icons, input.target.value);
   }
   changeItem(icon: PhoneIconModel) {
     const iconCopy = { ...icon };
-    iconCopy.phoneNum = this.value;
+    iconCopy.phoneNum = this.phoneNumber;
     this.onValueChange(iconCopy);
     this.valueChanged.emit(iconCopy);
     this.toggleDropdown();
@@ -88,23 +92,24 @@ export class PhoneIconFieldComponent implements OnInit {
     }
   }
   onTextChange(event) {
+    // console.log(event);
     if (this.mode === 'select') {
       this.renderer.setProperty(
         this.fieldNameEl.nativeElement,
         'value',
-        this.value
+        this.phoneNumber
       );
       return;
     }
-    this.onValueChange(this.getEventData(this.activeIcon));
-    this.valueChanged.emit(this.getEventData(this.activeIcon));
+    this.onValueChange(this.getEventData(this.activeIcon, event));
+    this.valueChanged.emit(this.getEventData(this.activeIcon, event));
   }
-  getEventData(icon): PhoneIconModel {
+  getEventData(icon, phoneNum): PhoneIconModel {
     return {
       icon,
       phonePrefix: this.phonePrefix,
       // phoneNum: this.fieldNameEl.nativeElement.value,
-      phoneNum: this.value,
+      phoneNum,
       item: this.item,
       name: this.fieldName.toLowerCase()
     };
