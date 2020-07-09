@@ -225,7 +225,7 @@ export const addSameBreak = createAction(
 );
 export const updateSameBreakData = createAction(
   '[DefineSameBreakComponent] updateSameBreakData',
-  props<{ index: number, field: 'title' | 'day' | 'after' | 'duration', value: string }>()
+  props<{ index: number, field: 'name' | 'day' | 'after' | 'duration', value: string }>()
 );
 export const removeSameBreak = createAction(
   '[DefineSameBreakSomponent] removeSameBreak',

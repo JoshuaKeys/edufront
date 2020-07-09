@@ -119,7 +119,7 @@ export class CalendarConfirmationComponent implements OnInit {
     this.modalState = this.store.select(selectCalendarModalState);
   }
   sendCalendarData() {
-    this.store.dispatch(toggleEndModal())
+    this.store.dispatch(sendCalendarData())
   }
   computeClasses(classes: ClassModel[]) {
     const grades = classes.map(classItem => classItem.grade).sort((a, b) => a - b);

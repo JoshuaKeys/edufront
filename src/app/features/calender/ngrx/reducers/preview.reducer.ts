@@ -88,7 +88,7 @@ export const previewReducer = createReducer(
     const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
       classesGroup => {
         const updatedPeriods = classesGroup.periods.map(period => {
-          period.breaks[action.index][action.field] = action.value as any;
+          period.breaks[action.index][action.field as any] = action.value as any;
           return period;
         });
         classesGroup.periods = updatedPeriods;
@@ -97,7 +97,7 @@ export const previewReducer = createReducer(
     );
 
     const updatedPeriods = stateCopy.periods.items.map(period => {
-      period.breaks[action.index][action.field] = action.value as any;
+      period.breaks[action.index][action.field as any] = action.value as any;
       return period;
     });
     stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
@@ -111,7 +111,7 @@ export const previewReducer = createReducer(
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
-        after: [],
+        after: null,
         duration: ''
       });
       return period;
@@ -123,7 +123,7 @@ export const previewReducer = createReducer(
             name: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
             day: [],
-            after: [],
+            after: null,
             duration: ''
           });
           return period;
@@ -168,7 +168,7 @@ export const previewReducer = createReducer(
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
         day: [],
-        after: [],
+        after: null,
         duration: ''
       } as BreakModel);
       return period;
@@ -218,7 +218,7 @@ export const previewReducer = createReducer(
           name: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
           day: [],
-          after: [],
+          after: null,
           duration: ''
         });
       }
@@ -232,7 +232,7 @@ export const previewReducer = createReducer(
               name: 'Break ' + period.breaks.length + 1,
               firstBreak: '',
               day: [],
-              after: [],
+              after: null,
               duration: ''
             });
           }

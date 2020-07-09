@@ -29,7 +29,7 @@ export class CalendarService {
     return this.httpClient.delete(`/api/v1/holiday/${holiday.id}`)
   }
   createTimetablePlanner(timetable) {
-    
+    return this.httpClient.post(`/api/v1/timetablePlanner`, timetable);
   }
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 }

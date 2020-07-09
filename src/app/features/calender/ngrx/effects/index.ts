@@ -5,14 +5,14 @@ import {
   fetchHolidaysResponse, fetchClassesAndGroups,
   fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
   updateSelectedTeachingDaysRequest,
-  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess
+  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData
 } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeachingDays, getAllSelectedClassPeriods, selectCreateCalendarData, selectTeaching, selectCalendar } from '../selectors';
-import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly } from '../../utilities';
+import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly, extractTimetableData } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { PeriodModel } from '../../models/period.model';
 import { v4 as uuid44 } from 'uuid';
@@ -129,7 +129,11 @@ export class CalendarEffects {
     ofType(createCalendarRequest),
     withLatestFrom(this.store.select(selectCreateCalendarData)),
     mergeMap(([action, calendarCreate]) => this.calendarService.createCalendar(calendarCreate).pipe(
-      map(calendarResponse => createCalendarSuccess({ calendarResponse }))
+      map(calendarResponse => {
+        localStorage.setItem('termId', calendarResponse.term.termDetailsDtos[0].termId);
+        localStorage.setItem('academicYearId', calendarResponse.term.termDetailsDtos[0].academicYearId)
+        return createCalendarSuccess({ calendarResponse })
+      })
     ))
   ))
   looseFocus$ = createEffect(() => this.actions$.pipe(
@@ -139,13 +143,16 @@ export class CalendarEffects {
     })
   ), { dispatch: false });
   sendCalendarData = createEffect(() => this.actions$.pipe(
-    withLatestFrom(this.store.select(selectCalendar)),
-    map(([action, calendarState]) => {
-      // return this.calendarService.createCalendar;
-      // return toggleEndModal()
-      return this.calendarService.createTimetablePlanner()
+    ofType(sendCalendarData),
+    withLatestFrom(this.store.select(selectTeaching)),
+    mergeMap(([action, calendarState]) => {
+      const api = extractTimetableData(calendarState)
+      console.log(api);
+      return this.calendarService.createTimetablePlanner(api).pipe(
+        map(response => toggleEndModal())
+      )
     })
-  ), { dispatch: false })
+  ))
   constructor(private actions$: Actions,
     private store: Store<CalendarStateModel>,
     private calendarService: CalendarService,
