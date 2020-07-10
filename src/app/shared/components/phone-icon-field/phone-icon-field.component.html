@@ -1,10 +1,10 @@
 <edu-input
   #inputEl
   [alignment]="alignment"
-  [(ngModel)]="value"
   [elementId]="fieldName"
+  [(ngModel)]="phoneNumber"
   #fieldNameEl
-  (input)="onTextChange($event)"
+  (edu-input)="onTextChange($event)"
 >
   <div class="form__icon-select-wrapper  edu-input__prefix" InputAffix>
     <img class="form__icon icon__img" [src]="activeIcon" alt="" />
@@ -22,13 +22,14 @@
             class="popup__search-input"
             type="text"
             placeholder="Search"
+            (input)="onSearchItems($event)"
           />
         </div>
         <div class="popup__content">
           <div class="icons">
             <div
               class="icon"
-              *ngFor="let icon of icons"
+              *ngFor="let icon of filteredIcons"
               (click)="changeItem(icon)"
             >
               <div class="icon__content">
