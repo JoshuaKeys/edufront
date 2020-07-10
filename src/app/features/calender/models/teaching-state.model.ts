@@ -6,11 +6,12 @@ import { SelectionModel } from './selection.model';
 import { CalendarUpdateModel } from './calendar-update.model';
 
 export interface TeachingStateModel {
-    teachingDays?: TeachingDay[];
-    periods?: PeriodModel[];
-    classesAndGroups?: ClassGroupModel[];
-    classes?: ClassModel[];
-    selection?: SelectionModel;
-    startTime?: string;
-    calendarEdit: CalendarUpdateModel
+  teachingDays?: TeachingDay[];
+  periods?: PeriodModel[];
+  classesAndGroups?: ClassGroupModel[];
+  classes?: ClassModel[];
+  selection?: SelectionModel;
+  startTime?: string;
+  calendarEdit?: CalendarUpdateModel;
+  sameNoOfPeriods?: boolean;
 }

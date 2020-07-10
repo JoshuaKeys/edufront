@@ -43,7 +43,8 @@ import {
   computeNewGroup,
   computedModifications,
   updateEditStartTime,
-  updateTeachingPeriod
+  updateTeachingPeriod,
+  setSamePeriodsQuestion
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -373,6 +374,11 @@ export const teachingReducer = createReducer(
       }
     );
     stateCopy.calendarEdit.teachingPeriods = updatedPeriods;
+    return stateCopy;
+  }),
+  on(setSamePeriodsQuestion, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.sameNoOfPeriods = action.answer;
     return stateCopy;
   }),
   on(updateSameBreakData, (state, action) => {

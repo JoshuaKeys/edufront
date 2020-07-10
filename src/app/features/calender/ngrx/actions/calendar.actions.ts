@@ -289,3 +289,7 @@ export const updateTeachingPeriod = createAction(
   '[UpdateTimetableComponent] updateTeachingPeriod',
   props<{ value: number; day: string }>()
 );
+export const setSamePeriodsQuestion = createAction(
+  '[SamePeriodsForClassesQuestionComponent] setSamePeriodsQuestion',
+  props<{ answer: boolean }>()
+)
