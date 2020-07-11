@@ -427,9 +427,12 @@
   &__text {
     text-align: left;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 1;
     letter-spacing: 0.42px;
     color: $blue;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 

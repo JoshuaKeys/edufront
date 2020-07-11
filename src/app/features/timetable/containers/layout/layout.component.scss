@@ -3,6 +3,11 @@
 @import 'src/assets/styles/colors';
 @import 'src/assets/styles/modules/section-module';
 @include splitLayout2();
+
+* {
+  transition: none;
+}
+
 section {
   padding-top: 46px;
 }
@@ -19,8 +24,6 @@ aside {
   }
 }
 
-@import 'src/assets/styles/colors';
-@import 'src/assets/styles/mixins/alignment';
 main {
   .form,
   .content {
@@ -51,10 +54,19 @@ main {
 
   .form__content-wrapper,
   .content-wrapper {
+    position: relative;
     width: 100%;
     margin: auto;
     flex-grow: 1;
     @include displayFlex(center, center, column);
+  }
+  .confirm-btn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    height: 40px;
+    text-transform: uppercase;
+    z-index: 3;
   }
   .form__button {
     width: 250px;
@@ -77,4 +89,213 @@ main {
 }
 .timetable__timetable {
   flex: 1 1 auto;
+  min-height: 500px;
+  padding: 0 25px;
+  width: 85%;
+  position: relative;
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: rgba(#fff, 0.5);
+  text-align: center;
+  padding-top: 100px;
+}
+
+edu-shared-staff-chip {
+  display: inline-block;
+  max-width: 100%;
+}
+
+edu-simple-button {
+  margin: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Quicksand;
+}
+.weekday {
+  text-align: center;
+  flex-basis: 15%;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: #a5aec7;
+  margin: 0 10px 10px;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.period {
+  position: relative;
+  height: 100px;
+  text-align: center;
+  border: 1px dashed #e6e9f3;
+  border-radius: 12px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: calc((100% - 120px) / 7);
+  flex: 0 0 calc((100% - 120px) / 7);
+  &.cdk-drop-list-receiving {
+    border-color: #b8d3f1;
+  }
+  &.cdk-drop-list:hover,
+  &.cdk-drop-list-dragging {
+    border-color: #69a9f2;
+  }
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+
+  edu-icon-button {
+    ::ng-deep {
+      .chip {
+        margin: 5px;
+      }
+    }
+  }
+  &.has-subject,
+  &.has-teacher {
+    .period-validator {
+      border: 1px solid #69a9f2;
+    }
+  }
+  &.has-subject.has-teacher {
+    .period-validator {
+      path {
+        stroke: #69a9f2;
+      }
+    }
+  }
+}
+.period-validator {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #e6e9f3;
+  border-radius: 50%;
+  top: -5px;
+  right: -5px;
+  background: #fff;
+  text-align: center;
+  line-height: 15px;
+  svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+.break,
+.assembly {
+  flex-basis: 100%;
+  border-radius: 8px;
+  background: rgba(#f2b269, 0.07);
+  color: #f2b269;
+  height: 26px;
+  line-height: 26px;
+  font-size: 12px;
+  letter-spacing: 0.36px;
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  font-family: Roboto;
+}
+
+.assembly {
+  background: #f4f9fe;
+  color: #69a9f2;
+}
+.time-cell {
+  margin-bottom: 10px;
+  margin-right: 0;
+  color: #a5aec7;
+  font-size: 16px;
+  min-width: 60px;
+  &__assembly {
+    color: #69a9f2;
+  }
+  &__break {
+    color: #f2b269;
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.5;
+}
+.cdk-drag-preview {
+  box-sizing: border-box;
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.selected-class-sections {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #e6e9f3;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-family: Roboto;
+  color: #ffffff;
+
+  .class-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 42px;
+    background: #69a9f2;
+  }
+}
+
+.section-button {
+  cursor: pointer;
+  display: block;
+  background: none;
+  border: none;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  line-height: 42px;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  margin-bottom: 10px;
+  border: 2px solid #e6e9f3;
+  color: #c7ccdb;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:focus {
+    outline: none;
+  }
+  &.active {
+    color: #ffffff;
+    background: #69a9f2;
+    border: 2px solid #69a9f2;
+    box-shadow: none;
+  }
+}
+
+.empty-timetable {
+  min-height: 400px;
+  width: 100%;
+  padding-top: 100px;
+  text-align: center;
 }

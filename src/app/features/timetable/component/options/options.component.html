@@ -3,7 +3,10 @@
     [ngStyle]="style"
     class="form__badge round-badge draggable"
     *ngFor="let class of classes"
-    [ngClass]="{ 'form__badge--empty': class.id !== selectedClassID }"
+    [ngClass]="{
+      'form__badge--empty': class.id !== selectedClassID,
+      selected: class.id === selectedClassID
+    }"
     (click)="onClick(class.id)"
     >{{ class.name }}</span
   >

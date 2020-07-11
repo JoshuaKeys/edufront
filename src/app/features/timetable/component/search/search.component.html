@@ -4,10 +4,14 @@
     <input
       class="search__input"
       type="text"
+      [formControl]="ctrl"
       [placeholder]="searchPlaceholder"
     />
   </div>
-  <button class="search__btn"><span>+</span></button>
+  <button *ngIf="false" class="search__btn" (click)="onCreate()">
+    <span>+</span>
+  </button>
 </div>
-
-<ng-content></ng-content>
+<div class="list-container">
+  <ng-content></ng-content>
+</div>

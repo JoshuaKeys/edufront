@@ -7,6 +7,14 @@
 @import 'assets/styles/main';
 @import 'assets/styles/utils';
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+.cdk-overlay-container,
+.cdk-overlay-connected-position-bounding-box,
+.cdk-overlay-pane {
+  transition: none;
+}
+
 body {
   margin: 0;
   padding: 0;

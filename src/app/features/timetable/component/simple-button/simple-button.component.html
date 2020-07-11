@@ -1,0 +1,8 @@
+<button
+  #button
+  [disabled]="disabled"
+  class="{{ type }}"
+  [ngStyle]="{ color: color, 'border-color': color, 'background-color': color }"
+>
+  <ng-content></ng-content>
+</button>

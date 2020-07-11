@@ -9,10 +9,10 @@
       <span>Timetable</span>
     </ng-template>
   </edu-header-nav>
-  <main>
+  <main cdkDropListGroup>
     <section class="section">
       <button class="section__back-btn" [routerLink]="['/dashboard']">
-        <img src="../../../assets/chevron-left.svg" alt="" /> Back
+        <img src="assets/chevron-left.svg" alt="" /> Back
       </button>
       <div class="content">
         <div class="content-wrapper">
@@ -23,9 +23,37 @@
             Please select a class and section from the menu on the left to get
             going
           </p>
+          <edu-simple-button
+            class="confirm-btn"
+            type="flat"
+            [disabled]="!(canSubmit$ | async)"
+            (click)="onSaveTimetable()"
+            >CONFIRM TIMETABLES</edu-simple-button
+          >
 
           <div class="timetable-wrapper">
             <div class="timetable__classes">
+              <div
+                *ngIf="selectedClassId$ | async"
+                class="selected-class-sections"
+              >
+                <div class="class-button">
+                  {{ (classById$ | async)?.name }}
+                </div>
+                <div class="section-list">
+                  <button
+                    *ngFor="let section of sectionsByClassId$ | async"
+                    type="button"
+                    class="section-button"
+                    [ngClass]="{
+                      active: (selectedSectionId$ | async) === section.id
+                    }"
+                    (click)="onSectionClick(section)"
+                  >
+                    {{ section.sectionName }}
+                  </button>
+                </div>
+              </div>
               <edu-timetable-options
                 (clicked)="onClassClicked($event)"
                 [classes]="classes | async"
@@ -39,7 +67,36 @@
               ></edu-timetable-options>
             </div>
             <div class="timetable__timetable">
-              timetable here
+              <div
+                class="loading"
+                *ngIf="
+                  (isSkeletonLoading$ | async) || (submittingTimetable$ | async)
+                "
+              >
+                LOADING...
+              </div>
+              <ng-container
+                *ngIf="periodsList$ | async as periodsList; else emptyTable"
+              >
+                <edu-custom-timetable
+                  *ngIf="
+                    (selectedSectionId$ | async) &&
+                    periodsList &&
+                    periodsList.length > 0
+                  "
+                  [periodsDataRef]="periodsData"
+                  [selectedClass]="selectedClassId$ | async"
+                  [selectedSection]="selectedSectionId$ | async"
+                  [edu-title]="'class'"
+                  [edu-value]="periodsList$ | async"
+                >
+                </edu-custom-timetable>
+              </ng-container>
+              <ng-template #emptyTable>
+                <div class="empty-timetable">
+                  Not enough data to render Timetable
+                </div>
+              </ng-template>
             </div>
           </div>
         </div>
@@ -48,23 +105,79 @@
       <router-outlet></router-outlet>
     </section>
     <aside class="aside">
-      <edu-timetable-search searchPlaceholder="Search Subjects">
-        Subjects result
-      </edu-timetable-search>
-      <edu-timetable-search searchPlaceholder="Search Teachers">
-        Teachers result
-      </edu-timetable-search>
+      <div *ngIf="subjectsError$ | async" class="error-block">
+        <p>Failed to load subjects/teachers</p>
+        <edu-simple-button
+          type="stroked"
+          color="#f2b269"
+          (click)="fetchSubjectsTeachers()"
+          >Try again</edu-simple-button
+        >
+      </div>
+      <ng-container *ngIf="!(subjectsError$ | async)">
+        <ng-container *ngIf="subjects | async as subj">
+          <edu-timetable-search
+            searchPlaceholder="Search Subjects"
+            [items]="subj"
+            (search)="onSubjSearch($event)"
+            (create)="onCreate('subject')"
+          >
+            <div
+              cdkDropList
+              [cdkDropListEnterPredicate]="noDrop"
+              [cdkDropListData]="subj"
+            >
+              <edu-icon-button
+                *ngFor="let subject of subj"
+                [subject]="subject"
+                cdkDrag
+                [cdkDragData]="{ item: subject, type: 'subject' }"
+              ></edu-icon-button>
+            </div>
+          </edu-timetable-search>
+        </ng-container>
+        <edu-timetable-search
+          searchPlaceholder="Search Teachers"
+          [items]="teachers | async"
+          (search)="onTeacherSearch($event)"
+        >
+          <div
+            cdkDropList
+            [cdkDropListEnterPredicate]="noDrop"
+            [cdkDropListData]="teachers | async"
+          >
+            <edu-simple-button
+              *ngFor="let teacher of teachers | async"
+              type="stroked"
+              cdkDrag
+              [cdkDragData]="{ item: teacher, type: 'teacher' }"
+              >{{ teacher.firstName }} {{ teacher.lastName }}</edu-simple-button
+            >
+          </div>
+        </edu-timetable-search>
+      </ng-container>
     </aside>
   </main>
 </div>
 
 <edu-modal-v2
-  *ngIf="false"
+  *ngIf="submittedTimetable$ | async"
+  class="complete"
+  btnText="Back to Dashboard"
+  header="Timetable Created!"
+  icon="assets/icon-complete.svg"
+  (btnClicked)="goToDashboard()"
+>
+  You have finished the timetable set up step! Well done. Continue to the <br />
+  dashboard in case you want to review the full set up.
+</edu-modal-v2>
+<edu-modal-v2
+  *ngIf="showWelcomeModal$ | async"
   class="intro"
   btnText="GOT IT"
   header="Timetable Filling"
   icon="assets/nav-timetable.svg"
-  (btnClicked)="onModalBtnClicked()"
+  (btnClicked)="toggleWelcomeModal()"
 >
   This is the <b class="orangecolor">final</b> step. All you have to do is fill
   the periods of the sections with a <b class="orangecolor">subject</b> and a

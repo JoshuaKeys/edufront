@@ -11,6 +11,11 @@
   width: 100%;
 }
 
+.list-container {
+  max-height: 160px;
+  overflow: auto;
+}
+
 .not-found {
   text-align: center;
   font-size: 16px;

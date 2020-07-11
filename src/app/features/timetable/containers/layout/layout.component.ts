@@ -1,230 +1,364 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { StaffsCommunicatorService } from 'src/app/features/staffs/services/staffs-communication.service';
+import { DialogService } from 'src/app/shared/components/generic-dialog/dialog.service';
+import * as moment from 'moment';
+import { CalendarModel } from '../../component/timetable/data';
+import { ClassesService } from 'src/app/root-store/classes.service';
+import { ClassSectionService } from 'src/app/root-store/class-section.service';
+import { map, filter, take } from 'rxjs/operators';
+import { ISectionModel } from 'src/app/shared/models/section.model';
+import { TimetableFacadeService } from '../../services/timetable-facade.service';
+import { IClassSectionPeriodModel } from 'src/app/core/models/timetable';
+import { Router } from '@angular/router';
+import { SubjectFormDialogComponent } from '../../component/subject-form-dialog/subject-form-dialog.component';
+
+const DEFAULT_START_IME = '08:00';
 
 @Component({
   selector: 'edu-timetable-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [StaffsCommunicatorService]
 })
 export class LayoutComponent implements OnInit {
-  classes = new BehaviorSubject([
-    {
-      name: '6',
-      grade: 6,
-      classGroupId: 'fcf5ac48-49d3-43a6-81df-ad437663fad5',
-      id: 'b96a53c2-8df6-11ea-9720-1323d471c03e',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '7',
-      grade: 7,
-      classGroupId: '3f44677c-0c74-48cf-8052-0dfa7e134bb6',
-      id: 'c57c06ba-8df6-11ea-9721-a773ed0f79c6',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '9',
-      grade: 9,
-      classGroupId: '3f44677c-0c74-48cf-8052-0dfa7e134bb6',
-      id: 'e0b640e4-8df6-11ea-9723-1b56557aa5e9',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '10',
-      grade: 10,
-      classGroupId: '7807e313-32d1-4953-a1d9-b87c60d5d8d9',
-      id: 'ed1a9344-8df6-11ea-9724-cb37ccbda8c1',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '11',
-      grade: 11,
-      classGroupId: '7807e313-32d1-4953-a1d9-b87c60d5d8d9',
-      id: 'f7966d8e-8df6-11ea-9725-1ba133b5817d',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '12',
-      grade: 12,
-      classGroupId: '7807e313-32d1-4953-a1d9-b87c60d5d8d9',
-      id: '0b0a55e2-8df7-11ea-9726-57ffaf54a22e',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '5',
-      grade: 5,
-      classGroupId: 'fcf5ac48-49d3-43a6-81df-ad437663fad5',
-      id: 'aea8dd8c-8df6-11ea-971f-cb02491d4175',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '8',
-      grade: 8,
-      classGroupId: '3f44677c-0c74-48cf-8052-0dfa7e134bb6',
-      id: 'd3a6d490-8df6-11ea-9722-ab05ab4c71a9',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '1',
-      grade: 1,
-      classGroupId: '3b16f13c-91da-11ea-8eeb-063100681874',
-      id: '855b9348-8df6-11ea-971b-a35658713d38',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '3',
-      grade: 3,
-      classGroupId: '3b16f13c-91da-11ea-8eeb-063100681874',
-      id: '960edaba-8df6-11ea-971d-eb1e97cddd39',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '4',
-      grade: 4,
-      classGroupId: '3b16f13c-91da-11ea-8eeb-063100681874',
-      id: 'a1f84fb4-8df6-11ea-971e-3f7df9a327fb',
-      teachers: [],
-      subjects: []
-    },
-    {
-      name: '2',
-      grade: 2,
-      classGroupId: '3b16f13c-91da-11ea-8eeb-063100681874',
-      id: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      teachers: [],
-      subjects: []
-    }
-  ]);
-  sections = new BehaviorSubject([
-    {
-      id: '6950a189-405e-4c92-8e15-f2e3743547ab',
-      sectionName: '4',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '5cf56526-1550-4fef-a4f6-4da3f7eb10af',
-      sectionName: '2',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    },
-    {
-      id: '5f9a89c8-0528-4f0b-a6c5-c037bccfdc06',
-      sectionName: '1',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '294b0f1c-b324-4606-a9a7-6bc54b67b882',
-      sectionName: '2',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '0d68d47a-2309-47b1-92ba-082c814b2a11',
-      sectionName: '3',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: 'a1150223-04fc-4aee-982c-b04b4f35e3a5',
-      sectionName: '4',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '12c86d65-7e4b-427f-a8f2-2b2f6f327286',
-      sectionName: '1',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: 'cbb85575-c1e9-409d-bacc-82ab5e08fb28',
-      sectionName: '2',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '0f408a13-82b5-4e6a-8dd7-d878be59709a',
-      sectionName: '3',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '75e1887d-8208-4a98-bb00-7b79c49f5e6b',
-      sectionName: '1',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    },
-    {
-      id: 'f4325f01-bdf3-4f95-aa22-c3bcef1c3813',
-      sectionName: '2',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    },
-    {
-      id: '3cb36666-5a41-41ea-ac3d-4ff62877ffd2',
-      sectionName: '3',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    },
-    {
-      id: '7ce705ad-65cd-4bfe-887b-1c9f1b16ec2a',
-      sectionName: 'A',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    },
-    {
-      id: 'f4d93d90-d80e-4ae6-ba58-caae1f527a55',
-      sectionName: 'B',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    },
-    {
-      id: 'be701bd3-079b-4bd0-8f4c-ff96696d61a6',
-      sectionName: 'A',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: '84585a65-5bd2-405c-80e4-d5638b6832ed',
-      sectionName: 'A',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: 'fe4864aa-b733-4247-b4b9-ee95012cf238',
-      sectionName: 'jnks',
-      classId: '855b9348-8df6-11ea-971b-a35658713d38',
-      studentIds: null
-    },
-    {
-      id: 'd68a6ec8-1be5-49ea-8467-abbcf89cc109',
-      sectionName: 'A',
-      classId: '8e33f4c4-8df6-11ea-971c-af6cdeacf7b0',
-      studentIds: null
-    }
-  ]);
-  constructor() {}
+  isSkeletonLoading$ = this.timetableFacade.skeletonUI$.pipe(
+    map(ui => ui.loading)
+  );
+  submittingTimetable$ = this.timetableFacade.UI$.pipe(
+    map(ui => ui.submitting)
+  );
+  submittedTimetable$ = this.timetableFacade.UI$.pipe(map(ui => ui.submitted));
+  isSkeletonLoaded$ = this.timetableFacade.skeletonUI$.pipe(
+    map(ui => ui.loaded)
+  );
+  selectedClassId$ = new BehaviorSubject(null);
+  selectedSectionId$ = new BehaviorSubject(null);
+  classById$ = combineLatest([
+    this.selectedClassId$,
+    this.classService.entityMap$
+  ]).pipe(
+    map(([selectedClassId, entityMap]) => {
+      return entityMap[selectedClassId];
+    })
+  );
 
-  ngOnInit(): void {}
+  canSubmit$ = combineLatest([
+    this.timetableFacade.timetableData$,
+    this.classService.count$
+  ]).pipe(
+    map(([timetableData, classesCount]) => {
+      let res = false;
+      for (const key in timetableData) {
+        if (timetableData.hasOwnProperty(key)) {
+          const element = timetableData[key];
+          if (element.data && element.data.length === 2) {
+            res = true;
+            break;
+          }
+        }
+      }
+      return res;
+    })
+  );
 
-  onModalBtnClicked() {
-    // this.store.dispatch(closeSubjectsStartModal())
+  sectionsByClassId$ = combineLatest([
+    this.selectedClassId$,
+    this.sectionService.entities$
+  ]).pipe(
+    map(([classId, sections]) => {
+      return sections
+        .filter(section => section.classId === classId)
+        .sort((a, b) => {
+          if (a.sectionName > b.sectionName) {
+            return 1;
+          }
+          if (a.sectionName < b.sectionName) {
+            return -1;
+          }
+          return 0;
+        });
+    })
+  );
+  classes = this.classService.entities$.pipe(
+    map(classes => {
+      return classes.sort((a, b) => {
+        return Number(a.name) - Number(b.name);
+      });
+    })
+  );
+  sections = this.sectionService.entities$;
+
+  teacherSearch$ = new BehaviorSubject('');
+  teachers = combineLatest([
+    this.timetableFacade.teachers$,
+    this.teacherSearch$
+  ]).pipe(
+    map(([teachers, query]) => {
+      if (query && query.length === 0) {
+        return teachers;
+      }
+      return teachers.filter(
+        s =>
+          s.firstName.toLowerCase().includes(query) ||
+          s.lastName.toLowerCase().includes(query)
+      );
+    })
+  );
+
+  subjectSearch$ = new BehaviorSubject('');
+  subjects = combineLatest([
+    this.timetableFacade.subjects$,
+    this.subjectSearch$
+  ]).pipe(
+    map(([subjects, query]) => {
+      if (query && query.length === 0) {
+        return subjects;
+      }
+      return subjects.filter(s => s.title.toLowerCase().includes(query));
+    })
+  );
+  subjectsError$ = this.timetableFacade.subjectsUI$.pipe(map(ui => ui.error));
+  periodsList$: Observable<CalendarModel[]>;
+  tt = [];
+  periodsData = {};
+  WEEKDAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+
+  showWelcomeModal$ = new BehaviorSubject(true);
+  constructor(
+    private dialog: DialogService,
+    private router: Router,
+    private timetableFacade: TimetableFacadeService,
+    private classService: ClassesService,
+    private sectionService: ClassSectionService
+  ) {
+    this.classService.getAll();
+    this.sectionService.getWithQuery({ pageSize: '200' });
+  }
+
+  ngOnInit(): void {
+    this.periodsList$ = this.mapPlannerToTable();
+  }
+
+  toggleWelcomeModal() {
+    this.showWelcomeModal$.next(false);
   }
 
   onClassClicked(id: string) {
-    console.log(id);
+    this.selectedSectionId$.next(null);
+    this.selectedClassId$.next(id);
+    this.timetableFacade.getSekeletonByClassId(id);
+    this.timetableFacade.getSubjects(id);
+  }
+
+  onSectionClick(section: ISectionModel) {
+    this.selectedSectionId$.next(section.id);
+  }
+
+  onTeacherClicked(teacher: any) {
+    console.log(teacher);
+  }
+
+  onSubjectClicked(subject: any) {
+    console.log(subject);
+  }
+
+  onCreate(type: 'subject' | 'teacher') {
+    if (type === 'subject') {
+      console.log('add new subject');
+      this.dialog.open(SubjectFormDialogComponent);
+    }
+  }
+
+  onSubjSearch(text: string) {
+    this.subjectSearch$.next(text);
+  }
+
+  onTeacherSearch(text: string) {
+    this.teacherSearch$.next(text);
+  }
+
+  noDrop() {
+    return false;
+  }
+
+  mapPlannerToTable(): Observable<CalendarModel[]> {
+    return combineLatest([
+      this.timetableFacade.skeleton$,
+      this.selectedClassId$,
+      this.selectedSectionId$
+    ]).pipe(
+      filter(
+        ([skeleton, classId, sectionId]) =>
+          Boolean(classId) && Boolean(sectionId) && Boolean(skeleton)
+      ),
+      map(([skeleton, classId, sectionId]) => {
+        return skeleton
+          .map(day => {
+            const prepareBreaks = [];
+            day.breaks.forEach(breakItem => {
+              const afterPeriodId =
+                day.periodPlanners.find(
+                  period => period.index === breakItem.endPeriod
+                ) || ({} as any);
+
+              // Add breaks with duration ONLY
+              if (breakItem.breakDuration != 0) {
+                prepareBreaks.push({
+                  name: breakItem.breakTitle,
+                  firstBreak: '',
+                  day: '',
+                  after: `${classId}--${sectionId}--${afterPeriodId.id}`,
+                  duration: String(breakItem.breakDuration)
+                });
+              }
+            });
+            const assemblyDuration = day.assemblyDuration;
+            const assemblyStartTime = day.assemblyStartTime;
+            return {
+              day: day.weekday.substring(0, 3),
+              periods: day.periodPlanners.map(period => {
+                this.periodsData[`${classId}--${sectionId}--${period.id}`] = [];
+                return `${classId}--${sectionId}--${period.id}`;
+              }),
+              startTime:
+                day.periodStartTime ||
+                this.addTime(assemblyStartTime, {
+                  minutes: assemblyDuration
+                }) ||
+                DEFAULT_START_IME,
+              periodDuration: String(day.periodPlanners[0].duration),
+              intervaBtwPeriods: '0',
+              breaks: prepareBreaks,
+              assembly: {
+                name: 'Assembly',
+                startingAt: assemblyStartTime,
+                duration: String(assemblyDuration)
+              }
+            };
+          })
+          .sort(this.sortByDay.bind(this));
+      }),
+      map(mappedCalendarData => {
+        const dayClone = mappedCalendarData.slice(0, 1)[0];
+        if (!dayClone) {
+          return mappedCalendarData;
+        }
+        const extendedCalendarData = [];
+        this.WEEKDAYS.forEach(day => {
+          const existinCalendarData = mappedCalendarData.find(
+            data => data.day === day
+          );
+          if (existinCalendarData) {
+            extendedCalendarData.push(existinCalendarData);
+          } else {
+            extendedCalendarData.push({
+              ...dayClone,
+              day,
+              periods: new Array(dayClone.periods.length).fill(''),
+              breaks: []
+            });
+          }
+        });
+        return extendedCalendarData;
+      })
+    );
+  }
+
+  sortByDay(a: any, b: any) {
+    const list = this.WEEKDAYS;
+    if (list.indexOf(a.day) > list.indexOf(b.day)) {
+      return 1;
+    }
+    if (list.indexOf(a.day) < list.indexOf(b.day)) {
+      return -1;
+    }
+    return 0;
+  }
+
+  addTime(target: string, time: { hours?: number; minutes?: number }) {
+    if (!target) {
+      return null;
+    }
+    return moment(target, 'HH:mm')
+      .add(time.minutes, 'm')
+      .format('HH:mm');
+  }
+
+  onSaveTimetable() {
+    this.timetableFacade.timetableData$
+      .pipe(take(1))
+      .subscribe(timetableData => {
+        const keys = Object.keys(timetableData);
+        if (keys.length > 0) {
+          let res: {
+            [key: string]: IClassSectionPeriodModel;
+          } = {};
+          keys.forEach(key => {
+            const [classId, sectionId, periodId] = key.split('--');
+            const item = timetableData[key];
+            const existingClass = res[`${classId}--${sectionId}`];
+            const subject = item.data.find(d => Boolean(d.id));
+            const teacher = item.data.find(d => Boolean(d.profileId));
+            if (existingClass) {
+              const periods = existingClass.periodRequestQ || [];
+              const periodRequest =
+                teacher && subject
+                  ? {
+                      periodId,
+                      subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
+                      teacherId: (
+                        item.data.find(d => Boolean(d.profileId)) || {}
+                      ).profileId
+                    }
+                  : null;
+              res = {
+                ...res,
+                [`${classId}--${sectionId}`]: {
+                  classId,
+                  sectionId,
+                  periodRequestQ: periodRequest
+                    ? periods.concat(periodRequest)
+                    : periods
+                }
+              };
+            } else {
+              const firstPeriodRequest =
+                teacher && subject
+                  ? [
+                      {
+                        periodId,
+                        subjectId: (subject || {}).id,
+                        teacherId: (teacher || {}).profileId
+                      }
+                    ]
+                  : [];
+              res = {
+                ...res,
+                [`${classId}--${sectionId}`]: {
+                  classId,
+                  sectionId,
+                  periodRequestQ: firstPeriodRequest
+                }
+              };
+            }
+          });
+
+          console.log('Data to submit');
+          console.log(Object.values(res));
+          // Object.values(res).forEach(timetable =>
+          //   this.timetableFacade.submitTimetable(timetable)
+          // );
+        }
+      });
+  }
+
+  fetchSubjectsTeachers() {
+    this.timetableFacade.getSubjects(this.selectedClassId$.value);
+  }
+
+  goToDashboard() {
+    this.router.navigateByUrl('/dashboard');
   }
 }

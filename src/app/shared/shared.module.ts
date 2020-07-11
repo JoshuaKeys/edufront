@@ -71,7 +71,9 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     StudentsFormComponent,
     ImgAuthPipe,
     PreviewAnimateDirective,
-    StopEventBubbleDirective
+    StopEventBubbleDirective,
+    SharedStaffChipComponent,
+    SharedTooltipComponent
   ],
   imports: [
     ImageSliderModule,
@@ -116,8 +118,11 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     // PopoverComponent,
     StudentsFormComponent,
     ImgAuthPipe,
-    StopEventBubbleDirective
+    StopEventBubbleDirective,
+    SharedStaffChipComponent,
+    SharedTooltipComponent
   ],
+  entryComponents: [SharedTooltipComponent],
   providers: [ClassesService, SubjectsService]
 })
 export class SharedModule {}
