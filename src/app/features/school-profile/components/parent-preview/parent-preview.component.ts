@@ -17,8 +17,10 @@ export class ParentPreviewComponent implements OnInit {
     return Object.keys(previewState.schoolName).length > 1
   }
   contactsSet(previewState: SchoolPreviewModel) {
-    console.log('Helllllooooo')
     return Object.keys(previewState.schoolContact).length > 1;
+  }
+  logoSet(previewState: SchoolPreviewModel) {
+    return Object.keys(previewState.schoolLogo).length > 1;
   }
   ngOnInit(): void {
     console.log(this.previewState)

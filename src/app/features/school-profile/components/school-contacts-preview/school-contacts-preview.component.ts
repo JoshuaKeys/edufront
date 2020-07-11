@@ -9,8 +9,15 @@ import { SchoolPreviewModel } from '../../models/preview.model';
 })
 export class SchoolContactsPreviewComponent implements OnInit {
   @Input() previewState: SchoolPreviewModel;
+  @Input() noBorder: boolean;
   constructor() { }
-
+  computeBorder() {
+    if (this.noBorder) {
+      return {
+        border: 'none'
+      }
+    }
+  }
   ngOnInit(): void {
   }
 

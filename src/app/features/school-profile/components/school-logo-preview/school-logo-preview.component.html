@@ -2,11 +2,11 @@
   <a
     *ngIf="previewState"
     class="preview-select-preview__link"
-    [routerLink]="[previewState.schoolName.route]"
+    [routerLink]="[previewState.schoolLogo.route]"
   >
-    <div class="selected-heading">School Name</div>
+    <div class="selected-heading">School Logo</div>
     <div class="selected-data">
-      <span class="info">{{ previewState.schoolName.name }}</span>
+      <img class="selected-img" [src]="previewState.schoolLogo.logo" />
     </div>
   </a>
 </div>

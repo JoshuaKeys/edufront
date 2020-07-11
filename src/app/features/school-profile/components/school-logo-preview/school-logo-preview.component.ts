@@ -2,17 +2,17 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 import { SchoolPreviewModel } from '../../models/preview.model';
 
 @Component({
-  selector: 'edu-school-address-preview',
-  templateUrl: './school-address-preview.component.html',
-  styleUrls: ['./school-address-preview.component.scss'],
+  selector: 'edu-school-logo-preview',
+  templateUrl: './school-logo-preview.component.html',
+  styleUrls: ['./school-logo-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SchoolAddressPreviewComponent implements OnInit {
-  @Input() styleMode: string;
+export class SchoolLogoPreviewComponent implements OnInit {
   @Input() previewState: SchoolPreviewModel;
   @Input() noBorder: boolean;
-  ngOnInit() {
-    // console.log(this.styleMode);
+  constructor() { }
+
+  ngOnInit(): void {
   }
   computeBorder() {
     if (this.noBorder) {
@@ -21,6 +21,4 @@ export class SchoolAddressPreviewComponent implements OnInit {
       }
     }
   }
-  constructor() { }
-
 }

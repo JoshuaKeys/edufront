@@ -11,6 +11,9 @@ const initialState: SchoolPreviewModel = {
   },
   schoolContact: {
     route: 'contact-details-question'
+  },
+  schoolLogo: {
+    route: 'school-logo-question'
   }
 }
 export const schoolProfilePreviewReducer = createReducer(initialState,
@@ -47,61 +50,18 @@ export const schoolProfilePreviewReducer = createReducer(initialState,
     }
     return stateCopy;
   }),
-  // on(setSchoolName, (state, { schoolName }) => {
-  //   const stateCopy: PreviewModel[] = JSON.parse(JSON.stringify(state));
-  //   const hasSchoolName = stateCopy.findIndex(previewItem => previewItem.label === 'School Name');
-  //   if (hasSchoolName > -1) {
-  //     stateCopy[hasSchoolName].values[0].value = schoolName
-  //   } else {
-  //     stateCopy.unshift({
-  //       label: 'School Name',
-  //       values: [{ name: 'schoolName', value: schoolName }],
-  //       route: 'school-name-question'
-  //     })
-  //   }
-  //   return stateCopy;
-  // }),
-
-  // on(setContactsData, (state, action) => {
-  //   const stateCopy: PreviewModel[] = JSON.parse(JSON.stringify(state));
-  //   const hasContact = stateCopy.findIndex(previewItem => previewItem.label === 'School Contact')
-  //   if (hasContact > -1) {
-  //     const hasContactField = stateCopy[hasContact].values.findIndex(value => value.name === action.field);
-  //     if (hasContactField > -1) {
-  //       stateCopy[hasContact].values[hasContactField].value = action.value;
-  //     } else {
-  //       stateCopy[hasContact].values.push({ name: action.field, value: action.value });
-  //     }
-  //   } else {
-  //     stateCopy.unshift({
-  //       label: 'School Contact',
-  //       values: [{ name: action.field, value: action.value }],
-  //       route: 'contact-details-question'
-  //     })
-  //   }
-  //   return stateCopy;
-  // }),
-  // on(setSchoolLogo, (state, action) => {
-  //   const stateCopy: PreviewModel[] = JSON.parse(JSON.stringify(state));
-  //   const hasImg = stateCopy.findIndex(previewItem => previewItem.label === 'School Logo')
-  //   if (hasImg > -1) {
-  //     stateCopy[hasImg].values[0] = { name: 'schoolLogo', value: action.preview };
-  //   } else {
-  //     stateCopy.unshift({
-  //       label: 'School Logo',
-  //       values: [{ name: 'schoolLogo', value: action.preview }],
-  //       route: 'school-logo-upload'
-  //     })
-  //   }
-  //   return stateCopy;
-  // }),
-  // on(clearLogoPreview, (state, action)=> {
-  //   const stateCopy: PreviewModel[] = JSON.parse(JSON.stringify(state));
-  //   const hasImg = stateCopy.findIndex(previewItem => previewItem.label === 'School Logo')
-  //   if(hasImg > -1) {
-  //     delete stateCopy[hasImg];
-  //   }
-  //   return stateCopy;
-  // })
+  on(setSchoolLogo, (state, action) => {
+    const stateCopy: SchoolPreviewModel = JSON.parse(JSON.stringify(state));
+    stateCopy.schoolLogo = {
+      ...stateCopy.schoolLogo,
+      logo: action.preview
+    }
+    return stateCopy;
+  }),
+  on(clearLogoPreview, (state, action) => {
+    const stateCopy: SchoolPreviewModel = JSON.parse(JSON.stringify(state));
+    delete stateCopy.schoolLogo.logo
+    return stateCopy;
+  })
 );
 

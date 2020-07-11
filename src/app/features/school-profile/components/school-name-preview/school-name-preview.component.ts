@@ -11,9 +11,16 @@ import { Observable } from 'rxjs';
 export class SchoolNamePreviewComponent implements OnInit {
   @Input() styleMode: string;
   @Input() previewState: SchoolPreviewModel;
-
+  @Input() noBorder: boolean;
   ngOnInit() {
     // console.log(this.styleMode);
+  }
+  computeBorder() {
+    if (this.noBorder) {
+      return {
+        border: 'none'
+      }
+    }
   }
   constructor() { }
 }

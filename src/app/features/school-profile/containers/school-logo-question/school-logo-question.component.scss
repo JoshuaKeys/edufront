@@ -43,7 +43,11 @@ body {
     @include displayFlex();
   }
 }
-
+button.active {
+  background-color: #69a9f2;
+  color: #fff;
+  border: 2px solid #69a9f2;
+}
 .content {
   &__body--final {
     @include displayFlex(space-between);

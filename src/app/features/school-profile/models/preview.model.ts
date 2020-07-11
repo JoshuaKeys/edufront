@@ -25,9 +25,11 @@ export interface SchoolPreviewModel {
     phoneNumber?: string;
     email?: string;
     website?: string;
+    route?: string;
   };
   haveSchoolLogo?: boolean;
   schoolLogo?: {
-
+    route?: string;
+    logo?: string
   }
 }

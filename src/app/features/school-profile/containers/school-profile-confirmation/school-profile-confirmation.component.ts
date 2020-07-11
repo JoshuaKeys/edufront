@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PreviewModel } from '../../models/preview.model';
+import { PreviewModel, SchoolPreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { selectPreviewState } from '../../ngrx/selectors';
 import { ProfileModalModel } from '../../models/profile-modal.model';
@@ -17,8 +17,20 @@ import { map } from 'rxjs/operators';
 })
 export class SchoolProfileConfirmationComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
-  previewState: Observable<PreviewModel[]>;
+  previewState: Observable<SchoolPreviewModel>;
   modalState: Observable<ProfileModalModel>;
+  addressSet(previewState: SchoolPreviewModel) {
+    return Object.keys(previewState.schoolAddress).length > 1;
+  }
+  schoolNameSet(previewState: SchoolPreviewModel) {
+    return Object.keys(previewState.schoolName).length > 1
+  }
+  contactsSet(previewState: SchoolPreviewModel) {
+    return Object.keys(previewState.schoolContact).length > 1;
+  }
+  logoSet(previewState: SchoolPreviewModel) {
+    return Object.keys(previewState.schoolLogo).length > 1;
+  }
   ngOnInit(): void {
     this.previewState = this.store.select(selectPreviewState);
     this.modalState = this.store.select(selectProfileModal)

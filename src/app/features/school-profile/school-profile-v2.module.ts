@@ -22,6 +22,7 @@ import { ParentPreviewComponent } from './components/parent-preview/parent-previ
 import { SchoolNamePreviewComponent } from './components/school-name-preview/school-name-preview.component';
 import { SchoolAddressPreviewComponent } from './components/school-address-preview/school-address-preview.component';
 import { SchoolContactsPreviewComponent } from './components/school-contacts-preview/school-contacts-preview.component';
+import { SchoolLogoPreviewComponent } from './components/school-logo-preview/school-logo-preview.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SchoolContactsPreviewComponent } from './components/school-contacts-pre
     ParentPreviewComponent,
     SchoolNamePreviewComponent,
     SchoolAddressPreviewComponent,
-    SchoolContactsPreviewComponent
+    SchoolContactsPreviewComponent,
+    SchoolLogoPreviewComponent
   ],
   imports: [
     CommonModule,

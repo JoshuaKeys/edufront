@@ -1,8 +1,8 @@
-<div PreviewAnimate class="profile-select-preview">
+<div PreviewAnimate class="profile-select-preview" [ngStyle]="computeBorder()">
   <a
     *ngIf="previewState"
     class="preview-select-preview__link"
-    [routerLink]="[previewState.schoolAddress.route]"
+    [routerLink]="[previewState.schoolContact.route]"
   >
     <div class="selected-heading">School Contact</div>
     <div class="selected-data">

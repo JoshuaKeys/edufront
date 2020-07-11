@@ -21,10 +21,10 @@ export const navigation = {
     next: 'school-profile-confirmation',
     previous: 'school-logo-question'
   },
-  'school-profile-confirmation': {
-    next: null,
-    previous: 'school-logo-upload'
-  }
+  // 'school-profile-confirmation': {
+  //   next: null,
+  //   previous: 'school-logo-upload'
+  // }
 };
 
 export const routeToComponentMap = {
@@ -33,5 +33,5 @@ export const routeToComponentMap = {
   'contact-details-question': fromContainers.ContactDetailsQuestionComponent,
   'school-logo-question': fromContainers.SchoolLogoQuestionComponent,
   'school-logo-upload': fromContainers.SchoolLogoUploadComponent,
-  'school-profile-confirmation': fromContainers.SchoolProfileConfirmationComponent
+  // 'school-profile-confirmation': fromContainers.SchoolProfileConfirmationComponent
 };
