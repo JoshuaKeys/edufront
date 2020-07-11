@@ -21,17 +21,25 @@ export const holidayListReducer = createReducer(initialState,
   }),
   on(deleteHoliday, (state, action) => holidayAdapter.removeOne(action.holiday.mockId, state)),
   on(addHoliday, (state, action) => {
-    const hasId = holidayAdapter.getSelectors().selectIds(state).findIndex(holidayId => holidayId === action.holiday.mockId);
-    const stateCopy = JSON.parse(JSON.stringify(state));
+    const holidays = holidayAdapter.getSelectors().selectAll(state);
+    const hasSameDate = holidays.findIndex(holiday => holiday.date === action.holiday.date);
     const holiday = JSON.parse(JSON.stringify(action.holiday));
     holiday.mockId = uuid44();
-    if (hasId > -1) {
+    if (hasSameDate > -1) {
       return state;
     }
     return holidayAdapter.addOne(holiday, state)
   }),
   on(editHolidaySuccess, (state, action) => {
     const holiday = JSON.parse(JSON.stringify(action.holiday));
+    const holidays = holidayAdapter.getSelectors().selectAll(state);
+    const hasSameDate = holidays.findIndex(holiday => holiday.date === action.holiday.date);
+    // && (holidays[hasSameDate].date !== action.holiday.date && holidays[hasSameDate].mockId === action.holiday.mockId)
+    if (hasSameDate > -1 && action.holiday.id !== holidays[hasSameDate].id) {
+      console.log(action.holiday, holidays[hasSameDate])
+      return state;
+    }
+    console.log(holidays[hasSameDate])
     const update: Update<HolidayModel> = {
       id: action.holiday.mockId,
       changes: {

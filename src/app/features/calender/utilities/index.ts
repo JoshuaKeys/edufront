@@ -9,6 +9,9 @@ import { CalendarStateModel } from '../models/calender-state.model';
 import { TimeTablePlanner } from '../models/time-table-planner.model';
 import { TeachingDayPlannerModel } from '../models/teaching-day-planner.model';
 import { TeachingStateModel } from '../models/teaching-state.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { TeachingDay } from '../models/teaching-day.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -92,7 +95,12 @@ export function buildRangePipe(items: number[]) {
         return (prev += `${curr.start}|${curr.end}`);
       }
       return (prev += `${curr.start}-${curr.end}`);
-    } else if (curr.start && !curr.end && arr.length > 1 && idx !== arr.length - 1) {
+    } else if (
+      curr.start &&
+      !curr.end &&
+      arr.length > 1 &&
+      idx !== arr.length - 1
+    ) {
       return (prev += `${curr.start}|`);
     } else if (curr.start && !curr.end) {
       console.log(curr, arr);
@@ -238,7 +246,7 @@ function setTeachingPeriods(
   modifiedClasses: ModifiedClasses[],
   idx,
   currentTeachingPeriods
-) { }
+) {}
 function isUniform(previous, current) {
   for (let i = 0; i < previous.length; i++) {
     let found = false;
@@ -320,16 +328,16 @@ export function validateTermsAndDates(
       errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
     }
     if (index > 0) {
-      console.log(termsAndDates.termsAndDates)
-      console.log(termsAndDates[formType])
+      console.log(termsAndDates.termsAndDates);
+      console.log(termsAndDates[formType]);
       console.log(index);
-      console.log(formType)
+      console.log(formType);
       const previousEndDate = new Date(
         termsAndDates[formType][index - 1].endDate
       );
       if (!isGreater(startDateObj, previousEndDate)) {
-        console.log(startDateObj)
-        console.log(previousEndDate)
+        console.log(startDateObj);
+        console.log(previousEndDate);
         errors.msg.push(
           `${field} ${index + 1}'s start time overlaps with ${field} ${index}`
         );
@@ -351,10 +359,14 @@ export function extractTimetableData(teachingState: TeachingStateModel) {
   let requestObj;
   if (acadimicYearId) {
     requestObj = {
-      intervalDuration: teachingState.classesAndGroups[0] && teachingState.classesAndGroups[0].periods ? +teachingState.classesAndGroups[0].periods[0].intervaBtwPeriods : undefined,
-      acadimicYearId,
+      intervalDuration:
+        teachingState.classesAndGroups[0] &&
+        teachingState.classesAndGroups[0].periods
+          ? +teachingState.classesAndGroups[0].periods[0].intervaBtwPeriods
+          : undefined,
+      acadimicYearId
     };
-    console.log(teachingState.classesAndGroups[0].periods[0])
+    console.log(teachingState.classesAndGroups[0].periods[0]);
     if (termId) {
       // requestObj.termId = "c330412d-81b2-4d0f-b862-46567140e04b";
     }
@@ -366,31 +378,36 @@ export function extractTimetableData(teachingState: TeachingStateModel) {
 function getWeekdays(classesAndGroups: ClassGroupModel[]) {
   let period = [];
   for (let i = 0; i < classesAndGroups.length; i++) {
-    const periods = classesAndGroups[i].periods ? classesAndGroups[i].periods : [];
+    const periods = classesAndGroups[i].periods
+      ? classesAndGroups[i].periods
+      : [];
     for (let j = 0; j < periods.length; j++) {
       let breaks = [];
       classesAndGroups[i].periods.map(period => {
         // no endDate
         const periodCopy = JSON.parse(JSON.stringify(period));
         const updatedPeriods = periodCopy.breaks.map(breakItem => {
-          console.log()
+          console.log();
           return {
             breakTitle: breakItem.name,
             periodIntervalDuration: breakItem.duration,
             endPeriod: +breakItem.after.substring(1)
-          }
-        })
+          };
+        });
         breaks.push(updatedPeriods);
-      })
+      });
       console.log(breaks);
-      const periodPlanners = classesAndGroups[i].periods[j].periods.map((period, index) => {
-        return {
-          name: period,
-          duration: +classesAndGroups[i].periods[j].periodDuration,
-          index: index + 1
+      const periodPlanners = classesAndGroups[i].periods[j].periods.map(
+        (period, index) => {
+          return {
+            name: period,
+            duration: +classesAndGroups[i].periods[j].periodDuration,
+            index: index + 1
+          };
         }
-      })
-      const assemblyStartTime = classesAndGroups[i].periods[j].assembly.startingAt;
+      );
+      const assemblyStartTime =
+        classesAndGroups[i].periods[j].assembly.startingAt;
       const assemblyDuration = classesAndGroups[i].periods[j].assembly.duration;
       period.push({
         classGroupId: classesAndGroups[i].id,
@@ -401,19 +418,59 @@ function getWeekdays(classesAndGroups: ClassGroupModel[]) {
         assemblyDuration: assemblyDuration ? assemblyDuration : undefined,
         breaks: breaks[0],
         periodPlanners
-      })
+      });
     }
   }
   return period.filter(period => period.periodPlanners.length);
 }
-function transformToFullDay(day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun') {
-  const fullDays = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+function transformToFullDay(
+  day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
+) {
+  const fullDays = [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY'
+  ];
   for (let i = 0; i < fullDays.length; i++) {
     if (fullDays[i].substr(0, 3).toLowerCase() === day.toLowerCase()) {
-
       return fullDays[i];
     } else {
-      console.log(fullDays[i].substr(0, 2).toLowerCase(), day.toLowerCase())
+      console.log(fullDays[i].substr(0, 2).toLowerCase(), day.toLowerCase());
     }
   }
+}
+
+export function definePeriods(teachingData: Observable<PeriodModel[]>) {
+  return teachingData.pipe(
+    map(items => {
+      const result: { value: number; display: string }[] = [];
+      const periodLengthIdx = items.findIndex(period => period.periods.length);
+      items[periodLengthIdx].periods.forEach((period, idx) => {
+        // result.push({ value: +period.substr(1), display: period });
+        result.push({ value: <any>period, display: period });
+      });
+      console.log(result);
+      return result;
+    })
+  );
+}
+
+export function defineDays(teachingData: Observable<TeachingDay[]>) {
+  return teachingData.pipe(
+    map(items => {
+      const result = [];
+      items.forEach(days => {
+        if (days.selected) {
+          result.push({ value: days.day, display: days.day });
+        }
+      });
+      result.unshift({ value: 'All', display: 'All' });
+
+      return result;
+    })
+  );
 }

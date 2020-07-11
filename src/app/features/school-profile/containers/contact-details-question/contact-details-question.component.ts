@@ -104,6 +104,7 @@ export class ContactDetailsQuestionComponent implements OnInit {
         phoneNum: event.phoneNum
       })
     );
+    console.log(event);
     this.store.dispatch(
       setContactsData({
         field: 'phone',

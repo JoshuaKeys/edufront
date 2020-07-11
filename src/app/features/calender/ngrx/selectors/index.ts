@@ -91,7 +91,8 @@ export const selectOrphanedClasses = createSelector(
 export const selectCreateCalendarData = createSelector(
   calendarFeatureState,
   feat => {
-    if (Object.keys(feat.calendarData).length >= 4) {
+    console.log(feat.calendarData);
+    if (Object.keys(feat.calendarData).length >= 5) {
       const holidays: HolidayCreateModel[] = selectAll(
         feat.holidays.holidayList
       ).map(holiday => {
@@ -105,13 +106,13 @@ export const selectCreateCalendarData = createSelector(
         };
       });
 
-      const vacations: VacationCreateModel[] = feat.calendarData.vacations.map(
-        vacation => ({
-          vacationStart: vacation.startDate,
-          vacationEnd: vacation.endDate,
-          vacationName: vacation.vacationName
-        })
-      );
+      const vacations: VacationCreateModel[] = feat.calendarData.vacations
+        ? feat.calendarData.vacations.map(vacation => ({
+            vacationStart: vacation.startDate,
+            vacationEnd: vacation.endDate,
+            vacationName: vacation.vacationName
+          }))
+        : [];
 
       const termDetailsDto: TermDetailsDtoModel[] = feat.calendarData.termsAndDates.map(
         termAndDate => {
@@ -137,7 +138,49 @@ export const selectCreateCalendarData = createSelector(
         vacations
       } as CalendarCreateModel;
     }
+    console.log(feat.calendarData);
     return null;
+  }
+);
+
+export const getLatestStartTime = createSelector(
+  selectTeaching,
+  teachingState => {
+    let containNonZeroStartTime = false;
+    let latestStartTimeArr: number[] = teachingState.classesAndGroups.map(
+      classAndGroup => {
+        let startTimeIntArr: number[] = classAndGroup.periods.map(period => {
+          containNonZeroStartTime =
+            containNonZeroStartTime || period.startTime.length == 5;
+          return convertTimeToInt2(period.startTime);
+        });
+        let latestStartTime = startTimeIntArr.reduce((prev, current) =>
+          prev < current ? current : prev
+        );
+
+        return latestStartTime;
+      }
+    );
+    // console.log(
+    //   `latestStartTimeArr - `,
+    //   latestStartTimeArr,
+    //   containNonZeroStartTime
+    // );
+    if (containNonZeroStartTime) {
+      let finalLatestStartTimeInt = latestStartTimeArr.reduce((prev, current) =>
+        prev < current ? current : prev
+      );
+
+      let h: any = Math.floor(finalLatestStartTimeInt / 100);
+
+      let m: any = Math.floor(finalLatestStartTimeInt % 100);
+      h = h < 10 ? `0${h}` : h;
+      m = m < 10 ? `0${m}` : m;
+
+      return `${h}:${m}`;
+    } else {
+      return '';
+    }
   }
 );
 
@@ -165,6 +208,16 @@ export const getEarliestStartTime = createSelector(
 function convertTimeToInt(time: string): number {
   if (time.length !== 5) {
     return 1000000;
+  } else {
+    let h = parseInt(time.substring(0, 2)) * 100;
+    let m = parseInt(time.substring(3, 5));
+    return h + m;
+  }
+}
+
+function convertTimeToInt2(time: string): number {
+  if (time.length !== 5) {
+    return 0;
   } else {
     let h = parseInt(time.substring(0, 2)) * 100;
     let m = parseInt(time.substring(3, 5));

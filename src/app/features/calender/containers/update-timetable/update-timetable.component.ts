@@ -35,6 +35,9 @@ import {
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
+import { defineDays, definePeriods } from '../../utilities';
+import { PeriodModel } from '../../models/period.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'edu-update-timetable',
@@ -79,6 +82,7 @@ export class UpdateTimetableComponent implements OnInit {
   ];
   constructor(
     private store: Store<CalendarStateModel>,
+    private location: Location,
     private activatedRoute: ActivatedRoute
   ) {}
   activeBadge = 8;
@@ -145,10 +149,7 @@ export class UpdateTimetableComponent implements OnInit {
     );
   }
   updateAssemblyName(data) {
-    console.log(data);
-    this.store.dispatch(
-      setEditAssemblyData({ field: 'name', value: data.target.value })
-    );
+    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data }));
   }
   getGroup(groups: ClassGroupModel[]) {
     return of(
@@ -173,7 +174,9 @@ export class UpdateTimetableComponent implements OnInit {
   computeModifications() {
     this.store.dispatch(computeModifications());
   }
-  closeModal() {}
+  goBack() {
+    this.location.back();
+  }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
       return true;
@@ -188,6 +191,12 @@ export class UpdateTimetableComponent implements OnInit {
     let res = scrollableHeight >= maxHeight - 10;
     return res;
   }
+  getDaysOptions(days: TeachingDay[]) {
+    return defineDays(of(days));
+  }
+  getPeriodOptions(periods: PeriodModel[]) {
+    return definePeriods(of(periods));
+  }
   parsePeriodValue(arr) {
     if (arr.length == 0) {
       return '';
@@ -199,16 +208,17 @@ export class UpdateTimetableComponent implements OnInit {
         if (typeof number === 'string' && number.toLowerCase() === 'all') {
           return `${number}`;
         }
-        if (number == 1) {
+        number = `${number}`.replace('P', '');
+
+        if (number === 1 || number === '1') {
           suffix = 'st';
-        } else if (number == 2) {
+        } else if (number === 2 || number === '2') {
           suffix = 'nd';
-        } else if (number == 3) {
+        } else if (number === 3 || number === '3') {
           suffix = 'rd';
         } else {
           suffix = 'th';
         }
-        number = `${number}`.replace('P', '');
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);
@@ -229,7 +239,8 @@ export class UpdateTimetableComponent implements OnInit {
   }
   updateAfter(item, idx) {
     this.store.dispatch(
-      updateEditBreakData({ index: idx, field: 'after', value: 'P' + item })
+      // updateEditBreakData({ index: idx, field: 'after', value: 'P' + item })
+      updateEditBreakData({ index: idx, field: 'after', value: item })
     );
   }
   updateDuration(item, idx) {

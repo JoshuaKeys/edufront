@@ -11,92 +11,8 @@ import { ClassModel } from 'src/app/shared/models/class.model';
 import { buildRangePipe } from '../../utilities';
 import { CalendarModalModel } from '../../models/calender-modal.model';
 import { toggleEndModal } from '../../ngrx/actions';
-let weirdData = [
-  {
-    day: 'Mon',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
-    startTime: '09:15',
-    periodDuration: '30',
-    intervaBtwPeriods: '10',
-    breaks: [],
-    assembly: { name: 'ass1', startingAt: '07:00', duration: '60' }
-  },
-  {
-    day: 'Tue',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '10',
-    breaks: [],
-    assembly: { name: 'ass1', startingAt: '07:00', duration: '60' }
-  },
-  {
-    day: 'Wed',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '30',
-    intervaBtwPeriods: '10',
-    breaks: [],
-    assembly: { name: 'ass1', startingAt: '07:00', duration: '60' }
-  }
-];
-let testData = [
-  {
-    day: 'Mon',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'],
-    startTime: '09:30',
-    periodDuration: '0',
-    intervaBtwPeriods: '0',
-    breaks: [],
-    assembly: { name: '', startingAt: '', duration: '' }
-  },
-  {
-    day: 'Tue',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '0',
-    intervaBtwPeriods: '0',
-    breaks: [],
-    assembly: { name: '', startingAt: '', duration: '' }
-  },
-  {
-    day: 'Wed',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '0',
-    intervaBtwPeriods: '0',
-    breaks: [],
-    assembly: { name: '', startingAt: '', duration: '' }
-  },
-  {
-    day: 'Thu',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '0',
-    intervaBtwPeriods: '0',
-    breaks: [],
-    assembly: { name: '', startingAt: '', duration: '' }
-  },
-  {
-    day: 'Fri',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '0',
-    intervaBtwPeriods: '0',
-    breaks: [],
-    assembly: { name: '', startingAt: '', duration: '' }
-  },
-  ,
-  {
-    day: 'Sat',
-    periods: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'],
-    startTime: '08:30',
-    periodDuration: '0',
-    intervaBtwPeriods: '0',
-    breaks: [],
-    assembly: { name: '', startingAt: '', duration: '' }
-  }
-];
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'edu-calendar-confirmation',
@@ -111,12 +27,14 @@ export class CalendarConfirmationComponent implements OnInit {
   constructor(
     private store: Store<CalendarStateModel>,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
     this.modalState = this.store.select(selectCalendarModalState);
+    this.teachingData.subscribe(teachingData => console.log(teachingData.classesAndGroups[0].periods))
   }
   sendCalendarData() {
     this.store.dispatch(sendCalendarData())
@@ -127,7 +45,7 @@ export class CalendarConfirmationComponent implements OnInit {
     return result
   }
   goToDashboard() {
-
+    this.router.navigateByUrl('/dashboard')
   }
   goNext() {
 
@@ -144,9 +62,6 @@ export class CalendarConfirmationComponent implements OnInit {
     return classes;
   }
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
-  timetableArr2 = [weirdData, testData]; //tempDisplayData
-
-  timetableArr = new Array(15).fill(testData);
 
   imageSize = {
     width: '380px',
@@ -164,7 +79,9 @@ export class CalendarConfirmationComponent implements OnInit {
   onTick(index) {
     console.log(`tick @ ${index}`);
   }
-
+  goBack() {
+    this.location.back()
+  }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
       return true;

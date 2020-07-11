@@ -43,13 +43,15 @@ export class TimepickerComponent
   value$ = new Subject();
   _value;
   set value(param) {
-    // console.log('SET VAL');
-    // console.log(param);
+    console.log('SET VAL');
+    console.log(param);
     param = this.sanitizeNullAndUndefined(param);
+    console.log(param);
     this.activeTime = this.parseStringToTime(param);
+    console.log(this.activeTime);
     this._value = param;
-    this.setDisplayText();
-    // this.value$.next(param);
+
+    this.value$.next(param);
   }
   get value() {
     return this._value;
@@ -93,7 +95,12 @@ export class TimepickerComponent
   }
 
   sanitizeNullAndUndefined(value) {
-    if (value === null || value == undefined) {
+    if (
+      value === null ||
+      value == undefined ||
+      typeof value != 'string' ||
+      value.length !== 5
+    ) {
       return '';
     }
     return value;
@@ -117,7 +124,8 @@ export class TimepickerComponent
   }
 
   setDisplayText() {
-    // console.log(this.activeTime);
+    console.log('setDisplayText', this.activeTime);
+
     if (JSON.stringify(this.activeTime) === `{}`) {
       this.displayText = ``;
     } else {
@@ -127,6 +135,7 @@ export class TimepickerComponent
       )}:${this.formatTimeToDoubleDigit(this.activeTime.min)}`;
       this.displayText = this.displayText.trim();
     }
+    console.log('setDisplayText', this.displayText);
   }
   formatTimeToDoubleDigit(time) {
     return time > 9 ? `${time}` : `0${time}`;

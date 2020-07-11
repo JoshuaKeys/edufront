@@ -4,9 +4,13 @@
       What time does the first period in a day start?
     </h1>
     <form *ngIf="startTimeForm" [formGroup]="startTimeForm">
-      <edu-timepicker (edu-change)="setStartTime($event)">
+      <edu-timepicker
+        formControlName="startTime"
+        (edu-change)="setStartTime($event)"
+      >
         <span class="edu-label">Start Time</span>
       </edu-timepicker>
+
       <!-- <input formControlName="startTime" type="time" (change)="setStartTime($event)"> -->
     </form>
     <div class="start-time__btn-container button--bottom" *ngIf="startTimeForm">

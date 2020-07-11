@@ -1,5 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TeachingStateModel } from '../../models/teaching-state.model';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { CalendarStateModel } from '../../models/calender-state.model';
+import { selectTeaching } from '../../ngrx/selectors';
+import { setHasAssemblyStatus } from '../../ngrx/actions/calendar.actions';
 
 @Component({
   selector: 'edu-common-assembly-question',
@@ -9,13 +15,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CommonAssemblyQuestionComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
+  teachingData: Observable<TeachingStateModel>;
 
   ngOnInit(): void {
+    this.teachingData = this.store.select(selectTeaching);
   }
   goUpperNext() {
+    this.setHasAssemblyStatus(false);
     this.router.navigateByUrl('/calendar/break-schedule-question')
+  }
+  setHasAssemblyStatus(boolean) {
+    this.store.dispatch(setHasAssemblyStatus({ value: boolean }))
   }
   constructor(
     private router: Router,
+    private store: Store<CalendarStateModel>,
     private activatedRoute: ActivatedRoute) { }
 }

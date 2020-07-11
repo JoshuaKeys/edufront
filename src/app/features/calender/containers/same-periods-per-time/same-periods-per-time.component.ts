@@ -2,7 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { setAllStartTime } from '../../ngrx/actions/calendar.actions';
+import { setAllStartTime, setSamePeriodsQuestion, setSameStartTimeStatus } from '../../ngrx/actions/calendar.actions';
+import { Observable } from 'rxjs';
+import { TeachingStateModel } from '../../models/teaching-state.model';
+import { selectTeaching } from '../../ngrx/selectors';
 
 @Component({
   selector: 'edu-same-periods-per-time',
@@ -12,11 +15,17 @@ import { setAllStartTime } from '../../ngrx/actions/calendar.actions';
 })
 export class SamePeriodsPerTimeComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data
+  teachingData: Observable<TeachingStateModel>;
   ngOnInit(): void {
+    this.teachingData = this.store.select(selectTeaching);
   }
   goToUpperNext() {
-    this.store.dispatch(setAllStartTime({startTime: '08:00'}))
+    this.setSameStartTimeStatus(false)
+    this.store.dispatch(setAllStartTime({ startTime: '08:00' }))
     this.router.navigateByUrl('/calendar/start-time-of-each-period')
+  }
+  setSameStartTimeStatus(boolean) {
+    this.store.dispatch(setSameStartTimeStatus({ value: boolean }))
   }
   constructor(
     private router: Router,

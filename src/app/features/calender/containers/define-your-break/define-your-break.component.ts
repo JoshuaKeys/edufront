@@ -6,7 +6,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
@@ -30,7 +30,8 @@ import { ClassModel } from 'src/app/shared/models/class.model';
 import { map } from 'rxjs/operators';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { FormGroup, FormArray } from '@angular/forms';
-import { buildRangePipe } from '../../utilities';
+import { buildRangePipe, defineDays, definePeriods } from '../../utilities';
+import { TeachingDay } from '../../models/teaching-day.model';
 
 @Component({
   selector: 'edu-define-your-break',
@@ -39,6 +40,8 @@ import { buildRangePipe } from '../../utilities';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefineYourBreakComponent implements OnInit {
+  dayOptions: Observable<{ value: string; display: string }[]>;
+  periodOptions: Observable<{ value: number; display: string }[]>;
   testData = {
     title: 'testTitle',
     day: ['Mon', 'Tue'],
@@ -104,8 +107,15 @@ export class DefineYourBreakComponent implements OnInit {
         );
       })
     );
+    // this.dayOptions = defineDays(this.teachingState)
+    // this.periodOptions = definePeriods(this.teachingState);
   }
-
+  getDaysOptions(item: ClassGroupModel) {
+    return defineDays(of(item.teachingDays));
+  }
+  getPeriodOptions(item: ClassGroupModel) {
+    return definePeriods(of(item.periods));
+  }
   timeArr = Array(60).fill('');
   dayArr = ['All', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   periodArr = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
@@ -174,17 +184,17 @@ export class DefineYourBreakComponent implements OnInit {
         if (typeof number === 'string' && number.toLowerCase() === 'all') {
           return `${number}`;
         }
-
-        if (number == 1) {
+        number = `${number}`.replace('P', '');
+        if (number === 1 || number === '1') {
           suffix = 'st';
-        } else if (number == 2) {
+        } else if (number === 2 || number === '2') {
           suffix = 'nd';
-        } else if (number == 3) {
+        } else if (number === 3 || number === '3') {
           suffix = 'rd';
         } else {
           suffix = 'th';
         }
-        number = `${number}`.replace('P', '');
+
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);
@@ -208,28 +218,4 @@ export class DefineYourBreakComponent implements OnInit {
     // }
     return arr.reduce((a, b) => `${a},${b}`);
   }
-  periodOption = [
-    { value: 1, display: 'P1' },
-    { value: 2, display: 'P2' },
-    { value: 3, display: 'P3' },
-    { value: 4, display: 'P4' },
-    { value: 5, display: 'P5' },
-    { value: 6, display: 'P6' },
-    { value: 11, display: 'P11' },
-    { value: 12, display: 'P12' },
-    { value: 13, display: 'P13' },
-    { value: 14, display: 'P14' },
-    { value: 15, display: 'P15' },
-    { value: 16, display: 'P16' }
-  ];
-  dayOptions = [
-    { value: 'all', display: 'All' },
-    { value: 'Mon', display: 'Mon' },
-    { value: 'Tue', display: 'Tue' },
-    { value: 'Wed', display: 'Wed' },
-    { value: 'Thu', display: 'Thu' },
-    { value: 'Fri', display: 'Fri' },
-    { value: 'Sat', display: 'Sat' },
-    { value: 'Sun', display: 'Sun' }
-  ];
 }

@@ -5,9 +5,14 @@ import {
   setStartTime,
   setAllStartTime
 } from '../../ngrx/actions/calendar.actions';
-import { selectCalendar, selectTeaching } from '../../ngrx/selectors';
+import {
+  selectCalendar,
+  selectTeaching,
+  getLatestStartTime
+} from '../../ngrx/selectors';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'edu-start-time-of-first-period',
@@ -22,11 +27,14 @@ export class StartTimeOfFirstPeriodComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
   startTimeForm: FormGroup;
+  teaching$: Observable<any>;
   ngOnInit(): void {
-    this.store.select(selectTeaching).subscribe(teaching => {
+    this.teaching$ = this.store.select(selectTeaching);
+    this.store.select(getLatestStartTime).subscribe(lastestStartTime => {
       this.startTimeForm = new FormGroup({
         startTime: new FormControl(
-          teaching.classesAndGroups[0].periods[0].startTime
+          // teaching.classesAndGroups[0].periods[0].startTime
+          lastestStartTime
         )
       });
     });
