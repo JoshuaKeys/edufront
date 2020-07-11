@@ -1,0 +1,19 @@
+<div PreviewAnimate class="profile-select-preview">
+  <a
+    *ngIf="previewState"
+    class="preview-select-preview__link"
+    [routerLink]="[previewState.schoolAddress.route]"
+  >
+    <div class="selected-heading">School Contact</div>
+    <div class="selected-data">
+      <span class="info">
+        <span
+          >{{ previewState.schoolContact.phonePrefix }}
+          {{ previewState.schoolContact.phoneNumber }}</span
+        >
+        <span>{{ previewState.schoolContact.email }}</span>
+        <span>{{ previewState.schoolContact.website }}</span>
+      </span>
+    </div>
+  </a>
+</div>

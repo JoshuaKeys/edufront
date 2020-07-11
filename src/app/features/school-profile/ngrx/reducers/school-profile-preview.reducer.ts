@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { PreviewModel, SchoolPreviewModel } from '../../models/preview.model';
-import { setSchoolName, setAddressData, setContactsData, setSchoolLogo, clearLogoPreview } from '../actions';
+import { setSchoolName, setAddressData, setContactsData, setSchoolLogo, clearLogoPreview, setPhoneData } from '../actions';
 
 const initialState: SchoolPreviewModel = {
   schoolName: {
@@ -8,6 +8,9 @@ const initialState: SchoolPreviewModel = {
   },
   schoolAddress: {
     route: 'school-address-question'
+  },
+  schoolContact: {
+    route: 'contact-details-question'
   }
 }
 export const schoolProfilePreviewReducer = createReducer(initialState,
@@ -19,9 +22,29 @@ export const schoolProfilePreviewReducer = createReducer(initialState,
     };
     return stateCopy;
   }),
+  on(setContactsData, (state, action) => {
+    if (action.field !== 'phone') {
+      const stateCopy: SchoolPreviewModel = JSON.parse(JSON.stringify(state));
+      stateCopy.schoolContact = {
+        ...stateCopy.schoolContact,
+        [action.field]: action.value
+      };
+      return stateCopy;
+    }
+    return state;
+  }),
   on(setAddressData, (state, action) => {
     const stateCopy: SchoolPreviewModel = JSON.parse(JSON.stringify(state));
     stateCopy.schoolAddress[action.field] = action.value;
+    return stateCopy;
+  }),
+  on(setPhoneData, (state, action) => {
+    const stateCopy: SchoolPreviewModel = JSON.parse(JSON.stringify(state));
+    stateCopy.schoolContact = {
+      ...stateCopy.schoolContact,
+      phonePrefix: action.prefix,
+      phoneNumber: action.phoneNum
+    }
     return stateCopy;
   }),
   // on(setSchoolName, (state, { schoolName }) => {

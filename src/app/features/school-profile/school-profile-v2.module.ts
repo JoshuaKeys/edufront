@@ -21,6 +21,7 @@ import { SchoolProfileService } from './services/school-profile.service';
 import { ParentPreviewComponent } from './components/parent-preview/parent-preview.component';
 import { SchoolNamePreviewComponent } from './components/school-name-preview/school-name-preview.component';
 import { SchoolAddressPreviewComponent } from './components/school-address-preview/school-address-preview.component';
+import { SchoolContactsPreviewComponent } from './components/school-contacts-preview/school-contacts-preview.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SchoolAddressPreviewComponent } from './components/school-address-previ
     ConfirmationBoxComponent,
     ParentPreviewComponent,
     SchoolNamePreviewComponent,
-    SchoolAddressPreviewComponent
+    SchoolAddressPreviewComponent,
+    SchoolContactsPreviewComponent
   ],
   imports: [
     CommonModule,

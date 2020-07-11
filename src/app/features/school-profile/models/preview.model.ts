@@ -21,6 +21,7 @@ export interface SchoolPreviewModel {
     route?: string;
   };
   schoolContact?: {
+    phonePrefix?: string;
     phoneNumber?: string;
     email?: string;
     website?: string;

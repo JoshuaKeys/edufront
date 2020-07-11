@@ -1,4 +1,8 @@
 <ul>
+  <li *ngIf="contactsSet(previewState)">
+    <edu-school-contacts-preview [previewState]="previewState">
+    </edu-school-contacts-preview>
+  </li>
   <li *ngIf="addressSet(previewState)">
     <edu-school-address-preview
       [previewState]="previewState"
