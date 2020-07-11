@@ -128,6 +128,9 @@ export class CalendarEffects {
   createCalendarRequest$ = createEffect(() => this.actions$.pipe(
     ofType(createCalendarRequest),
     withLatestFrom(this.store.select(selectCreateCalendarData)),
+    tap(([action, calendarCreate]) => {
+      console.log(calendarCreate)
+    }),
     mergeMap(([action, calendarCreate]) => this.calendarService.createCalendar(calendarCreate).pipe(
       map(calendarResponse => {
         localStorage.setItem('termId', calendarResponse.term.termDetailsDtos[0].termId);

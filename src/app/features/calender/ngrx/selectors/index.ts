@@ -91,7 +91,8 @@ export const selectOrphanedClasses = createSelector(
 export const selectCreateCalendarData = createSelector(
   calendarFeatureState,
   feat => {
-    if (Object.keys(feat.calendarData).length >= 4) {
+    console.log(feat.calendarData)
+    if (Object.keys(feat.calendarData).length >= 5) {
       const holidays: HolidayCreateModel[] = selectAll(
         feat.holidays.holidayList
       ).map(holiday => {
@@ -105,13 +106,13 @@ export const selectCreateCalendarData = createSelector(
         };
       });
 
-      const vacations: VacationCreateModel[] = feat.calendarData.vacations.map(
+      const vacations: VacationCreateModel[] = feat.calendarData.vacations ? feat.calendarData.vacations.map(
         vacation => ({
           vacationStart: vacation.startDate,
           vacationEnd: vacation.endDate,
           vacationName: vacation.vacationName
         })
-      );
+      ) : [];
 
       const termDetailsDto: TermDetailsDtoModel[] = feat.calendarData.termsAndDates.map(
         termAndDate => {
@@ -137,6 +138,7 @@ export const selectCreateCalendarData = createSelector(
         vacations
       } as CalendarCreateModel;
     }
+    console.log(feat.calendarData)
     return null;
   }
 );
