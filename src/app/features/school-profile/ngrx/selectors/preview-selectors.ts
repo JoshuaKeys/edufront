@@ -11,10 +11,10 @@ export const selectPreviewState = createSelector(
 export const selectLogoPreview = createSelector(
   selectPreviewState,
   previewState => {
-    const index = previewState.findIndex(previewItem => previewItem && previewItem.label === 'School Logo')
-    if (index > -1) {
-      return previewState[index].values[0].value;
-    }
+    // const index = previewState.findIndex(previewItem => previewItem && previewItem.label === 'School Logo')
+    // if (index > -1) {
+    //   return previewState[index].values[0].value;
+    // }
     return null
   }
 )

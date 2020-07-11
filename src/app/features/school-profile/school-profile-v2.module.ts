@@ -18,6 +18,9 @@ import { ConfirmationBoxComponent } from './components/confirmation-box/confirma
 import { EffectsModule } from '@ngrx/effects';
 import { SchoolProfileEffects } from './ngrx/effects/effects';
 import { SchoolProfileService } from './services/school-profile.service';
+import { ParentPreviewComponent } from './components/parent-preview/parent-preview.component';
+import { SchoolNamePreviewComponent } from './components/school-name-preview/school-name-preview.component';
+import { SchoolAddressPreviewComponent } from './components/school-address-preview/school-address-preview.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { SchoolProfileService } from './services/school-profile.service';
     SchoolLogoQuestionComponent,
     SchoolLogoUploadComponent,
     SchoolProfileConfirmationComponent,
-    ConfirmationBoxComponent
+    ConfirmationBoxComponent,
+    ParentPreviewComponent,
+    SchoolNamePreviewComponent,
+    SchoolAddressPreviewComponent
   ],
   imports: [
     CommonModule,
@@ -41,4 +47,4 @@ import { SchoolProfileService } from './services/school-profile.service';
   ],
   providers: [SchoolProfileService]
 })
-export class SchoolProfileV2Module {}
+export class SchoolProfileV2Module { }

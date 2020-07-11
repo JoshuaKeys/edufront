@@ -1,0 +1,12 @@
+<ul>
+  <li *ngIf="addressSet(previewState)">
+    <edu-school-address-preview
+      [previewState]="previewState"
+    ></edu-school-address-preview>
+  </li>
+  <li *ngIf="schoolNameSet(previewState)">
+    <edu-school-name-preview
+      [previewState]="previewState"
+    ></edu-school-name-preview>
+  </li>
+</ul>

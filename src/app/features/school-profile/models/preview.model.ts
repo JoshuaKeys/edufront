@@ -6,3 +6,27 @@ export interface PreviewModel {
   values: Array<{ name: string, value: string }>;
   route?: string;
 }
+
+export interface SchoolPreviewModel {
+  schoolName?: {
+    name?: string;
+    route?: string;
+  };
+  schoolAddress?: {
+    country?: string;
+    address?: string;
+    zipCode?: number;
+    state?: string;
+    city?: string;
+    route?: string;
+  };
+  schoolContact?: {
+    phoneNumber?: string;
+    email?: string;
+    website?: string;
+  };
+  haveSchoolLogo?: boolean;
+  schoolLogo?: {
+
+  }
+}

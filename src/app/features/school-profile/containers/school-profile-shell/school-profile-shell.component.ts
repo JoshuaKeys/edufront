@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PreviewModel } from '../../models/preview.model';
+import { PreviewModel, SchoolPreviewModel } from '../../models/preview.model';
 import { Store } from '@ngrx/store';
 import { SchoolProfileModel } from '../../models/school-profile.model';
 import { selectPreviewState } from '../../ngrx/selectors';
@@ -12,7 +12,7 @@ import { selectPreviewState } from '../../ngrx/selectors';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchoolProfileShellComponent implements OnInit {
-  previewState: Observable<PreviewModel[]>
+  previewState: Observable<SchoolPreviewModel>
 
 
   ngOnInit(): void {
