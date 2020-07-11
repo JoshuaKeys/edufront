@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import {
@@ -15,6 +15,9 @@ import {
   updateSameBreakData
 } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { defineDays, definePeriods } from '../../utilities';
+import { ClassGroupModel } from '../../models/class-group.model';
 
 @Component({
   selector: 'edu-define-same-breaks',
@@ -24,11 +27,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DefineSameBreaksComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
+  teachingData: Observable<TeachingStateModel>;
+  dayOptions: Observable<{ value: string; display: string }[]>;
+  periodOptions: Observable<{ value: number; display: string }[]>;
   constructor(
     private store: Store<CalendarStateModel>,
     private activatedRoute: ActivatedRoute
   ) { }
-  teachingData: Observable<TeachingStateModel>;
   testDataArr = [
     {
       title: 'testTitle',
@@ -46,6 +51,13 @@ export class DefineSameBreaksComponent implements OnInit {
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
+
+  }
+  getDaysOptions(item: TeachingStateModel) {
+    return defineDays(of(item.teachingDays))
+  }
+  getPeriodOptions(item: TeachingStateModel) {
+    return definePeriods(of(item.periods));
   }
   timeArr = Array(60).fill('');
   formArr = [0];
@@ -155,15 +167,5 @@ export class DefineSameBreaksComponent implements OnInit {
     { value: 4, display: 'P4' },
     { value: 5, display: 'P5' },
     { value: 6, display: 'P6' }
-  ];
-  dayOptions = [
-    { value: 'all', display: 'All' },
-    { value: 'Mon', display: 'Mon' },
-    { value: 'Tue', display: 'Tue' },
-    { value: 'Wed', display: 'Wed' },
-    { value: 'Thu', display: 'Thu' },
-    { value: 'Fri', display: 'Fri' },
-    { value: 'Sat', display: 'Sat' },
-    { value: 'Sun', display: 'Sun' }
   ];
 }

@@ -44,7 +44,11 @@ import {
   computedModifications,
   updateEditStartTime,
   updateTeachingPeriod,
-  setSamePeriodsQuestion
+  setSamePeriodsQuestion,
+  setTeachingDaysStatus,
+  setSameStartTimeStatus,
+  setHasAssemblyStatus,
+  setSameBreakScheduleStatus
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -94,6 +98,26 @@ export const teachingReducer = createReducer(
   on(setAssemblyEnabledMode, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     stateCopy.calendarEdit.isAssemblyIncluded = action.isEnabled
+    return stateCopy;
+  }),
+  on(setTeachingDaysStatus, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.sameTeachingDays = action.value;
+    return stateCopy;
+  }),
+  on(setSameStartTimeStatus, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.sameStartTime = action.value;
+    return stateCopy;
+  }),
+  on(setHasAssemblyStatus, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.hasAssembly = action.value;
+    return stateCopy;
+  }),
+  on(setSameBreakScheduleStatus, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.sameBreakSchedule = action.value;
     return stateCopy;
   }),
   on(toggleEditTeachingActive, (state, action) => {

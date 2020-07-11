@@ -1,5 +1,8 @@
 <div class="main">
   <div class="content">
+    <button class="section__back-btn" (click)="goToDashboard()">
+      <img src="../../../assets/chevron-left.svg" alt="" /> Back
+    </button>
     <h1 class="header">
       Are these correct?
     </h1>
@@ -8,7 +11,7 @@
       #scrollableEl
       class="scrollable-content"
       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
-      *ngIf="teachingData | async as teachingData"
+      *ngIf="teachingData | async"
     >
       <edu-image-slider [imageSize]="imageSize">
         <edu-timetable-card
@@ -18,13 +21,16 @@
           [edu-title]="computeClasses(timetable.classes)"
           (edu-edit)="onEdit($event, timetable)"
           (edu-tick)="onTick($event)"
-          *ngFor="let timetable of teachingData.classesAndGroups; let i = index"
+          *ngFor="
+            let timetable of (teachingData | async).classesAndGroups;
+            let i = index
+          "
         ></edu-timetable-card>
       </edu-image-slider>
     </div>
   </div>
   <div class="button--bottom">
-    <button ButtonType="outline">
+    <button ButtonType="outline" (click)="goBack()">
       Back
     </button>
     <button ButtonType="basic" (click)="sendCalendarData()">

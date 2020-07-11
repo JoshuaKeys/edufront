@@ -5,7 +5,7 @@ import {
   fetchHolidaysResponse, fetchClassesAndGroups,
   fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
   updateSelectedTeachingDaysRequest,
-  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData
+  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData, editCalendar, setAssemblyEnabledMode
 } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
@@ -151,6 +151,15 @@ export class CalendarEffects {
       return this.calendarService.createTimetablePlanner(api).pipe(
         map(response => toggleEndModal())
       )
+    })
+  ));
+  editCalendar$ = createEffect(() => this.actions$.pipe(
+    ofType(editCalendar),
+    map(action => {
+      if (action.group.periods[0].assembly.name.length) {
+        return setAssemblyEnabledMode({ isEnabled: true })
+      }
+      return setAssemblyEnabledMode({ isEnabled: false })
     })
   ))
   constructor(private actions$: Actions,

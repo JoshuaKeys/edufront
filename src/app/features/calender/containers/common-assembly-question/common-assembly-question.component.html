@@ -1,15 +1,24 @@
 <div class="main">
-    <div class="content">
-        <h1 class="header">
-            Does the school have a common assembly before the first period?
-        </h1>
+  <div class="content">
+    <h1 class="header">
+      Does the school have a common assembly before the first period?
+    </h1>
 
-        <div class="btns-container">
-            <button ButtonType="round-basic" [routerLink]="['../', activatedRouteData.next]">
-          Yes</button
-        ><button
-            (click)="goUpperNext()"
-            ButtonType="round">No</button>
-        </div>
+    <div class="btns-container">
+      <button
+        [ngClass]="{ active: (teachingData | async).hasAssembly === true }"
+        ButtonType="round"
+        (click)="setHasAssemblyStatus(true)"
+        [routerLink]="['../', activatedRouteData.next]"
+      >
+        Yes</button
+      ><button
+        (click)="goUpperNext()"
+        [ngClass]="{ active: (teachingData | async).hasAssembly === false }"
+        ButtonType="round"
+      >
+        No
+      </button>
     </div>
+  </div>
 </div>

@@ -11,6 +11,9 @@ import { selectTeachingDay, editCalendar, toggleEditClassActive, setEditAssembly
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
+import { defineDays, definePeriods } from '../../utilities';
+import { PeriodModel } from '../../models/period.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'edu-update-timetable',
@@ -53,7 +56,7 @@ export class UpdateTimetableComponent implements OnInit {
     { value: 'Sat', display: 'Sat' },
     { value: 'Sun', display: 'Sun' }
   ];
-  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) { }
+  constructor(private store: Store<CalendarStateModel>, private location: Location, private activatedRoute: ActivatedRoute) { }
   activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
@@ -102,8 +105,7 @@ export class UpdateTimetableComponent implements OnInit {
     this.store.dispatch(updateCalendarPeriodData({ field: 'intervaBtwPeriods', value: interval.duration.duration }))
   }
   updateAssemblyName(data) {
-    console.log(data);
-    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data.target.value }))
+    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data }))
   }
   getGroup(groups: ClassGroupModel[]) {
     return of(groups.find(group => group.id === this.activatedRoute.snapshot.queryParams.groupId));
@@ -124,8 +126,8 @@ export class UpdateTimetableComponent implements OnInit {
   computeModifications() {
     this.store.dispatch(computeModifications());
   }
-  closeModal() {
-
+  goBack() {
+    this.location.back()
   }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
@@ -140,6 +142,12 @@ export class UpdateTimetableComponent implements OnInit {
 
     let res = scrollableHeight >= maxHeight - 10;
     return res;
+  }
+  getDaysOptions(days: TeachingDay[]) {
+    return defineDays(of(days))
+  }
+  getPeriodOptions(periods: PeriodModel[]) {
+    return definePeriods(of(periods));
   }
   parsePeriodValue(arr) {
     if (arr.length == 0) {

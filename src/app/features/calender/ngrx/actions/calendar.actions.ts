@@ -262,6 +262,10 @@ export const setAssemblyEnabledMode = createAction(
   '[DefineSameBreakComponent] setAssemblyEnabledMode',
   props<{ isEnabled: boolean }>()
 )
+export const setTeachingDaysStatus = createAction(
+  '[SameTeachingDaysQuestion] setTeachingDaysStatus',
+  props<{ value: boolean }>()
+)
 export const setEditAssemblyData = createAction(
   '[AssemblyDetailsComponent] setEditAssemblyData',
   props<{ field: 'startingAt' | 'duration' | 'name', value: number | string }>()
@@ -292,4 +296,16 @@ export const updateTeachingPeriod = createAction(
 export const setSamePeriodsQuestion = createAction(
   '[SamePeriodsForClassesQuestionComponent] setSamePeriodsQuestion',
   props<{ answer: boolean }>()
-)
+);
+export const setSameStartTimeStatus = createAction(
+  '[SamePeriodsPerTimeComponent] setSameStartTimeStatus',
+  props<{ value: boolean }>()
+);
+export const setHasAssemblyStatus = createAction(
+  '[CommonAssemblyQuestionComponent] setHasAssemblyStatus',
+  props<{ value: boolean }>()
+);
+export const setSameBreakScheduleStatus = createAction(
+  '[BreakScheduleQuestion] setSameBreakScheduleStatus',
+  props<{ value: boolean }>()
+);

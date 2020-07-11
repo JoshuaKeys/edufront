@@ -57,7 +57,7 @@
               [isSingleSelect]="true"
               [textParserFn]="parseDayValue"
               [elementId]="'day-' + i + '-ci-' + classIndex"
-              [valueOptions]="dayOptions"
+              [valueOptions]="getDaysOptions(item) | async"
               [ngModel]="breakItem.day"
             >
               <span class="edu-label">
@@ -68,7 +68,7 @@
               (edu-tick)="updateAfter($event, i, item.id)"
               [textParserFn]="parsePeriodValue"
               [elementId]="'after-' + i + '-ci-' + classIndex"
-              [valueOptions]="periodOption"
+              [valueOptions]="getPeriodOptions(item) | async"
               [ngModel]="breakItem.after"
             >
               <span class="edu-label">

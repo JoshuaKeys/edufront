@@ -14,4 +14,8 @@ export interface TeachingStateModel {
   startTime?: string;
   calendarEdit?: CalendarUpdateModel;
   sameNoOfPeriods?: boolean;
+  sameTeachingDays?: boolean;
+  sameStartTime?: boolean;
+  sameBreakSchedule?: boolean;
+  hasAssembly?: boolean;
 }

@@ -9,6 +9,9 @@ import { CalendarStateModel } from '../models/calender-state.model';
 import { TimeTablePlanner } from '../models/time-table-planner.model';
 import { TeachingDayPlannerModel } from '../models/teaching-day-planner.model';
 import { TeachingStateModel } from '../models/teaching-state.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { TeachingDay } from '../models/teaching-day.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -416,4 +419,32 @@ function transformToFullDay(day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' |
       console.log(fullDays[i].substr(0, 2).toLowerCase(), day.toLowerCase())
     }
   }
+}
+
+export function definePeriods(teachingData: Observable<PeriodModel[]>) {
+  return teachingData.pipe(
+    map(items => {
+      const result: { value: number; display: string }[] = [];
+      const periodLengthIdx = items.findIndex(period => period.periods.length);
+      items[periodLengthIdx].periods.forEach((period, idx) => {
+        result.push({ value: +period.substr(1), display: period })
+      })
+      return result;
+    })
+  )
+}
+
+export function defineDays(teachingData: Observable<TeachingDay[]>) {
+  return teachingData.pipe(
+    map(items => {
+      const result = [];
+      items.forEach(days => {
+        if (days.selected) {
+          result.push({ value: days.day, display: days.day })
+        }
+      })
+      result.unshift({ value: 'All', display: 'All' })
+      return result;
+    })
+  )
 }

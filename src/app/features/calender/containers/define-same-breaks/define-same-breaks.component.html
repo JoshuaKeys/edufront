@@ -6,16 +6,14 @@
 
     <div
       #scrollableEl
+      *ngIf="teachingData | async as teaching"
       class="scrollable-content"
       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
     >
       <!-- <div class="group--row break" *ngFor="let item of formArr"> -->
       <div
         class="group--row break"
-        *ngFor="
-          let break of (teachingData | async).periods[0].breaks;
-          let i = index
-        "
+        *ngFor="let break of teaching.periods[0].breaks; let i = index"
       >
         <edu-input
           (edu-blur)="updateTitle($event, i)"
@@ -30,7 +28,7 @@
           (edu-tick)="updateDay($event, i)"
           [textParserFn]="parseDayValue"
           [elementId]="'day'"
-          [valueOptions]="dayOptions"
+          [valueOptions]="getDaysOptions(teaching) | async"
           [ngModel]="break.day"
         >
           <span class="edu-label">
@@ -42,7 +40,7 @@
           (edu-tick)="updateAfter($event, i)"
           [textParserFn]="parsePeriodValue"
           elementId="after"
-          [valueOptions]="periodOption"
+          [valueOptions]="getPeriodOptions(teaching) | async"
           [ngModel]="break.after"
         >
           <span class="edu-label">
@@ -81,7 +79,7 @@
     </div>
   </div>
   <button
-    [routerLink]="['../', activatedRouteData.next]"
+    [routerLink]="['/calendar/calendar-confirmation']"
     class="button--bottom"
     ButtonType="basic"
   >

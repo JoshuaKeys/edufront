@@ -1,5 +1,5 @@
 <div class="main">
-  <div class="content" *ngIf="teachingState | async">
+  <div class="content" *ngIf="teachingState | async as teachingData">
     <h1 class="header">
       Update Timetable for Class 1-12
     </h1>
@@ -117,7 +117,9 @@
                 (edu-tick)="updateDay($event, i)"
                 [textParserFn]="parseDayValue"
                 [elementId]="'day'"
-                [valueOptions]="dayOptions"
+                [valueOptions]="
+                  getDaysOptions(teachingData.calendarEdit.teachingDays) | async
+                "
                 [ngModel]="break.day"
               >
                 <span class="edu-label">
@@ -129,7 +131,10 @@
                 [isSingleSelect]="true"
                 [textParserFn]="parsePeriodValue"
                 elementId="after"
-                [valueOptions]="periodOption"
+                [valueOptions]="
+                  getPeriodOptions(teachingData.calendarEdit.teachingPeriods)
+                    | async
+                "
                 [ngModel]="break.after"
               >
                 <span class="edu-label">
@@ -241,7 +246,7 @@
     </div>
   </div>
   <div class="button--bottom button__wrapper">
-    <button ButtonType="outline" class="button--cancel">
+    <button ButtonType="outline" class="button--cancel" (click)="goBack()">
       cancel
     </button>
     <button
@@ -281,15 +286,11 @@
       <button
         class="button button--cancel"
         ButtonType="outline"
-        (click)="closeModal()"
+        (click)="goBack()"
       >
         cancel
       </button>
-      <button
-        class="button button--update"
-        ButtonType="basic"
-        (click)="closeModal()"
-      >
+      <button class="button button--update" ButtonType="basic">
         update
       </button>
     </div>
