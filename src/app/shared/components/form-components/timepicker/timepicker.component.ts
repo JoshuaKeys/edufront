@@ -48,8 +48,8 @@ export class TimepickerComponent
     param = this.sanitizeNullAndUndefined(param);
     this.activeTime = this.parseStringToTime(param);
     this._value = param;
-
-    this.value$.next(param);
+    this.setDisplayText();
+    // this.value$.next(param);
   }
   get value() {
     return this._value;
@@ -65,11 +65,10 @@ export class TimepickerComponent
   isAfterViewInit = false;
   ngOnInit(): void {
     this.value$.pipe(distinctUntilChanged()).subscribe(param => {
+      console.log('UPDATEING VALUE', param);
       this.setDisplayText();
       if (this.isAfterViewInit) {
         console.log('pushing change to after view init', param);
-        this.onChange(param);
-        this.onEduChange.emit(param);
       }
     });
   }
@@ -156,6 +155,8 @@ export class TimepickerComponent
     // console.log('popover closing', this.activeTime);
     // if (JSON.stringify(this.tempValue) !== JSON.stringify(this.activeTime)) {
     this.value = this.displayText;
+    this.onChange(this.value);
+    this.onEduChange.emit(this.value);
     // }
   }
   popoverOpen() {

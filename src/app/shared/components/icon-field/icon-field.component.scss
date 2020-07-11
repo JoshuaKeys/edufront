@@ -88,6 +88,7 @@ edu-input {
 .popup__search {
   position: relative;
   min-height: 44px;
+  padding: 0 16px;
   @include displayFlex(flex-start);
 
   &-icon {
@@ -233,4 +234,17 @@ aside {
 }
 .icon__img {
   width: 30px;
+}
+.icon {
+  padding: 0px 16px;
+}
+.icon:hover {
+  .icon__text {
+    color: #69a9f2;
+  }
+  background: #fafbfc 0% 0% no-repeat padding-box;
+}
+
+edu-popover ::ng-deep {
+  padding: 6px 0px;
 }

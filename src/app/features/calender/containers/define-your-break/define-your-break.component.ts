@@ -184,6 +184,7 @@ export class DefineYourBreakComponent implements OnInit {
         } else {
           suffix = 'th';
         }
+        number = `${number}`.replace('P', '');
         return `${number}${suffix}`;
       })
       .reduce((a, b) => `${a},${b}`);

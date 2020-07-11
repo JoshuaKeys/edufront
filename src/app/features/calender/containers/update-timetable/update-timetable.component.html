@@ -55,8 +55,9 @@
       <div class=" line-item item--5">
         <div class="line-item__title ">Period Duration And Interval</div>
         <div class="line-item__content period-duration">
-          <edu-select
+          <edu-select-v2
             elementId="duration"
+            (edu-change)="onUpdatePeriodDuration($event)"
             [ngModel]="
               (teachingState | async).calendarEdit.teachingPeriods[0]
                 .periodDuration
@@ -65,15 +66,16 @@
             <span class="edu-label">
               Period Duration
             </span>
-            <edu-option
+            <edu-option-v2
               *ngFor="let duration of periodDurations"
-              (click)="onUpdatePeriodDuration(duration)"
               [OptionValue]="duration.duration"
-              >{{ duration.text }}</edu-option
+              >{{ duration.text }}</edu-option-v2
             >
-          </edu-select>
-          <edu-select
+          </edu-select-v2>
+
+          <edu-select-v2
             elementId="interval"
+            (edu-change)="onUpdateInterval($event)"
             [ngModel]="
               (teachingState | async).calendarEdit.teachingPeriods[0]
                 .intervaBtwPeriods
@@ -82,14 +84,13 @@
             <span class="edu-label">
               Interval Duration
             </span>
-            <edu-option
-              (click)="onUpdateInterval(interval)"
+            <edu-option-v2
               *ngFor="let interval of intervals; let i = index"
               [OptionValue]="interval.duration"
             >
               {{ interval.text }}
-            </edu-option>
-          </edu-select>
+            </edu-option-v2>
+          </edu-select-v2>
         </div>
       </div>
       <div class=" line-item item--6">
@@ -208,11 +209,14 @@
                 Name
               </span>
             </edu-input>
+
             <edu-timepicker
               elementId="startingAt"
               [ngModel]="
-                (teachingState | async).calendarEdit.teachingPeriods[0].assembly
-                  .startingAt['duration']
+                loadAssemblyStartTime(
+                  (teachingState | async).calendarEdit.teachingPeriods[0]
+                    .assembly.startingAt
+                )
               "
               (edu-change)="updateStartTime($event)"
             >

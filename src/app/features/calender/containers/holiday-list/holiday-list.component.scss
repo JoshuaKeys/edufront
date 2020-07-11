@@ -12,6 +12,7 @@
   &__items {
     display: flex;
     flex-wrap: wrap;
+    padding: 0;
   }
   &__item {
     max-width: 200px;

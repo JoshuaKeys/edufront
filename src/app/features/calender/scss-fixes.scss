@@ -93,3 +93,7 @@ button.basic {
     position: relative;
   }
 }
+
+.group--row.line-entry .card__desc {
+  word-break: break-word;
+}

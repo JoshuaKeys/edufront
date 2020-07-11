@@ -101,6 +101,7 @@ export class SelectComponent
         this.onValueChange.emit(param);
         this.elchange.emit(param);
         this.onChange(param);
+        this.cd.markForCheck();
       });
     //register to events here
 
@@ -160,7 +161,9 @@ export class SelectComponent
     this.selectIsActive = false;
   }
   @HostListener('click', ['$event']) onClick($event) {
-    $event.stopPropagation();
+    // if (this.selectState !== 'inactive') {
+    //   $event.stopPropagation();
+    // }
   }
 
   @HostListener('keydown', ['$event']) onKeydown($event) {

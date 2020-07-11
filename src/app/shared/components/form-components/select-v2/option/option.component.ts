@@ -58,7 +58,7 @@ export class OptionComponent2 implements OnInit, AfterViewInit {
     // this.selectService.optionClicked.subscribe(() => {
     //   this.renderer.removeClass(this.el.nativeElement, 'selected');
     // });
-    // console.log('option init');
+    console.log(`option init`, this.OptionValue);
     this.selectService.validOptionValues$.next(this.OptionValue);
   }
   ngAfterViewInit() {
@@ -121,6 +121,7 @@ export class OptionComponent2 implements OnInit, AfterViewInit {
   }
 
   optionSelected() {
+    console.log(`option clicked - ${this.OptionValue}`);
     this.onEduSelected.emit(this.OptionValue);
 
     this.selectService.activeOptionComponent.next(this);

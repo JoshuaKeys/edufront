@@ -40,7 +40,7 @@ export class TermNamesAndDatesQuestionComponent
     private store: Store<CalendarStateModel>,
     private router: Router,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {}
 
   getElementId(index, value) {
     return `${value}--${index}`;
@@ -75,6 +75,9 @@ export class TermNamesAndDatesQuestionComponent
     });
   }
   getValues(item) {
+    if (item == null) {
+      return [];
+    }
     return Object.values(item);
   }
   ngAfterViewInit() {

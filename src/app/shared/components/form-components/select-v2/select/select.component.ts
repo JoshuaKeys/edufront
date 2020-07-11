@@ -56,14 +56,23 @@ export class SelectComponent2
   _value = '';
   set value(param) {
     // console.log('SET IN SELECT');
-    // console.log(`set select value ${param}`);
+    console.log(
+      `[${this.elementId}] set select value ${param}`,
+      this.isValidOption(param),
+      this.validOptionValues
+    );
+
+    if (!this.ngAfterViewInit) {
+      this.selectService.setActiveValue(param);
+    }
+
     this._value = param;
     if (param == null) {
       this.inputValue = '';
     } else {
       this.$value.next(param);
     }
-
+    this.cd.markForCheck();
     console.log(`selectid value setter ${this.elementId} - ${param}`);
   }
   get value() {
@@ -92,7 +101,8 @@ export class SelectComponent2
   ) {}
 
   ngOnInit() {
-    console.log('select init');
+    console.log(`[${this.elementId}] select init start`);
+
     this.selectService.validOptionValues$.subscribe(values => {
       // console.log(this.validOptionValues);
       this.validOptionValues.push(values);
@@ -101,12 +111,13 @@ export class SelectComponent2
     this.setElementId();
     this.$value
       .pipe(
-        filter(() => this.ngafterViewHookPassed),
-        filter(param => this.isValidOption(param)),
-        distinctUntilChanged()
+        filter(() => this.ngafterViewHookPassed)
+        // filter(param => this.isValidOption(param)),
+        // distinctUntilChanged()
       )
 
       .subscribe(param => {
+        console.log('SET ACTIVE VALUE VIA SUB', param);
         // this._value = param;
         this.selectService.setActiveValue(param);
       });
@@ -127,12 +138,12 @@ export class SelectComponent2
       });
     this.selectService.activeOptionComponent
       .pipe(
-        filter(val => val != null),
-        distinctUntilChanged()
+        filter(val => val != null)
+        // distinctUntilChanged()
       )
       .subscribe((optionComp: OptionComponent2) => {
-        // console.log('SETTING DISPLAY VALUE');
-        // console.log(optionComp);
+        console.log('SETTING DISPLAY VALUE');
+        console.log(optionComp);
         // if (optionComp !== null) {
 
         this.inputValue = optionComp.displayedValue;
@@ -153,13 +164,14 @@ export class SelectComponent2
         //     this.onChange(this.value);
         //     this.cd.markForCheck();
       });
+    console.log(`[${this.elementId}] select init ended`);
   }
   ngAfterViewInit() {
     this.ngafterViewHookPassed = true;
   }
 
   isValidOption(option) {
-    // console.log(option);
+    console.log(typeof option);
 
     if (option === null) {
       return false;
@@ -181,7 +193,9 @@ export class SelectComponent2
     this.selectIsActive = false;
   }
   @HostListener('click', ['$event']) onClick($event) {
-    $event.stopPropagation();
+    // if (this.selectState !== 'inactive') {
+    //   $event.stopPropagation();
+    // }
   }
 
   @HostListener('keydown', ['$event']) onKeydown($event) {

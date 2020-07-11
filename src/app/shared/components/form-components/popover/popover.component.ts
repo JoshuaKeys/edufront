@@ -88,7 +88,9 @@ export class PopoverComponent
     //stops propagation on lower layers
     // $event.preventDefault();
     // console.log(this.popoverOptionDir);
-    $event.stopPropagation();
+    if (this.el.nativeElement.classList.contains('active')) {
+      $event.stopPropagation();
+    }
   }
 
   togglePopoverState() {
