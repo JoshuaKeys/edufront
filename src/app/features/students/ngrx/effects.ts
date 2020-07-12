@@ -92,7 +92,7 @@ export class StudentsEffects {
         if (studentReqData.profileDto.profileImage['imageUrl'].length > 0) {
           studentReqData.profileDto.profileImage = studentReqData.profileDto.profileImage['imageUrl'];
           return this.studentsService.editStudent(studentReqData).pipe(
-            map(student => editStudentResponse({ student }), toggleEditModal())
+            mergeMap(student => [editStudentResponse({ student }), toggleEditModal()])
           )
         }
         const fileConvertedFromBase64 = dataURLtoFile(studentReqData.profileDto.profileImage['base64'], 'profilePic.png')
