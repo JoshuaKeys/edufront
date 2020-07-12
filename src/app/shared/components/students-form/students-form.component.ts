@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
 import { ProfilePicModel } from 'src/app/shared/models/profile-pic.model';
 import { Observable } from 'rxjs';
@@ -73,43 +73,11 @@ export class StudentsFormComponent implements OnInit {
         return classes.sort((classA, classB) => classA.grade < classB.grade ? -1 : 1)
       })
     )
-    this.sortedClasses.subscribe(x=> console.log(x, 'hoooooooll'))
+    this.sortedClasses.subscribe(x => console.log(x, 'hoooooooll'))
     this.studentsXClasses.subscribe(console.log);
     if (!this.students) {
       this.addEditForm = this.setupCreateMode();
     }
-  }
-  setupEditMode() {
-    return new FormGroup({
-      profilePic: new FormGroup({
-        profileImage: new FormControl(null)
-      }),
-      profileDto: new FormGroup({
-        firstName: new FormControl(''),
-        middleName: new FormControl(''),
-        familyName: new FormControl(''),
-        dob: new FormControl(''),
-        gender: new FormControl(''),
-        id: new FormControl(''),
-        country: new FormControl(this.countryIconMap[0]),
-        city: new FormControl(''),
-        state: new FormControl(''),
-        zipcode: new FormControl(''),
-        address: new FormControl(''),
-        contexts: new FormControl(['STUDENT']),
-        classId: new FormControl(''),
-        rollNumber: new FormControl('')
-      }),
-      guardianDetailsDto: new FormGroup({
-        email: new FormControl(''),
-        familyName: new FormControl(''),
-        firstName: new FormControl(''),
-        middleName: new FormControl(''),
-        id: new FormControl(''),
-        phone: new FormControl(this.countryIconMap[0]),
-        profileId: new FormControl('')
-      })
-    });
   }
   setupCreateMode() {
     return new FormGroup({
@@ -121,7 +89,7 @@ export class StudentsFormComponent implements OnInit {
         middleName: new FormControl(''),
         familyName: new FormControl(''),
         dob: new FormControl('2020-02-01'),
-        gender: new FormControl(''),
+        gender: new FormControl('', Validators.required),
         id: new FormControl(''),
         country: new FormControl(this.countryIconMap[0]),
         city: new FormControl(''),
@@ -129,7 +97,7 @@ export class StudentsFormComponent implements OnInit {
         zipcode: new FormControl(''),
         address: new FormControl(''),
         contexts: new FormControl(['STUDENT']),
-        classId: new FormControl(''),
+        classId: new FormControl('', Validators.required),
         rollNumber: new FormControl('')
       }),
       guardianDetailsDto: new FormGroup({
@@ -154,7 +122,7 @@ export class StudentsFormComponent implements OnInit {
       iconMap => iconMap.id === event.id
     );
     if (idx > -1) {
-      this.addEditForm.controls.guardianDto.patchValue({
+      this.addEditForm.controls.guardianDetailsDto.patchValue({
         phone: { ...this.countryIconMap[idx], phoneNum: event.phoneNum }
       });
     }

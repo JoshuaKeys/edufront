@@ -42,7 +42,7 @@ export class StudentsEffects {
     ))
   ))
   refreshStudentsXClasses$ = createEffect(() => this.actions$.pipe(
-    ofType(createStudentSuccess),
+    ofType(createStudentSuccess, editStudentResponse),
     withLatestFrom(this.store.select(selectAllStudents), this.store.select(selectAllClasses)),
     map(([action, students, classes]) => {
       const mappedStudents = <any>students.map(student => {
@@ -118,7 +118,8 @@ export class StudentsEffects {
     ))
   ))
   composeCreateStudentData(student: StudentModel, file: string) {
-    const studentCopy: StudentModel = { ...student, };
+    const studentCopy: StudentModel = { ...student };
+    console.log(studentCopy);
     if (studentCopy.profileDto.profileImage) {
       studentCopy.profileDto.profileImage = file;
     }
@@ -167,6 +168,7 @@ export class StudentsEffects {
       ...student,
       profileDto: { ...student.profileDto }
     }
+    console.log(studentCopy.profileDto)
     if (studentCopy.profileDto.profileImage == null) {
       delete studentCopy.profileDto.profileImage;
     }
@@ -183,14 +185,18 @@ export class StudentsEffects {
       delete studentCopy.profileDto.classId
     }
     if (!studentCopy.profileDto['familyName']) {
+
+      delete studentCopy.profileDto['familyName']
+    } else {
+      studentCopy.profileDto.lastName = studentCopy.profileDto['familyName'];
       delete studentCopy.profileDto['familyName']
     }
     if (!studentCopy.profileDto.firstName) {
       delete studentCopy.profileDto.firstName
     }
-    if (!studentCopy.profileDto.lastName) {
-      delete studentCopy.profileDto.lastName
-    }
+    // if (!studentCopy.profileDto.lastName) {
+    //   delete studentCopy.profileDto.lastName
+    // }
     if (!studentCopy.profileDto.middleName) {
       delete studentCopy.profileDto.middleName
     }
@@ -206,6 +212,7 @@ export class StudentsEffects {
     if (!studentCopy.profileDto.rollNumber) {
       delete studentCopy.profileDto.rollNumber
     }
+    console.log(studentCopy)
     return studentCopy;
   }
   constructor(
