@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
-import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate, initializeVacations, addVacation, setVacationName, setVacationEndDate, setVacationStartDate, setNumberOfPeriods, toggleSelectedDay, removeVacation, setSamePeriodsQuestion } from '../actions/calendar.actions';
+import { setAcademicYearStartDate, setAcademicYearEndDate, toggleSelectedTerms, initializeTermsAndDates, setTermName, setTermEndDate, setTermStartDate, initializeVacations, addVacation, setVacationName, setVacationEndDate, setVacationStartDate, setNumberOfPeriods, toggleSelectedDay, removeVacation, setSamePeriodsQuestion, setGovernmentHolidaysStatus } from '../actions/calendar.actions';
 import { TermsAndDates } from '../../models/terms-and-date.model';
 import { VacationModel } from '../../models/vacation.model';
 import { CalendarStateModel } from '../../models/calender-state.model';
@@ -11,7 +11,7 @@ const initialState: CalendarModel = {
   //     // startDate: '1996-07-07',
   //     // endDate: '2000-07-08'
   // }
-  teaching: {}
+  teaching: {},
 }
 export const calendarReducer = createReducer(initialState,
   on(setAcademicYearStartDate, (state, action) => {
@@ -22,6 +22,11 @@ export const calendarReducer = createReducer(initialState,
         startDate: action.startDate
       }
     }
+  }),
+  on(setGovernmentHolidaysStatus, (state, action) => {
+    const stateCopy: CalendarModel = JSON.parse(JSON.stringify(state));
+    stateCopy.governmentHolidaysObserved = action.value;
+    return stateCopy;
   }),
   on(setAcademicYearEndDate, (state, action) => {
     return {

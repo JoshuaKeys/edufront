@@ -20,5 +20,6 @@ export interface CalendarModel {
   //     periods?: PeriodModel[]
   //     classes?:ClassModel[]
   // }
-  teaching?: TeachingStateModel
+  teaching?: TeachingStateModel;
+  governmentHolidaysObserved?: boolean;
 }

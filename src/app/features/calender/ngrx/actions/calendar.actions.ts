@@ -309,3 +309,7 @@ export const setSameBreakScheduleStatus = createAction(
   '[BreakScheduleQuestion] setSameBreakScheduleStatus',
   props<{ value: boolean }>()
 );
+export const setGovernmentHolidaysStatus = createAction(
+  '[GovernmentHolidaysObservedQuestionComponent] setGovernmentHolidaysStatus',
+  props<{ value: boolean }>()
+);
