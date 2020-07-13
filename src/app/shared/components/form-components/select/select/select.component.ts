@@ -97,7 +97,7 @@ export class SelectComponent
       .subscribe(param => {
         // console.log('CHANGE IN SELECT - ' + param);
         // this._value = param;
-
+        // console.log('change param', param);
         this.onValueChange.emit(param);
         this.elchange.emit(param);
         this.onChange(param);

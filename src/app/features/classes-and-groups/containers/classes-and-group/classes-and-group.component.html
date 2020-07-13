@@ -1,41 +1,51 @@
 <main>
-    <section class="section">
-        <button class="section__back-btn" (click)="goToDashboard()">
+  <section class="section">
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
 
-        <div class="form">
-            <h2 class="form__title">
-                How many Groups of Classes do you need?
-            </h2>
-            <p class="form__desc">
-                Eg: Primary, Middle, Secondary etc
-            </p>
-            <edu-select elementId="classSelector" (onValueChange)="computeNumOfGroupsInClasses($event)">
-                <span class="edu-label">
+    <div class="form">
+      <h2 class="form__title">
+        How many Groups of Classes do you need?
+      </h2>
+      <p class="form__desc">
+        Eg: Primary, Middle, Secondary etc
+      </p>
+      <edu-select-v2
+        elementId="classSelector"
+        (edu-change)="computeNumOfGroupsInClasses($event)"
+      >
+        <span class="edu-label">
           <ng-container *ngIf="(numOfGroups | async) == 0; else validSelect">
             Number</ng-container
           >
           <ng-template #validSelect>Select Item</ng-template>
         </span>
-                <edu-option OptionValue="1">1</edu-option>
-                <edu-option OptionValue="2">2</edu-option>
-                <edu-option OptionValue="3">3</edu-option>
-                <edu-option OptionValue="4">4</edu-option>
-                <edu-option OptionValue="5">5</edu-option>
-            </edu-select>
-            <!-- <edu-custom-select
+        <edu-option-v2 OptionValue="1">1</edu-option-v2>
+        <edu-option-v2 OptionValue="2">2</edu-option-v2>
+        <edu-option-v2 OptionValue="3">3</edu-option-v2>
+        <edu-option-v2 OptionValue="4">4</edu-option-v2>
+        <edu-option-v2 OptionValue="5">5</edu-option-v2>
+      </edu-select-v2>
+      <!-- <edu-custom-select
         (onQtyChange)="computeNumOfGroupsInClasses($event)"
         [groupQty]="numOfGroups | async"
       ></edu-custom-select> -->
-        </div>
-        <button class="form__button" ButtonType="basic" [routerLink]="['../', activatedRouteData.next]" [disabled]="(numOfGroups | async) == 0">
+    </div>
+    <button
+      class="form__button"
+      ButtonType="basic"
+      [routerLink]="['../', activatedRouteData.next]"
+      [disabled]="(numOfGroups | async) == 0"
+    >
       Continue
     </button>
-    </section>
-    <aside class="aside">
-        <h5 class="aside__title">Preview</h5>
-        <edu-class-card [groupsOfClassesQty]="numOfGroups | async"></edu-class-card>
-        <edu-school-classes-card [selectedClasses]="selectedClasses"></edu-school-classes-card>
-    </aside>
+  </section>
+  <aside class="aside">
+    <h5 class="aside__title">Preview</h5>
+    <edu-class-card [groupsOfClassesQty]="numOfGroups | async"></edu-class-card>
+    <edu-school-classes-card
+      [selectedClasses]="selectedClasses"
+    ></edu-school-classes-card>
+  </aside>
 </main>

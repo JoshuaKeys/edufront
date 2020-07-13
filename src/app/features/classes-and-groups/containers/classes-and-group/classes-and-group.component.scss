@@ -5,10 +5,13 @@ section {
   padding-top: 46px;
   @include displayFlex(unset, unset, column);
 }
+edu-select-v2,
 edu-select {
   margin: unset;
   width: 194px;
   height: 54px;
+  &::ng-deep .label,
+  &::ng-deep .input,
   &::ng-deep label,
   &::ng-deep input {
     font-size: 16px !important;
