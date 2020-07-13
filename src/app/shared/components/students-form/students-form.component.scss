@@ -230,3 +230,11 @@ button.form__round-btn.form__round-btn--active {
 .modal__content-subject-area {
   width: 275px;
 }
+
+.button--close {
+  position: absolute;
+  right: 40px;
+  &:hover > img {
+    content: url('/assets/form-components/cross-red.svg');
+  }
+}
