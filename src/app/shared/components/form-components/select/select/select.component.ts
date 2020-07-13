@@ -103,11 +103,11 @@ export class SelectComponent
 
     this.setElementId();
     this.$value
-      .pipe(
-        filter(() => this.ngafterViewHookPassed)
-        // filter(param => this.isValidOption(param)),
-        // distinctUntilChanged()
-      )
+      .pipe
+      // filter(() => this.ngafterViewHookPassed)
+      // filter(param => this.isValidOption(param)),
+      // distinctUntilChanged()
+      ()
 
       .subscribe(param => {
         // this._value = param;
