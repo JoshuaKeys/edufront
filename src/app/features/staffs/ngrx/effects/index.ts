@@ -19,7 +19,8 @@ import {
   fetchStaffByIdSuccess,
   toggleEditModal,
   editStaffRequest,
-  editStaffResponse
+  editStaffResponse,
+  setEditClassesSubjectsAssociation
 } from '../actions';
 import { mergeMap, map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { StaffsService } from '../../services/staffs.service';
@@ -30,6 +31,7 @@ import { StaffsStateModel } from '../../models/staff-state.model';
 import { selectSelectedSubject, classesAndSubjectsAssoc } from '../selectors';
 import { StaffFormModel } from '../../models/staff-form.model';
 import { CreateStaffRequestModel } from '../../models/create-staff-request.model';
+import { forkJoin } from 'rxjs';
 
 @Injectable()
 export class StaffsEffects {
@@ -114,8 +116,17 @@ export class StaffsEffects {
   fetchStaffById$ = createEffect(() => this.actions$.pipe(
     ofType(fetchStaffById),
     mergeMap(action => {
-      return this.staffsService.fetchStaffById(action.staff).pipe(
-        mergeMap(staff => [fetchStaffByIdSuccess({ staff, profileId: action.staff.id }), toggleEditModal()])
+      return forkJoin(this.staffsService.fetchStaffById(action.staff), this.staffsService.fetchClassesSubjects(action.staff)).pipe(
+        mergeMap(([staff, associationResponse]) => {
+          const associations = associationResponse.map(association => {
+            return {
+              subjectId: association['subject']['id'],
+              classes: association.classes
+            }
+          })
+          console.log(associationResponse);
+          return [fetchStaffByIdSuccess({ staff, profileId: action.staff.id }), toggleEditModal(), setEditClassesSubjectsAssociation({ associations })]
+        })
       )
     })
   ))

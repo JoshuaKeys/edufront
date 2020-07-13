@@ -28,7 +28,10 @@ export class SubjectClassesComponent implements OnInit {
   @Input() style: ClassesStyle;
 
   sortedClasses$: Observable<ClassModel[]>;
-  constructor() {}
+  constructor() { }
+  debug(item) {
+    console.log(item);
+  }
   ngOnInit(): void {
     this.sortedClasses$ = this.classes.pipe(
       map(classArr => {

@@ -11,18 +11,12 @@ import { PeriodModel } from './period.model';
 import { TeachingStateModel } from './teaching-state.model';
 
 export interface CalendarStateModel {
-    modal: CalendarModalModel,
-    preview: PreviewModel,
-    calendarData: CalendarModel,
-    holidays?: {
-        holidayList: EntityState<HolidayModel>;
-        holidayEdit: HolidayEditModel
-    },
-    // teaching: {
-    //     teachingDays?: TeachingDay[],
-    //     classesAndGroups: ClassGroupModel[],
-    //     classes: ClassModel[],
-    //     periods: PeriodModel[],
-    // }
-    teaching: TeachingStateModel
+  modal: CalendarModalModel,
+  preview: PreviewModel,
+  calendarData: CalendarModel,
+  holidays?: {
+    holidayList: EntityState<HolidayModel>;
+    holidayEdit: HolidayEditModel
+  },
+  teaching: TeachingStateModel
 }
