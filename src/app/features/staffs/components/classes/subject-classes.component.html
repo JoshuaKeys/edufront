@@ -3,9 +3,9 @@
     [ngStyle]="style"
     class="form__badge  round-badge draggable"
     [ngClass]="{ 'form__badge--empty': !class.selected }"
-    *ngFor="let class of classes | async"
+    *ngFor="let class of sortedClasses$ | async"
     (click)="processClicked(class)"
     [title]="class.selected"
-    >{{ class.name }}</span
+    >{{ class.name }} {{ debug(class) }}</span
   >
 </div>

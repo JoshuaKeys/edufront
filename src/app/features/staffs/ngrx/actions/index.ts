@@ -7,6 +7,7 @@ import { CreateStaffResponseModel } from '../../models/create-staff-response.mod
 import { StaffFormModel } from '../../models/staff-form.model';
 import { StaffModel } from '../../../../shared/models/staff.model';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
 
 export const fetchStaffsRequest = createAction(
   '[StaffShellComponent] fetchStaffsRequest'
@@ -93,9 +94,17 @@ export const fetchStaffByIdSuccess = createAction(
 )
 export const editStaffRequest = createAction(
   '[StaffsCreationComponent] editStaffRequest',
-  props<{staff: StaffFormModel}>()
+  props<{ staff: StaffFormModel }>()
 );
 export const editStaffResponse = createAction(
   '[StaffsCreationComponent] editStaffResponse',
-  props<{staff: CreateStaffResponseModel}>()
+  props<{ staff: CreateStaffResponseModel }>()
+);
+export const setEditClassesSubjectsAssociation = createAction(
+  '[StaffsEffects] setEditClassesSubjectsAssociation',
+  props<{ associations: SubjectClassesAssociation[] }>()
+);
+export const setActiveSubject = createAction(
+  '[StaffsCreationComponent] setActiveSubject',
+  props<{ subject: { id: string; title: string; classes: string[] } }>()
 )

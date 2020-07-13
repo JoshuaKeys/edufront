@@ -28,7 +28,8 @@ import {
   toggleStartModal,
   toggleEditModal,
   fetchStaffById,
-  editStaffRequest
+  editStaffRequest,
+  setActiveSubject
 } from '../../ngrx/actions';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -112,7 +113,7 @@ export class StaffsCreationComponent implements OnInit {
     this.store.dispatch(fetchStaffById({ staff }))
   }
   processEditStaff(staff: StaffFormModel) {
-    this.store.dispatch(editStaffRequest({staff}))
+    this.store.dispatch(editStaffRequest({ staff }))
   }
   onRemoveStaff(staff: StaffModel) {
     this.store.dispatch(deleteStaffRequest({ staff }))
@@ -130,6 +131,12 @@ export class StaffsCreationComponent implements OnInit {
   onFinish() {
     this.store.dispatch(toggleEndModal())
     this.store.dispatch(incrementProgress())
+  }
+
+  onSetActiveSubject(subject: { id: string; title: string; classes: string[] }) {
+    this.store.dispatch(setSelectedState({ subjectId: subject.id }))
+    this.currentlySelectedSubject = subject.id;
+    this.refreshClasses();
   }
   transformClasses(allClasses, classesOfSubjects) {
     if (!classesOfSubjects) {

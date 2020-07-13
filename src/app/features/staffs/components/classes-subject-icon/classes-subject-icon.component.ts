@@ -22,9 +22,9 @@ export class ClassesSubjectIconComponent implements OnInit {
   @Input() association: SubjectClassesAssociation;
   @Output() onClick = new EventEmitter<SelectableSubjectModel>();
   subject: Observable<{ title: string; classes: string[] }>;
-  constructor() {}
-  handleClick() {
-    // this.onClick.emit(this.subject)
+  constructor() { }
+  handleClick(subject) {
+    this.onClick.emit(subject)
   }
   ngOnInit(): void {
     this.subject = this.subjects.pipe(
@@ -33,6 +33,7 @@ export class ClassesSubjectIconComponent implements OnInit {
         for (let i = 0; i < subjects.length; i++) {
           if (this.association.subjectId === subjects[i].id) {
             newAssociation = {
+              id: subjects[i].id,
               title: subjects[i].title,
               classes: this.association.classes.map(classItem => classItem.name)
             };

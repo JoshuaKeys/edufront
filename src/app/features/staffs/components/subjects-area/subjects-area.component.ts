@@ -20,10 +20,13 @@ export class SubjectsAreaComponent implements OnInit {
   @Output() selectSubject = new EventEmitter<string>();
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
-
+  @Output() classSubAssocClicked = new EventEmitter<{ title: string; classes: string[] }>();
   subjectsData: Observable<SelectableSubjectModel[]>;
 
   constructor() { }
+  setActive(subject: { title: string; classes: string[] }) {
+    this.classSubAssocClicked.emit(subject)
+  }
   toggleSubject(subject: SelectableSubjectModel) {
     if (!subject.selected) {
       this.selectSubject.emit(subject.id)

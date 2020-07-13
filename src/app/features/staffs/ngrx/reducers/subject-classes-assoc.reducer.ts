@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { toggleClassInSubject } from '../actions';
+import { toggleClassInSubject, setEditClassesSubjectsAssociation } from '../actions';
 import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
 
 
@@ -23,5 +23,8 @@ export const subjectClassesAssociationReducer = createReducer(initialState,
       stateCopy[itemIdx].classes.push(action.class)
     }
     return stateCopy;
+  }),
+  on(setEditClassesSubjectsAssociation, (state, action) => {
+    return action.associations;
   })
 );
