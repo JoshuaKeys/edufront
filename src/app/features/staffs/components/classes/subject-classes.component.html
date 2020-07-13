@@ -6,6 +6,6 @@
     *ngFor="let class of sortedClasses$ | async"
     (click)="processClicked(class)"
     [title]="class.selected"
-    >{{ class.name }} {{ debug(class) }}</span
+    >{{ class.name }}</span
   >
 </div>

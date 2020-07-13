@@ -47,6 +47,7 @@ export class StudentEditFormComponent implements OnInit {
   @Input() allClasses: Observable<ClassModel[]>
   @Input() students: StudentModel;
   @Output() onSubmit = new EventEmitter<StudentsStateModel>();
+  @Output() closeEditModal = new EventEmitter();
   addEditForm: FormGroup;
   sortedClasses: Observable<ClassModel[]>;
 
@@ -57,6 +58,9 @@ export class StudentEditFormComponent implements OnInit {
     formValue.profileDto.profileImage = formValue.profilePic.profileImage
     delete formValue.profilePic;
     this.onSubmit.emit(formValue)
+  }
+  closeEditBtn() {
+    this.closeEditModal.emit();
   }
   ngOnInit(): void {
     this.sortedClasses = this.allClasses.pipe(

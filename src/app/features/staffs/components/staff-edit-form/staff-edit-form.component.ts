@@ -50,10 +50,14 @@ export class StaffEditFormComponent implements OnInit {
   @Output() onEditStaff = new EventEmitter();
   @Input() editState = new EventEmitter<{ title: string; classes: string[] }>();
   @Output() setActiveSubject = new EventEmitter();
+  @Output() closeEditModal = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
   editStaff() {
     this.onEditStaff.emit(this.addEditForm.value);
+  }
+  closeEditBtn() {
+    this.closeEditModal.emit();
   }
   ngOnInit(): void {
     this.editState.subscribe(editState => {

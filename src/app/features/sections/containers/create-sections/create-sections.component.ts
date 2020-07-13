@@ -41,15 +41,18 @@ export class CreateSectionsComponent implements OnInit {
     this.allStudents = this.store.select(selectAllStudents);
     this.selectedSections = this.store.select(selectSections);
     this.allClasses = this.store.select(selectAllClasses).pipe(
-      map(classes=> classes.map(classItem => classItem.class))
+      map(classes => classes.map(classItem => classItem.class))
     )
-        this.allClasses.subscribe(x => console.log('hellooooo', x));
+    this.allClasses.subscribe(x => console.log('hellooooo', x));
     this.sortedClasses = this.sortedClassesStaffs.pipe(
       map(sortedClasses => sortedClasses.map(classItem => classItem.class))
     );
     this.selectedClass = this.store.select(selectSelectedClass);
     this.selectedClass.subscribe(console.log)
     this.store.dispatch(getAllClassesRequest())
+  }
+  closeAddModal() {
+    this.store.dispatch(toggleModal({ modal: 'addModal' }))
   }
   processDroppedStudent(payload: { student: ExtendedProfileDTOModel, classId: string, sectionName: string }) {
     this.store.dispatch(toggleStudentsDraggedState({ student: payload.student }))

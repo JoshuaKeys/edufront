@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ProfilePicModel } from '../../../../shared/models/profile-pic.model';
 import { PhoneIconModel } from 'src/app/shared/models/phone-icon.model';
@@ -52,19 +52,23 @@ export class StaffFormComponent implements OnInit {
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
   @Output() onCreateStaff = new EventEmitter();
+  @Output() closeAddModal = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
   createStaff() {
     this.onCreateStaff.emit(this.addEditForm.value)
   }
+  closeAddBtn() {
+    this.closeAddModal.emit();
+  }
   ngOnInit(): void {
     this.addEditForm = new FormGroup({
       profilePic: new FormControl(null),
-      firstName: new FormControl(''),
+      firstName: new FormControl('', Validators.required),
       middleName: new FormControl(''),
-      familyName: new FormControl(''),
+      familyName: new FormControl('', Validators.required),
       dob: new FormControl(''),
-      sex: new FormControl(''),
+      sex: new FormControl('', Validators.required),
       id: new FormControl(''),
       phone: new FormControl(this.countryIconMap[0]),
       country: new FormControl(this.countryIconMap[0]),

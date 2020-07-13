@@ -5,9 +5,23 @@
       <span class="country">India</span>?
     </h1>
     <div class="btns-container">
-      <button ButtonType="round" (click)="goToPrepopulatedHolidayList()">
+      <button
+        [ngClass]="{
+          active: (calendarData | async).governmentHolidaysObserved === true
+        }"
+        ButtonType="round"
+        (click)="goToPrepopulatedHolidayList()"
+      >
         Yes</button
-      ><button ButtonType="round" (click)="goToHolidayList()">No</button>
+      ><button
+        [ngClass]="{
+          active: (calendarData | async).governmentHolidaysObserved === false
+        }"
+        ButtonType="round"
+        (click)="goToHolidayList()"
+      >
+        No
+      </button>
     </div>
   </div>
 </div>

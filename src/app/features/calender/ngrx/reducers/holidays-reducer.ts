@@ -1,7 +1,7 @@
 import { createReducer, on, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, Update } from '@ngrx/entity';
 import { HolidayModel } from '../../models/holiday.model';
-import { fetchHolidaysResponse, deleteHoliday, editHolidayRequest, addHoliday, editHoliday, editHolidaySuccess } from '../actions/calendar.actions';
+import { fetchHolidaysResponse, deleteHoliday, editHolidayRequest, addHoliday, editHoliday, editHolidaySuccess, clearAllHolidays, clearEditState } from '../actions/calendar.actions';
 import { v4 as uuid44 } from 'uuid';
 const holidayAdapter = createEntityAdapter<HolidayModel>({
   selectId: (state) => {
@@ -18,6 +18,10 @@ export const holidayListReducer = createReducer(initialState,
       return holiday
     })
     return holidayAdapter.addAll(holidaysAndIds, state);
+  }),
+  on(clearAllHolidays, (state, action) => {
+
+    return holidayAdapter.removeAll(state);
   }),
   on(deleteHoliday, (state, action) => holidayAdapter.removeOne(action.holiday.mockId, state)),
   on(addHoliday, (state, action) => {
@@ -62,6 +66,12 @@ export const holidayEditReducer = createReducer(editState,
       editedHoliday: {
         ...action.holiday
       }
+    }
+  }),
+  on(clearEditState, (state, action) => {
+    return {
+      ...state,
+      editedHoliday: null
     }
   }),
   on(editHolidaySuccess, (state, action) => {

@@ -96,6 +96,7 @@
   </section>
 </main>
 <edu-staff-edit-form
+  (closeEditModal)="closeEditModal()"
   (setActiveSubject)="onSetActiveSubject($event)"
   *ngIf="(staffsModalsState | async).editModal"
   [subjects]="subjects"
@@ -109,6 +110,7 @@
 >
 </edu-staff-edit-form>
 <edu-staff-form
+  (closeAddModal)="closeAddModal()"
   *ngIf="(staffsModalsState | async).addModal"
   [subjects]="subjects"
   [classes]="classes"
