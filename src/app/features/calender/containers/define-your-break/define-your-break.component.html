@@ -66,6 +66,7 @@
             </edu-icon-select>
             <edu-icon-select
               (edu-tick)="updateAfter($event, i, item.id)"
+              [isSingleSelect]="true"
               [textParserFn]="parsePeriodValue"
               [elementId]="'after-' + i + '-ci-' + classIndex"
               [valueOptions]="getPeriodOptions(item) | async"
@@ -89,17 +90,6 @@
                 >{{ i + 1 }} mins</edu-option-v2
               >
             </edu-select-v2>
-            <!-- <edu-input
-              (edu-blur)="updateDuration($event, i, item.id)"
-              [elementId]="'duration-' + i + '-ci-' + classIndex"
-              [ngModel]="breakItem.duration"
-            >
-              <span class="edu-label">
-                Duration
-              </span>
-              <span class="inline-suffix duration__suffix">mins</span>
-            </edu-input> -->
-
             <button
               class="delete-vacation-btn"
               ButtonType="icon"
@@ -113,9 +103,6 @@
           </button>
         </div>
       </div>
-      <!-- <button class="break__btn card" (click)="addClassArr()">
-        <img src="assets/32pxplusblue.svg" />
-      </button> -->
       <div class="group--row line-entry">
         <div class="card card--dashed break__btn">
           <img src="/assets/search-plus.svg" alt="" srcset="" />

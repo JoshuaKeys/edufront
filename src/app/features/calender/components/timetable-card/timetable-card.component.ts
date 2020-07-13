@@ -22,9 +22,9 @@ import { Output, EventEmitter, HostListener } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetableCardComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   periodDurationDefined = false;
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
@@ -39,6 +39,7 @@ export class TimetableCardComponent implements OnInit {
   @Input('edu-id') eduId;
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
+    console.log(val)
     this.resetMainValues();
     let cleanValues = this.removeDaysWithEmptyPeriod(val);
     this.parseElValue(cleanValues);

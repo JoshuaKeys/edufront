@@ -84,12 +84,12 @@ export class UpdateTimetableComponent implements OnInit {
     private store: Store<CalendarStateModel>,
     private location: Location,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
     console.log(event);
-    this.updateAssemblyData('startingAt', { duration: event, text: event });
+    this.updateAssemblyData('startingAt', event);
   }
   ngOnInit(): void {
     for (let i = 0; i < this.timeArr.length; i++) {
@@ -112,15 +112,15 @@ export class UpdateTimetableComponent implements OnInit {
       })
     );
   }
-  updateInterval(interval) {}
-  onSetPeriodDuration(duration) {}
+  updateInterval(interval) { }
+  onSetPeriodDuration(duration) { }
   toggleClassActive(event) {
     this.store.dispatch(toggleEditClassActive({ name: event }));
   }
   toggleActive(event) {
     this.store.dispatch(toggleEditTeachingActive(event));
   }
-  setStartTime(event, idx) {}
+  setStartTime(event, idx) { }
   loadAssemblyStartTime(time) {
     if (time.duration) {
       return time.duration;
