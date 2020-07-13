@@ -21,6 +21,7 @@ import { HolidayModel } from '../../models/holiday.model';
 import { of } from 'rxjs';
 import { TimeTablePlanner } from '../../models/time-table-planner.model';
 import { toggleEndModal } from '../actions';
+import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 
 @Injectable()
 export class CalendarEffects {
@@ -152,7 +153,7 @@ export class CalendarEffects {
       const api = extractTimetableData(calendarState)
       console.log(api);
       return this.calendarService.createTimetablePlanner(api).pipe(
-        map(response => toggleEndModal())
+        mergeMap(response => [toggleEndModal(), incrementProgress()])
       )
     })
   ));
