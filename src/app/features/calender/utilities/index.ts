@@ -278,8 +278,13 @@ export function getSubtractedClasses(
   return subtractedClasses;
 }
 export function removeAssembly(periods: PeriodModel[]) {
-  return periods.map(period => {
-    delete period.assembly;
+  let _periods = JSON.parse(JSON.stringify(periods));
+  return _periods.map(period => {
+    period.assembly = {
+      name: '',
+      startingAt: '',
+      duration: ''
+    };
     return period;
   });
 }
