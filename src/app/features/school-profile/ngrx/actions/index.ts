@@ -17,7 +17,7 @@ export const setCountryIdData = createAction(
 )
 export const setPhoneData = createAction(
   '[ContactDetailsQuestion] setPhoneData',
-  props<{ field: string, prefix: string, phoneNum: string, icon?: string }>()
+  props<{ field: string, prefix: string, id: string; phoneNum: string, icon?: string }>()
 )
 export const setContactsData = createAction(
   '[ContactDetailsQuestion] setContactData',
@@ -40,6 +40,10 @@ export const toggleProfileEndModal = createAction(
 export const createSchoolRequest = createAction(
   '[SchoolProfileConfirmationComponent] createSchoolRequest'
 );
-export const  clearLogoPreview = createAction(
+export const clearLogoPreview = createAction(
   '[SchoolLogoQuestion] clearLogoPreview'
+);
+export const setHasSchoolLogoState = createAction(
+  '[SchoolLogoQuestion] setHasSchoolLogoState',
+  props<{ value: boolean }>()
 )

@@ -6,12 +6,6 @@
 .form__btns .form__button {
   width: 200px;
   margin: 40px 10px;
-
-  // &--white {
-  //   background-color: white;
-  //   color: $blue;
-  //   border-color: $blue;
-  // }
 }
 
 body {
@@ -75,4 +69,13 @@ edu-preview ::ng-deep .profile-select-preview {
 @include dropZone();
 .drop-zone {
   @include displayFlex(flex-start, center, column);
+}
+.confirmation-box {
+  padding: 0;
+  display: flex;
+  li {
+    list-style-type: none;
+    max-width: 400px;
+    width: 100%;
+  }
 }

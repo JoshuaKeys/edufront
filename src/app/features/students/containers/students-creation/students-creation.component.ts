@@ -12,7 +12,7 @@ import { toggleSortByAlphabet, toggleSortByGender, toggleSortyByClasses } from '
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { map } from 'rxjs/operators';
 import { StudentModel } from '../../../../shared/models/student.model';
-import { createStudentRequest, deleteStudentRequest, editStudentRequest } from '../../ngrx/actions/class-students.actions';
+import { createStudentRequest, deleteStudentRequest, editStudentRequest, fetchStudentByIdRequest } from '../../ngrx/actions/class-students.actions';
 import { StudentsCommunicatorService } from '../../services/students-communicator.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -36,17 +36,17 @@ export class StudentsCreationComponent implements OnInit {
   ngOnInit(): void {
     this.studentEditState = this.store.select(selectEditData);
     const headers = new HttpHeaders().set('Content-Type', 'application/image; charset=utf-8');
-    this.httpClient.get('https://education.development.allexis.io/admin/image/profile/0ddcf2ee-9d85-4d25-9218-4a2c51d6f3f1.jpg', {
-      headers, responseType: 'blob'
-    })
-      .subscribe(res => {
-        var reader = new FileReader();
-        reader.readAsDataURL(res);
-        reader.onloadend = () => {
-          var base64data = reader.result;
-          this.img = base64data
-        }
-      })
+    // this.httpClient.get('https://education.development.allexis.io/admin/image/profile/0ddcf2ee-9d85-4d25-9218-4a2c51d6f3f1.jpg', {
+    //   headers, responseType: 'blob'
+    // })
+    //   .subscribe(res => {
+    //     var reader = new FileReader();
+    //     reader.readAsDataURL(res);
+    //     reader.onloadend = () => {
+    //       var base64data = reader.result;
+    //       this.img = base64data
+    //     }
+    //   })
     this.studentsModalState = this.store.select(selectModalState);
     this.sortingState = this.store.select(selectSortingState)
     this.studentsXClasses = this.store.select(selectStudentsAndClasses);
@@ -95,7 +95,9 @@ export class StudentsCreationComponent implements OnInit {
   onEditStudent(student: StudentModel) {
     // this.store.dispatch(editSt)
     // this.store.dispatch(toggleEditModal())
-    this.studentsService.getStudentById(student).subscribe(console.log)
+    // alert('Hello')
+    this.store.dispatch(fetchStudentByIdRequest({ student }))
+    // this.studentsService.getStudentById(student).subscribe(console.log)
   }
   processSubmit(event: StudentModel) {
     this.createStudent(event)

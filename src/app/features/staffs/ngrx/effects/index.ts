@@ -68,7 +68,7 @@ export class StaffsEffects {
     ofType(editStaffRequest),
     withLatestFrom(this.store.select(classesAndSubjectsAssoc)),
     mergeMap(([action, subjectsAssociation]) => {
-      if(action.staff.profilePic.imageUrl) {
+      if (action.staff.profilePic.imageUrl) {
         const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, action.staff.profilePic.imageUrl)
         return this.staffsService.editStaff(createStaffRequestObj).pipe(
           mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
@@ -84,7 +84,7 @@ export class StaffsEffects {
           })
         )
       }
-      
+
       const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, null)
       return this.staffsService.editStaff(createStaffRequestObj).pipe(
         mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
@@ -146,11 +146,14 @@ export class StaffsEffects {
     if (staffCopy.profilePic) {
       staffReqObj.profileDto.profileImage = file;
     }
-    if(staffCopy.id) {
+    if (staffCopy.id) {
       staffReqObj.profileDto.id = staffCopy.id
     }
     if (staffCopy.phone.phoneNum) {
+
       staffReqObj.profileDto.phone = staffCopy.phone.phoneNum;
+    } else {
+      console.log(staffCopy)
     }
     if (staffCopy.city) {
       staffReqObj.profileDto.city = staffCopy.city;
@@ -164,10 +167,13 @@ export class StaffsEffects {
     if (staffCopy.firstName) {
       staffReqObj.profileDto.firstName = staffCopy.firstName
     }
+    if (staffCopy.zip) {
+      staffReqObj.profileDto.zipcode = staffCopy.zip
+    }
     if (staffCopy.familyName) {
       staffReqObj.profileDto.lastName = staffCopy.familyName
     }
-    if(staffCopy.middleName) {
+    if (staffCopy.middleName) {
       staffReqObj.profileDto.middleName = staffCopy.middleName
     }
     if (staffCopy.sex) {

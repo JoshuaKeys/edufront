@@ -23,18 +23,23 @@
         />
       </div>
       <div class="popup__content">
-        <div class="icons">
-          <div
-            class="icon"
-            *ngFor="let icon of filteredIcons"
-            (click)="changeItem(icon)"
-          >
-            <div class="icon__content">
-              <img class="icon__img" [src]="icon.icon" alt="" />
-              <div class="icon__text">{{ icon.item }}</div>
+        <ng-container *ngIf="filteredIcons.length; else notFound">
+          <div class="icons">
+            <div
+              class="icon"
+              *ngFor="let icon of filteredIcons"
+              (click)="changeItem(icon)"
+            >
+              <div class="icon__content">
+                <img class="icon__img" [src]="icon.icon" alt="" />
+                <div class="icon__text">{{ icon.item }}</div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-template #notFound>
+          <div class="icon__text">No Data Found</div>
+        </ng-template>
       </div>
     </div>
   </edu-popover>

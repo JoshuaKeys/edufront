@@ -52,6 +52,7 @@ export class StaffEditFormComponent implements OnInit {
   addEditForm: FormGroup;
   constructor() { }
   editStaff() {
+    console.log(this.addEditForm.value);
     this.onEditStaff.emit(this.addEditForm.value);
   }
   ngOnInit(): void {
@@ -74,7 +75,7 @@ export class StaffEditFormComponent implements OnInit {
           country: new FormControl(this.countryIconMap[countryIdx]),
           city: new FormControl(editState.city ? editState.city : ''),
           state: new FormControl(editState.state ? editState.state : ''),
-          zip: new FormControl(editState.zip ? editState.zip : ''),
+          zip: new FormControl(editState.zipcode ? editState.zipcode : ''),
           email: new FormControl(editState.email ? editState.email : ''),
           address: new FormControl(editState.address ? editState.address : ''),
         });
