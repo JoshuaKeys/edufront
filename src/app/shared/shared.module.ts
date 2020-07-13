@@ -44,6 +44,8 @@ import { ImgAuthPipe } from './pipes/img-auth.pipe';
 import { PreviewAnimateDirective } from './directives/preview-animate.directive';
 import { StopEventBubbleDirective } from './directives/stop-event-bubble.directive';
 import { ImageSliderModule } from './components/image-slider/image-slider.module';
+import { SharedTooltipComponent } from './components/tooltip/tooltip.component';
+import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.component';
 
 @NgModule({
   declarations: [
