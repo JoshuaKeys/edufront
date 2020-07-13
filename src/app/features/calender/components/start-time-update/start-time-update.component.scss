@@ -1,65 +1,66 @@
 @import '../../scss-fixes.scss';
 .start-time-update {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
 }
 
 .day__value-container {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    font: 400 16px/22px Roboto;
-    border: 2px solid #c7ccdb;
-    color: #c6ccdb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font: 400 16px/22px Roboto;
+  border: 2px solid #c7ccdb;
+  color: #c6ccdb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 edu-popover.popover__timepicker ::ng-deep {
-    padding: 0;
+  padding: 0;
 }
 
 .popover__timepicker edu-timepicker-block ::ng-deep .card.period-menu {
-    margin: 0;
-    border: 0px;
+  margin: 0;
+  border: 0px;
 }
 
 edu-popover.class-popover ::ng-deep {
-    padding: 0px;
+  padding: 0px;
 }
 
 .classes {
-    @include displayFlex();
-    width: 156px;
-    flex-wrap: wrap;
-    padding: 20px 15px;
-    .badge {
-        cursor: pointer;
-        font: 500 12px/14px Roboto;
-        border: 2px solid #e6e9f3;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        margin: 5px;
-        position: relative;
-        &--active {
-            border-color: #69a9f2;
-            background: #69a9f2;
-            span {
-                color: white !important;
-            }
-        }
-        span {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 12px;
-            line-height: 14px;
-            color: #c7ccdb;
-        }
+  @include displayFlex();
+  width: 156px;
+  flex-wrap: wrap;
+  padding: 20px 15px;
+  .badge {
+    cursor: pointer;
+    font: 500 12px/14px Roboto;
+    border: 2px solid #e6e9f3;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin: 5px;
+    position: relative;
+    &--active {
+      border-color: #69a9f2;
+      background: #69a9f2;
+      span {
+        color: white !important;
+      }
     }
+    span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      line-height: 14px;
+      color: #c7ccdb;
+    }
+  }
 }
