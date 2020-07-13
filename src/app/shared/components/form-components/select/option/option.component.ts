@@ -29,9 +29,9 @@ export class OptionComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef
   ) {}
   ngOnInit() {
-    this.indexInParent = Array.from(
-      this.el.nativeElement.parentElement.children
-    ).indexOf(this.el.nativeElement);
+    // this.indexInParent = Array.from(
+    //   this.el.nativeElement.parentElement.children
+    // ).indexOf(this.el.nativeElement);
 
     // this.selectService.activeOptionIndex.subscribe((activeIndex)=>{
     //   if(this.indexInParent === activeIndex){
@@ -58,7 +58,6 @@ export class OptionComponent implements OnInit, AfterViewInit {
     // this.selectService.optionClicked.subscribe(() => {
     //   this.renderer.removeClass(this.el.nativeElement, 'selected');
     // });
-    // console.log('option init');
     this.selectService.validOptionValues$.next(this.OptionValue);
   }
   ngAfterViewInit() {
@@ -123,8 +122,8 @@ export class OptionComponent implements OnInit, AfterViewInit {
   optionSelected() {
     this.onEduSelected.emit(this.OptionValue);
 
-    this.selectService.optionClicked.next();
     this.selectService.activeOptionComponent.next(this);
+    this.selectService.optionClicked.next(this);
   }
 
   resetState() {

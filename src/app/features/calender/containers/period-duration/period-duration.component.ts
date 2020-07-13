@@ -64,10 +64,8 @@ export class PeriodDurationComponent implements OnInit {
       //     })
     });
   }
-  onSetPeriodDuration(duration: { duration: number; text: string }) {
-    this.store.dispatch(
-      setPeriodDuration({ periodDuration: duration.duration })
-    );
+  onSetPeriodDuration(duration) {
+    this.store.dispatch(setPeriodDuration({ periodDuration: duration }));
   }
   constructor(
     private cd: ChangeDetectorRef,

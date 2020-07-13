@@ -229,6 +229,7 @@
             </edu-timepicker>
             <edu-select
               elementId="assemblyDuration"
+              (edu-change)="updateAssemblyDuration($event)"
               [ngModel]="
                 (teachingState | async).calendarEdit.teachingPeriods[0].assembly
                   .duration
@@ -237,12 +238,18 @@
                 Duration
               </span>
               <edu-option
-                (click)="updateAssemblyData('duration', duration)"
                 *ngFor="let duration of durations; let i = index"
                 [OptionValue]="duration.duration"
               >
                 {{ duration.text }}
               </edu-option>
+              <!-- <edu-option
+                (click)="updateAssemblyData('duration', duration)"
+                *ngFor="let duration of durations; let i = index"
+                [OptionValue]="duration.duration"
+              >
+                {{ duration.text }}
+              </edu-option> -->
             </edu-select>
           </div>
         </div>

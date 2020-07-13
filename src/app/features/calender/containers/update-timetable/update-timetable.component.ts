@@ -89,7 +89,14 @@ export class UpdateTimetableComponent implements OnInit {
   emptyArr = new Array(100);
   updateStartTime(event) {
     console.log(event);
-    this.updateAssemblyData('startingAt', { duration: event, text: event });
+    // this.updateAssemblyData('startingAt', { duration: event, text: event });
+    this.updateAssemblyData('startingAt', `${event}`);
+  }
+
+  updateAssemblyDuration(event) {
+    console.log(event);
+    // this.updateAssemblyData('startingAt', { duration: event, text: event });
+    this.updateAssemblyData('duration', `${event}`);
   }
   ngOnInit(): void {
     for (let i = 0; i < this.timeArr.length; i++) {

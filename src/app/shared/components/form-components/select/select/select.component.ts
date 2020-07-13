@@ -15,10 +15,17 @@ import {
 } from '@angular/core';
 import { Renderer2, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionComponent } from '../../option/option.component';
+import { OptionComponent } from '../option/option.component';
 import { SelectService } from '../select.service';
 // import { OptionValueDirective } from "../option-value.directive"
-import { filter, distinctUntilChanged, map, distinct } from 'rxjs/operators';
+import {
+  filter,
+  distinctUntilChanged,
+  map,
+  distinct,
+  mergeMap,
+  sample
+} from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'edu-select',
@@ -49,11 +56,19 @@ export class SelectComponent
   _value = '';
   set value(param) {
     // console.log('SET IN SELECT');
-    // console.log(`set select value ${param}`);
-    this._value = param;
-    this.selectService.setActiveValue(param);
 
-    this.$value.next(param);
+    if (!this.ngAfterViewInit) {
+      this.selectService.setActiveValue(param);
+    }
+
+    this._value = param;
+    if (param == null) {
+      this.inputValue = '';
+    } else {
+      this.$value.next(param);
+    }
+    this.cd.markForCheck();
+    console.log(`selectid value setter ${this.elementId} - ${param}`);
   }
   get value() {
     return this._value;
@@ -81,7 +96,6 @@ export class SelectComponent
   ) {}
 
   ngOnInit() {
-    console.log('select init');
     this.selectService.validOptionValues$.subscribe(values => {
       // console.log(this.validOptionValues);
       this.validOptionValues.push(values);
@@ -90,18 +104,14 @@ export class SelectComponent
     this.setElementId();
     this.$value
       .pipe(
-        filter(() => this.ngafterViewHookPassed),
-        filter(param => this.isValidOption(param))
+        filter(() => this.ngafterViewHookPassed)
+        // filter(param => this.isValidOption(param)),
+        // distinctUntilChanged()
       )
 
       .subscribe(param => {
-        // console.log('CHANGE IN SELECT - ' + param);
         // this._value = param;
-        // console.log('change param', param);
-        this.onValueChange.emit(param);
-        this.elchange.emit(param);
-        this.onChange(param);
-        this.cd.markForCheck();
+        this.selectService.setActiveValue(param);
       });
     //register to events here
 
@@ -111,20 +121,27 @@ export class SelectComponent
     //   this.checkboxEl.nativeElement.focus();
     // });
     this.selectService.activeOptionComponent
+      .pipe(sample(this.selectService.optionClicked))
+      .subscribe((optionComp: OptionComponent) => {
+        let value = optionComp.OptionValue;
+        this.onValueChange.emit(value);
+        this.elchange.emit(value);
+        this.onChange(value);
+      });
+    this.selectService.activeOptionComponent
       .pipe(
-        filter(val => val != null),
-        distinctUntilChanged()
+        filter(val => val != null)
+        // distinctUntilChanged()
       )
       .subscribe((optionComp: OptionComponent) => {
-        // console.log('SETTING DISPLAY VALUE');
-        // console.log(optionComp);
         // if (optionComp !== null) {
-        setTimeout(() => {
-          this.inputValue = optionComp.displayedValue;
-          // console.log(`inputValue - ${this.inputValue}`);
-          this.value = optionComp.OptionValue;
-          this.cd.markForCheck();
-        });
+
+        this.inputValue = optionComp.displayedValue;
+        // console.log(`inputValue - ${this.inputValue}`);
+        this.value = optionComp.OptionValue;
+
+        this.cd.markForCheck();
+
         // } else {
         // console.log('OPTION COM IS NUL ??');
         // }
@@ -141,9 +158,11 @@ export class SelectComponent
   ngAfterViewInit() {
     this.ngafterViewHookPassed = true;
   }
+
   isValidOption(option) {
-    // console.log(option);
-    // console.log(typeof this.validOptionValues);
+    if (option === null) {
+      return false;
+    }
     // console.log(this.validOptionValues);
     return this.validOptionValues.indexOf(option) != -1;
   }
