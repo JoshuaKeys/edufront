@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+div {
+  background-color: #8787f6;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 8px;
+  font: normal 12px/18px Raleway;
+  position: relative;
+  &:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -4px;
+    display: block;
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 4px 0 4px;
+    border-color: #8787f6 transparent transparent transparent;
+  }
+}

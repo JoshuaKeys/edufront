@@ -78,6 +78,14 @@ const routes: Routes = [
       import('./features/calender/calender.module').then(m => m.CalenderModule)
   },
   {
+    path: 'timetable',
+    canLoad: [AuthenticatedGuard],
+    loadChildren: () =>
+      import('./features/timetable/timetable.module').then(
+        m => m.TimetableModule
+      )
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'

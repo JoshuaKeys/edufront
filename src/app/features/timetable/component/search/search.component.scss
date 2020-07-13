@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+@import 'src/assets/scss/mixins/components';
+@import 'src/assets/scss/colors';
+//------ search styling ------
+@include search();
+.search {
+  width: 100%;
+}
+
+.list-container {
+  max-height: 160px;
+  overflow: auto;
+}
+
+.not-found {
+  text-align: center;
+  font-size: 16px;
+  max-width: 150px;
+  color: #a5aec6;
+  align-self: center;
+}

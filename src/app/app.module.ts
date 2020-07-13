@@ -1,6 +1,11 @@
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import {
+  EntityDataModule,
+  DefaultDataServiceConfig,
+  EntityDataService
+} from '@ngrx/data';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +17,14 @@ import { ClassesAndGroupsModule } from './features/classes-and-groups/classes-an
 import { EffectsModule } from '@ngrx/effects';
 import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 import { SchoolProfileV2Module } from './features/school-profile/school-profile-v2.module';
+import {
+  appEntityMetadata,
+  defaultDataServiceConfig
+} from './root-store/metadata';
+import {
+  ClassSectionService,
+  ClassSectionDataService
+} from './root-store/class-section.service';
 
 export function ConfigLoader(configService: ConfigService) {
   return () => configService.fetchConfig();
@@ -26,9 +39,11 @@ export function ConfigLoader(configService: ConfigService) {
     AppRoutingModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
+    EntityDataModule.forRoot({ entityMetadata: appEntityMetadata }),
     EffectsModule.forRoot([])
   ],
   providers: [
+    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
     {
       provide: APP_INITIALIZER,
       useFactory: ConfigLoader,
@@ -39,4 +54,11 @@ export function ConfigLoader(configService: ConfigService) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(
+    entityDataService: EntityDataService,
+    sectionsDataService: ClassSectionDataService
+  ) {
+    entityDataService.registerService('classSection', sectionsDataService); // <-- register it
+  }
+}

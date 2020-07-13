@@ -1,0 +1,45 @@
+@import '../../../../../assets/styles/modules/section-module';
+@import '../../../../../assets/styles/mixins/staff';
+// @import './groups.scss';
+@import './form.scss';
+@include splitLayout2();
+
+@include groups();
+@include form();
+
+edu-input.subFields ::ng-deep .label--active {
+  // font-size: 0;
+  // height: 0;
+  display: none;
+}
+.iconbtn {
+  cursor: pointer;
+}
+.deleteIcon {
+  font-size: 2em;
+  color: red;
+}
+.content__title {
+  width: 560px;
+}
+.card {
+  box-shadow: 0px 5px 10px #a6adce1a;
+}
+
+.form {
+  @include form1();
+  padding: 40px 70px;
+}
+
+aside {
+  width: 400px;
+}
+.chips {
+  @include displayFlex(flex-start);
+}
+.chip {
+  @include chip();
+}
+:host {
+  width: 100%;
+}
