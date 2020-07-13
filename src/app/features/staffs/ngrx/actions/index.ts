@@ -107,4 +107,7 @@ export const setEditClassesSubjectsAssociation = createAction(
 export const setActiveSubject = createAction(
   '[StaffsCreationComponent] setActiveSubject',
   props<{ subject: { id: string; title: string; classes: string[] } }>()
-)
+);
+export const clearAssociations = createAction(
+  '[StaffsCreationComponent] clearAssociations'
+);
