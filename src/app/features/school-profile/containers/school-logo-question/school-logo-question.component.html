@@ -14,6 +14,10 @@
               ButtonType="round"
               class="form__button--round"
               [routerLink]="['../', activatedRouteData.next]"
+              [ngClass]="{
+                active: (schoolProfileState | async).hasSchoolLogo === true
+              }"
+              (click)="setSchoolLogoStatus(true)"
             >
               Yes
             </button>
@@ -22,6 +26,9 @@
               class="form__button--round"
               [routerLink]="['../', 'school-profile-confirmation']"
               (click)="clearLogoPreview()"
+              [ngClass]="{
+                active: (schoolProfileState | async).hasSchoolLogo === false
+              }"
             >
               No
             </button>

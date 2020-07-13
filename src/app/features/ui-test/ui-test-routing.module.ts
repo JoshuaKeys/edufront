@@ -8,10 +8,21 @@ import { TimeTableTestComponent } from './timetable-test/timetable-test.componen
 import { TimeTableTestComponent2 } from './timetable-test-2/timetable-test.component';
 import { PopoverTestComponent } from './popover-test/popover-test.component';
 import { ImgTestComponent } from './img-test/img-test.component';
+import { SliderTestComponent } from './slider-test/slider-test.component';
+import { TimepickerTestComponent } from './timepicker-test/timepicker-test.component';
+import { ModalTestComponent } from './modal-test/modal-test.component';
+import { NgmodelTestComponent } from './ngmodel-test/ngmodel-test.component';
 const routes: Routes = [
+  { path: 'test', component: NgmodelTestComponent },
+  { path: 'time', component: TimepickerTestComponent },
+  { path: 'modal', component: ModalTestComponent },
   {
     path: 'date',
     component: DatepickerTestComponent
+  },
+  {
+    path: 'slider',
+    component: SliderTestComponent
   },
   {
     path: 'img-upload',

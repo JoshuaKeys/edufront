@@ -1,0 +1,52 @@
+<div
+  [ngClass]="{ disabled: disabled }"
+  role="listbox"
+  class="{{ alignment }} {{ selectState }} wrapper  select__wrapper"
+>
+  <div class="input-label">
+    <input
+      tabindex="-1"
+      class="  select__input input"
+      [(ngModel)]="displayText"
+      name="{{ elementId }}-input"
+      #input
+      [ngClass]="{ 'input--active': isLabelActive() }"
+      type="text"
+      placeholder="-"
+      disabled
+    />
+    <!-- <div
+      class="  select__input"
+      [ngClass]="{ 'input--active': isLabelActive() }"
+    >
+      {{ displayValue }}
+    </div> -->
+    <label
+      [ngClass]="{ 'label--active': isLabelActive() }"
+      class="select__label label"
+    >
+      <div class="label__shrink-wrap">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
+    </label>
+  </div>
+
+  <div class="prefix">
+    <ng-content select=".edu-select__prefix"></ng-content>
+  </div>
+  <edu-popover (edu-open)="popoverOpen()" (edu-close)="popoverClose()">
+    <div class="badges">
+      <div
+        *ngFor="let option of displayBadges; let i = index"
+        (click)="setActiveBadge(i)"
+        class="badge {{ option.state }}"
+      >
+        <div class="badge__value">{{ option.display }}</div>
+      </div>
+    </div>
+    <edu-tick-button
+      [ClosePopover]="popoverToogleVar"
+      (click)="confirmState()"
+    ></edu-tick-button>
+  </edu-popover>
+</div>

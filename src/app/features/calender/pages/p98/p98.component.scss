@@ -58,7 +58,20 @@
 }
 
 .break {
+  position: relative;
   margin-bottom: 20px;
+  &:hover .delete-vacation-btn {
+    opacity: 1;
+  }
+}
+.delete-vacation-btn {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  height: 100%;
+  width: 30px;
+  transform: translate(30px, -50%);
 }
 button.button--bottom {
   margin: 0px auto 40px auto !important;
@@ -73,14 +86,53 @@ div.group--row.break > * {
   }
 }
 
+.duration__suffix {
+  color: $ash;
+  margin-left: 6px;
+}
+
 edu-input,
+edu-icon-select,
 edu-select {
   height: 54px;
   width: 160px;
   margin: 0;
-  &::ng-deep input,
-  &::ng-deep label {
+  &::ng-deep .input,
+  &::ng-deep .label {
     font-size: 16px;
+  }
+}
+edu-icon-select edu-popover {
+  width: 160px;
+  min-height: 172px;
+  @include displayFlex(flex-start, flex-start);
+  display: inline-flex;
+  flex-wrap: wrap;
+  edu-option ::ng-deep {
+    display: inline-block;
+    .option__wrapper {
+      padding: 0;
+    }
+  }
+  .badges {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 126px;
+    margin: 22px auto;
+  }
+  .badge {
+    display: block;
+    margin: 5px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #e6e9f3;
+    @include displayFlex();
+    font: 500 10px/20px Roboto;
+  }
+  .badge.selected {
+    background: $blue;
+    color: white;
+    border-color: $blue;
   }
 }
 

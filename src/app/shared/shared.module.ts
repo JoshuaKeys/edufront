@@ -25,6 +25,7 @@ import { CustomPlainSelectComponent } from './components/custom-plain-select/cus
 // import { Datepicker2Module } from './components/form-components/datepicker2/datepicker2.module';
 
 import { TimetableModule } from './components/timetable/timetable.module';
+import { TimetableModule2 } from './components/timetable2/timetable2.module';
 import { SubjectsService } from './services/subjects.service';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { CountryFieldComponent } from './components/country-field/country-field.component';
@@ -42,6 +43,7 @@ import { ImageUploadV3Component } from './components/image-upload-v3/image-uploa
 import { ImgAuthPipe } from './pipes/img-auth.pipe';
 import { PreviewAnimateDirective } from './directives/preview-animate.directive';
 import { StopEventBubbleDirective } from './directives/stop-event-bubble.directive';
+import { ImageSliderModule } from './components/image-slider/image-slider.module';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     StopEventBubbleDirective
   ],
   imports: [
+    ImageSliderModule,
     ImageCropperModule,
     FormComponentsModule,
     ReactiveFormsModule,
@@ -80,9 +83,11 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     // datePickerModule,
     SelectModule,
     TimetableModule,
+    TimetableModule2,
     RouterModule
   ],
   exports: [
+    ImageSliderModule,
     PreviewAnimateDirective,
     FormComponentsModule,
     // PopoverOptionDirective,
@@ -98,6 +103,7 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
     ImageUploadV3Component,
     PreviewComponent,
     TimetableModule,
+    TimetableModule2,
     ImageUploadComponent,
     IconFieldComponent,
     PhoneIconFieldComponent,

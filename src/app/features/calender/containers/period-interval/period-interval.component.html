@@ -1,0 +1,18 @@
+<div class="main">
+    <form *ngIf="periodIntervalForm" class="content" [formGroup]="periodIntervalForm">
+        <h1 class="header">
+            Define the interval between periods
+        </h1>
+
+        <edu-select formControlName="interval"><span class="edu-label">
+          Interval Duration
+        </span>
+            <edu-option (click)="updateInterval(interval)" *ngFor="let interval of intervals; let i = index" [OptionValue]="interval.duration">
+                {{interval.text}}
+            </edu-option>
+        </edu-select>
+    </form>
+    <button [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
+      continue
+    </button>
+</div>

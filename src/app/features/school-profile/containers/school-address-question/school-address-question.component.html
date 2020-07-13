@@ -9,30 +9,13 @@
           What is your school address?
         </h2>
         <form class="content__form" [formGroup]="schoolAddressForm">
-          <!-- <edu-icon-field
+          <edu-icon-field
             formControlName="country"
             [fieldName]="'Country'"
             [icons]="countryIconMap"
             (valueChanged)="updateCountry($event)"
             mode="select"
-          ></edu-icon-field> -->
-          <edu-country-field
-            formControlName="country"
-            [fieldName]="'Country'"
-            [icons]="countryIconMap"
-            (valueChanged)="updateCountry($event)"
-            [mode]="'select'"
-          >
-          </edu-country-field>
-
-          <!-- <edu-icon-field
-            formControlName="country"
-            [fieldName]="'Country'"
-            [icons]="countryIconMap"
-            (valueChanged)="updateCountry($event)"
-            [mode]="'select'"
-          >
-          </edu-icon-field> -->
+          ></edu-icon-field>
           <edu-input
             alignment="center"
             (input)="returnFormFieldFormat('zipCode', $event)"
@@ -61,30 +44,6 @@
           >
             <span class="edu-label"> City</span>
           </edu-input>
-          <!-- <edu-input-field
-            idPrefix="zipCode"
-            text="Zip Code"
-            formControlName="zipCode"
-            (onChange)="updateFormField($event)"
-          ></edu-input-field>
-          <edu-input-field
-            idPrefix="address"
-            text="Address"
-            formControlName="address"
-            (onChange)="updateFormField($event)"
-          ></edu-input-field>
-          <edu-input-field
-            idPrefix="state"
-            text="State"
-            formControlName="state"
-            (onChange)="updateFormField($event)"
-          ></edu-input-field>
-          <edu-input-field
-            idPrefix="city"
-            text="City"
-            formControlName="city"
-            (onChange)="updateFormField($event)"
-          ></edu-input-field> -->
         </form>
       </div>
     </div>

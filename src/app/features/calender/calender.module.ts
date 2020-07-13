@@ -13,13 +13,19 @@ import {
   TeachingDaysComponent,
   SameTeachingDaysQuestionComponent,
   SamePeriodsForClassesQuestionComponent,
-  TeachingPeriodsPerDayComponent
+  TeachingPeriodsPerDayComponent,
+  SamePeriodsPerTimeComponent,
+  StartTimeOfFirstPeriodComponent,
+  StartTimeOfEachPeriodComponent,
+  PeriodDurationComponent,
+  CommonAssemblyQuestionComponent,
+  CalendarConfirmationComponent
 } from './containers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreviewParentComponent } from './components/preview-parent/preview-parent.component';
 import { AcademicYearPreviewComponent } from './components/academic-year-preview/academic-year-preview.component';
 import { SchoolTermsPreviewComponent } from './components/school-terms-preview/school-terms-preview.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TermsComponent } from './components/terms/terms.component';
 import { TermsDatesPreviewComponent } from './components/terms-dates-preview/terms-dates-preview.component';
 import { VacationDatesPreviewComponent } from './components/vacation-dates-preview/vacation-dates-preview.component';
@@ -35,10 +41,39 @@ import { DaysOfWeekPreviewComponent } from './components/days-of-week-preview/da
 import { NumberOfPeriodsComponent } from './containers/number-of-periods/number-of-periods.component';
 import { PeriodsPerDayComponent } from './components/periods-per-day/periods-per-day.component';
 import { PeriodsPreviewComponent } from './components/periods-preview/periods-preview.component';
+import { TimepickerBlockComponent } from './components/timepicker-block/timepicker-block.component';
+import { TimetablePreviewComponent } from './components/timetable-preview/timetable-preview.component';
+import { TimetablePreview2Component } from './components/timetable-preview2/timetable-preview2.component';
+import { TimetableCardComponent } from './components/timetable-card/timetable-card.component';
+import { PreviewTestComponent } from './components/preview-test/preview-test.component';
 import { pages } from './pages';
+import { StartTimePerDayComponent } from './components/start-time-per-day/start-time-per-day.component';
+import { BreakScheduleQuestionComponent } from './containers/break-schedule-question/break-schedule-question.component';
+import { AssemblyDetailsComponent } from './containers/assembly-details/assembly-details.component';
+import { DefineYourBreakComponent } from './containers/define-your-break/define-your-break.component';
+import { PeriodIntervalComponent } from './containers/period-interval/period-interval.component';
+import { PopoverModule } from 'src/app/shared/components/form-components/popover/popover.module';
+import { FormComponentsModule } from 'src/app/shared/components/form-components/form-component.module';
+import { DefineSameBreaksComponent } from './containers/define-same-breaks/define-same-breaks.component';
+import { OrphanClassesComponent } from './components/orphan-classes/orphan-classes.component';
+import { UpdateTimetableComponent } from './containers/update-timetable/update-timetable.component';
+import { ClassUpdateComponent } from './components/class-update/class-update.component';
+import { PeriodPopoverComponent } from './components/period-popover/period-popover.component';
+import { TimepickerPopoverComponent } from './components/timepicker-popover/timepicker-popover.component';
+import { PeriodUpdateComponent } from './components/period-update/period-update.component';
+import { UpdateStartTimeComponent } from './components/update-start-time/update-start-time.component';
+import { UpdateTeachingPeriodsComponent } from './components/update-teaching-periods/update-teaching-periods.component';
+import { StartTimeUpdateComponent } from './components/start-time-update/start-time-update.component';
 @NgModule({
   declarations: [
     ...pages,
+    TimepickerPopoverComponent,
+    PeriodPopoverComponent,
+    TimepickerBlockComponent,
+    TimetablePreviewComponent,
+    TimetablePreview2Component,
+    TimetableCardComponent,
+    PreviewTestComponent,
     TeachingDayForClassQuestionComponent,
     AcademicYearQuestionComponent,
     CalenderShellComponent,
@@ -63,12 +98,35 @@ import { pages } from './pages';
     NumberOfPeriodsComponent,
     TeachingPeriodsPerDayComponent,
     PeriodsPerDayComponent,
-    PeriodsPreviewComponent
+    PeriodsPreviewComponent,
+    SamePeriodsPerTimeComponent,
+    StartTimeOfFirstPeriodComponent,
+    SamePeriodsPerTimeComponent,
+    StartTimeOfEachPeriodComponent,
+    StartTimePerDayComponent,
+    PeriodDurationComponent,
+    BreakScheduleQuestionComponent,
+    AssemblyDetailsComponent,
+    DefineYourBreakComponent,
+    DefineSameBreaksComponent,
+    PeriodIntervalComponent,
+    CommonAssemblyQuestionComponent,
+    CalendarConfirmationComponent,
+    OrphanClassesComponent,
+    UpdateTimetableComponent,
+    ClassUpdateComponent,
+    PeriodUpdateComponent,
+    UpdateStartTimeComponent,
+    UpdateTeachingPeriodsComponent,
+    StartTimeUpdateComponent
   ],
   imports: [
     CommonModule,
     CalenderRoutingModule,
     SharedModule,
+    PopoverModule,
+    FormsModule,
+    FormComponentsModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([CalendarEffects]),
     StoreModule.forFeature('calendar', calenderReducer)

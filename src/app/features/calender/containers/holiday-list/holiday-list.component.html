@@ -1,19 +1,31 @@
 <div class="main">
-    <div class="holiday-list content">
-        <h1 class="holiday-list__header">Please, complete your Holiday list</h1>
-        <edu-holiday-add (edit)="onEditHoliday($event)" (add)="onAddHoliday($event)" [mode]="mode"></edu-holiday-add>
+  <div class="holiday-list content">
+    <h1 class="holiday-list__header">Please, complete your Holiday list</h1>
+    <edu-holiday-add
+      (edit)="onEditHoliday($event)"
+      (add)="onAddHoliday($event)"
+      [mode]="mode"
+    ></edu-holiday-add>
 
-        <div class="scrollable-content">
-            <ul class="holiday-list__items">
-                <li class="holiday-list__item" *ngFor="let holiday of holidays | async">
-                    <edu-holiday-pill [holiday]="holiday" (editHoliday)="onEditHolidayRequest($event)" (deleteHoliday)="onDeleteHoliday($event)"></edu-holiday-pill>
-                </li>
-            </ul>
-        </div>
+    <div class="scrollable-content">
+      <ul class="holiday-list__items">
+        <li class="holiday-list__item" *ngFor="let holiday of holidays | async">
+          <edu-holiday-pill
+            [holiday]="holiday"
+            (editHoliday)="onEditHolidayRequest($event)"
+            (deleteHoliday)="onDeleteHoliday($event)"
+          ></edu-holiday-pill>
+        </li>
+      </ul>
     </div>
-    <div class="holiday-list__btn-container button--bottom">
-        <button class="holiday-list__continue-btn" (click)="goNext()">
+  </div>
+  <div class="holiday-list__btn-container button--bottom">
+    <button
+      class="holiday-list__continue-btn"
+      ButtonType="basic"
+      (click)="goNext()"
+    >
       Continue
     </button>
-    </div>
+  </div>
 </div>

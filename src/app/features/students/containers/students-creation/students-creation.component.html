@@ -155,14 +155,16 @@
   sections
 </edu-modal-v2>
 <edu-students-form
+  (closeAddModal)="closeAddModal()"
   *ngIf="(studentsModalState | async).addModal"
   [studentsXClasses]="studentsXClasses"
   [allClasses]="allClasses"
   (onSubmit)="processSubmit($event)"
 ></edu-students-form>
 <edu-student-edit-form
+  (closeEditModal)="closeEditModal()"
   *ngIf="(studentsModalState | async).editModal"
-  [studentsXClasses]="studentsXClasses"
+  [allClasses]="allClasses"
   (onSubmit)="processEditStudent($event)"
   [editData]="studentEditState"
 >

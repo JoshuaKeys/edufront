@@ -1,0 +1,42 @@
+@import '../../scss-fixes.scss';
+.header {
+  // margin-top: 290px;
+  font-size: 26px;
+  color: #212121;
+  line-height: 40px;
+  max-width: 484px;
+  margin-bottom: 30px;
+}
+.scrollable-content {
+  //   @include displayFlex();
+  height: 100%;
+  max-height: calc(100vh - 278px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.button--bottom {
+  @include displayFlex();
+}
+.button--bottom > button {
+  width: 200px;
+}
+
+edu-image-slider ::ng-deep {
+  width: 100%;
+
+  edu-timetable-card {
+    margin-top: 5px;
+    margin-bottom: 23px;
+    // height: 415px;
+  }
+  .ng-image-slider,
+  .ng-image-slider-container,
+  .ng-image-slider-container > .main {
+    height: 100% !important;
+    max-height: calc(100vh - 286px);
+    overflow-y: hidden;
+  }
+}

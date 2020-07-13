@@ -141,3 +141,20 @@ aside {
   padding-left: 70px;
   line-height: unset !important;
 }
+
+.popup__search-wrapper {
+  padding: 0px 16px;
+}
+.icon {
+  padding: 0px 16px;
+}
+.icon:hover {
+  .icon__text {
+    color: #69a9f2;
+  }
+  background: #fafbfc 0% 0% no-repeat padding-box;
+}
+
+edu-popover ::ng-deep {
+  padding: 6px 0px;
+}

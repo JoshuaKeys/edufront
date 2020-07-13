@@ -1,0 +1,65 @@
+<!-- {{ selectState }} -->
+<div
+  [ngClass]="{
+    disabled: disabled,
+    active: selectIsActive,
+    hideChevron: hideChevron
+  }"
+  role="listbox"
+  class="{{ alignment }} {{ selectState }} wrapper  select__wrapper"
+>
+  <input
+    #checkboxEl
+    (change)="cbChange()"
+    (blur)="cbBlur()"
+    (focus)="cbFocus()"
+    [(ngModel)]="selectIsActive"
+    [id]="elementId"
+    name="{{ elementId }}-checkbox"
+    type="checkbox"
+    class="select__checkbox"
+    [disabled]="disabled"
+  />
+
+  <div class="input-label">
+    <input
+      tabindex="-1"
+      class="  select__input input"
+      [(ngModel)]="inputValue"
+      name="{{ elementId }}-input"
+      #input
+      [ngClass]="{ 'input--active': isLabelActive() }"
+      type="text"
+      placeholder="-"
+      [disabled]="disabled"
+    />
+
+    <label
+      [ngClass]="{
+        'label--active': isLabelActive(),
+        labelIsPlaceholder: labelIsPlaceholder
+      }"
+      class="select__label label"
+      [for]="elementId"
+    >
+      <div class="label__shrink-wrap">
+        <ng-content select=".edu-label"></ng-content>
+      </div>
+    </label>
+  </div>
+
+  <div class="prefix">
+    <ng-content select=".prefix"></ng-content>
+  </div>
+
+  <div class="select__dropdown ">
+    <div class="popup" [ngClass]="{ active: selectIsActive }">
+      <div class="pointer"></div>
+      <div class="popup__content-wrapper">
+        <!-- search implementation to be done later -->
+        <!-- <div><input (blur) = cbBlur() type="text" tabindex="-1"> </div> -->
+        <ng-content select="edu-option-v2"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

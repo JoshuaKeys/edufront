@@ -19,32 +19,33 @@ export class ContactDetailsQuestionComponent implements OnInit {
   contactForm: FormGroup;
   countryIconMap = [
     {
+      id: 'ab53c906-6427-11ea-a761-8b6db09d1095',
       item: 'India +91',
-      icon: 'assets/images/flags/flg-in.svg',
       phonePrefix: '+91',
-      phoneNum: ''
+      icon: 'assets/images/flags/flg-in.svg'
     },
     {
+      id: '1c1e29e4-642b-11ea-a762-9bcb0d229311',
       item: 'United States +1',
-      icon: 'assets/images/flags/flg-us.svg',
       phonePrefix: '+1',
-      phoneNum: ''
+      icon: 'assets/images/flags/flg-us.svg'
     },
     {
+      id: '418bc6b4-642b-11ea-a763-33192cb50cc3',
       item: 'Canada +1',
-      icon: 'assets/images/flags/flg-ca.svg',
       phonePrefix: '+1',
-      phoneNum: ''
+      icon: 'assets/images/flags/flg-ca.svg'
     },
     {
+      id: '44f9b17e-642d-11ea-a764-d79d3a1df079',
       item: 'United Kingdom +44',
-      icon: 'assets/images/flags/flg-uk.svg',
       phonePrefix: '+44',
-      phoneNum: ''
+      icon: 'assets/images/flags/flg-uk.svg'
     }
   ];
   ngOnInit(): void {
     this.store.select(selectSchoolContact).subscribe(schoolContacts => {
+      console.log(schoolContacts)
       let contacts: any = {};
       if (!schoolContacts) {
         contacts.email = '';
@@ -54,18 +55,13 @@ export class ContactDetailsQuestionComponent implements OnInit {
         contacts.email = schoolContacts.email;
         contacts.website = schoolContacts.website;
         const phoneIdx = this.countryIconMap.findIndex(
-          countryItem => countryItem.phonePrefix === schoolContacts.countryCode
+          countryItem => countryItem.id === schoolContacts.id
         );
-        if (schoolContacts) {
-          contacts.phone = {
-            ...this.countryIconMap[phoneIdx],
-            phoneNum: schoolContacts.phone
-          };
-        } else {
-          contacts.phone = null;
-        }
+        contacts.phone = {
+          ...this.countryIconMap[phoneIdx],
+          phoneNum: schoolContacts.phone ? schoolContacts.phone.phoneNum : null
+        };
       }
-
       this.contactForm = new FormGroup({
         phone: new FormControl(contacts.phone, Validators.required),
         email: new FormControl(contacts.email),
@@ -94,6 +90,7 @@ export class ContactDetailsQuestionComponent implements OnInit {
     this.router.navigateByUrl('/dashboard')
   }
   updatePhone(event: PhoneIconModel) {
+    console.log(event)
     this.contactForm.patchValue({
       phone: event
     });
@@ -101,15 +98,18 @@ export class ContactDetailsQuestionComponent implements OnInit {
       setPhoneData({
         field: 'phone',
         prefix: event.phonePrefix,
-        phoneNum: event.phoneNum
+        phoneNum: event.phoneNum,
+        id: event.id
       })
     );
-    this.store.dispatch(
-      setContactsData({
-        field: 'phone',
-        value: `${event.phoneNum}`
-      })
-    );
+    console.log(event);
+    // this.store.dispatch(
+    //   setContactsData({
+    //     field: 'phone',
+    //     value: `${event.phoneNum}`,
+
+    //   })
+    // );
   }
   constructor(
     private activatedRoute: ActivatedRoute,

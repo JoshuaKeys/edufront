@@ -1,0 +1,93 @@
+<div class="main">
+  <form
+    *ngIf="assemblyDetailsForm"
+    [formGroup]="assemblyDetailsForm"
+    class="content"
+  >
+    <h1 class="header">
+      Tell us more about the assembly
+    </h1>
+
+    <div class="group--row">
+      <!--     (input)="updateAssemblyName($event)" -->
+      <edu-input formControlName="assemblyName">
+        <span class="edu-label">
+          Name
+        </span>
+      </edu-input>
+
+      <!-- <edu-timepicker
+        formControlName="startingAt"
+        (edu-change)="updateAssemblyData('startingAt', $event)"
+      >
+        <span class="edu-label">
+          Starting at
+        </span>
+      </edu-timepicker> -->
+      <!-- <edu-select formControlName="startingAt">
+        <span class="edu-label">
+          Starting at
+        </span>
+        <edu-option
+          (click)="updateAssemblyData('startingAt', duration)"
+          *ngFor="let duration of durations; let i = index"
+          [OptionValue]="duration.duration"
+        >
+          {{ duration.text }}
+        </edu-option>
+      </edu-select> -->
+
+      <!--     (edu-change)="updateStartTime($event, 'startingAt')" -->
+      <edu-timepicker formControlName="startingAt">
+        <span class="edu-label">Start Time</span>
+      </edu-timepicker>
+      <!-- (click)="updateAssemblyData('duration', duration)" -->
+      <edu-select formControlName="assemblyDuration"
+        ><span class="edu-label">
+          Assembly Duration
+        </span>
+        <edu-option
+          *ngFor="let duration of durations; let i = index"
+          [OptionValue]="duration.duration"
+        >
+          {{ duration.text }}
+        </edu-option>
+      </edu-select>
+    </div>
+
+    <ul
+      class="errors"
+      *ngIf="assemblyDetailsForm.invalid && assemblyDetailsForm.errors"
+    >
+      <li *ngIf="assemblyDetailsForm.errors.startingAt">
+        {{ assemblyDetailsForm.errors.startingAt }}
+      </li>
+
+      <li *ngIf="assemblyDetailsForm.errors.assemblyDuration">
+        {{ assemblyDetailsForm.errors.assemblyDuration }}
+      </li>
+      <li
+        *ngIf="
+          assemblyDetailsForm.errors.assemblyNameRequired &&
+          (fromControl.assemblyName.touched ||
+            (!assemblyDetailsForm.errors.assemblyDuration &&
+              !assemblyDetailsForm.errors.startingAt &&
+              fromControl.assemblyDuration.value &&
+              fromControl.startingAt.value))
+        "
+      >
+        Assembly name is required
+      </li>
+    </ul>
+  </form>
+
+  <button
+    *ngIf="assemblyDetailsForm"
+    [disabled]="assemblyDetailsForm.invalid"
+    [routerLink]="['../', activatedRouteData.next]"
+    class="button--bottom"
+    ButtonType="basic"
+  >
+    continue
+  </button>
+</div>

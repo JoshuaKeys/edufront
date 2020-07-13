@@ -38,7 +38,8 @@ export const classesAndGroupsReducer = createReducer(
         }else {
             stateCopy[groupIdx].classes.push(action.class)
         }
-        const adjustedGroups = clearClassOffGroups(action.class, stateCopy, action.classesGroup)
+        const adjustedGroups = clearClassOffGroups(action.class, stateCopy, action.classesGroup.id)
         return adjustedGroups
-    })
+    }),
+    // on()
 )

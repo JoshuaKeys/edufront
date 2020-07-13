@@ -19,6 +19,7 @@
           <edu-classes-subject-icon
             [association]="unit"
             [subjects]="subjects"
+            (onClick)="setActive($event); toggleSubjectClassesBox()"
             *ngFor="let unit of classesAndSubject | async"
           >
           </edu-classes-subject-icon>

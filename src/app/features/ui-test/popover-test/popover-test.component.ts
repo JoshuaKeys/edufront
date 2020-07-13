@@ -15,4 +15,8 @@ export class PopoverTestComponent implements OnInit {
   toggleBtn() {
     this.btnTest = !this.btnTest;
   }
+
+  log(param) {
+    console.log(param);
+  }
 }

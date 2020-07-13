@@ -19,7 +19,7 @@ export class PopoverOptionDirective {
   @Input('ClosePopover') set ClosePopover(param) {
     this._ClosePopover = param;
     this.closePopoverEvent.emit();
-    console.log('should close stuff');
+    // console.log('should close stuff');
   }
 
   @Output('closePopover') closePopoverEvent = new EventEmitter();

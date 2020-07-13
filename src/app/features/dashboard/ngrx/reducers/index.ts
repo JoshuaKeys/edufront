@@ -12,8 +12,11 @@ const initialState: DashboardStateModel = {
 const _dashboardReducer = createReducer(initialState,
   on(incrementProgress, (state, action) => {
     const stateCopy: DashboardStateModel = JSON.parse(JSON.stringify(state));
+
     stateCopy.activeNavIndex += 1;
-    stateCopy.progress += 10
+    stateCopy.progress += 12.5;
+    stateCopy.progress = Math.round(stateCopy.progress);
+    stateCopy.progress = stateCopy.progress > 95 ? 100 : stateCopy.progress;
     return stateCopy;
   }),
   on(selectUserModalState, (state, action) => {

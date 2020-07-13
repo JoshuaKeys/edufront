@@ -3,6 +3,9 @@
     <div class="modal">
       <h2 class="modal__title">
         Add Students
+        <button class="button--close" ButtonType="icon" (click)="closeAddBtn()">
+          <img src="assets/form-components/cross-black.svg" alt="" />
+        </button>
       </h2>
       <form
         id="addEditForm"
@@ -42,15 +45,6 @@
             <edu-datepicker formControlName="dob">
               <span class="edu-label">Date of Birth</span>
             </edu-datepicker>
-            <!-- <edu-input alignment="left" formControlName="dob">
-              <span class="edu lebel">Date of Birth</span>
-            </edu-input> -->
-            <!-- <edu-input-field
-              idPrefix="dateOfBirth"
-              formControlName="dob"
-              text="Date of Birth"
-            ></edu-input-field> -->
-            <!-- <edu-datepicker formControlName="dob"></edu-datepicker> -->
             <edu-select formControlName="gender" alignment="left">
               <span class="edu-label"> Sex </span>
               <edu-option OptionValue="Male"> Male </edu-option>
@@ -59,30 +53,14 @@
           </div>
 
           <div class="group--row form--row">
-            <edu-country-field
+            <edu-icon-field
               formControlName="country"
               [fieldName]="'Country'"
               [icons]="countryIconMap"
               (valueChanged)="updateCountry($event)"
               [mode]="'select'"
             >
-            </edu-country-field>
-
-            <!-- <edu-icon-field
-              formControlName="country"
-              [fieldName]="'Country'"
-              [icons]="countryIconMap"
-              (valueChanged)="updateCountry($event)"
-              mode="select"
-            ></edu-icon-field> -->
-            <!-- <edu-country-field
-              formControlName="country"
-              [fieldName]="'Country'"
-              [icons]="countryIconMap"
-              (valueChanged)="updateCountry($event)"
-              mode="select"
-            ></edu-country-field> -->
-
+            </edu-icon-field>
             <edu-input alignment="left" formControlName="address">
               <span class="edu-label"> Address</span>
             </edu-input>
@@ -151,15 +129,9 @@
               </span>
             </edu-input>
           </div>
-
-          <!-- <edu-phone-field
-            formControlName="phone"
-            [icons]="countryIconMap"
-            fieldName="Phone"
-            (valueChanged)="updatePhone($event)"
-          ></edu-phone-field> -->
           <div class="group--row form--row">
             <edu-phone-icon-field
+              alignment="left"
               formControlName="phone"
               fieldName="Phone"
               [icons]="countryIconMap"
@@ -179,6 +151,7 @@
         form="addEditForm"
         class="form__round-btn form__round-btn--active"
         type="submit"
+        [disabled]="addEditForm.invalid"
       >
         <img src="../../../assets/iconfinder_plus-white.svg" alt="" />
       </button>

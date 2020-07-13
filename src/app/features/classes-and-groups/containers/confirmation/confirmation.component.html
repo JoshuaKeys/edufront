@@ -1,36 +1,54 @@
 <main>
-    <section class="section">
-        <button class="section__back-btn" (click)="goToDashboard()">
+  <section class="section">
+    <button class="section__back-btn" (click)="goToDashboard()">
       <img src="../../../assets/chevron-left.svg" alt="" /> Back
     </button>
 
-        <div class="form">
-            <div class="form__content-wrapper">
-                <h2 class="form__title">
-                    Are these correct?
-                </h2>
+    <div class="form">
+      <div class="form__content-wrapper">
+        <h2 class="form__title">
+          Are these correct?
+        </h2>
 
-                <div class="drop-zones">
-                    <edu-group-box *ngFor="let group of groupClassMap | async" [group]="group"></edu-group-box>
-                </div>
-            </div>
+        <div class="drop-zones">
+          <edu-group-box
+            *ngFor="let group of groupClassMap | async"
+            [group]="group"
+          ></edu-group-box>
         </div>
-        <div class="form__btns">
-            <button ButtonType="outline" class="form__button form__button--white" [routerLink]="['../', activatedRouteData.previous]">
+      </div>
+    </div>
+    <div class="form__btns">
+      <button
+        ButtonType="outline"
+        class="form__button form__button--white"
+        [routerLink]="['../', activatedRouteData.previous]"
+      >
         Back
       </button>
-            <!--  -->
-            <!--  -->
-            <!--  -->
-            <button ButtonType="basic" class="form__button" (click)="submit()">
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <button ButtonType="basic" class="form__button" (click)="submit()">
         Continue
       </button>
-        </div>
-    </section>
-</main>
-<edu-modal-v2 *ngIf="(modalState | async).endModal" class="complete" btnText="GOT IT" header="Classes And Groups Setup Complete" icon="assets/icon-complete.svg" [completeModal]="true" leftBtn="TAKE ME TO DASHBOARD" rightBtn="TAKE ME TO SUBJECTS" (leftBtnClicked)="goToDashboard()"
-    (rightBtnClicked)="goToSubjects()">
-    <div class="modal__text--complete">
-        Nicely Done! Now you can either move on to telling us all about what subjects are taught, or return to the dashboard.
     </div>
+  </section>
+</main>
+<edu-modal-v2
+  *ngIf="(modalState | async).endModal"
+  class="complete"
+  btnText="GOT IT"
+  header="Classes And Groups Setup Complete"
+  icon="assets/icon-complete.svg"
+  [completeModal]="true"
+  leftBtn="TAKE ME TO DASHBOARD"
+  rightBtn="TAKE ME TO SUBJECTS"
+  (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToSubjects()"
+>
+  <div class="modal__text--complete">
+    Nicely Done! Now you can either move on to telling us all about what
+    subjects are taught, or return to the dashboard.
+  </div>
 </edu-modal-v2>

@@ -28,16 +28,19 @@ import { PhoneIconModel } from '../../models/phone-icon.model';
 })
 export class PhoneIconFieldComponent implements OnInit {
   @Input() fieldName: string;
+  @Input() alignment: string = 'center';
   @Input() icons: PhoneIconModel[];
   @Input() mode: string;
   isOpen = false;
-  constructor(private renderer: Renderer2) {}
+  phoneNumber = '';
+  constructor(private renderer: Renderer2) { }
   value: string;
   activeIcon: string;
   phonePrefix: string;
   item: string;
   filter = '';
   popOverIsOpened = false;
+  id: string;
   filteredIcons: PhoneIconModel[];
   @Output() valueChanged = new EventEmitter<PhoneIconModel>();
   @ViewChild('fieldNameEl') fieldNameEl: ElementRef<HTMLInputElement>;
@@ -49,37 +52,46 @@ export class PhoneIconFieldComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
   writeValue(val: PhoneIconModel) {
+    console.log(val);
     if (val === null || val == undefined) {
       this.activeIcon = this.icons[0].icon;
       this.phonePrefix = this.icons[0].phonePrefix;
       this.item = this.icons[0].item;
-      this.value = '';
+      this.phoneNumber = '';
+      this.valueChanged.emit({ icon: this.activeIcon, phoneNum: this.phoneNumber, phonePrefix: this.phonePrefix, id: this.icons[0].id })
       return;
     }
-    this.value = val.phoneNum ? val.phoneNum : '';
+    this.phoneNumber = val.phoneNum ? val.phoneNum : '';
     this.phonePrefix = val.phonePrefix;
     this.activeIcon = val.icon;
     this.item = val.item;
+    this.id = val.id;
   }
   filterIcons(icons: PhoneIconModel[], filter: string) {
-    return icons.filter(icon => icon.item.match(filter));
+    console.log(filter);
+    return icons.filter(icon =>
+      icon.item.toLowerCase().indexOf(filter.toLowerCase()) > -1 //.match(filter.toLowerCase())
+    );
+  }
+  removeSpecialChars(str) {
+
   }
   onSearchItems(input) {
     this.filteredIcons = this.filterIcons(this.icons, input.target.value);
   }
   changeItem(icon: PhoneIconModel) {
+    console.log(icon);
     const iconCopy = { ...icon };
-    iconCopy.phoneNum = this.value;
+    iconCopy.phoneNum = this.phoneNumber;
     this.onValueChange(iconCopy);
     this.valueChanged.emit(iconCopy);
     this.toggleDropdown();
     this.popOverIsOpened = !this.popOverIsOpened;
-    // this.toggleDropdown();
   }
   registerOnChange(fn: any) {
     this.onValueChange = fn;
   }
-  registerOnTouched(fn: any) {}
+  registerOnTouched(fn: any) { }
 
   processClick() {
     if (this.mode === 'select') {
@@ -87,25 +99,26 @@ export class PhoneIconFieldComponent implements OnInit {
     }
   }
   onTextChange(event) {
+    console.log(event);
     if (this.mode === 'select') {
       this.renderer.setProperty(
         this.fieldNameEl.nativeElement,
         'value',
-        this.value
+        this.phoneNumber
       );
       return;
     }
-    this.onValueChange(this.getEventData(this.activeIcon));
-    this.valueChanged.emit(this.getEventData(this.activeIcon));
+    this.onValueChange(this.getEventData(this.activeIcon, event));
+    this.valueChanged.emit(this.getEventData(this.activeIcon, event));
   }
-  getEventData(icon): PhoneIconModel {
+  getEventData(icon, phoneNum): PhoneIconModel {
     return {
       icon,
       phonePrefix: this.phonePrefix,
-      // phoneNum: this.fieldNameEl.nativeElement.value,
-      phoneNum: this.value,
+      phoneNum,
       item: this.item,
-      name: this.fieldName.toLowerCase()
+      name: this.fieldName.toLowerCase(),
+      id: this.id
     };
   }
 }

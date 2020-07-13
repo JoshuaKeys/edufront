@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .overflowVisible {
   overflow: visible !important;
 }
@@ -15,27 +16,33 @@
   max-width: unset;
   margin: unset;
 }
+
 .vacations-and-dates {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
 }
+
 .header {
   // margin-top: 290px;
   font-size: 26px;
   color: #212121;
 }
+
 h1.header + p {
   margin-top: 20px;
   color: #a5aec7;
   margin-bottom: 30px;
 }
+
 .term-name-date {
   display: flex;
 }
+
 .orangeColor {
   color: #f2b269;
 }
+
 edu-input,
 edu-datepicker {
   width: 240px;
@@ -54,14 +61,27 @@ edu-datepicker {
   }
 }
 
+.delete-vacation-btn {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(30px, -50%);
+  height: 100%;
+  width: 30px;
+}
+
 .vacations-and-dates {
   // display: flex;
-
   &__item {
     margin: auto;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+    position: relative;
+    &:hover .delete-vacation-btn {
+      opacity: 1;
+    }
   }
   &__add-btn-container {
     max-width: 60%;
@@ -85,20 +105,34 @@ edu-datepicker {
 
 .vacations-and-dates__btn-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
+
+.validation-errors {
+  //   padding: 0;
+}
+
+.validation-error {
+  //   list-style-type: none;
+  //   color: red;
+  //   font-weight: bold;
+}
+
 .vacations-and-dates__errors {
-  display: flex;
-  justify-content: center;
-  span {
-    color: red;
-    font-weight: 700;
-  }
+  //   display: flex;
+  //   justify-content: center;
+  //   span {
+  //     color: red;
+  //     font-weight: 700;
+  //   }
 }
+
 .vacations-and-dates__btn-container {
   display: flex;
   justify-content: center;
 }
+
 .vacations-and-dates__continue-btn {
   height: 52px;
   border-radius: 100px;
@@ -109,8 +143,82 @@ edu-datepicker {
   text-align: center;
   color: #fff;
   border: none;
+
   &:active,
   &:focus {
     outline: none;
   }
+}
+
+.break__btn {
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-right: 520px;
+  width: 240px;
+  height: 54px;
+  background: transparent;
+  position: relative;
+  border: 0px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid #e6e9f3;
+  &:hover {
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+  }
+  &:active {
+    background-color: #e6f3fd;
+    border: 1px solid $blue;
+    border-radius: 8px;
+  }
+  &:focus {
+    outline: none;
+  }
+  img {
+    width: 16px;
+    height: 16px;
+    @include absoluteCenter();
+  }
+}
+
+.validation-error {
+  padding: 0;
+}
+
+.validation-errors {
+  flex-shrink: 0;
+  padding: 0;
+  //   position: absolute;
+  min-width: 500px;
+  width: 100%;
+  bottom: 92px;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  text-align: center;
+  list-style-type: none;
+  font: 400 14px/20px Raleway;
+  color: $ash;
+
+  &.hidden {
+    opacity: 0;
+    user-select: none;
+    color: transparent;
+  }
+  &.display {
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.button--bottom > button.vacations-and-dates__continue-btn {
+  margin-bottom: 0px !important;
+}
+
+.form-wrapper {
+  @include displayFlex(flex-start, center, column);
+  max-height: calc(100vh - 310px);
+  width: 100%;
 }

@@ -9,11 +9,12 @@
 <!-- <h1>confirm event : {{ confirmEventResults }}</h1> -->
 <br /><br />
 
-<input type="text" />
-<edu-datepicker></edu-datepicker>
+<!-- <input type="text" /> -->
+<!-- <edu-datepicker></edu-datepicker> -->
+<button (click)="clearAll()">clear all</button>
 <form action="" [formGroup]="testForm" (ngSubmit)="formSubmit()">
   <edu-datepicker formControlName="f1" alignment="center">
-    <span class="edu-label">date of birth</span>
+    <span class="edu-label">date of birth f1</span>
     <div class="edu-suffix" InputAffix>
       <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
     </div>

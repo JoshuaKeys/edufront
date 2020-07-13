@@ -6,13 +6,28 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { of, Observable } from 'rxjs';
-import { selectClassesAndGroups, selectCalendar, selectTeaching, selectAllClasses } from '../../ngrx/selectors';
+import {
+  selectClassesAndGroups,
+  selectTeaching,
+  selectAllClasses,
+  selectPeriodSelected,
+  selectOrphanedClasses
+} from '../../ngrx/selectors';
 import { map } from 'rxjs/operators';
-import { CalendarModel } from '../../models/calendar.model';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { reassignClass, selectTeachingDay,  updateSelectedTeachingDaysRequest } from '../../ngrx/actions/calendar.actions';
+import {
+  reassignClass,
+  selectTeachingDay,
+  updateSelectedTeachingDaysRequest,
+  addClassesGroup,
+  addPeriodsToGroup,
+  setGroupTeachingDays,
+  setGroupPeriods
+} from '../../ngrx/actions/calendar.actions';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-
+import { v4 as uuid44 } from 'uuid';
+import { SelectionModel } from '../../models/selection.model';
+import { buildRangePipe } from '../../utilities';
 @Component({
   selector: 'edu-teaching-periods-per-day',
   templateUrl: './teaching-periods-per-day.component.html',
@@ -20,31 +35,42 @@ import { SelectedPeriodModel } from '../../models/selected-period.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TeachingPeriodsPerDayComponent implements OnInit {
+  orphanedClasses: Observable<ClassModel[]>;
   activatedRouteData = this.activatedRoute.snapshot.data;
   classesAndGroups: Observable<ClassGroupModel[]>;
+  selection: Observable<SelectionModel>;
   calendarData: Observable<TeachingStateModel>;
   allClasses: Observable<ClassModel[]>;
-  periods = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) { }
+  periods = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  constructor(
+    private store: Store<CalendarStateModel>,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.orphanedClasses = this.store.select(selectOrphanedClasses);
     this.calendarData = this.store.select(selectTeaching);
     this.classesAndGroups = this.store.select(selectClassesAndGroups);
+    this.selection = this.store.select(selectPeriodSelected);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
-        const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
-        return unsortedClassesCopy.sort((itemA, itemB)=> itemA.grade - itemB.grade)
+        const unsortedClassesCopy: ClassModel[] = JSON.parse(
+          JSON.stringify(unsortedClasses)
+        );
+        return unsortedClassesCopy.sort(
+          (itemA, itemB) => itemA.grade - itemB.grade
+        );
       })
-    )
+    );
     // this.allClasses.subscribe(console.log)
   }
   toggleActiveClass(classItem: ClassModel, classesGroup: ClassGroupModel) {
-    this.store.dispatch(reassignClass({class: classItem, classesGroup}))
+    this.store.dispatch(reassignClass({ class: classItem, classesGroup }));
   }
   isPresent(classes: ClassModel[], classItem: ClassModel) {
-    for(let i = 0; i < classes.length; i++) {
-      if(classes[i].id === classItem.id) {
-        return true
+    for (let i = 0; i < classes.length; i++) {
+      if (classes[i].id === classItem.id) {
+        return true;
       }
     }
     return false;
@@ -55,13 +81,68 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
   toggleActive(day: TeachingDay, classesGroup: ClassGroupModel) {
     // this.store.dispatch(toggleClassesGroupActive({day, classesGroup}))
   }
+  parsePeriodValue(arr) {
+    if (arr.length == 0) {
+      return '';
+    }
+    let displayValue = '';
+    let temp = arr
+      .map(number => {
+        let suffix;
+        if (typeof number === 'string' && number.toLowerCase() === 'all') {
+          return `${number}`;
+        }
+        if (number == 1) {
+          suffix = 'st';
+        } else if (number == 2) {
+          suffix = 'nd';
+        } else if (number == 3) {
+          suffix = 'rd';
+        } else {
+          suffix = 'th';
+        }
+        number = `${number}`.replace('P', '');
+        return `${number}${suffix}`;
+      })
+      .reduce((a, b) => `${a},${b}`);
+    if (arr.length == 1 && arr[0] == '') {
+      displayValue = '';
+    } else {
+      displayValue = `${temp} period`;
+    }
+    // displayValue = `${temp} period`;
+    // }
+    return displayValue;
+  }
   asObservable(item) {
     return of(item);
   }
+  computeClasses(classes: ClassModel[]) {
+    const grades = classes
+      .map(classItem => classItem.grade)
+      .sort((a, b) => a - b);
+    const result = buildRangePipe(grades);
+    return result;
+  }
+  addGroup() {
+    // alert('hello')
+    const generatedGroupId = uuid44();
+    this.store.dispatch(addClassesGroup({ generatedGroupId }));
+    this.store.dispatch(addPeriodsToGroup({ generatedGroupId }));
+  }
+  addNewGroup(classItem: ClassModel) {
+    const generatedGroupId = uuid44();
+    this.store.dispatch(addClassesGroup({ generatedGroupId }));
+    this.store.dispatch(
+      reassignClass({ class: classItem, groupId: generatedGroupId })
+    );
+    this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
+    this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
+  }
   selectPeriod($event: SelectedPeriodModel) {
-    this.store.dispatch(selectTeachingDay($event))
+    this.store.dispatch(selectTeachingDay($event));
   }
   updateSelectedDays(updateTo: number) {
-    this.store.dispatch(updateSelectedTeachingDaysRequest({updateTo}));
+    this.store.dispatch(updateSelectedTeachingDaysRequest({ updateTo }));
   }
 }

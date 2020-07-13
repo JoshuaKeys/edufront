@@ -1,0 +1,50 @@
+@import 'src/assets/styles/mixins/alignment';
+h1 {
+  position: relative;
+}
+
+edu-popover.popover__timepicker ::ng-deep {
+  padding: 0;
+}
+.popover__timepicker edu-timepicker-block ::ng-deep .card.period-menu {
+  margin: 0;
+  border: 0px;
+}
+
+edu-popover.class-popover ::ng-deep {
+  padding: 0px;
+}
+.classes {
+  @include displayFlex();
+  width: 156px;
+  flex-wrap: wrap;
+  padding: 20px 15px;
+  .badge {
+    cursor: pointer;
+    font: 500 12px/14px Roboto;
+    border: 2px solid #e6e9f3;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin: 5px;
+    position: relative;
+
+    &--active {
+      border-color: #69a9f2;
+
+      background: #69a9f2;
+      span {
+        color: white !important;
+      }
+    }
+    span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      line-height: 14px;
+      color: #c7ccdb;
+    }
+  }
+}

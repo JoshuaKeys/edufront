@@ -1,0 +1,9 @@
+<ul class="days" *ngIf="teachingPeriods | async as periods">
+  <li class="days__container" *ngFor="let day of periods; let index = i">
+    <edu-period-update
+      (periodSelected)="updatePeriod($event)"
+      [activeBadge]="day.periods.length"
+      [day]="day.day"
+    ></edu-period-update>
+  </li>
+</ul>

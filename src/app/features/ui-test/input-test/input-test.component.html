@@ -22,11 +22,17 @@
   <p>
     {{ prettifyJSON(testForm.controls['f1'].errors) }}
   </p>
-  <input type="text" />
-
-  <edu-input class="f1" alignment="center" name="name" formControlName="f1">
-    <edu-phone-prefix class="prefix" InputAffix></edu-phone-prefix>
-    <span class="edu-label"> input 11 </span>
+  <!-- <edu-subject-icon-field formControlName="f2"></edu-subject-icon-field> -->
+  <edu-input
+    class="f1"
+    alignment="center"
+    name="name"
+    formControlName="f1"
+    (edu-input)="logInput($event)"
+    (edu-change)="log($event)"
+  >
+    <!-- (edu-blur)="log($event)" -->
+    <span class="edu-label"> input 1 </span>
 
     <!-- for validation only need [validator] and [alignment] which takes left,right,bottom and bottom-flow and  -->
     <!-- bottom-flow is basically for validation to flow as part of the flow and not be absolutely positioned -->
@@ -48,9 +54,10 @@
 
 <br />
 <h1>ngmodel suffix test: {{ modelTest }}</h1>
-<edu-input [(ngModel)]="modelTest" alignment="left" elementId="'test132'">
+<edu-input [(ngModel)]="modelTest" alignment="center" elementId="'test132'">
   <span class="edu-label"> suffix test </span>
-  <!-- <edu-cb-test class="edu-input__suffix" InputAffix></edu-cb-test> -->
+  <span class="inline-suffix suffixtest">mins</span>
+  <!-- <edu-cb-test class="suffix" InputAffix></edu-cb-test> -->
 </edu-input>
 
 <h1>ngmodel prefix test: {{ modelTest2 }}</h1>

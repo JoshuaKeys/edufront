@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, Update } from '@ngrx/entity';
-import { fetchSubjectSuccess, setSelectedState, unSetSelectedState } from '../actions';
+import { fetchSubjectSuccess, setSelectedState, unSetSelectedState, clearAssociations } from '../actions';
 import { SelectableSubjectModel } from 'src/app/shared/models/selectable-subject.model';
 const subjectsAdapter = createEntityAdapter<SelectableSubjectModel>();
 const initialState = subjectsAdapter.getInitialState();
@@ -29,6 +29,20 @@ export const subjectsReducer = createReducer(initialState,
     }
 
     return subjectsAdapter.updateOne(update, state)
+  }),
+  on(clearAssociations, (state, action) => {
+    const stateShallowCopy = selectAll(state);
+    console.log(stateShallowCopy);
+    const updateArr = stateShallowCopy.map(subject => {
+      const changes: Update<SelectableSubjectModel> = {
+        id: subject.id,
+        changes: {
+          selected: false
+        }
+      }
+      return changes;
+    })
+    return subjectsAdapter.updateMany(updateArr, state);
   })
 );
 export const { selectAll } = subjectsAdapter.getSelectors()

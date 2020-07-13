@@ -1,5 +1,5 @@
 import * as fromCalenderContainer from '../containers';
-import * as fromPages from '../pages';
+import { PreviewTestComponent } from '../components/preview-test/preview-test.component';
 export const calenderNavigation = {
   'dates-of-academic-year': {
     previous: null,
@@ -47,14 +47,61 @@ export const calenderNavigation = {
   },
   'teaching-periods-per-day': {
     previous: 'number-of-periods',
+    next: 'same-periods-per-time'
+  },
+  'same-periods-per-time': {
+    previous: 'teaching-periods-per-day',
+    next: 'start-time-of-first-period'
+  },
+  'start-time-of-first-period': {
+    previous: 'same-periods-per-time',
+    next: 'period-duration'
+  },
+  'start-time-of-each-period': {
+    previous: 'same-periods-per-time',
+    next: 'period-duration'
+  },
+  'period-duration': {
+    previous: 'start-time-of-each-period',
+    next: 'period-interval'
+  },
+  'period-interval': {
+    previous: 'period-duration',
+    next: 'common-assembly-question'
+  },
+  'common-assembly-question': {
+    previous: 'period-interval',
+    next: 'assembly-details'
+  },
+  'assembly-details': {
+    previous: 'common-assembly-question',
+    next: 'break-schedule-question'
+  },
+  'break-schedule-question': {
+    previous: 'common-assembly-question',
+    next: 'break-definition'
+  },
+  'break-definition': {
+    previous: 'break-schedule-question',
+    next: 'calendar-confirmation'
+  },
+  'same-break-definition': {
+    previous: 'break-schedule-question',
+    next: 'calendar-confirmation'
+  },
+  'calendar-confirmation': {
+    previous: 'break-definition',
+    next: 'update-timetable'
+  },
+  'update-timetable': {
+    previous: 'calendar-confirmation',
     next: ''
   }
 };
 
 export const calenderRouteToComponentMap = {
   'dates-of-academic-year': fromCalenderContainer.AcademicYearQuestionComponent,
-  // 'dates-of-academic-year': fromPages.P98Component,
-
+  // 'dates-of-academic-year': PreviewTestComponent,
   'school-terms-question': fromCalenderContainer.SchoolTermsQuestionComponent,
   'term-names-and-dates-question':
     fromCalenderContainer.TermNamesAndDatesQuestionComponent,
@@ -72,5 +119,21 @@ export const calenderRouteToComponentMap = {
     fromCalenderContainer.SamePeriodsForClassesQuestionComponent,
   'number-of-periods': fromCalenderContainer.NumberOfPeriodsComponent,
   'teaching-periods-per-day':
-    fromCalenderContainer.TeachingPeriodsPerDayComponent
+    fromCalenderContainer.TeachingPeriodsPerDayComponent,
+  'same-periods-per-time': fromCalenderContainer.SamePeriodsPerTimeComponent,
+  'start-time-of-first-period':
+    fromCalenderContainer.StartTimeOfFirstPeriodComponent,
+  'start-time-of-each-period':
+    fromCalenderContainer.StartTimeOfEachPeriodComponent,
+  'period-duration': fromCalenderContainer.PeriodDurationComponent,
+  'period-interval': fromCalenderContainer.PeriodIntervalComponent,
+  'common-assembly-question':
+    fromCalenderContainer.CommonAssemblyQuestionComponent,
+  'assembly-details': fromCalenderContainer.AssemblyDetailsComponent,
+  'break-schedule-question':
+    fromCalenderContainer.BreakScheduleQuestionComponent,
+  'break-definition': fromCalenderContainer.DefineYourBreakComponent,
+  'calendar-confirmation': fromCalenderContainer.CalendarConfirmationComponent,
+  'same-break-definition': fromCalenderContainer.DefineSameBreaksComponent,
+  'update-timetable': fromCalenderContainer.UpdateTimetableComponent
 };

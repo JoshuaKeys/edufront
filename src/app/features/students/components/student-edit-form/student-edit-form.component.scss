@@ -32,14 +32,15 @@
       .wrapper {
         padding: 0 15px;
       }
-      label,
-      input {
+      .label,
+      .input {
         font: 400 16px/24px Raleway;
       }
     }
   }
 }
 edu-phone-icon-field ::ng-deep,
+edu-icon-field ::ng-deep,
 edu-country-field ::ng-deep {
   width: calc(50% - 10px) !important;
   display: flex;
@@ -58,8 +59,8 @@ edu-country-field ::ng-deep {
     height: 22px;
   }
 
-  label,
-  input {
+  .label,
+  .input {
     font: 400 16px/24px Raleway;
   }
 }
@@ -230,4 +231,12 @@ button.form__round-btn.form__round-btn--active {
 }
 .modal__content-subject-area {
   width: 275px;
+}
+
+.button--close {
+  position: absolute;
+  right: 40px;
+  &:hover > img {
+    content: url('/assets/form-components/cross-red.svg');
+  }
 }

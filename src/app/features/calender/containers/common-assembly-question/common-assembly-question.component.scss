@@ -1,0 +1,50 @@
+@import '../../scss-fixes.scss';
+.header {
+  // margin-top: 290px;
+  font-size: 26px;
+  color: #212121;
+  line-height: 40px;
+  max-width: 566px;
+  margin-bottom: 30px;
+}
+
+.country {
+  padding: 5px 30px;
+  border: 1px solid #69a9f2;
+  border-radius: 100px;
+  color: #69a9f2;
+  cursor: pointer;
+  margin-right: 10px;
+}
+button.active {
+  background-color: #69a9f2;
+  border: 2px solid #69a9f2;
+  color: #fff;
+}
+.btns-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+  button {
+    margin: 0 10px;
+    // width: 64px;
+    // height: 64px;
+    // border-radius: 50%;
+    // background-color: transparent;
+    // border: 2px solid #e6e9f3;
+    // color: #c7ccdb;
+    // box-shadow: 0px 2px 6px #3c4b9b;
+  }
+  button:first-of-type {
+    // background-color: #69a9f2;
+    // // border: 2px solid #69a9f2;
+    // font-size: 16px;
+    // color: #fff;
+  }
+}
+
+.sub-header {
+  color: #a5aec7;
+  text-align: center;
+  font-size: 14px;
+}

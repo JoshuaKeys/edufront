@@ -1,0 +1,12 @@
+<div PreviewAnimate class="profile-select-preview" [ngStyle]="computeBorder()">
+  <a
+    *ngIf="previewState"
+    class="preview-select-preview__link"
+    [routerLink]="[previewState.schoolLogo.route]"
+  >
+    <div class="selected-heading">School Logo</div>
+    <div class="selected-data">
+      <img class="selected-img" [src]="previewState.schoolLogo.logo" />
+    </div>
+  </a>
+</div>

@@ -1,0 +1,25 @@
+<p>ngmodel-test works! 123</p>
+<h4>selectArr: {{ selectArr$ | async }}</h4>
+<ng-container *ngFor="let item of selectArr$ | async; let i = index">
+  <edu-select [ngModel]="item" (edu-change)="updateSelectArr($event, i)">
+    <span class="edu-label"> select no. {{ i }} {{ item }}</span>
+
+    <!-- <edu-select *ngFor="let item of selectArr">
+    <span class="edu-label"> select no. </span> -->
+
+    <edu-option
+      [OptionValue]="option.value"
+      *ngFor="let option of selectOptions"
+      >{{ option.display }}</edu-option
+    >
+  </edu-select>
+</ng-container>
+
+<br />
+<!-- <h4>singleArrValue: {{ singelArrValue }}</h4>
+<edu-select [(ngModel)]="singelArrValue">
+  <span class="edu-label"> singleArrValue select </span>
+  <edu-option [OptionValue]="option" *ngFor="let option of selectOptions">
+    display {{ option }}
+  </edu-option>
+</edu-select> -->

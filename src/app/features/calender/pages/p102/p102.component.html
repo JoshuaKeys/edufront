@@ -1,0 +1,94 @@
+<div class="main">
+  <div class="content">
+    <h1 class="header">
+      Update Timetable for Class 1-12
+    </h1>
+    <p class="content__desc">
+      Select the Class/Classes you wish to <b class="orangecolor">edit</b>
+    </p>
+
+    <div
+      #scrollableEl
+      class="scrollable-content"
+      [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
+    >
+      <div class=" line-item">
+        <div class="line-item__title">
+          title must be here
+        </div>
+        <div class="line-item__content">
+          <p>place to put form fields and tuff</p>
+          <p>place to put form fields and tuff</p>
+          <p>place to put form fields and tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+          <p>place to put form fields awnd tuff</p>
+        </div>
+      </div>
+      <div class=" line-item" *ngFor="let item of emptyArr">
+        <div class="line-item__title">Classes</div>
+        <div class="line-item__content">
+          <p>place to put form fields and tuff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button--bottom button__wrapper">
+    <button ButtonType="outline" class="button--cancel">
+      cancel
+    </button>
+    <button ButtonType="basic" class="button--update" (click)="openModal()">
+      Update Timetable
+    </button>
+  </div>
+</div>
+
+<edu-modal [(ngModel)]="modalIsActive">
+  <div class="modal__content">
+    <h3>These are the consequences:</h3>
+    <div class="consequences">
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+      <div class="consequence">
+        <span>All <b>XXX</b> students currently assigned to this class</span>
+      </div>
+    </div>
+    <h3>Are you sure you wish to continue?</h3>
+    <div class="button__wrapper">
+      <button
+        class="button button--cancel"
+        ButtonType="outline"
+        (click)="closeModal()"
+      >
+        cancel
+      </button>
+      <button
+        class="button button--update"
+        ButtonType="basic"
+        (click)="closeModal()"
+      >
+        update
+      </button>
+    </div>
+  </div>
+</edu-modal>

@@ -19,7 +19,8 @@ import {
   fetchStaffByIdSuccess,
   toggleEditModal,
   editStaffRequest,
-  editStaffResponse
+  editStaffResponse,
+  setEditClassesSubjectsAssociation
 } from '../actions';
 import { mergeMap, map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { StaffsService } from '../../services/staffs.service';
@@ -30,6 +31,7 @@ import { StaffsStateModel } from '../../models/staff-state.model';
 import { selectSelectedSubject, classesAndSubjectsAssoc } from '../selectors';
 import { StaffFormModel } from '../../models/staff-form.model';
 import { CreateStaffRequestModel } from '../../models/create-staff-request.model';
+import { forkJoin } from 'rxjs';
 
 @Injectable()
 export class StaffsEffects {
@@ -68,7 +70,7 @@ export class StaffsEffects {
     ofType(editStaffRequest),
     withLatestFrom(this.store.select(classesAndSubjectsAssoc)),
     mergeMap(([action, subjectsAssociation]) => {
-      if(action.staff.profilePic.imageUrl) {
+      if (action.staff.profilePic.imageUrl) {
         const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, action.staff.profilePic.imageUrl)
         return this.staffsService.editStaff(createStaffRequestObj).pipe(
           mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
@@ -84,7 +86,7 @@ export class StaffsEffects {
           })
         )
       }
-      
+
       const createStaffRequestObj = this.composeCreateStaffData(action.staff, subjectsAssociation, null)
       return this.staffsService.editStaff(createStaffRequestObj).pipe(
         mergeMap(response => [editStaffResponse({ staff: response }), toggleEditModal()])
@@ -114,8 +116,17 @@ export class StaffsEffects {
   fetchStaffById$ = createEffect(() => this.actions$.pipe(
     ofType(fetchStaffById),
     mergeMap(action => {
-      return this.staffsService.fetchStaffById(action.staff).pipe(
-        mergeMap(staff => [fetchStaffByIdSuccess({ staff, profileId: action.staff.id }), toggleEditModal()])
+      return forkJoin(this.staffsService.fetchStaffById(action.staff), this.staffsService.fetchClassesSubjects(action.staff)).pipe(
+        mergeMap(([staff, associationResponse]) => {
+          const associations = associationResponse.map(association => {
+            return {
+              subjectId: association['subject']['id'],
+              classes: association.classes
+            }
+          })
+          console.log(associationResponse);
+          return [fetchStaffByIdSuccess({ staff, profileId: action.staff.id }), toggleEditModal(), setEditClassesSubjectsAssociation({ associations })]
+        })
       )
     })
   ))
@@ -146,11 +157,14 @@ export class StaffsEffects {
     if (staffCopy.profilePic) {
       staffReqObj.profileDto.profileImage = file;
     }
-    if(staffCopy.id) {
+    if (staffCopy.id) {
       staffReqObj.profileDto.id = staffCopy.id
     }
     if (staffCopy.phone.phoneNum) {
+
       staffReqObj.profileDto.phone = staffCopy.phone.phoneNum;
+    } else {
+      console.log(staffCopy)
     }
     if (staffCopy.city) {
       staffReqObj.profileDto.city = staffCopy.city;
@@ -164,10 +178,13 @@ export class StaffsEffects {
     if (staffCopy.firstName) {
       staffReqObj.profileDto.firstName = staffCopy.firstName
     }
+    if (staffCopy.zip) {
+      staffReqObj.profileDto.zipcode = staffCopy.zip
+    }
     if (staffCopy.familyName) {
       staffReqObj.profileDto.lastName = staffCopy.familyName
     }
-    if(staffCopy.middleName) {
+    if (staffCopy.middleName) {
       staffReqObj.profileDto.middleName = staffCopy.middleName
     }
     if (staffCopy.sex) {

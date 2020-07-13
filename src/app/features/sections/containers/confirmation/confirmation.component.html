@@ -71,12 +71,14 @@
 </main>
 <edu-modal-v2
   *ngIf="(sectionsModalState | async).endModal"
+  class="complete"
   header="Creating Sections"
   icon="assets/icon-complete.svg"
   [completeModal]="true"
   leftBtn="TAKE ME TO DASHBOARD"
   rightBtn="CONTINUE TO CALENDER"
   (leftBtnClicked)="goToDashboard()"
+  (rightBtnClicked)="goToCalendar()"
 >
   <b class="orangeColor">You are almost there!</b> All that is left is to set up
   your Calender and Timetable

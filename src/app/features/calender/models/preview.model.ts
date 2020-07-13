@@ -26,11 +26,13 @@ export interface PreviewModel {
     teachingDays?: {
         route: string;
         items?: TeachingDay[];
-        classesAndGroupItems?: ClassGroupModel[]
+        classesAndGroupItems?: ClassGroupModel[],
+        startTime?: string;
     },
     periods?: {
         route: string;
         items?: PeriodModel[],
         classesAndGroupItems?: PeriodGroupModel[]
-    }
+    },
+    
 }

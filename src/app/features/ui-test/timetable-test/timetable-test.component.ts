@@ -121,7 +121,7 @@ export class TimeTableTestComponent implements OnInit {
     // unique i.e keys used in monday cant be reused in tuesday
     //trying to use this as the ngModel object that gets ouputted, but having issues letting ng-tempalte communicated with <edu-timetable> Component
     mon: [
-      { key: 'm1', value: '0' },
+      { key: 'm1', value: '2' },
       { key: 'm2', value: '0' },
       { key: 'm3', value: '0' },
       { key: 'm4', value: '0' },

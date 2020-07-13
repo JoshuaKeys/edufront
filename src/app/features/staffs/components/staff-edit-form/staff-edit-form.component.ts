@@ -48,17 +48,21 @@ export class StaffEditFormComponent implements OnInit {
   @Output() unSelectSubject = new EventEmitter<string>();
   @Output() classClicked = new EventEmitter<ClassModel>();
   @Output() onEditStaff = new EventEmitter();
-  @Input() editState = new EventEmitter();
+  @Input() editState = new EventEmitter<{ title: string; classes: string[] }>();
+  @Output() setActiveSubject = new EventEmitter();
+  @Output() closeEditModal = new EventEmitter();
   addEditForm: FormGroup;
   constructor() { }
   editStaff() {
     this.onEditStaff.emit(this.addEditForm.value);
   }
+  closeEditBtn() {
+    this.closeEditModal.emit();
+  }
   ngOnInit(): void {
     this.editState.subscribe(editState => {
       if (editState) {
         const countryIdx = this.countryIconMap.findIndex(country => {
-          console.log(editState)
           return editState.countryId === country.id
         });
         console.log(countryIdx)
@@ -70,17 +74,20 @@ export class StaffEditFormComponent implements OnInit {
           dob: new FormControl(editState.dob ? editState.dob : ''),
           sex: new FormControl(editState.gender ? editState.gender : ''),
           id: new FormControl(editState.id ? editState.id : ''),
-          phone: new FormControl(this.countryIconMap[countryIdx]),
+          phone: new FormControl({ ...this.countryIconMap[countryIdx], phoneNum: editState.phone }),
           country: new FormControl(this.countryIconMap[countryIdx]),
           city: new FormControl(editState.city ? editState.city : ''),
           state: new FormControl(editState.state ? editState.state : ''),
-          zip: new FormControl(editState.zip ? editState.zip : ''),
+          zip: new FormControl(editState.zipcode ? editState.zipcode : ''),
           email: new FormControl(editState.email ? editState.email : ''),
           address: new FormControl(editState.address ? editState.address : ''),
         });
       }
     })
 
+  }
+  onClassSubjAssocClicked(assoc: { title: string; classes: string[] }) {
+    this.setActiveSubject.emit(assoc);
   }
   handleImgUpload(event: ProfilePicModel) {
     console.log(event);

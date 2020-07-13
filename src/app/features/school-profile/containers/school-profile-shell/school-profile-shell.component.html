@@ -16,7 +16,10 @@
     <aside class="side-bar">
       <h1 class="side-bar__heading">Preview</h1>
 
-      <edu-preview [previewState]="previewState"></edu-preview>
+      <!-- <edu-preview [previewState]="previewState"></edu-preview> -->
+      <edu-parent-preview
+        [previewState]="previewState | async"
+      ></edu-parent-preview>
     </aside>
   </main>
 </div>

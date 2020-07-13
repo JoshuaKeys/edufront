@@ -1,0 +1,31 @@
+<div
+  [ngClass]="{
+    leftDisabled: leftDisabled,
+    rightDisabled: rightDisabled,
+    hideBtns: hideBtns
+  }"
+>
+  <ng-image-slider
+    [images]="imageObject"
+    [imageSize]="imageSize"
+    [imagePopup]="imagePopup"
+    arrowKeyMove="true"
+    [animationSpeed]="animationSpeed"
+    [infinite]="infinite"
+    showArrow="false"
+    (arrowClick)="onArrowClickEvent()"
+    #nav
+  ></ng-image-slider>
+  <div [ngClass]="{ hidden: !displayNgContent }">
+    <ng-content select="[sliderChildren]"></ng-content>
+  </div>
+  <button class="nav__button nav__button--prev" (click)="prev()">
+    <img src="" alt="" />
+  </button>
+  <button class="nav__button nav__button--next" (click)="next()">
+    <img src="" alt="" />
+  </button>
+</div>
+<!-- leftDisabled: {{ leftDisabled }} rightDisabled: {{ rightDisabled }} hideBtns{{
+  hideBtns
+}} -->

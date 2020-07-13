@@ -1,0 +1,56 @@
+@import 'src/assets/styles/colors';
+:host {
+  display: inline-block;
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid $blue;
+  background: white;
+  .tickicon {
+    content: url('/assets/form-components/tick-blue.svg');
+  }
+  &:hover {
+    border-color: $green;
+    .tickicon {
+      content: url('/assets/form-components/tick-green.svg');
+    }
+  }
+  &:disabled {
+    background: #e6e9f3;
+    border-color: #e6e9f3;
+    .tickicon {
+      content: url('/assets/form-components/tick-white.svg');
+    }
+  }
+  &:active {
+    border-color: $green;
+    background: $green;
+    .tickicon {
+      content: url('/assets/form-components/tick-white.svg');
+    }
+  }
+}
+
+button {
+  background: unset;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 0px;
+  &:focus {
+    outline: none;
+  }
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+:host.bottomright {
+  right: 0;
+  bottom: 0;
+  transform: translate(50%, 50%);
+}

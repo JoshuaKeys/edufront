@@ -1,6 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PreviewModel } from '../../models/preview.model';
+import { CalendarModel } from '../../models/calendar.model';
+import { TeachingDay } from '../../models/teaching-day.model';
+import { periodUniformity, buildRangePipe } from '../../utilities';
+import { ClassGroupModel } from '../../models/class-group.model';
+import { PeriodModel } from '../../models/period.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
 
 @Component({
   selector: 'edu-preview-parent',
@@ -11,14 +17,38 @@ import { PreviewModel } from '../../models/preview.model';
 export class PreviewParentComponent implements OnInit {
   @Input() previewState: Observable<PreviewModel>;
   previewArray: Array<{name: string, item: any}> = [];
-  constructor() { }
 
+  constructor() { }
+  debug(item) {
+    console.log(item);
+  }
+  hasSelectedTeachingDays(teachingDays: TeachingDay[]) {
+    return teachingDays.find(teachingDay=> teachingDay.selected) ? true : false;
+  }
   ngOnInit(): void {
+   
     this.previewState.subscribe(previewState=> {
       for(let preview in previewState) {
         this.previewArray.push({name: preview, item: previewState[preview]})
       }
     })
-  }
 
+  }
+  isUniform(classesAndGroups: ClassGroupModel[]) {
+    const periods = classesAndGroups.map(classesAndGroup=> classesAndGroup.periods);
+    return periodUniformity(periods);
+  }
+  
+  stripOffEmptyPeriods(periods: PeriodModel[]) {
+
+    const res= periods.filter(period => period.periods.length)
+    console.log(res);
+    return periods
+  }
+  computeClasses(classes: ClassModel[]){
+    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+    const result = buildRangePipe(grades);
+    console.log(result)
+    return result
+  }
 }

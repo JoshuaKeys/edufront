@@ -3,18 +3,23 @@ import { VacationModel } from './vacation.model';
 import { ClassGroupModel } from './class-group.model';
 import { TeachingDay } from './teaching-day.model';
 import { PeriodModel } from './period.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
+import { TeachingStateModel } from './teaching-state.model';
 
 export interface CalendarModel {
-    currentAcademicYear?: {
-        startDate: string;
-        endDate: string;
-    },
-    schoolTerms?: number,
-    termsAndDates?: TermsAndDates[],
-    vacations?: VacationModel[],
-    teaching?: {
-        teachingDays?: TeachingDay[],
-        classesAndGroups?: ClassGroupModel[],
-        periods?: PeriodModel[]
-    }
+  currentAcademicYear?: {
+    startDate: string;
+    endDate: string;
+  },
+  schoolTerms?: number,
+  termsAndDates?: TermsAndDates[],
+  vacations?: VacationModel[],
+  // teaching?: {
+  //     teachingDays?: TeachingDay[],
+  //     classesAndGroups?: ClassGroupModel[],
+  //     periods?: PeriodModel[]
+  //     classes?:ClassModel[]
+  // }
+  teaching?: TeachingStateModel;
+  governmentHolidaysObserved?: boolean;
 }

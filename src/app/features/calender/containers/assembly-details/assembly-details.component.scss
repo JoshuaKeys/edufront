@@ -1,0 +1,97 @@
+@import '../../scss-fixes.scss';
+.header {
+  // margin-top: 290px;
+  font-size: 26px;
+  color: #212121;
+  line-height: 40px;
+  max-width: 484px;
+  margin-bottom: 30px;
+}
+
+button.button--bottom {
+  margin: 0px auto 40px auto !important;
+}
+
+div.group--row > *:nth-child(2) {
+  margin: 0 12px;
+}
+edu-timepicker,
+edu-input,
+edu-select {
+  height: 54px;
+  width: 240px;
+  margin: 0;
+  &::ng-deep .input,
+  &::ng-deep .label {
+    font-size: 16px;
+  }
+}
+
+.country {
+  padding: 5px 30px;
+  border: 1px solid #69a9f2;
+  border-radius: 100px;
+  color: #69a9f2;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btns-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+  button {
+    margin: 0 10px;
+    // width: 64px;
+    // height: 64px;
+    // border-radius: 50%;
+    // background-color: transparent;
+    // border: 2px solid #e6e9f3;
+    // color: #c7ccdb;
+    // box-shadow: 0px 2px 6px #3c4b9b;
+  }
+  button:first-of-type {
+    // background-color: #69a9f2;
+    // // border: 2px solid #69a9f2;
+    // font-size: 16px;
+    // color: #fff;
+  }
+}
+
+.sub-header {
+  color: #a5aec7;
+  text-align: center;
+  font-size: 14px;
+}
+
+.errors {
+  flex-shrink: 0;
+  padding: 0;
+  position: absolute;
+  min-width: 500px;
+  width: 100%;
+  bottom: 0;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  text-align: center;
+  list-style-type: none;
+  font: 400 14px/20px Raleway;
+  color: $ash;
+
+  li {
+    padding: 0;
+  }
+  &.hidden {
+    opacity: 0;
+    user-select: none;
+    color: transparent;
+  }
+  &.display {
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+  }
+}

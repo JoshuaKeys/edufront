@@ -15,14 +15,15 @@ export class PeriodsPerDayComponent implements OnInit {
   @Input() classGroup: Observable<ClassGroupModel>;
   @Output() onSelectPeriod = new EventEmitter<SelectedPeriodModel>()
   constructor() { }
-
+  debug(item) {
+    console.log(item);
+  }
   ngOnInit(): void {
     this.classGroup.subscribe(console.log);
   }
   selectPeriod(day: TeachingDay, group: ClassGroupModel) {
-    if(!day.period) {
-      return;
+    if (day.periods.length) {
+      this.onSelectPeriod.emit({ day, classGroup: group })
     }
-    this.onSelectPeriod.emit({day, classGroup: group})
   }
 }

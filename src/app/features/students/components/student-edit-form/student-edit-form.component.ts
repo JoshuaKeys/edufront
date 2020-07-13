@@ -6,6 +6,8 @@ import { StudentsStateModel } from '../../models/students-state.model';
 import { StudentsXClassesModel } from '../../models/students-x-classes.model';
 import { Observable } from 'rxjs';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { ClassModel } from 'src/app/shared/models/class.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'edu-student-edit-form',
@@ -42,11 +44,12 @@ export class StudentEditFormComponent implements OnInit {
     }
   ];
 
-  @Input() studentsXClasses: Observable<StudentsXClassesModel[]>
+  @Input() allClasses: Observable<ClassModel[]>
   @Input() students: StudentModel;
   @Output() onSubmit = new EventEmitter<StudentsStateModel>();
+  @Output() closeEditModal = new EventEmitter();
   addEditForm: FormGroup;
-  sortedStudentsXClasses: Observable<StudentsXClassesModel[]>;
+  sortedClasses: Observable<ClassModel[]>;
 
   constructor() { }
 
@@ -54,15 +57,24 @@ export class StudentEditFormComponent implements OnInit {
     const formValue = this.addEditForm.value;
     formValue.profileDto.profileImage = formValue.profilePic.profileImage
     delete formValue.profilePic;
-    console.log(formValue);
     this.onSubmit.emit(formValue)
   }
+  closeEditBtn() {
+    this.closeEditModal.emit();
+  }
   ngOnInit(): void {
+    this.sortedClasses = this.allClasses.pipe(
+      map(allClasses => {
+        return allClasses.sort((itemA, itemB) => itemA.grade - itemB.grade)
+      })
+    )
     this.editData.subscribe(
       editData => {
         const profileDto = editData.profileDto;
         const guardianDto = editData.guardianDetailsDto;
         const countryIdx = this.countryIconMap.findIndex(country => country.id === editData.profileDto.countryId);
+        console.log(editData, countryIdx);
+        // const phoneIdx = this.countryIconMap.findIndex(country => )
         this.addEditForm = new FormGroup({
           profilePic: new FormGroup({
             profileImage: new FormControl(profileDto.profileImage ? { imageUrl: profileDto.profileImage } : null),
@@ -73,7 +85,7 @@ export class StudentEditFormComponent implements OnInit {
             familyName: new FormControl(profileDto.lastName ? profileDto.lastName : ''),
             dob: new FormControl(profileDto.dob ? profileDto.dob : ''),
             gender: new FormControl(profileDto.gender ? profileDto.gender : ''),
-            id: new FormControl(profileDto.id ? profileDto.id : ''),
+            id: new FormControl(profileDto.rollNumber ? profileDto.rollNumber : ''),
             country: new FormControl(this.countryIconMap[countryIdx]),
             city: new FormControl(profileDto.city ? profileDto.city : ''),
             state: new FormControl(profileDto.state ? profileDto.state : ''),
@@ -89,7 +101,7 @@ export class StudentEditFormComponent implements OnInit {
             firstName: new FormControl(guardianDto.firstName ? guardianDto.firstName : ''),
             middleName: new FormControl(guardianDto.middleName ? guardianDto.middleName : ''),
             id: new FormControl(guardianDto.id ? guardianDto.id : ''),
-            phone: new FormControl(this.countryIconMap[countryIdx]),
+            phone: new FormControl({ ...this.countryIconMap[countryIdx], phoneNum: editData.guardianDetailsDto.phone }),
             profileId: new FormControl(guardianDto.profileId ? guardianDto.profileId : '')
           })
         })
@@ -107,9 +119,10 @@ export class StudentEditFormComponent implements OnInit {
     })
   }
   updatePhone(event: PhoneIconModel) {
+    console.log(event)
     const idx = this.countryIconMap.findIndex(iconMap => iconMap.id === event.id);
     if (idx > -1) {
-      this.addEditForm.controls.guardianDto.patchValue({
+      this.addEditForm.controls.guardianDetailsDto.patchValue({
         phone: { ...this.countryIconMap[idx], phoneNum: event.phoneNum }
       })
     }

@@ -1,9 +1,19 @@
+@import 'src/assets/styles/mixins/containers';
+@include group();
 .days {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   margin: 20px 0;
   padding: 0;
+
+  padding-left: 10px;
+  align-items: center;
+  width: 100%;
+  &.uniform {
+    justify-content: center;
+  }
 }
 
 .days.days-split {
@@ -13,7 +23,9 @@
 
 .days-split-container {
   display: flex;
-  margin: 5px 10px 0 0;
+  justify-content: center;
+  margin: 20px 10px 0 0px;
+  // margin: 5px 10px 0 0;
 }
 
 .classes {
@@ -29,6 +41,8 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    width: 70px;
+    word-break: break-word;
   }
   &__item {
     margin: 0 3px 0;
@@ -55,4 +69,17 @@
 
 .day.active {
   display: flex;
+}
+
+.nonUniform__container {
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: flex-start;
+  display: inline-flex;
+  // background: red;
+  flex-direction: column;
+}
+
+.group--row.jc {
+  justify-content: center;
 }

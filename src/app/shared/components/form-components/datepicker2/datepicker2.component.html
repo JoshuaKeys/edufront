@@ -11,7 +11,7 @@
     >
       <input
         tabindex="-1"
-        class="  dp__input"
+        class="  dp__input input"
         [(ngModel)]="displayedValue"
         name="{{ elementId }}-input"
         #input
@@ -23,7 +23,7 @@
 
       <label
         [ngClass]="{ 'label--active': isLabelActive() }"
-        class="dp__label "
+        class="dp__label label"
       >
         <!-- for="dp-{{ elementId }}" -->
         <div class="label__shrink-wrap">

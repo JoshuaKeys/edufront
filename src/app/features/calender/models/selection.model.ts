@@ -1,0 +1,4 @@
+export interface SelectionModel {
+    selectionState: 'started' | 'ended';
+    periodSelected?: number;
+}

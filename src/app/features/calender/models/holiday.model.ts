@@ -5,4 +5,5 @@ export interface HolidayModel {
   nationalCalendarId: string;
   nationalHoliday: boolean;
   termId: string;
+  mockId?: string;
 }

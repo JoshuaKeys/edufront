@@ -9,19 +9,39 @@
         <h2 class="form__title">
           Are these correct?
         </h2>
-        <div class="confirmation-box" *ngIf="previewState | async as preview">
-          <edu-preview
-            [styleMode]="'horizontal'"
-            [previewState]="previewState"
-          ></edu-preview>
-        </div>
+        <ul class="confirmation-box" *ngIf="previewState | async as preview">
+          <li *ngIf="schoolNameSet(preview)">
+            <edu-school-name-preview
+              [noBorder]="true"
+              [previewState]="preview"
+            ></edu-school-name-preview>
+          </li>
+          <li *ngIf="addressSet(preview)">
+            <edu-school-address-preview
+              [noBorder]="true"
+              [previewState]="preview"
+            ></edu-school-address-preview>
+          </li>
+          <li *ngIf="contactsSet(preview)">
+            <edu-school-contacts-preview
+              [previewState]="preview"
+              [noBorder]="true"
+            >
+            </edu-school-contacts-preview>
+          </li>
+          <li *ngIf="logoSet(preview)">
+            <edu-school-logo-preview [previewState]="preview" [noBorder]="true">
+            </edu-school-logo-preview>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="form__btns">
       <button
         ButtonType="outline"
         class="form__button form__button--white"
-        (click)="goToLogoPage()">
+        (click)="goToLogoPage()"
+      >
         Back
       </button>
       <button ButtonType="basic" class="form__button" (click)="submit()">
@@ -30,8 +50,9 @@
     </div>
   </section>
 </main>
-<edu-modal
+<edu-modal-v2
   *ngIf="(modalState | async).endModal"
+  class="complete"
   [description]="getModalBody()"
   btnText="GOT IT"
   header="School Profile Complete"
@@ -41,4 +62,4 @@
   rightBtn="GO TO CLASS CREATION"
   (leftBtnClicked)="goToDashboard()"
   (rightBtnClicked)="goToClassCreation()"
-></edu-modal>
+></edu-modal-v2>

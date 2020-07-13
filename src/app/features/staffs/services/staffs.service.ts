@@ -6,6 +6,7 @@ import { CreateStaffRequestModel } from '../models/create-staff-request.model';
 import { CreateStaffResponseModel } from '../models/create-staff-response.model';
 import { LogoUploadResponseModel } from 'src/app/shared/models/logo-upload-response.model';
 import { StaffModel } from 'src/app/shared/models/staff.model';
+import { SubjectClassesAssociation } from '../models/subject-classes-association.model';
 
 @Injectable()
 export class StaffsService {
@@ -18,12 +19,15 @@ export class StaffsService {
   editStaff(staff: CreateStaffRequestModel): Observable<CreateStaffResponseModel> {
     return this.httpClient.put<CreateStaffResponseModel>(`/api/v1/profile/completeProfile/${staff.profileDto.id}`, staff);
   }
-  
+
   deleteStaff(profileId: string): Observable<any> {
     return this.httpClient.delete(`/api/v1/profile/${profileId}`)
   }
   fetchStaffById(staff: StaffModel): Observable<any> {
     return this.httpClient.get(`/api/v1/profile/completeProfile/${staff.id}`)
+  }
+  fetchClassesSubjects(staff: StaffModel): Observable<SubjectClassesAssociation[]> {
+    return this.httpClient.get<SubjectClassesAssociation[]>(`/api/v1/class/teacher/${staff.id}/subject`)
   }
   uploadLogo(file: File): Observable<LogoUploadResponseModel> {
     const formData = new FormData();

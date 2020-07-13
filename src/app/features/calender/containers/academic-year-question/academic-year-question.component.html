@@ -32,19 +32,18 @@
     </div>
   </div>
 
-  <div
-    class="academic-year__btn-container button--bottom"
-    *ngIf="academicYearForm && academicYearForm.valid"
-  >
+  <div class="academic-year__btn-container button--bottom">
     <button
       ButtonType="basic"
       class="academic-year__continue-btn"
       (click)="goNext()"
+      [disabled]="academicYearForm && academicYearForm.invalid"
     >
       Continue
     </button>
   </div>
 </div>
+
 <edu-modal-v2
   *ngIf="
     (calendarModalState | async) && (calendarModalState | async).startModal

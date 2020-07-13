@@ -1,0 +1,12 @@
+<ul class="days" *ngIf="teachingPeriods | async as teachingPeriods">
+  <li
+    class="days__container"
+    *ngFor="let day of teachingPeriods; let index = i"
+  >
+    <edu-start-time-update
+      (timeChanged)="onTimeChanged($event)"
+      [time]="day.startTime"
+      [day]="day.day"
+    ></edu-start-time-update>
+  </li>
+</ul>

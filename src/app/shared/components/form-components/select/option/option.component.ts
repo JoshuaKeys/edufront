@@ -8,10 +8,13 @@ import {
   HostListener,
   AfterViewInit,
   OnInit,
-  ViewChild
+  ViewChild,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { SelectService } from '../select.service';
 import { filter } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'edu-option',
   templateUrl: './option.component.html',
@@ -26,18 +29,9 @@ export class OptionComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef
   ) {}
   ngOnInit() {
-    this.indexInParent = Array.from(
-      this.el.nativeElement.parentElement.children
-    ).indexOf(this.el.nativeElement);
-    // console.log('testing', this.OptionValue);
-    //  this.selectService.activeOption
-    // .subscribe((activeOption)=>{
-    //   this.isActive = (activeOption === this.OptionValue);
-    //   this.cd.markForCheck();
-    // });
-    if (this.isActive) {
-      this.selectService.activeOptionIndex.next(this.indexInParent);
-    }
+    // this.indexInParent = Array.from(
+    //   this.el.nativeElement.parentElement.children
+    // ).indexOf(this.el.nativeElement);
 
     // this.selectService.activeOptionIndex.subscribe((activeIndex)=>{
     //   if(this.indexInParent === activeIndex){
@@ -49,21 +43,22 @@ export class OptionComponent implements OnInit, AfterViewInit {
     //   }
     //   this.cd.markForCheck();
     // })
-    this.selectService.activeOptionComponent.subscribe(activeComp => {
-      if (this === activeComp) {
-        this.isActive = true;
-        this.renderer.addClass(this.el.nativeElement, 'selected');
-        this.cd.markForCheck();
-      } else {
-        this.isActive = false;
-        this.renderer.removeClass(this.el.nativeElement, 'selected');
-        this.cd.markForCheck();
-      }
-    });
+    // this.selectService.activeOptionComponent.subscribe(activeComp => {
+    //   if (this === activeComp) {
+    //     this.isActive = true;
+    //     this.renderer.addClass(this.el.nativeElement, 'selected');
+    //     this.cd.markForCheck();
+    //   } else {
+    //     this.isActive = false;
+    //     this.renderer.removeClass(this.el.nativeElement, 'selected');
+    //     this.cd.markForCheck();
+    //   }
+    // });
 
-    this.selectService.optionClicked.subscribe(() => {
-      this.renderer.removeClass(this.el.nativeElement, 'selected');
-    });
+    // this.selectService.optionClicked.subscribe(() => {
+    //   this.renderer.removeClass(this.el.nativeElement, 'selected');
+    // });
+    this.selectService.validOptionValues$.next(this.OptionValue);
   }
   ngAfterViewInit() {
     let displayedValue = this.optionEl.nativeElement.childNodes[0];
@@ -73,20 +68,46 @@ export class OptionComponent implements OnInit, AfterViewInit {
         : displayedValue.nodeValue;
     this.displayedValue = displayedValue;
 
+    this.selectService.activeValue
+      .pipe(distinctUntilChanged())
+      .subscribe(value => {
+        if (typeof value == 'string') {
+          if (
+            value.toLocaleLowerCase() == `${this.OptionValue}`.toLowerCase()
+          ) {
+            this.isActive = true;
+          } else {
+            this.isActive = false;
+          }
+        } else if (typeof value == 'number') {
+          if (value == parseInt(this.OptionValue)) {
+            this.isActive = true;
+          } else {
+            this.isActive = false;
+          }
+        } else {
+          if (JSON.stringify(value) == JSON.stringify(this.OptionValue)) {
+            this.isActive = true;
+          } else {
+            this.isActive = false;
+          }
+        }
+        if (this.isActive) {
+          // console.log('setting active option @ ' + this.OptionValue);
+          this.selectService.setActiveOption(this);
+        }
+        this.cd.markForCheck();
+        // console.log(`[${this.OptionValue}] - ${this.isActive}`);
+      });
     // console.log(JSON.stringify(this.selectService.activeOption));
     // console.log(
     //   `selet vs opt - ${this.selectService.activeValue} ${this.OptionValue}`
     // );
     // console.log(this.selectService.activeValue);
-    if (!this.selectService.activeValue) {
-      return;
-    }
-    if (this.selectService.activeValue == this.OptionValue) {
-      this.selectService.activeOptionComponent.next(this);
-    }
   }
 
   @Input('OptionValue') OptionValue;
+  @Output('edu-selected') onEduSelected = new EventEmitter();
   @ViewChild('optionEl') optionEl: ElementRef;
   displayedValue;
   isActive = false;
@@ -94,9 +115,22 @@ export class OptionComponent implements OnInit, AfterViewInit {
 
   @HostListener('click') onClick() {
     // this.selectService.setActiveOption(this.OptionValue);
+    // console.log('CLICK ED ' + this.displayedValue);
+    this.optionSelected();
+  }
 
-    this.selectService.optionClicked.next();
+  optionSelected() {
+    this.onEduSelected.emit(this.OptionValue);
+
     this.selectService.activeOptionComponent.next(this);
+    this.selectService.optionClicked.next(this);
+  }
+
+  resetState() {
+    this.isActive = false;
+  }
+  setActive() {
+    this.isActive = true;
   }
 
   // @HostListener("valueChange",["$event"]) onValueChange($event){ //listenting to  directive

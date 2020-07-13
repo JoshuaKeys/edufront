@@ -6,12 +6,21 @@
   flex-grow: 1;
   height: 100%;
 }
+
 form {
-  // height: 100% !important;
+  display: flex;
+  align-items: center;
+  //   height: 100%;
+  justify-content: flex-start;
+  flex-direction: column;
+  max-height: calc(100vh - 330px);
+  padding-bottom: 20px;
 }
+
 .main {
   overflow: hidden;
 }
+
 .overflowVisible {
   overflow: visible !important;
 }
@@ -27,12 +36,13 @@ form {
   font-size: 26px;
   color: #212121;
 }
+
 .desc {
   margin-bottom: 30px;
 }
+
 .terms-and-dates {
   display: flex;
-
   &__item {
     margin: auto;
     margin-bottom: 20px;
@@ -42,6 +52,7 @@ form {
     }
   }
 }
+
 .terms-and-dates__errors {
   display: flex;
   justify-content: center;
@@ -50,6 +61,7 @@ form {
     font-weight: 700;
   }
 }
+
 edu-input,
 edu-datepicker {
   width: 240px;
@@ -67,10 +79,13 @@ edu-datepicker {
     margin-right: 0;
   }
 }
+
 .terms-and-dates__btn-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
+
 .terms-and-dates__continue-btn {
   height: 52px;
   border-radius: 100px;
@@ -84,5 +99,38 @@ edu-datepicker {
   &:active,
   &:focus {
     outline: none;
+  }
+}
+
+.validation-error {
+  padding: 0;
+}
+
+.validation-errors {
+  flex-shrink: 0;
+  padding: 0;
+  //   position: absolute;
+  min-width: 500px;
+  width: 100%;
+  bottom: 92px;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  text-align: center;
+  list-style-type: none;
+  font: 400 14px/20px Raleway;
+  color: $ash;
+
+  &.hidden {
+    opacity: 0;
+    user-select: none;
+    color: transparent;
+  }
+  &.display {
+    position: absolute;
+    bottom: 92px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
   }
 }

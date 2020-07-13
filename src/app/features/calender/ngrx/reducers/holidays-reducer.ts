@@ -1,61 +1,88 @@
 import { createReducer, on, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, Update } from '@ngrx/entity';
 import { HolidayModel } from '../../models/holiday.model';
-import { fetchHolidaysResponse, deleteHoliday, editHolidayRequest, addHoliday, editHoliday } from '../actions/calendar.actions';
-
+import { fetchHolidaysResponse, deleteHoliday, editHolidayRequest, addHoliday, editHoliday, editHolidaySuccess, clearAllHolidays, clearEditState } from '../actions/calendar.actions';
+import { v4 as uuid44 } from 'uuid';
 const holidayAdapter = createEntityAdapter<HolidayModel>({
-    selectId: (state)=> {
-        return state.date
-    }
+  selectId: (state) => {
+    return state.mockId
+  }
 })
 const initialState = holidayAdapter.getInitialState();
 
-export const holidayListReducer = createReducer(initialState, 
-    on(fetchHolidaysResponse, (state, action)=> {
-        return holidayAdapter.addAll(action.holidays.content, state);
-    }),
-    on(deleteHoliday, (state, action)=> holidayAdapter.removeOne(action.holiday.date, state)),
-    on(addHoliday, (state, action)=> {
-        const hasId = holidayAdapter.getSelectors().selectIds(state).findIndex(holidayId => holidayId === action.holiday.date);
-        if(hasId > -1) {
-            return state;
-        }
-        return holidayAdapter.addOne(action.holiday, state)
-    }),
-    on(editHoliday, (state, action)=> {
-        const update: Update<HolidayModel> = {
-            id: action.holiday.id,
-            changes: {
-                ...action.holiday
-            }
-        }
-        return holidayAdapter.updateOne(update, state);
+export const holidayListReducer = createReducer(initialState,
+  on(fetchHolidaysResponse, (state, action) => {
+    const holidayCopy = JSON.parse(JSON.stringify(action.holidays.content))
+    const holidaysAndIds = holidayCopy.map(holiday => {
+      holiday.mockId = uuid44()
+      return holiday
     })
+    return holidayAdapter.addAll(holidaysAndIds, state);
+  }),
+  on(clearAllHolidays, (state, action) => {
+
+    return holidayAdapter.removeAll(state);
+  }),
+  on(deleteHoliday, (state, action) => holidayAdapter.removeOne(action.holiday.mockId, state)),
+  on(addHoliday, (state, action) => {
+    const holidays = holidayAdapter.getSelectors().selectAll(state);
+    const hasSameDate = holidays.findIndex(holiday => holiday.date === action.holiday.date);
+    const holiday = JSON.parse(JSON.stringify(action.holiday));
+    holiday.mockId = uuid44();
+    if (hasSameDate > -1) {
+      return state;
+    }
+    return holidayAdapter.addOne(holiday, state)
+  }),
+  on(editHolidaySuccess, (state, action) => {
+    const holiday = JSON.parse(JSON.stringify(action.holiday));
+    const holidays = holidayAdapter.getSelectors().selectAll(state);
+    const hasSameDate = holidays.findIndex(holiday => holiday.date === action.holiday.date);
+    // && (holidays[hasSameDate].date !== action.holiday.date && holidays[hasSameDate].mockId === action.holiday.mockId)
+    if (hasSameDate > -1 && action.holiday.id !== holidays[hasSameDate].id) {
+      console.log(action.holiday, holidays[hasSameDate])
+      return state;
+    }
+    console.log(holidays[hasSameDate])
+    const update: Update<HolidayModel> = {
+      id: action.holiday.mockId,
+      changes: {
+        ...holiday
+      }
+    }
+    return holidayAdapter.updateOne(update, state);
+  })
 );
 const editState: {
-    editedHoliday: HolidayModel
+  editedHoliday: HolidayModel
 } = {
-    editedHoliday: null
+  editedHoliday: null
 }
 export const holidayEditReducer = createReducer(editState,
-    on(editHolidayRequest, (state, action)=> {
-        console.log(action.holiday)
-        return {
-            ...state,
-            editedHoliday: {
-                ...action.holiday
-            }
-        }
-    }),
-    on(editHoliday, (state, action)=> {
-        return {
-            ...state,
-            editedHoliday: null
-        }
-    })
+  on(editHolidayRequest, (state, action) => {
+    console.log(action.holiday)
+    return {
+      ...state,
+      editedHoliday: {
+        ...action.holiday
+      }
+    }
+  }),
+  on(clearEditState, (state, action) => {
+    return {
+      ...state,
+      editedHoliday: null
+    }
+  }),
+  on(editHolidaySuccess, (state, action) => {
+    return {
+      ...state,
+      editedHoliday: null
+    }
+  })
 );
 export const holidayReducer = combineReducers({
-    holidayList: holidayListReducer,
-    holidayEdit: holidayEditReducer,
+  holidayList: holidayListReducer,
+  holidayEdit: holidayEditReducer,
 })
 export const { selectAll } = holidayAdapter.getSelectors();

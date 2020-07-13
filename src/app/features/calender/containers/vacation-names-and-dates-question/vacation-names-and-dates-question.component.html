@@ -1,47 +1,132 @@
 <div class="main">
-    <h1 class="header">Please specify the vacation dates and names</h1>
-    <p>
-        Note: Only define vacations on this step which last
-        <b class="orangeColor">longer</b> than one day, single<br /> Holidays will be input in the next step
-    </p>
+  <h1 class="header">Please specify the vacation dates and names</h1>
+  <p>
+    Note: Only define vacations on this step which last
+    <b class="orangeColor">longer</b> than one day, single<br />
+    Holidays will be input in the next step
+  </p>
 
-    <form *ngIf="vacationForm" [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }" #scrollableEl [formGroup]="vacationForm" class="scrollable-content">
-        <div formArrayName="vacationsAndDates" class="vacations-and-dates">
-            <!-- <div *ngFor="let vacation of (calendarData | async).vacations; let i = index" [formGroupName]="i"
-                class="vacations-and-dates__item"> -->
-            <div *ngFor="
-          let vacation of vacationForm.controls.vacationsAndDates['controls'];
-          let i = index
-        " [formGroupName]="i">
-                <div class="vacations-and-dates__item">
-                    <edu-input formControlName="vacationName" alignment="center">
-                    </edu-input>
-                    <edu-datepicker formControlName="startDate" alignment="center">
-                        <span class="edu-label">Starts from</span>
-                        <div class="edu-suffix" InputAffix>
-                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-                        </div>
-                    </edu-datepicker>
-                    <edu-datepicker formControlName="endDate" alignment="center">
-                        <span class="edu-label">Ends on</span>
-                        <div class="edu-suffix" InputAffix>
-                            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-                        </div>
-                    </edu-datepicker>
-                </div>
-            </div>
-
-            <div class="vacations-and-dates__add-btn-container">
-                <button class="vacations-and-dates__add-btn" (click)="addVacation()">
-          <img src="assets/32pxplusblue.svg" />
-        </button>
-            </div>
-            <div class="vacations-and-dates__btn-container button--bottom" *ngIf="vacationForm && vacationForm.valid">
-
-                <button type="button" ButtonType="basic" class="vacations-and-dates__continue-btn" (click)="goNext()">
-          Continue
-        </button>
-            </div>
+  <div class="form-wrapper">
+    <form
+      *ngIf="vacationForm"
+      [ngClass]="{ overflowVisible: shouldScroll }"
+      #scrollableEl
+      [formGroup]="vacationForm"
+      class="scrollable-content"
+    >
+      <div formArrayName="vacationsAndDates" class="vacations-and-dates">
+        <!-- <div *ngFor="let vacation of (calendarData | async).vacations; let i = index" [formGroupName]="i"
+                    class="vacations-and-dates__item"> -->
+        <div
+          *ngFor="
+            let vacation of vacationForm.controls.vacationsAndDates['controls'];
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <div class="vacations-and-dates__item">
+            <edu-input
+              [elementId]="getElementId(i, 'title')"
+              formControlName="vacationName"
+              alignment="center"
+              (edu-blur)="updateTitle($event, i)"
+            >
+            </edu-input>
+            <edu-datepicker
+              [elementId]="getElementId(i, 'startdp')"
+              formControlName="startDate"
+              alignment="center"
+              (edu-change)="updateStart($event, i)"
+            >
+              <span class="edu-label">Starts from</span>
+              <div class="edu-suffix" InputAffix>
+                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+              </div>
+            </edu-datepicker>
+            <edu-datepicker
+              [elementId]="getElementId(i, 'enddp')"
+              formControlName="endDate"
+              alignment="center"
+              (edu-change)="updateEnd($event, i)"
+            >
+              <span class="edu-label">Ends on</span>
+              <div class="edu-suffix" InputAffix>
+                <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+              </div>
+            </edu-datepicker>
+            <button class="delete-vacation-btn" ButtonType="icon">
+              <img
+                src="assets/form-components/cross-red.svg"
+                alt=""
+                (click)="removeItem(i)"
+              />
+            </button>
+          </div>
         </div>
+
+        <div class="vacations-and-dates__add-btn-container">
+          <button
+            class="vacations-and-dates__add-btn break__btn"
+            (click)="addVacation()"
+          >
+            <img src="assets/32pxplusblue.svg" />
+          </button>
+        </div>
+      </div>
     </form>
+    <ng-container class="validation-errors" *ngIf="isFormInvalid()">
+      <ul class="validation-errors hidden" #errors>
+        <li
+          class="validation-error"
+          *ngFor="
+            let errorGroup of getValues(
+              vacationForm.controls.vacationsAndDates.errors
+            )
+          "
+        >
+          <span *ngFor="let error of errorGroup"> {{ error }}</span>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+  <div class="vacations-and-dates__btn-container button--bottom">
+    <ng-container class="validation-errors" *ngIf="isFormInvalid()">
+      <ul class="validation-errors display" #errors>
+        <li
+          class="validation-error"
+          *ngFor="
+            let errorGroup of getValues(
+              vacationForm.controls.vacationsAndDates.errors
+            )
+          "
+        >
+          <span *ngFor="let error of errorGroup"> {{ error }}</span>
+        </li>
+      </ul>
+    </ng-container>
+
+    <!-- <ng-container class="validation-errors" *ngIf="isFormInvalid()">
+                <ul class="validation-errors" *ngFor="let errorGroup of getValues(vacationForm.controls.vacationsAndDates.errors)">
+                    <li class="validation-error" *ngFor="let error of errorGroup">
+                        {{error}}
+                    </li>
+                </ul>
+            </ng-container> -->
+    <!-- <ul class="validation-errors" *ngIf="isFormInvalid()">
+                <li class="validation-error" *ngFor="let error of vacationForm.controls.vacationsAndDates.errors.msg">
+                    {{error}}
+                </li>
+            </ul> -->
+    <button
+      type="button"
+      ButtonType="basic"
+      [disabled]="
+        !!getValues(vacationForm.controls.vacationsAndDates.errors).length
+      "
+      class="vacations-and-dates__continue-btn"
+      (click)="goNext()"
+    >
+      Continue
+    </button>
+  </div>
 </div>

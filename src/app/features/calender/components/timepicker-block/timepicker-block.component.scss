@@ -1,0 +1,60 @@
+@import 'src/assets/styles/colors';
+@import 'src/assets/styles/mixins/alignment';
+.period-menu {
+  height: auto;
+  align-self: flex-start;
+  margin-top: 35px;
+  box-shadow: 0px 10px 15px #a6adce1a;
+  width: 153px;
+  .card-title {
+    font: 600 14px/40px Quicksand;
+    margin: 0;
+  }
+  .form__input-label,
+  .form__input {
+    font: 400 14px/22px Raleway;
+  }
+  .form__input-label {
+    top: 5px;
+  }
+  margin-right: 0px;
+  margin-left: 30px;
+  padding: 17px 15px;
+  //badge inside period menu
+  .badge {
+    margin: 5px 7.5px;
+    background: $blue;
+  }
+  .badge.badge--inactive {
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+  }
+}
+
+.timeSelector {
+  @include displayFlex();
+  margin-bottom: 13px;
+  &--hr,
+  &--min {
+    width: 54px;
+    height: 44px;
+    margin: 0 8px;
+    &::ng-deep .wrapper:before {
+      display: none;
+    }
+
+    &::ng-deep .popup.active {
+      width: 120px;
+    }
+  }
+
+  &--min {
+    &::ng-deep .popup.active {
+      left: unset;
+      right: 0;
+      .pointer {
+        right: 10px;
+        left: unset;
+      }
+    }
+  }
+}

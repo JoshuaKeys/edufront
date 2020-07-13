@@ -1,0 +1,29 @@
+<edu-popover (edu-open)="popoverOpen()" (edu-close)="popoverClose()">
+  <div class="time">
+    <div>
+      <div>hr</div>
+      <ul class=" time__hour">
+        <li
+          [ngClass]="{ active: isActive('hour', i) }"
+          *ngFor="let _hour of hour; let i = index"
+          (click)="setActiveTime('hour', i)"
+        >
+          {{ formatTimeToDoubleDigit(i) }}
+        </li>
+      </ul>
+    </div>
+    <span>:</span>
+    <div>
+      <div>min</div>
+      <ul class=" time__min">
+        <li
+          [ngClass]="{ active: isActive('min', i) }"
+          *ngFor="let _min of min; let i = index"
+          (click)="setActiveTime('min', i)"
+        >
+          {{ formatTimeToDoubleDigit(i) }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</edu-popover>

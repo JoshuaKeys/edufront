@@ -8,9 +8,21 @@
       others don't
     </p>
     <div class="btns-container">
-      <button ButtonType="round-basic" (click)="goToTeachingDays()">
+      <button
+        ButtonType="round"
+        [ngClass]="{ active: (teachingData | async).sameTeachingDays === true }"
+        (click)="goToTeachingDays()"
+      >
         Yes</button
-      ><button ButtonType="round" (click)="goToDaysDefinition()">No</button>
+      ><button
+        ButtonType="round"
+        [ngClass]="{
+          active: (teachingData | async).sameTeachingDays === false
+        }"
+        (click)="goToDaysDefinition()"
+      >
+        No
+      </button>
     </div>
   </div>
 </div>

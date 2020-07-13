@@ -6,11 +6,19 @@
     </h1>
     <div class="btns-container">
       <button
-        ButtonType="round-basic"
+        ButtonType="round"
+        [ngClass]="{ active: (teachingData | async).sameNoOfPeriods == true }"
         [routerLink]="['../', activatedRouteData.next]"
+        (click)="answerPeriodsQuestion(true)"
       >
         Yes</button
-      ><button ButtonType="round">No</button>
+      ><button
+        ButtonType="round"
+        [ngClass]="{ active: (teachingData | async).sameNoOfPeriods == false }"
+        (click)="assignDefaultPeriods()"
+      >
+        No
+      </button>
     </div>
   </div>
 </div>

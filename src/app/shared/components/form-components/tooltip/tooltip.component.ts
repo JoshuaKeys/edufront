@@ -30,7 +30,7 @@ export class TooltipComponent implements OnInit {
       this.el.nativeElement.parentElement,
       'mouseover',
       $event => {
-        console.log('enter');
+        // console.log('enter');
         this.renderer.addClass(this.el.nativeElement, 'active');
       }
     );
@@ -38,7 +38,7 @@ export class TooltipComponent implements OnInit {
       this.el.nativeElement.parentElement,
       'mouseleave',
       $event => {
-        console.log('leave');
+        // console.log('leave');
         this.renderer.removeClass(this.el.nativeElement, 'active');
       }
     );

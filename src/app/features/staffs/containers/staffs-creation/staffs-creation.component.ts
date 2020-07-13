@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EntityState } from '@ngrx/entity';
@@ -13,7 +13,7 @@ import {
   selectSortingData,
   selectEditData
 } from '../../ngrx/selectors';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { StaffsModalsModel } from '../../models/staffs-modal.model';
 import {
   toggleAddModal,
@@ -26,13 +26,14 @@ import {
   deleteStaffRequest,
   toggleEndModal,
   toggleStartModal,
-  toggleEditModal,
   fetchStaffById,
-  editStaffRequest
+  editStaffRequest,
+  toggleEditModal,
+  clearAssociations,
 } from '../../ngrx/actions';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { withLatestFrom, map, filter, tap } from 'rxjs/operators';
+import { withLatestFrom, map, filter, tap, take } from 'rxjs/operators';
 import { SubjectClassesAssociation } from '../../models/subject-classes-association.model';
 import { StaffFormModel } from '../../models/staff-form.model'
 import { SortingModel } from '../../models/sorting-state.model';
@@ -43,7 +44,7 @@ import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
   selector: 'edu-staffs-creation',
   templateUrl: './staffs-creation.component.html',
   styleUrls: ['./staffs-creation.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     StaffsCommunicatorService
   ]
@@ -64,6 +65,7 @@ export class StaffsCreationComponent implements OnInit {
     this.staffs = this.store.select(selectAllStaffs);
     this.staffsModalsState = this.store.select(selectStaffsModalsState);
     this.subjects = this.store.select(selectAllSubjects);
+    this.subjects.subscribe(x => console.log(x, 'helllooo'))
     this.classes = this.store.select(selectAllClasses);
     this.subjectClassesAssociation = this.store.select(classesAndSubjectsAssoc);
     this.sortingState = this.store.select(selectSortingData)
@@ -100,36 +102,53 @@ export class StaffsCreationComponent implements OnInit {
   }
 
   refreshClasses() {
-    this.classes = this.store.select(selectAllClasses).pipe(
-      withLatestFrom(this.store.select(selectClassesOfSubject, { subjectId: this.currentlySelectedSubject })),
-      map(([allClasses, classesOfSubjects]) => {
-        return this.transformClasses(allClasses, classesOfSubjects)
-      })
-    )
+    this.store.select(selectAllClasses).pipe(
+      withLatestFrom(this.store.select(selectClassesOfSubject, { subjectId: this.currentlySelectedSubject }))
+    ).subscribe(([allClasses, classesOfSubjects]) => {
+      console.log(classesOfSubjects)
+      this.classes = of(this.transformClasses(allClasses, classesOfSubjects));
+      this.classes.subscribe(x => console.log('heooooaooaa'))
+    });
   }
-
+  closeEditModal() {
+    this.store.dispatch(toggleEditModal())
+    this.currentlySelectedSubject = null;
+  }
+  closeAddModal() {
+    this.store.dispatch(toggleAddModal())
+    this.currentlySelectedSubject = null;
+  }
   onEditStaff(staff: StaffModel) {
     this.store.dispatch(fetchStaffById({ staff }))
   }
   processEditStaff(staff: StaffFormModel) {
-    this.store.dispatch(editStaffRequest({staff}))
+    this.store.dispatch(editStaffRequest({ staff }))
   }
   onRemoveStaff(staff: StaffModel) {
     this.store.dispatch(deleteStaffRequest({ staff }))
   }
 
   onAddStaff() {
+    this.refreshClasses()
+    this.store.dispatch(clearAssociations())
     this.store.dispatch(toggleAddModal());
   }
 
   onSelectSubject(subjectId: string) {
     this.store.dispatch(setSelectedState({ subjectId }))
     this.currentlySelectedSubject = subjectId;
+
     this.refreshClasses();
   }
   onFinish() {
     this.store.dispatch(toggleEndModal())
     this.store.dispatch(incrementProgress())
+  }
+
+  onSetActiveSubject(subject: { id: string; title: string; classes: string[] }) {
+    this.store.dispatch(setSelectedState({ subjectId: subject.id }))
+    this.currentlySelectedSubject = subject.id;
+    this.refreshClasses();
   }
   transformClasses(allClasses, classesOfSubjects) {
     if (!classesOfSubjects) {
@@ -162,6 +181,8 @@ export class StaffsCreationComponent implements OnInit {
 
   onUnselectSubject(subjectId: string) {
     this.store.dispatch(unSetSelectedState({ subjectId }))
+    this.currentlySelectedSubject = null;
+    this.refreshClasses();
   }
   get startDescription() {
     return ``
