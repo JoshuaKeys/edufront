@@ -313,3 +313,9 @@ export const setGovernmentHolidaysStatus = createAction(
   '[GovernmentHolidaysObservedQuestionComponent] setGovernmentHolidaysStatus',
   props<{ value: boolean }>()
 );
+export const clearAllHolidays = createAction(
+  '[GovernmentHolidaysObservedQuestionComponent] clearAllHolidays',
+);
+export const clearEditState = createAction(
+  '[HolidayAddComponent] clearEditState'
+)

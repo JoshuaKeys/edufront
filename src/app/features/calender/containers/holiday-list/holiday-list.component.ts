@@ -8,7 +8,8 @@ import {
   addHoliday,
   editHoliday,
   editHolidayRequest,
-  createCalendarRequest
+  createCalendarRequest,
+  clearEditState
 } from '../../ngrx/actions/calendar.actions';
 import { Observable } from 'rxjs';
 import { HolidayModel } from '../../models/holiday.model';
@@ -67,6 +68,7 @@ export class HolidayListComponent implements OnInit {
   }
 
   goNext() {
+    this.store.dispatch(clearEditState())
     this.store.dispatch(createCalendarRequest())
     this.router.navigate(['../', this.activatedRouteData.next], {
       relativeTo: this.activatedRoute

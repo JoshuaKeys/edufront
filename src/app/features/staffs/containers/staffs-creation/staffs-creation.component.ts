@@ -112,6 +112,7 @@ export class StaffsCreationComponent implements OnInit {
   }
   closeEditModal() {
     this.store.dispatch(toggleEditModal())
+    this.currentlySelectedSubject = null;
   }
   closeAddModal() {
     this.store.dispatch(toggleAddModal())

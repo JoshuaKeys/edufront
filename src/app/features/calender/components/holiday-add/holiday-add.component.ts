@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HolidayEditModel } from '../../models/holiday-edit.model';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { stringify } from 'querystring';
 import { HolidayModel } from '../../models/holiday.model';
 
@@ -11,7 +11,7 @@ import { HolidayModel } from '../../models/holiday.model';
   styleUrls: ['./holiday-add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HolidayAddComponent implements OnInit {
+export class HolidayAddComponent implements OnInit, OnDestroy {
   @Input() mode: Observable<HolidayEditModel | 'addMode'>;
   @Output() edit = new EventEmitter<HolidayModel>();
   @Output() add = new EventEmitter<HolidayModel>();
@@ -27,17 +27,22 @@ export class HolidayAddComponent implements OnInit {
   editHoliday() {
     this.edit.emit(this.editHolidayForm.value);
   }
+  ngOnDestroy() {
+    if (this.editHolidayForm) {
+      this.editHolidayForm.reset();
+    }
+  }
   ngOnInit(): void {
     this.addHolidayForm = new FormGroup({
-      name: new FormControl('Holiday Name'),
-      date: new FormControl('')
+      name: new FormControl('Holiday Name', Validators.required),
+      date: new FormControl(null, Validators.required)
     })
     this.mode.subscribe((mode: HolidayEditModel) => {
       if (mode.editedHoliday) {
         this.editHolidayForm = new FormGroup({
           mockId: new FormControl(mode.editedHoliday.mockId),
           id: new FormControl(mode.editedHoliday.id),
-          name: new FormControl(mode.editedHoliday.name),
+          name: new FormControl(mode.editedHoliday.name, Validators.required),
           date: new FormControl(mode.editedHoliday.date),
           nationalCalendarId: new FormControl(mode.editedHoliday.nationalCalendarId),
           termId: new FormControl(mode.editedHoliday.termId),
