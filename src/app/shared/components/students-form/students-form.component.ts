@@ -53,11 +53,14 @@ export class StudentsFormComponent implements OnInit {
   @Input() studentsXClasses: Observable<StudentsXClassesModel[]>;
   @Input() students: StudentModel;
   @Output() onSubmit = new EventEmitter<StudentsStateModel>();
+  @Output() closeAddModal = new EventEmitter();
   addEditForm: FormGroup;
   sortedStudentsXClasses: Observable<StudentsXClassesModel[]>;
   sortedClasses: Observable<ClassModel[]>;
   constructor() { }
-
+  closeAddBtn() {
+    this.closeAddModal.emit();
+  }
   createStaff() {
     const formValue = this.addEditForm.value;
     formValue.profileDto.profileImage = formValue.profilePic.profileImage;

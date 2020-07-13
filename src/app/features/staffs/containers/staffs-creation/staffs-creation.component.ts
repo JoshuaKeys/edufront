@@ -26,10 +26,9 @@ import {
   deleteStaffRequest,
   toggleEndModal,
   toggleStartModal,
-  toggleEditModal,
   fetchStaffById,
   editStaffRequest,
-  setActiveSubject
+  toggleEditModal,
 } from '../../ngrx/actions';
 import { SubjectModel } from 'src/app/shared/models/_subject.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
@@ -108,7 +107,12 @@ export class StaffsCreationComponent implements OnInit {
       })
     )
   }
-
+  closeEditModal() {
+    this.store.dispatch(toggleEditModal())
+  }
+  closeAddModal() {
+    this.store.dispatch(toggleAddModal())
+  }
   onEditStaff(staff: StaffModel) {
     this.store.dispatch(fetchStaffById({ staff }))
   }

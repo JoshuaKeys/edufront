@@ -3,7 +3,7 @@
     <div class="modal">
       <h2 class="modal__title">
         Add Students
-        <button class="button--close" ButtonType="icon">
+        <button class="button--close" ButtonType="icon" (click)="closeAddBtn()">
           <img src="assets/form-components/cross-black.svg" alt="" />
         </button>
       </h2>
@@ -45,15 +45,6 @@
             <edu-datepicker formControlName="dob">
               <span class="edu-label">Date of Birth</span>
             </edu-datepicker>
-            <!-- <edu-input alignment="left" formControlName="dob">
-              <span class="edu lebel">Date of Birth</span>
-            </edu-input> -->
-            <!-- <edu-input-field
-              idPrefix="dateOfBirth"
-              formControlName="dob"
-              text="Date of Birth"
-            ></edu-input-field> -->
-            <!-- <edu-datepicker formControlName="dob"></edu-datepicker> -->
             <edu-select formControlName="gender" alignment="left">
               <span class="edu-label"> Sex </span>
               <edu-option OptionValue="Male"> Male </edu-option>
