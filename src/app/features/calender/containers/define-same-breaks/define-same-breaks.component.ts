@@ -68,16 +68,16 @@ export class DefineSameBreaksComponent implements OnInit {
     // })
     // ();
 
-    this.store.select(getTeachingDaysWithValidPeriod).subscribe(periods => {
-      let finalBreakArr = [];
+    // this.store.select(getTeachingDaysWithValidPeriod).subscribe(periods => {
+    //   let finalBreakArr = [];
 
-      periods.map(period => {
-        finalBreakArr = [...finalBreakArr, ...period.breaks];
-      });
+    //   periods.map(period => {
+    //     finalBreakArr = [...finalBreakArr, ...period.breaks];
+    //   });
 
-      this.getBreakArr(finalBreakArr);
-      console.log('PERIODS breaksArr', finalBreakArr);
-    });
+    //   this.getBreakArr(finalBreakArr);
+    //   console.log('PERIODS breaksArr', finalBreakArr);
+    // });
   }
   getDaysOptions(item: TeachingStateModel) {
     return defineDays(of(item.teachingDays)).pipe(
