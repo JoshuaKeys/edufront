@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   TimetableSkeleton,
-  IClassSectionPeriodModel
+  IClassSectionPeriodModel,
+  ITimetableSavingModel
 } from 'src/app/core/models/timetable';
 import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 import { IGenericSearchReponse } from 'src/app/shared/models/generic-search.model';
@@ -45,8 +46,8 @@ export class TimetableService {
     );
   }
 
-  submitTimetable(data: IClassSectionPeriodModel) {
-    return this.http.post<IClassSectionPeriodModel>(
+  submitTimetable(data: ITimetableSavingModel[]) {
+    return this.http.post<ITimetableSavingModel[]>(
       '/api/v1/classSectionPeriod',
       data
     );
