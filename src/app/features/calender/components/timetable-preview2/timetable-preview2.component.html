@@ -1,4 +1,8 @@
-<div class="card__title" *ngIf="titleText.length > 0">
+<div
+  class="card__title"
+  [ngStyle]="{ color: color }"
+  *ngIf="titleText.length > 0"
+>
   {{ titleText }}
 </div>
 
