@@ -96,8 +96,13 @@ export class PopoverComponent
   togglePopoverState() {
     let hasActiveClass = this.el.nativeElement.classList.contains('active');
     if (hasActiveClass) {
+      // this.el.nativeElement.classList.remove('active');
       this.renderer.removeClass(this.el.nativeElement, 'active');
-      // console.log('inactive');
+      // console.log(
+      //   'inactive',
+      //   this.el.nativeElement.classList,
+      //   this.el.nativeElement
+      // );
       this.onClose.emit();
       this.closeEvent.emit();
     } else {
@@ -105,5 +110,6 @@ export class PopoverComponent
       // console.log('active');
       this.openEvent.emit();
     }
+    this.cd.markForCheck();
   }
 }
