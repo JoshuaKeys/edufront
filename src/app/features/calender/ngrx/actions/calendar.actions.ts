@@ -319,3 +319,6 @@ export const clearAllHolidays = createAction(
 export const clearEditState = createAction(
   '[HolidayAddComponent] clearEditState'
 )
+export const updateDayBreakData = createAction(
+  ''
+)

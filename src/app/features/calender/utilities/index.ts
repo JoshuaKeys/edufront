@@ -18,7 +18,6 @@ export function clearClassOffGroups(
   groups: ClassGroupModel[],
   skipGroupId: string
 ) {
-  console.log(groups);
   return groups
     .map(group => {
       if (skipGroupId) {
@@ -103,7 +102,6 @@ export function buildRangePipe(items: number[]) {
     ) {
       return (prev += `${curr.start}|`);
     } else if (curr.start && !curr.end) {
-      console.log(curr, arr);
       return (prev += `${curr.start}`);
     }
   }, '');
@@ -246,7 +244,7 @@ function setTeachingPeriods(
   modifiedClasses: ModifiedClasses[],
   idx,
   currentTeachingPeriods
-) {}
+) { }
 function isUniform(previous, current) {
   for (let i = 0; i < previous.length; i++) {
     let found = false;
@@ -333,25 +331,16 @@ export function validateTermsAndDates(
       errors.msg.push(`${field} ${index + 1}'s end time is out of range`);
     }
     if (index > 0) {
-      console.log(termsAndDates.termsAndDates);
-      console.log(termsAndDates[formType]);
-      console.log(index);
-      console.log(formType);
       const previousEndDate = new Date(
         termsAndDates[formType][index - 1].endDate
       );
       if (!isGreater(startDateObj, previousEndDate)) {
-        console.log(startDateObj);
-        console.log(previousEndDate);
         errors.msg.push(
           `${field} ${index + 1}'s start time overlaps with ${field} ${index}`
         );
-      } else {
-        // console.log(startDateObj.getTime(), previousEndDate.getTime())
       }
     }
   }
-  // console.log(errors);
   if (!errors.msg.length) {
     errors = null;
   }
@@ -366,18 +355,13 @@ export function extractTimetableData(teachingState: TeachingStateModel) {
     requestObj = {
       intervalDuration:
         teachingState.classesAndGroups[0] &&
-        teachingState.classesAndGroups[0].periods
+          teachingState.classesAndGroups[0].periods
           ? +teachingState.classesAndGroups[0].periods[0].intervaBtwPeriods
           : undefined,
       acadimicYearId
     };
-    console.log(teachingState.classesAndGroups[0].periods[0]);
-    if (termId) {
-      // requestObj.termId = "c330412d-81b2-4d0f-b862-46567140e04b";
-    }
     requestObj.teachingDayPlanner = getWeekdays(teachingState.classesAndGroups);
   }
-  console.log(requestObj);
   return requestObj;
 }
 function getWeekdays(classesAndGroups: ClassGroupModel[]) {
@@ -392,7 +376,6 @@ function getWeekdays(classesAndGroups: ClassGroupModel[]) {
         // no endDate
         const periodCopy = JSON.parse(JSON.stringify(period));
         const updatedPeriods = periodCopy.breaks.map(breakItem => {
-          console.log();
           return {
             breakTitle: breakItem.name,
             periodIntervalDuration: breakItem.duration,
@@ -401,7 +384,6 @@ function getWeekdays(classesAndGroups: ClassGroupModel[]) {
         });
         breaks.push(updatedPeriods);
       });
-      console.log(breaks);
       const periodPlanners = classesAndGroups[i].periods[j].periods.map(
         (period, index) => {
           return {
@@ -414,16 +396,19 @@ function getWeekdays(classesAndGroups: ClassGroupModel[]) {
       const assemblyStartTime =
         classesAndGroups[i].periods[j].assembly.startingAt;
       const assemblyDuration = classesAndGroups[i].periods[j].assembly.duration;
-      period.push({
-        classGroupId: classesAndGroups[i].id,
-        weekday: transformToFullDay(classesAndGroups[i].periods[j].day),
-        noOfPeriod: classesAndGroups[i].periods.length,
-        periodStartTime: classesAndGroups[i].periods[j].startTime,
-        assemblyStartTime: assemblyStartTime ? assemblyStartTime : undefined,
-        assemblyDuration: assemblyDuration ? assemblyDuration : undefined,
-        breaks: breaks[0],
-        periodPlanners
-      });
+      classesAndGroups[i].classes.forEach(classItem => {
+        period.push({
+          classId: classItem.id,
+          weekday: transformToFullDay(classesAndGroups[i].periods[j].day),
+          noOfPeriod: classesAndGroups[i].periods[j].periods.length,
+          periodStartTime: classesAndGroups[i].periods[j].startTime,
+          assemblyStartTime: assemblyStartTime ? assemblyStartTime : undefined,
+          assemblyDuration: assemblyDuration ? assemblyDuration : undefined,
+          breaks: breaks[0],
+          periodPlanners
+        });
+      })
+
     }
   }
   return period.filter(period => period.periodPlanners.length);
@@ -443,8 +428,6 @@ function transformToFullDay(
   for (let i = 0; i < fullDays.length; i++) {
     if (fullDays[i].substr(0, 3).toLowerCase() === day.toLowerCase()) {
       return fullDays[i];
-    } else {
-      console.log(fullDays[i].substr(0, 2).toLowerCase(), day.toLowerCase());
     }
   }
 }
@@ -458,7 +441,7 @@ export function definePeriods(teachingData: Observable<PeriodModel[]>) {
         // result.push({ value: +period.substr(1), display: period });
         result.push({ value: <any>period, display: period });
       });
-      console.log(result);
+
       return result;
     })
   );

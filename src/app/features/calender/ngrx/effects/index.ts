@@ -83,11 +83,14 @@ export class CalendarEffects {
       if (!subtractedClasses.length) {
         return [computedModifications({ modifiedGroup })]
       } else {
+        console.log(subtractedClasses);
         const newGroup: ClassGroupModel = {
           ...teachingState.calendarEdit.group,
+          classes: subtractedClasses,
           id: uuid44(),
           groupName: `Default_Group ${teachingState.classesAndGroups.length}`
         }
+        console.log(newGroup);
         return [computedModifications({ modifiedGroup }), computeNewGroup({ newGroup })]
       }
     })
