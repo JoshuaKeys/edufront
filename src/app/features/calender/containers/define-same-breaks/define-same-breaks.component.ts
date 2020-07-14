@@ -15,7 +15,7 @@ import {
   updateSameBreakData
 } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { defineDays, definePeriods } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
 
@@ -50,7 +50,14 @@ export class DefineSameBreaksComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.teachingData = this.store.select(selectTeaching);
+    this.teachingData = this.store.select(selectTeaching).pipe(
+      tap(teaching => {
+        if (teaching.periods[0]) {
+          this.getBreakArr(teaching.periods[0].breaks);
+        }
+        // getBreakArr
+      })
+    );
   }
   getDaysOptions(item: TeachingStateModel) {
     return defineDays(of(item.teachingDays));
@@ -170,4 +177,122 @@ export class DefineSameBreaksComponent implements OnInit {
     { value: 5, display: 'P5' },
     { value: 6, display: 'P6' }
   ];
+
+  //edits
+
+  // tempBreak = {
+  //   name: 'Break 01',
+  //   firstBreak: '',
+  //   day: [],
+  //   after: '',
+  //   duration: '',
+  //   dayOptions: []
+  // };
+  tempBreakArr = [];
+  getBreakArr(breakArrFromStore) {
+    console.log(breakArrFromStore);
+    if (breakArrFromStore.length === 0) {
+      let tempBreak = {
+        name: 'Break 01',
+        firstBreak: '',
+        day: [],
+        after: '',
+        duration: '',
+        dayOptions: []
+      };
+      this.tempBreakArr.push(tempBreak);
+    } else {
+      this.tempBreakArr = [];
+      breakArrFromStore.forEach(_break => {
+        let tempBreak = JSON.parse(JSON.stringify(_break));
+        let dayOptions = [];
+        tempBreak = { ...tempBreak, dayOptions };
+        this.tempBreakArr = [...this.tempBreakArr, tempBreak];
+      });
+    }
+
+    console.log(this.tempBreakArr);
+  }
+
+  updateTitle2(title, index) {
+    console.log(this.tempBreakArr);
+    this.tempBreakArr[index].name = title;
+    console.log(this.tempBreakArr);
+    this.parseBreakObj();
+  }
+  updateDay2(day, dayOptions, index) {
+    console.log(this.tempBreakArr, dayOptions);
+    this.tempBreakArr[index].day = day;
+    this.tempBreakArr[index].dayOptions = dayOptions;
+    console.log(this.tempBreakArr);
+    this.parseBreakObj();
+  }
+  updateAfter2(after, index) {
+    console.log(this.tempBreakArr);
+    this.tempBreakArr[index].after = after;
+    console.log(this.tempBreakArr);
+    this.parseBreakObj();
+  }
+  updateDuration2(duration, index) {
+    console.log(this.tempBreakArr);
+    this.tempBreakArr[index].duration = duration;
+    console.log(this.tempBreakArr);
+    this.parseBreakObj();
+  }
+
+  addNewBreak() {
+    let tempBreak = {
+      name: 'Break 01',
+      firstBreak: '',
+      day: [],
+      after: '',
+      duration: '',
+      dayOptions: []
+    };
+    this.tempBreakArr.push(tempBreak);
+  }
+  parseBreakObj() {
+    let breaks = [];
+    this.tempBreakArr.forEach(tempBreak => {
+      let isValidBreakObj =
+        tempBreak.duration &&
+        tempBreak.day &&
+        tempBreak.after &&
+        tempBreak.name;
+
+      if (isValidBreakObj) {
+        let days = tempBreak.dayOptions
+          .map(day => day.value.toLowerCase())
+          .filter(dayValue => {
+            console.log(dayValue, tempBreak.day);
+            if (tempBreak.day[0].toLowerCase() === 'all') {
+              return dayValue !== 'all';
+            } else {
+              return (
+                tempBreak.day
+                  .map(day => day.toLowerCase())
+                  .indexOf(dayValue) !== -1
+              );
+            }
+          });
+
+        console.log(days);
+        days.forEach(day => {
+          let breakData = {
+            name: tempBreak.name,
+            firstBreak: '',
+            day,
+            after: tempBreak.after,
+            duration: tempBreak.duration
+          };
+          breaks.push(breakData);
+        });
+
+        //ned to push to store later
+        console.log(breaks);
+      }
+    });
+  }
+
+  popoverToggleVar = false;
 }

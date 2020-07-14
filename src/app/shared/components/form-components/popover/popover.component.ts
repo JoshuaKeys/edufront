@@ -44,6 +44,7 @@ export class PopoverComponent
         this.el.nativeElement.parentElement,
         'click',
         $event => {
+          console.log('parent got clicked ????');
           this.togglePopoverState();
           this.cd.markForCheck();
         }
@@ -55,9 +56,8 @@ export class PopoverComponent
     this.popoverOptionDir.forEach(dir => {
       // console.log('subscribe');
       dir.closePopoverEvent.subscribe(close => {
-        this.togglePopoverState();
-        // this.renderer.removeClass(this.el.nativeElement, 'active');
-        // console.log('close?');
+        // this.togglePopoverState();
+        this.closePopoverViaInputControl();
         this.cd.markForCheck();
       });
     });
@@ -88,9 +88,20 @@ export class PopoverComponent
     //stops propagation on lower layers
     // $event.preventDefault();
     // console.log(this.popoverOptionDir);
-    if (this.el.nativeElement.classList.contains('active')) {
-      $event.stopPropagation();
-    }
+    // if (this.el.nativeElement.classList.contains('active')) {
+    $event.stopPropagation();
+    // }
+  }
+
+  closePopoverViaInputControl() {
+    this.renderer.removeClass(this.el.nativeElement, 'active');
+    console.log(
+      'INACTIVE CLOSE',
+      this.el.nativeElement.classList,
+      this.el.nativeElement
+    );
+    this.onClose.emit();
+    this.closeEvent.emit();
   }
 
   togglePopoverState() {
@@ -98,15 +109,20 @@ export class PopoverComponent
     if (hasActiveClass) {
       // this.el.nativeElement.classList.remove('active');
       this.renderer.removeClass(this.el.nativeElement, 'active');
-      // console.log(
-      //   'inactive',
-      //   this.el.nativeElement.classList,
-      //   this.el.nativeElement
-      // );
+      console.log(
+        'INACTIVE',
+        this.el.nativeElement.classList,
+        this.el.nativeElement
+      );
       this.onClose.emit();
       this.closeEvent.emit();
     } else {
       this.renderer.addClass(this.el.nativeElement, 'active');
+      console.log(
+        'ACTIVE',
+        this.el.nativeElement.classList,
+        this.el.nativeElement
+      );
       // console.log('active');
       this.openEvent.emit();
     }

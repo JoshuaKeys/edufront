@@ -10,7 +10,66 @@
       class="scrollable-content"
       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
     >
-      <!-- <div class="group--row break" *ngFor="let item of formArr"> -->
+      <div
+        class="group--row break"
+        *ngFor="let break of tempBreakArr; let i = index"
+      >
+        <edu-input
+          (edu-blur)="updateTitle2($event, i)"
+          elementId="title "
+          [ngModel]="break.name"
+        >
+          <span class="edu-label">
+            Title
+          </span>
+        </edu-input>
+        <ng-container *ngIf="getDaysOptions(teaching) | async as dayOption">
+          <edu-icon-select
+            (edu-tick)="updateDay2($event, dayOption, i)"
+            [textParserFn]="parseDayValue"
+            elementId="day"
+            [valueOptions]="dayOption"
+            [ngModel]="break.day"
+          >
+            <span class="edu-label">
+              Day
+            </span>
+          </edu-icon-select>
+        </ng-container>
+
+        <edu-icon-select
+          [isSingleSelect]="true"
+          (edu-tick)="updateAfter2($event, i)"
+          [textParserFn]="parsePeriodValue"
+          elementId="after"
+          [valueOptions]="getPeriodOptions(teaching) | async"
+          [ngModel]="break.after"
+        >
+          <span class="edu-label">
+            After
+          </span>
+        </edu-icon-select>
+        <edu-select-v2
+          (edu-change)="updateDuration2($event, i)"
+          elementId="duration"
+          [ngModel]="break.duration"
+        >
+          <span class="edu-label">
+            Duration
+          </span>
+          <edu-option-v2
+            [OptionValue]="getMinInString(1 + i)"
+            *ngFor="let time of timeArr; let i = index"
+            >{{ i + 1 }} mins</edu-option-v2
+          >
+        </edu-select-v2>
+
+        <button class="delete-vacation-btn" ButtonType="icon">
+          <img src="assets/form-components/cross-red.svg" alt="" />
+        </button>
+      </div>
+
+      <!--      
       <div
         class="group--row break"
         *ngFor="let break of teaching.periods[0].breaks; let i = index"
@@ -60,20 +119,23 @@
             *ngFor="let time of timeArr; let i = index"
             >{{ i + 1 }} mins</edu-option-v2
           >
-        </edu-select-v2>
-        <!-- <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
+        </edu-select-v2>-->
+      <!-- <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
                     <span class="edu-label">
             Duration
           </span>
                     <span class="inline-suffix duration__suffix">mins</span>
                 </edu-input> -->
 
-        <button class="delete-vacation-btn" ButtonType="icon">
+      <!-- <button class="delete-vacation-btn" ButtonType="icon">
           <img src="assets/form-components/cross-red.svg" alt="" />
         </button>
-      </div>
+      </div> -->
 
-      <button class="break__btn" (click)="addSameBreaks()">
+      <!-- <button class="break__btn" (click)="addSameBreaks()">
+        <img src="assets/32pxplusblue.svg" />
+      </button> -->
+      <button class="break__btn" (click)="addNewBreak()">
         <img src="assets/32pxplusblue.svg" />
       </button>
     </div>
