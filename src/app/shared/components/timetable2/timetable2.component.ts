@@ -38,7 +38,8 @@ export class TimetableComponent2 implements OnInit {
   _time;
   @Input() set time(_time: Time[]) {
     this._time = _time;
-
+    this.timeNotDefined = _time.length == 0;
+    console.log('timeNotDefined', this.timeNotDefined, _time);
     if (this.initHookHasPassed) {
       this.timeClasses = new Array(this.time.length).fill([]);
       this.timeStyles = new Array(this.time.length).fill({});
@@ -71,6 +72,7 @@ export class TimetableComponent2 implements OnInit {
   @ContentChild('periodTemplate') periodTemplate: TemplateRef<any>;
   constructor(private timeTableService: TimetableService2) {}
 
+  timeNotDefined = true;
   timeClasses = [];
   timeStyles = [];
   SpecialPeriodClasses = [];

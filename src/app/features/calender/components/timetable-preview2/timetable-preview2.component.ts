@@ -32,7 +32,16 @@ export class TimetablePreview2Component implements OnInit {
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
   specialPeriodIDarr = [];
   tempTimeArr = [];
-
+  color = `#69A9F2`;
+  _indexInParent = 0;
+  @Input('indexInParent') set indexInParent(param) {
+    let colorArr = ['#69A9F2', '#8787F6', '#00DCE8'];
+    this.color = colorArr[param % colorArr.length];
+    this._indexInParent = param;
+  }
+  get indexInParent() {
+    return this._indexInParent;
+  }
   time = [];
   specialPeriods: any = [];
   model: any = {};
@@ -464,7 +473,8 @@ export class TimetablePreview2Component implements OnInit {
           this.periodDurationIsSet =
             this.parseTimeToInt(dayData.periodDuration) > 0;
           if (this.periodDurationIsSet) {
-            this.checkForAssembly(dayData.assembly, dayData.day, '#69A9F2');
+            console.log(this.color);
+            this.checkForAssembly(dayData.assembly, dayData.day, this.color);
 
             let breakDuration = this.checkForBreaks(
               period,

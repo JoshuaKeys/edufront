@@ -16,19 +16,34 @@
             <p class="card__desc">
               {{ computeClasses(item.classes) }}
             </p>
-            <edu-popover>
+            <edu-popover
+              *ngIf="allClasses | async as allClasses"
+              (edu-open)="popoverOpen(allClasses, item.classes)"
+            >
               <div class="classes">
                 <div
+                  (click)="toggleTempActive(classItem)"
+                  *ngFor="let classItem of _tempAllClasses"
+                  class="badge badge--class"
+                  [ngClass]="{
+                    'badge--active': isActiveInTemp(classItem)
+                  }"
+                >
+                  <!-- <div
                   (click)="toggleActiveClass(classItem, item)"
-                  *ngFor="let classItem of allClasses | async as allClasses"
+                  *ngFor="let classItem of allClasses"
                   class="badge badge--class"
                   [ngClass]="{
                     'badge--active': isPresent(item.classes, classItem)
                   }"
-                >
+                > -->
                   {{ classItem.grade }}
                 </div>
               </div>
+              <edu-tick-button
+                [ClosePopover]="popoverToggleVar"
+                (click)="confirmSelection(item)"
+              ></edu-tick-button>
             </edu-popover>
           </div>
 
@@ -41,18 +56,40 @@
         </div>
 
         <div class="group--row line-entry">
-          <div class="card card--dashed break__btn">
+          <div
+            class="card card--dashed break__btn"
+            *ngIf="classesAndGroups | async as classesAndGroups"
+          >
             <img src="/assets/search-plus.svg" alt="" srcset="" />
-            <edu-popover>
+            <edu-popover
+              stopEventBubble="click"
+              *ngIf="allClasses | async as allClasses"
+              (edu-open)="popoverOpen(allClasses, [])"
+            >
+              <div class="classes" stopEventBubble="click">
+                <div
+                  (click)="toggleTempActive(classItem)"
+                  *ngFor="let classItem of _tempAllClasses"
+                  class="badge badge--class"
+                  [ngClass]="{
+                    'badge--active': isActiveInTemp(classItem)
+                  }"
+                >
+                  <!-- <edu-popover>
               <div class="classes">
                 <div
                   class="badge badge--class"
                   (click)="addNewGroup(classItem)"
                   *ngFor="let classItem of allClasses | async"
-                >
+                > -->
                   {{ classItem.grade }}
                 </div>
               </div>
+              <edu-tick-button
+                stopEventBubble="click"
+                [ClosePopover]="popoverToggleVar"
+                (click)="confirmNewSelection($event)"
+              ></edu-tick-button>
             </edu-popover>
           </div>
         </div>

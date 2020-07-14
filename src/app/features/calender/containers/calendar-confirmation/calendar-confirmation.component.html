@@ -19,6 +19,7 @@
           [edu-value]="timetable.periods"
           [edu-id]="i"
           [edu-title]="computeClasses(timetable.classes)"
+          [indexInParent]="i"
           (edu-edit)="onEdit($event, timetable)"
           (edu-tick)="onTick($event)"
           *ngFor="

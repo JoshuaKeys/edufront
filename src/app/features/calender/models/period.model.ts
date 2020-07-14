@@ -1,4 +1,4 @@
-import { BreakModel } from './break.model';
+import { BreakModel, BreakModel2 } from './break.model';
 
 export interface PeriodModel {
   day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
@@ -8,7 +8,7 @@ export interface PeriodModel {
   startTime: string;
   periodDuration: string;
   intervaBtwPeriods: string;
-  breaks: BreakModel[];
+  breaks: BreakModel2[];
   assembly: { name: string; startingAt: string; duration: string };
   periodSelected?: boolean;
   startTimeSelected?: boolean;
