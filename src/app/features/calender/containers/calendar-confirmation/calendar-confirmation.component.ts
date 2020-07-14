@@ -1,18 +1,30 @@
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeaching, selectCalendar, selectCalendarModalState } from '../../ngrx/selectors';
+import {
+  selectTeaching,
+  selectCalendar,
+  selectCalendarModalState
+} from '../../ngrx/selectors';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { editCalendar, sendCalendarData } from '../../ngrx/actions/calendar.actions';
+import {
+  editCalendar,
+  sendCalendarData
+} from '../../ngrx/actions/calendar.actions';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { buildRangePipe } from '../../utilities';
 import { CalendarModalModel } from '../../models/calender-modal.model';
 import { toggleEndModal } from '../../ngrx/actions';
 import { Location } from '@angular/common';
-
 
 @Component({
   selector: 'edu-calendar-confirmation',
@@ -29,26 +41,30 @@ export class CalendarConfirmationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
     this.modalState = this.store.select(selectCalendarModalState);
-    this.teachingData.subscribe(teachingData => console.log(teachingData.classesAndGroups[0].periods))
+    this.teachingData.subscribe(teachingData =>
+      console.log(teachingData.classesAndGroups[0].periods)
+    );
   }
   sendCalendarData() {
-    this.store.dispatch(sendCalendarData())
+    this.store.dispatch(sendCalendarData());
   }
   computeClasses(classes: ClassModel[]) {
-    const grades = classes.map(classItem => classItem.grade).sort((a, b) => a - b);
+    const grades = classes
+      .map(classItem => classItem.grade)
+      .sort((a, b) => a - b);
     const result = buildRangePipe(grades);
-    return result
+    return result;
   }
   goToDashboard() {
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('/dashboard');
   }
   goNext() {
-
+    this.router.navigateByUrl('/timetable');
   }
   computeClassName(classGroup: ClassGroupModel) {
     let classes = '';
@@ -71,16 +87,17 @@ export class CalendarConfirmationComponent implements OnInit {
   onEdit(index, group: ClassGroupModel) {
     this.store.dispatch(editCalendar({ group }));
     this.router.navigate(['../', this.activatedRouteData.next], {
-      relativeTo: this.activatedRoute, queryParams: {
+      relativeTo: this.activatedRoute,
+      queryParams: {
         groupId: group.id
       }
-    })
+    });
   }
   onTick(index) {
     console.log(`tick @ ${index}`);
   }
   goBack() {
-    this.location.back()
+    this.location.back();
   }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
