@@ -1,4 +1,4 @@
-<div class="calendar">
+<div class="calendar" [ngClass]="{ hideTime: timeNotDefined }">
   <div class="empty__placeholder r0 c0"></div>
   <div
     [ngClass]="timeClasses[i]"

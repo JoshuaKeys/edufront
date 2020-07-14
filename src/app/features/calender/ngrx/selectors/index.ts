@@ -205,6 +205,13 @@ export const getEarliestStartTime = createSelector(
   }
 );
 
+export const getTeachingDaysWithValidPeriod = createSelector(
+  selectTeaching,
+  teachingState => {
+    return teachingState.periods.filter(period => period.periods.length > 0);
+  }
+);
+
 function convertTimeToInt(time: string): number {
   if (time.length !== 5) {
     return 1000000;
