@@ -378,7 +378,7 @@ function getWeekdays(classesAndGroups: ClassGroupModel[]) {
         const updatedPeriods = periodCopy.breaks.map(breakItem => {
           return {
             breakTitle: breakItem.name,
-            periodIntervalDuration: breakItem.duration,
+            breakDuration: breakItem.duration,
             endPeriod: +breakItem.after.substring(1)
           };
         });

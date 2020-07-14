@@ -48,7 +48,8 @@ import {
   setTeachingDaysStatus,
   setSameStartTimeStatus,
   setHasAssemblyStatus,
-  setSameBreakScheduleStatus
+  setSameBreakScheduleStatus,
+  defineSameBreakData
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -405,6 +406,16 @@ export const teachingReducer = createReducer(
     stateCopy.sameNoOfPeriods = action.answer;
     return stateCopy;
   }),
+  // on(defineSameBreakData, (state, action) => {
+  //   const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+  //   const updatedClassesAndGroups = stateCopy.classesAndGroups.map(
+  //     classesAndGroup => {
+  //       const updatedPeriods = classesAndGroup.periods.map(period => {
+  //         period.
+  //       })
+  //     }
+  //   )
+  // }),
   on(updateSameBreakData, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     const updatedClassesAndGroups = stateCopy.classesAndGroups.map(

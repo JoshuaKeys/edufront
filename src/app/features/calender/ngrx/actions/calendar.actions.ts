@@ -10,6 +10,7 @@ import { PeriodModel } from '../../models/period.model';
 import { SelectedPeriods } from '../../models/selected-periods.model';
 import { CalendarCreateModel } from '../../models/calendar-create.model';
 import { HolidayCreateResponseModel } from '../../models/holiday-create-response.model';
+import { BreakModel, BreakModel2 } from '../../models/break.model';
 export const setPreviewAcademicYearStartDate = createAction(
   '[AcademicYearQuestionComponent] setPreviewAcademicYearStartDate',
   props<{ startDate: string }>()
@@ -319,6 +320,7 @@ export const clearAllHolidays = createAction(
 export const clearEditState = createAction(
   '[HolidayAddComponent] clearEditState'
 )
-export const updateDayBreakData = createAction(
-  ''
+export const defineSameBreakData = createAction(
+  '[DefineSameBreakComponent] defineSameBreakData',
+  props<{ day: string; break: BreakModel2[] }>()
 )
