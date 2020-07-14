@@ -9,7 +9,10 @@ import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { Observable, of } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { selectTeaching } from '../../ngrx/selectors';
+import {
+  selectTeaching,
+  getTeachingDaysWithValidPeriod
+} from '../../ngrx/selectors';
 import {
   addSameBreak,
   updateSameBreakData,
@@ -52,24 +55,43 @@ export class DefineSameBreaksComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.teachingData = this.store.select(selectTeaching).pipe(
-      tap(teaching => {
-        if (teaching.periods[0]) {
-          this.getBreakArr(teaching.periods[0].breaks);
-        }
-        // getBreakArr
-      })
-    );
+    this.teachingData = this.store.select(selectTeaching);
+    // .pipe
+    // tap(teaching => {
+    //   console.log(`TAP 0 `, teaching.periods);
+    //   if (teaching.periods[0]) {
+    //     console.log(`TAP 1 `, teaching.periods[0].breaks);
+    //     console.log('GETTING TEACHING DAYS', this.teachingDays);
+    //     this.getBreakArr(teaching.periods[0].breaks);
+    //   }
+    //   // getBreakArr
+    // })
+    // ();
+
+    this.store.select(getTeachingDaysWithValidPeriod).subscribe(periods => {
+      let finalBreakArr = [];
+
+      periods.map(period => {
+        finalBreakArr = [...finalBreakArr, ...period.breaks];
+      });
+
+      this.getBreakArr(finalBreakArr);
+      console.log('PERIODS breaksArr', finalBreakArr);
+    });
   }
   getDaysOptions(item: TeachingStateModel) {
-    return defineDays(of(item.teachingDays));
+    return defineDays(of(item.teachingDays)).pipe(
+      tap(teachingDays => {
+        this.teachingDays = [...teachingDays];
+      })
+    );
   }
   getPeriodOptions(item: TeachingStateModel) {
     return definePeriods(of(item.periods));
   }
   timeArr = Array(60).fill('');
   formArr = [0];
-
+  teachingDays = [];
   getMinInString(val) {
     return `${val}`;
   }
@@ -216,7 +238,7 @@ export class DefineSameBreaksComponent implements OnInit {
       this.tempBreakArr = this.combineTempBreaks(this.tempBreakArr);
     }
 
-    console.log(this.tempBreakArr);
+    console.log(`tempBreakArr`, this.tempBreakArr);
   }
 
   combineTempBreaks(breakArrFromStore) {
@@ -263,16 +285,16 @@ export class DefineSameBreaksComponent implements OnInit {
     this.parseBreakObj();
   }
   updateDay2(day, dayOptions, index) {
-    console.log(this.tempBreakArr, dayOptions);
+    console.log('DAY', this.tempBreakArr, dayOptions);
     this.tempBreakArr[index].day = day;
     this.tempBreakArr[index].dayOptions = dayOptions;
-    console.log(this.tempBreakArr);
+    console.log('DAY', this.tempBreakArr);
     this.parseBreakObj();
   }
   updateAfter2(after, index) {
-    console.log(this.tempBreakArr);
+    console.log(`AFTER`, this.tempBreakArr);
     this.tempBreakArr[index].after = after;
-    console.log(this.tempBreakArr);
+    console.log(`AFTER`, this.tempBreakArr);
     this.parseBreakObj();
   }
   updateDuration2(duration, index) {
@@ -328,7 +350,7 @@ export class DefineSameBreaksComponent implements OnInit {
 
         //ned to push to store later
         this.store.dispatch(updateSameBreakData2({ break: breaks }));
-        console.log(breaks);
+        console.log('BREAKS', breaks);
       }
     });
   }

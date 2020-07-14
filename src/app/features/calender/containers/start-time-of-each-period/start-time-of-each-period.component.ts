@@ -231,12 +231,12 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
     if (this._tempActiveArr.length > 0) {
       const generatedGroupId = uuid44();
       this.store.dispatch(addClassesGroup({ generatedGroupId }));
-      // this._tempActiveArr.forEach((classItem, index) => {
-      let firstClassItem = this._tempActiveArr[0];
-      this.store.dispatch(
-        reassignClass({ class: firstClassItem, groupId: generatedGroupId })
-      );
-      // });
+      this._tempActiveArr.forEach((classItem, index) => {
+        // let firstClassItem = this._tempActiveArr[0];
+        this.store.dispatch(
+          reassignClass({ class: classItem, groupId: generatedGroupId })
+        );
+      });
 
       this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
 

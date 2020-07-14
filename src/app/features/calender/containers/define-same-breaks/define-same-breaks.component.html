@@ -10,7 +10,8 @@
       class="scrollable-content"
       [ngClass]="{ overflowVisible: !startScroll(scrollableEl) }"
     >
-      <div
+      <!-- CALVINS VERSION -->
+      <!-- <div
         class="group--row break"
         *ngFor="let break of tempBreakArr; let i = index"
       >
@@ -67,9 +68,10 @@
         <button class="delete-vacation-btn" ButtonType="icon">
           <img src="assets/form-components/cross-red.svg" alt="" />
         </button>
-      </div>
+      </div> -->
 
-      <!--      
+      <!-- ORIGINAL VERSION -->
+
       <div
         class="group--row break"
         *ngFor="let break of teaching.periods[0].breaks; let i = index"
@@ -119,32 +121,31 @@
             *ngFor="let time of timeArr; let i = index"
             >{{ i + 1 }} mins</edu-option-v2
           >
-        </edu-select-v2>-->
-      <!-- <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
+        </edu-select-v2>
+        <!-- <edu-input (edu-blur)="updateDuration($event, i)" [elementId]="computeName('duration', i)" [ngModel]="break.duration">
                     <span class="edu-label">
             Duration
           </span>
                     <span class="inline-suffix duration__suffix">mins</span>
                 </edu-input> -->
 
-      <!-- <button class="delete-vacation-btn" ButtonType="icon">
+        <!-- <button class="delete-vacation-btn" ButtonType="icon">
           <img src="assets/form-components/cross-red.svg" alt="" />
         </button>
       </div> -->
 
-      <!-- <button class="break__btn" (click)="addSameBreaks()">
-        <img src="assets/32pxplusblue.svg" />
-      </button> -->
-      <button class="break__btn" (click)="addNewBreak()">
-        <img src="assets/32pxplusblue.svg" />
-      </button>
+        <button class="break__btn" (click)="addSameBreaks()">
+          <img src="assets/32pxplusblue.svg" />
+        </button>
+
+        <button
+          [routerLink]="['/calendar/calendar-confirmation']"
+          class="button--bottom"
+          ButtonType="basic"
+        >
+          continue
+        </button>
+      </div>
     </div>
   </div>
-  <button
-    [routerLink]="['/calendar/calendar-confirmation']"
-    class="button--bottom"
-    ButtonType="basic"
-  >
-    continue
-  </button>
 </div>
