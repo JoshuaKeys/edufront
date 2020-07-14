@@ -12,12 +12,14 @@ import { TeachingStateModel } from '../../models/teaching-state.model';
 import { selectTeaching } from '../../ngrx/selectors';
 import {
   addSameBreak,
-  updateSameBreakData
+  updateSameBreakData,
+  updateSameBreakData2
 } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { defineDays, definePeriods } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
+import { BreakModel2 } from '../../models/break.model';
 
 @Component({
   selector: 'edu-define-same-breaks',
@@ -203,15 +205,55 @@ export class DefineSameBreaksComponent implements OnInit {
       this.tempBreakArr.push(tempBreak);
     } else {
       this.tempBreakArr = [];
+      console.log('BREAK FRO MSTORE', breakArrFromStore);
       breakArrFromStore.forEach(_break => {
         let tempBreak = JSON.parse(JSON.stringify(_break));
         let dayOptions = [];
         tempBreak = { ...tempBreak, dayOptions };
         this.tempBreakArr = [...this.tempBreakArr, tempBreak];
       });
+
+      this.tempBreakArr = this.combineTempBreaks(this.tempBreakArr);
     }
 
     console.log(this.tempBreakArr);
+  }
+
+  combineTempBreaks(breakArrFromStore) {
+    // let identifierArr = [] ;
+    let results = [];
+    let getIdentifier = _break =>
+      `${_break.after}-${_break.duration}-${_break.name}`;
+    //     breakArrFromStore.forEach((_break)=>{
+    //       let newIdentifier = getIdentifier(_break);
+    //       if(identifierArr.indexOf(newIdentifier) !== -1){
+    //         identifierArr.push(newIdentifier);
+    //       }
+
+    //     })
+    // console.log(identifierArr);
+    breakArrFromStore.forEach(_break => {
+      let identifier = getIdentifier(_break);
+      let resultsIdentifierArr = results.map(res => getIdentifier(res));
+
+      if (resultsIdentifierArr.indexOf(identifier) !== -1) {
+        let indexInResults = resultsIdentifierArr.indexOf(identifier);
+        let existingResults = results[indexInResults];
+        let newBreak = {
+          ...existingResults,
+          ...{ day: [...existingResults.day, _break.day] }
+        };
+
+        results[indexInResults] = newBreak;
+      } else {
+        let newBreak = { ..._break, ...{ day: [_break.day] } };
+        results = [...results, newBreak];
+      }
+
+      console.log(results);
+    });
+    console.log('FINAL ', results);
+    return results;
   }
 
   updateTitle2(title, index) {
@@ -252,7 +294,7 @@ export class DefineSameBreaksComponent implements OnInit {
     this.tempBreakArr.push(tempBreak);
   }
   parseBreakObj() {
-    let breaks = [];
+    let breaks: BreakModel2[] = [];
     this.tempBreakArr.forEach(tempBreak => {
       let isValidBreakObj =
         tempBreak.duration &&
@@ -262,17 +304,13 @@ export class DefineSameBreaksComponent implements OnInit {
 
       if (isValidBreakObj) {
         let days = tempBreak.dayOptions
-          .map(day => day.value.toLowerCase())
+          .map(day => day.value)
           .filter(dayValue => {
             console.log(dayValue, tempBreak.day);
-            if (tempBreak.day[0].toLowerCase() === 'all') {
-              return dayValue !== 'all';
+            if (tempBreak.day[0] === 'All') {
+              return dayValue !== 'All';
             } else {
-              return (
-                tempBreak.day
-                  .map(day => day.toLowerCase())
-                  .indexOf(dayValue) !== -1
-              );
+              return tempBreak.day.map(day => day).indexOf(dayValue) !== -1;
             }
           });
 
@@ -289,6 +327,7 @@ export class DefineSameBreaksComponent implements OnInit {
         });
 
         //ned to push to store later
+        this.store.dispatch(updateSameBreakData2({ break: breaks }));
         console.log(breaks);
       }
     });

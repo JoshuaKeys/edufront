@@ -38,20 +38,22 @@ import {
   setGroupStartTime,
   initializeSameBreaks,
   addSameBreak,
+  updateSameBreakData2,
   removeSameBreak,
   initializeBreaks,
   addBreak,
   removeBreak,
   updateBreakData,
   updateSameBreakData,
-  computedModifications
+  computedModifications,
+  updateBreakData2
 } from '../actions/calendar.actions';
 import { VacationModel } from '../../models/vacation.model';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { clearClassOffGroups, generatePeriodFromNumber } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { PeriodModel } from '../../models/period.model';
-import { BreakModel } from '../../models/break.model';
+import { BreakModel, BreakModel2 } from '../../models/break.model';
 const initialState: PreviewModel = {
   datePreview: {
     route: '/calendar/dates-of-academic-year'
@@ -88,7 +90,9 @@ export const previewReducer = createReducer(
     const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
       classesGroup => {
         const updatedPeriods = classesGroup.periods.map(period => {
-          period.breaks[action.index][action.field as any] = action.value as any;
+          period.breaks[action.index][
+            action.field as any
+          ] = action.value as any;
           return period;
         });
         classesGroup.periods = updatedPeriods;
@@ -104,13 +108,48 @@ export const previewReducer = createReducer(
     stateCopy.periods.items = updatedPeriods;
     return stateCopy;
   }),
+  on(updateSameBreakData2, (state, action) => {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
+      classesGroup => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          // period.breaks = action.break;
+          let day = period.day.toLowerCase();
+          let matchingPeriods = action.break.filter(
+            _break => _break.day.toLowerCase() === day
+          );
+
+          period.breaks = [...matchingPeriods];
+
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
+
+    const updatedPeriods = stateCopy.periods.items.map(period => {
+      // period.breaks = action.break;
+      let day = period.day.toLowerCase();
+      let matchingPeriods = action.break.filter(
+        _break => _break.day.toLowerCase() === day
+      );
+
+      period.breaks = [...matchingPeriods];
+      return period;
+    });
+    stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    stateCopy.periods.items = updatedPeriods;
+    return stateCopy;
+  }),
+
   on(addSameBreak, (state, action) => {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const updatedPeriods = stateCopy.periods.items.map(period => {
       period.breaks.push({
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
-        day: [],
+        day: '',
         after: null,
         duration: ''
       });
@@ -122,7 +161,39 @@ export const previewReducer = createReducer(
           period.breaks.push({
             name: 'Break ' + (period.breaks.length + 1),
             firstBreak: '',
-            day: [],
+            day: '',
+            after: null,
+            duration: ''
+          });
+          return period;
+        });
+        classesGroup.periods = updatedPeriods;
+        return classesGroup;
+      }
+    );
+    stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
+    stateCopy.periods.items = updatedPeriods;
+    return stateCopy;
+  }),
+  on(addSameBreak, (state, action) => {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const updatedPeriods = stateCopy.periods.items.map(period => {
+      period.breaks.push({
+        name: 'Break ' + (period.breaks.length + 1),
+        firstBreak: '',
+        day: '',
+        after: null,
+        duration: ''
+      });
+      return period;
+    });
+    const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
+      classesGroup => {
+        const updatedPeriods = classesGroup.periods.map(period => {
+          period.breaks.push({
+            name: 'Break ' + (period.breaks.length + 1),
+            firstBreak: '',
+            day: '',
             after: null,
             duration: ''
           });
@@ -167,10 +238,10 @@ export const previewReducer = createReducer(
       period.breaks.push({
         name: 'Break ' + (period.breaks.length + 1),
         firstBreak: '',
-        day: [],
+        day: '',
         after: null,
         duration: ''
-      } as BreakModel);
+      } as BreakModel2);
       return period;
     });
     stateCopy.teachingDays.classesAndGroupItems[
@@ -210,6 +281,23 @@ export const previewReducer = createReducer(
     ].periods = updatedPeriods;
     return stateCopy;
   }),
+  on(updateBreakData2, (state, action) => {
+    const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.teachingDays.classesAndGroupItems.findIndex(
+      group => group.id === action.groupId
+    );
+    const updatedPeriods = stateCopy.teachingDays.classesAndGroupItems[
+      groupIdx
+    ].periods.map(period => {
+      period.breaks = action.break;
+      return period;
+    });
+    stateCopy.teachingDays.classesAndGroupItems[
+      groupIdx
+    ].periods = updatedPeriods;
+    return stateCopy;
+  }),
+
   on(initializeSameBreaks, initializeBreaks, (state, action) => {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
     const updatedperiods = stateCopy.periods.items.map(period => {
@@ -217,7 +305,7 @@ export const previewReducer = createReducer(
         period.breaks.push({
           name: 'Break ' + period.breaks.length + 1,
           firstBreak: '',
-          day: [],
+          day: '',
           after: null,
           duration: ''
         });
@@ -231,7 +319,7 @@ export const previewReducer = createReducer(
             period.breaks.push({
               name: 'Break ' + period.breaks.length + 1,
               firstBreak: '',
-              day: [],
+              day: '',
               after: null,
               duration: ''
             });
@@ -279,12 +367,18 @@ export const previewReducer = createReducer(
     const classes = action.modifiedGroup.classes;
     let adjustedGroups: ClassGroupModel[];
     classes.forEach(classItem => {
-      adjustedGroups = clearClassOffGroups(classItem, stateCopy.teachingDays.classesAndGroupItems, action.modifiedGroup.id);
-    })
-    const modifiedIdx = adjustedGroups.findIndex(classGroup => classGroup.id === action.modifiedGroup.id);
+      adjustedGroups = clearClassOffGroups(
+        classItem,
+        stateCopy.teachingDays.classesAndGroupItems,
+        action.modifiedGroup.id
+      );
+    });
+    const modifiedIdx = adjustedGroups.findIndex(
+      classGroup => classGroup.id === action.modifiedGroup.id
+    );
     adjustedGroups[modifiedIdx] = action.modifiedGroup;
     console.log(adjustedGroups);
-    stateCopy.teachingDays.classesAndGroupItems = adjustedGroups
+    stateCopy.teachingDays.classesAndGroupItems = adjustedGroups;
     return stateCopy;
   }),
   on(selectTeachingDay, (state, action) => {
@@ -672,7 +766,7 @@ export const previewReducer = createReducer(
     );
     console.log(clickedClassIdx);
     if (clickedClassIdx > -1) {
-      console.log(groupsState[groupIdx])
+      console.log(groupsState[groupIdx]);
       groupsState[groupIdx].classes.splice(clickedClassIdx, 1);
       if (groupsState[groupIdx].classes.length === 0) {
         console.log(groupsState);
