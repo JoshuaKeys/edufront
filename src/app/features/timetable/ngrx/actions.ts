@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import {
   TimetableSkeleton,
-  IClassSectionPeriodModel
+  IClassSectionPeriodModel,
+  ITimetableSavingModel
 } from 'src/app/core/models/timetable';
 import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 import {
@@ -12,6 +13,7 @@ import {
 import { GetStaffResponseModel } from '../../staffs/models/get-staff-response.model';
 
 export enum ActionTypes {
+  INIT_TIMETABLE = '[TIMETABLE] INIT TIMETABLE',
   GET_DAY_PLANNER = '[TIMETABLE] Get day planner',
   GET_DAY_PLANNER_SUCCESS = '[TIMETABLE] Get day planner success',
   GET_DAY_PLANNER_FAILURE = '[TIMETABLE] Get day planner failure',
@@ -38,6 +40,8 @@ export enum ActionTypes {
   SUBMIT_TIMETABLE_SUCCESS = '[TIMETABLE] Submit timetable success',
   SUBMIT_TIMETABLE_FAILURE = '[TIMETABLE] Submit timetable failure'
 }
+
+export const initTimetableAction = createAction(ActionTypes.INIT_TIMETABLE);
 
 export const getDayPlannerAction = createAction(
   ActionTypes.GET_DAY_PLANNER,
@@ -110,11 +114,11 @@ export const updateTimetablePeriodAction = createAction(
 
 export const submitTimetableAction = createAction(
   ActionTypes.SUBMIT_TIMETABLE,
-  props<{ timetable: IClassSectionPeriodModel }>()
+  props<{ timetable: ITimetableSavingModel[] }>()
 );
 export const submitTimetableSuccessAction = createAction(
   ActionTypes.SUBMIT_TIMETABLE_SUCCESS,
-  props<{ timetable: IClassSectionPeriodModel }>()
+  props<{ timetable: ITimetableSavingModel[] }>()
 );
 export const submitTimetableFailureAction = createAction(
   ActionTypes.SUBMIT_TIMETABLE_FAILURE,

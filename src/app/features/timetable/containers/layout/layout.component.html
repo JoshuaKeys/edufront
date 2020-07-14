@@ -91,10 +91,16 @@
                   [edu-value]="periodsList$ | async"
                 >
                 </edu-custom-timetable>
+                <div *ngIf="!(selectedSectionId$ | async)">
+                  Please select a Class and a Section
+                </div>
               </ng-container>
               <ng-template #emptyTable>
                 <div class="empty-timetable">
-                  Not enough data to render Timetable
+                  Not enough data to render timetable
+                  <div *ngIf="!(selectedSectionId$ | async)">
+                    Please select a Class and a Section
+                  </div>
                 </div>
               </ng-template>
             </div>
@@ -122,18 +128,23 @@
             (search)="onSubjSearch($event)"
             (create)="onCreate('subject')"
           >
-            <div
-              cdkDropList
-              [cdkDropListEnterPredicate]="noDrop"
-              [cdkDropListData]="subj"
-            >
-              <edu-icon-button
-                *ngFor="let subject of subj"
-                [subject]="subject"
-                cdkDrag
-                [cdkDragData]="{ item: subject, type: 'subject' }"
-              ></edu-icon-button>
-            </div>
+            <ng-container *ngIf="subjectsLoading$ | async">
+              Subjects loading...
+            </ng-container>
+            <ng-container *ngIf="subjectsLoaded$ | async">
+              <div
+                cdkDropList
+                [cdkDropListEnterPredicate]="noDrop"
+                [cdkDropListData]="subj"
+              >
+                <edu-icon-button
+                  *ngFor="let subject of subj"
+                  [subject]="subject"
+                  cdkDrag
+                  [cdkDragData]="{ item: subject, type: 'subject' }"
+                ></edu-icon-button>
+              </div>
+            </ng-container>
           </edu-timetable-search>
         </ng-container>
         <edu-timetable-search
@@ -141,19 +152,25 @@
           [items]="teachers | async"
           (search)="onTeacherSearch($event)"
         >
-          <div
-            cdkDropList
-            [cdkDropListEnterPredicate]="noDrop"
-            [cdkDropListData]="teachers | async"
-          >
-            <edu-simple-button
-              *ngFor="let teacher of teachers | async"
-              type="stroked"
-              cdkDrag
-              [cdkDragData]="{ item: teacher, type: 'teacher' }"
-              >{{ teacher.firstName }} {{ teacher.lastName }}</edu-simple-button
+          <ng-container *ngIf="subjectsLoading$ | async">
+            Teachers loading...
+          </ng-container>
+          <ng-container *ngIf="subjectsLoaded$ | async">
+            <div
+              cdkDropList
+              [cdkDropListEnterPredicate]="noDrop"
+              [cdkDropListData]="teachers | async"
             >
-          </div>
+              <edu-simple-button
+                *ngFor="let teacher of teachers | async"
+                type="stroked"
+                cdkDrag
+                [cdkDragData]="{ item: teacher, type: 'teacher' }"
+                >{{ teacher.firstName }}
+                {{ teacher.lastName }}</edu-simple-button
+              >
+            </div>
+          </ng-container>
         </edu-timetable-search>
       </ng-container>
     </aside>

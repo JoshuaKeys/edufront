@@ -11,11 +11,13 @@ import {
   updateTimetablePeriodAction,
   submitTimetableAction,
   submitTimetableSuccessAction,
-  getSubjectsFailureAction
+  getSubjectsFailureAction,
+  initTimetableAction
 } from './actions';
 
 export const timetableReducer = createReducer(
   INITIAL_STATE,
+  on(initTimetableAction, state => INITIAL_STATE),
   on(getDayPlannerAction, state => ({
     ...state,
     ui: {

@@ -25,10 +25,22 @@ export interface PeriodPlanner {
   index: number;
 }
 
+export interface ITimetableSavingModel {
+  acadimicYearId: string;
+  classId: string;
+  termDetailId: string;
+  sectionList: ISectionPeriodModel[];
+}
+
 export interface IClassSectionPeriodModel {
   acadimicYearId?: string;
-  sectionId?: string;
   classId: string;
+  sectionId: string;
+  periodRequestQ: PeriodRequestQ[];
+}
+
+export interface ISectionPeriodModel {
+  sectionId: string;
   periodRequestQ: PeriodRequestQ[];
 }
 
