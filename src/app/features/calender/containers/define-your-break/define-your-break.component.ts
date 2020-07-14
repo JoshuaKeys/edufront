@@ -218,4 +218,102 @@ export class DefineYourBreakComponent implements OnInit {
     // }
     return arr.reduce((a, b) => `${a},${b}`);
   }
+
+  //new addition for multi select
+  popoverToggleVar = false;
+  _tempAllClasses;
+  _tempActiveArr = [];
+  toggleTempActive(classItem) {
+    let isNotActive = true;
+    this._tempActiveArr = this._tempActiveArr.filter((activeItem, index) => {
+      if (activeItem.id === classItem.id) {
+        isNotActive = false;
+        return false;
+      }
+      return true;
+    });
+    if (isNotActive) {
+      this._tempActiveArr.push(classItem);
+    }
+  }
+  isActiveInTemp(classItem) {
+    for (let i = 0; i < this._tempActiveArr.length; i++) {
+      if (this._tempActiveArr[i].id === classItem.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  popoverOpen(allClasses, activeArr) {
+    console.log('POPOVER OPEN', activeArr);
+    this._tempAllClasses = JSON.parse(JSON.stringify(allClasses));
+    this._tempActiveArr = JSON.parse(JSON.stringify(activeArr));
+
+    console.log(allClasses);
+  }
+
+  confirmSelection(classesGroup: ClassGroupModel) {
+    let diffClasses = [];
+
+    //check _tempActiveArr against classesGroup.item to determine any deletions
+    classesGroup.classes.forEach(classGroup => {
+      let classExistOnTempActiveArr = false;
+      for (let i = 0; i < this._tempActiveArr.length; i++) {
+        if (this._tempActiveArr[i].id === classGroup.id) {
+          classExistOnTempActiveArr = true;
+          break;
+        }
+      }
+      // console.log(classExistOnTempActiveArr);
+      if (!classExistOnTempActiveArr) {
+        diffClasses.push(classGroup);
+      }
+    });
+
+    //check classesGroup.item  against _tempActiveArr   to determine any additions
+    this._tempActiveArr.forEach(tempClassGroup => {
+      let classExistOnTempActiveArr = false;
+      for (let i = 0; i < classesGroup.classes.length; i++) {
+        if (classesGroup.classes[i].id === tempClassGroup.id) {
+          classExistOnTempActiveArr = true;
+          break;
+        }
+      }
+      // console.log(classExistOnTempActiveArr);
+      if (!classExistOnTempActiveArr) {
+        diffClasses.push(tempClassGroup);
+      }
+    });
+
+    console.log(diffClasses);
+    diffClasses.forEach(classItem => {
+      this.store.dispatch(reassignClass({ class: classItem, classesGroup }));
+      console.log('push to store');
+    });
+    console.log(this.popoverToggleVar);
+    this.popoverToggleVar = !this.popoverToggleVar;
+    console.log(this.popoverToggleVar);
+  }
+
+  confirmNewSelection(clickEvent: Event) {
+    console.log(this.popoverToggleVar);
+    this.popoverToggleVar = !this.popoverToggleVar;
+    console.log(this.popoverToggleVar);
+    if (this._tempActiveArr.length > 0) {
+      const generatedGroupId = uuid44();
+      this.store.dispatch(addClassesGroup({ generatedGroupId }));
+      this._tempActiveArr.forEach((classItem, index) => {
+        // let firstClassItem = this._tempActiveArr[0];
+        this.store.dispatch(
+          reassignClass({ class: classItem, groupId: generatedGroupId })
+        );
+      });
+
+      this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
+
+      this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
+      this.store.dispatch(setGroupStartTime({ groupId: generatedGroupId }));
+    }
+  }
 }
