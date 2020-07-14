@@ -237,6 +237,16 @@ export class TeachingPeriodsPerDayComponent implements OnInit {
       });
 
       this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
+      this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
     }
   }
 }
+// addNewGroup(classItem: ClassModel) {
+//   const generatedGroupId = uuid44();
+//   this.store.dispatch(addClassesGroup({ generatedGroupId }));
+//   this.store.dispatch(
+//     reassignClass({ class: classItem, groupId: generatedGroupId })
+//   );
+//   this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
+//   this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
+// }

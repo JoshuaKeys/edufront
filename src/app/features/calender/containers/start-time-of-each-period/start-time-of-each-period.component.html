@@ -102,12 +102,12 @@
                       }"
                     >
                       <!-- <edu-popover>
-                                <div class="classes">
-                                  <div
-                                    class="badge badge--class"
-                                    (click)="addNewGroup(classItem)"
-                                    *ngFor="let classItem of allClasses | async"
-                                  > -->
+                  <div class="classes">
+                    <div
+                      class="badge badge--class"
+                      (click)="addNewGroup(classItem)"
+                      *ngFor="let classItem of allClasses | async"
+                    > -->
                       {{ classItem.grade }}
                     </div>
                   </div>
@@ -117,13 +117,6 @@
                     (click)="confirmNewSelection($event)"
                   ></edu-tick-button>
                 </edu-popover>
-                <!-- <edu-popover>
-                                    <div class="classes">
-                                        <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async; ">
-                                            {{ classItem.grade }}
-                                        </div>
-                                    </div>
-                                </edu-popover> -->
               </div>
             </div>
           </div>
