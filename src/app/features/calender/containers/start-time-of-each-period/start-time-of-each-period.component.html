@@ -1,33 +1,67 @@
 <div class="main">
-    <div class="content">
-        <h2 class="content__title">
-            What time does the first period start in these days?
-        </h2>
-        <p class="content__desc">Note: You can select multiple days at a time</p>
-        <div class="group--row align-items-start">
-            <div class="badges-wrapper group--column justify-start ">
-                <ul class="days--header">
-                    <li>Mon</li>
-                    <li>Tue</li>
-                    <li>Wed</li>
-                    <li>Thu</li>
-                    <li>Fri</li>
-                    <li>Sat</li>
-                    <li>Sun</li>
-                </ul>
-                <div class="badges scrollable-content">
-                    <div class="badges--inlineflex">
-                        <div class="container" *ngIf="teachingData | async as teachingData">
-                            <div>
-                                <div class="group--row line-entry" *ngFor="let item of teachingData.classesAndGroups">
-                                    <div class="card ">
-                                        <h4 class="card__title">
-                                            Classes
-                                        </h4>
-                                        <p class="card__desc">
-                                            {{computeClasses(item.classes)}}
-                                        </p>
-                                        <edu-popover>
+  <div class="content">
+    <h2 class="content__title">
+      What time does the first period start in these days?
+    </h2>
+    <p class="content__desc">Note: You can select multiple days at a time</p>
+    <div class="group--row align-items-start">
+      <div class="badges-wrapper group--column justify-start ">
+        <ul class="days--header">
+          <li>Mon</li>
+          <li>Tue</li>
+          <li>Wed</li>
+          <li>Thu</li>
+          <li>Fri</li>
+          <li>Sat</li>
+          <li>Sun</li>
+        </ul>
+        <div class="badges scrollable-content">
+          <div class="badges--inlineflex">
+            <div class="container" *ngIf="teachingData | async as teachingData">
+              <div>
+                <div
+                  class="group--row line-entry"
+                  *ngFor="let item of teachingData.classesAndGroups"
+                >
+                  <div class="card ">
+                    <h4 class="card__title">
+                      Classes
+                    </h4>
+                    <p class="card__desc">
+                      {{ computeClasses(item.classes) }}
+                    </p>
+
+                    <edu-popover
+                      *ngIf="allClasses | async as allClasses"
+                      (edu-open)="popoverOpen(allClasses, item.classes)"
+                    >
+                      <div class="classes">
+                        <div
+                          (click)="toggleTempActive(classItem)"
+                          *ngFor="let classItem of _tempAllClasses"
+                          class="badge badge--class"
+                          [ngClass]="{
+                            'badge--active': isActiveInTemp(classItem)
+                          }"
+                        >
+                          <!-- <div
+                                            (click)="toggleActiveClass(classItem, item)"
+                                            *ngFor="let classItem of allClasses"
+                                            class="badge badge--class"
+                                            [ngClass]="{
+                                              'badge--active': isPresent(item.classes, classItem)
+                                            }"
+                                          > -->
+                          {{ classItem.grade }}
+                        </div>
+                      </div>
+                      <edu-tick-button
+                        [ClosePopover]="popoverToggleVar"
+                        (click)="confirmSelection(item)"
+                      ></edu-tick-button>
+                    </edu-popover>
+
+                    <!-- <edu-popover>
                                             <div class="classes">
                                                 <div (click)="toggleActiveClass(classItem, item)" *ngFor="
                             let classItem of allClasses | async as allClasses
@@ -37,52 +71,103 @@
                                                     {{ classItem.grade }}
                                                 </div>
                                             </div>
-                                        </edu-popover>
-                                    </div>
-                                    <div class="days">
-                                        <edu-start-time-per-day (onSelectTime)="selectStartTime($event)" [classGroup]="asObservable(item)"></edu-start-time-per-day>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- (click)="addToTempArr()" -->
-                        <div class="group--row line-entry">
-                            <div class="card card--dashed break__btn">
-                                <img src="/assets/search-plus.svg" alt="" srcset="" />
-                                <edu-popover>
+                                        </edu-popover> -->
+                  </div>
+                  <div class="days">
+                    <edu-start-time-per-day
+                      (onSelectTime)="selectStartTime($event)"
+                      [classGroup]="asObservable(item)"
+                    ></edu-start-time-per-day>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- (click)="addToTempArr()" -->
+            <div class="group--row line-entry">
+              <div class="card card--dashed break__btn">
+                <img src="/assets/search-plus.svg" alt="" srcset="" />
+
+                <edu-popover
+                  stopEventBubble="click"
+                  *ngIf="allClasses | async as allClasses"
+                  (edu-open)="popoverOpen(allClasses, [])"
+                >
+                  <div class="classes" stopEventBubble="click">
+                    <div
+                      (click)="toggleTempActive(classItem)"
+                      *ngFor="let classItem of _tempAllClasses"
+                      class="badge badge--class"
+                      [ngClass]="{
+                        'badge--active': isActiveInTemp(classItem)
+                      }"
+                    >
+                      <!-- <edu-popover>
+                                <div class="classes">
+                                  <div
+                                    class="badge badge--class"
+                                    (click)="addNewGroup(classItem)"
+                                    *ngFor="let classItem of allClasses | async"
+                                  > -->
+                      {{ classItem.grade }}
+                    </div>
+                  </div>
+                  <edu-tick-button
+                    stopEventBubble="click"
+                    [ClosePopover]="popoverToggleVar"
+                    (click)="confirmNewSelection($event)"
+                  ></edu-tick-button>
+                </edu-popover>
+                <!-- <edu-popover>
                                     <div class="classes">
                                         <div class="badge badge--class" (click)="addNewGroup(classItem)" *ngFor="let classItem of allClasses | async; ">
                                             {{ classItem.grade }}
                                         </div>
                                     </div>
-                                </edu-popover>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </edu-popover> -->
+              </div>
             </div>
-
-            <div class="card period-menu">
-                <h5 class="card-title">Select Time</h5>
-                <div class="group--row timeSelector">
-                    <edu-select class="timeSelector--hr" (edu-change)="onHourChange($event)">
-                        <span class="edu-label">Hr</span>
-                        <edu-option *ngFor="let hr of hrSelector; let i = index" [OptionValue]="i + 7">
-                            {{ display2Digit(i + 7) }}
-                        </edu-option>
-                    </edu-select>
-                    <edu-select class="timeSelector--min" (edu-change)="onMinutesChange($event)">
-                        <span class="edu-label">Min</span>
-                        <edu-option *ngFor="let min of minSelector; let i = index" [OptionValue]="i">
-                            {{ display2Digit(i) }}
-                        </edu-option>
-                    </edu-select>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="card period-menu">
+        <h5 class="card-title">Select Time</h5>
+        <div class="group--row timeSelector">
+          <edu-select
+            class="timeSelector--hr"
+            (edu-change)="onHourChange($event)"
+          >
+            <span class="edu-label">Hr</span>
+            <edu-option
+              *ngFor="let hr of hrSelector; let i = index"
+              [OptionValue]="i + 7"
+            >
+              {{ display2Digit(i + 7) }}
+            </edu-option>
+          </edu-select>
+          <edu-select
+            class="timeSelector--min"
+            (edu-change)="onMinutesChange($event)"
+          >
+            <span class="edu-label">Min</span>
+            <edu-option
+              *ngFor="let min of minSelector; let i = index"
+              [OptionValue]="i"
+            >
+              {{ display2Digit(i) }}
+            </edu-option>
+          </edu-select>
+        </div>
+      </div>
     </div>
-    <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
-    <button [disabled]="(orphanedClasses | async).length" [routerLink]="['../', activatedRouteData.next]" class="button--bottom" ButtonType="basic">
-      continue
-    </button>
+  </div>
+  <edu-orphan-classes [orphanedClasses]="orphanedClasses"></edu-orphan-classes>
+  <button
+    [disabled]="(orphanedClasses | async).length"
+    [routerLink]="['../', activatedRouteData.next]"
+    class="button--bottom"
+    ButtonType="basic"
+  >
+    continue
+  </button>
 </div>

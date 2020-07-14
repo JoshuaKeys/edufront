@@ -43,8 +43,7 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   constructor(
     private store: Store<CalendarStateModel>,
-    private activatedRoute: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private activatedRoute: ActivatedRoute
   ) {}
 
   computeClasses(classes: ClassModel[]) {
@@ -180,7 +179,6 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
     console.log(this.popoverToggleVar);
     this.popoverToggleVar = !this.popoverToggleVar;
     console.log(this.popoverToggleVar);
-    this.cd.markForCheck();
   }
 
   confirmNewSelection(clickEvent: Event) {
@@ -198,6 +196,5 @@ export class TeachingDayForClassQuestionComponent implements OnInit {
 
       this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
     }
-    this.cd.markForCheck();
   }
 }

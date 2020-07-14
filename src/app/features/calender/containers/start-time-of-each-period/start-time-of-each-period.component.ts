@@ -4,14 +4,27 @@ import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Store } from '@ngrx/store';
 import { CalendarModel } from '../../models/calendar.model';
 import { CalendarStateModel } from '../../models/calender-state.model';
-import { selectTeaching, selectAllClasses, selectOrphanedClasses } from '../../ngrx/selectors';
+import {
+  selectTeaching,
+  selectAllClasses,
+  selectOrphanedClasses
+} from '../../ngrx/selectors';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ClassGroupModel } from '../../models/class-group.model';
-import { reassignClass, selectStartTime, addClassesGroup, addPeriodsToGroup, setStartTime, setGroupTeachingDays, setGroupPeriods, setGroupStartTime } from '../../ngrx/actions/calendar.actions';
+import {
+  reassignClass,
+  selectStartTime,
+  addClassesGroup,
+  addPeriodsToGroup,
+  setStartTime,
+  setGroupTeachingDays,
+  setGroupPeriods,
+  setGroupStartTime
+} from '../../ngrx/actions/calendar.actions';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { v4 as uuid44} from 'uuid';
+import { v4 as uuid44 } from 'uuid';
 import { map } from 'rxjs/operators';
 import { buildRangePipe } from '../../utilities';
 
@@ -23,7 +36,10 @@ import { buildRangePipe } from '../../utilities';
 })
 export class StartTimeOfEachPeriodComponent implements OnInit {
   orphanedClasses: Observable<ClassModel[]>;
-  constructor(private store: Store<CalendarStateModel>, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private store: Store<CalendarStateModel>,
+    private activatedRoute: ActivatedRoute
+  ) {}
   allClasses: Observable<ClassModel[]>;
   teachingData: Observable<TeachingStateModel>;
   selectTimeForm: FormGroup;
@@ -32,37 +48,45 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
   min = '00';
   addNewGroup(classItem: ClassModel) {
     const generatedGroupId = uuid44();
-    this.store.dispatch(addClassesGroup({generatedGroupId}))
-    this.store.dispatch(reassignClass({class: classItem, groupId: generatedGroupId}))
-    this.store.dispatch(setGroupTeachingDays({groupId: generatedGroupId}))
-    this.store.dispatch(setGroupPeriods({groupId: generatedGroupId}))
-    this.store.dispatch(setGroupStartTime({groupId: generatedGroupId}))
-  } 
+    this.store.dispatch(addClassesGroup({ generatedGroupId }));
+    this.store.dispatch(
+      reassignClass({ class: classItem, groupId: generatedGroupId })
+    );
+    this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
+    this.store.dispatch(setGroupPeriods({ groupId: generatedGroupId }));
+    this.store.dispatch(setGroupStartTime({ groupId: generatedGroupId }));
+  }
   toggleActiveClass(classItem: ClassModel, classesGroup: ClassGroupModel) {
-    this.store.dispatch(reassignClass({class: classItem, classesGroup}))
+    this.store.dispatch(reassignClass({ class: classItem, classesGroup }));
   }
   isPresent(classes: ClassModel[], classItem: ClassModel) {
-    for(let i = 0; i < classes.length; i++) {
-      if(classes[i].id === classItem.id) {
-        return true
+    for (let i = 0; i < classes.length; i++) {
+      if (classes[i].id === classItem.id) {
+        return true;
       }
     }
     return false;
   }
-  computeClasses(classes: ClassModel[]){
-    const grades = classes.map(classItem => classItem.grade).sort((a, b)=> a -b);
+  computeClasses(classes: ClassModel[]) {
+    const grades = classes
+      .map(classItem => classItem.grade)
+      .sort((a, b) => a - b);
     const result = buildRangePipe(grades);
-    return result
+    return result;
   }
   ngOnInit(): void {
-    this.orphanedClasses = this.store.select(selectOrphanedClasses)
+    this.orphanedClasses = this.store.select(selectOrphanedClasses);
     this.teachingData = this.store.select(selectTeaching);
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
-        const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
-        return unsortedClassesCopy.sort((itemA, itemB)=> itemA.grade - itemB.grade)
+        const unsortedClassesCopy: ClassModel[] = JSON.parse(
+          JSON.stringify(unsortedClasses)
+        );
+        return unsortedClassesCopy.sort(
+          (itemA, itemB) => itemA.grade - itemB.grade
+        );
       })
-    )
+    );
   }
   onSubmit() {
     console.log('Hello');
@@ -78,33 +102,33 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
   }
   addToTempArr() {
     const generatedGroupId = uuid44();
-    this.store.dispatch(addClassesGroup({generatedGroupId}))
-    this.store.dispatch(addPeriodsToGroup({generatedGroupId}))
+    this.store.dispatch(addClassesGroup({ generatedGroupId }));
+    this.store.dispatch(addPeriodsToGroup({ generatedGroupId }));
   }
   selectStartTime($event: SelectedPeriodModel) {
-    this.store.dispatch(selectStartTime($event))
+    this.store.dispatch(selectStartTime($event));
   }
   onHourChange(timeChange) {
     let stringRepOfHour = '';
-    if(timeChange < 10) {
+    if (timeChange < 10) {
       stringRepOfHour = '0' + timeChange;
-    }else {
+    } else {
       stringRepOfHour = timeChange;
     }
-    const startTime = `${stringRepOfHour}:${this.min}`
+    const startTime = `${stringRepOfHour}:${this.min}`;
     this.hr = stringRepOfHour;
-    this.store.dispatch(setStartTime({startTime}))
+    this.store.dispatch(setStartTime({ startTime }));
   }
   onMinutesChange(timeChange) {
     let stringRepOfMin = '';
-    if(timeChange < 10) {
+    if (timeChange < 10) {
       stringRepOfMin = '0' + timeChange;
-    }else {
+    } else {
       stringRepOfMin = timeChange;
     }
-    const startTime = `${this.hr}:${stringRepOfMin}`
-    this.min = stringRepOfMin
-    this.store.dispatch(setStartTime({startTime}))
+    const startTime = `${this.hr}:${stringRepOfMin}`;
+    this.min = stringRepOfMin;
+    this.store.dispatch(setStartTime({ startTime }));
   }
   isWeekend(index) {
     if (index > 4) {
@@ -120,6 +144,100 @@ export class StartTimeOfEachPeriodComponent implements OnInit {
       return `0${value}`;
     } else {
       return value;
+    }
+  }
+
+  //new addition for multi select
+  popoverToggleVar = false;
+  _tempAllClasses;
+  _tempActiveArr = [];
+  toggleTempActive(classItem) {
+    let isNotActive = true;
+    this._tempActiveArr = this._tempActiveArr.filter((activeItem, index) => {
+      if (activeItem.id === classItem.id) {
+        isNotActive = false;
+        return false;
+      }
+      return true;
+    });
+    if (isNotActive) {
+      this._tempActiveArr.push(classItem);
+    }
+  }
+  isActiveInTemp(classItem) {
+    for (let i = 0; i < this._tempActiveArr.length; i++) {
+      if (this._tempActiveArr[i].id === classItem.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  popoverOpen(allClasses, activeArr) {
+    console.log('POPOVER OPEN', activeArr);
+    this._tempAllClasses = JSON.parse(JSON.stringify(allClasses));
+    this._tempActiveArr = JSON.parse(JSON.stringify(activeArr));
+
+    console.log(allClasses);
+  }
+
+  confirmSelection(classesGroup: ClassGroupModel) {
+    let diffClasses = [];
+
+    //check _tempActiveArr against classesGroup.item to determine any deletions
+    classesGroup.classes.forEach(classGroup => {
+      let classExistOnTempActiveArr = false;
+      for (let i = 0; i < this._tempActiveArr.length; i++) {
+        if (this._tempActiveArr[i].id === classGroup.id) {
+          classExistOnTempActiveArr = true;
+          break;
+        }
+      }
+      // console.log(classExistOnTempActiveArr);
+      if (!classExistOnTempActiveArr) {
+        diffClasses.push(classGroup);
+      }
+    });
+
+    //check classesGroup.item  against _tempActiveArr   to determine any additions
+    this._tempActiveArr.forEach(tempClassGroup => {
+      let classExistOnTempActiveArr = false;
+      for (let i = 0; i < classesGroup.classes.length; i++) {
+        if (classesGroup.classes[i].id === tempClassGroup.id) {
+          classExistOnTempActiveArr = true;
+          break;
+        }
+      }
+      // console.log(classExistOnTempActiveArr);
+      if (!classExistOnTempActiveArr) {
+        diffClasses.push(tempClassGroup);
+      }
+    });
+
+    console.log(diffClasses);
+    diffClasses.forEach(classItem => {
+      this.store.dispatch(reassignClass({ class: classItem, classesGroup }));
+      console.log('push to store');
+    });
+    console.log(this.popoverToggleVar);
+    this.popoverToggleVar = !this.popoverToggleVar;
+    console.log(this.popoverToggleVar);
+  }
+
+  confirmNewSelection(clickEvent: Event) {
+    console.log(this.popoverToggleVar);
+    this.popoverToggleVar = !this.popoverToggleVar;
+    console.log(this.popoverToggleVar);
+    if (this._tempActiveArr.length > 0) {
+      const generatedGroupId = uuid44();
+      this.store.dispatch(addClassesGroup({ generatedGroupId }));
+      this._tempActiveArr.forEach(classItem => {
+        this.store.dispatch(
+          reassignClass({ class: classItem, groupId: generatedGroupId })
+        );
+      });
+
+      this.store.dispatch(setGroupTeachingDays({ groupId: generatedGroupId }));
     }
   }
 }
