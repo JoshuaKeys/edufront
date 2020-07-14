@@ -9,7 +9,10 @@ import { ClassSectionService } from 'src/app/root-store/class-section.service';
 import { map, filter, take } from 'rxjs/operators';
 import { ISectionModel } from 'src/app/shared/models/section.model';
 import { TimetableFacadeService } from '../../services/timetable-facade.service';
-import { IClassSectionPeriodModel } from 'src/app/core/models/timetable';
+import {
+  IClassSectionPeriodModel,
+  ITimetableSavingModel
+} from 'src/app/core/models/timetable';
 import { Router } from '@angular/router';
 import { SubjectFormDialogComponent } from '../../component/subject-form-dialog/subject-form-dialog.component';
 
@@ -120,6 +123,10 @@ export class LayoutComponent implements OnInit {
     })
   );
   subjectsError$ = this.timetableFacade.subjectsUI$.pipe(map(ui => ui.error));
+  subjectsLoading$ = this.timetableFacade.subjectsUI$.pipe(
+    map(ui => ui.loading)
+  );
+  subjectsLoaded$ = this.timetableFacade.subjectsUI$.pipe(map(ui => ui.loaded));
   periodsList$: Observable<CalendarModel[]>;
   tt = [];
   periodsData = {};
@@ -133,6 +140,7 @@ export class LayoutComponent implements OnInit {
     private classService: ClassesService,
     private sectionService: ClassSectionService
   ) {
+    this.timetableFacade.resetTimetable();
     this.classService.getAll();
     this.sectionService.getWithQuery({ pageSize: '200' });
   }
@@ -346,12 +354,121 @@ export class LayoutComponent implements OnInit {
           });
 
           console.log('Data to submit');
-          console.log(Object.values(res));
-          // Object.values(res).forEach(timetable =>
-          //   this.timetableFacade.submitTimetable(timetable)
-          // );
+          const dataToSubmit = Object.values(res).reduce((result, item) => {
+            const existingClass =
+              result[item.classId] || ({} as ITimetableSavingModel);
+            const sectionList = existingClass.sectionList || [];
+            return {
+              ...result,
+              [item.classId]: {
+                ...existingClass,
+                classId: item.classId,
+                sectionList: sectionList.concat({
+                  sectionId: item.sectionId,
+                  periodRequestQ: item.periodRequestQ
+                })
+              }
+            };
+          }, {} as { [key: string]: ITimetableSavingModel });
+          console.log(Object.values(dataToSubmit));
+          this.timetableFacade.submitTimetable(Object.values(dataToSubmit));
         }
       });
+  }
+
+  // onSaveTimetable() {
+  //   this.timetableFacade.timetableData$
+  //     .pipe(take(1))
+  //     .subscribe(timetableData => {
+  //       const keys = Object.keys(timetableData);
+  //       if (keys.length > 0) {
+  //         let res: {
+  //           [key: string]: IClassSectionPeriodModel;
+  //         } = {};
+  //         keys.forEach(key => {
+  //           const [classId, sectionId, periodId] = key.split('--');
+  //           const item = timetableData[key];
+  //           const existingClass = res[`${classId}`];
+  //           const subject = item.data.find(d => Boolean(d.id));
+  //           const teacher = item.data.find(d => Boolean(d.profileId));
+  //           const periodRequest =
+  //             teacher && subject
+  //               ? {
+  //                   periodId,
+  //                   subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
+  //                   teacherId: (item.data.find(d => Boolean(d.profileId)) || {})
+  //                     .profileId
+  //                 }
+  //               : null;
+
+  //           if (existingClass) {
+  //             const sectionList = existingClass.sectionList || [];
+  //             let existingSection = sectionList.find(
+  //               list => list.sectionId === sectionId
+  //             );
+  //             let newSection;
+
+  //             if (existingSection) {
+  //               if (periodRequest) {
+  //                 existingSection = {
+  //                   ...existingSection,
+  //                   periodRequestQ: existingSection.periodRequestQ.concat(
+  //                     periodRequest
+  //                   )
+  //                 };
+  //               }
+  //             } else {
+  //               newSection = {
+  //                 periodRequestQ: periodRequest ? [periodRequest] : [],
+  //                 sectionId
+  //               };
+  //             }
+
+  //             res[`${classId}`] = {
+  //               ...existingClass,
+  //               sectionList: newSection
+  //                 ? this.addNewSection(existingClass.sectionList, newSection)
+  //                 : this.replaceSection(
+  //                     existingClass.sectionList,
+  //                     existingSection
+  //                   )
+  //             };
+  //           } else {
+  //             const firstPeriodRequest = periodRequest ? [periodRequest] : [];
+  //             res = {
+  //               ...res,
+  //               [`${classId}`]: {
+  //                 classId,
+  //                 sectionList: [
+  //                   {
+  //                     sectionId,
+  //                     periodRequestQ: firstPeriodRequest
+  //                   }
+  //                 ]
+  //               }
+  //             };
+  //           }
+  //         });
+
+  //         console.log('Data to submit');
+  //         console.log(Object.values(res));
+  //         // Object.values(res).forEach(timetable =>
+  //         //   this.timetableFacade.submitTimetable(timetable)
+  //         // );
+  //       }
+  //     });
+  // }
+
+  addNewSection(list: any[], section: any) {
+    return list.concat(section);
+  }
+  replaceSection(list: any[], section: any) {
+    return list.map(l => {
+      if (l.sectionId === section.sectionId) {
+        return section;
+      }
+      return l;
+    });
   }
 
   fetchSubjectsTeachers() {

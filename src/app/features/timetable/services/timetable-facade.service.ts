@@ -9,7 +9,8 @@ import {
   getTeachersAction,
   getSubjectsAction,
   updateTimetablePeriodAction,
-  submitTimetableAction
+  submitTimetableAction,
+  initTimetableAction
 } from '../ngrx/actions';
 import {
   selectTimetableSkeleton,
@@ -20,7 +21,10 @@ import {
   selectUi,
   selectSubjectsUI
 } from '../ngrx/selectors';
-import { IClassSectionPeriodModel } from 'src/app/core/models/timetable';
+import {
+  IClassSectionPeriodModel,
+  ITimetableSavingModel
+} from 'src/app/core/models/timetable';
 import {
   createSubjectRequest,
   createSubjectSuccess
@@ -49,6 +53,10 @@ export class TimetableFacadeService {
     private store: Store<TimetableFeatureState>,
     private actions$: Actions
   ) {}
+
+  resetTimetable() {
+    this.store.dispatch(initTimetableAction());
+  }
 
   getSekeletonByClassId(classId: string) {
     this.store.dispatch(getDayPlannerAction({ classId }));
@@ -79,7 +87,7 @@ export class TimetableFacadeService {
     this.store.dispatch(updateTimetablePeriodAction(data));
   }
 
-  submitTimetable(timetable: IClassSectionPeriodModel) {
+  submitTimetable(timetable: ITimetableSavingModel[]) {
     this.store.dispatch(submitTimetableAction({ timetable }));
   }
 
