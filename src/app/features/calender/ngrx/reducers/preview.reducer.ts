@@ -417,6 +417,7 @@ export const previewReducer = createReducer(
       });
       if (teachingDaysSelected) {
         period.startTime = state.teachingDays.startTime;
+        console.log(period.startTime)
       }
       return period;
     });
@@ -427,10 +428,6 @@ export const previewReducer = createReducer(
   }),
   on(setAllStartTime, (state, action) => {
     const stateCopy: PreviewModel = JSON.parse(JSON.stringify(state));
-    // console.log('SET START TIME @ REDUCER FOR PREVIEW');
-    // console.log(stateCopy.periods.items);
-    // console.log(stateCopy);
-    // console.log(action);
     stateCopy.teachingDays.classesAndGroupItems = stateCopy.teachingDays.classesAndGroupItems.map(
       groupItem => {
         let periods = groupItem.periods.map(period => ({
@@ -440,25 +437,7 @@ export const previewReducer = createReducer(
         return { ...groupItem, periods };
       }
     );
-    // const updatedClassesAndGroups = stateCopy.teachingDays.classesAndGroupItems.map(
-    //   classesAndGroup => {
-    //     const updatedPeriods = classesAndGroup.periods.map(period => {
-    //       const teachingDaysSelected = classesAndGroup.teachingDays.find(
-    //         teachingDay => {
-    //           return teachingDay.day === period.day && teachingDay.selected;
-    //         }
-    //       );
-    //       if (teachingDaysSelected) {
-    //         period.startTime = action.startTime;
-    //       }
-    //       return period;
-    //     });
-    //     classesAndGroup.periods = updatedPeriods;
-    //     return classesAndGroup;
-    //   }
-    // );
-    // stateCopy.teachingDays.classesAndGroupItems = updatedClassesAndGroups;
-    // stateCopy.teachingDays.startTime = action.startTime;
+    stateCopy.teachingDays.startTime = action.startTime
     return stateCopy;
   }),
   on(assignPeriodsToTeachingDates, (state, action) => {
