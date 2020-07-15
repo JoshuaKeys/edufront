@@ -550,6 +550,12 @@ export class TimetableComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any[]>, ...periodData: string[]) {
+    if (event.container.id === event.previousContainer.id) {
+      // Sometimes when drag&drop from period to another period where drop is not allowed
+      // item returns back to original period and triggers validation
+      // That is why we are comparing ID of container and previousContainer
+      return;
+    }
     if (event.item.data.type === 'teacher') {
       const isAvailable = this.isTeacherAvailable(
         event.item.data.item,
@@ -567,8 +573,9 @@ export class TimetableComponent implements OnInit {
           tooltipRef.instance.text =
             'This teacher is teaching already at selected time';
           setTimeout(() => {
+            tooltipRef.destroy();
             this.overlayRef.detach();
-          }, 2000);
+          }, 5000);
         }, 80);
         return false;
       }
@@ -602,6 +609,17 @@ export class TimetableComponent implements OnInit {
     );
 
     this.timetableFacade.updateTimetableData(updatePeriodData);
+
+    if (event.item.data.sourcePeriod) {
+      const updatePreviousPeriodData = this.getUpdatePeriodData(
+        event.previousContainer.data,
+        event.item.data.sourcePeriod
+      );
+
+      this.timetableFacade.updateTimetableData(updatePreviousPeriodData);
+    }
+
+    this.updateDataRefFromStore();
 
     this.render.removeClass(
       event.previousContainer.element.nativeElement,
@@ -696,7 +714,6 @@ export class TimetableComponent implements OnInit {
   }
 
   onRemoveFromTimetable(items: any[], index: number, ...periodData: string[]) {
-    console.log(this.droplists);
     items.splice(index, 1);
     const updatePeriodData = this.getUpdatePeriodData(items, periodData);
 
