@@ -263,45 +263,29 @@
     <button
       ButtonType="basic"
       class="button--update"
-      (click)="computeModifications()"
+      (click)="showConfirmationModal()"
     >
       Update Timetable
     </button>
   </div>
 </div>
-<edu-modal [(ngModel)]="modalIsActive">
+<edu-modal
+  *ngIf="consequences | async as consequences"
+  [value]="consequences && consequences.length"
+>
   <div class="modal__content">
-    <h3>These are the consequences:</h3>
+    <h3 class="modal__header">These are the consequences:</h3>
     <div class="consequences">
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
+      <div class="consequence" *ngFor="let consequence of consequences">
+        <span>{{ consequence }}</span>
       </div>
     </div>
-    <h3>Are you sure you wish to continue?</h3>
+    <h3 class="modal__content-question">Are you sure you wish to continue?</h3>
     <div class="button__wrapper">
-      <button
-        class="button button--cancel"
-        ButtonType="outline"
-        (click)="goBack()"
-      >
+      <button class="button button--cancel" (click)="goBack()">
         cancel
       </button>
-      <button class="button button--update" ButtonType="basic">
+      <button class="button button--update" (click)="computeModifications()">
         update
       </button>
     </div>

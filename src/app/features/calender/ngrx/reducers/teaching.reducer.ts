@@ -50,7 +50,8 @@ import {
   setHasAssemblyStatus,
   setSameBreakScheduleStatus,
   updateBreakData2,
-  updateSameBreakData2
+  updateSameBreakData2,
+  setConsequences
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -101,6 +102,11 @@ export const teachingReducer = createReducer(
     stateCopy.calendarEdit.teachingPeriods = updatedPeriod;
     return stateCopy;
   }),
+  on(setConsequences, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.calendarEdit.consequences = action.consequences
+    return stateCopy;
+  }),
   on(setAssemblyEnabledMode, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
     stateCopy.calendarEdit.isAssemblyIncluded = action.isEnabled;
@@ -128,7 +134,7 @@ export const teachingReducer = createReducer(
   }),
   on(toggleEditTeachingActive, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const classToEdit = stateCopy.calendarEdit.teachingDays.findIndex(day => {
+    const dayToEdit = stateCopy.calendarEdit.teachingDays.findIndex(day => {
       return day.day === action.day;
     });
     const periodToEdit = stateCopy.calendarEdit.teachingPeriods.findIndex(
@@ -136,31 +142,34 @@ export const teachingReducer = createReducer(
         return period.day === action.day;
       }
     );
+    const lengthOfClasses = stateCopy.calendarEdit.teachingDays.filter(teachingDay => teachingDay.selected).length
+    if (lengthOfClasses !== 1 || (lengthOfClasses === 1 && !stateCopy.calendarEdit.teachingDays[dayToEdit].selected)) {
+      // Affect periods start time
+      if (stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime != '0') {
+        stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime = '0';
+      } else {
+        stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime =
+          stateCopy.startTime;
+      }
 
-    // Affect periods start time
-    if (stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime != '0') {
-      stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime = '0';
-    } else {
-      stateCopy.calendarEdit.teachingPeriods[periodToEdit].startTime =
-        stateCopy.startTime;
+      // Affect teaching period
+      if (
+        stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods.length > 0
+      ) {
+        stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods = [];
+      } else {
+        // Change this:
+        // const periodNumber = stateCopy.teachingDays[periodToEdit].periods.length;
+        stateCopy.calendarEdit.teachingPeriods[
+          periodToEdit
+        ].periods = generatePeriodFromNumber(8);
+      }
+
+      stateCopy.calendarEdit.teachingDays[
+        dayToEdit
+      ].selected = !action.selected;
     }
 
-    // Affect teaching period
-    if (
-      stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods.length > 0
-    ) {
-      stateCopy.calendarEdit.teachingPeriods[periodToEdit].periods = [];
-    } else {
-      // Change this:
-      // const periodNumber = stateCopy.teachingDays[periodToEdit].periods.length;
-      stateCopy.calendarEdit.teachingPeriods[
-        periodToEdit
-      ].periods = generatePeriodFromNumber(8);
-    }
-
-    stateCopy.calendarEdit.teachingDays[
-      classToEdit
-    ].selected = !action.selected;
     return stateCopy;
   }),
   on(toggleEditClassActive, (state, action) => {
@@ -168,8 +177,13 @@ export const teachingReducer = createReducer(
     const classToEdit = stateCopy.calendarEdit.classes.findIndex(classItem => {
       return classItem.name === action.name;
     });
-    stateCopy.calendarEdit.classes[classToEdit].selected = !stateCopy
-      .calendarEdit.classes[classToEdit].selected;
+    const lengthOfClasses = stateCopy.calendarEdit.classes.filter(classItem => classItem.selected).length
+    if (lengthOfClasses !== 1) {
+      stateCopy.calendarEdit.classes[classToEdit].selected = !stateCopy
+        .calendarEdit.classes[classToEdit].selected;
+    } else if (lengthOfClasses === 1 && !stateCopy.calendarEdit.classes[classToEdit].selected) {
+      stateCopy.calendarEdit.classes[classToEdit].selected = true;
+    }
     return stateCopy;
   }),
   on(editCalendar, (state, action) => {

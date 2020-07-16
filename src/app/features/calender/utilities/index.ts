@@ -12,6 +12,9 @@ import { TeachingStateModel } from '../models/teaching-state.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../models/teaching-day.model';
+import { ExtendedClassModel } from '../../subjects/models/extend-class.model';
+import { group } from 'console';
+import { CalendarModalModel } from '../models/calender-modal.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -460,4 +463,164 @@ export function defineDays(teachingData: Observable<TeachingDay[]>) {
       return result;
     })
   );
+}
+export function areClassesEqual(classesA: ExtendedClassModel[], classesB: ExtendedClassModel[]) {
+  console.log(classesA, classesB)
+  if (classesA.length !== classesB.length) {
+    return false;
+  }
+  for (let i = 0; i < classesA.length; i++) {
+    let found = false;
+    for (let i = 0; i < classesB.length; i++) {
+      if (classesA[i].id === classesB[i].id) {
+        found = true;
+        break;
+      }
+    }
+    if (found === false) {
+
+      return false;
+    }
+  }
+  return true;
+}
+export function computeScenarioOne(editState: CalendarUpdateModel, classes: ClassModel[]) {
+  const strings = [];
+
+  const teachingDays = editState.teachingDays.filter(teachingDay => teachingDay.selected)
+  const classesRange = classes.map(classItem => classItem.grade).sort((gradeA, gradeB) => gradeA - gradeB);
+  const teachingDaysStr = teachingDays.map(teachingDay => teachingDay.day).join(', ');
+  strings.push(`Original class (${buildRangePipe(classesRange)}) will have teaching days ${teachingDaysStr}`)
+
+  let periodsStr = `Original class (${buildRangePipe(classesRange)}) will have `
+  const teachingPeriods = editState.teachingPeriods.filter(period => period.periods.length > 0)
+  teachingPeriods.forEach(period => {
+    periodsStr += `${period.periods.length} period(s) on ${period.day} `
+  });
+  strings.push(periodsStr);
+
+  let startingTimesStr = `Original class (${buildRangePipe(classesRange)}) will have starting time at `;
+  teachingPeriods.forEach(period => {
+    startingTimesStr += `${period.startTime} on ${period.day} `;
+  });
+  strings.push(startingTimesStr);
+  return strings;
+}
+export function testForScenarioTwo(editState: CalendarUpdateModel, classes: ClassModel[]) {
+  let found = false;
+  for (let i = 0; i < editState.group.classes.length; i++) {
+    const isPresent = classes.find(classItem => editState.group.classes[i].id === classItem.id);
+    if (!isPresent) {
+      return false;
+    }
+  }
+  if (editState.group.classes.length < classes.length) {
+    return true;
+  }
+  return false;
+}
+export function testForScenarioFour(editState: CalendarUpdateModel, classes: ClassModel[]) {
+  let found = false;
+  console.log(classes, editState.group.classes)
+  for (let i = 0; i < editState.classes.length; i++) {
+    const isPresent = classes.find(classItem => classItem.id === editState.classes[i].id)
+    if (!isPresent) {
+      console.log(isPresent)
+      return true;
+    }
+  }
+
+  return false;
+}
+export function checkForOtherCalendarModifications(editState: CalendarUpdateModel, classes: ClassModel[]) {
+  const newTeachingDays = editState.teachingDays.filter(teachingDay => teachingDay.selected);
+  const oldTeachingDays = editState.group.teachingDays.filter(teachingDay => teachingDay.selected);
+  if (newTeachingDays.length !== oldTeachingDays.length) {
+    return true;
+  } else {
+    for (let i = 0; i < newTeachingDays.length; i++) {
+      if (!oldTeachingDays.find(teachingDay => teachingDay.day === newTeachingDays[i].day)) {
+        return true
+      }
+    }
+
+  }
+
+  const oldTeachingPeriods = editState.teachingPeriods.filter(teachingPeriod => teachingPeriod.periodSelected);
+  const newTeachingPeriods = editState.group.periods.filter(period => period.periodSelected);
+  if (newTeachingPeriods.length !== oldTeachingPeriods.length) {
+    return true;
+  } else {
+    for (let i = 0; i < newTeachingPeriods.length; i++) {
+      if (!oldTeachingPeriods.find(period => period.periods.length === newTeachingPeriods[i].periods.length)) {
+        return true
+      }
+    }
+  }
+
+  const newStartTimePeriods = editState.teachingPeriods.filter(teachingPeriod => teachingPeriod.startTime !== '0')
+  const oldStartTimePeriods = editState.group.periods.filter(period => period.startTime !== '0');
+  if (newStartTimePeriods.length !== oldStartTimePeriods.length) {
+    return true;
+  } else {
+    for (let i = 0; i < oldStartTimePeriods.length; i++) {
+
+      if (!oldStartTimePeriods.find(period => period.day === oldStartTimePeriods[i].day)) {
+        return true;
+      } else if (!oldStartTimePeriods.find(period => period.day === oldStartTimePeriods[i].day && period.startTime === oldStartTimePeriods[i].startTime)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+export function computeScenarioTwo(editState: CalendarUpdateModel, classes) {
+  const strings = [];
+  const teachingDays = editState.teachingDays.filter(teachingDay => teachingDay.selected)
+  const classesRange = classes.map(classItem => classItem.grade).sort((gradeA, gradeB) => gradeA - gradeB);
+  const teachingDaysStr = teachingDays.map(teachingDay => teachingDay.day).join(', ');
+  strings.push(`New Classes will have teaching days ${teachingDaysStr}`)
+
+  let periodsStr = `New Classes will have `
+  const teachingPeriods = editState.teachingPeriods.filter(period => period.periods.length > 0)
+  teachingPeriods.forEach(period => {
+    periodsStr += `${period.periods.length} period(s) on ${period.day} `
+  });
+  strings.push(periodsStr);
+
+  let startingTimesStr = `New classes will have starting time at `;
+  teachingPeriods.forEach(period => {
+    startingTimesStr += `${period.startTime} on ${period.day} `;
+  });
+  strings.push(startingTimesStr);
+  return strings;
+}
+export function computeScenarioThree(editState: CalendarUpdateModel, classes) {
+  const strings = [];
+  strings.push(`All Classes will have changed configuration`)
+  strings.push(`New Classes will have ripple effects`);
+  return strings;
+}
+export function computeScenarios(editState: CalendarUpdateModel) {
+  const group = editState.group;
+  const classes = editState.classes.filter(classItem => classItem.selected)
+  let message: string[];
+  if (areClassesEqual(classes, group.classes)) {
+    // Scenario one
+    const message = computeScenarioOne(editState, classes);
+    return message;
+  } else {
+    // Compute other scenarios
+    if (testForScenarioTwo(editState, classes)) {
+      if (!checkForOtherCalendarModifications(editState, classes)) {
+        return computeScenarioTwo(editState, classes);
+      }
+      return computeScenarioThree(editState, classes);
+
+    }
+
+    if (testForScenarioFour(editState, classes)) {
+      return computeScenarioTwo(editState, classes);
+    }
+  }
 }

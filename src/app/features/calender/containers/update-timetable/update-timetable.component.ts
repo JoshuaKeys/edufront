@@ -10,7 +10,8 @@ import { ClassModel } from 'src/app/shared/models/class.model';
 import {
   selectAllClasses,
   selectTeachingDays,
-  selectTeaching
+  selectTeaching,
+  selectConsequences
 } from '../../ngrx/selectors';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
@@ -30,7 +31,8 @@ import {
   setAssemblyEnabledMode,
   computeModifications,
   updateEditStartTime,
-  updateTeachingPeriod
+  updateTeachingPeriod,
+  requestUpdatedDetails
 } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
@@ -51,6 +53,7 @@ export class UpdateTimetableComponent implements OnInit {
   intervals: { duration: number; text: string }[] = [];
   timeArr = Array(60);
   modalIsActive = false;
+  consequences: Observable<string[]>;
   durations: { duration: number; text: string }[] = [];
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   periodDurations = [
@@ -84,7 +87,7 @@ export class UpdateTimetableComponent implements OnInit {
     private store: Store<CalendarStateModel>,
     private location: Location,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
@@ -99,6 +102,7 @@ export class UpdateTimetableComponent implements OnInit {
     this.updateAssemblyData('duration', `${event}`);
   }
   ngOnInit(): void {
+    this.consequences = this.store.select(selectConsequences);
     for (let i = 0; i < this.timeArr.length; i++) {
       this.durations.push({ duration: i + 1, text: `${i + 1} mins` });
     }
@@ -119,15 +123,15 @@ export class UpdateTimetableComponent implements OnInit {
       })
     );
   }
-  updateInterval(interval) {}
-  onSetPeriodDuration(duration) {}
+  updateInterval(interval) { }
+  onSetPeriodDuration(duration) { }
   toggleClassActive(event) {
     this.store.dispatch(toggleEditClassActive({ name: event }));
   }
   toggleActive(event) {
     this.store.dispatch(toggleEditTeachingActive(event));
   }
-  setStartTime(event, idx) {}
+  setStartTime(event, idx) { }
   loadAssemblyStartTime(time) {
     if (time.duration) {
       return time.duration;
@@ -175,14 +179,17 @@ export class UpdateTimetableComponent implements OnInit {
     this.store.dispatch(updateEditStartTime(event));
   }
   updateTeachingPeriod(event) {
-    console.log(event);
     this.store.dispatch(updateTeachingPeriod(event));
   }
   computeModifications() {
+
     this.store.dispatch(computeModifications());
   }
   goBack() {
     this.location.back();
+  }
+  showConfirmationModal() {
+    this.store.dispatch(requestUpdatedDetails())
   }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
@@ -280,3 +287,8 @@ export class UpdateTimetableComponent implements OnInit {
     return arr.reduce((a, b) => `${a},${b}`);
   }
 }
+
+
+
+
+

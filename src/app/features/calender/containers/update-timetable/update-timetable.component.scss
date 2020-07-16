@@ -226,3 +226,38 @@ button.button--bottom {
     margin: 0 10px;
   }
 }
+
+.consequence {
+  background: #ef53500d 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  padding: 10px 20px;
+}
+.modal__content-question {
+  text-align: center;
+}
+.button--cancel,
+.button--update {
+  width: 155px;
+  height: 40px;
+  margin: 0 20px;
+  padding: 0;
+  border-radius: 100px;
+  box-shadow: 0px 4px 8px #3c4b9b26;
+  text-transform: uppercase;
+  position: relative;
+  font: 700 12px/20px Raleway;
+}
+.button--cancel {
+  border: 2px solid #69a9f2;
+  color: #69a9f2;
+  background: #fff;
+}
+.button--update {
+  color: white;
+  background: #69a9f2;
+  border: none;
+}
+.modal__header {
+  text-align: center;
+}

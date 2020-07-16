@@ -4,9 +4,10 @@ import { PeriodModel } from './period.model';
 import { ClassGroupModel } from './class-group.model';
 
 export interface CalendarUpdateModel {
-    classes?: ExtendedClassModel[];
-    teachingDays?: TeachingDay[];
-    teachingPeriods?: PeriodModel[];
-    group?: ClassGroupModel,
-    isAssemblyIncluded?: boolean;
+  classes?: ExtendedClassModel[];
+  teachingDays?: TeachingDay[];
+  teachingPeriods?: PeriodModel[];
+  group?: ClassGroupModel,
+  isAssemblyIncluded?: boolean;
+  consequences?: string[]
 }

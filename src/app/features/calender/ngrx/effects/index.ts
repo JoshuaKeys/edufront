@@ -5,14 +5,14 @@ import {
   fetchHolidaysResponse, fetchClassesAndGroups,
   fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
   updateSelectedTeachingDaysRequest,
-  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData, editCalendar, setAssemblyEnabledMode
+  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData, editCalendar, setAssemblyEnabledMode, requestUpdatedDetails, setConsequences
 } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeachingDays, getAllSelectedClassPeriods, selectCreateCalendarData, selectTeaching, selectCalendar } from '../selectors';
-import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly, extractTimetableData } from '../../utilities';
+import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly, extractTimetableData, computeScenarios } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { PeriodModel } from '../../models/period.model';
 import { v4 as uuid44 } from 'uuid';
@@ -56,6 +56,14 @@ export class CalendarEffects {
     mergeMap(action => this.calendarService.getAllClasses().pipe(
       map(classes => getAllClassesResponse({ classes }))
     ))
+  ))
+  requestUpdateDetails = createEffect(() => this.actions$.pipe(
+    ofType(requestUpdatedDetails),
+    withLatestFrom(this.store.select(selectTeaching)),
+    map(([action, teachingState]) => {
+      const consequences: string[] = computeScenarios(teachingState.calendarEdit)
+      return setConsequences({ consequences });
+    })
   ))
   computeModifications$ = createEffect(() => this.actions$.pipe(
     ofType(computeModifications),
