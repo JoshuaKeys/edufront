@@ -37,6 +37,8 @@ $blue: #69a9f2;
 $pink: #fd7fc2;
 $purple: #8787f6;
 $grey: #e6e9f3;
+$maxHeight: calc(100vh - 70px);
+
 //Partials
 .fit-to-page {
   height: 100%;
@@ -52,7 +54,7 @@ $grey: #e6e9f3;
 }
 
 .content {
-  min-height: calc(100vh - 70px);
+  min-height: $maxHeight;
   @include displayFlex(center, center, column);
   &__title {
     font: 600 26px/36px Quicksand;
@@ -105,6 +107,7 @@ $grey: #e6e9f3;
   }
   &--active {
     background: $blue;
+    border-color: $blue;
     color: white;
   }
   &--disabled {
@@ -191,5 +194,41 @@ $grey: #e6e9f3;
     &__delete-btn {
       user-select: auto;
     }
+  }
+}
+
+.search {
+  border: 1px solid $grey;
+  border-radius: 100px;
+  padding-left: 32px;
+  padding-right: 5px;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+  @include displayFlex(center, center);
+
+  &::after {
+    display: block;
+    content: '';
+    @include absoluteVertCenter();
+    width: 10px;
+    height: 10px;
+    // background: red;
+    background: url('/assets/search.svg') no-repeat no-repeat center center;
+    background-size: cover;
+    left: 8px;
+  }
+  &__input {
+    border: 0px;
+    height: 95%;
+    outline: none;
+    color: $black;
+    font: 400 14px/32px Raleway;
+    min-width: unset;
+    width: auto;
+    background: transparent;
+  }
+  &__input::placeholder {
+    color: $grey;
   }
 }
