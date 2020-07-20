@@ -1,12 +1,8 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-  ElementRef,
-  Renderer2
-} from '@angular/core';
-import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
+import { ModalService } from '../modal/modal.service';
+
+import { TestingComponentComponent } from './testing-component/testing-component.component';
 
 @Component({
   selector: 'edu-modal-test',
@@ -15,13 +11,19 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalTestComponent implements OnInit {
-  constructor(private renderer: Renderer2) {}
+  constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}
-  modalIsActive = false;
-  addActiveClass() {
-    this.modalIsActive = true;
-    // console.log(this.modalTest.nativeElement);
-    // this.renderer.addClass(this.modalTest.nativeElement, 'active');
+  openModal() {
+    let params = {
+      title: 'this is a injected el title',
+
+      desc: 'this is another desc',
+      random123: 'blah blaj'
+    };
+    this.modalService.addModal(TestingComponentComponent, params);
+  }
+  closeModal() {
+    this.modalService.clearModal();
   }
 }

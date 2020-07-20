@@ -1,0 +1,71 @@
+<div class="content sub-menu-list-tab">
+  <h3 class="content__title">
+    These are the Class and Groups set up in your School
+  </h3>
+  <p class="content__desc">Add, drag, drop and edit</p>
+  <div class="badges">
+    <div
+      class="badge badge--active"
+      *ngFor="let badge of badgeArr; let idx = index"
+    >
+      <span>{{ idx + 1 }}</span>
+    </div>
+    <div class="badge badge--disabled">
+      <span>21</span>
+    </div>
+    <div class="badge badge--edit">
+      <div class="signs">
+        <span>+</span>
+        <span>-</span>
+      </div>
+
+      <edu-popover>
+        <div class="badges badges--popover">
+          <div
+            class="badge badge--small badge--active"
+            *ngFor="let badge of badgeArr; let idx = index"
+          >
+            <span>{{ idx + 1 }}</span>
+          </div>
+        </div>
+      </edu-popover>
+    </div>
+  </div>
+
+  <div class="content__body scrollable">
+    <div class="dropzones">
+      <div class="dropzone" *ngFor="let dropzone of dropZoneArr">
+        <div class="dropzone__title-wrapper">
+          <h5 class="dropzone__title">{{ dropzone.title }}</h5>
+          <button ButtonType="icon" class="dropzone__delete-btn">
+            <edu-popover
+              class="delete-popover"
+              alignment="top"
+              pointerAlignment="right"
+            >
+              <div class="delete-popover__text">
+                Are you sure you want to delete this group?
+              </div>
+              <div class="delete-popover__buttons">
+                <button
+                  class="delete-popover__button delete-popover__button--cancel"
+                  ButtonType="basic"
+                >
+                  cancel
+                </button>
+                <button
+                  class="delete-popover__button delete-popover__button--delete"
+                  ButtonType="outline"
+                >
+                  delete
+                </button>
+              </div>
+            </edu-popover>
+            <img src="assets/admin/buttons/delete.svg" />
+          </button>
+        </div>
+      </div>
+      <div class="dropzone dropzone--create"><span>+</span></div>
+    </div>
+  </div>
+</div>

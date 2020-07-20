@@ -1,0 +1,38 @@
+.modal__overlay {
+  z-index: 5;
+  width: 300vw;
+  height: 300vh;
+  left: -100vw;
+  top: -100vh;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.modal__wrapper {
+  display: flex;
+  box-sizing: border-box;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  box-shadow: 0px 5px 10px #a6adce1a;
+  border: 1px solid #e6e9f3;
+  border-radius: 15px;
+  background: white;
+  & > * {
+    position: relative;
+  }
+}
+:host {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: -100;
+  display: none;
+  overflow: hidden;
+}
+
+:host.active {
+  z-index: 100;
+  display: block;
+  overflow: visible;
+}

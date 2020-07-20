@@ -18,7 +18,12 @@ import { TimepickerTestComponent } from './timepicker-test/timepicker-test.compo
 import { SliderTestComponent } from './slider-test/slider-test.component';
 import { ModalTestComponent } from './modal-test/modal-test.component';
 import { NgmodelTestComponent } from './ngmodel-test/ngmodel-test.component';
+import { ModalModule } from './modal/modal.module';
+
+import { TestingComponentComponent } from './modal-test/testing-component/testing-component.component';
+
 const components = [
+  TestingComponentComponent,
   NgmodelTestComponent,
   ModalTestComponent,
   TimepickerTestComponent,
@@ -39,6 +44,7 @@ const components = [
 @NgModule({
   declarations: components,
   imports: [
+    ModalModule,
     CommonModule,
     uiTestRoutingModule,
     SharedModule,

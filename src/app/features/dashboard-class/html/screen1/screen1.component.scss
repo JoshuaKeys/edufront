@@ -1,0 +1,48 @@
+@import 'src/app/features/dashboard-class/dashboard-class-shared';
+.scrollable {
+  max-height: calc(100vh - 300px);
+  overflow: scroll;
+}
+
+.delete-popover {
+  right: -9px;
+  max-width: 377px;
+  padding: 30px;
+  &__text {
+    width: 90%;
+    white-space: normal;
+    text-align: center;
+    margin: auto;
+
+    margin-top: 20px;
+    color: $black;
+    font: 600 20px/28px Quicksand;
+  }
+  &__buttons {
+    @include displayFlex();
+    margin-top: 30px;
+    //this nested selector is needed to overwrite default component styling
+    .delete-popover {
+      &__button {
+        width: 144px;
+        height: 40px;
+        &:first-child {
+          margin-right: 18px;
+        }
+      }
+
+      &__button--cancel {
+      }
+      &__button--delete {
+        color: $red;
+        border-color: $red;
+
+        &:hover {
+          border-color: $red;
+          background-color: $red;
+          color: white;
+        }
+      }
+    }
+  }
+}
