@@ -1,0 +1,56 @@
+@import 'src/app/features/dashboard-calendar/dashboard-calendar-shared';
+.content {
+  @include displayFlex(flex-start, flex-start, column);
+  height: $maxHeight;
+}
+
+.content__header {
+  @include displayFlex(space-between);
+  width: 100%;
+  height: 56px;
+  font: 600 20px/56px Quicksand;
+  padding: 0 18px 0 25px;
+  border-bottom: 1px solid $grey;
+}
+
+.selector {
+  position: relative;
+  cursor: pointer;
+
+  edu-popover {
+    padding: 0;
+  }
+  &--year {
+    margin-right: 12px;
+  }
+
+  &__options {
+    padding: 6px 0;
+    list-style: none;
+    margin: 0;
+    max-height: 250px;
+    overflow: auto;
+  }
+  &__option {
+    cursor: pointer;
+    padding: 0 16px;
+    font: 400 14px/44px Raleway;
+    min-height: 44px;
+    margin: 0;
+    min-width: 113px;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  &__option:hover {
+    background: #fafbfc;
+  }
+  &__option.active {
+    color: $blue;
+  }
+}
+
+.button.button--substitute-teacher {
+  height: 32px;
+  width: 171px;
+}

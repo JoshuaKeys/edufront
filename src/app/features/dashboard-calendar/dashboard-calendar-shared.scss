@@ -1,0 +1,40 @@
+//mixins
+@mixin absoluteCenter() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fixedCenter() {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absoluteVertCenter() {
+  position: absolute;
+
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin displayFlex($justify: center, $align: center, $direction: row) {
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  display: flex;
+}
+
+//Variables
+$red: #ef5350;
+$black: #212121;
+$ash: #a5aec7;
+$blue: #69a9f2;
+$pink: #fd7fc2;
+$purple: #8787f6;
+$grey: #e6e9f3;
+$maxHeight: calc(100vh - 70px);
+
+//PARTIALS

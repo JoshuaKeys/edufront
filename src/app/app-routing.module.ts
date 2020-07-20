@@ -17,6 +17,14 @@ const routes: Routes = [
         m => m.DashboardClassModule
       )
   },
+  {
+    path: 'dashboard-calendar',
+
+    loadChildren: () =>
+      import('./features/dashboard-calendar/dashboard-calendar.module').then(
+        m => m.DashboardCalendarModule
+      )
+  },
 
   {
     path: 'admin',

@@ -1,0 +1,25 @@
+<div class="content">
+  <div class="content__header">
+    <span
+      ><span class="selector selector--year"
+        >2019
+        <edu-popover
+          pointerAlignment="left"
+          (edu-open)="log('open')"
+          (edu-close)="log('close')"
+        >
+          <ul class="selector__options">
+            <li class="selector__option" *ngFor="let year of yearOptions">
+              {{ year }}
+            </li>
+          </ul>
+        </edu-popover>
+      </span>
+      <span class="selector selector--term">All Terms</span></span
+    >
+    <button class=" button  button--substitute-teacher" ButtonType="outline">
+      Substitute teacher
+    </button>
+  </div>
+  <div class="content__body"></div>
+</div>
