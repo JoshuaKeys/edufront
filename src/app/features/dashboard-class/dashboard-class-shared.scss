@@ -105,17 +105,17 @@ $maxHeight: calc(100vh - 70px);
   & > * {
     @include absoluteCenter();
   }
-  &--active {
+  &--active.badge {
     background: $blue;
     border-color: $blue;
-    color: white;
+    color: white !important;
   }
-  &--disabled {
+  &--disabled.badge {
     cursor: not-allowed;
     //not sure if this is what we want
     //   cursor: default;
     background: $grey;
-    color: white;
+    color: white !important;
     border-color: $grey;
   }
 
@@ -230,5 +230,43 @@ $maxHeight: calc(100vh - 70px);
   }
   &__input::placeholder {
     color: $grey;
+  }
+}
+.placeholder-text {
+  @include absoluteCenter();
+  text-align: center;
+  color: $ash;
+  font: 400 16px/24px Raleway;
+}
+//student pills
+
+.pills {
+  overflow: auto;
+  height: 290px;
+  width: 260px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.pill {
+  cursor: pointer;
+  height: 32px;
+  font: 600 12px/32px Raleway;
+  border: 1px solid;
+  border-radius: 100px;
+  padding: 0 12px;
+  margin: 5px;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &--male,
+  &--subject {
+    color: $blue;
+    border-color: $blue;
+  }
+
+  &--female {
+    color: $pink;
+    border-color: $pink;
   }
 }

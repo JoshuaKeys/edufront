@@ -1,1 +1,93 @@
-<p>screen20 works!</p>
+<div class="content subjects-tab fit-to-page">
+  <p class="content__desc">
+    Assign subjects to classes by selecting one or multiple classes on the left
+    and selecting/dropping the subjects from the right
+  </p>
+
+  <div class="content__body   ">
+    <div class="badges">
+      <!-- can ADD badge--active or badge--disabled to adjust styling -->
+      <div class="badge badge--all"><span>All</span></div>
+      <div class="badge  " *ngFor="let badge of badgeArr; let idx = index">
+        <span>{{ idx + 1 }}</span>
+      </div>
+    </div>
+    <div class="dropzone">
+      <span class="placeholder-text"
+        >No <b class="orangecolor">class</b> selected</span
+      >
+    </div>
+  </div>
+</div>
+
+<aside class="aside">
+  <div class="search">
+    <input class="search__input" type="text" placeholder="Search students" />
+  </div>
+  <button
+    class="aside__button"
+    (click)="toggleSidePanel()"
+    ButtonType="outline"
+    class="aside__button aside__button--add-students"
+  >
+    +
+  </button>
+  <div class="aside__body pills">
+    <div class="pill pill--subject " *ngFor="let subject of subjectsArr">
+      <span>{{ subject }}</span>
+    </div>
+  </div>
+</aside>
+
+<div class="side-panel" [ngClass]="{ active: sidePanelIsActive }">
+  <div class="side-panel__header">
+    <button (click)="toggleSidePanel()" ButtonType="icon">x</button>
+  </div>
+  <div class="side-panel__body">
+    <div class="side-panel__title">
+      <div class="side-panel__subject-icon icon--large">
+        <img src="assets/admin/class-subjects/img-placeholder.svg" alt="" />
+      </div>
+      <input class="side-panel__input" type="text" value="Mathematics" />
+
+      <button class="delete-btn" ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" />
+      </button>
+    </div>
+    <div class="subject-activities__wrapper">
+      <div class="side-panel__subjects">
+        <div *ngFor="let subject of subSubjectsArr" class="side-panel__subject">
+          <div class="side-panel__subject-icon">
+            <img src="assets/admin/class-subjects/img-placeholder.svg" alt="" />
+          </div>
+          <input class="side-panel__input" type="text" [value]="subject" />
+          <button class="delete-btn" ButtonType="icon">
+            <img src="assets/admin/buttons/delete.svg" />
+          </button>
+        </div>
+
+        <button class="side-panel__create roundbtn" ButtonType="outline">
+          <img src="assets/admin/form/add-16px-black.svg" alt="" />
+        </button>
+      </div>
+      <div class="side-panel__activities">
+        <div class="side-panel__subject">
+          <div class="side-panel__activity-icon">
+            <img src="assets/admin/class-subjects/icon-activity.svg" alt="" />
+          </div>
+          <input
+            class="side-panel__input"
+            type="text"
+            placeholder="Activity (Optional)"
+          />
+          <button class="delete-btn" ButtonType="icon">
+            <img src="assets/admin/buttons/delete.svg" />
+          </button>
+        </div>
+        <button class="side-panel__create roundbtn" ButtonType="outline">
+          <img src="assets/admin/form/add-16px-black.svg" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

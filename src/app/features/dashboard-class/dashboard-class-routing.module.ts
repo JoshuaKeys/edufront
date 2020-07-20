@@ -20,14 +20,7 @@ const dahsboardClassRoutes: Routes = [
     path: 'screen14',
     component: html.Screen14Component
   },
-  {
-    path: 'screen15',
-    component: html.Screen15Component
-  },
-  {
-    path: 'screen17',
-    component: html.Screen17Component
-  },
+
   {
     path: 'screen20',
     component: html.Screen20Component
