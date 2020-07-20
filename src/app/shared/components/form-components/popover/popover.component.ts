@@ -65,6 +65,7 @@ export class PopoverComponent
   @Output('close') onClose = new EventEmitter();
   @Output('edu-open') openEvent = new EventEmitter();
   @Output('edu-close') closeEvent = new EventEmitter();
+
   @ContentChildren(PopoverOptionDirective) popoverOptionDir: QueryList<
     PopoverOptionDirective
   >;
@@ -72,6 +73,18 @@ export class PopoverComponent
   @Input('alignment') alignment = 'bottom';
   //possible values [left, center, right] and it only works for top and bottom
   @Input('pointerAlignment') pointerAlignment = 'center';
+
+  @Input('popoverIsOpen') set popoverIsOpen(param) {
+    console.log(param);
+    let hasActiveClass = this.el.nativeElement.classList.contains('active');
+    if (param) {
+      if (!hasActiveClass) {
+        this.togglePopoverState();
+      }
+    } else {
+      this.closePopoverViaInputControl();
+    }
+  }
 
   @HostListener('document:click', ['$event']) clickedOutside($event) {
     //close element when click is from outside
@@ -95,11 +108,11 @@ export class PopoverComponent
 
   closePopoverViaInputControl() {
     this.renderer.removeClass(this.el.nativeElement, 'active');
-    console.log(
-      'INACTIVE CLOSE',
-      this.el.nativeElement.classList,
-      this.el.nativeElement
-    );
+    // console.log(
+    //   'INACTIVE CLOSE',
+    //   this.el.nativeElement.classList,
+    //   this.el.nativeElement
+    // );
     this.onClose.emit();
     this.closeEvent.emit();
   }

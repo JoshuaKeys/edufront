@@ -24,21 +24,25 @@
     margin-right: 12px;
   }
 
+  &-content-wrapper {
+    overflow: hidden;
+    border-radius: 6px;
+  }
   &__options {
-    padding: 6px 0;
+    padding: 0;
     list-style: none;
     margin: 0;
     max-height: 250px;
     overflow: auto;
   }
   &__option {
+    position: relative;
     cursor: pointer;
     padding: 0 16px;
     font: 400 14px/44px Raleway;
     min-height: 44px;
     margin: 0;
-    min-width: 113px;
-    max-width: 150px;
+    width: 162px;
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -48,9 +52,54 @@
   &__option.active {
     color: $blue;
   }
+
+  &__option--custom {
+    border-top: 1px solid $grey;
+    position: relative;
+    padding-left: 38px;
+    img {
+      left: 16px;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+  }
 }
 
 .button.button--substitute-teacher {
   height: 32px;
   width: 171px;
+  position: relative;
+
+  edu-popover {
+    color: $black;
+    bottom: -12px;
+    text-transform: none;
+    padding: 0;
+    width: 334px;
+    &:hover {
+      color: $black;
+    }
+  }
+  .selector__option--search {
+    padding-left: 38px;
+    img {
+      left: 16px;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+  }
+  .popover-content-wrapper {
+    position: relative;
+  }
+  .selector__options--detached {
+    border: 1px solid $blue;
+    border-radius: 8px;
+    position: absolute;
+    bottom: -12px;
+    transform: translateY(100%);
+    bottom: -10px;
+    width: 100%;
+  }
 }
