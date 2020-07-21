@@ -25,10 +25,10 @@ export class Screen14Component implements OnInit {
     }
   }
 
-  // dropzoneArr = ['A', 'B' ];
+  // dropzoneArr = s['A', 'B'];
   // dropzoneArr = ['A', 'B', 'C'];
-  // dropzoneArr = ['A', 'B', 'C',"D"];
-  dropzoneArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+  dropzoneArr = ['A', 'B', 'C', 'D'];
+  // dropzoneArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
   badgeArr = new Array(12);
   studentsArr = [
     {

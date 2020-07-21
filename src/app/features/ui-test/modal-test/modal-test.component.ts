@@ -19,9 +19,15 @@ export class ModalTestComponent implements OnInit {
       title: 'this is a injected el title',
 
       desc: 'this is another desc',
-      random123: 'blah blaj'
+      random123: 'blah blah'
     };
-    this.modalService.addModal(TestingComponentComponent, params);
+
+    let outputs = ['testEvent', 'testEvent2'];
+    this.modalService
+      .addModal(TestingComponentComponent, params, outputs)
+      .subscribe(value => {
+        console.log('subbing to modalService', value);
+      });
   }
   closeModal() {
     this.modalService.clearModal();

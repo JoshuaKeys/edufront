@@ -19,10 +19,11 @@ import { SliderTestComponent } from './slider-test/slider-test.component';
 import { ModalTestComponent } from './modal-test/modal-test.component';
 import { NgmodelTestComponent } from './ngmodel-test/ngmodel-test.component';
 import { ModalModule } from './modal/modal.module';
-
+import { SampleDataTestComponent } from './sample-data-test/sample-data-test.component';
 import { TestingComponentComponent } from './modal-test/testing-component/testing-component.component';
 
 const components = [
+  SampleDataTestComponent,
   TestingComponentComponent,
   NgmodelTestComponent,
   ModalTestComponent,

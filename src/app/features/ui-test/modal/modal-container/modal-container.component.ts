@@ -34,12 +34,12 @@ export class ModalContainerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.modalService.activeComponentInModal
       // .pipe(skip(1))
-      .subscribe(({ component, param }) => {
+      .subscribe(({ component, param, output }) => {
         console.log('MODAL SERVICE SUB - ', component);
         if (component === null) {
           this.clearModal();
         } else {
-          this.loadComponent(component, param);
+          this.loadComponent(component, param, output);
         }
       });
   }
@@ -49,9 +49,13 @@ export class ModalContainerComponent implements OnInit, AfterViewInit {
   clearModal() {
     this.modalContainer.clear();
     this.render.removeClass(this.el.nativeElement, 'active');
+    this.modalService.activeComponentEventStream.next({
+      event: 'modal-deleted'
+    });
+    this.modalService.resetActiveComponentEventStream();
   }
 
-  loadComponent(injectedComponent, params) {
+  loadComponent(injectedComponent, params, output = []) {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       injectedComponent
     );
@@ -60,13 +64,34 @@ export class ModalContainerComponent implements OnInit, AfterViewInit {
     let componentRef: ComponentRef<any> = this.modalContainer.createComponent(
       componentFactory
     );
-
-    console.log('param', params);
+    this.modalService.activeComponentEventStream.next({
+      event: 'modal-created'
+    });
+    console.log('param', params, componentRef);
 
     Object.keys(params).forEach(key => {
       componentRef.instance[key] = params[key];
-      // componentRef.instance[param] = 'Testes';
     });
+
+    componentRef.instance['testEvent'].subscribe(value => {
+      this.modalService.activeComponentEventStream.next({
+        event: 'testEvent',
+        value
+      });
+      console.log('testEvent', value);
+    });
+
+    // output.forEach(eventName => {
+    //   console.log('output', eventName);
+    //   componentRef.instance[eventName].subscribe(value => {
+    //     this.modalService.activeComponentEventStream.next({
+    //       event: eventName,
+    //       value
+    //     });
+    //     console.log(eventName, value);
+    //   });
+    // });
+
     this.cd.markForCheck();
   }
 }

@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  EventEmitter
 } from '@angular/core';
 
 @Component({
@@ -15,7 +16,9 @@ export class TestingComponentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
+  testEvent = new EventEmitter();
+  testEvent2 = new EventEmitter();
+  inputValue = '';
   _title = '';
   set title(param) {
     this._title = param;
@@ -26,4 +29,10 @@ export class TestingComponentComponent implements OnInit {
   }
   desc;
   random123;
+  emitTest() {
+    this.testEvent.emit('yo');
+  }
+  emitTest2() {
+    this.testEvent2.emit(this.inputValue);
+  }
 }

@@ -1,0 +1,18 @@
+<div class="popover__component popover__component--first">
+  <div class="pointer {{ pointerAlignment }}"></div>
+
+  <div></div>
+
+  <ng-container
+    childIdentifier="0"
+    *ngIf="getFirstComponent"
+    #componentContainer
+  ></ng-container>
+</div>
+
+<div
+  *ngFor="let component of getRemainingComponent; let idx = index"
+  class="popover__component popover__component--not-first  "
+>
+  <ng-container [childIdentifier]="idx + 1" #componentContainer></ng-container>
+</div>
