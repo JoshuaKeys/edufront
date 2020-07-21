@@ -56,6 +56,10 @@
         max-height: $maxHeight;
       }
     }
+    &.none {
+      width: 0px;
+      overflow: hidden;
+    }
 
     &.single {
       height: unset;

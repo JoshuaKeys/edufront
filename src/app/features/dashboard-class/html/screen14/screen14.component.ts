@@ -22,12 +22,15 @@ export class Screen14Component implements OnInit {
       return 'double';
     } else if (arr.length > 3) {
       return 'multiple';
+    } else if (arr.length == 1) {
+      return 'none';
     }
   }
 
-  // dropzoneArr = s['A', 'B'];
+  // dropzoneArr = ['A'];
+  dropzoneArr = ['A', 'B'];
   // dropzoneArr = ['A', 'B', 'C'];
-  dropzoneArr = ['A', 'B', 'C', 'D'];
+  // dropzoneArr = ['A', 'B', 'C', 'D'];
   // dropzoneArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
   badgeArr = new Array(12);
   studentsArr = [
