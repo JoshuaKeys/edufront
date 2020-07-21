@@ -38,6 +38,7 @@ export class LayoutComponent implements OnInit {
   );
   selectedClassId$ = new BehaviorSubject(null);
   selectedSectionId$ = new BehaviorSubject(null);
+  refreshTimetable$ = new BehaviorSubject(false);
   classById$ = combineLatest([
     this.selectedClassId$,
     this.classService.entityMap$
@@ -161,7 +162,13 @@ export class LayoutComponent implements OnInit {
   }
 
   onSectionClick(section: ISectionModel) {
+    // Hacky way to force table re-render
+    // Otherwise it has problems
+    this.refreshTimetable$.next(true);
     this.selectedSectionId$.next(section.id);
+    setTimeout(() => {
+      this.refreshTimetable$.next(false);
+    }, 10);
   }
 
   onTeacherClicked(teacher: any) {
@@ -240,7 +247,7 @@ export class LayoutComponent implements OnInit {
               intervaBtwPeriods: '0',
               breaks: prepareBreaks,
               assembly: {
-                name: 'Assembly',
+                name: day.assemblyTitle || 'Assembly',
                 startingAt: assemblyStartTime,
                 duration: String(assemblyDuration)
               }
@@ -371,7 +378,7 @@ export class LayoutComponent implements OnInit {
             };
           }, {} as { [key: string]: ITimetableSavingModel });
           console.log(Object.values(dataToSubmit));
-          this.timetableFacade.submitTimetable(Object.values(dataToSubmit));
+          // this.timetableFacade.submitTimetable(Object.values(dataToSubmit));
         }
       });
   }

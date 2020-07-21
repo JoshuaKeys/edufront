@@ -48,7 +48,16 @@
         </svg>
       </div>
       <ng-container *ngFor="let item of periodsDataRef[value]; let i = index">
-        <edu-simple-button *ngIf="item.title" type="stroked">
+        <edu-simple-button
+          *ngIf="item.title"
+          type="stroked"
+          cdkDrag
+          [cdkDragData]="{
+            item: item,
+            type: 'subject',
+            sourcePeriod: [value, startTime, endTime, key]
+          }"
+        >
           <img
             [src]="item.subjectIcon || 'assets/pill-blue-icon.svg'"
             width="24"
@@ -82,7 +91,16 @@
             </svg>
           </span>
         </edu-simple-button>
-        <edu-simple-button *ngIf="!item.title" type="stroked">
+        <edu-simple-button
+          *ngIf="!item.title"
+          type="stroked"
+          cdkDrag
+          [cdkDragData]="{
+            item: item,
+            type: 'teacher',
+            sourcePeriod: [value, startTime, endTime, key]
+          }"
+        >
           {{ item.firstName }} {{ item.lastName }}
           <span
             class="remove-placeholder"

@@ -80,6 +80,7 @@
               >
                 <edu-custom-timetable
                   *ngIf="
+                    !(refreshTimetable$ | async) &&
                     (selectedSectionId$ | async) &&
                     periodsList &&
                     periodsList.length > 0
@@ -134,6 +135,7 @@
             <ng-container *ngIf="subjectsLoaded$ | async">
               <div
                 cdkDropList
+                cdkDropListSortingDisabled
                 [cdkDropListEnterPredicate]="noDrop"
                 [cdkDropListData]="subj"
               >
@@ -158,6 +160,7 @@
           <ng-container *ngIf="subjectsLoaded$ | async">
             <div
               cdkDropList
+              cdkDropListSortingDisabled
               [cdkDropListEnterPredicate]="noDrop"
               [cdkDropListData]="teachers | async"
             >
