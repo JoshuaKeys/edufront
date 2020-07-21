@@ -31,7 +31,10 @@
   }"
   class="popover__component   "
 >
-  <div class="pointer {{ pointerAlignment }}" *ngIf="isFirst"></div>
+  <div
+    class="pointer {{ pointerAlignment }}"
+    *ngIf="isFirstVisible(component.id)"
+  ></div>
 
   <ng-container
     [childIdentifier]="component.id"

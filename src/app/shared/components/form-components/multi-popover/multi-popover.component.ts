@@ -64,7 +64,6 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   //possible values [left, center, right] and it only works for top and bottom
   @Input('pointerAlignment') pointerAlignment = 'center';
 
-  // need to implement getter/setter for this
   @Input('edu-components') componentArr = [];
 
   @HostListener('document:click', ['$event']) clickedOutside($event) {
@@ -78,18 +77,28 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
   @HostListener('click', ['$event']) onClick($event) {
-    //stops propagation on lower layers
     $event.preventDefault();
-    // console.log(this.popoverOptionDir);
-    // if (this.el.nativeElement.classList.contains('active')) {
     $event.stopPropagation();
-    // }
   }
 
   trackByFn(index, item) {
     return item.id;
   }
+
+  isFirstVisible(id) {
+    let IndexOfFirstVisibleComp = this.componentArr.findIndex(
+      comp => !Boolean(comp.hide)
+    );
+    let idOfFirstVisibleComp =
+      IndexOfFirstVisibleComp > -1
+        ? this.componentArr[IndexOfFirstVisibleComp].id
+        : null;
+
+    return idOfFirstVisibleComp === id;
+  }
+
   addClassBasedOnPointerValues() {
     this.renderer.addClass(
       this.el.nativeElement,
@@ -103,7 +112,6 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
         this.el.nativeElement.parentElement,
         'click',
         $event => {
-          console.log('parent got clicked ????');
           this.togglePopoverState();
           this.cd.markForCheck();
         }
@@ -112,11 +120,7 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   }
   closePopoverViaInputControl() {
     this.renderer.removeClass(this.el.nativeElement, 'active');
-    // console.log(
-    //   'INACTIVE CLOSE',
-    //   this.el.nativeElement.classList,
-    //   this.el.nativeElement
-    // );
+
     this.onClose.emit();
     this.closeEvent.emit();
   }
@@ -124,23 +128,13 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   togglePopoverState() {
     let hasActiveClass = this.el.nativeElement.classList.contains('active');
     if (hasActiveClass) {
-      // this.el.nativeElement.classList.remove('active');
       this.renderer.removeClass(this.el.nativeElement, 'active');
-      console.log(
-        'INACTIVE',
-        this.el.nativeElement.classList,
-        this.el.nativeElement
-      );
+
       this.onClose.emit();
       this.closeEvent.emit();
     } else {
       this.renderer.addClass(this.el.nativeElement, 'active');
-      console.log(
-        'ACTIVE',
-        this.el.nativeElement.classList,
-        this.el.nativeElement
-      );
-      // console.log('active');
+
       this.openEvent.emit();
     }
     this.cd.markForCheck();
@@ -152,9 +146,7 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
     );
     let compObj = this.componentArr[compIndex];
     let paramKeys = Object.keys(compObj.param);
-    console.log(this.componentArr, compIndex, componentId);
-    console.log(this.componentContainers, compObj);
-    console.log('componentContainers', this.componentContainers);
+
     let compFactory = this.resolver.resolveComponentFactory(compObj.component);
     this.componentContainers.toArray()[compIndex].clear;
     let componentRef: ComponentRef<any> = this.componentContainers
@@ -166,6 +158,7 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   }
 
   injectComponent(idxes) {
+    //delete soon
     console.log(this.componentContainers.toArray());
     console.log(this.componentArr);
     console.log(idxes);
@@ -192,6 +185,4 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
       this.cd.markForCheck();
     });
   }
-
-  createComponent() {}
 }

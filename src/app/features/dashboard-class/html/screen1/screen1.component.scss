@@ -1,7 +1,9 @@
 @import 'src/app/features/dashboard-class/dashboard-class-shared';
 .scrollable {
-  max-height: calc(100vh - 300px);
-  overflow: scroll;
+  // max-height: calc(100vh - 300px);
+  display: flex;
+  justify-content: center;
+  // overflow: scroll;
 }
 
 .delete-popover {
@@ -47,9 +49,9 @@
 
 .scrollable {
   margin-top: 20px;
-  flex-wrap: nowrap;
-  justify-content: flex;
-  overflow: visible;
+  // flex-wrap: nowrap;
+  // justify-content: flex;
+  // overflow: visible;
   /* overflow-x: scroll; */
   width: 90vw;
 }
@@ -57,13 +59,17 @@
 .dropzones {
   flex-wrap: nowrap;
   display: inline-flex;
-  justify-content: flex-start;
+  justify-content: center;
   margin: 0 10px;
 }
 
 .dropzone {
-  width: 280px;
+  width: 240px;
   flex-shrink: 0;
+  &__body {
+    max-height: 142px;
+    overflow: auto;
+  }
 }
 
 //removing animation for multiselect popover

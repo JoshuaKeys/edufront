@@ -39,7 +39,7 @@
   }
   .dropzones-flexwrap {
     width: 100%;
-    @include displayFlex();
+    @include displayFlex(flex-start);
     flex-wrap: wrap;
     max-height: $maxHeight;
     overflow: scroll;
