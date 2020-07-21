@@ -169,7 +169,7 @@ $maxHeight: calc(100vh - 70px);
   &__title-wrapper {
     min-height: 44px;
     width: 100%;
-    border-bottom: 1px solid $black;
+    border-bottom: 1px solid $grey;
     @include displayFlex(center, center);
   }
   &__delete-btn {

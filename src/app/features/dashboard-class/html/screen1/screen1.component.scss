@@ -5,7 +5,7 @@
 }
 
 .delete-popover {
-  right: -9px;
+  right: -8px !important;
   max-width: 377px;
   padding: 30px;
   &__text {
@@ -42,5 +42,33 @@
         }
       }
     }
+  }
+}
+
+.scrollable {
+  margin-top: 20px;
+  flex-wrap: nowrap;
+  justify-content: flex;
+  overflow: visible;
+  /* overflow-x: scroll; */
+  width: 90vw;
+}
+
+.dropzones {
+  flex-wrap: nowrap;
+  display: inline-flex;
+  justify-content: flex-start;
+  margin: 0 10px;
+}
+
+.dropzone {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+//removing animation for multiselect popover
+.multiselect-popover {
+  .badge {
+    transition: none;
   }
 }
