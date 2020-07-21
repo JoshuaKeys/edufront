@@ -58,13 +58,11 @@ import { ClassGroupModel } from '../../models/class-group.model';
 import {
   clearClassOffGroups,
   generatePeriodFromNumber,
-  periodUniformity
 } from '../../utilities';
 import { PeriodModel } from '../../models/period.model';
-import { BreakModel, BreakModel2 } from '../../models/break.model';
+import { BreakModel2 } from '../../models/break.model';
 import { CalendarUpdateModel } from '../../models/calendar-update.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 
 const initialState: TeachingStateModel = {
   teachingDays: [
@@ -188,11 +186,8 @@ export const teachingReducer = createReducer(
   }),
   on(editCalendar, (state, action) => {
     const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
-    const classes: ClassModel[] = [];
-
     const newClasses = JSON.parse(JSON.stringify(stateCopy.classes));
     for (let i = 0; i < newClasses.length; i++) {
-      let copy: ClassModel;
       for (let j = 0; j < action.group.classes.length; j++) {
         if (newClasses[i].id === action.group.classes[j].id) {
           newClasses[i].selected = true;
