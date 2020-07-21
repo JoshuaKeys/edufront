@@ -25,6 +25,7 @@ export class ChildIdentifierDirective
   }
   ngAfterViewInit() {
     console.log('component created at after view init', this.childIdentifier);
+    this.service.newMultiPopoverId$.next(this.childIdentifier);
     this.service.componentIdArr$.next([
       ...this.componentIds,
       this.childIdentifier

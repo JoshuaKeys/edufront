@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MultiPopoverService {
   componentIdArr$ = new BehaviorSubject([]);
+  newMultiPopoverId$ = new BehaviorSubject(null);
 
   constructor() {}
 }

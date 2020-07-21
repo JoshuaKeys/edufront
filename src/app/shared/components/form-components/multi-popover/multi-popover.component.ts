@@ -17,9 +17,10 @@ import {
   ComponentRef
 } from '@angular/core';
 import { MultiPopoverService } from './multi-popover.service';
+import { ChildIdentifierDirective } from './child-identifier.directive';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { SampleDataTestComponent } from 'src/app/features/ui-test/sample-data-test/sample-data-test.component';
-import { map, filter, delay } from 'rxjs/operators';
+import { map, filter, delay, skip } from 'rxjs/operators';
 @Component({
   selector: 'edu-multi-popover',
   templateUrl: './multi-popover.component.html',
@@ -38,15 +39,22 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.addClassBasedOnPointerValues();
     let currentIdxes = [];
-    this.service.componentIdArr$.pipe(delay(100)).subscribe(idx => {
-      console.log('idx', idx);
-      this.injectComponent(idx);
-    });
+    // this.service.componentIdArr$.pipe(delay(100)).subscribe(idx => {
+    //   console.log('idx', idx);
+    //   this.injectComponent(idx);
+    // });
+
+    this.service.newMultiPopoverId$
+      .pipe(skip(1), delay(100))
+      .subscribe(id => this.injectComponentByCompId(id));
   }
   ngAfterViewInit() {
     this.registerClickOnParent();
     // console.log('multi popover', this.componentArr, this.componentContainers);
   }
+  @ViewChildren(ChildIdentifierDirective) identifierDirectives: QueryList<
+    ChildIdentifierDirective
+  >;
   @ViewChildren('componentContainer', { read: ViewContainerRef })
   componentContainers: QueryList<ViewContainerRef>;
   @Output('close') onClose = new EventEmitter();
@@ -72,23 +80,16 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   }
   @HostListener('click', ['$event']) onClick($event) {
     //stops propagation on lower layers
-    // $event.preventDefault();
+    $event.preventDefault();
     // console.log(this.popoverOptionDir);
     // if (this.el.nativeElement.classList.contains('active')) {
     $event.stopPropagation();
     // }
   }
 
-  get getFirstComponent() {
-    return this.componentArr.length > 0 ? this.componentArr[0] : null;
+  trackByFn(index, item) {
+    return item.id;
   }
-
-  get getRemainingComponent() {
-    return this.componentArr.length > 1
-      ? this.componentArr.filter((component, idx) => idx > 0)
-      : null;
-  }
-
   addClassBasedOnPointerValues() {
     this.renderer.addClass(
       this.el.nativeElement,
@@ -144,6 +145,26 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
     }
     this.cd.markForCheck();
   }
+
+  injectComponentByCompId(componentId) {
+    let compIndex = this.componentArr.findIndex(
+      component => component.id === componentId
+    );
+    let compObj = this.componentArr[compIndex];
+    let paramKeys = Object.keys(compObj.param);
+    console.log(this.componentArr, compIndex, componentId);
+    console.log(this.componentContainers, compObj);
+    console.log('componentContainers', this.componentContainers);
+    let compFactory = this.resolver.resolveComponentFactory(compObj.component);
+    this.componentContainers.toArray()[compIndex].clear;
+    let componentRef: ComponentRef<any> = this.componentContainers
+      .toArray()
+      [compIndex].createComponent(compFactory);
+    paramKeys.forEach(key => {
+      componentRef.instance[key] = compObj.param[key];
+    });
+  }
+
   injectComponent(idxes) {
     console.log(this.componentContainers.toArray());
     console.log(this.componentArr);

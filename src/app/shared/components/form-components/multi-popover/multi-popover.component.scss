@@ -54,6 +54,12 @@ $spaceFromParentElement: -8px; //was -4
   &--not-first {
     margin-top: 10px;
   }
+  &.hide {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    border: 0px;
+  }
 }
 
 .pointer {

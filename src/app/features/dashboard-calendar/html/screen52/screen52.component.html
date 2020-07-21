@@ -28,8 +28,11 @@
           (edu-open)="log('open')"
           (edu-close)="log('close')"
         >
-          <div class="selector-content-wrapper">
-            <ul class="selector__options" [ClosePopover]="termPopoverState">
+          <div
+            class="selector-content-wrapper"
+            [ClosePopover]="termPopoverState"
+          >
+            <ul class="selector__options">
               <li
                 class="selector__option"
                 *ngFor="let term of termOptions"
