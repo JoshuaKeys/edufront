@@ -1,0 +1,22 @@
+<nav class="side-nav">
+  <button class="side-nav__brand-logo" ButtonType="blank">
+    <img src="assets/user-settings/side-nav_logo.svg" alt="" />
+  </button>
+
+  <div class="group--column side-nav__options">
+    <button
+      *ngFor="let option of sideMenuOptions"
+      (click)="setActiveOption(option)"
+      class="side-nav__option {{ option.value }} "
+      ButtonType="blank"
+      [routerLink]="[option.route]"
+    >
+      <img src="assets/user-settings/side-nav_{{ option.value }}.svg" alt="" />
+      <span>{{ option.text }} </span>
+    </button>
+  </div>
+</nav>
+
+<div class="top-nav-and-content">
+  <router-outlet></router-outlet>
+</div>

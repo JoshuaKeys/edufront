@@ -1,29 +1,13 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
-  selector: 'edu-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss'],
+  selector: 'edu-console-header',
+  templateUrl: './console-header.component.html',
+  styleUrls: ['./console-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminComponent implements OnInit {
-  @Output('close') close = new EventEmitter();
-
-  constructor(private cd: ChangeDetectorRef) { }
-
-  ngOnInit(): void { }
-
-  closePopover() {
-    this.close.emit();
-  }
-
+export class ConsoleHeaderComponent implements OnInit {
+  @Input() title: string;
   activeSideMenuOption = { value: 'users', text: 'Users' };
   sideMenuOptions = [
     { value: 'home', text: 'Home', route: '/admin/home' },
@@ -37,11 +21,7 @@ export class AdminComponent implements OnInit {
 
   modalOptions = { none: 'none', profile: 'profile', school: 'school' };
   activeModalOption = this.modalOptions.none;
-
-  setActiveOption(option) {
-    this.activeSideMenuOption = option;
-  }
-
+  constructor() { }
   isActiveOption(option) {
     return option.value === this.activeSideMenuOption.value;
   }
@@ -53,15 +33,7 @@ export class AdminComponent implements OnInit {
   setActiveModal(param) {
     this.activeModalOption = param;
   }
-
-  closeModal() {
-    this.activeModalOption = this.modalOptions.none;
+  ngOnInit(): void {
   }
 
-  // openProfileSettings() {
-  //   this.activeModalOption = this.modalOptions.profile;
-  // }
-  // openSchoolSettings() {
-  //   this.activeModalOption = this.modalOptions.school;
-  // }
 }

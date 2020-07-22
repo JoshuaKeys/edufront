@@ -40,6 +40,12 @@ const routes: Routes = [
       )
   },
   {
+    path: 'console',
+    loadChildren: () => import('./features/console/console.module').then(
+      m => m.ConsoleModule
+    )
+  },
+  {
     path: 'school-profile',
     canLoad: [AuthenticatedGuard],
     loadChildren: () =>
@@ -112,4 +118,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
