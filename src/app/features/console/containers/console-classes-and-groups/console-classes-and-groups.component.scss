@@ -1,3 +1,83 @@
 :host {
   width: 100%;
 }
+@import 'src/app/features/dashboard-class/dashboard-class-shared';
+.scrollable {
+  // max-height: calc(100vh - 300px);
+  display: flex;
+  justify-content: center;
+  // overflow: scroll;
+}
+
+.delete-popover {
+  right: -8px !important;
+  max-width: 377px;
+  padding: 30px;
+  &__text {
+    width: 90%;
+    white-space: normal;
+    text-align: center;
+    margin: auto;
+
+    margin-top: 20px;
+    color: $black;
+    font: 600 20px/28px Quicksand;
+  }
+  &__buttons {
+    @include displayFlex();
+    margin-top: 30px;
+    //this nested selector is needed to overwrite default component styling
+    .delete-popover {
+      &__button {
+        width: 144px;
+        height: 40px;
+        &:first-child {
+          margin-right: 18px;
+        }
+      }
+
+      &__button--delete {
+        color: $red;
+        border-color: $red;
+
+        &:hover {
+          border-color: $red;
+          background-color: $red;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.scrollable {
+  margin-top: 20px;
+  // flex-wrap: nowrap;
+  // justify-content: flex;
+  // overflow: visible;
+  /* overflow-x: scroll; */
+  width: 90vw;
+}
+
+.dropzones {
+  flex-wrap: nowrap;
+  display: inline-flex;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.dropzone {
+  width: 240px;
+  flex-shrink: 0;
+  &__body {
+    max-height: 142px;
+    overflow: auto;
+  }
+}
+
+//removing animation for multiselect popover
+.multiselect-popover {
+  .badge {
+    transition: none;
+  }
+}

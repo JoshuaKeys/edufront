@@ -2,7 +2,7 @@
   <edu-console-header title="Classes">
     <ul class="top-nav__options">
       <li class="top-nav__option active" tabindex="0">
-        Students
+        Class & Groups
       </li>
       <li class="top-nav__option" tabindex="0">
         Teachers
@@ -12,4 +12,93 @@
       </li>
     </ul>
   </edu-console-header>
+  <div class="content sub-menu-list-tab">
+    <h3 class="content__title">
+      These are the Class and Groups set up in your School
+    </h3>
+    <p class="content__desc">Add, drag, drop and edit</p>
+    <div class="badges">
+      <div
+        class="badge badge--active"
+        *ngFor="let badge of badgeArr; let idx = index"
+      >
+        <span>{{ idx + 1 }}</span>
+      </div>
+      <div class="badge badge--disabled">
+        <span>21</span>
+      </div>
+      <div class="badge badge--edit">
+        <div class="signs">
+          <span>+</span>
+          <span>-</span>
+        </div>
+        <!-- [ngClass]="{badge--active: isActive(badge)}" -->
+        <edu-popover class="multiselect-popover" (edu-open)="openMultiSelect()">
+          <div class="badges badges--popover">
+            <ng-container *ngFor="let badge of badgeArr; let idx = index">
+              <div
+                class="badge badge--small "
+                [ngClass]="{ 'badge--active': isActive(idx + 1) }"
+                (click)="toggleOption(idx + 1)"
+              >
+                <span>{{ idx + 1 }}</span>
+              </div>
+            </ng-container>
+          </div>
+          <edu-tick-button
+            [ClosePopover]="multiselectPopoverState"
+            (click)="eduTickClick()"
+          ></edu-tick-button>
+        </edu-popover>
+      </div>
+    </div>
+
+    <div class="content__body scrollable">
+      <div class="dropzones">
+        <div class="dropzone" *ngFor="let dropzone of dropZoneArr">
+          <div class="dropzone__title-wrapper">
+            <h5 class="dropzone__title">{{ dropzone.title }}</h5>
+            <button ButtonType="icon" class="dropzone__delete-btn">
+              <img src="assets/admin/buttons/delete.svg" />
+              <edu-popover
+                class="delete-popover"
+                alignment="top"
+                pointerAlignment="right"
+              >
+                <div
+                  class="delete-popover__text"
+                  [ClosePopover]="deletePopoverState"
+                >
+                  Are you sure you want to delete this group?
+                </div>
+                <div class="delete-popover__buttons">
+                  <button
+                    class="delete-popover__button delete-popover__button--cancel"
+                    ButtonType="basic"
+                    (click)="toggleDeletePopover()"
+                  >
+                    cancel
+                  </button>
+                  <button
+                    class="delete-popover__button delete-popover__button--delete"
+                    ButtonType="outline"
+                    (click)="toggleDeletePopover()"
+                  >
+                    delete
+                  </button>
+                </div>
+              </edu-popover>
+            </button>
+          </div>
+          <div class="dropzone__body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda
+            quisquam exercitationem ea sint nam neque animi iusto quas rem quam
+            deleniti, non, blanditiis perspiciatis, pariatur incidunt molestias
+            obcaecati dolorem? In.
+          </div>
+        </div>
+        <div class="dropzone dropzone--create"><span>+</span></div>
+      </div>
+    </div>
+  </div>
 </div>

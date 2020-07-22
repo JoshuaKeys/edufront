@@ -5,6 +5,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ConsoleRoutingModule } from './console-routing.module';
 import { ConsoleHeaderComponent } from './components/console-header/console-header.component';
 import { ConsoleClassesAndGroupsComponent } from './containers';
+import { StoreModule } from '@ngrx/store';
+import { consoleReducer } from './ngrx/reducers';
 
 
 
@@ -17,7 +19,8 @@ import { ConsoleClassesAndGroupsComponent } from './containers';
   imports: [
     CommonModule,
     SharedModule,
-    ConsoleRoutingModule
+    ConsoleRoutingModule,
+    StoreModule.forFeature('console', consoleReducer)
   ]
 })
 export class ConsoleModule { }
