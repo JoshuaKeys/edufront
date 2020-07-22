@@ -4,6 +4,11 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
 const routes: Routes = [
   {
+    path: 'console',
+    loadChildren: () =>
+      import('./console/calendar/calendar.module').then(m => m.CalendarModule)
+  },
+  {
     path: 'ui',
 
     loadChildren: () =>

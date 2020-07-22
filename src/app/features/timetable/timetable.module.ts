@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TimetableComponent } from './component/timetable/timetable.component';
 import { LayoutComponent } from './containers/layout/layout.component';
 import { TimetableRoutingModule } from './timetable-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -12,23 +11,16 @@ import { DialogModule } from 'src/app/shared/components/generic-dialog/dialog.mo
 import { SubjectIconFieldComponent } from './component/subject-icon-field/subject-icon-field.component';
 import { SubjectsFormComponent } from './component/subjects-form/subjects-form.component';
 import { ArrayInputFieldComponent } from './component/input-field/input-field.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { timetableReducer } from './ngrx/reducer';
-import { TimetableEffects } from './ngrx/effects';
-import { SimpleButtonComponent } from './component/simple-button/simple-button.component';
 import { SubjectFormDialogComponent } from './component/subject-form-dialog/subject-form-dialog.component';
 
 @NgModule({
   declarations: [
-    TimetableComponent,
     LayoutComponent,
     TimetableOptionsComponent,
     SearchComponent,
     SubjectIconFieldComponent,
     SubjectsFormComponent,
     ArrayInputFieldComponent,
-    SimpleButtonComponent,
     SubjectFormDialogComponent
   ],
   imports: [
@@ -38,9 +30,7 @@ import { SubjectFormDialogComponent } from './component/subject-form-dialog/subj
     SharedModule,
     TimetableRoutingModule,
     DragDropModule,
-    DialogModule,
-    StoreModule.forFeature('timetable', timetableReducer),
-    EffectsModule.forFeature([TimetableEffects])
+    DialogModule
   ]
 })
 export class TimetableModule {}

@@ -10,7 +10,6 @@ import {
   ISubjectWithTeachers,
   ITeacher
 } from 'src/app/shared/models/subject.model';
-import { GetStaffResponseModel } from '../../staffs/models/get-staff-response.model';
 
 export enum ActionTypes {
   INIT_TIMETABLE = '[TIMETABLE] INIT TIMETABLE',

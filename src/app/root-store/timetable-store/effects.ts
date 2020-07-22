@@ -16,7 +16,7 @@ import {
   submitTimetableFailureAction
 } from './actions';
 import { of } from 'rxjs';
-import { TimetableService } from '../services/timetable.service';
+import { TimetableService } from 'src/app/services/timetable/timetable.service';
 import { ITeacher } from 'src/app/shared/models/subject.model';
 
 @Injectable()

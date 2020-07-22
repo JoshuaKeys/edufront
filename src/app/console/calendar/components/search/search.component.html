@@ -1,0 +1,17 @@
+<div class="search">
+  <div class="search__wrapper">
+    <img class="search__icon" src="/assets/search.svg" alt="" />
+    <input
+      class="search__input"
+      type="text"
+      [formControl]="ctrl"
+      [placeholder]="searchPlaceholder"
+    />
+  </div>
+  <button *ngIf="false" class="search__btn" (click)="onCreate()">
+    <span>+</span>
+  </button>
+</div>
+<div class="list-container">
+  <ng-content></ng-content>
+</div>

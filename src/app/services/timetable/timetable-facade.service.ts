@@ -1,36 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { TimetableFeatureState } from '../ngrx/state';
+
 import {
+  IClassSectionPeriodModel,
+  ITimetableSavingModel
+} from 'src/app/core/models/timetable';
+import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
+import { mapTo } from 'rxjs/operators';
+import {
+  selectUi,
+  selectTimetableSkeleton,
+  selectTimetableSkeletonUI,
+  selectSubjects,
+  selectSubjectsUI,
+  selectTeachers,
+  selectTimetableData
+} from 'src/app/root-store/timetable-store/selectors';
+import {
+  createSubjectSuccess,
+  createSubjectRequest
+} from 'src/app/features/subjects/ngrx/actions';
+import { TimetableFeatureState } from 'src/app/root-store/timetable-store/state';
+import {
+  initTimetableAction,
   getDayPlannerAction,
   getClassesAction,
   getSectionsAction,
   getTeachersAction,
   getSubjectsAction,
   updateTimetablePeriodAction,
-  submitTimetableAction,
-  initTimetableAction
-} from '../ngrx/actions';
-import {
-  selectTimetableSkeleton,
-  selectTimetableSkeletonUI,
-  selectTeachers,
-  selectSubjects,
-  selectTimetableData,
-  selectUi,
-  selectSubjectsUI
-} from '../ngrx/selectors';
-import {
-  IClassSectionPeriodModel,
-  ITimetableSavingModel
-} from 'src/app/core/models/timetable';
-import {
-  createSubjectRequest,
-  createSubjectSuccess
-} from '../../subjects/ngrx/actions';
-import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
-import { mapTo } from 'rxjs/operators';
+  submitTimetableAction
+} from 'src/app/root-store/timetable-store/actions';
 
 @Injectable({
   providedIn: 'root'

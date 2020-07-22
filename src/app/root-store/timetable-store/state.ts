@@ -1,9 +1,7 @@
 import {
-  SubjectModel,
   ITeacher,
   ISubjectWithTeachers
 } from 'src/app/shared/models/subject.model';
-import { GetStaffResponseModel } from '../../staffs/models/get-staff-response.model';
 import { TimetableSkeleton } from 'src/app/core/models/timetable';
 import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 

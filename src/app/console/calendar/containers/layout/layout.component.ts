@@ -1,29 +1,27 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { StaffsCommunicatorService } from 'src/app/features/staffs/services/staffs-communication.service';
-import { DialogService } from 'src/app/shared/components/generic-dialog/dialog.service';
-import * as moment from 'moment';
-import { CalendarModel } from '../../component/timetable/data';
-import { ClassesService } from 'src/app/root-store/classes.service';
-import { ClassSectionService } from 'src/app/root-store/class-section.service';
-import { map, filter, take } from 'rxjs/operators';
-import { ISectionModel } from 'src/app/shared/models/section.model';
 import {
+  ITimetableSavingModel,
   IClassSectionPeriodModel,
-  ITimetableSavingModel
+  IAcademicYear
 } from 'src/app/core/models/timetable';
+import * as moment from 'moment';
+import { map, filter, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, merge } from 'rxjs';
+import { CalendarModel } from 'src/app/features/calender/models/calendar.model';
 import { Router } from '@angular/router';
-import { SubjectFormDialogComponent } from '../../component/subject-form-dialog/subject-form-dialog.component';
+import { ClassSectionService } from 'src/app/root-store/class-section.service';
+import { ISectionModel } from 'src/app/shared/models/section.model';
+import { ClassesService } from 'src/app/root-store/classes.service';
 import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
+import { AcademicYearService } from 'src/app/root-store/academicYear.service';
 
 const DEFAULT_START_IME = '08:00';
 
 @Component({
-  selector: 'edu-timetable-layout',
+  selector: 'edu-console-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [StaffsCommunicatorService]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayoutComponent implements OnInit {
   isSkeletonLoading$ = this.timetableFacade.skeletonUI$.pipe(
@@ -136,17 +134,42 @@ export class LayoutComponent implements OnInit {
   WEEKDAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   showWelcomeModal$ = new BehaviorSubject(true);
-  constructor(
 
-    private dialog: DialogService,
+  _selectedAcademicYear$: Observable<IAcademicYear> = new BehaviorSubject(null);
+
+  academicYears$ = this.academiYearService.entities$;
+  selectedAcademicYear$ = merge(
+    this.academicYears$.pipe(map(years => years[0])),
+    this._selectedAcademicYear$.pipe(filter(year => Boolean(year)))
+  );
+  academicYearTerms$ = this.selectedAcademicYear$.pipe(
+    map(year => {
+      return year.termDetailsDtos;
+    })
+  );
+  constructor(
     private router: Router,
     private timetableFacade: TimetableFacadeService,
     private classService: ClassesService,
-    private sectionService: ClassSectionService
+    private sectionService: ClassSectionService,
+    private academiYearService: AcademicYearService
   ) {
     this.timetableFacade.resetTimetable();
     this.classService.getAll();
     this.sectionService.getWithQuery({ pageSize: '200' });
+    this.academiYearService.getWithQuery({ pageSize: '200' });
+  }
+
+  get academicYearTitle() {
+    return this.selectedAcademicYear$.pipe(
+      filter(year => {
+        return Boolean(year);
+      }),
+      map(year => {
+        const title = `${year.acadimicStart.split('-')[0]}`;
+        return title;
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -186,12 +209,7 @@ export class LayoutComponent implements OnInit {
     console.log(subject);
   }
 
-  onCreate(type: 'subject' | 'teacher') {
-    if (type === 'subject') {
-      console.log('add new subject');
-      this.dialog.open(SubjectFormDialogComponent);
-    }
-  }
+  onCreate(type: 'subject' | 'teacher') {}
 
   onSubjSearch(text: string) {
     this.subjectSearch$.next(text);
@@ -328,12 +346,12 @@ export class LayoutComponent implements OnInit {
               const periodRequest =
                 teacher && subject
                   ? {
-                    periodId,
-                    subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
-                    teacherId: (
-                      item.data.find(d => Boolean(d.profileId)) || {}
-                    ).profileId
-                  }
+                      periodId,
+                      subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
+                      teacherId: (
+                        item.data.find(d => Boolean(d.profileId)) || {}
+                      ).profileId
+                    }
                   : null;
               res = {
                 ...res,
@@ -349,12 +367,12 @@ export class LayoutComponent implements OnInit {
               const firstPeriodRequest =
                 teacher && subject
                   ? [
-                    {
-                      periodId,
-                      subjectId: (subject || {}).id,
-                      teacherId: (teacher || {}).profileId
-                    }
-                  ]
+                      {
+                        periodId,
+                        subjectId: (subject || {}).id,
+                        teacherId: (teacher || {}).profileId
+                      }
+                    ]
                   : [];
               res = {
                 ...res,

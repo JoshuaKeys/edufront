@@ -1,0 +1,26 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CalendarRoutingModule } from './calendar-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { LayoutComponent } from './containers/layout/layout.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ConsoleSearchComponent } from './components/search/search.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ConsoleCalendarOptionsComponent } from './components/options/options.component';
+
+@NgModule({
+  declarations: [
+    LayoutComponent,
+    ConsoleSearchComponent,
+    ConsoleCalendarOptionsComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CalendarRoutingModule,
+    SharedModule,
+    DragDropModule
+  ]
+})
+export class CalendarModule {}
