@@ -1,0 +1,68 @@
+<div class="content sections-tab fit-to-page">
+  <div class="badges">
+    <!-- can ADD badge--active or badge--disabled to adjust styling -->
+    <div class="badge  " *ngFor="let badge of badgeArr; let idx = index">
+      <span>{{ idx + 1 }}</span>
+    </div>
+  </div>
+  <div class="content__body  dropzones">
+    <div class="dropzone " *ngIf="getFirstInArr(dropzoneArr) as firstDropZone">
+      <div class="dropzone__title-wrapper">
+        <h5 class="dropzone__title">{{ firstDropZone }}</h5>
+        <button ButtonType="icon" class="dropzone__delete-btn">
+          <img src="assets/admin/buttons/delete.svg" />
+        </button>
+      </div>
+      <div class="dropzone__body">
+        <div class="placeholder-text">
+          To assign students to this section, simply
+          <b class="orangecolor">drag</b> and <b class="orangecolor">drop</b>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="dropzones dropzones-flexwrap {{
+        assignDropzoneClass(dropzoneArr)
+      }}"
+    >
+      <ng-container *ngFor="let dropzone of dropzoneArr; let first = first">
+        <div *ngIf="!first" class="dropzone">
+          <div class="dropzone__title-wrapper">
+            <h5 class="dropzone__title">{{ dropzone }}</h5>
+            <button ButtonType="icon" class="dropzone__delete-btn">
+              <img src="assets/admin/buttons/delete.svg" />
+            </button>
+          </div>
+          <div class="dropzone__body"></div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="dropzone dropzone--create">+</div>
+  </div>
+</div>
+
+<aside class="aside">
+  <div class="search">
+    <input class="search__input" type="text" placeholder="Search students" />
+  </div>
+  <button
+    class="aside__button"
+    ButtonType="outline"
+    class="aside__button aside__button--add-students"
+  >
+    +
+  </button>
+  <div class="aside__body pills">
+    <div
+      class="pill pill--{{ student.gender }}"
+      *ngFor="let student of studentsArr"
+    >
+      {{ student.name }}
+    </div>
+  </div>
+  <button class="aside__button aside__button--footer" ButtonType="basic">
+    Auto Assign
+  </button>
+</aside>

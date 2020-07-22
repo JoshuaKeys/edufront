@@ -11,30 +11,23 @@ $spaceFromParentElement: -8px; //was -4
   & * {
     transition: none;
   }
-  padding: $y-padding $x-padding;
-  display: block;
-  position: relative;
-  z-index: 0;
-
-  transition: none;
+  z-index: 4;
   cursor: default;
   position: absolute;
-  background: white;
-  z-index: 4;
-
-  border: 1px solid $blue;
-  border-radius: 6px;
-
-  white-space: nowrap;
-
-  text-align: left;
-  border-color: $blue;
-
   //hiding popover
   width: 0;
   height: 0;
   overflow: hidden;
   opacity: 0;
+  display: flex;
+  flex-direction: column;
+  color: initial;
+  border-color: $blue;
+}
+
+:host:hover {
+  color: initial;
+  border-color: $blue;
 }
 
 :host.active {
@@ -42,7 +35,33 @@ $spaceFromParentElement: -8px; //was -4
   height: auto;
   overflow: unset;
   opacity: 1;
+  color: initial;
+  border-color: $blue;
 }
+.popover__component {
+  padding: $y-padding $x-padding;
+  display: block;
+  position: relative;
+  z-index: 0;
+  border: 1px solid $blue;
+  background: white;
+  border-radius: 6px;
+
+  white-space: nowrap;
+
+  text-align: left;
+
+  &--not-first {
+    margin-top: 10px;
+  }
+  &.hide {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    border: 0px;
+  }
+}
+
 .pointer {
   position: absolute;
 
@@ -79,13 +98,16 @@ $spaceFromParentElement: -8px; //was -4
 
   &.pointer-right {
     right: 0;
+    align-items: flex-end;
   }
   &.pointer-left {
     left: 0;
+    align-items: flex-start;
   }
   &.pointer-center {
     left: 50%;
     transform: translateY(100%) translateX(-50%);
+    align-items: center;
   }
   .pointer {
     top: 0;

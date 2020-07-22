@@ -1,8 +1,13 @@
 <div class="content">
+  <button (click)="toggleStuff()">toggleStuff</button>
   <button ButtonType="basic">
     popover top left
+    <edu-multi-popover
+      pointerAlignment="left"
+      [edu-components]="displayArr"
+    ></edu-multi-popover>
 
-    <edu-popover
+    <!-- <edu-popover
       alignment="top"
       pointerAlignment="left"
       (edu-open)="log('opening popover')"
@@ -17,7 +22,7 @@
       </p></edu-popover
     >
 
-    <edu-tooltip alignment="top" pointerAlignment="left">hi there </edu-tooltip>
+    <edu-tooltip alignment="top" pointerAlignment="left">hi there </edu-tooltip> -->
   </button>
   <button ButtonType="outline">
     <edu-tooltip alignment="top" pointerAlignment="center"

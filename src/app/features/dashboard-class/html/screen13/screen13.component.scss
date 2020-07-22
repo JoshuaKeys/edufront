@@ -1,0 +1,72 @@
+@import 'src/app/features/dashboard-class/dashboard-class-shared';
+
+:host {
+  @include displayFlex(flex-start, stretch);
+  max-height: $maxHeight;
+}
+//tab sepcific styling
+.sections-tab {
+  &.content {
+    flex-direction: row;
+    flex-grow: 1;
+    height: 100%;
+    min-height: $maxHeight;
+    position: relative;
+  }
+  .badges {
+    width: 84px;
+    max-width: unset;
+    margin: 0 14px;
+  }
+  .badge {
+    width: 38px;
+    height: 38px;
+    color: $grey;
+    border-color: $grey;
+    margin: 4px 0;
+  }
+  .badge:nth-child(odd) {
+    margin-right: 8px;
+  }
+}
+
+.palceholder-text {
+  @include absoluteCenter();
+  text-align: center;
+  color: $ash;
+  font: 400 16px/24px Raleway;
+}
+//aside styling
+.aside {
+  width: 219px;
+
+  border-left: 2px solid $grey;
+  max-height: $maxHeight;
+  overflow: scroll;
+  padding: 29px 17px;
+  flex-shrink: 0;
+  @include displayFlex(flex-start, center, column);
+
+  &__body {
+    flex-grow: 1;
+    margin: 10px 0;
+  }
+
+  & > button.aside__button {
+    width: 100%;
+    height: 32px;
+
+    &--add-students {
+      font: 600 22px/32px Quicksand;
+      margin-top: 20px;
+      border-style: dashed;
+    }
+    &--footer {
+      font: 700 12px/32px Raleway;
+    }
+  }
+}
+
+.search {
+  width: 100%;
+}

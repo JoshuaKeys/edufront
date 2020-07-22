@@ -9,6 +9,22 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/ui-test/ui-test.module').then(m => m.uiTestModule)
   },
+  {
+    path: 'dashboard-class',
+
+    loadChildren: () =>
+      import('./features/dashboard-class/dashboard-class.module').then(
+        m => m.DashboardClassModule
+      )
+  },
+  {
+    path: 'dashboard-calendar',
+
+    loadChildren: () =>
+      import('./features/dashboard-calendar/dashboard-calendar.module').then(
+        m => m.DashboardCalendarModule
+      )
+  },
 
   {
     path: 'admin',

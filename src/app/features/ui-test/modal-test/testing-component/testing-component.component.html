@@ -1,0 +1,10 @@
+<p>injected component</p>
+<ul>
+  <li>title: {{ title }}</li>
+  <li>desc :{{ desc }}</li>
+  <li>random123 :{{ random123 }}</li>
+</ul>
+
+<input [(ngModel)]="inputValue" type="text" />
+<button (click)="emitTest()">emitting testEvent</button>
+<button (click)="emitTest2()">emitting testEvent2 with input val</button>

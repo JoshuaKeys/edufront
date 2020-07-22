@@ -1,0 +1,84 @@
+<div class="content">
+  <div class="content__header">
+    <span
+      ><span class="selector selector--year"
+        >2019
+        <edu-popover
+          pointerAlignment="left"
+          (edu-open)="log('open')"
+          (edu-close)="log('close')"
+        >
+          <div class="selector-content-wrapper">
+            <ul class="selector__options" [ClosePopover]="yearPopoverState">
+              <li
+                class="selector__option"
+                *ngFor="let year of yearOptions"
+                (click)="closeYearSelector()"
+              >
+                {{ year }}
+              </li>
+            </ul>
+          </div>
+        </edu-popover>
+      </span>
+      <span class="selector selector--term"
+        >All Terms
+        <edu-popover
+          pointerAlignment="left"
+          (edu-open)="log('open')"
+          (edu-close)="log('close')"
+        >
+          <div
+            class="selector-content-wrapper"
+            [ClosePopover]="termPopoverState"
+          >
+            <ul class="selector__options">
+              <li
+                class="selector__option"
+                *ngFor="let term of termOptions"
+                (click)="closeTermSelector()"
+              >
+                {{ term }}
+              </li>
+              <li class="selector__option selector__option--custom">
+                <img src="assets/admin/form/add-16px-black.svg" alt="" />
+                <span>Custom</span>
+              </li>
+            </ul>
+          </div>
+        </edu-popover>
+      </span></span
+    >
+    <button class=" button  button--substitute-teacher" ButtonType="outline">
+      Substitute teacher
+      <edu-popover
+        pointerAlignment="right"
+        (edu-open)="log('open')"
+        (edu-close)="log('close')"
+      >
+        <div class="popover-content-wrapper">
+          <ul class="selector__options" [ClosePopover]="termPopoverState">
+            <li class="selector__option  selector__option--search">
+              <img src="assets/admin/calendar/user.svg" alt="" />
+              <span>Search teacher</span>
+            </li>
+          </ul>
+
+          <ul
+            class="selector__options selector__options--detached"
+            [ClosePopover]="termPopoverState"
+          >
+            <li
+              class="selector__option  selector__option--search"
+              *ngFor="let item of emptyArr"
+            >
+              <img src="assets/admin/calendar/user.svg" alt="" />
+              <span>Test teacher 123 </span>
+            </li>
+          </ul>
+        </div>
+      </edu-popover>
+    </button>
+  </div>
+  <div class="content__body"></div>
+</div>
