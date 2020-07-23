@@ -24,7 +24,7 @@ export class ImgUploadV2Component implements OnInit {
     }
     if (val.imageUrl) {
       this.mode = 'imageUrl';
-      this.imageSrc = `https://education.development.allexis.io/admin/image/profile/${val.imageUrl}`;
+      this.imageSrc = `https://login.development.edufront.education/auth/image/profile/${val.imageUrl}`;
       return;
     }
     this.imageSrc = val.base64;

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://education.development.allexis.io/admin/",
+    "target": "https://login.development.edufront.education/auth/",
     "secure": false
   }
 }
