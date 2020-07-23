@@ -135,6 +135,7 @@ export class LayoutComponent implements OnInit {
 
   showWelcomeModal$ = new BehaviorSubject(true);
   constructor(
+
     private dialog: DialogService,
     private router: Router,
     private timetableFacade: TimetableFacadeService,
@@ -321,12 +322,12 @@ export class LayoutComponent implements OnInit {
               const periodRequest =
                 teacher && subject
                   ? {
-                      periodId,
-                      subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
-                      teacherId: (
-                        item.data.find(d => Boolean(d.profileId)) || {}
-                      ).profileId
-                    }
+                    periodId,
+                    subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
+                    teacherId: (
+                      item.data.find(d => Boolean(d.profileId)) || {}
+                    ).profileId
+                  }
                   : null;
               res = {
                 ...res,
@@ -342,12 +343,12 @@ export class LayoutComponent implements OnInit {
               const firstPeriodRequest =
                 teacher && subject
                   ? [
-                      {
-                        periodId,
-                        subjectId: (subject || {}).id,
-                        teacherId: (teacher || {}).profileId
-                      }
-                    ]
+                    {
+                      periodId,
+                      subjectId: (subject || {}).id,
+                      teacherId: (teacher || {}).profileId
+                    }
+                  ]
                   : [];
               res = {
                 ...res,

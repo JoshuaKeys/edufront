@@ -10,6 +10,7 @@
       class="side-nav__option {{ option.value }} "
       ButtonType="blank"
       [routerLink]="[option.route]"
+      routerLinkActive="active"
     >
       <img src="assets/user-settings/side-nav_{{ option.value }}.svg" alt="" />
       <span>{{ option.text }} </span>

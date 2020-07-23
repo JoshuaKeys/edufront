@@ -7,6 +7,14 @@ import { ConsoleHeaderComponent } from './components/console-header/console-head
 import { ConsoleClassesAndGroupsComponent } from './containers';
 import { StoreModule } from '@ngrx/store';
 import { consoleReducer } from './ngrx/reducers';
+import { ClassesShellComponent } from './containers/classes-shell/classes-shell.component';
+import { ConsoleSectionsComponent } from './containers/console-sections/console-sections.component';
+import { ConsoleSubjectsComponent } from './containers/console-subjects/console-subjects.component';
+import { ConsoleClassesService } from './services/console-classes/console-classes.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { ConsoleClassesEffects } from './ngrx/effects/console-classes';
+import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 
 
 
@@ -14,13 +22,22 @@ import { consoleReducer } from './ngrx/reducers';
   declarations: [
     ConsoleShellComponent,
     ConsoleHeaderComponent,
-    ConsoleClassesAndGroupsComponent
+    ClassesShellComponent,
+    ConsoleClassesAndGroupsComponent,
+    ConsoleSectionsComponent,
+    ConsoleSubjectsComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    HttpClientModule,
     ConsoleRoutingModule,
-    StoreModule.forFeature('console', consoleReducer)
+    StoreModule.forFeature('console', consoleReducer),
+    EffectsModule.forFeature([ConsoleClassesEffects]),
+  ],
+  providers: [
+    ConsoleClassesService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
 export class ConsoleModule { }

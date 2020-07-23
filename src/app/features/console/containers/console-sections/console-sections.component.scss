@@ -1,0 +1,100 @@
+@import 'src/app/features/dashboard-class/dashboard-class-shared';
+.scrollable {
+  max-height: calc(100vh - 280px);
+  overflow: scroll;
+  padding: 0 100px;
+}
+
+.content {
+  &__title {
+    max-width: 720px;
+  }
+  &__button.basic {
+    width: 156px;
+    height: 40px;
+    font: 700 12px/14px Raleway;
+    letter-spacing: 1px;
+  }
+}
+.sections {
+  @include displayFlex();
+  flex-wrap: wrap;
+}
+.section {
+  margin: 20px;
+  min-width: 25%;
+  @include displayFlex(flex-start);
+}
+
+.classes {
+  @include displayFlex();
+}
+
+.badge {
+  margin-right: 10px;
+}
+.class {
+  transition: all 0.3s, color 0s;
+  border: 1px solid $purple;
+  font: 500 12px/32px Roboto;
+  cursor: pointer;
+  height: 32px;
+  min-width: 32px;
+  text-align: center;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  border-radius: 8px;
+  margin: 10px;
+  color: $purple;
+  padding: 0 4px;
+  position: relative;
+
+  &__text-wrapper {
+    transition: all 0.3s, color 0s;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__text {
+    transition: all 0.3s, color 0s;
+    // line-height: 32px;
+    white-space: nowrap;
+    // @include absoluteVertCenter();
+  }
+}
+
+.class:hover {
+  color: white;
+  background: $purple;
+}
+
+//for popover
+
+.pills {
+  overflow: auto;
+  height: 290px;
+  width: 260px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.pill {
+  cursor: pointer;
+  height: 32px;
+  font: 600 12px/32px Raleway;
+  border: 1px solid;
+  border-radius: 100px;
+  padding: 0 12px;
+  margin: 5px;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &--male {
+    color: $blue;
+    border-color: $blue;
+  }
+
+  &--female {
+    color: $pink;
+    border-color: $pink;
+  }
+}

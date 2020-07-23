@@ -41,6 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'console',
+    canLoad: [AuthenticatedGuard],
     loadChildren: () => import('./features/console/console.module').then(
       m => m.ConsoleModule
     )

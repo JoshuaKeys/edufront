@@ -1,6 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { fetchGeneratedGroups, fetchAllClasses } from '../../ngrx/actions/console-classes';
+import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
+import { selectConsoleClasses, selectConsoleGroups } from '../../ngrx/selectors/console-classes';
+import { GeneratedGroupsModel } from '../../models/generated-groups.model';
 
 @Component({
   selector: 'edu-console-classes-and-groups',
@@ -9,9 +14,15 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConsoleClassesAndGroupsComponent implements OnInit {
-  classes$ = this.classService.entities$
-
+  // classes$ = this.classService.entities$
+  classes$: Observable<ExtendedClassModel[]>;
+  classesLoading$ = this.classService.loading$;
+  classesAndGroups$: Observable<GeneratedGroupsModel[]>;
   ngOnInit(): void {
+    this.store.dispatch(fetchAllClasses())
+    this.store.dispatch(fetchGeneratedGroups())
+    this.classes$ = this.store.select(selectConsoleClasses);
+    this.classesAndGroups$ = this.store.select(selectConsoleGroups);
     this.classService.getAll()
     this.badgeMultiSelect = this.badgeArr.map(badge => ({
       value: badge,
@@ -68,7 +79,7 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
     console.log(this.activeArr);
   }
 
-  constructor(private classService: ClassesService) {
+  constructor(private classService: ClassesService, private store: Store) {
 
   }
 }
