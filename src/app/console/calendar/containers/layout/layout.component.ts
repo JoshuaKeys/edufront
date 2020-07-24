@@ -478,15 +478,19 @@ export class LayoutComponent implements OnInit {
 
   onAddTerm() {
     console.log('new term');
-    const newTerm = {
-      academicYearId: 'e64d46a7-ab83-417d-8ed7-b4ac3ec84225',
-      priority: 0,
-      termEnd: '2020-05-31',
-      termStart: '2020-01-01',
-      termTitle: 'Term 1'
-    };
     this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
-      this.academiYearService.add(res);
+      const newTerm = {
+        academicYearId: res.id,
+        priority: 0,
+        termEnd: '2020-06-01',
+        termStart: '2020-07-01',
+        termTitle: 'Term 3'
+      };
+      this.academiYearService.update({
+        ...res,
+        noOfTerm: res.noOfTerm + 1,
+        termDetailsDtos: res.termDetailsDtos.concat(newTerm)
+      });
     });
   }
 }

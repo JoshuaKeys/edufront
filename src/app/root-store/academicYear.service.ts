@@ -9,6 +9,7 @@ import {
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IAcademicYear } from '../core/models/timetable';
+import { Update } from '@ngrx/entity';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,18 @@ export class AcademicYearDataService extends DefaultDataService<IAcademicYear> {
       map((res: any) => {
         return res.content;
       })
+    );
+  }
+
+  update(data: Update<IAcademicYear>) {
+    const id = data && data.id;
+    const updateOrError =
+      id == null
+        ? new Error(`No "${this.entityName}" update data or id`)
+        : data.changes;
+    return this.http.put<IAcademicYear>(
+      `${this.entitiesUrl}/${id}`,
+      updateOrError
     );
   }
 }

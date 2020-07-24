@@ -170,11 +170,13 @@ edu-simple-button {
   font: 500 20px/1 Quicksand;
   cursor: pointer;
   &:hover,
-  &.active {
+  &.active,
+  &.opened {
     background: #f8f9fa;
     border: 1px solid #e6e9f3;
     border-radius: 8px;
   }
+  &.opened,
   &.active {
     color: #69a9f2;
   }

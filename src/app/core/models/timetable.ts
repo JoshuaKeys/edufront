@@ -54,7 +54,7 @@ export interface PeriodRequestQ {
 export interface IAcademicYear {
   acadimicEnd: string;
   acadimicStart: string;
-  id: string;
+  id?: string;
   noOfTerm: number;
   schoolId: string;
   termDetailsDtos: TermDetailsDto[];
@@ -64,7 +64,7 @@ export interface TermDetailsDto {
   academicYearId: string;
   priority: number;
   termEnd: string;
-  termId: string;
+  termId?: string;
   termStart: string;
   termTitle: string;
 }
