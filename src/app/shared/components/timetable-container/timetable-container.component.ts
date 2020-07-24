@@ -9,7 +9,8 @@ import {
   ElementRef,
   ComponentRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   CalendarModel,
@@ -55,13 +56,17 @@ export class TimetableContainerComponent implements OnInit {
     return this._timetableData;
   }
   set timetableData(data: any) {
-    this._timetableData = data;
+    if (!data) {
+      return;
+    }
+    this._timetableData = { ...data };
 
     const dataKeysFromStore = Object.keys(data);
     dataKeysFromStore.forEach(key => {
       const d = data[key].data;
       this.periodsDataRef[key] = [...d];
     });
+    // this.cdr.markForCheck();
   }
   private _timetableData;
 
@@ -94,13 +99,16 @@ export class TimetableContainerComponent implements OnInit {
     // this.logStuff();
   }
 
+  localData = {};
+
   days = [];
   periodDurationIsSet = false;
   private overlayRef: OverlayRef;
   constructor(
     private render: Renderer2,
     private overlay: Overlay,
-    private overlayPositionBuilder: OverlayPositionBuilder
+    private overlayPositionBuilder: OverlayPositionBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

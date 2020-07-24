@@ -68,3 +68,14 @@ export interface TermDetailsDto {
   termStart: string;
   termTitle: string;
 }
+
+export interface IPeriodSavedData {
+  id: string;
+  classId: string;
+  sectionId: string;
+  periodId: string;
+  subjectId: string;
+  teacherId: string;
+  termDetailId: string;
+  acadimicYearId: string;
+}

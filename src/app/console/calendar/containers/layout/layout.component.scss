@@ -33,8 +33,10 @@
 }
 
 .timetable-container {
-  overflow: hidden;
+  overflow: auto;
   padding: 0 25px;
+  height: 100%;
+  padding-bottom: 80px;
 }
 
 .cdk-drag-placeholder {
@@ -161,6 +163,7 @@ edu-simple-button {
 
 .academic-year,
 .academic-year-terms {
+  position: relative;
   padding: 2px 8px;
   color: #212121;
   border: 1px solid transparent;
@@ -175,4 +178,34 @@ edu-simple-button {
   &.active {
     color: #69a9f2;
   }
+}
+
+.popover-button {
+  background: none;
+  outline: none;
+  display: block;
+  min-width: 100px;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: #212121;
+  font: normal 14px/40px Raleway;
+  &:hover {
+    color: #69a9f2;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.last-button {
+  margin: 0 -16px;
+  padding: 0 16px;
+  border-top: 1px solid #e6e9f3;
+  padding-top: 16px;
 }

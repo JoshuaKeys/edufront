@@ -2,7 +2,10 @@ import {
   ITeacher,
   ISubjectWithTeachers
 } from 'src/app/shared/models/subject.model';
-import { TimetableSkeleton } from 'src/app/core/models/timetable';
+import {
+  TimetableSkeleton,
+  IPeriodSavedData
+} from 'src/app/core/models/timetable';
 import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 
 export interface UIState {
@@ -27,6 +30,8 @@ export interface TimetableFeatureState {
     submitted: boolean;
   };
 
+  timetableAPIData: IPeriodSavedData[];
+
   timetableData: {
     [key: string]: {
       periodId: string;
@@ -38,6 +43,7 @@ export interface TimetableFeatureState {
 
 export const INITIAL_STATE: TimetableFeatureState = {
   timetableData: {},
+  timetableAPIData: [],
   classes: [],
   sections: [],
   timetableSkeleton: [],

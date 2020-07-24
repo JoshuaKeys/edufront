@@ -1,13 +1,78 @@
 <div class="calendar-top-bar">
   <div>
-    <div class="academic-year">{{ academicYearTitle | async }}</div>
-    <div class="academic-year-terms">All terms</div>
+    <div class="academic-year">
+      {{ academicYearTitle | async }}
+      <edu-popover
+        *ngIf="(academicYears$ | async)?.length"
+        alignment="bottom"
+        pointerAlignment="left"
+        #popover
+      >
+        <button
+          *ngFor="let academicYear of academicYears$ | async"
+          class="popover-button"
+          (click)="onSelectYear(academicYear, popover)"
+        >
+          {{ getAcademicYearTitle(academicYear) }}
+        </button>
+      </edu-popover>
+    </div>
+    <div class="academic-year-terms">
+      {{ selectedTermTitle$ | async }}
+      <edu-popover
+        *ngIf="(academicYearTerms$ | async)?.length"
+        alignment="bottom"
+        pointerAlignment="left"
+        #popover
+      >
+        <button
+          class="popover-button"
+          (click)="onSelectTerm('All terms', popover)"
+        >
+          All terms
+        </button>
+        <button
+          *ngFor="let term of academicYearTerms$ | async"
+          class="popover-button"
+          (click)="onSelectTerm(term, popover)"
+        >
+          {{ term.termTitle }}
+        </button>
+        <div class="last-button">
+          <button class="popover-button" (click)="onAddTerm()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="10"
+              height="10"
+              viewBox="0 0 35 35"
+            >
+              <defs>
+                <style>
+                  .a {
+                    fill: none;
+                    stroke: #000;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-width: 3px;
+                  }
+                </style>
+              </defs>
+              <g transform="translate(1.5 1.5)">
+                <line class="a" y2="32" transform="translate(16)" />
+                <line class="a" x2="32" transform="translate(0 16)" />
+              </g>
+            </svg>
+            Custom
+          </button>
+        </div>
+      </edu-popover>
+    </div>
   </div>
   <div>
     <button>Substitute Teacher</button>
   </div>
 </div>
-<div class="layout-container">
+<div class="layout-container" cdkDropListGroup>
   <div class="left-col">
     <div class="timetable__classes">
       <div *ngIf="selectedClassId$ | async" class="selected-class-sections">
@@ -106,7 +171,7 @@
       </edu-console-calendar-search>
     </ng-container>
   </div>
-  <div class="timetable-container" cdkDropListGroup>
+  <div class="timetable-container">
     <div class="timetable__timetable">
       <div
         class="loading"

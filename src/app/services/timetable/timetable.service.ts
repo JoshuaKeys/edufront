@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import {
   TimetableSkeleton,
   IClassSectionPeriodModel,
-  ITimetableSavingModel
+  ITimetableSavingModel,
+  IPeriodSavedData
 } from 'src/app/core/models/timetable';
 import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 import { IGenericSearchReponse } from 'src/app/shared/models/generic-search.model';
@@ -51,5 +52,9 @@ export class TimetableService {
       '/api/v1/classSectionPeriod',
       data
     );
+  }
+
+  getAllPeriodsData() {
+    return this.http.get<IPeriodSavedData[]>('/api/v1/classSectionPeriod/all');
   }
 }

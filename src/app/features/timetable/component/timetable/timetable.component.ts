@@ -25,7 +25,6 @@ import {
   transferArrayItem,
   copyArrayItem
 } from '@angular/cdk/drag-drop';
-import { TimetableFacadeService } from '../../services/timetable-facade.service';
 import { take, delay } from 'rxjs/operators';
 import {
   Overlay,
@@ -34,6 +33,7 @@ import {
 } from '@angular/cdk/overlay';
 import { SharedTooltipComponent } from 'src/app/shared/components/tooltip/tooltip.component';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
 
 @Component({
   selector: 'edu-custom-timetable',

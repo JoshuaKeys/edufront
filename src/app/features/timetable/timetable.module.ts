@@ -12,6 +12,7 @@ import { SubjectIconFieldComponent } from './component/subject-icon-field/subjec
 import { SubjectsFormComponent } from './component/subjects-form/subjects-form.component';
 import { ArrayInputFieldComponent } from './component/input-field/input-field.component';
 import { SubjectFormDialogComponent } from './component/subject-form-dialog/subject-form-dialog.component';
+import { TimetableComponent } from './component/timetable/timetable.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SubjectFormDialogComponent } from './component/subject-form-dialog/subj
     SubjectIconFieldComponent,
     SubjectsFormComponent,
     ArrayInputFieldComponent,
-    SubjectFormDialogComponent
+    SubjectFormDialogComponent,
+    TimetableComponent
   ],
   imports: [
     CommonModule,

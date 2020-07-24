@@ -2,10 +2,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   ITimetableSavingModel,
   IClassSectionPeriodModel,
-  IAcademicYear
+  IAcademicYear,
+  TermDetailsDto
 } from 'src/app/core/models/timetable';
 import * as moment from 'moment';
-import { map, filter, take } from 'rxjs/operators';
+import { map, filter, take, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable, merge } from 'rxjs';
 import { CalendarModel } from 'src/app/features/calender/models/calendar.model';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { ISectionModel } from 'src/app/shared/models/section.model';
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
 import { AcademicYearService } from 'src/app/root-store/academicYear.service';
+import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
 
 const DEFAULT_START_IME = '08:00';
 
@@ -46,7 +48,18 @@ export class LayoutComponent implements OnInit {
     })
   );
 
-  timetableData$ = this.timetableFacade.timetableData$;
+  timetableAPIDataByClass$ = this.selectedClassId$.pipe(
+    switchMap(classId => this.timetableFacade.timetableAPIDataByClass$(classId))
+  );
+
+  timetableData$ = combineLatest([
+    this.timetableFacade.timetableData$,
+    this.timetableAPIDataByClass$
+  ]).pipe(
+    map(([timetableData, timetableAPIDataByClass]) => {
+      return timetableData;
+    })
+  );
 
   canSubmit$ = combineLatest([
     this.timetableFacade.timetableData$,
@@ -135,7 +148,22 @@ export class LayoutComponent implements OnInit {
 
   showWelcomeModal$ = new BehaviorSubject(true);
 
-  _selectedAcademicYear$: Observable<IAcademicYear> = new BehaviorSubject(null);
+  _selectedAcademicYear$: BehaviorSubject<IAcademicYear> = new BehaviorSubject(
+    null
+  );
+
+  selectedTerm$: BehaviorSubject<TermDetailsDto | string> = new BehaviorSubject(
+    'All terms'
+  );
+
+  selectedTermTitle$ = this.selectedTerm$.pipe(
+    map(term => {
+      if (typeof term === 'string') {
+        return term;
+      }
+      return term.termTitle;
+    })
+  );
 
   academicYears$ = this.academiYearService.entities$;
   selectedAcademicYear$ = merge(
@@ -143,6 +171,7 @@ export class LayoutComponent implements OnInit {
     this._selectedAcademicYear$.pipe(filter(year => Boolean(year)))
   );
   academicYearTerms$ = this.selectedAcademicYear$.pipe(
+    filter(year => Boolean(year)),
     map(year => {
       return year.termDetailsDtos;
     })
@@ -156,6 +185,7 @@ export class LayoutComponent implements OnInit {
   ) {
     this.timetableFacade.resetTimetable();
     this.classService.getAll();
+    this.timetableFacade.getAllPeriodsData();
     this.sectionService.getWithQuery({ pageSize: '200' });
     this.academiYearService.getWithQuery({ pageSize: '200' });
   }
@@ -170,6 +200,13 @@ export class LayoutComponent implements OnInit {
         return title;
       })
     );
+  }
+
+  getAcademicYearTitle(year: IAcademicYear) {
+    const title = `${year.acadimicStart.split('-')[0]} - ${
+      year.acadimicEnd.split('-')[0]
+    }`;
+    return title;
   }
 
   ngOnInit(): void {
@@ -408,89 +445,6 @@ export class LayoutComponent implements OnInit {
       });
   }
 
-  // onSaveTimetable() {
-  //   this.timetableFacade.timetableData$
-  //     .pipe(take(1))
-  //     .subscribe(timetableData => {
-  //       const keys = Object.keys(timetableData);
-  //       if (keys.length > 0) {
-  //         let res: {
-  //           [key: string]: IClassSectionPeriodModel;
-  //         } = {};
-  //         keys.forEach(key => {
-  //           const [classId, sectionId, periodId] = key.split('--');
-  //           const item = timetableData[key];
-  //           const existingClass = res[`${classId}`];
-  //           const subject = item.data.find(d => Boolean(d.id));
-  //           const teacher = item.data.find(d => Boolean(d.profileId));
-  //           const periodRequest =
-  //             teacher && subject
-  //               ? {
-  //                   periodId,
-  //                   subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
-  //                   teacherId: (item.data.find(d => Boolean(d.profileId)) || {})
-  //                     .profileId
-  //                 }
-  //               : null;
-
-  //           if (existingClass) {
-  //             const sectionList = existingClass.sectionList || [];
-  //             let existingSection = sectionList.find(
-  //               list => list.sectionId === sectionId
-  //             );
-  //             let newSection;
-
-  //             if (existingSection) {
-  //               if (periodRequest) {
-  //                 existingSection = {
-  //                   ...existingSection,
-  //                   periodRequestQ: existingSection.periodRequestQ.concat(
-  //                     periodRequest
-  //                   )
-  //                 };
-  //               }
-  //             } else {
-  //               newSection = {
-  //                 periodRequestQ: periodRequest ? [periodRequest] : [],
-  //                 sectionId
-  //               };
-  //             }
-
-  //             res[`${classId}`] = {
-  //               ...existingClass,
-  //               sectionList: newSection
-  //                 ? this.addNewSection(existingClass.sectionList, newSection)
-  //                 : this.replaceSection(
-  //                     existingClass.sectionList,
-  //                     existingSection
-  //                   )
-  //             };
-  //           } else {
-  //             const firstPeriodRequest = periodRequest ? [periodRequest] : [];
-  //             res = {
-  //               ...res,
-  //               [`${classId}`]: {
-  //                 classId,
-  //                 sectionList: [
-  //                   {
-  //                     sectionId,
-  //                     periodRequestQ: firstPeriodRequest
-  //                   }
-  //                 ]
-  //               }
-  //             };
-  //           }
-  //         });
-
-  //         console.log('Data to submit');
-  //         console.log(Object.values(res));
-  //         // Object.values(res).forEach(timetable =>
-  //         //   this.timetableFacade.submitTimetable(timetable)
-  //         // );
-  //       }
-  //     });
-  // }
-
   addNewSection(list: any[], section: any) {
     return list.concat(section);
   }
@@ -507,7 +461,32 @@ export class LayoutComponent implements OnInit {
     this.timetableFacade.getSubjects(this.selectedClassId$.value);
   }
 
-  goToDashboard() {
-    this.router.navigateByUrl('/dashboard');
+  onSelectYear(year: IAcademicYear, popover: PopoverComponent) {
+    this._selectedAcademicYear$.next(year);
+    this.selectedTerm$.next('All terms');
+    popover.togglePopoverState();
+  }
+
+  onSelectTerm(term: TermDetailsDto | string, popover: PopoverComponent) {
+    if (typeof term === 'string') {
+      this.selectedTerm$.next(term);
+    } else {
+      this.selectedTerm$.next(term);
+    }
+    popover.togglePopoverState();
+  }
+
+  onAddTerm() {
+    console.log('new term');
+    const newTerm = {
+      academicYearId: 'e64d46a7-ab83-417d-8ed7-b4ac3ec84225',
+      priority: 0,
+      termEnd: '2020-05-31',
+      termStart: '2020-01-01',
+      termTitle: 'Term 1'
+    };
+    this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+      this.academiYearService.add(res);
+    });
   }
 }

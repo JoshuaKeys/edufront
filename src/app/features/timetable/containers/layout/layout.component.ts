@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { CalendarModel } from '../../component/timetable/data';
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { ClassSectionService } from 'src/app/root-store/class-section.service';
-import { map, filter, take } from 'rxjs/operators';
+import { map, filter, take, delay } from 'rxjs/operators';
 import { ISectionModel } from 'src/app/shared/models/section.model';
 import {
   IClassSectionPeriodModel,
@@ -48,7 +48,7 @@ export class LayoutComponent implements OnInit {
     })
   );
 
-  timetableData$ = this.timetableFacade.timetableData$;
+  timetableData$ = this.timetableFacade.timetableData$.pipe(delay(100));
 
   canSubmit$ = combineLatest([
     this.timetableFacade.timetableData$,

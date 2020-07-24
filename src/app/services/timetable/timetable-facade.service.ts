@@ -15,7 +15,8 @@ import {
   selectSubjects,
   selectSubjectsUI,
   selectTeachers,
-  selectTimetableData
+  selectTimetableData,
+  selectTimetableAPIDataByClass
 } from 'src/app/root-store/timetable-store/selectors';
 import {
   createSubjectSuccess,
@@ -30,7 +31,8 @@ import {
   getTeachersAction,
   getSubjectsAction,
   updateTimetablePeriodAction,
-  submitTimetableAction
+  submitTimetableAction,
+  getTimetableDataAction
 } from 'src/app/root-store/timetable-store/actions';
 
 @Injectable({
@@ -46,6 +48,8 @@ export class TimetableFacadeService {
   subjectsUI$ = this.store.pipe(select(selectSubjectsUI));
   teachers$ = this.store.pipe(select(selectTeachers));
   timetableData$ = this.store.pipe(select(selectTimetableData));
+  timetableAPIDataByClass$ = (classId: string) =>
+    this.store.pipe(select(selectTimetableAPIDataByClass, { classId }));
   subjectCreated$ = this.actions$.pipe(
     ofType(createSubjectSuccess),
     mapTo(true)
@@ -94,5 +98,9 @@ export class TimetableFacadeService {
 
   createSubjectRequest(subject: CreateSubjModel) {
     this.store.dispatch(createSubjectRequest({ subject }));
+  }
+
+  getAllPeriodsData() {
+    this.store.dispatch(getTimetableDataAction());
   }
 }

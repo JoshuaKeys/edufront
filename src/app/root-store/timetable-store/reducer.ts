@@ -12,7 +12,9 @@ import {
   submitTimetableAction,
   submitTimetableSuccessAction,
   getSubjectsFailureAction,
-  initTimetableAction
+  initTimetableAction,
+  getTimetableDataAction,
+  getTimetableDataSuccessAction
 } from './actions';
 
 export const timetableReducer = createReducer(
@@ -128,6 +130,28 @@ export const timetableReducer = createReducer(
       ...state.ui,
       submitting: false,
       submitted: true
+    }
+  })),
+
+  on(getTimetableDataAction, state => ({
+    ...state,
+    ui: {
+      ...state.ui,
+      timetableSkeleton: {
+        ...state.ui.timetableSkeleton,
+        loading: true
+      }
+    }
+  })),
+  on(getTimetableDataSuccessAction, (state, { data }) => ({
+    ...state,
+    timetableAPIData: data,
+    ui: {
+      ...state.ui,
+      timetableSkeleton: {
+        ...state.ui.timetableSkeleton,
+        loading: false
+      }
     }
   }))
 );
