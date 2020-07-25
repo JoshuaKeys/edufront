@@ -1,0 +1,17 @@
+<h1>Delete Term {{ termTitle }}?</h1>
+<p>To delete, select a replacement term from the dropdown</p>
+<select [formControl]="termCtrl" placeholder="Select Timetable">
+  <option *ngFor="let term of data.terms" [value]="term">{{
+    term.termStart
+  }}</option>
+</select>
+<div class="dialog-buttons">
+  <button (click)="onCancel()">Cancel</button>
+  <button
+    class="btn-flat btn-red"
+    [disabled]="termCtrl.invalid"
+    (click)="onDelete()"
+  >
+    Delete
+  </button>
+</div>

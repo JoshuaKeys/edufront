@@ -254,22 +254,20 @@ export class Datepicker2Component
         this.model = isNaN(dateObj.year) ? null : model;
       }, 1);
     } else {
-      if (this.displayedValue) {
-        let beginDate = this.getDateObj(this.displayedValue.substring(0, 8));
-        let endDate = this.getDateObj(this.displayedValue.substring(11, 20));
+      let beginDate = this.getDateObj(this.displayedValue.substring(0, 8));
+      let endDate = this.getDateObj(this.displayedValue.substring(11, 20));
 
-        let model: IMyDateModel = {
-          isRange: true,
-          singleDate: null,
-          dateRange: {
-            beginDate,
-            endDate
-          }
-        };
-        setTimeout(() => {
-          this.model = isNaN(beginDate.year) ? null : model;
-        }, 1);
-      }
+      let model: IMyDateModel = {
+        isRange: true,
+        singleDate: null,
+        dateRange: {
+          beginDate,
+          endDate
+        }
+      };
+      setTimeout(() => {
+        this.model = isNaN(beginDate.year) ? null : model;
+      }, 1);
     }
 
     // this.cd.markForCheck();

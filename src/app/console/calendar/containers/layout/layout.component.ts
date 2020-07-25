@@ -16,6 +16,8 @@ import { ClassesService } from 'src/app/root-store/classes.service';
 import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
 import { AcademicYearService } from 'src/app/root-store/academicYear.service';
 import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
+import { DialogService } from 'src/app/shared/components/generic-dialog/dialog.service';
+import { DeleteTermDialogComponent } from '../../components/delete-term-dialog/delete-term-dialog.component';
 
 const DEFAULT_START_IME = '08:00';
 
@@ -176,8 +178,14 @@ export class LayoutComponent implements OnInit {
       return year.termDetailsDtos;
     })
   );
+
+  optionWithRange = {
+    dateRange: true
+  };
+  showAddTerm = false;
+  dateRangeValue = null;
   constructor(
-    private router: Router,
+    private dialog: DialogService,
     private timetableFacade: TimetableFacadeService,
     private classService: ClassesService,
     private sectionService: ClassSectionService,
@@ -207,6 +215,13 @@ export class LayoutComponent implements OnInit {
       year.acadimicEnd.split('-')[0]
     }`;
     return title;
+  }
+
+  customTermTitle(term: TermDetailsDto) {
+    const start = moment(term.termStart).format('DD MMM');
+    const end = moment(term.termEnd).format('DD MMM');
+
+    return `${start} - ${end}`;
   }
 
   ngOnInit(): void {
@@ -477,14 +492,30 @@ export class LayoutComponent implements OnInit {
   }
 
   onAddTerm() {
-    console.log('new term');
+    this.showAddTerm = true;
+  }
+
+  onDateRangeChange(data) {
+    console.log(data);
+    this.dateRangeValue = data;
+  }
+
+  onClose() {
+    console.log('closed');
+    this.showAddTerm = false;
+    this.dateRangeValue = null;
+  }
+
+  onSaveTermDates() {
+    console.log('save term');
+    const [start, end] = this.dateRangeValue.split(' - ');
     this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
       const newTerm = {
         academicYearId: res.id,
         priority: 0,
-        termEnd: '2020-06-01',
-        termStart: '2020-07-01',
-        termTitle: 'Term 3'
+        termEnd: end,
+        termStart: start,
+        termTitle: null
       };
       this.academiYearService.update({
         ...res,
@@ -492,5 +523,137 @@ export class LayoutComponent implements OnInit {
         termDetailsDtos: res.termDetailsDtos.concat(newTerm)
       });
     });
+
+    this.showAddTerm = false;
+    this.dateRangeValue = null;
+  }
+
+  onRemoveTerm(
+    term: TermDetailsDto,
+    indexToRemove: number,
+    terms: TermDetailsDto[]
+  ) {
+    console.log(term);
+    const termsWithoutDeleted = terms.filter((t, i) => i !== indexToRemove);
+    const dialogRef = this.dialog.open(DeleteTermDialogComponent, {
+      data: {
+        term,
+        terms: termsWithoutDeleted,
+        index: indexToRemove
+      }
+    });
+    dialogRef.afterClosed().subscribe((termToExtend: TermDetailsDto | null) => {
+      if (termToExtend) {
+        const termDetailsDtos = this.prepareTermsToSave(
+          term,
+          terms,
+          termToExtend,
+          indexToRemove
+        );
+        console.log(termDetailsDtos);
+        // this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+        //   this.academiYearService.update({
+        //     ...res,
+        //     noOfTerm: termDetailsDtos.length,
+        //     termDetailsDtos
+        //   });
+        // });
+      }
+    });
+  }
+  onEditTerm(term: TermDetailsDto, index: number, terms: TermDetailsDto[]) {
+    console.log(term);
+  }
+
+  prepareTermsToSave(
+    term: TermDetailsDto,
+    terms: TermDetailsDto[],
+    termToExtend: TermDetailsDto,
+    indexToRemove: number
+  ) {
+    const termToExtendIndex = terms.findIndex(
+      t => termToExtend.termId === t.termId
+    );
+    let res: TermDetailsDto[] = [];
+
+    if (indexToRemove === 0) {
+      /**
+       * If removed Term is first element
+       * We remove all terms in between Removed Term and TermToExtend
+       * and set termStart of TermToExtend to be equal to Removed term termStart
+       */
+      return terms.slice(termToExtendIndex).map((t, i) => {
+        if (i === 0) {
+          return {
+            ...t,
+            termStart: term.termStart
+          };
+        }
+        return t;
+      });
+    }
+
+    if (indexToRemove === terms.length - 1) {
+      /**
+       * If removed Term is Last element
+       * We remove all terms in between Removed Term and TermToExtend
+       * and set termEnd of TermToExtend to be equal to Removed term termEnd
+       */
+      res = terms.slice().splice(0, termToExtendIndex + 1);
+      return res.map((t, i) => {
+        if (i === res.length - 1) {
+          return {
+            ...t,
+            termEnd: term.termEnd
+          };
+        }
+        return t;
+      });
+    }
+
+    if (indexToRemove > 0 && indexToRemove < termToExtendIndex) {
+      const termsBeforeRemoved: TermDetailsDto[] = terms
+        .slice()
+        .splice(0, indexToRemove);
+      const termsAfterExtended: TermDetailsDto[] = terms
+        .slice()
+        .splice(termToExtendIndex)
+        .map((t, i) => {
+          if (i === 0) {
+            return {
+              ...t,
+              termStart: term.termStart
+            };
+          }
+          return t;
+        });
+
+      return termsBeforeRemoved.concat(termsAfterExtended);
+    }
+
+    if (indexToRemove > 0 && indexToRemove > termToExtendIndex) {
+      const termsBeforeExtended: TermDetailsDto[] = terms
+        .slice()
+        .splice(0, termToExtendIndex);
+      const termsAfterRemoved: TermDetailsDto[] = terms
+        .slice()
+        .splice(indexToRemove + 1)
+        .map((t, i) => {
+          if (i === 0) {
+            return {
+              ...t,
+              termStart: term.termStart
+            };
+          }
+          return t;
+        });
+
+      const extended = {
+        ...terms[termToExtendIndex],
+        termEnd: term.termEnd
+      };
+
+      return [...termsBeforeExtended, extended].concat(termsAfterRemoved);
+    }
   }
 }

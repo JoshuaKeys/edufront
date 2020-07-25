@@ -7,12 +7,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ConsoleSearchComponent } from './components/search/search.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConsoleCalendarOptionsComponent } from './components/options/options.component';
+import { DeleteTermDialogComponent } from './components/delete-term-dialog/delete-term-dialog.component';
+import { DialogModule } from 'src/app/shared/components/generic-dialog/dialog.module';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ConsoleSearchComponent,
-    ConsoleCalendarOptionsComponent
+    ConsoleCalendarOptionsComponent,
+    DeleteTermDialogComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +23,9 @@ import { ConsoleCalendarOptionsComponent } from './components/options/options.co
     ReactiveFormsModule,
     CalendarRoutingModule,
     SharedModule,
-    DragDropModule
-  ]
+    DragDropModule,
+    DialogModule
+  ],
+  entryComponents: [DeleteTermDialogComponent]
 })
 export class CalendarModule {}

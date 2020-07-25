@@ -23,48 +23,124 @@
         *ngIf="(academicYearTerms$ | async)?.length"
         alignment="bottom"
         pointerAlignment="left"
+        (edu-close)="onClose()"
         #popover
       >
-        <button
-          class="popover-button"
-          (click)="onSelectTerm('All terms', popover)"
+        <edu-datepicker
+          *ngIf="showAddTerm"
+          (edu-change)="onDateRangeChange($event)"
+          alignment="center"
+          [edu-datepicker-options]="optionWithRange"
         >
-          All terms
-        </button>
+          <span class="edu-label">Select date range</span>
+          <div class="edu-suffix" InputAffix>
+            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
+          </div>
+        </edu-datepicker>
         <button
-          *ngFor="let term of academicYearTerms$ | async"
-          class="popover-button"
-          (click)="onSelectTerm(term, popover)"
+          *ngIf="dateRangeValue"
+          (click)="onSaveTermDates()"
+          class="submit-term-btn"
         >
-          {{ term.termTitle }}
-        </button>
-        <div class="last-button">
-          <button class="popover-button" (click)="onAddTerm()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="10"
-              height="10"
-              viewBox="0 0 35 35"
-            >
-              <defs>
-                <style>
-                  .a {
-                    fill: none;
-                    stroke: #000;
-                    stroke-linecap: round;
-                    stroke-linejoin: round;
-                    stroke-width: 3px;
-                  }
-                </style>
-              </defs>
-              <g transform="translate(1.5 1.5)">
-                <line class="a" y2="32" transform="translate(16)" />
-                <line class="a" x2="32" transform="translate(0 16)" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+          >
+            <defs>
+              <style>
+                .a,
+                .b,
+                .d {
+                  fill: none;
+                }
+                .a,
+                .b {
+                  stroke: #69a9f2;
+                }
+                .b {
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 2px;
+                }
+                .c {
+                  stroke: none;
+                }
+                .a {
+                  fill: none;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                }
+              </style>
+            </defs>
+            <g transform="translate(-634 -378)">
+              <g class="a" transform="translate(634 378)">
+                <circle class="c" cx="10" cy="10" r="10" />
+                <circle class="d" cx="10" cy="10" r="9.5" />
               </g>
-            </svg>
-            Custom
+              <path
+                class="b"
+                d="M14,6,7.125,12.875,4,9.75"
+                transform="translate(634.583 379.083)"
+              />
+            </g>
+          </svg>
+        </button>
+        <ng-container *ngIf="!showAddTerm">
+          <button
+            class="popover-button"
+            (click)="onSelectTerm('All terms', popover)"
+          >
+            All terms
           </button>
-        </div>
+          <ng-container *ngIf="academicYearTerms$ | async as terms">
+            <div
+              *ngFor="let term of terms; let i = index"
+              class="terms-wrapper"
+            >
+              <button
+                class="popover-button"
+                (click)="onSelectTerm(term, popover)"
+              >
+                {{ term.termTitle || customTermTitle(term) }}
+              </button>
+              <button class="icon-btn" (click)="onEditTerm(term, i, terms)">
+                e
+              </button>
+              <button class="icon-btn" (click)="onRemoveTerm(term, i, terms)">
+                d
+              </button>
+            </div>
+          </ng-container>
+          <div class="last-button">
+            <button class="popover-button" (click)="onAddTerm()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                height="10"
+                viewBox="0 0 35 35"
+              >
+                <defs>
+                  <style>
+                    .plus {
+                      fill: none;
+                      stroke: #000;
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                      stroke-width: 3px;
+                    }
+                  </style>
+                </defs>
+                <g transform="translate(1.5 1.5)">
+                  <line class="plus" y2="32" transform="translate(16)" />
+                  <line class="plus" x2="32" transform="translate(0 16)" />
+                </g>
+              </svg>
+              Custom
+            </button>
+          </div>
+        </ng-container>
       </edu-popover>
     </div>
   </div>
