@@ -7,7 +7,8 @@
     <div class="badges">
       <div
         class="badge badge--active"
-        [ngClass]="{ 'badge--disabled': !classItem.selected }"
+        [ngClass]="{ 'badge--disabled': classItem.dragged }"
+        [appDraggable]="{ data: classItem, notDraggable: classItem.dragged }"
         *ngFor="let classItem of classes$ | async"
       >
         <span>{{ classItem.grade }}</span>
@@ -17,13 +18,17 @@
           <span>+</span>
           <span>-</span>
         </div>
-        <edu-popover class="multiselect-popover" (edu-open)="openMultiSelect()">
+        <edu-popover
+          class="multiselect-popover"
+          (edu-close)="onCloseMultiSelect()"
+          (edu-open)="openMultiSelect()"
+        >
           <div class="badges badges--popover">
-            <ng-container *ngFor="let classItem of classes$ | async">
+            <ng-container *ngFor="let classItem of localCopy">
               <div
                 class="badge badge--small "
-                [ngClass]="{ 'badge--active': isActive(classItem.grade) }"
-                (click)="toggleOption(classItem.grade)"
+                [ngClass]="{ 'badge--active': classItem.selected }"
+                (click)="toggleOption(classItem)"
               >
                 <span>{{ classItem.grade }}</span>
               </div>
@@ -41,7 +46,11 @@
       <div class="dropzones">
         <div
           class="dropzone"
-          *ngFor="let groupItem of classesAndGroups$ | async"
+          [ngClass]="{ 'dropzone__body--active': groupItem.draggedOver }"
+          (dragover)="onDragEnter($event, groupItem)"
+          (drop)="onDrop($event, groupItem)"
+          (dragleave)="onDragLeave($event, groupItem)"
+          *ngFor="let groupItem of groupsCopy"
         >
           <div class="dropzone__title-wrapper">
             <h5 class="dropzone__title">{{ groupItem.groupName }}</h5>
@@ -69,7 +78,7 @@
                   <button
                     class="delete-popover__button delete-popover__button--delete"
                     ButtonType="outline"
-                    (click)="toggleDeletePopover()"
+                    (click)="deleteGroupItem(groupItem)"
                   >
                     delete
                   </button>
@@ -80,16 +89,24 @@
           <div class="dropzone__body">
             <div
               *ngFor="let classItem of groupItem.classes"
-              class="badge badge--small "
-              [ngClass]="{ 'badge--active': isActive(classItem.grade) }"
+              class="badge badge--small badge--active"
               (click)="toggleOption(classItem.grade)"
+              [appDraggable]="{ data: classItem }"
             >
               <span>{{ classItem.grade }}</span>
             </div>
           </div>
         </div>
-        <div class="dropzone dropzone--create"><span>+</span></div>
+        <div class="dropzone dropzone--create" (click)="createGroup()">
+          <span>+</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<edu-delete-classes-modal
+  *ngIf="isOpen"
+  (onCancel)="onCancel()"
+  (onDelete)="onDelete()"
+  [deletedClasses]="toBeDeleted"
+></edu-delete-classes-modal>

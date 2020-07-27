@@ -12,6 +12,7 @@ export class SubjectsListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.allSubjects)
   }
 
 }

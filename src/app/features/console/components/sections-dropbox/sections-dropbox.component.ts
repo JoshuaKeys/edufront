@@ -1,24 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Renderer2, EventEmitter, Output, Input } from '@angular/core';
+import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
+import { SectionModel } from 'src/app/shared/models/section.model';
 import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
-import { SectionModel } from '../../models/section.model';
-import { StudentModel } from 'src/app/shared/models/student.model';
+import { AggregatedResult } from '../../models/aggregated-result.model';
 
 @Component({
-  selector: 'edu-section-drop-box',
-  templateUrl: './section-drop-box.component.html',
-  styleUrls: ['./section-drop-box.component.scss'],
+  selector: 'edu-sections-dropbox',
+  templateUrl: './sections-dropbox.component.html',
+  styleUrls: ['./sections-dropbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SectionDropBoxComponent implements OnInit {
+export class SectionsDropboxComponent implements OnInit {
   @Input() selectedClass: Observable<ExtendedClassModel> | null;
   @Output() onDropped = new EventEmitter<{
     student: ExtendedProfileDTOModel;
     classId: string;
     sectionName: string;
   }>()
+  @Input() aggregatedResult: Observable<AggregatedResult>
+
   @Output() onAddSection = new EventEmitter<string>()
   @Output() onRemove = new EventEmitter<{
     student: ExtendedProfileDTOModel;
@@ -28,7 +30,9 @@ export class SectionDropBoxComponent implements OnInit {
   @Output() onChangeSectionName = new EventEmitter<{ classId: string; oldName: string; newName: string }>()
   @Input() sections: Observable<SectionModel>;
   isDraggedOver = false;
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {
+
+  }
   addSection(classId: string) {
     this.
       onAddSection.emit(classId)
@@ -49,14 +53,13 @@ export class SectionDropBoxComponent implements OnInit {
   onDragOver(event: DragEvent) {
     event.preventDefault();
     console.log(event);
-    this.renderer.addClass(event.target, 'drop-zone--is-dragged')
+    this.renderer.addClass(event.target, 'drop-zone--is-dragged');
   }
   onDragLeave(event) {
     event.preventDefault();
     this.isDraggedOver = false;
-    this.renderer.removeClass(event.target, 'drop-zone--is-dragged')
+    this.renderer.removeClass(event.target, 'drop-zone--is-dragged');
   }
   ngOnInit(): void {
-    this.sections.subscribe(console.log)
   }
 }

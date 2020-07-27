@@ -1,4 +1,4 @@
-@import '../../../../../assets/styles/modules/section-module';
+@import 'src/assets/styles/modules/section-module';
 .chips {
   @include displayFlex(flex-start);
   &__container {

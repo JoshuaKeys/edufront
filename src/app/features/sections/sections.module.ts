@@ -11,8 +11,6 @@ import { SectionsService } from './services/sections.service';
 import { EffectsModule } from '@ngrx/effects';
 import { ClassesEffects } from './ngrx/effects'
 import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
-import { SectionDropBoxComponent } from './components/section-drop-box/section-drop-box.component';
-import { SectionAsideComponent } from './components/section-aside/section-aside.component';
 import { SectionsEffects } from './ngrx/effects/sections.effects';
 import { StudentsService } from '../students/services/students.service';
 
@@ -21,9 +19,7 @@ import { StudentsService } from '../students/services/students.service';
 @NgModule({
   declarations: [
     CreateSectionsComponent,
-    SectionDropBoxComponent,
     CreateSectionsShellComponent,
-    SectionAsideComponent,
     ConfirmationComponent
   ],
   imports: [

@@ -1,0 +1,62 @@
+<div class="content sections-tab fit-to-page">
+  <div class="content">
+    <div class="content-wrapper">
+      <div class="content__body groups groups--split-layout">
+        <div class="groups groups--column-layout relative flex-grow-1">
+          <h3 class="content__title">
+            These are the sections for each class and the students assigned to
+            them
+          </h3>
+          <p class="content__desc">Add, drag, drop and edit</p>
+          <div class="content__body flex-wrap selection--confirmations">
+            <div
+              class="gropu--row-layout selection--confirmation"
+              *ngFor="let aggregateItem of aggregatedSectionsData | async"
+            >
+              <div class="badge">{{ aggregateItem.classItem.grade }}</div>
+              <div class="badge--squares">
+                <div
+                  class="badge badge--square"
+                  *ngFor="let section of aggregateItem.sections"
+                >
+                  {{ section.sectionName }}
+                  <edu-popover
+                    class="popover"
+                    alignment="bottom"
+                    pointerAlignment="left"
+                  >
+                    <div class="chips flex-wrap">
+                      <div *ngIf="section.students.length == 0">
+                        No students assigned
+                      </div>
+                      <div
+                        *ngFor="let student of section.students"
+                        class="chip"
+                        [ngClass]="{
+                          'chip--blue': student.gender.toLowerCase() === 'male',
+                          'chip--pink':
+                            student.gender.toLowerCase() === 'female'
+                        }"
+                      >
+                        <span class="chip__desc"
+                          >{{ student.firstName }} {{ student.lastName }}</span
+                        >
+                      </div>
+                    </div>
+                  </edu-popover>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      class="content__button"
+      [routerLink]="['../', 'sections-edit']"
+      ButtonType="basic"
+    >
+      Edit Sections
+    </button>
+  </div>
+</div>

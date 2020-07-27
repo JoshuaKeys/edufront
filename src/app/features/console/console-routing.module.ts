@@ -7,6 +7,8 @@ import { ClassesShellComponent } from './containers/classes-shell/classes-shell.
 import { ConsoleClassesAndGroupsComponent } from './containers';
 import { ConsoleSectionsComponent } from './containers/console-sections/console-sections.component';
 import { ConsoleSubjectsComponent } from './containers/console-subjects/console-subjects.component';
+import { ConsoleSectionEditComponent } from './containers/console-section-edit/console-section-edit.component';
+import { ConsoleSectionViewComponent } from './containers/console-section-view/console-section-view.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,7 +24,21 @@ const routes: Routes = [{
         },
         {
           path: 'sections',
-          component: ConsoleSectionsComponent
+          component: ConsoleSectionsComponent,
+          children: [
+            {
+              path: 'sections-view',
+              component: ConsoleSectionViewComponent
+            },
+            {
+              path: 'sections-edit',
+              component: ConsoleSectionEditComponent
+            }, {
+              path: '',
+              redirectTo: 'sections-view',
+              pathMatch: 'full'
+            }
+          ]
         },
         {
           path: 'subjects',

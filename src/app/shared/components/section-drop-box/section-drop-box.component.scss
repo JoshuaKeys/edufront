@@ -4,7 +4,7 @@
 @import 'src/assets/scss/modules/students';
 @include studentChips();
 @include dropZone();
-@import '../../scss-fixes.scss';
+@import '../../scss/scss-fixes.scss';
 
 .main-wrapper {
   align-items: stretch !important;

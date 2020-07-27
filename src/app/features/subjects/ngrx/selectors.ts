@@ -47,7 +47,6 @@ export const getAssignedClasses = createSelector(selectAllClasses, classes => {
 })
 export const getCommonClasses = createSelector(getAllSelectedClasses, classes => {
   const subjects = classes.map(classItem => classItem.subjects ? classItem.subjects : [])
-  console.log(getIntersection(subjects));
   return getIntersection(subjects)
 })
 

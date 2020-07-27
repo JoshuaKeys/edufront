@@ -3,18 +3,18 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { getAllClassesRequest, getAllClassesSuccess, toggleSelectedState, doNothing, setClassStudents, createStudentRequest, createStudentSuccess } from '../actions/classes.actions';
 import { mergeMap, map, withLatestFrom, tap } from 'rxjs/operators';
 import { SectionsService } from '../../services/sections.service';
-import { ClassesModel } from '../../models/classes-model';
+import { ClassesModel } from '../../../../shared/models/classes-model';
 import { selectSelectedClass, selectAllClasses } from '../selectors/classes.selectors';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { SectionsStateModel } from '../../models/sections-state.model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { initFirstSection } from '../actions/sections.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { StudentsService } from 'src/app/features/students/services/students.service';
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { toggleModal } from '../actions/sections-modal.actions';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
 @Injectable()
 export class ClassesEffects {
   // initStudentsXClasses$ = createEffect(() => this.actions$.pipe(

@@ -18,7 +18,6 @@
     white-space: normal;
     text-align: center;
     margin: auto;
-
     margin-top: 20px;
     color: $black;
     font: 600 20px/28px Quicksand;
@@ -72,6 +71,11 @@
   &__body {
     max-height: 142px;
     overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &--create {
+    cursor: pointer;
   }
 }
 
@@ -80,4 +84,7 @@
   .badge {
     transition: none;
   }
+}
+.dropzone__body--active {
+  border-color: #69a9f2;
 }

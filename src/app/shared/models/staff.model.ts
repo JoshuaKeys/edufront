@@ -9,6 +9,7 @@ export interface StaffModel {
   id: string;
   isDeleted?: boolean;
   lastName: string;
+  sectionId?: string;
   login: string;
   middleName: string;
   phone: string | PhoneIconModel;

@@ -1,0 +1,104 @@
+@mixin absoluteCenter() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fixedCenter() {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absoluteVertCenter() {
+  position: absolute;
+
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin displayFlex($justify: center, $align: center, $direction: row) {
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  display: flex;
+}
+
+//Variables
+$red: #ef5350;
+$black: #212121;
+$ash: #a5aec7;
+$blue: #69a9f2;
+$pink: #fd7fc2;
+$purple: #8787f6;
+$grey: #e6e9f3;
+$maxHeight: calc(100vh - 70px);
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.delete-classes-modal {
+  &__backdrop {
+    background-color: #010315;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+  &__body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #fff;
+    width: 400px;
+    min-height: 250px;
+    border-radius: 15px;
+    padding-bottom: 40px;
+  }
+}
+.delete-popover {
+  right: -8px !important;
+  max-width: 377px;
+  padding: 30px;
+  &__text {
+    width: 90%;
+    white-space: normal;
+    text-align: center;
+    margin: auto;
+    margin-top: 64px;
+    color: #212121;
+    font: 600 20px/28px Quicksand;
+    max-width: 260px;
+    margin-bottom: 50px;
+  }
+  &__buttons {
+    @include displayFlex();
+    margin-top: 30px;
+    //this nested selector is needed to overwrite default component styling
+    .delete-popover {
+      &__button {
+        width: 144px;
+        height: 40px;
+        &:first-child {
+          margin-right: 18px;
+        }
+      }
+
+      &__button--delete {
+        color: $red;
+        border-color: $red;
+
+        &:hover {
+          border-color: $red;
+          background-color: $red;
+          color: white;
+        }
+      }
+    }
+  }
+}

@@ -9,13 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { getAllClassesRequest, toggleSelectedState, toggleStudentsDraggedState, createStudentRequest } from '../../ngrx/actions/classes.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections, selectAllClasses, selectAllStudents } from '../../ngrx/selectors/classes.selectors';
-import { ClassesModel } from '../../models/classes-model';
+import { ClassesModel } from '../../../../shared/models/classes-model';
 import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
-import { SectionModel } from '../../models/section.model';
+import { SectionModel } from '../../../../shared/models/section.model';
 import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest, getAggregatedResult, changeSectionNameRequest } from '../../ngrx/actions/sections.actions';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
 
 @Component({
   selector: 'edu-create-sections',

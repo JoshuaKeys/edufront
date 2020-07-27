@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { ClassesModel } from '../../models/classes-model';
+import { ClassesModel } from '../../../../shared/models/classes-model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
 
 export const getAllClassesRequest = createAction(
   '[CreateSectionsComponent] getAllClassesRequest'

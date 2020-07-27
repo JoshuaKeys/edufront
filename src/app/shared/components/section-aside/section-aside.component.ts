@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { ClassesModel } from '../../models/classes-model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
 import { map, filter, mapTo, withLatestFrom } from 'rxjs/operators';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
+import { ClassesModel } from '../../models/classes-model';
 
 @Component({
   selector: 'edu-section-aside',
@@ -14,6 +14,7 @@ import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model'
 })
 export class SectionAsideComponent implements OnInit {
   @Input() selectedClass: Observable<ClassesModel>;
+  @Input() forConsoleUse: boolean;
   classId: string;
   filter = '';
   fileredStudents: Observable<ExtendedProfileDTOModel[]>;
@@ -32,7 +33,7 @@ export class SectionAsideComponent implements OnInit {
   areAllStudentsAssigned() {
     return this.fileredStudents.pipe(
       withLatestFrom(this.allStudents),
-      map(([students, allStudents])=> {
+      map(([students, allStudents]) => {
         const isDraggedPresent = allStudents && allStudents.find(student => student.dragged);
         return allStudents && isDraggedPresent
       })
@@ -40,7 +41,14 @@ export class SectionAsideComponent implements OnInit {
   }
   ngOnInit(): void {
     this.filterItems(this.filter);
-    this.selectedClass.subscribe(classItem => this.classId = classItem.class.id)
+    this.selectedClass.subscribe(classItem => {
+      if (!this.forConsoleUse) {
+        this.classId = classItem.class.id
+      } else {
+        this.classId = classItem['id'];
+      }
+
+    })
   }
   setDataTransfer(event: DragEvent, student: ProfileDTOModel) {
     event.dataTransfer.setData('text', JSON.stringify(student));

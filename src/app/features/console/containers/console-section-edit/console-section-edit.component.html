@@ -1,0 +1,77 @@
+<main>
+  <section class="section">
+    <div class="content">
+      <div class="content-wrapper">
+        <div class="content__body groups groups--split-layout">
+          <edu-classes
+            (classClicked)="processClassClick($event)"
+            class="group group--row-layout badges flex-wrap"
+            [classes]="sortedClasses"
+            [style]="{
+              width: '44px',
+              height: '44px',
+              margin: '4px',
+              border: '2px solid #e6e9f3',
+              fontSize: '12px'
+            }"
+          ></edu-classes>
+          <!-- <edu-section-drop-box
+            (onDropped)="processDroppedStudent($event)"
+            (onRemove)="processStudentRemoval($event)"
+            (onAddSection)="processAddSection($event)"
+            (onChangeSectionName)="onChangeGroupName($event)"
+          >
+          </edu-section-drop-box> -->
+          <!-- <edu-section-drop-box
+            [selectedClass]="selectedClass"
+            (onDropped)="processDroppedStudent($event)"
+            (onRemove)="processStudentRemoval($event)"
+            (onAddSection)="processAddSection($event)"
+            [sections]="selectedSections"
+            (onChangeSectionName)="onChangeGroupName($event)"
+          >
+          </edu-section-drop-box> -->
+          <edu-sections-dropbox
+            [selectedClass]="selectedClass"
+            [aggregatedResult]="aggregatedData"
+          >
+          </edu-sections-dropbox>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="aside">
+    <edu-section-aside
+      [forConsoleUse]="true"
+      *ngIf="selectedClass | async"
+      [selectedClass]="selectedClass"
+      [students]="notDraggedStudents"
+      [allStudents]="allStudents"
+    ></edu-section-aside>
+    <!-- (onAssign)="onAssign($event)"
+    (onOpenAddModal)="openAddModal()" -->
+  </aside>
+</main>
+<!-- <edu-modal-v2
+  class="intro"
+  *ngIf="(sectionsModalState | async).startModal"
+  header="Creating Sections"
+  icon="assets/sections-intro.svg"
+  btnText="GOT IT!"
+  (btnClicked)="onContinue()"
+>
+  In this step, you will create <b class="orangeColor">sections</b> and
+  <b class="orangeColor">assign</b> students to them.<br />Simply select the
+  Class you want to modify, add and name its sections.<br />
+  Once done, simply select the section and click (or drag) the available<br />student
+  tags on the right side of the screen to assign.<br />
+  If you have no preference about what student goes into which section,<br />use
+  the <b class="orangeColor">random function</b>!
+</edu-modal-v2>
+<edu-students-form
+  (closeAddModal)="closeAddModal()"
+  *ngIf="(sectionsModalState | async).addModal"
+  (onSubmit)="processSubmit($event)"
+  [studentsXClasses]="allClasses"
+  [allClasses]="allClasses"
+></edu-students-form> -->
