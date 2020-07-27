@@ -18,11 +18,11 @@ export class AppComponent implements OnInit {
     private config: ConfigService,
     private store: Store<AuthStateModel>,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.setupAuth();
-    // this.setupTheme();
+    this.setupTheme();
     this.store.dispatch(retrieveTokenRequest());
   }
 

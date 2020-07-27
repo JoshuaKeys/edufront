@@ -10,6 +10,7 @@ import { assignToSelectedClassesRequest, toggleClass, toggleFormModal, createSub
 import { SubjectModalStateModel } from '../../models/subject-modal-state.model';
 import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 import { filter, map } from 'rxjs/operators';
+import { ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
 
 
 
@@ -24,8 +25,8 @@ export class AssignSubjectsQuestionComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   classes: Observable<ClassModel[]>;
   modalState: Observable<SubjectModalStateModel>;
-  allSubjects: Observable<SubjectModel[]>;
-  filteredSubjects: Observable<SubjectModel[]>;
+  allSubjects: Observable<ISubjectWithTeachers[]>;
+  filteredSubjects: Observable<ISubjectWithTeachers[]>;
   subjectsInterception: Observable<SubjectModel[]>;
   selectedClasses: Observable<ClassModel[]>;
   ngOnInit(): void {

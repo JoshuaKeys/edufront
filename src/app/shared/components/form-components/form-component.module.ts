@@ -20,6 +20,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { PhonePrefixComponent } from './phone-prefix/phone-prefix.component';
 import { PopoverModule } from './popover/popover.module';
 import { TimepickerModule } from './timepicker/timepicker.module';
+import { MultiPopoverModule } from './multi-popover/multi-popover.module';
 // import { PopoverComponent } from './popover/popover.component';
 // import { PopoverOptionDirective } from './popover/popover-option.directive';
 let components = [
@@ -35,6 +36,7 @@ let components = [
 ];
 
 let customModules = [
+  MultiPopoverModule,
   TimepickerModule,
   TickButtonModule,
   SelectModule,

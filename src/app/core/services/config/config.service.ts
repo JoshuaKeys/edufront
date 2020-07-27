@@ -73,8 +73,6 @@ export class ConfigService {
   }
 
   get(path) {
-    // console.log(this.config)
-    // console.log(get(this.config, path));
     return path ? get(this.config, path) : this.config;
   }
 }

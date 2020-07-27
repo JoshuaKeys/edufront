@@ -8,7 +8,7 @@ export interface ISubjectWithTeachers {
   subjectIcon: string;
   subSubjects: any[];
   id: string;
-  teachers: ITeacher[];
+  teachers?: ITeacher[];
   teacherIds?: string[]; // custom property
 }
 

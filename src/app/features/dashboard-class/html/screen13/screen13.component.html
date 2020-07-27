@@ -1,0 +1,30 @@
+<div class="content sections-tab fit-to-page">
+  <div class="badges">
+    <!-- can ADD badge--active or badge--disabled to adjust styling -->
+    <div class="badge" *ngFor="let badge of badgeArr; let idx = index">
+      <span>{{ idx + 1 }}</span>
+    </div>
+  </div>
+  <div class="content__body ">
+    <div class="palceholder-text">
+      Select a class on the <b class="orangecolor">left</b> to manage section
+    </div>
+  </div>
+</div>
+
+<aside class="aside">
+  <div class="search">
+    <input class="search__input" type="text" placeholder="Search students" />
+  </div>
+  <button
+    class="aside__button"
+    ButtonType="outline"
+    class="aside__button aside__button--add-students"
+  >
+    +
+  </button>
+  <div class="aside__body pills"></div>
+  <button class="aside__button aside__button--footer" ButtonType="basic">
+    Auto Assign
+  </button>
+</aside>

@@ -1,0 +1,15 @@
+@import 'src/assets/styles/modules/section-module';
+.chips {
+  @include displayFlex(flex-start);
+  &__container {
+    list-style-type: none;
+  }
+}
+
+edu-icon-button ::ng-deep .chip {
+  margin: 5px;
+}
+
+.chips.flex-wrap {
+  padding: 0;
+}

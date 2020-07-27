@@ -35,8 +35,9 @@ export class SubjectsEffects {
       // }
       // if(!action.subject.)
       return this.subjectsService.createSubject(action.subject).pipe(
-      map(subject => createSubjectSuccess({ subject }))
-    )})
+        map(subject => createSubjectSuccess({ subject }))
+      )
+    })
   ));
   fetchAllClasses$ = createEffect(() => this.actions$.pipe(
     ofType(fromSubjectActions.getClassesRequest),

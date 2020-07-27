@@ -8,6 +8,7 @@ import { closeSubjectsStartModal, createSubjectRequest } from '../../ngrx/action
 import { SubjectModel } from '../../models/subject.model';
 import { CreateSubjModel } from '../../../../shared/models/create-subject.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
 @Component({
   selector: 'edu-subjects-taught-question',
   templateUrl: './subjects-taught-question.component.html',
@@ -16,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SubjectsTaughtQuestionComponent implements OnInit {
   modalState: Observable<SubjectModalStateModel>;
-  allSubjects: Observable<SubjectModel[]>
+  allSubjects: Observable<ISubjectWithTeachers[]>
   activatedRouteData = this.activatedRoute.snapshot.data;
 
   ngOnInit(): void {
@@ -27,8 +28,8 @@ export class SubjectsTaughtQuestionComponent implements OnInit {
     this.store.dispatch(closeSubjectsStartModal())
   }
   createSubject(subject: CreateSubjModel) {
-    const subSubjects = subject.subSubjects.filter(subSubject=> subSubject.title !== null);
-    const clearedSubject: CreateSubjModel = {...subject, subSubjects}
+    const subSubjects = subject.subSubjects.filter(subSubject => subSubject.title !== null);
+    const clearedSubject: CreateSubjModel = { ...subject, subSubjects }
     this.store.dispatch(createSubjectRequest({ subject: clearedSubject }));
   }
   goToDashboard() {

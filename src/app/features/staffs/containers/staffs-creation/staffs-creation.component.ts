@@ -39,6 +39,7 @@ import { StaffFormModel } from '../../models/staff-form.model'
 import { SortingModel } from '../../models/sorting-state.model';
 import { StaffsCommunicatorService } from '../../services/staffs-communication.service';
 import { incrementProgress } from 'src/app/features/dashboard/ngrx/actions';
+import { ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
 
 @Component({
   selector: 'edu-staffs-creation',
@@ -53,7 +54,7 @@ export class StaffsCreationComponent implements OnInit {
   activatedRouteData = this.activatedRoute.snapshot.data;
   staffsModalsState: Observable<StaffsModalsModel>
   staffs: Observable<StaffModel[]>;
-  subjects: Observable<SubjectModel[]>;
+  subjects: Observable<ISubjectWithTeachers[]>;
   classes: Observable<ClassModel[]>;
   currentlySelectedSubject: string;
   subjectClassesAssociation: Observable<SubjectClassesAssociation[]>

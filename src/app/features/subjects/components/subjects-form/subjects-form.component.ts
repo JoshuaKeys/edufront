@@ -59,14 +59,6 @@ export class SubjectsFormComponent implements OnInit {
     while (this.activities.controls.length > 1) {
       this.activities.removeAt(1);
     }
-    // this.subSubjects.insert(item.pos + 1, this.fb.control(''));
-    // this.addSubjForm.patchValue({
-    //   subSubjects: this.fb.array([this.fb.control('')]),
-    //   activities: this.fb.array([this.fb.control('')])
-    // });
-    // this.addSubjForm.controls.subSubjects.setValue(
-    //   this.fb.array([this.fb.control('')])
-    // );
   }
   processArrayFields(
     type: 'activity' | 'subsubject',
@@ -81,7 +73,7 @@ export class SubjectsFormComponent implements OnInit {
         subjectType: type
       }));
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   insertItem(item: { type: string; pos: number }) {
     if (item.type === 'subject') {
       this.subSubjects.insert(item.pos + 1, this.fb.control(''));
@@ -103,5 +95,5 @@ export class SubjectsFormComponent implements OnInit {
     return this.addSubjForm.get('activities') as FormArray;
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 }

@@ -1,0 +1,29 @@
+<edu-console-header title="Classes">
+  <ul class="top-nav__options">
+    <li
+      class="top-nav__option"
+      routerLinkActive="active"
+      [routerLink]="['./', 'classes-and-groups']"
+      tabindex="0"
+    >
+      Class & Groups
+    </li>
+    <li
+      class="top-nav__option"
+      tabindex="0"
+      [routerLink]="['./', 'sections']"
+      routerLinkActive="active"
+    >
+      Sections
+    </li>
+    <li
+      class="top-nav__option"
+      tabindex="0"
+      [routerLink]="['./', 'subjects']"
+      routerLinkActive="active"
+    >
+      Subjects
+    </li>
+  </ul>
+</edu-console-header>
+<router-outlet></router-outlet>

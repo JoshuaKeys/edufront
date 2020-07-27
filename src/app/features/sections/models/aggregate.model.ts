@@ -1,6 +1,6 @@
-import { ClassesModel } from './classes-model';
-import { SectionModel } from './section.model';
-import { ExtendedProfileDTOModel } from './extended-profiledto.model';
+import { ClassesModel } from '../../../shared/models/classes-model';
+import { SectionModel } from '../../../shared/models/section.model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
 
 export interface AggregateModel {
   classItem: string;

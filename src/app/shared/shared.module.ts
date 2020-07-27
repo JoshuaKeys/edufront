@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
-// import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { CustomSelectComponent } from './components/custom-select/custom-select.component';
 import { DraggableDirective } from './directives/draggable.directive';
@@ -14,16 +13,10 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponentV2 } from './components/modal-v2/modal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
-// import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { PhoneIconFieldComponent } from './components/phone-icon-field/phone-icon-field.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { CustomPlainSelectComponent } from './components/custom-plain-select/custom-plain-select.component';
-
-// import { datePickerModule } from './components/datepicker/datepicker.module';
-// import { datePickerModule } from './components/form-components/datepicker/datepicker.module';
-// import { Datepicker2Module } from './components/form-components/datepicker2/datepicker2.module';
-
 import { TimetableModule } from './components/timetable/timetable.module';
 import { TimetableModule2 } from './components/timetable2/timetable2.module';
 import { SubjectsService } from './services/subjects.service';
@@ -32,9 +25,6 @@ import { CountryFieldComponent } from './components/country-field/country-field.
 import { ImgUploadV2Component } from './components/img-upload-v2/img-upload-v2.component';
 import { PhoneFieldComponent } from './components/phone-field/phone-field.component';
 import { ButtonComponent } from './components/button/button.component';
-// import { PopoverComponent } from './components/popover/popover.component';
-// import { PopoverOptionDirective } from './components/popover/popover-option.directive';
-
 import { FormComponentsModule } from './components/form-components/form-component.module';
 import { SelectModule } from './components/form-components/select/select.module';
 import { StudentsFormComponent } from './components/students-form/students-form.component';
@@ -46,6 +36,11 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
 import { ImageSliderModule } from './components/image-slider/image-slider.module';
 import { SharedTooltipComponent } from './components/tooltip/tooltip.component';
 import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.component';
+import { SectionAsideComponent } from './components/section-aside/section-aside.component';
+import { SectionDropBoxComponent } from './components/section-drop-box/section-drop-box.component';
+import { OptionsComponent } from './components/options/options.component';
+import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
+import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.component';
 
 @NgModule({
   declarations: [
@@ -68,14 +63,17 @@ import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.com
     ImgUploadV2Component,
     PhoneFieldComponent,
     ButtonComponent,
-    // PopoverComponent,
-    // PopoverOptionDirective,
     StudentsFormComponent,
     ImgAuthPipe,
     PreviewAnimateDirective,
     StopEventBubbleDirective,
     SharedStaffChipComponent,
-    SharedTooltipComponent
+    SharedTooltipComponent,
+    SectionAsideComponent,
+    SectionDropBoxComponent,
+    OptionsComponent,
+    SubjectsListComponent,
+    SubjectsBoxComponent
   ],
   imports: [
     ImageSliderModule,
@@ -84,7 +82,6 @@ import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.com
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    // datePickerModule,
     SelectModule,
     TimetableModule,
     TimetableModule2,
@@ -94,13 +91,11 @@ import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.com
     ImageSliderModule,
     PreviewAnimateDirective,
     FormComponentsModule,
-    // PopoverOptionDirective,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
     HeaderNavComponent,
     ButtonComponent,
-    // datePickerModule,
     DraggableDirective,
     DroppableDirective,
     ClassesComponent,
@@ -117,14 +112,18 @@ import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.com
     ImgUploadV2Component,
     CountryFieldComponent,
     PhoneFieldComponent,
-    // PopoverComponent,
     StudentsFormComponent,
     ImgAuthPipe,
     StopEventBubbleDirective,
     SharedStaffChipComponent,
-    SharedTooltipComponent
+    SharedTooltipComponent,
+    SectionAsideComponent,
+    SectionDropBoxComponent,
+    OptionsComponent,
+    SubjectsListComponent,
+    SubjectsBoxComponent
   ],
   entryComponents: [SharedTooltipComponent],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule {}
+export class SharedModule { }

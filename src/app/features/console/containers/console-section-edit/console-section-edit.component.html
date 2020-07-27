@@ -1,0 +1,65 @@
+<main>
+  <section class="section">
+    <div class="content">
+      <div class="content-wrapper">
+        <div class="content__body groups groups--split-layout">
+          <edu-classes
+            (classClicked)="processClassClick($event)"
+            class="group group--row-layout badges flex-wrap"
+            [classes]="sortedClasses"
+            [style]="{
+              width: '44px',
+              height: '44px',
+              margin: '4px',
+              border: '2px solid #e6e9f3',
+              fontSize: '12px'
+            }"
+          ></edu-classes>
+          <!-- <edu-section-drop-box
+            (onDropped)="processDroppedStudent($event)"
+            (onRemove)="processStudentRemoval($event)"
+            (onAddSection)="processAddSection($event)"
+            (onChangeSectionName)="onChangeGroupName($event)"
+          >
+          </edu-section-drop-box> -->
+          <!-- <edu-section-drop-box
+            [selectedClass]="selectedClass"
+            (onDropped)="processDroppedStudent($event)"
+            (onRemove)="processStudentRemoval($event)"
+            (onAddSection)="processAddSection($event)"
+            [sections]="selectedSections"
+            (onChangeSectionName)="onChangeGroupName($event)"
+          >
+          </edu-section-drop-box> -->
+          <edu-sections-dropbox
+            [selectedClass]="selectedClass"
+            [aggregatedResult]="aggregatedData"
+            (onDropped)="handleDropped($event)"
+            (onAddSection)="processAddSection($event)"
+          >
+          </edu-sections-dropbox>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="aside">
+    <edu-console-section-aside
+      [forConsoleUse]="true"
+      *ngIf="selectedClass | async"
+      [selectedClass]="selectedClass"
+      [students]="notDraggedStudents"
+      [allStudents]="allStudents"
+      (droppedData)="removeStudent($event)"
+      (onOpenAddModal)="toggleAddModal()"
+    ></edu-console-section-aside>
+    <!-- (onAssign)="onAssign($event)"
+    (onOpenAddModal)="openAddModal()" -->
+  </aside>
+</main>
+<edu-students-form
+  (closeAddModal)="toggleAddModal()"
+  *ngIf="isAddModalOpened"
+  (onSubmit)="processSubmit($event)"
+  [studentsXClasses]="allClasses"
+  [allClasses]="allClasses"
+></edu-students-form>

@@ -11,22 +11,28 @@ export class DraggableDirective implements OnInit, OnDestroy {
 
   @Input()
   set appDraggable(options: DraggableOptions) {
+    // alert('hello')
     if (options) {
       this.options = options;
+      // this.addDragEvents();
     }
   }
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {
-    this.renderer.setProperty(this.elementRef.nativeElement, 'draggable', true);
-    this.renderer.addClass(this.elementRef.nativeElement, 'app-draggable');
+
   }
   ngOnInit() {
     this.addDragEvents();
+    if (!this.options.notDraggable) {
+      this.renderer.setProperty(this.elementRef.nativeElement, 'draggable', true);
+    }
+    this.renderer.addClass(this.elementRef.nativeElement, 'app-draggable');
   }
   ngOnDestroy() {
     this.onDragStart();
   }
   private addDragEvents(): void {
+    console.log(this.options);
     this.onDragStart = this.renderer.listen(
       this.elementRef.nativeElement
       , 'dragstart'
@@ -42,4 +48,5 @@ export class DraggableDirective implements OnInit, OnDestroy {
 
 export interface DraggableOptions {
   data?: any;
+  notDraggable?: boolean;
 }

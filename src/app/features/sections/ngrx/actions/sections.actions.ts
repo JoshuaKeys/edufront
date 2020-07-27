@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { StudentModel } from 'src/app/shared/models/student.model';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { ClassesModel } from '../../models/classes-model';
-import { SectionModel } from '../../models/section.model';
+import { ClassesModel } from '../../../../shared/models/classes-model';
+import { SectionModel } from '../../../../shared/models/section.model';
 import { AggregateModel } from '../../models/aggregate.model';
 import { ClassesWithStudentsModel } from '../../models/classes-with-students.model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
 
 export const initFirstSection = createAction(
   '[ClassesEffects] initFirstSection',

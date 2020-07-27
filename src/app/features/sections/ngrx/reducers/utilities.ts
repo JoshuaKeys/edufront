@@ -1,4 +1,4 @@
-import { ClassesModel } from '../../models/classes-model';
+import { ClassesModel } from '../../../../shared/models/classes-model';
 
 export function removePreviouslySelectedState(classes: ClassesModel[], exclude: number) {
   return classes.map((classItem, idx) => {
@@ -21,6 +21,6 @@ export function mapAlphaToNumeric() {
     '13': 'm', '14': 'n', '15': 'o', '16': 'p',
     '17': 'q', '18': 'r', '19': 's', '20': 't',
     '21': 'u', '22': 'v', '23': 'w', '24': 'x',
-    '25': 'y','26':'z'
+    '25': 'y', '26': 'z'
   })
 }

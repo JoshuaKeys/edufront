@@ -6,14 +6,15 @@ import { SubjectCreationSuccessModel } from '../models/subject-creation-success.
 import { PostClassSubjectModel } from '../models/post-class-subject.model';
 import { PostClassSubjectResponseModel } from '../models/post-class-subject-response.model';
 import { SubjectModel } from '../models/_subject.model';
+import { ISubjectWithTeachers } from '../models/subject.model';
 
 @Injectable()
 export class SubjectsService {
-  getAllSubjects(): Observable<SubjectModel[]> {
-    return this.httpClient.get<SubjectModel[]>('/api/v1/subject');
+  getAllSubjects(): Observable<ISubjectWithTeachers[]> {
+    return this.httpClient.get<ISubjectWithTeachers[]>('/api/v1/subject');
   }
-  createSubject(subject: CreateSubjModel): Observable<SubjectCreationSuccessModel> {
-    return this.httpClient.post<SubjectCreationSuccessModel>('/api/v1/subject', subject);
+  createSubject(subject: CreateSubjModel): Observable<ISubjectWithTeachers> {
+    return this.httpClient.post<ISubjectWithTeachers>('/api/v1/subject', subject);
   }
   postClassSubjects(classSubject: PostClassSubjectModel[]): Observable<PostClassSubjectResponseModel[]> {
     return this.httpClient.post<PostClassSubjectResponseModel[]>('/api/v1/class/updateAll', classSubject)

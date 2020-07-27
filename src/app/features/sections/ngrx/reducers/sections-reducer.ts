@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { SectionModel } from '../../models/section.model';
+import { SectionModel } from '../../../../shared/models/section.model';
 import { initFirstSection, addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, changeSectionNameRequest } from '../actions/sections.actions';
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { mapAlphaToNumeric } from './utilities';

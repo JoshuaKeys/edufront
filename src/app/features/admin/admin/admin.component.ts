@@ -16,9 +16,9 @@ import {
 export class AdminComponent implements OnInit {
   @Output('close') close = new EventEmitter();
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   closePopover() {
     this.close.emit();

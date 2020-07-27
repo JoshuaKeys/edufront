@@ -5,6 +5,7 @@ import { SubjectCreationSuccessModel } from '../../../../shared/models/subject-c
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { PostClassSubjectModel } from '../../../../shared/models/post-class-subject.model';
 import { PostClassSubjectResponseModel } from '../../../../shared/models/post-class-subject-response.model';
+import { ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
 export const closeSubjectsStartModal = createAction(
   '[SubjectsTaughtQuestionComponent] closeSubjectsStartModal'
 );
@@ -14,7 +15,7 @@ export const fetchAllSubjectsRequest = createAction(
 );
 export const fetchAllSubjectsSuccess = createAction(
   '[SubjectsResolver] fetchAllSubjectsSuccess',
-  props<{ subjects: SubjectModel[] }>()
+  props<{ subjects: ISubjectWithTeachers[] }>()
 )
 export const createSubjectRequest = createAction(
   '[SubjectsTaughtComponent] createSubjectRequest',
@@ -22,7 +23,7 @@ export const createSubjectRequest = createAction(
 )
 export const createSubjectSuccess = createAction(
   '[SubjectsEffects] createSubjectsSuccess',
-  props<{ subject: SubjectCreationSuccessModel }>()
+  props<{ subject: ISubjectWithTeachers }>()
 )
 export const assignToSelectedClassesRequest = createAction(
   '[AssignSubjectsQuestionComponent] assignSubjectToSelectedClasses',

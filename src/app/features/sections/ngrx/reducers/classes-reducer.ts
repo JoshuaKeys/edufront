@@ -4,7 +4,7 @@ import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-clas
 import { getAllClassesSuccess, toggleSelectedState, setClassStudents, toggleStudentsDraggedState, createStudentSuccess } from '../actions/classes.actions';
 import { removePreviouslySelectedState } from './utilities';
 import { StaffModel } from 'src/app/shared/models/staff.model';
-import { ClassesModel } from '../../models/classes-model';
+import { ClassesModel } from '../../../../shared/models/classes-model';
 import { assignStudentsRandomly } from '../actions/sections.actions';
 
 
