@@ -163,7 +163,10 @@ export class LayoutComponent implements OnInit {
       if (typeof term === 'string') {
         return term;
       }
-      return term.termTitle;
+      if (term.termTitle) {
+        return term.termTitle;
+      }
+      return this.customTermTitle(term);
     })
   );
 
@@ -542,22 +545,22 @@ export class LayoutComponent implements OnInit {
         index: indexToRemove
       }
     });
-    dialogRef.afterClosed().subscribe((termToExtend: TermDetailsDto | null) => {
-      if (termToExtend) {
+    dialogRef.afterClosed().subscribe((termToExtendID: string | null) => {
+      if (termToExtendID) {
         const termDetailsDtos = this.prepareTermsToSave(
           term,
           terms,
-          termToExtend,
+          termToExtendID,
           indexToRemove
         );
         console.log(termDetailsDtos);
-        // this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
-        //   this.academiYearService.update({
-        //     ...res,
-        //     noOfTerm: termDetailsDtos.length,
-        //     termDetailsDtos
-        //   });
-        // });
+        this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+          this.academiYearService.update({
+            ...res,
+            noOfTerm: termDetailsDtos.length,
+            termDetailsDtos
+          });
+        });
       }
     });
   }
@@ -568,12 +571,10 @@ export class LayoutComponent implements OnInit {
   prepareTermsToSave(
     term: TermDetailsDto,
     terms: TermDetailsDto[],
-    termToExtend: TermDetailsDto,
+    termToExtendID: string,
     indexToRemove: number
   ) {
-    const termToExtendIndex = terms.findIndex(
-      t => termToExtend.termId === t.termId
-    );
+    const termToExtendIndex = terms.findIndex(t => termToExtendID === t.termId);
     let res: TermDetailsDto[] = [];
 
     if (indexToRemove === 0) {
