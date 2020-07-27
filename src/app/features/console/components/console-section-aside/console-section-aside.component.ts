@@ -3,17 +3,20 @@ import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
 import { map, filter, mapTo, withLatestFrom } from 'rxjs/operators';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
-import { ClassesModel } from '../../models/classes-model';
-import { DraggedSectionModel } from '../../models/dragged-section.model';
+import { ClassesModel } from 'src/app/shared/models/classes-model';
+import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
+// import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
+// import { ClassesModel } from '../../models/classes-model';
+// import { DraggedSectionModel } from '../../models/dragged-section.model';
 
 @Component({
-  selector: 'edu-section-aside',
-  templateUrl: './section-aside.component.html',
-  styleUrls: ['./section-aside.component.scss'],
+  selector: 'edu-console-section-aside',
+  templateUrl: './console-section-aside.component.html',
+  styleUrls: ['./console-section-aside.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SectionAsideComponent implements OnInit {
+export class ConsoleSectionAsideComponent implements OnInit {
   @Input() selectedClass: Observable<ClassesModel>;
   @Input() forConsoleUse: boolean;
   @Output() droppedData = new EventEmitter<DraggedSectionModel>();
@@ -33,6 +36,9 @@ export class SectionAsideComponent implements OnInit {
   onDragOver(event) {
     this.renderer.addClass(this.dropZone.nativeElement, 'group--dragged-over')
     event.preventDefault();
+  }
+  computeDragObj(classId: string, student: ExtendedProfileDTOModel) {
+    return { classId, student };
   }
   onDrop(event) {
     event.preventDefault();

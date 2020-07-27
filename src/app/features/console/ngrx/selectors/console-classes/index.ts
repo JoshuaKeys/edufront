@@ -36,8 +36,13 @@ export const selectAggregatedSectionsData = createSelector(consoleFeature, feat 
   return feat.consoleClasses.classesAndGroups && feat.consoleClasses.classesAndGroups.sections ? feat.consoleClasses.classesAndGroups.sections.aggregate : [];
 });
 export const selectAggregateByClassId = createSelector(consoleFeature, feat => {
-  const selectedClass = feat.consoleClasses.classesAndGroups.sections.classes.find(classItem => classItem.selected);
+  const selectedClass = feat.consoleClasses.classesAndGroups.sections.classes ?
+    feat.consoleClasses.classesAndGroups.sections.classes.find(classItem => classItem.selected) : undefined;
+  if (!selectedClass) {
+    return null;
+  }
   const aggregate = feat.consoleClasses.classesAndGroups && feat.consoleClasses.classesAndGroups.sections ? feat.consoleClasses.classesAndGroups.sections.aggregate : [];
+  console.log(feat);
   if (aggregate.length) {
     const aggregateData = aggregate.find(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
     return aggregateData;
@@ -86,16 +91,20 @@ export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
   liveAggregateItem.sections.forEach(sectionItem => {
     currentStudents.push(...sectionItem.students)
   })
+  console.log(currentStudents, defaultStudents)
   const notDraggedStudents: StaffModel[] = [];
   for (let i = 0; i < defaultStudents.length; i++) {
     let isNotDeleted = currentStudents.find(studentItem => studentItem.id === defaultStudents[i].id);
+    console.log(isNotDeleted);
     if (isNotDeleted) {
       continue;
     }
     else {
-      notDraggedStudents.push(isNotDeleted);
+      console.log('wuuuut')
+      notDraggedStudents.push(defaultStudents[i]);
     }
   }
+  console.log(notDraggedStudents)
   return notDraggedStudents;
 })
 export const selectAllConsoleSubjectsClasses = createSelector(consoleFeature, (feat) => {

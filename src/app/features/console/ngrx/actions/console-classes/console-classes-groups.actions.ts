@@ -3,6 +3,9 @@ import { GeneratedGroupsModel } from '../../../models/generated-groups.model';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { ISubjectWithTeachers, SubjectModel } from 'src/app/shared/models/subject.model';
+import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
+import { SubjectCreationSuccessModel } from 'src/app/shared/models/subject-creation-success.model';
+import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model';
 
 export const fetchGeneratedGroups = createAction(
   '[ConsoleClassesAndGroupsComponent] fetchGeneratedGroups'
@@ -112,4 +115,28 @@ export const assignToSelectedConsoleSubjectsClassesRequest = createAction(
 export const assignToSelectedConsoleSubjectsClasses = createAction(
   '[ConsoleSubjectsComponent] assignToSelectedConsoleSubjectsClasses',
   props<{ selectedClasses: ExtendedClassModel[], subject: SubjectModel }>()
+);
+export const createSubjectRequestFromConsole = createAction(
+  '[ConsoleSubjectsComponent] createSubjectRequestFromConsole',
+  props<{ subject: CreateSubjModel }>()
+)
+export const createSubjectFromConsoleSuccess = createAction(
+  '[ConsoleSubjectsComponent] createSubjectFromConsoleSuccess',
+  props<{ subject: ISubjectWithTeachers }>()
+)
+export const performSectionDrop = createAction(
+  '[ConsoleSectionEditComponent] performSectionDrop',
+  props<{ draggedData: DraggedSectionModel }>()
+)
+export const removeStudentsFromSection = createAction(
+  '[ConsoleSectionEditComponent] removeStudentsFromSection',
+  props<{ draggedData: DraggedSectionModel }>()
+);
+export const addStudentToConsoleSection = createAction(
+  '[ConsoleSectionEditComponent] addStudentToConsoleSection',
+  props<{ draggedData: DraggedSectionModel }>()
+)
+export const addNewSectionToAggregate = createAction(
+  '[ConsoleSectionEditComponent] addNewSectionToAggregate',
+  props<{ classId: string }>()
 )

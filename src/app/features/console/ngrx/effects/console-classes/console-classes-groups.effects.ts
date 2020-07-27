@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesService } from '../../../services/console-classes/console-classes.service';
 import { mergeMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -121,6 +121,14 @@ export class ConsoleClassesEffects {
       }
     })
   ))
+  createSubjectRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(createSubjectRequestFromConsole),
+    mergeMap(action => {
+      return this.consoleClassesService.createSubject(action.subject).pipe(
+        map(subject => createSubjectFromConsoleSuccess({ subject }))
+      )
+    })
+  ));
   assignToSelectedConsoleSubjectsClassesRequest$ = createEffect(() => this.actions$.pipe(
     ofType(assignToSelectedConsoleSubjectsClassesRequest),
     withLatestFrom(this.store.select(selectConsoleSubjectsSelectedClasses)),

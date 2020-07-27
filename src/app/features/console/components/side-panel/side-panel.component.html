@@ -1,0 +1,86 @@
+<form
+  [ngStyle]="style"
+  [formGroup]="addSubjForm"
+  class="side-panel"
+  [ngClass]="{ active: sidePanelIsActive }"
+>
+  <div class="side-panel__header">
+    <button (click)="toggleSidePanel()" ButtonType="icon">x</button>
+  </div>
+  <div class="side-panel__body">
+    <div class="side-panel__title">
+      <div class="side-panel__subject-icon icon--large">
+        <img src="assets/admin/class-subjects/img-placeholder.svg" alt="" />
+      </div>
+      <input
+        formControlName="subjectName"
+        class="side-panel__input"
+        type="text"
+        placeholder="Subject Name"
+      />
+      <button class="delete-btn" ButtonType="icon">
+        <img src="assets/admin/buttons/delete.svg" />
+      </button>
+    </div>
+    <div class="subject-activities__wrapper">
+      <div class="side-panel__subjects" formArrayName="subSubjects">
+        <div
+          *ngFor="let subSubject of subSubjects.controls; let i = index"
+          class="side-panel__subject"
+        >
+          <div class="side-panel__subject-icon">
+            <img src="assets/admin/class-subjects/img-placeholder.svg" alt="" />
+          </div>
+          <input class="side-panel__input" type="text" [formControlName]="i" />
+          <button class="delete-btn" ButtonType="icon">
+            <img
+              src="assets/admin/buttons/delete.svg"
+              (click)="deleteItem('subject', i)"
+            />
+          </button>
+        </div>
+
+        <button
+          class="side-panel__create roundbtn"
+          ButtonType="outline"
+          (click)="insertItem('subject')"
+        >
+          <img src="assets/admin/form/add-16px-black.svg" alt="" />
+        </button>
+      </div>
+      <div class="side-panel__activities" formArrayName="activities">
+        <div
+          class="side-panel__subject"
+          *ngFor="let activity of activities.controls; let i = index"
+        >
+          <div class="side-panel__activity-icon">
+            <img src="assets/admin/class-subjects/icon-activity.svg" alt="" />
+          </div>
+          <input
+            class="side-panel__input"
+            type="text"
+            [formControlName]="i"
+            placeholder="Activity (Optional)"
+          />
+          <button
+            class="delete-btn"
+            ButtonType="icon"
+            (click)="deleteItem('activity', i)"
+          >
+            <img src="assets/admin/buttons/delete.svg" />
+          </button>
+        </div>
+        <button
+          class="side-panel__create roundbtn"
+          ButtonType="outline"
+          (click)="insertItem('activity')"
+        >
+          <img src="assets/admin/form/add-16px-black.svg" alt="" />
+        </button>
+      </div>
+    </div>
+    <div class="subject-activities__submit">
+      <button ButtonType="basic" (click)="addSubject()">Add Subject</button>
+    </div>
+  </div>
+</form>

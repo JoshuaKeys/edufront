@@ -39,7 +39,7 @@
           placeholder="Search"
         />
       </div>
-      <button class="search__btn" (click)="openFormModal()">
+      <button class="search__btn" (click)="toggleSidePanel()">
         <span>+</span>
       </button>
     </div>
@@ -54,5 +54,11 @@
     </ng-template>
   </aside>
 </main>
+<edu-side-panel
+  [style]="{ position: 'absolute', top: '70px' }"
+  [sidePanelIsActive]="sidePanelIsActive"
+  (closeSidePanel)="toggleSidePanel()"
+  (createSubject)="createSubject($event)"
+></edu-side-panel>
 <!-- <edu-add-subject-modal (createSubject)="createSubject($event)" *ngIf="(modalState | async).formModal">
 </edu-add-subject-modal> -->

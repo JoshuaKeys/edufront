@@ -20,6 +20,9 @@ import { DeleteClassesModalComponent } from './components/delete-classes-modal/d
 import { ConsoleSectionEditComponent } from './containers/console-section-edit/console-section-edit.component';
 import { ConsoleSectionViewComponent } from './containers/console-section-view/console-section-view.component';
 import { SectionsDropboxComponent } from './components/sections-dropbox/sections-dropbox.component';
+import { SidePanelComponent } from './components/side-panel/side-panel.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ConsoleSectionAsideComponent } from './components/console-section-aside/console-section-aside.component';
 
 
 
@@ -34,13 +37,16 @@ import { SectionsDropboxComponent } from './components/sections-dropbox/sections
     DeleteClassesModalComponent,
     ConsoleSectionEditComponent,
     ConsoleSectionViewComponent,
-    SectionsDropboxComponent
+    SectionsDropboxComponent,
+    SidePanelComponent,
+    ConsoleSectionAsideComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     HttpClientModule,
     ConsoleRoutingModule,
+    ReactiveFormsModule,
     StoreModule.forFeature('console', consoleReducer),
     EffectsModule.forFeature([ConsoleClassesEffects]),
   ],

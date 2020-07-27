@@ -8,6 +8,8 @@ import { pluck, tap, map } from 'rxjs/operators';
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { SubjectModel, ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
+import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
+import { SubjectCreationSuccessModel } from 'src/app/shared/models/subject-creation-success.model';
 
 @Injectable()
 export class ConsoleClassesService {
@@ -50,6 +52,9 @@ export class ConsoleClassesService {
   }
   getFullClass(classItem: ExtendedClassModel): Observable<ExtendedClassModel> {
     return this.httpClient.get<ExtendedClassModel>(`api/v1/class/${classItem.id}`);
+  }
+  createSubject(subject: CreateSubjModel): Observable<ISubjectWithTeachers> {
+    return this.httpClient.post<ISubjectWithTeachers>('/api/v1/subject', subject);
   }
   constructor(private httpClient: HttpClient) { }
 }

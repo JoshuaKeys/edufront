@@ -24,7 +24,9 @@
       class="chip"
       *ngFor="let student of students"
       draggable="true"
-      [appDraggable]="{ data: student }"
+      [appDraggable]="{
+        data: computeDragObj(student.classId, student)
+      }"
       [ngClass]="{
         'chip--blue': student.gender.toLocaleLowerCase() === 'male',
         'chip--pink': student.gender.toLocaleLowerCase() === 'female'

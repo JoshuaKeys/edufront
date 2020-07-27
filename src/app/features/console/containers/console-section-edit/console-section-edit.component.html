@@ -34,6 +34,8 @@
           <edu-sections-dropbox
             [selectedClass]="selectedClass"
             [aggregatedResult]="aggregatedData"
+            (onDropped)="handleDropped($event)"
+            (onAddSection)="processAddSection($event)"
           >
           </edu-sections-dropbox>
         </div>
@@ -41,13 +43,14 @@
     </div>
   </section>
   <aside class="aside">
-    <edu-section-aside
+    <edu-console-section-aside
       [forConsoleUse]="true"
       *ngIf="selectedClass | async"
       [selectedClass]="selectedClass"
       [students]="notDraggedStudents"
       [allStudents]="allStudents"
-    ></edu-section-aside>
+      (droppedData)="removeStudent($event)"
+    ></edu-console-section-aside>
     <!-- (onAssign)="onAssign($event)"
     (onOpenAddModal)="openAddModal()" -->
   </aside>
