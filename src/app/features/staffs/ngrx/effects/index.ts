@@ -49,7 +49,7 @@ export class StaffsEffects {
   ))
   fetchClassesRequest$ = createEffect(() => this.actions$.pipe(
     ofType(fetchClassesRequest),
-    mergeMap(action => this.classesService.getClasses().pipe(
+    mergeMap(action => this.classesService.getAssignedClasses().pipe(
       map(classes => fetchClassesSuccess({ classes }))
     ))
   ))

@@ -25,6 +25,7 @@ export const selectConsoleSelectedClasses = createSelector(selectConsoleClasses,
   const classesCopy = JSON.parse(JSON.stringify(classes))
   for (let i = 0; i < classesCopy.length; i++) {
     const isSelected = groupedClasses.find(classItem => classItem.id === classesCopy[i].id);
+    console.log(isSelected);
     if (isSelected) {
       classesCopy[i].dragged = true;
       classesCopy[i].selected = true;

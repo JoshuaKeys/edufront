@@ -9,5 +9,8 @@ export class ClassesService {
   getClasses(): Observable<GetClassesResponseModel[]> {
     return this.httpClient.get<GetClassesResponseModel[]>(`/api/v1/class/systemClasses`);
   }
+  getAssignedClasses(): Observable<GetClassesResponseModel[]> {
+    return this.httpClient.get<GetClassesResponseModel[]>(`/api/v1/class/`)
+  }
   constructor(private httpClient: HttpClient) { }
 }

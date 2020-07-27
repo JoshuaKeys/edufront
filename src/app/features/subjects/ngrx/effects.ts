@@ -41,7 +41,7 @@ export class SubjectsEffects {
   ));
   fetchAllClasses$ = createEffect(() => this.actions$.pipe(
     ofType(fromSubjectActions.getClassesRequest),
-    mergeMap(action => this.classesService.getClasses().pipe(
+    mergeMap(action => this.classesService.getAssignedClasses().pipe(
       map(classes => fromSubjectActions.getClassesSuccess({ classes }))
     ))
   ));

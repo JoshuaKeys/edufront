@@ -20,6 +20,9 @@ export class ConsoleClassesService {
   getClasses(): Observable<ExtendedClassModel[]> {
     return this.httpClient.get<ExtendedClassModel[]>('/api/v1/class/systemClasses')
   }
+  getAssignedClasses(): Observable<ExtendedClassModel[]> {
+    return this.httpClient.get<ExtendedClassModel[]>('/api/v1/class')
+  }
   deleteGroup(group: GeneratedGroupsModel): Observable<any> {
     return this.httpClient.delete(`/api/v1/classGroup/${group.id}`, { responseType: 'text' })
   }
@@ -40,7 +43,7 @@ export class ConsoleClassesService {
   getStudentsInSection(section: ConsoleSectionModel): Observable<StaffModel[]> {
     return this.httpClient.get<StaffModel[]>(`/api/v1/profile/sectionId/${section.id}`).pipe(
       map(staffData => staffData.map(staffItem => {
-        staffItem.sectionId = section.id;
+        staffItem['sectionId'] = section.id;
         return staffItem;
       }))
     )

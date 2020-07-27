@@ -93,10 +93,10 @@
             </button>
           </div>
           <div class="dropzone__body">
+            <!-- (click)="toggleOption(classItem.grade)" -->
             <div
               *ngFor="let classItem of groupItem.classes"
               class="badge badge--small badge--active"
-              (click)="toggleOption(classItem.grade)"
               [appDraggable]="{ data: classItem }"
             >
               <span>{{ classItem.grade }}</span>

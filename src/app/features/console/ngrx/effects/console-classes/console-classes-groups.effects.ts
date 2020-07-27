@@ -83,7 +83,7 @@ export class ConsoleClassesEffects {
       if (classes.length) {
         return of(fetchAllClassesForSectionsSuccess({ classes }));
       }
-      return this.consoleClassesService.getClasses().pipe(
+      return this.consoleClassesService.getAssignedClasses().pipe(
         map(classes => fetchAllClassesForSectionsSuccess({ classes }))
       );
     })
@@ -96,7 +96,7 @@ export class ConsoleClassesEffects {
         return of(fetchAllClassesWithSubjects({ classes }))
         // return of(fetchAllClassesForSubjectsSuccess({ classes }))
       }
-      return this.consoleClassesService.getClasses().pipe(
+      return this.consoleClassesService.getAssignedClasses().pipe(
         map(classes => fetchAllClassesWithSubjects({ classes }))
       )
     })

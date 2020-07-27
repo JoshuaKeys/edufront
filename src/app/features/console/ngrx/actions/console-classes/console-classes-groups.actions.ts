@@ -148,4 +148,8 @@ export const createConsoleStudentRequest = createAction(
 export const createConsoleStudentSuccess = createAction(
   '[ConsoleClassesEffects] createConsoleStudentSuccess',
   props<{ student: StudentModel }>()
-)
+);
+export const removeClassFromGroup = createAction(
+  '[ConsoleClassesEffects] removeClassFromGroup',
+  props<{ class: ExtendedClassModel }>()
+);

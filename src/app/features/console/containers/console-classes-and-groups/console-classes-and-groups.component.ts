@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Rend
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { selectConsoleGroups, selectConsoleSelectedClasses } from '../../ngrx/selectors/console-classes';
 import { GeneratedGroupsModel } from '../../models/generated-groups.model';
@@ -66,8 +66,10 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
   }
   onBadgesDrop(event) {
     event.preventDefault();
-    const data: ExtendedClassModel = JSON.parse(JSON.stringify(event.dataTransfer.getData('Text')));
+    const data: ExtendedClassModel = JSON.parse(event.dataTransfer.getData('Text'));
+    this.renderer.removeClass(this.badges.nativeElement, 'badges--dragged-over');
     console.log(data);
+    this.store.dispatch(removeClassFromGroup({ class: data }))
   }
   deletePopoverState = false;
   deleteGroupItem(group: GeneratedGroupsModel) {
