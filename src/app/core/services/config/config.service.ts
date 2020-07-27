@@ -22,7 +22,7 @@ export class ConfigService {
       //   // config = window.location.hostname.replace('www.', '').split('.')[0] + '-config.json';
       // }
 
-      of(environment.config1).subscribe(
+      of(environment.config).subscribe(
         res => {
           // console.log('succesS ?', res);
           this.config = res;
