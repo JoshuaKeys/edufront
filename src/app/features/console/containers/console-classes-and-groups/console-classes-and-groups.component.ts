@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -26,7 +26,7 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
   activeArr = [];
   tempActiveArr = [];
   multiselectPopoverState = false;
-
+  @ViewChild('badges') badges: ElementRef<HTMLDivElement>;
   ngOnInit(): void {
     this.store.dispatch(fetchAllClasses())
     this.store.dispatch(fetchGeneratedGroups())
@@ -56,7 +56,19 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
     { title: 'secondary', popoverIsOpened: false },
     { title: 'higher secondary', popoverIsOpened: false }
   ];
-
+  onBadgesDragOver(event) {
+    event.preventDefault();
+    this.renderer.addClass(this.badges.nativeElement, 'badges--dragged-over');
+  }
+  onBadgesDragLeave(event) {
+    event.preventDefault();
+    this.renderer.removeClass(this.badges.nativeElement, 'badges--dragged-over');
+  }
+  onBadgesDrop(event) {
+    event.preventDefault();
+    const data: ExtendedClassModel = JSON.parse(JSON.stringify(event.dataTransfer.getData('Text')));
+    console.log(data);
+  }
   deletePopoverState = false;
   deleteGroupItem(group: GeneratedGroupsModel) {
     if (group.id) {
@@ -159,6 +171,6 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
     this.isOpen = true;
   }
 
-  constructor(private classService: ClassesService, private store: Store) {
+  constructor(private classService: ClassesService, private renderer: Renderer2, private store: Store) {
   }
 }

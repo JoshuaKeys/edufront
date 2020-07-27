@@ -4,7 +4,13 @@
       These are the Class and Groups set up in your School
     </h3>
     <p class="content__desc">Add, drag, drop and edit</p>
-    <div class="badges">
+    <div
+      class="badges"
+      #badges
+      (dragleave)="onBadgesDragLeave($event)"
+      (dragover)="onBadgesDragOver($event)"
+      (drop)="onBadgesDrop($event)"
+    >
       <div
         class="badge badge--active"
         [ngClass]="{ 'badge--disabled': classItem.dragged }"
