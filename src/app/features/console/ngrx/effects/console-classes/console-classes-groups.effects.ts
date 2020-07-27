@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess, createConsoleStudentRequest, createConsoleStudentSuccess } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesService } from '../../../services/console-classes/console-classes.service';
 import { mergeMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses } from '../.
 import { of, forkJoin } from 'rxjs';
 import { aggregateSectionData } from '../../../utilities';
 import { fetchSectionData, aggregateSectionDataRequest, fetchSectionDataSuccess } from '../../actions/console-classes/console-sections.actions';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 @Injectable()
 export class ConsoleClassesEffects {
@@ -138,9 +139,136 @@ export class ConsoleClassesEffects {
       }
     })
   ))
+  createConsoleStudentRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(createConsoleStudentRequest),
+    mergeMap(action => {
+      const studentReqData = this.processStudentReqData(action.student);
+      if (studentReqData.profileDto.profileImage) {
+        return this.consoleClassesService.uploadLogo(studentReqData.profileDto.profileImage['acceptedFile']).pipe(
+          mergeMap(res => {
+            const createStudentReqObj = this.composeCreateStudentData(studentReqData, res.file);
+            return this.consoleClassesService.createStudent(createStudentReqObj).pipe(
+              mergeMap(student => [createConsoleStudentSuccess({ student }),])
+              // toggleModal({ modal: 'addModal' })
+            )
+          })
+        )
+      }
+      // if (studentReqData.profileDto.profileImage) {
+      //   return this.studentsService.uploadLogo(studentReqData.profileDto.profileImage['acceptedFile']).pipe(
+      //     mergeMap(res => {
+
+      //     })
+      //   )
+      // }
+      const createStudentReqObj = this.composeCreateStudentData(studentReqData, null);
+      return this.consoleClassesService.createStudent(studentReqData).pipe(
+        mergeMap(student => [createConsoleStudentSuccess({ student })])
+        // toggleModal({ modal: 'addModal' })
+      )
+    })
+  ))
+  processguardianDetailsDto(student: StudentModel) {
+    let studentCopy: StudentModel = {
+      ...student,
+      guardianDetailsDto: {
+        ...student.guardianDetailsDto
+      }
+    }
+    if (!studentCopy.guardianDetailsDto.email) {
+      delete studentCopy.guardianDetailsDto.email
+    }
+    if (!studentCopy.guardianDetailsDto.familyName) {
+      delete studentCopy.guardianDetailsDto.familyName
+    }
+    if (!studentCopy.guardianDetailsDto.firstName) {
+      delete studentCopy.guardianDetailsDto.firstName
+    }
+    if (!studentCopy.guardianDetailsDto.middleName) {
+      delete studentCopy.guardianDetailsDto.middleName
+    }
+    if (!studentCopy.guardianDetailsDto.phone) {
+      delete studentCopy.guardianDetailsDto.phone
+    }
+    if (!studentCopy.guardianDetailsDto.id) {
+      delete studentCopy.guardianDetailsDto.id
+    }
+    return studentCopy
+  }
+  processProfileDTO(student: StudentModel) {
+    let studentCopy: StudentModel = {
+      ...student,
+      profileDto: { ...student.profileDto }
+    }
+    if (studentCopy.profileDto.profileImage == null) {
+      delete studentCopy.profileDto.profileImage;
+    }
+    if (!studentCopy.profileDto.address) {
+      delete studentCopy.profileDto.address;
+    }
+    if (!studentCopy.profileDto.id) {
+      delete studentCopy.profileDto.id;
+    }
+    if (!studentCopy.profileDto.city) {
+      delete studentCopy.profileDto.city
+    }
+    if (!studentCopy.profileDto.classId) {
+      delete studentCopy.profileDto.classId
+    }
+    if (!studentCopy.profileDto['familyName']) {
+      delete studentCopy.profileDto['familyName']
+    }
+    if (!studentCopy.profileDto.firstName) {
+      delete studentCopy.profileDto.firstName
+    }
+    if (!studentCopy.profileDto.lastName) {
+      delete studentCopy.profileDto.lastName
+    }
+    if (!studentCopy.profileDto.middleName) {
+      delete studentCopy.profileDto.middleName
+    }
+    if (!studentCopy.profileDto.state) {
+      delete studentCopy.profileDto.state
+    }
+    if (!studentCopy.profileDto.zipcode) {
+      delete studentCopy.profileDto.zipcode
+    }
+    if (!studentCopy.profileDto.gender) {
+      delete studentCopy.profileDto.gender
+    }
+    if (!studentCopy.profileDto.rollNumber) {
+      delete studentCopy.profileDto.rollNumber
+    }
+    return studentCopy;
+  }
+
+  composeCreateStudentData(student: StudentModel, file: string) {
+    console.log(student, file);
+    const studentCopy: StudentModel = { ...student, };
+    if (studentCopy.profileDto.profileImage) {
+      studentCopy.profileDto.profileImage = file;
+    }
+    if (studentCopy.guardianDetailsDto.phone) {
+      studentCopy.guardianDetailsDto.phone = student.guardianDetailsDto.phone['phoneNum']
+    }
+    if (studentCopy.profileDto['country']) {
+      studentCopy.profileDto.countryId = student.profileDto['country'].id
+    }
+    return studentCopy
+  }
+  processStudentReqData(student: StudentModel) {
+    const processedProfileDTO = this.processProfileDTO(student);
+    const processguardianDetailsDto = this.processguardianDetailsDto(processedProfileDTO);
+    return processguardianDetailsDto;
+  }
+
   constructor(
     private actions$: Actions,
     private consoleClassesService: ConsoleClassesService,
     private store: Store<ConsoleClassesStateModel>
   ) { }
 }
+
+
+
+

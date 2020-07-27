@@ -73,6 +73,7 @@ export class StudentsFormComponent implements OnInit {
   ngOnInit(): void {
     this.sortedClasses = this.allClasses.pipe(
       map(classes => {
+        console.log(classes);
         return classes.sort((classA, classB) => classA.grade < classB.grade ? -1 : 1)
       })
     )

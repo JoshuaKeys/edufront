@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ConsoleClassesStateModel } from '../../models/console-classes-state.model';
 import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectAllClassesForSections, selectSelectedClassForSections, selectAggregatedSectionsData, selectAllStudentsForSections, selectAggregateByClassId, selectNotDraggedStudents } from '../../ngrx/selectors/console-classes';
+import { selectAllClassesForSections, selectSelectedClassForSections, selectAggregatedSectionsData, selectAllStudentsForSections, selectAggregateByClassId, selectNotDraggedStudents, selectConsoleClasses } from '../../ngrx/selectors/console-classes';
 import { toggleSelectedState, fetchAllStudents, fetchAllClassesForSections, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { AggregatedResult } from '../../models/aggregated-result.model';
@@ -17,9 +17,11 @@ import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConsoleSectionEditComponent implements OnInit {
+  isAddModalOpened = false;
   sortedClasses: Observable<ExtendedClassModel[]>
   notDraggedStudents: Observable<StaffModel[]>;
   allStudents: Observable<StaffModel[]>;
+  allClasses: Observable<ExtendedClassModel[]>;
   selectedClass: Observable<ExtendedClassModel> | null;
   aggregatedData: Observable<AggregatedResult>;
   ngOnInit(): void {
@@ -31,6 +33,7 @@ export class ConsoleSectionEditComponent implements OnInit {
     this.sortedClasses.subscribe(console.log)
     this.selectedClass = this.store.select(selectSelectedClassForSections);
     this.aggregatedData = this.store.select(selectAggregateByClassId)
+    this.allClasses = this.store.select(selectAllClassesForSections);
   }
   // processSubmit(student: StudentModel) {
   //   this.store.dispatch(createStudentRequest({ student }))
@@ -45,6 +48,12 @@ export class ConsoleSectionEditComponent implements OnInit {
   // onAssign(classId: string) {
   //   this.store.dispatch(assignStudentsRequest({ classId }))
   // }
+  toggleAddModal() {
+    this.isAddModalOpened = !this.isAddModalOpened;
+  }
+  processSubmit(event) {
+    console.log(event);
+  }
   handleDropped(draggedData: DraggedSectionModel) {
     if (draggedData.sectionName) {
       this.store.dispatch(performSectionDrop({ draggedData }))

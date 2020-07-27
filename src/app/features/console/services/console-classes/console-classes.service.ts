@@ -10,6 +10,7 @@ import { StaffModel } from 'src/app/shared/models/staff.model';
 import { SubjectModel, ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
 import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
 import { SubjectCreationSuccessModel } from 'src/app/shared/models/subject-creation-success.model';
+import { LogoUploadResponseModel } from 'src/app/shared/models/logo-upload-response.model';
 
 @Injectable()
 export class ConsoleClassesService {
@@ -44,6 +45,11 @@ export class ConsoleClassesService {
       }))
     )
   }
+  uploadLogo(file: File): Observable<LogoUploadResponseModel> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post<LogoUploadResponseModel>('/api/v1/upload/image', formData);
+  }
   getAllFullClasses(): Observable<ExtendedClassModel[]> {
     return this.httpClient.get<ExtendedClassModel[]>(`api/v1/class`)
   }
@@ -55,6 +61,9 @@ export class ConsoleClassesService {
   }
   createSubject(subject: CreateSubjModel): Observable<ISubjectWithTeachers> {
     return this.httpClient.post<ISubjectWithTeachers>('/api/v1/subject', subject);
+  }
+  createStudent(student: StudentModel): Observable<StudentModel> {
+    return this.httpClient.post<StudentModel>('/api/v1/profile/completeProfile', student);
   }
   constructor(private httpClient: HttpClient) { }
 }

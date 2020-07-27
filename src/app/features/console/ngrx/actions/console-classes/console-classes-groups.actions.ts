@@ -6,14 +6,15 @@ import { ISubjectWithTeachers, SubjectModel } from 'src/app/shared/models/subjec
 import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
 import { SubjectCreationSuccessModel } from 'src/app/shared/models/subject-creation-success.model';
 import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 export const fetchGeneratedGroups = createAction(
   '[ConsoleClassesAndGroupsComponent] fetchGeneratedGroups'
-)
+);
 export const fetchGeneratedGroupsSuccess = createAction(
   '[ConsoleClassesEffects] fetchGeneratedGroupsSuccess',
   props<{ generatedGroups: GeneratedGroupsModel[] }>()
-)
+);
 export const fetchAllClasses = createAction(
   '[ConsoleClassesAndGroupsComponent] fetchAllClasses'
 );
@@ -59,31 +60,31 @@ export const createGroup = createAction(
 export const toggleSelectedState = createAction(
   '[ConsoleSectionEditComponent] toggleSelectedState',
   props<{ classGrade: string }>()
-)
+);
 export const fetchAllStudents = createAction(
   '[ConsoleSectionEditComponent] fetchAllStudents'
 );
 export const fetchAllStudentsSuccess = createAction(
   '[ConsoleClassesEffects] fetchAllStudentsSuccess',
   props<{ students: StaffModel[] }>()
-)
+);
 export const fetchAllClassesForSections = createAction(
   '[ConsoleSectionEditComponent] fetchAllClassesForSections'
 )
 export const fetchAllClassesForSectionsSuccess = createAction(
   '[ConsoleClasses] fetchAllClassesForSectionsSuccess',
   props<{ classes: ExtendedClassModel[] }>()
-)
+);
 export const fetchAllClassesForSubjects = createAction(
   '[ConsoleSubjectsComponent] fetchAllClassesForSubjects'
-)
+);
 export const fetchAllClassesForSubjectsSuccess = createAction(
   '[ConsoleClassesEffects] fetchAllClassesForSubjectsSuccess',
   props<{ classes: ExtendedClassModel[] }>()
 );
 export const fetchAllSubjects = createAction(
   '[ConsoleSubjectsComponent] fetchAllSubjects'
-)
+);
 export const fetchAllSubjectsSuccess = createAction(
   '[ConsoleClassesEffects] fetchAllSubjectsSuccess',
   props<{ subjects: ISubjectWithTeachers[] }>()
@@ -91,11 +92,11 @@ export const fetchAllSubjectsSuccess = createAction(
 export const fetchAllClassesWithSubjects = createAction(
   '[ConsoleClassesEffects] fetchAllClassesWithSubjects',
   props<{ classes: ExtendedClassModel[] }>()
-)
+);
 export const fetchAllClassesWithSubjectsSuccess = createAction(
   '[ConsoleClassesEffects] fetchAllClassesWithSubjectsSuccess',
   props<{ classes: ExtendedClassModel[] }>()
-)
+);
 export const toggleConsoleSubjectsClassSelectedState = createAction(
   '[ConsoleSubjectsComponent] toggleConsoleSubjectsClassSelectedState',
   props<{ classId: string }>()
@@ -103,15 +104,15 @@ export const toggleConsoleSubjectsClassSelectedState = createAction(
 export const removeFromSelectedConsoleSubjectsClassesRequest = createAction(
   '[ConsoleSubjectsComponent] removeFromSelectedConsoleSubjectsClassesRequest',
   props<{ subject: SubjectModel }>()
-)
+);
 export const removeFromSelectedConsoleSubjectsClasses = createAction(
   '[ConsoleClassesEffects] removeFromSelectedConsoleSubjectsClasses',
   props<{ selectedClasses: ExtendedClassModel[], subject: SubjectModel }>()
-)
+);
 export const assignToSelectedConsoleSubjectsClassesRequest = createAction(
   '[ConsoleSubjectsComponent] assignToSelectedConsoleSubjectsClassesRequest',
   props<{ subject: SubjectModel }>()
-)
+);
 export const assignToSelectedConsoleSubjectsClasses = createAction(
   '[ConsoleSubjectsComponent] assignToSelectedConsoleSubjectsClasses',
   props<{ selectedClasses: ExtendedClassModel[], subject: SubjectModel }>()
@@ -119,15 +120,15 @@ export const assignToSelectedConsoleSubjectsClasses = createAction(
 export const createSubjectRequestFromConsole = createAction(
   '[ConsoleSubjectsComponent] createSubjectRequestFromConsole',
   props<{ subject: CreateSubjModel }>()
-)
+);
 export const createSubjectFromConsoleSuccess = createAction(
   '[ConsoleSubjectsComponent] createSubjectFromConsoleSuccess',
   props<{ subject: ISubjectWithTeachers }>()
-)
+);
 export const performSectionDrop = createAction(
   '[ConsoleSectionEditComponent] performSectionDrop',
   props<{ draggedData: DraggedSectionModel }>()
-)
+);
 export const removeStudentsFromSection = createAction(
   '[ConsoleSectionEditComponent] removeStudentsFromSection',
   props<{ draggedData: DraggedSectionModel }>()
@@ -135,8 +136,16 @@ export const removeStudentsFromSection = createAction(
 export const addStudentToConsoleSection = createAction(
   '[ConsoleSectionEditComponent] addStudentToConsoleSection',
   props<{ draggedData: DraggedSectionModel }>()
-)
+);
 export const addNewSectionToAggregate = createAction(
   '[ConsoleSectionEditComponent] addNewSectionToAggregate',
   props<{ classId: string }>()
+);
+export const createConsoleStudentRequest = createAction(
+  '[ConsoleSectionEditComponent] createConsoleStudentRequest',
+  props<{ student: StudentModel }>()
+);
+export const createConsoleStudentSuccess = createAction(
+  '[ConsoleClassesEffects] createConsoleStudentSuccess',
+  props<{ student: StudentModel }>()
 )
