@@ -109,3 +109,4 @@ export abstract class RestService {
     return base + parts;
   }
 }
+//https://devapi.edufront.education;443/api/v1/admin/systemclass

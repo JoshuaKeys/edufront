@@ -95,16 +95,13 @@ export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
   const notDraggedStudents: StaffModel[] = [];
   for (let i = 0; i < defaultStudents.length; i++) {
     let isNotDeleted = currentStudents.find(studentItem => studentItem.id === defaultStudents[i].id);
-    console.log(isNotDeleted);
     if (isNotDeleted) {
       continue;
     }
     else {
-      console.log('wuuuut')
       notDraggedStudents.push(defaultStudents[i]);
     }
   }
-  console.log(notDraggedStudents)
   return notDraggedStudents;
 })
 export const selectAllConsoleSubjectsClasses = createSelector(consoleFeature, (feat) => {
