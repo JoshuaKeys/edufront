@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { GeneratedGroupsModel } from '../../../models/generated-groups.model';
-import { fetchGeneratedGroupsSuccess, fetchAllClassesSuccess, deleteGroupSuccess, performDrop, createGroup, deleteLocalGroup, performInitialDrop, toggleSelectedState, fetchAllStudentsSuccess, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjectsSuccess, fetchAllSubjectsSuccess, toggleConsoleSubjectsClassSelectedState, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, createSubjectFromConsoleSuccess, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroupsSuccess, fetchAllClassesSuccess, deleteGroupSuccess, performDrop, createGroup, deleteLocalGroup, performInitialDrop, toggleSelectedState, fetchAllStudentsSuccess, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjectsSuccess, fetchAllSubjectsSuccess, toggleConsoleSubjectsClassSelectedState, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, createSubjectFromConsoleSuccess, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentSuccess } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesStateModel } from '../../../models/console-classes-state.model';
 import { fetchSectionDataSuccess } from '../../actions/console-classes/console-sections.actions';
 import { StaffModel } from 'src/app/shared/models/staff.model';
@@ -240,4 +240,28 @@ export const consoleClassesReducer = createReducer(initialState,
     stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.push({ sectionName, students: [], id })
     return stateCopy;
   }),
+  on(createConsoleStudentSuccess, (state, action) => {
+    const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
+    const aggregateIdx = stateCopy.classesAndGroups.sections.aggregate.findIndex(aggregate => action.student.profileDto.classId === aggregate.classItem.id)
+    const newStudent: StaffModel = {
+      classId: action.student.profileDto.classId,
+      contexts: [
+        'STUDENT'
+      ],
+      email: action.student.guardianDetailsDto.email,
+      firstName: action.student.profileDto.firstName,
+      lastName: action.student.profileDto.lastName,
+      gender: action.student.profileDto.gender,
+      id: action.student.profileDto.id,
+      isDeleted: null,
+      login: null,
+      middleName: action.student.profileDto.middleName,
+      phone: action.student.guardianDetailsDto.phone,
+      profileImage: action.student.profileDto.profileImage,
+      roles: null,
+      rollNumber: action.student.profileDto.rollNumber
+    }
+    stateCopy.classesAndGroups.sections.students.push(newStudent as StaffModel);
+    return stateCopy;
+  })
 );

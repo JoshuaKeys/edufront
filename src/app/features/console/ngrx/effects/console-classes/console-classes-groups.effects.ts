@@ -154,13 +154,6 @@ export class ConsoleClassesEffects {
           })
         )
       }
-      // if (studentReqData.profileDto.profileImage) {
-      //   return this.studentsService.uploadLogo(studentReqData.profileDto.profileImage['acceptedFile']).pipe(
-      //     mergeMap(res => {
-
-      //     })
-      //   )
-      // }
       const createStudentReqObj = this.composeCreateStudentData(studentReqData, null);
       return this.consoleClassesService.createStudent(studentReqData).pipe(
         mergeMap(student => [createConsoleStudentSuccess({ student })])

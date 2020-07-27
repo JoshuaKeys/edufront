@@ -5,10 +5,11 @@ import { ConsoleClassesStateModel } from '../../models/console-classes-state.mod
 import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { selectAllClassesForSections, selectSelectedClassForSections, selectAggregatedSectionsData, selectAllStudentsForSections, selectAggregateByClassId, selectNotDraggedStudents, selectConsoleClasses } from '../../ngrx/selectors/console-classes';
-import { toggleSelectedState, fetchAllStudents, fetchAllClassesForSections, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
+import { toggleSelectedState, fetchAllStudents, fetchAllClassesForSections, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentRequest } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { AggregatedResult } from '../../models/aggregated-result.model';
 import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model';
+import { StudentModel } from 'src/app/shared/models/student.model';
 
 @Component({
   selector: 'edu-console-section-edit',
@@ -51,8 +52,9 @@ export class ConsoleSectionEditComponent implements OnInit {
   toggleAddModal() {
     this.isAddModalOpened = !this.isAddModalOpened;
   }
-  processSubmit(event) {
-    console.log(event);
+  processSubmit(student: StudentModel) {
+    this.store.dispatch(createConsoleStudentRequest({ student }))
+    this.toggleAddModal()
   }
   handleDropped(draggedData: DraggedSectionModel) {
     if (draggedData.sectionName) {
