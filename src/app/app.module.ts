@@ -27,7 +27,8 @@ import {
 } from './root-store/class-section.service';
 
 export function ConfigLoader(configService: ConfigService) {
-  return () => configService.fetchConfig();
+  // return () => configService.fetchConfig();
+  return () => configService.fetchConfigFromEnv();
 }
 
 @NgModule({
