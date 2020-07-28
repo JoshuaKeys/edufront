@@ -5,6 +5,7 @@ export interface TimetableSkeleton {
   weekday: string;
   noOfPeriod: number;
   periodStartTime: null;
+  assemblyTitle: string;
   assemblyStartTime: string;
   assemblyDuration: number;
   breaks: Break[];
