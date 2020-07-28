@@ -21,20 +21,23 @@ export const consoleClassesReducer = createReducer(initialState,
     return {
       ...state,
       classes: action.classes,
-      // classesAndGroups: {
-      //   ...state.classesAndGroups,
-      //   sections: {
-      //     ...state.classesAndGroups.sections,
-      //     classes: action.classes
-      //   }
-      // }
     }
   }),
   on(fetchGeneratedGroupsSuccess, (state, action) => {
+    const groupsCopy: GeneratedGroupsModel[] = JSON.parse(JSON.stringify(action.generatedGroups));
+    let modifiedGroups = groupsCopy.map(group => {
+      const modifiedClasses = group.classes.map(classItem => {
+        classItem.dragged = true;
+        classItem.selected = true;
+        return classItem;
+      })
+      group.classes = modifiedClasses;
+      return group;
+    });
     return {
       ...state,
       classesAndGroups: {
-        groups: action.generatedGroups
+        groups: modifiedGroups
       }
     }
   }),
@@ -93,6 +96,11 @@ export const consoleClassesReducer = createReducer(initialState,
     })
     const classIdx = stateCopy.classesAndGroups.groups[groupIdx].classes.findIndex(classItem => classItem.id === action.class.id);
     stateCopy.classesAndGroups.groups[groupIdx].classes.splice(classIdx, 1);
+
+    const classItemIdx = stateCopy.classes.findIndex(classItem => action.class.id === classItem.id);
+    stateCopy.classes[classItemIdx].selected = false;
+    stateCopy.classes[classItemIdx].dragged = false;
+
 
 
     return stateCopy;

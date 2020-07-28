@@ -91,6 +91,7 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
       return;
     }
     group.draggedOver = false;
+    console.log(droppedClass);
     if (droppedClass.dragged) {
       this.store.dispatch(performDrop({ group, droppedClass }))
     } else {
