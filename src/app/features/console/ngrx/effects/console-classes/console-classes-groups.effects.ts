@@ -1,23 +1,31 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess, createConsoleStudentRequest, createConsoleStudentSuccess } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess, createConsoleStudentRequest, createConsoleStudentSuccess, performSectionDrop, addStudentToConsoleSection, removeStudentsFromSection, addNewSectionToAggregate, fetchAssignedClasses, fetchAssignedClassesSuccess, addNewSectionToAggregateRequest } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesService } from '../../../services/console-classes/console-classes.service';
-import { mergeMap, map, tap, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { ConsoleClassesStateModel } from '../../../models/console-classes-state.model';
-import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses } from '../../selectors/console-classes';
+import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses, selectAggregatedSectionsData, selectSelectedClassForSections } from '../../selectors/console-classes';
 import { of, forkJoin } from 'rxjs';
 import { aggregateSectionData } from '../../../utilities';
-import { fetchSectionData, aggregateSectionDataRequest, fetchSectionDataSuccess } from '../../actions/console-classes/console-sections.actions';
+import { fetchSectionData, aggregateSectionDataRequest, fetchSectionDataSuccess, aggregateSectionStudentsDataRequest } from '../../actions/console-classes/console-sections.actions';
 import { StudentModel } from 'src/app/shared/models/student.model';
-
+import { v4 } from 'uuid';
+import { mapAlphaToNumeric } from 'src/app/shared/utilities/utilities';
+import { SectionModel } from 'src/app/shared/models/section.model';
 @Injectable()
 export class ConsoleClassesEffects {
   fetchAllClasses$ = createEffect(() => this.actions$.pipe(
     ofType(fetchAllClasses),
     withLatestFrom(this.store.select(selectConsoleClasses)),
-    mergeMap(([action, classes]) => this.consoleClassesService.getClasses().pipe(
+    mergeMap(() => this.consoleClassesService.getClasses().pipe(
       map(classes => fetchAllClassesSuccess({ classes }))
+    ))
+  ))
+  fetchAssignedClasses$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchAssignedClasses),
+    mergeMap(() => this.consoleClassesService.getAssignedClasses().pipe(
+      map(classes => fetchAssignedClassesSuccess({ classes }))
     ))
   ))
   fetchGeneratedGroups$ = createEffect(() => this.actions$.pipe(
@@ -47,7 +55,6 @@ export class ConsoleClassesEffects {
     mergeMap(action => {
       return forkJoin(this.consoleClassesService.getSectionData(), this.consoleClassesService.getClasses()).pipe(
         map(([sections, classes]) => {
-          // return fetchSectionDataSuccess({ sections: aggregateSectionData(sections, classes, students) })
           return aggregateSectionDataRequest({ sections, classes })
         })
       )
@@ -88,6 +95,21 @@ export class ConsoleClassesEffects {
       );
     })
   ))
+  addNewSectionToAggregate$ = createEffect(() => this.actions$.pipe(
+    ofType(addNewSectionToAggregateRequest),
+    withLatestFrom(this.store.select(selectAggregatedSectionsData), this.store.select(selectSelectedClassForSections)),
+    mergeMap(([action, aggregateData, selectedClass]) => {
+      const selectedAggregate = aggregateData.findIndex(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
+      const sectionName: string = mapAlphaToNumeric()[aggregateData[selectedAggregate].sections.length + 1].toUpperCase();
+      const sectionObj = {
+        classId: selectedClass.id,
+        sectionName
+      };
+      return this.consoleClassesService.addNewSection(sectionObj).pipe(
+        map(section => addNewSectionToAggregate({ section }))
+      );
+    })
+  ))
   fetchAllClassesForSubjects$ = createEffect(() => this.actions$.pipe(
     ofType(fetchAllClassesForSubjects),
     withLatestFrom(this.store.select(selectConsoleClasses)),
@@ -116,10 +138,14 @@ export class ConsoleClassesEffects {
   removeFromSelectedClassesRequest$ = createEffect(() => this.actions$.pipe(
     ofType(removeFromSelectedConsoleSubjectsClassesRequest),
     withLatestFrom(this.store.select(selectConsoleSubjectsSelectedClasses)),
-    map(([action, selectedClasses]) => {
-      if (selectedClasses.length > 0) {
-        return removeFromSelectedConsoleSubjectsClasses({ selectedClasses, subject: action.subject })
-      }
+    mergeMap(([action, selectedClasses]) => {
+      return forkJoin(selectedClasses.map(classItem => this.consoleClassesService.deleteSubjectFromClass(classItem.id, action.subject.id))).pipe(
+        map((response) => {
+          if (selectedClasses.length > 0) {
+            return removeFromSelectedConsoleSubjectsClasses({ selectedClasses, subject: action.subject })
+          }
+        })
+      )
     })
   ))
   createSubjectRequest$ = createEffect(() => this.actions$.pipe(
@@ -133,10 +159,14 @@ export class ConsoleClassesEffects {
   assignToSelectedConsoleSubjectsClassesRequest$ = createEffect(() => this.actions$.pipe(
     ofType(assignToSelectedConsoleSubjectsClassesRequest),
     withLatestFrom(this.store.select(selectConsoleSubjectsSelectedClasses)),
-    map(([action, selectedClasses]) => {
-      if (selectedClasses.length > 0) {
-        return assignToSelectedConsoleSubjectsClasses({ selectedClasses, subject: action.subject })
-      }
+    mergeMap(([action, selectedClasses]) => {
+      return forkJoin(selectedClasses.map(classItem => this.consoleClassesService.assignSubjectToClass(classItem, action.subject))).pipe(
+        map((response) => {
+          if (selectedClasses.length > 0) {
+            return assignToSelectedConsoleSubjectsClasses({ selectedClasses, subject: action.subject });
+          }
+        })
+      )
     })
   ))
   createConsoleStudentRequest$ = createEffect(() => this.actions$.pipe(
@@ -161,6 +191,21 @@ export class ConsoleClassesEffects {
       )
     })
   ))
+  performSectionDrop$ = createEffect(() => this.actions$.pipe(
+    ofType(performSectionDrop, addStudentToConsoleSection),
+    mergeMap(action => {
+      const id = action.draggedData.student.id;
+      const sectionId = action.draggedData.newSectionId;
+      return this.consoleClassesService.updateSectionData(sectionId, id)
+    })
+  ), { dispatch: false })
+  removeStudentFromSection$ = createEffect(() => this.actions$.pipe(
+    ofType(removeStudentsFromSection),
+    mergeMap(action => {
+      const sectionId = v4()
+      return this.consoleClassesService.updateSectionData(sectionId, action.draggedData.student.id)
+    })
+  ), { dispatch: false })
   processguardianDetailsDto(student: StudentModel) {
     let studentCopy: StudentModel = {
       ...student,

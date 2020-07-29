@@ -7,5 +7,6 @@ export interface AggregatedResult {
     id: string;
     sectionName: string;
     students: StaffModel[]
-  }[]
+  }[],
+  students: StaffModel[]
 }

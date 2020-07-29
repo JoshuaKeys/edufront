@@ -1,8 +1,7 @@
-import { ClassModel } from 'src/app/shared/models/class.model';
-import { ClassGroupModel } from '../../calender/models/class-group.model';
+import { ExtendedClassModel } from '../../subjects/models/extend-class.model';
 
 export interface GeneratedGroupsModel {
-  classes: ClassModel[],
+  classes: ExtendedClassModel[];
   groupName: string;
   id?: string;
   draggedOver?: boolean;

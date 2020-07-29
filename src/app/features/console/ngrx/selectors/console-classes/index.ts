@@ -11,6 +11,12 @@ export const selectConsoleClasses = createSelector(consoleFeature,
     return feat.consoleClasses.classes ? feat.consoleClasses.classes.slice().sort((classA, classB) => classA.grade - classB.grade) : []
   }
 )
+export const selectConsoleAssignedClasses = createSelector(consoleFeature,
+  feat => {
+    return feat.consoleClasses.classesAndGroups && feat.consoleClasses.classesAndGroups.assignedClasses ? feat.consoleClasses.classesAndGroups.assignedClasses.slice().sort((classA, classB) => {
+      return classA.grade - classB.grade
+    }) : []
+  })
 export const selectConsoleGroups = createSelector(consoleFeature,
   feat => {
     const result = Object.keys(feat.consoleClasses.classesAndGroups).find(key => key === 'groups') ? feat.consoleClasses.classesAndGroups.groups : [];
@@ -79,21 +85,15 @@ export const selectAllSubjectsForConsole = createSelector(consoleFeature, feat =
   return result;
 })
 export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
-  const unalteredAggregate = feat.consoleClasses.classesAndGroups.sections.unalteredAggregate;
-  const liveAggregate = feat.consoleClasses.classesAndGroups.sections.aggregate;
   const selectedClass = feat.consoleClasses.classesAndGroups.sections.classes.find(classItem => classItem.selected);
-  const unalteredAggregateItem = unalteredAggregate.find(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
+  const liveAggregate = feat.consoleClasses.classesAndGroups.sections.aggregate;
   const liveAggregateItem = liveAggregate.find(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
-  const defaultStudents: StaffModel[] = [];
-  unalteredAggregateItem.sections.forEach(sectionItem => {
-    defaultStudents.push(...sectionItem.students);
-  });
   const currentStudents: StaffModel[] = [];
   liveAggregateItem.sections.forEach(sectionItem => {
-    currentStudents.push(...sectionItem.students)
+    currentStudents.push(...sectionItem.students);
   })
-  console.log(currentStudents, defaultStudents)
   const notDraggedStudents: StaffModel[] = [];
+  const defaultStudents = feat.consoleClasses.classesAndGroups.sections.students;
   for (let i = 0; i < defaultStudents.length; i++) {
     let isNotDeleted = currentStudents.find(studentItem => studentItem.id === defaultStudents[i].id);
     if (isNotDeleted) {

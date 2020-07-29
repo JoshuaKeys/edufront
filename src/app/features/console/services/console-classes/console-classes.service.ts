@@ -11,7 +11,10 @@ import { SubjectModel, ISubjectWithTeachers } from 'src/app/shared/models/subjec
 import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
 import { SubjectCreationSuccessModel } from 'src/app/shared/models/subject-creation-success.model';
 import { LogoUploadResponseModel } from 'src/app/shared/models/logo-upload-response.model';
-
+import { v4 } from 'uuid'
+import { SectionModel } from 'src/app/shared/models/section.model';
+import { ClassesAndGroupsModel } from 'src/app/features/classes-and-groups/models/classes-and-group.model';
+import { GroupClassMapModel } from 'src/app/features/classes-and-groups/models/group-class-map.model';
 @Injectable()
 export class ConsoleClassesService {
   getGeneratedGroups(): Observable<GeneratedGroupsModel[]> {
@@ -48,6 +51,9 @@ export class ConsoleClassesService {
       }))
     )
   }
+  createGroup(): Observable<GroupClassMapModel> {
+
+  }
   uploadLogo(file: File): Observable<LogoUploadResponseModel> {
     const formData = new FormData();
     formData.append('file', file);
@@ -67,6 +73,25 @@ export class ConsoleClassesService {
   }
   createStudent(student: StudentModel): Observable<StudentModel> {
     return this.httpClient.post<StudentModel>('/api/v1/profile/completeProfile', student);
+  }
+  deleteSubjectFromClass(classId: string, subjectId: string): Observable<any> {
+    return this.httpClient.delete<any>(`/api/v1/class/classSubject/${classId}/subject/${subjectId}`)
+  }
+  assignSubjectToClass(classItem: ExtendedClassModel, subject: SubjectModel): Observable<SubjectModel> {
+    const modifiedClassItem = classItem.subjects.map(subject => subject.id)
+    modifiedClassItem.push(subject.id)
+    delete classItem.subjects
+    classItem['subjectIds'] = modifiedClassItem;
+    return this.httpClient.put<SubjectModel>(`/api/v1/class/${classItem.id}`, classItem)
+  }
+  updateSectionData(sectionId: string, studentId: string): Observable<any> {
+    return this.httpClient.put<any>(`/api/v1/profile/section/${sectionId}`, [studentId])
+  }
+  getStudentsById(classItem: ExtendedClassModel): Observable<StaffModel[]> {
+    return this.httpClient.get<StaffModel[]>(`/api/v1/profile/classId/${classItem.id}`);
+  }
+  addNewSection(sectionObj): Observable<SectionModel> {
+    return this.httpClient.post<SectionModel>('/api/v1/classSection', sectionObj)
   }
   constructor(private httpClient: HttpClient) { }
 }

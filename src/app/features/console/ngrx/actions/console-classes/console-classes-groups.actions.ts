@@ -54,9 +54,7 @@ export const addClasses = createAction(
   '[ConsoleClassesAndGroupsComponent] addClasses',
   props<{ classes: ExtendedClassModel[] }>()
 );
-export const createGroup = createAction(
-  '[ConsoleClassesAndGroupsComponent] createGroup'
-);
+
 export const toggleSelectedState = createAction(
   '[ConsoleSectionEditComponent] toggleSelectedState',
   props<{ classGrade: string }>()
@@ -137,10 +135,6 @@ export const addStudentToConsoleSection = createAction(
   '[ConsoleSectionEditComponent] addStudentToConsoleSection',
   props<{ draggedData: DraggedSectionModel }>()
 );
-export const addNewSectionToAggregate = createAction(
-  '[ConsoleSectionEditComponent] addNewSectionToAggregate',
-  props<{ classId: string }>()
-);
 export const createConsoleStudentRequest = createAction(
   '[ConsoleSectionEditComponent] createConsoleStudentRequest',
   props<{ student: StudentModel }>()
@@ -153,3 +147,24 @@ export const removeClassFromGroup = createAction(
   '[ConsoleClassesEffects] removeClassFromGroup',
   props<{ class: ExtendedClassModel }>()
 );
+export const addNewSectionToAggregateRequest = createAction(
+  '[ConsoleSectionEditComponent] addNewSectionToAggregateRequest',
+  props<{ classId: string }>()
+)
+export const addNewSectionToAggregate = createAction(
+  '[ConsoleSectionEditComponent] addNewSectionToAggregate',
+  props<{ section: any }>()
+);
+export const fetchAssignedClasses = createAction(
+  '[ConsoleClassesAndGroupsComponent] fetchAssignedClasses',
+)
+export const fetchAssignedClassesSuccess = createAction(
+  '[ConsoleEffects] fetchAssignedClassesSuccess',
+  props<{ classes: ExtendedClassModel[] }>()
+)
+export const createGroup = createAction(
+  '[ConsoleClassesAndGroupsComponent] createGroup'
+);
+export const createGroupRequest = createAction(
+  '[ConsoleClassesAndGroupsComponent] createGroupRequest'
+)

@@ -2,9 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Rend
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup, fetchAssignedClasses } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectConsoleGroups, selectConsoleSelectedClasses } from '../../ngrx/selectors/console-classes';
+import { selectConsoleGroups, selectConsoleSelectedClasses, selectConsoleAssignedClasses } from '../../ngrx/selectors/console-classes';
 import { GeneratedGroupsModel } from '../../models/generated-groups.model';
 
 
@@ -17,6 +17,7 @@ import { GeneratedGroupsModel } from '../../models/generated-groups.model';
 export class ConsoleClassesAndGroupsComponent implements OnInit {
   isOpen = false;
   classes$: Observable<ExtendedClassModel[]>;
+  assignedClasses$: Observable<ExtendedClassModel[]>;
   classesLoading$ = this.classService.loading$;
   localCopy: ExtendedClassModel[];
   cancelationFallback: ExtendedClassModel[];
@@ -29,9 +30,11 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
   @ViewChild('badges') badges: ElementRef<HTMLDivElement>;
   ngOnInit(): void {
     this.store.dispatch(fetchAllClasses())
+    this.store.dispatch(fetchAssignedClasses())
     this.store.dispatch(fetchGeneratedGroups())
     this.classes$ = this.store.select(selectConsoleSelectedClasses);
     this.classesAndGroups$ = this.store.select(selectConsoleGroups);
+    this.assignedClasses$ = this.store.select(selectConsoleAssignedClasses);
     this.classesAndGroups$.subscribe(groups => {
       console.log(groups);
       this.groupsCopy = JSON.parse(JSON.stringify(groups)) as GeneratedGroupsModel[];

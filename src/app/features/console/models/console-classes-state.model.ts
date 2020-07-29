@@ -8,6 +8,7 @@ import { ISubjectWithTeachers } from 'src/app/shared/models/subject.model';
 export interface ConsoleClassesStateModel {
   classes?: ExtendedClassModel[];
   classesAndGroups?: {
+    assignedClasses?: ExtendedClassModel[];
     groups?: GeneratedGroupsModel[];
     sections?: {
       unalteredAggregate?: AggregatedResult[];
