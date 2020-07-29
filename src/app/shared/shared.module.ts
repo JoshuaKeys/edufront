@@ -77,7 +77,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     SectionDropBoxComponent,
     OptionsComponent,
     SubjectsListComponent,
-    SubjectsBoxComponent
+    SubjectsBoxComponent,
     TimetableContainerComponent,
     SimpleButtonComponent
   ],
@@ -129,11 +129,11 @@ import { OverlayModule } from '@angular/cdk/overlay';
     SectionDropBoxComponent,
     OptionsComponent,
     SubjectsListComponent,
-    SubjectsBoxComponent
+    SubjectsBoxComponent,
     TimetableContainerComponent,
     SimpleButtonComponent
   ],
   entryComponents: [SharedTooltipComponent],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule { }
+export class SharedModule {}

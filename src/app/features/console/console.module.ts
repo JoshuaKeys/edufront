@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConsoleShellComponent } from './containers/console-shell/console-shell.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConsoleRoutingModule } from './console-routing.module';
-import { ConsoleHeaderComponent } from './components/console-header/console-header.component';
 import { ConsoleClassesAndGroupsComponent } from './containers';
 import { StoreModule } from '@ngrx/store';
 import { consoleReducer } from './ngrx/reducers';
@@ -20,16 +18,12 @@ import { DeleteClassesModalComponent } from './components/delete-classes-modal/d
 import { ConsoleSectionEditComponent } from './containers/console-section-edit/console-section-edit.component';
 import { ConsoleSectionViewComponent } from './containers/console-section-view/console-section-view.component';
 import { SectionsDropboxComponent } from './components/sections-dropbox/sections-dropbox.component';
-import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConsoleSectionAsideComponent } from './components/console-section-aside/console-section-aside.component';
-
-
+import { ConsoleComponentsModule } from './components/console-components.module';
 
 @NgModule({
   declarations: [
-    ConsoleShellComponent,
-    ConsoleHeaderComponent,
     ClassesShellComponent,
     ConsoleClassesAndGroupsComponent,
     ConsoleSectionsComponent,
@@ -38,7 +32,6 @@ import { ConsoleSectionAsideComponent } from './components/console-section-aside
     ConsoleSectionEditComponent,
     ConsoleSectionViewComponent,
     SectionsDropboxComponent,
-    SidePanelComponent,
     ConsoleSectionAsideComponent
   ],
   imports: [
@@ -49,10 +42,11 @@ import { ConsoleSectionAsideComponent } from './components/console-section-aside
     ReactiveFormsModule,
     StoreModule.forFeature('console', consoleReducer),
     EffectsModule.forFeature([ConsoleClassesEffects]),
+    ConsoleComponentsModule
   ],
   providers: [
     ConsoleClassesService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
-export class ConsoleModule { }
+export class ConsoleModule {}

@@ -4,7 +4,7 @@ import { AuthenticatedGuard } from './guards/authenticated/authenticated-guard';
 
 const routes: Routes = [
   {
-    path: 'console',
+    path: 'console-calendar',
     loadChildren: () =>
       import('./console/calendar/calendar.module').then(m => m.CalendarModule)
   },
@@ -47,9 +47,8 @@ const routes: Routes = [
   {
     path: 'console',
     canLoad: [AuthenticatedGuard],
-    loadChildren: () => import('./features/console/console.module').then(
-      m => m.ConsoleModule
-    )
+    loadChildren: () =>
+      import('./features/console/console.module').then(m => m.ConsoleModule)
   },
   {
     path: 'school-profile',
@@ -124,4 +123,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

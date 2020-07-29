@@ -9,13 +9,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConsoleCalendarOptionsComponent } from './components/options/options.component';
 import { DeleteTermDialogComponent } from './components/delete-term-dialog/delete-term-dialog.component';
 import { DialogModule } from 'src/app/shared/components/generic-dialog/dialog.module';
+import { ConsoleComponentsModule } from '../components/console-components.module';
+import { TimetableComponent } from './containers/timetable/timetable.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ConsoleSearchComponent,
     ConsoleCalendarOptionsComponent,
-    DeleteTermDialogComponent
+    DeleteTermDialogComponent,
+    TimetableComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +27,8 @@ import { DialogModule } from 'src/app/shared/components/generic-dialog/dialog.mo
     CalendarRoutingModule,
     SharedModule,
     DragDropModule,
-    DialogModule
+    DialogModule,
+    ConsoleComponentsModule
   ],
   entryComponents: [DeleteTermDialogComponent]
 })

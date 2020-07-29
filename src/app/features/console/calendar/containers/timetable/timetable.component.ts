@@ -1,33 +1,32 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {
-  ITimetableSavingModel,
-  IClassSectionPeriodModel,
-  IAcademicYear,
-  TermDetailsDto
-} from 'src/app/core/models/timetable';
-import * as moment from 'moment';
-import { map, filter, take, switchMap } from 'rxjs/operators';
+import { map, switchMap, filter, take } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable, merge } from 'rxjs';
 import { CalendarModel } from 'src/app/features/calender/models/calendar.model';
-import { Router } from '@angular/router';
-import { ClassSectionService } from 'src/app/root-store/class-section.service';
-import { ISectionModel } from 'src/app/shared/models/section.model';
-import { ClassesService } from 'src/app/root-store/classes.service';
-import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
-import { AcademicYearService } from 'src/app/root-store/academicYear.service';
-import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
+import {
+  IAcademicYear,
+  TermDetailsDto,
+  IClassSectionPeriodModel,
+  ITimetableSavingModel
+} from 'src/app/core/models/timetable';
 import { DialogService } from 'src/app/shared/components/generic-dialog/dialog.service';
+import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
+import { ClassesService } from 'src/app/root-store/classes.service';
+import { ClassSectionService } from 'src/app/root-store/class-section.service';
+import { AcademicYearService } from 'src/app/root-store/academicYear.service';
+import * as moment from 'moment';
+import { ISectionModel } from 'src/app/shared/models/section.model';
+import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
 import { DeleteTermDialogComponent } from '../../components/delete-term-dialog/delete-term-dialog.component';
 
 const DEFAULT_START_IME = '08:00';
 
 @Component({
-  selector: 'edu-console-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
+  selector: 'edu-console-timetable',
+  templateUrl: './timetable.component.html',
+  styleUrls: ['./timetable.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutComponent implements OnInit {
+export class TimetableComponent implements OnInit {
   isSkeletonLoading$ = this.timetableFacade.skeletonUI$.pipe(
     map(ui => ui.loading)
   );

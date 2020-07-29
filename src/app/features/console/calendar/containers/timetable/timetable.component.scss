@@ -1,6 +1,7 @@
 :host {
   display: block;
   height: 100vh;
+  width: 100%;
 }
 
 * {
@@ -206,17 +207,40 @@ edu-simple-button {
   align-items: center;
   &:hover {
     .icon-btn {
-      visibility: visible;
+      opacity: 1;
     }
   }
 }
 
 .icon-btn {
-  visibility: hidden;
+  opacity: 0;
   background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
+  outline: none;
+}
+
+.edit-btn {
+  background: url('/assets/icon-edit-grey.svg') 0 0 no-repeat;
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  &:hover {
+    background: url('/assets/icon-edit-blue.svg') 0 0 no-repeat;
+    background-size: cover;
+  }
+}
+
+.delete-btn {
+  background: url('/assets/icon-delete-grey.svg') 0 0 no-repeat;
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  &:hover {
+    background: url('/assets/icon-delete-red.svg') 0 0 no-repeat;
+    background-size: cover;
+  }
 }
 
 .popover-button {

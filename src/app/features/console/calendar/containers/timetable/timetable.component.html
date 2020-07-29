@@ -105,12 +105,14 @@
               >
                 {{ term.termTitle || customTermTitle(term) }}
               </button>
-              <button class="icon-btn" (click)="onEditTerm(term, i, terms)">
-                e
-              </button>
-              <button class="icon-btn" (click)="onRemoveTerm(term, i, terms)">
-                d
-              </button>
+              <button
+                class="icon-btn edit-btn"
+                (click)="onEditTerm(term, i, terms)"
+              ></button>
+              <button
+                class="icon-btn delete-btn"
+                (click)="onRemoveTerm(term, i, terms)"
+              ></button>
             </div>
           </ng-container>
           <div class="last-button">
