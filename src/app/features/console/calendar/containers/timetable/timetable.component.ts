@@ -17,6 +17,8 @@ import * as moment from 'moment';
 import { ISectionModel } from 'src/app/shared/models/section.model';
 import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
 import { DeleteTermDialogComponent } from '../../components/delete-term-dialog/delete-term-dialog.component';
+import { DatepickerOptions } from 'src/app/shared/components/form-components/datepicker3';
+import { FormBuilder } from '@angular/forms';
 
 const DEFAULT_START_IME = '08:00';
 
@@ -181,13 +183,17 @@ export class TimetableComponent implements OnInit {
     })
   );
 
-  optionWithRange = {
-    dateRange: true,
-    inline: false
+  datepickerOption: DatepickerOptions = {
+    isRange: true,
+    inline: false,
+    displayFormat: 'DD-MM-YY'
   };
   showAddTerm = false;
   dateRangeValue = null;
+  dateRangeCtrl = this.fb.control(null);
+  private termToEdit: TermDetailsDto = null;
   constructor(
+    private fb: FormBuilder,
     private dialog: DialogService,
     private timetableFacade: TimetableFacadeService,
     private classService: ClassesService,
@@ -499,7 +505,6 @@ export class TimetableComponent implements OnInit {
   }
 
   onDateRangeChange(data) {
-    console.log(data);
     this.dateRangeValue = data;
   }
 
@@ -507,26 +512,50 @@ export class TimetableComponent implements OnInit {
     console.log('closed');
     this.showAddTerm = false;
     this.dateRangeValue = null;
+    this.dateRangeCtrl.patchValue(null);
   }
 
   onSaveTermDates() {
     console.log('save term');
     const [start, end] = this.dateRangeValue.split(' - ');
-    this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
-      const newTerm = {
-        academicYearId: res.id,
-        priority: 0,
-        termEnd: end,
-        termStart: start,
-        termTitle: null
-      };
-      this.academiYearService.update({
-        ...res,
-        noOfTerm: res.noOfTerm + 1,
-        termDetailsDtos: res.termDetailsDtos.concat(newTerm)
+    if (this.termToEdit) {
+      this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+        const newTerms = res.termDetailsDtos.map(term => {
+          if (term.termId === this.termToEdit.termId) {
+            return {
+              ...this.termToEdit,
+              termEnd: end,
+              termStart: start
+            };
+          }
+          return term;
+        });
+        this.academiYearService.update({
+          ...res,
+          noOfTerm: res.noOfTerm + 1,
+          termDetailsDtos: newTerms
+        });
       });
-    });
+    } else {
+      this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+        const newTerm = {
+          academicYearId: res.id,
+          priority: 0,
+          termEnd: end,
+          termStart: start,
+          termTitle: null
+        };
+        this.academiYearService.update({
+          ...res,
+          noOfTerm: res.noOfTerm + 1,
+          termDetailsDtos: res.termDetailsDtos.concat(newTerm)
+        });
+      });
+    }
 
+    // Resettnig data after save
+    this.dateRangeCtrl.markAsPristine();
+    this.termToEdit = null;
     this.showAddTerm = false;
     this.dateRangeValue = null;
   }
@@ -553,19 +582,27 @@ export class TimetableComponent implements OnInit {
           termToExtendID,
           indexToRemove
         );
-        console.log(termDetailsDtos);
+
         this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
-          this.academiYearService.update({
-            ...res,
-            noOfTerm: termDetailsDtos.length,
-            termDetailsDtos
-          });
+          this.academiYearService
+            .update({
+              ...res,
+              noOfTerm: termDetailsDtos.length,
+              termDetailsDtos
+            })
+            .pipe(take(1))
+            .subscribe(res => {
+              this.selectedTerm$.next('All terms');
+            });
         });
       }
     });
   }
   onEditTerm(term: TermDetailsDto, index: number, terms: TermDetailsDto[]) {
-    console.log(term);
+    this.termToEdit = term;
+    this.dateRangeCtrl.patchValue(`${term.termStart} - ${term.termEnd}`);
+    this.showAddTerm = true;
+    this.dateRangeValue = `${term.termStart} - ${term.termEnd}`;
   }
 
   prepareTermsToSave(

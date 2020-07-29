@@ -11,6 +11,9 @@
         <button
           *ngFor="let academicYear of academicYears$ | async"
           class="popover-button"
+          [ngClass]="{
+            active: (selectedAcademicYear$ | async)?.id === academicYear.id
+          }"
           (click)="onSelectYear(academicYear, popover)"
         >
           {{ getAcademicYearTitle(academicYear) }}
@@ -26,19 +29,14 @@
         (edu-close)="onClose()"
         #popover
       >
-        <edu-datepicker
+        <edu-datepicker3
           *ngIf="showAddTerm"
+          [formControl]="dateRangeCtrl"
           (edu-change)="onDateRangeChange($event)"
-          alignment="center"
-          [edu-datepicker-options]="optionWithRange"
-        >
-          <span class="edu-label">Select date range</span>
-          <div class="edu-suffix" InputAffix>
-            <img src="/assets/date-picker-calender.svg" alt="" srcset="" />
-          </div>
-        </edu-datepicker>
+          [options]="datepickerOption"
+        ></edu-datepicker3>
         <button
-          *ngIf="dateRangeValue"
+          *ngIf="dateRangeCtrl.dirty"
           (click)="onSaveTermDates()"
           class="submit-term-btn"
         >
@@ -101,6 +99,9 @@
             >
               <button
                 class="popover-button"
+                [ngClass]="{
+                  active: (selectedTerm$ | async)?.termId === term.termId
+                }"
                 (click)="onSelectTerm(term, popover)"
               >
                 {{ term.termTitle || customTermTitle(term) }}
