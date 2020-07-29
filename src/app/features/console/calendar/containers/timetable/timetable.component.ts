@@ -182,7 +182,8 @@ export class TimetableComponent implements OnInit {
   );
 
   optionWithRange = {
-    dateRange: true
+    dateRange: true,
+    inline: false
   };
   showAddTerm = false;
   dateRangeValue = null;
