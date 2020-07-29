@@ -1,19 +1,18 @@
-import {
-  createSelector,
-  MemoizedSelector,
-  createFeatureSelector
-} from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { TimetableFeatureState } from './state';
+import { IPeriodSavedData } from 'src/app/core/models/timetable';
 
-const staffsFeature = createFeatureSelector<TimetableFeatureState>('timetable');
+const timetableFeature = createFeatureSelector<TimetableFeatureState>(
+  'timetable'
+);
 
 export const selectUi = createSelector(
-  staffsFeature,
+  timetableFeature,
   timetable => timetable.ui
 );
 
 export const selectTimetableSkeleton = createSelector(
-  staffsFeature,
+  timetableFeature,
   timetable => timetable.timetableSkeleton
 );
 
@@ -23,17 +22,28 @@ export const selectTimetableSkeletonUI = createSelector(
 );
 
 export const selectTeachers = createSelector(
-  staffsFeature,
+  timetableFeature,
   timetable => timetable.teachers
 );
 export const selectSubjects = createSelector(
-  staffsFeature,
+  timetableFeature,
   timetable => timetable.subjects
 );
 
 export const selectSubjectsUI = createSelector(selectUi, ui => ui.subjects);
 
 export const selectTimetableData = createSelector(
-  staffsFeature,
+  timetableFeature,
   timetable => timetable.timetableData
+);
+
+export const selectTimetableAPIData = createSelector(
+  timetableFeature,
+  timetable => timetable.timetableAPIData
+);
+
+export const selectTimetableAPIDataByClass = createSelector(
+  selectTimetableAPIData,
+  (timetableAPIData: IPeriodSavedData[], props) =>
+    timetableAPIData.filter(item => item.classId === props.classId)
 );

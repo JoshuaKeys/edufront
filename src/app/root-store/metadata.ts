@@ -4,7 +4,8 @@ export const appEntityMetadata: EntityMetadataMap = {
   class: {},
   classSection: {},
   teachers: {},
-  subjects: {}
+  subjects: {},
+  academicYear: {}
 };
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
@@ -25,6 +26,10 @@ export const defaultDataServiceConfig: DefaultDataServiceConfig = {
     subjects: {
       entityResourceUrl: '/api/v1/subject',
       collectionResourceUrl: '/api/v1/subject'
+    },
+    academicYear: {
+      entityResourceUrl: '/api/v1/academicYear',
+      collectionResourceUrl: '/api/v1/academicYear'
     }
   },
   timeout: 3000 // request timeout

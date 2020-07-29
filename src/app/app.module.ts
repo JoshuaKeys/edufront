@@ -25,6 +25,8 @@ import {
   ClassSectionService,
   ClassSectionDataService
 } from './root-store/class-section.service';
+import { TimetableStoreModule } from './root-store/timetable-store/timetable-store.module';
+import { AcademicYearDataService } from './root-store/academicYear.service';
 
 export function ConfigLoader(configService: ConfigService) {
   // return () => configService.fetchConfig();
@@ -38,6 +40,7 @@ export function ConfigLoader(configService: ConfigService) {
     CoreModule,
     AuthModule,
     AppRoutingModule,
+    TimetableStoreModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EntityDataModule.forRoot({ entityMetadata: appEntityMetadata }),
@@ -58,8 +61,10 @@ export function ConfigLoader(configService: ConfigService) {
 export class AppModule {
   constructor(
     entityDataService: EntityDataService,
-    sectionsDataService: ClassSectionDataService
+    sectionsDataService: ClassSectionDataService,
+    academicYearDataService: AcademicYearDataService
   ) {
     entityDataService.registerService('classSection', sectionsDataService); // <-- register it
+    entityDataService.registerService('academicYear', academicYearDataService); // <-- register it
   }
 }

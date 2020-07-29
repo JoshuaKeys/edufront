@@ -1,31 +1,32 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { StaffsCommunicatorService } from 'src/app/features/staffs/services/staffs-communication.service';
-import { DialogService } from 'src/app/shared/components/generic-dialog/dialog.service';
-import * as moment from 'moment';
-import { CalendarModel } from '../../component/timetable/data';
-import { ClassesService } from 'src/app/root-store/classes.service';
-import { ClassSectionService } from 'src/app/root-store/class-section.service';
-import { map, filter, take, delay } from 'rxjs/operators';
-import { ISectionModel } from 'src/app/shared/models/section.model';
+import { map, switchMap, filter, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, merge } from 'rxjs';
+import { CalendarModel } from 'src/app/features/calender/models/calendar.model';
 import {
+  IAcademicYear,
+  TermDetailsDto,
   IClassSectionPeriodModel,
   ITimetableSavingModel
 } from 'src/app/core/models/timetable';
-import { Router } from '@angular/router';
-import { SubjectFormDialogComponent } from '../../component/subject-form-dialog/subject-form-dialog.component';
+import { DialogService } from 'src/app/shared/components/generic-dialog/dialog.service';
 import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
+import { ClassesService } from 'src/app/root-store/classes.service';
+import { ClassSectionService } from 'src/app/root-store/class-section.service';
+import { AcademicYearService } from 'src/app/root-store/academicYear.service';
+import * as moment from 'moment';
+import { ISectionModel } from 'src/app/shared/models/section.model';
+import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
+import { DeleteTermDialogComponent } from '../../components/delete-term-dialog/delete-term-dialog.component';
 
 const DEFAULT_START_IME = '08:00';
 
 @Component({
-  selector: 'edu-timetable-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [StaffsCommunicatorService]
+  selector: 'edu-console-timetable',
+  templateUrl: './timetable.component.html',
+  styleUrls: ['./timetable.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutComponent implements OnInit {
+export class TimetableComponent implements OnInit {
   isSkeletonLoading$ = this.timetableFacade.skeletonUI$.pipe(
     map(ui => ui.loading)
   );
@@ -48,7 +49,18 @@ export class LayoutComponent implements OnInit {
     })
   );
 
-  timetableData$ = this.timetableFacade.timetableData$.pipe(delay(100));
+  timetableAPIDataByClass$ = this.selectedClassId$.pipe(
+    switchMap(classId => this.timetableFacade.timetableAPIDataByClass$(classId))
+  );
+
+  timetableData$ = combineLatest([
+    this.timetableFacade.timetableData$,
+    this.timetableAPIDataByClass$
+  ]).pipe(
+    map(([timetableData, timetableAPIDataByClass]) => {
+      return timetableData;
+    })
+  );
 
   canSubmit$ = combineLatest([
     this.timetableFacade.timetableData$,
@@ -136,17 +148,82 @@ export class LayoutComponent implements OnInit {
   WEEKDAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   showWelcomeModal$ = new BehaviorSubject(true);
-  constructor(
 
+  _selectedAcademicYear$: BehaviorSubject<IAcademicYear> = new BehaviorSubject(
+    null
+  );
+
+  selectedTerm$: BehaviorSubject<TermDetailsDto | string> = new BehaviorSubject(
+    'All terms'
+  );
+
+  selectedTermTitle$ = this.selectedTerm$.pipe(
+    map(term => {
+      if (typeof term === 'string') {
+        return term;
+      }
+      if (term.termTitle) {
+        return term.termTitle;
+      }
+      return this.customTermTitle(term);
+    })
+  );
+
+  academicYears$ = this.academiYearService.entities$;
+  selectedAcademicYear$ = merge(
+    this.academicYears$.pipe(map(years => years[0])),
+    this._selectedAcademicYear$.pipe(filter(year => Boolean(year)))
+  );
+  academicYearTerms$ = this.selectedAcademicYear$.pipe(
+    filter(year => Boolean(year)),
+    map(year => {
+      return year.termDetailsDtos;
+    })
+  );
+
+  optionWithRange = {
+    dateRange: true
+  };
+  showAddTerm = false;
+  dateRangeValue = null;
+  constructor(
     private dialog: DialogService,
-    private router: Router,
     private timetableFacade: TimetableFacadeService,
     private classService: ClassesService,
-    private sectionService: ClassSectionService
+    private sectionService: ClassSectionService,
+    private academiYearService: AcademicYearService
   ) {
     this.timetableFacade.resetTimetable();
     this.classService.getAll();
+    this.timetableFacade.getAllPeriodsData();
     this.sectionService.getWithQuery({ pageSize: '200' });
+    this.academiYearService.getWithQuery({ pageSize: '200' });
+  }
+
+  get academicYearTitle() {
+    return this.selectedAcademicYear$.pipe(
+      filter(year => {
+        return Boolean(year);
+      }),
+      map(year => {
+        const title = `${year.acadimicStart.split('-')[0]}`;
+        return title;
+      })
+    );
+  }
+
+  getAcademicYearTitle(year: IAcademicYear) {
+    const title = `${year.acadimicStart.split('-')[0]} - ${
+      year.acadimicEnd.split('-')[0]
+    }`;
+    return title;
+  }
+
+  customTermTitle(term: TermDetailsDto) {
+    const start = moment(term.termStart).format('DD MMM');
+    const end = moment(term.termEnd).format('DD MMM');
+
+    return `${start} - ${end}`;
   }
 
   ngOnInit(): void {
@@ -186,12 +263,7 @@ export class LayoutComponent implements OnInit {
     console.log(subject);
   }
 
-  onCreate(type: 'subject' | 'teacher') {
-    if (type === 'subject') {
-      console.log('add new subject');
-      this.dialog.open(SubjectFormDialogComponent);
-    }
-  }
+  onCreate(type: 'subject' | 'teacher') {}
 
   onSubjSearch(text: string) {
     this.subjectSearch$.next(text);
@@ -328,12 +400,12 @@ export class LayoutComponent implements OnInit {
               const periodRequest =
                 teacher && subject
                   ? {
-                    periodId,
-                    subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
-                    teacherId: (
-                      item.data.find(d => Boolean(d.profileId)) || {}
-                    ).profileId
-                  }
+                      periodId,
+                      subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
+                      teacherId: (
+                        item.data.find(d => Boolean(d.profileId)) || {}
+                      ).profileId
+                    }
                   : null;
               res = {
                 ...res,
@@ -349,12 +421,12 @@ export class LayoutComponent implements OnInit {
               const firstPeriodRequest =
                 teacher && subject
                   ? [
-                    {
-                      periodId,
-                      subjectId: (subject || {}).id,
-                      teacherId: (teacher || {}).profileId
-                    }
-                  ]
+                      {
+                        periodId,
+                        subjectId: (subject || {}).id,
+                        teacherId: (teacher || {}).profileId
+                      }
+                    ]
                   : [];
               res = {
                 ...res,
@@ -390,89 +462,6 @@ export class LayoutComponent implements OnInit {
       });
   }
 
-  // onSaveTimetable() {
-  //   this.timetableFacade.timetableData$
-  //     .pipe(take(1))
-  //     .subscribe(timetableData => {
-  //       const keys = Object.keys(timetableData);
-  //       if (keys.length > 0) {
-  //         let res: {
-  //           [key: string]: IClassSectionPeriodModel;
-  //         } = {};
-  //         keys.forEach(key => {
-  //           const [classId, sectionId, periodId] = key.split('--');
-  //           const item = timetableData[key];
-  //           const existingClass = res[`${classId}`];
-  //           const subject = item.data.find(d => Boolean(d.id));
-  //           const teacher = item.data.find(d => Boolean(d.profileId));
-  //           const periodRequest =
-  //             teacher && subject
-  //               ? {
-  //                   periodId,
-  //                   subjectId: (item.data.find(d => Boolean(d.id)) || {}).id,
-  //                   teacherId: (item.data.find(d => Boolean(d.profileId)) || {})
-  //                     .profileId
-  //                 }
-  //               : null;
-
-  //           if (existingClass) {
-  //             const sectionList = existingClass.sectionList || [];
-  //             let existingSection = sectionList.find(
-  //               list => list.sectionId === sectionId
-  //             );
-  //             let newSection;
-
-  //             if (existingSection) {
-  //               if (periodRequest) {
-  //                 existingSection = {
-  //                   ...existingSection,
-  //                   periodRequestQ: existingSection.periodRequestQ.concat(
-  //                     periodRequest
-  //                   )
-  //                 };
-  //               }
-  //             } else {
-  //               newSection = {
-  //                 periodRequestQ: periodRequest ? [periodRequest] : [],
-  //                 sectionId
-  //               };
-  //             }
-
-  //             res[`${classId}`] = {
-  //               ...existingClass,
-  //               sectionList: newSection
-  //                 ? this.addNewSection(existingClass.sectionList, newSection)
-  //                 : this.replaceSection(
-  //                     existingClass.sectionList,
-  //                     existingSection
-  //                   )
-  //             };
-  //           } else {
-  //             const firstPeriodRequest = periodRequest ? [periodRequest] : [];
-  //             res = {
-  //               ...res,
-  //               [`${classId}`]: {
-  //                 classId,
-  //                 sectionList: [
-  //                   {
-  //                     sectionId,
-  //                     periodRequestQ: firstPeriodRequest
-  //                   }
-  //                 ]
-  //               }
-  //             };
-  //           }
-  //         });
-
-  //         console.log('Data to submit');
-  //         console.log(Object.values(res));
-  //         // Object.values(res).forEach(timetable =>
-  //         //   this.timetableFacade.submitTimetable(timetable)
-  //         // );
-  //       }
-  //     });
-  // }
-
   addNewSection(list: any[], section: any) {
     return list.concat(section);
   }
@@ -489,7 +478,182 @@ export class LayoutComponent implements OnInit {
     this.timetableFacade.getSubjects(this.selectedClassId$.value);
   }
 
-  goToDashboard() {
-    this.router.navigateByUrl('/dashboard');
+  onSelectYear(year: IAcademicYear, popover: PopoverComponent) {
+    this._selectedAcademicYear$.next(year);
+    this.selectedTerm$.next('All terms');
+    popover.togglePopoverState();
+  }
+
+  onSelectTerm(term: TermDetailsDto | string, popover: PopoverComponent) {
+    if (typeof term === 'string') {
+      this.selectedTerm$.next(term);
+    } else {
+      this.selectedTerm$.next(term);
+    }
+    popover.togglePopoverState();
+  }
+
+  onAddTerm() {
+    this.showAddTerm = true;
+  }
+
+  onDateRangeChange(data) {
+    console.log(data);
+    this.dateRangeValue = data;
+  }
+
+  onClose() {
+    console.log('closed');
+    this.showAddTerm = false;
+    this.dateRangeValue = null;
+  }
+
+  onSaveTermDates() {
+    console.log('save term');
+    const [start, end] = this.dateRangeValue.split(' - ');
+    this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+      const newTerm = {
+        academicYearId: res.id,
+        priority: 0,
+        termEnd: end,
+        termStart: start,
+        termTitle: null
+      };
+      this.academiYearService.update({
+        ...res,
+        noOfTerm: res.noOfTerm + 1,
+        termDetailsDtos: res.termDetailsDtos.concat(newTerm)
+      });
+    });
+
+    this.showAddTerm = false;
+    this.dateRangeValue = null;
+  }
+
+  onRemoveTerm(
+    term: TermDetailsDto,
+    indexToRemove: number,
+    terms: TermDetailsDto[]
+  ) {
+    console.log(term);
+    const termsWithoutDeleted = terms.filter((t, i) => i !== indexToRemove);
+    const dialogRef = this.dialog.open(DeleteTermDialogComponent, {
+      data: {
+        term,
+        terms: termsWithoutDeleted,
+        index: indexToRemove
+      }
+    });
+    dialogRef.afterClosed().subscribe((termToExtendID: string | null) => {
+      if (termToExtendID) {
+        const termDetailsDtos = this.prepareTermsToSave(
+          term,
+          terms,
+          termToExtendID,
+          indexToRemove
+        );
+        console.log(termDetailsDtos);
+        this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+          this.academiYearService.update({
+            ...res,
+            noOfTerm: termDetailsDtos.length,
+            termDetailsDtos
+          });
+        });
+      }
+    });
+  }
+  onEditTerm(term: TermDetailsDto, index: number, terms: TermDetailsDto[]) {
+    console.log(term);
+  }
+
+  prepareTermsToSave(
+    term: TermDetailsDto,
+    terms: TermDetailsDto[],
+    termToExtendID: string,
+    indexToRemove: number
+  ) {
+    const termToExtendIndex = terms.findIndex(t => termToExtendID === t.termId);
+    let res: TermDetailsDto[] = [];
+
+    if (indexToRemove === 0) {
+      /**
+       * If removed Term is first element
+       * We remove all terms in between Removed Term and TermToExtend
+       * and set termStart of TermToExtend to be equal to Removed term termStart
+       */
+      return terms.slice(termToExtendIndex).map((t, i) => {
+        if (i === 0) {
+          return {
+            ...t,
+            termStart: term.termStart
+          };
+        }
+        return t;
+      });
+    }
+
+    if (indexToRemove === terms.length - 1) {
+      /**
+       * If removed Term is Last element
+       * We remove all terms in between Removed Term and TermToExtend
+       * and set termEnd of TermToExtend to be equal to Removed term termEnd
+       */
+      res = terms.slice().splice(0, termToExtendIndex + 1);
+      return res.map((t, i) => {
+        if (i === res.length - 1) {
+          return {
+            ...t,
+            termEnd: term.termEnd
+          };
+        }
+        return t;
+      });
+    }
+
+    if (indexToRemove > 0 && indexToRemove < termToExtendIndex) {
+      const termsBeforeRemoved: TermDetailsDto[] = terms
+        .slice()
+        .splice(0, indexToRemove);
+      const termsAfterExtended: TermDetailsDto[] = terms
+        .slice()
+        .splice(termToExtendIndex)
+        .map((t, i) => {
+          if (i === 0) {
+            return {
+              ...t,
+              termStart: term.termStart
+            };
+          }
+          return t;
+        });
+
+      return termsBeforeRemoved.concat(termsAfterExtended);
+    }
+
+    if (indexToRemove > 0 && indexToRemove > termToExtendIndex) {
+      const termsBeforeExtended: TermDetailsDto[] = terms
+        .slice()
+        .splice(0, termToExtendIndex);
+      const termsAfterRemoved: TermDetailsDto[] = terms
+        .slice()
+        .splice(indexToRemove + 1)
+        .map((t, i) => {
+          if (i === 0) {
+            return {
+              ...t,
+              termStart: term.termStart
+            };
+          }
+          return t;
+        });
+
+      const extended = {
+        ...terms[termToExtendIndex],
+        termEnd: term.termEnd
+      };
+
+      return [...termsBeforeExtended, extended].concat(termsAfterRemoved);
+    }
   }
 }

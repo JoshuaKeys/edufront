@@ -1,0 +1,135 @@
+<edu-timetable2
+  [time]="time"
+  [specialPeriods]="specialPeriods"
+  [model]="model"
+  [periodDurationDefined]="periodDurationIsSet"
+  specialPeriodHeight="1"
+>
+  <ng-template
+    #periodTemplate
+    let-key="key"
+    let-value="value"
+    let-startTime="startTime"
+    let-endTime="endTime"
+  >
+    <div *ngIf="!value" class="period"></div>
+    <div
+      *ngIf="value"
+      class="period"
+      cdkDropList
+      [cdkDropListData]="periodsDataRef[value]"
+      [cdkDropListEnterPredicate]="subjAndTeacherOnly.bind(this)"
+      (cdkDropListDropped)="drop($event, value, startTime, endTime, key)"
+    >
+      <div class="period-validator">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+        >
+          <g transform="translate(-14 -18)">
+            <rect
+              width="10"
+              height="10"
+              fill="none"
+              transform="translate(14 18)"
+            />
+            <path
+              stroke="#e6e9f3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2px"
+              d="M10.282,6,5.963,10.188,4,8.284"
+              transform="translate(11.84 15.067)"
+            />
+          </g>
+        </svg>
+      </div>
+      <ng-container *ngFor="let item of periodsDataRef[value]; let i = index">
+        <edu-simple-button
+          *ngIf="item.title"
+          type="stroked"
+          cdkDrag
+          [cdkDragData]="{
+            item: item,
+            type: 'subject',
+            sourcePeriod: [value, startTime, endTime, key]
+          }"
+        >
+          <img
+            [src]="item.subjectIcon || 'assets/pill-blue-icon.svg'"
+            width="24"
+            [alt]="item.title"
+          />
+          {{ item.title }}
+          <span
+            class="remove-placeholder"
+            (click)="
+              onRemoveFromTimetable(
+                periodsDataRef[value],
+                i,
+                value,
+                startTime,
+                endTime,
+                key
+              )
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                fill="white"
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </span>
+        </edu-simple-button>
+        <edu-simple-button
+          *ngIf="!item.title"
+          type="stroked"
+          cdkDrag
+          [cdkDragData]="{
+            item: item,
+            type: 'teacher',
+            sourcePeriod: [value, startTime, endTime, key]
+          }"
+        >
+          {{ item.firstName }} {{ item.lastName }}
+          <span
+            class="remove-placeholder"
+            (click)="
+              onRemoveFromTimetable(
+                periodsDataRef[value],
+                i,
+                value,
+                startTime,
+                endTime,
+                key
+              )
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                fill="white"
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </span>
+        </edu-simple-button>
+      </ng-container>
+    </div>
+  </ng-template>
+</edu-timetable2>
