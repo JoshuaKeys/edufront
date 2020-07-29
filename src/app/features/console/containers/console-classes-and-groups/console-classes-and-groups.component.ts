@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular/core';
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup, fetchAssignedClasses } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup, fetchAssignedClasses, createGroupRequest, sendGroupsWithClasses } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectConsoleGroups, selectConsoleSelectedClasses, selectConsoleAssignedClasses } from '../../ngrx/selectors/console-classes';
+import { selectConsoleGroups, selectConsoleSelectedClasses, selectConsoleAssignedClasses, selectAssignedClassesIntersection } from '../../ngrx/selectors/console-classes';
 import { GeneratedGroupsModel } from '../../models/generated-groups.model';
 
 
@@ -14,12 +14,13 @@ import { GeneratedGroupsModel } from '../../models/generated-groups.model';
   styleUrls: ['./console-classes-and-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConsoleClassesAndGroupsComponent implements OnInit {
+export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
   isOpen = false;
   classes$: Observable<ExtendedClassModel[]>;
   assignedClasses$: Observable<ExtendedClassModel[]>;
   classesLoading$ = this.classService.loading$;
   localCopy: ExtendedClassModel[];
+  classIntersection$: Observable<ExtendedClassModel[]>;
   cancelationFallback: ExtendedClassModel[];
   classesAndGroups$: Observable<GeneratedGroupsModel[]>;
   toBeDeleted: ExtendedClassModel[] = [];
@@ -28,18 +29,22 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
   tempActiveArr = [];
   multiselectPopoverState = false;
   @ViewChild('badges') badges: ElementRef<HTMLDivElement>;
+  ngOnDestroy() {
+    this.store.dispatch(sendGroupsWithClasses())
+  }
   ngOnInit(): void {
     this.store.dispatch(fetchAllClasses())
     this.store.dispatch(fetchAssignedClasses())
     this.store.dispatch(fetchGeneratedGroups())
     this.classes$ = this.store.select(selectConsoleSelectedClasses);
     this.classesAndGroups$ = this.store.select(selectConsoleGroups);
+    this.classIntersection$ = this.store.select(selectAssignedClassesIntersection);
     this.assignedClasses$ = this.store.select(selectConsoleAssignedClasses);
     this.classesAndGroups$.subscribe(groups => {
       console.log(groups);
       this.groupsCopy = JSON.parse(JSON.stringify(groups)) as GeneratedGroupsModel[];
     })
-    this.classes$.subscribe(classes => {
+    this.classIntersection$.subscribe(classes => {
       this.cancelationFallback = JSON.parse(JSON.stringify(classes));
       this.localCopy = JSON.parse(JSON.stringify(classes));
     });
@@ -49,6 +54,7 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
       display: badge
     }));
     console.log(this.badgeMultiSelect);
+    this.classIntersection$.subscribe(x => console.log('hoooooo', x))
   }
 
   badgeArr = new Array(9).fill('');
@@ -94,7 +100,6 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
       return;
     }
     group.draggedOver = false;
-    console.log(droppedClass);
     if (droppedClass.dragged) {
       this.store.dispatch(performDrop({ group, droppedClass }))
     } else {
@@ -131,39 +136,35 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
     const itemB = this.localCopy;
     const deleted = this.classesDeleted(itemA, itemB)
     const added = this.classesAdded(itemA, itemB);
-
-    if (deleted.length) {
-      deleted.forEach(classItem => this.store.dispatch(deleteClass({ class: classItem })))
-    }
-    if (added.length) {
-      this.store.dispatch(addClasses({ classes: added }))
-    }
+    console.log(this.cancelationFallback, this.localCopy)
+    console.log(added, deleted);
+    // if (deleted.length) {
+    deleted.forEach(classItem => this.store.dispatch(deleteClass({ class: classItem })))
+    // }
     this.isOpen = false;
   }
-  classesAdded(itemA: ExtendedClassModel[], itemB: ExtendedClassModel[]) {
+  classesAdded(fallback: ExtendedClassModel[], localCopy: ExtendedClassModel[]) {
     const addedClasses: ExtendedClassModel[] = [];
-    for (let i = 0; i < itemB.length; i++) {
-      let addedIdx = itemB.findIndex(classItem => classItem.id === itemA[i].id && classItem.selected !== itemB[i].selected);
-      if (addedIdx > -1) {
-        addedClasses.push(itemB[addedIdx]);
+    for (let i = 0; i < localCopy.length; i++) {
+      let addedIdx = fallback.findIndex(classItem => classItem.id === localCopy[i].id);
+      if (!fallback[addedIdx].selected && localCopy[i].selected) {
+        addedClasses.push(localCopy[i]);
       }
     }
     return addedClasses;
   }
-  classesDeleted(itemA: ExtendedClassModel[], itemB: ExtendedClassModel[]) {
+  classesDeleted(fallback: ExtendedClassModel[], localCopy: ExtendedClassModel[]) {
     const deletedClasses: ExtendedClassModel[] = [];
-    for (let i = 0; i < itemB.length; i++) {
-      let deletedIdx = itemA.findIndex(classItem => classItem.id === itemB[i].id && classItem.selected !== itemB[i].selected);
-      if (deletedIdx > -1) {
-        deletedClasses.push(itemB[deletedIdx]);
-      } else {
-        // console.log(itemA, itemB[i])
+    for (let i = 0; i < fallback.length; i++) {
+      let deletedIdx = localCopy.findIndex(classItem => classItem.id === fallback[i].id);
+      if (!localCopy[deletedIdx].selected && fallback[i].selected) {
+        deletedClasses.push(fallback[i]);
       }
     }
     return deletedClasses;
   }
   createGroup() {
-    this.store.dispatch(createGroup())
+    this.store.dispatch(createGroupRequest())
   }
   onDeleteGroup() {
 
@@ -174,7 +175,19 @@ export class ConsoleClassesAndGroupsComponent implements OnInit {
   eduTickClick() {
     this.multiselectPopoverState = !this.multiselectPopoverState;
     this.toBeDeleted.sort((classItemA, classItemB) => classItemA.grade - classItemB.grade)
-    this.isOpen = true;
+    // this.isOpen = true;
+
+    const itemA = this.cancelationFallback;
+    const itemB = this.localCopy;
+    const deleted = this.classesDeleted(itemA, itemB)
+    const added = this.classesAdded(itemA, itemB);
+    console.log(deleted, added)
+    if (deleted.length > 0) {
+      this.isOpen = true;
+    }
+    if (added.length > 0) {
+      this.store.dispatch(addClasses({ classes: added }))
+    }
   }
 
   constructor(private classService: ClassesService, private renderer: Renderer2, private store: Store) {

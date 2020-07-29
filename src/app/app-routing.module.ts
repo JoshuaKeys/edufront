@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: 'console-calendar',
     loadChildren: () =>
-      import('./console/calendar/calendar.module').then(m => m.CalendarModule)
+      import('./features/console/calendar/calendar.module').then(m => m.CalendarModule)
   },
   {
     path: 'ui',
@@ -123,4 +123,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

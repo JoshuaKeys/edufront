@@ -32,4 +32,4 @@ import { TimetableComponent } from './containers/timetable/timetable.component';
   ],
   entryComponents: [DeleteTermDialogComponent]
 })
-export class CalendarModule {}
+export class CalendarModule { }

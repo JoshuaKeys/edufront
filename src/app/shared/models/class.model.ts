@@ -5,7 +5,7 @@ export interface ClassModel {
   name: string;
   grade: number;
   classGroupId?: string;
-  id: string;
+  id?: string;
   teachers: TeacherModel[];
   subjects: SubjectModel[];
   selected?: boolean;

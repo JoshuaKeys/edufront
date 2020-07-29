@@ -10,15 +10,15 @@ export interface ConsoleClassesStateModel {
   classesAndGroups?: {
     assignedClasses?: ExtendedClassModel[];
     groups?: GeneratedGroupsModel[];
-    sections?: {
-      unalteredAggregate?: AggregatedResult[];
-      aggregate?: AggregatedResult[];
-      classes?: ExtendedClassModel[];
-      students?: StaffModel[];
-    };
-    subjects?: {
-      classes?: ExtendedClassModel[],
-      subjects?: ISubjectWithTeachers[]
-    }
   };
+  sections?: {
+    unalteredAggregate?: AggregatedResult[];
+    aggregate?: AggregatedResult[];
+    classes?: ExtendedClassModel[];
+    students?: StaffModel[];
+  };
+  subjects?: {
+    classes?: ExtendedClassModel[],
+    subjects?: ISubjectWithTeachers[]
+  }
 }

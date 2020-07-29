@@ -7,6 +7,8 @@ import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
 import { SubjectCreationSuccessModel } from 'src/app/shared/models/subject-creation-success.model';
 import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model';
 import { StudentModel } from 'src/app/shared/models/student.model';
+import { ClassGroupModel } from 'src/app/features/calender/models/class-group.model';
+import { GroupWithClasses } from '../../../models/group-with-classes.model';
 
 export const fetchGeneratedGroups = createAction(
   '[ConsoleClassesAndGroupsComponent] fetchGeneratedGroups'
@@ -54,7 +56,10 @@ export const addClasses = createAction(
   '[ConsoleClassesAndGroupsComponent] addClasses',
   props<{ classes: ExtendedClassModel[] }>()
 );
-
+export const addClassesSuccess = createAction(
+  '[ConsoleClassesEffects] addClassesSuccess',
+  props<{ classes: ExtendedClassModel[] }>()
+)
 export const toggleSelectedState = createAction(
   '[ConsoleSectionEditComponent] toggleSelectedState',
   props<{ classGrade: string }>()
@@ -163,8 +168,17 @@ export const fetchAssignedClassesSuccess = createAction(
   props<{ classes: ExtendedClassModel[] }>()
 )
 export const createGroup = createAction(
-  '[ConsoleClassesAndGroupsComponent] createGroup'
+  '[ConsoleClassesAndGroupsComponent] createGroup',
+  props<{ group: ClassGroupModel }>()
 );
 export const createGroupRequest = createAction(
   '[ConsoleClassesAndGroupsComponent] createGroupRequest'
+);
+export const sendGroupsWithClasses = createAction(
+  '[ConsoleClassesAndGroupsComponent] sendGroupsWithClasses',
+  // props<{ groups: GroupWithClasses[] }>()
+)
+export const sendGroupsWithClassesSuccess = createAction(
+  '[ConsoleClassesEffects] sendGroupsWithClassesSuccess',
+  props<{ groups: ClassGroupModel[] }>()
 )

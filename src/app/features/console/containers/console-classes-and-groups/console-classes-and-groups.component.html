@@ -15,7 +15,7 @@
         class="badge badge--active"
         [ngClass]="{ 'badge--disabled': classItem.dragged }"
         [appDraggable]="{ data: classItem, notDraggable: classItem.dragged }"
-        *ngFor="let classItem of assignedClasses$ | async"
+        *ngFor="let classItem of classes$ | async"
       >
         <span>{{ classItem.grade }}</span>
       </div>

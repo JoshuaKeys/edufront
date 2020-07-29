@@ -15,6 +15,8 @@ import { v4 } from 'uuid'
 import { SectionModel } from 'src/app/shared/models/section.model';
 import { ClassesAndGroupsModel } from 'src/app/features/classes-and-groups/models/classes-and-group.model';
 import { GroupClassMapModel } from 'src/app/features/classes-and-groups/models/group-class-map.model';
+import { ClassGroupModel } from 'src/app/features/calender/models/class-group.model';
+import { GroupWithClasses } from '../../models/group-with-classes.model';
 @Injectable()
 export class ConsoleClassesService {
   getGeneratedGroups(): Observable<GeneratedGroupsModel[]> {
@@ -51,8 +53,8 @@ export class ConsoleClassesService {
       }))
     )
   }
-  createGroup(): Observable<GroupClassMapModel> {
-
+  createGroup(group: ClassGroupModel): Observable<ClassGroupModel> {
+    return this.httpClient.post<ClassGroupModel>('/api/v1/classGroup', group)
   }
   uploadLogo(file: File): Observable<LogoUploadResponseModel> {
     const formData = new FormData();
@@ -92,6 +94,12 @@ export class ConsoleClassesService {
   }
   addNewSection(sectionObj): Observable<SectionModel> {
     return this.httpClient.post<SectionModel>('/api/v1/classSection', sectionObj)
+  }
+  addMultiClasses(classes: ExtendedClassModel[]): Observable<ExtendedClassModel[]> {
+    return this.httpClient.post<ExtendedClassModel[]>('/api/v1/class/createAll', classes);
+  }
+  sendGroupData(groups: GroupWithClasses[]): Observable<ClassGroupModel[]> {
+    return this.httpClient.post<ClassGroupModel[]>('/api/v1/classGroup/groupwithclass', groups)
   }
   constructor(private httpClient: HttpClient) { }
 }

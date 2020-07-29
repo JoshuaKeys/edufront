@@ -1,18 +1,20 @@
 import { createReducer, on } from "@ngrx/store";
 import { GeneratedGroupsModel } from '../../../models/generated-groups.model';
-import { fetchGeneratedGroupsSuccess, fetchAllClassesSuccess, deleteGroupSuccess, performDrop, createGroup, deleteLocalGroup, performInitialDrop, toggleSelectedState, fetchAllStudentsSuccess, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjectsSuccess, fetchAllSubjectsSuccess, toggleConsoleSubjectsClassSelectedState, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, createSubjectFromConsoleSuccess, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentSuccess, removeClassFromGroup, fetchAssignedClassesSuccess } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroupsSuccess, fetchAllClassesSuccess, deleteGroupSuccess, performDrop, createGroup, deleteLocalGroup, performInitialDrop, toggleSelectedState, fetchAllStudentsSuccess, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjectsSuccess, fetchAllSubjectsSuccess, toggleConsoleSubjectsClassSelectedState, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, createSubjectFromConsoleSuccess, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentSuccess, removeClassFromGroup, fetchAssignedClassesSuccess, deleteClassSuccess, addClassesSuccess } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesStateModel } from '../../../models/console-classes-state.model';
 import { fetchSectionDataSuccess } from '../../actions/console-classes/console-sections.actions';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { SectionModel } from 'src/app/shared/models/section.model';
 import { mapAlphaToNumeric } from 'src/app/shared/utilities/utilities';
 import { v4 as uuid44 } from 'uuid';
+import { ClassGroupModel } from 'src/app/features/calender/models/class-group.model';
 
 const initialState: ConsoleClassesStateModel = {
   classesAndGroups: {
-    sections: {},
-    subjects: {}
-  }
+
+  },
+  sections: {},
+  subjects: {}
 }
 
 export const consoleClassesReducer = createReducer(initialState,
@@ -32,6 +34,19 @@ export const consoleClassesReducer = createReducer(initialState,
       }
     }
   }),
+  on(addClassesSuccess, (state, action) => {
+    const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
+
+    const assignedClasses = stateCopy.classesAndGroups.assignedClasses;
+    assignedClasses.push(...action.classes);
+    return {
+      ...state,
+      classesAndGroups: {
+        ...state.classesAndGroups,
+        assignedClasses
+      }
+    }
+  }),
   on(fetchGeneratedGroupsSuccess, (state, action) => {
     const groupsCopy: GeneratedGroupsModel[] = JSON.parse(JSON.stringify(action.generatedGroups));
     let modifiedGroups = groupsCopy.map(group => {
@@ -46,6 +61,7 @@ export const consoleClassesReducer = createReducer(initialState,
     return {
       ...state,
       classesAndGroups: {
+        ...state.classesAndGroups,
         groups: modifiedGroups
       }
     }
@@ -67,6 +83,28 @@ export const consoleClassesReducer = createReducer(initialState,
         groups: updatedClassesAndGroups
       }
     }
+  }),
+  on(deleteClassSuccess, (state, action) => {
+    const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
+    const deletedClassIdx = stateCopy.classesAndGroups.assignedClasses.findIndex(classItem => classItem.id === action.classItem.id);
+    stateCopy.classesAndGroups.assignedClasses.splice(deletedClassIdx, 1);
+
+    let groupDeletedClassIdx;
+    const groupIdx = stateCopy.classesAndGroups.groups.findIndex(groupItem => {
+      groupDeletedClassIdx = groupItem.classes.findIndex(classItem => classItem.grade === action.classItem.grade);
+      console.log(groupDeletedClassIdx, action.classItem.grade, groupItem.classes);
+      if (groupDeletedClassIdx > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    console.log(groupIdx);
+    if (groupIdx > -1) {
+      stateCopy.classesAndGroups.groups[groupIdx].classes.splice(groupDeletedClassIdx, 1);
+    }
+
+    return stateCopy;
   }),
   on(performDrop, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
@@ -116,11 +154,13 @@ export const consoleClassesReducer = createReducer(initialState,
   }),
   on(createGroup, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    const newGroup: GeneratedGroupsModel = {
-      groupName: `Default Group ${stateCopy.classesAndGroups.groups.length + 1}`,
-      classes: []
-    }
-    stateCopy.classesAndGroups.groups.push(newGroup);
+    // const newGroup: GeneratedGroupsModel = {
+    //   groupName: `Default Group ${stateCopy.classesAndGroups.groups.length + 1}`,
+    //   classes: []
+    // }
+    const groupCopy: ClassGroupModel = JSON.parse(JSON.stringify(action.group));
+    groupCopy.classes = [];
+    stateCopy.classesAndGroups.groups.push(groupCopy);
     return stateCopy;
   }),
   on(fetchSectionDataSuccess, (state, action) => {
@@ -129,7 +169,7 @@ export const consoleClassesReducer = createReducer(initialState,
       classesAndGroups: {
         ...state.classesAndGroups,
         sections: {
-          ...state.classesAndGroups.sections,
+          ...state.sections,
           aggregate: action.sections,
           unalteredAggregate: action.sections
         }
@@ -142,7 +182,7 @@ export const consoleClassesReducer = createReducer(initialState,
       classesAndGroups: {
         ...state.classesAndGroups,
         sections: {
-          ...state.classesAndGroups.sections,
+          ...state.sections,
           students: action.students
         }
       }
@@ -154,7 +194,7 @@ export const consoleClassesReducer = createReducer(initialState,
       classesAndGroups: {
         ...state.classesAndGroups,
         sections: {
-          ...state.classesAndGroups.sections,
+          ...state.sections,
           classes: action.classes
         }
       }
@@ -166,7 +206,7 @@ export const consoleClassesReducer = createReducer(initialState,
       classesAndGroups: {
         ...state.classesAndGroups,
         subjects: {
-          ...state.classesAndGroups.subjects,
+          ...state.subjects,
           classes: action.classes
         }
       }
@@ -174,26 +214,26 @@ export const consoleClassesReducer = createReducer(initialState,
   }),
   on(toggleSelectedState, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    const classIdx = stateCopy.classesAndGroups.sections.classes.findIndex(classItem => classItem.name === action.classGrade);
-    let updatedClasses = stateCopy.classesAndGroups.sections.classes.map(classItem => {
+    const classIdx = stateCopy.sections.classes.findIndex(classItem => classItem.name === action.classGrade);
+    let updatedClasses = stateCopy.sections.classes.map(classItem => {
       classItem.selected = false
       return classItem;
     })
-    stateCopy.classesAndGroups.sections.classes = updatedClasses;
-    stateCopy.classesAndGroups.sections.classes[classIdx].selected = !stateCopy.classesAndGroups.sections.classes[classIdx].selected;
+    stateCopy.sections.classes = updatedClasses;
+    stateCopy.sections.classes[classIdx].selected = !stateCopy.sections.classes[classIdx].selected;
     return stateCopy;
   }),
   on(toggleConsoleSubjectsClassSelectedState, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    const classIdx = stateCopy.classesAndGroups.subjects.classes.findIndex(classItem => classItem.id === action.classId);
-    console.log(stateCopy.classesAndGroups.subjects.classes, action)
-    stateCopy.classesAndGroups.subjects.classes[classIdx].selected = !stateCopy.classesAndGroups.subjects.classes[classIdx].selected;
+    const classIdx = stateCopy.subjects.classes.findIndex(classItem => classItem.id === action.classId);
+    console.log(stateCopy.subjects.classes, action)
+    stateCopy.subjects.classes[classIdx].selected = !stateCopy.subjects.classes[classIdx].selected;
     return stateCopy;
   }),
   on(fetchAllSubjectsSuccess, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    stateCopy.classesAndGroups.subjects = {
-      ...stateCopy.classesAndGroups.subjects,
+    stateCopy.subjects = {
+      ...stateCopy.subjects,
       subjects: action.subjects
     }
     return stateCopy;
@@ -201,19 +241,19 @@ export const consoleClassesReducer = createReducer(initialState,
   on(removeFromSelectedConsoleSubjectsClasses, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
     for (let i = 0; i < action.selectedClasses.length; i++) {
-      const classIdx = stateCopy.classesAndGroups.subjects.classes.findIndex(classItem => action.selectedClasses[i].id === classItem.id);
-      const subjectIdx = stateCopy.classesAndGroups.subjects.classes[classIdx].subjects.findIndex(subject => subject.id === action.subject.id);
-      stateCopy.classesAndGroups.subjects.classes[classIdx].subjects.splice(subjectIdx, 1);
+      const classIdx = stateCopy.subjects.classes.findIndex(classItem => action.selectedClasses[i].id === classItem.id);
+      const subjectIdx = stateCopy.subjects.classes[classIdx].subjects.findIndex(subject => subject.id === action.subject.id);
+      stateCopy.subjects.classes[classIdx].subjects.splice(subjectIdx, 1);
     }
     return stateCopy;
   }),
   on(assignToSelectedConsoleSubjectsClasses, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
     for (let i = 0; i < action.selectedClasses.length; i++) {
-      const classIdx = stateCopy.classesAndGroups.subjects.classes.findIndex(classItem => action.selectedClasses[i].id === classItem.id);
-      const alreadyHasSubject = stateCopy.classesAndGroups.subjects.classes[classIdx].subjects.find(subject => subject.id === action.subject.id);
+      const classIdx = stateCopy.subjects.classes.findIndex(classItem => action.selectedClasses[i].id === classItem.id);
+      const alreadyHasSubject = stateCopy.subjects.classes[classIdx].subjects.find(subject => subject.id === action.subject.id);
       if (!alreadyHasSubject) {
-        stateCopy.classesAndGroups.subjects.classes[classIdx].subjects.push(action.subject);
+        stateCopy.subjects.classes[classIdx].subjects.push(action.subject);
       }
 
     }
@@ -221,24 +261,24 @@ export const consoleClassesReducer = createReducer(initialState,
   }),
   on(createSubjectFromConsoleSuccess, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    stateCopy.classesAndGroups.subjects.subjects.push(action.subject)
+    stateCopy.subjects.subjects.push(action.subject)
     return stateCopy;
   }),
   on(performSectionDrop, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
     const newSectionId = action.draggedData.newSectionId;
     const oldSectionId = action.draggedData.student['sectionId'];
-    const aggregateIdx = stateCopy.classesAndGroups.sections.aggregate.findIndex(aggregate => action.draggedData.classId === aggregate.classItem.id);
-    const oldSectionIdx = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === oldSectionId);
-    const studentIdx = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.findIndex(student =>
+    const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.draggedData.classId === aggregate.classItem.id);
+    const oldSectionIdx = stateCopy.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === oldSectionId);
+    const studentIdx = stateCopy.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.findIndex(student =>
       student.id === action.draggedData.student.id
     )
-    stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.splice(studentIdx, 1);
-    const newSectionIdx = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === newSectionId);
+    stateCopy.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.splice(studentIdx, 1);
+    const newSectionIdx = stateCopy.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === newSectionId);
     const student: StaffModel = JSON.parse(JSON.stringify(action.draggedData.student));
-    student.classId = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].classItem.id;
-    student['sectionId'] = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[newSectionIdx].id;
-    stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[newSectionIdx].students.push(student);
+    student.classId = stateCopy.sections.aggregate[aggregateIdx].classItem.id;
+    student['sectionId'] = stateCopy.sections.aggregate[aggregateIdx].sections[newSectionIdx].id;
+    stateCopy.sections.aggregate[aggregateIdx].sections[newSectionIdx].students.push(student);
     return stateCopy;
   }),
   on(removeStudentsFromSection, (state, action) => {
@@ -247,36 +287,36 @@ export const consoleClassesReducer = createReducer(initialState,
     }
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
     const oldSectionId = action.draggedData.student['sectionId'];
-    const aggregateIdx = stateCopy.classesAndGroups.sections.aggregate.findIndex(aggregate => action.draggedData.classId === aggregate.classItem.id);
-    const oldSectionIdx = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === oldSectionId);
-    const studentIdx = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.findIndex(student =>
+    const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.draggedData.classId === aggregate.classItem.id);
+    const oldSectionIdx = stateCopy.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === oldSectionId);
+    const studentIdx = stateCopy.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.findIndex(student =>
       student.id === action.draggedData.student.id
     )
-    console.log(stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students[studentIdx])
-    stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.splice(studentIdx, 1);
+    console.log(stateCopy.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students[studentIdx])
+    stateCopy.sections.aggregate[aggregateIdx].sections[oldSectionIdx].students.splice(studentIdx, 1);
     return stateCopy;
   }),
   on(addStudentToConsoleSection, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    const aggregateIdx = stateCopy.classesAndGroups.sections.aggregate.findIndex(aggregate => action.draggedData.student.classId == aggregate.classItem.id);
+    const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.draggedData.student.classId == aggregate.classItem.id);
     const newSectionId = action.draggedData.newSectionId;
-    const newSectionIdx = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === newSectionId);
+    const newSectionIdx = stateCopy.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === newSectionId);
     const student: StaffModel = JSON.parse(JSON.stringify(action.draggedData.student));
-    student['sectionId'] = stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[newSectionIdx].id;
-    stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections[newSectionIdx].students.push(student);
+    student['sectionId'] = stateCopy.sections.aggregate[aggregateIdx].sections[newSectionIdx].id;
+    stateCopy.sections.aggregate[aggregateIdx].sections[newSectionIdx].students.push(student);
     return stateCopy;
   }),
   on(addNewSectionToAggregate, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    const aggregateIdx = stateCopy.classesAndGroups.sections.aggregate.findIndex(aggregate => action.section.classId === aggregate.classItem.id);
+    const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.section.classId === aggregate.classItem.id);
     // const sectionName = mapAlphaToNumeric()[stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.length + 1].toUpperCase();
     // const id = uuid44();
-    stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.push({ ...action.section })
+    stateCopy.sections.aggregate[aggregateIdx].sections.push({ ...action.section })
     return stateCopy;
   }),
   on(createConsoleStudentSuccess, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
-    const aggregateIdx = stateCopy.classesAndGroups.sections.aggregate.findIndex(aggregate => action.student.profileDto.classId === aggregate.classItem.id)
+    const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.student.profileDto.classId === aggregate.classItem.id)
     const newStudent: StaffModel = {
       classId: action.student.profileDto.classId,
       contexts: [
@@ -295,7 +335,7 @@ export const consoleClassesReducer = createReducer(initialState,
       roles: null,
       rollNumber: action.student.profileDto.rollNumber
     }
-    stateCopy.classesAndGroups.sections.students.push(newStudent as StaffModel);
+    stateCopy.sections.students.push(newStudent as StaffModel);
     return stateCopy;
   })
 );

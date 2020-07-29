@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess, createConsoleStudentRequest, createConsoleStudentSuccess, performSectionDrop, addStudentToConsoleSection, removeStudentsFromSection, addNewSectionToAggregate, fetchAssignedClasses, fetchAssignedClassesSuccess, addNewSectionToAggregateRequest } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchGeneratedGroupsSuccess, fetchAllClasses, fetchAllClassesSuccess, deleteGroup, deleteGroupSuccess, deleteClass, deleteClassSuccess, fetchAllStudents, fetchAllStudentsSuccess, fetchAllClassesForSections, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjects, fetchAllClassesForSubjectsSuccess, fetchAllSubjects, fetchAllSubjectsSuccess, fetchAllClassesWithSubjects, removeFromSelectedConsoleSubjectsClassesRequest, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClassesRequest, createSubjectRequestFromConsole, createSubjectFromConsoleSuccess, createConsoleStudentRequest, createConsoleStudentSuccess, performSectionDrop, addStudentToConsoleSection, removeStudentsFromSection, addNewSectionToAggregate, fetchAssignedClasses, fetchAssignedClassesSuccess, addNewSectionToAggregateRequest, createGroupRequest, createGroup, addClasses, addClassesSuccess, sendGroupsWithClasses, sendGroupsWithClassesSuccess } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesService } from '../../../services/console-classes/console-classes.service';
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { ConsoleClassesStateModel } from '../../../models/console-classes-state.model';
-import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses, selectAggregatedSectionsData, selectSelectedClassForSections } from '../../selectors/console-classes';
+import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses, selectAggregatedSectionsData, selectSelectedClassForSections, selectConsoleGroups } from '../../selectors/console-classes';
 import { of, forkJoin } from 'rxjs';
 import { aggregateSectionData } from '../../../utilities';
 import { fetchSectionData, aggregateSectionDataRequest, fetchSectionDataSuccess, aggregateSectionStudentsDataRequest } from '../../actions/console-classes/console-sections.actions';
@@ -13,6 +13,8 @@ import { StudentModel } from 'src/app/shared/models/student.model';
 import { v4 } from 'uuid';
 import { mapAlphaToNumeric } from 'src/app/shared/utilities/utilities';
 import { SectionModel } from 'src/app/shared/models/section.model';
+import { ClassGroupModel } from 'src/app/features/calender/models/class-group.model';
+import { GroupWithClasses } from '../../../models/group-with-classes.model';
 @Injectable()
 export class ConsoleClassesEffects {
   fetchAllClasses$ = createEffect(() => this.actions$.pipe(
@@ -93,6 +95,19 @@ export class ConsoleClassesEffects {
       return this.consoleClassesService.getAssignedClasses().pipe(
         map(classes => fetchAllClassesForSectionsSuccess({ classes }))
       );
+    })
+  ));
+  createClassGroupRequest$ = createEffect(() => this.actions$.pipe(
+    ofType(createGroupRequest),
+    withLatestFrom(this.store.select(selectConsoleGroups)),
+    mergeMap(([action, groups]) => {
+      const groupName = `Default Group ${groups.length + 1}`;
+      const groupObj: ClassGroupModel = {
+        groupName
+      }
+      return this.consoleClassesService.createGroup(groupObj).pipe(
+        map(group => createGroup({ group }))
+      )
     })
   ))
   addNewSectionToAggregate$ = createEffect(() => this.actions$.pipe(
@@ -191,6 +206,12 @@ export class ConsoleClassesEffects {
       )
     })
   ))
+  addClasses$ = createEffect(() => this.actions$.pipe(
+    ofType(addClasses),
+    mergeMap(action => this.consoleClassesService.addMultiClasses(action.classes).pipe(
+      map(classes => addClassesSuccess({ classes }))
+    ))
+  ))
   performSectionDrop$ = createEffect(() => this.actions$.pipe(
     ofType(performSectionDrop, addStudentToConsoleSection),
     mergeMap(action => {
@@ -206,6 +227,23 @@ export class ConsoleClassesEffects {
       return this.consoleClassesService.updateSectionData(sectionId, action.draggedData.student.id)
     })
   ), { dispatch: false })
+  sendGroupsWithClasses$ = createEffect(() => this.actions$.pipe(
+    ofType(sendGroupsWithClasses),
+    withLatestFrom(this.store.select(selectConsoleGroups)),
+    mergeMap(([action, groups]) => {
+      const groupsCopy = JSON.parse(JSON.stringify(groups));
+      const groupData: GroupWithClasses[] = groupsCopy.map(group => {
+        const classes = group.classes.map(classItem => classItem.id);
+        delete group.classes;
+        group.classIds = classes;
+        return group;
+      })
+
+      return this.consoleClassesService.sendGroupData(groupData).pipe(
+        map(groups => sendGroupsWithClassesSuccess({ groups }))
+      );
+    })
+  ))
   processguardianDetailsDto(student: StudentModel) {
     let studentCopy: StudentModel = {
       ...student,
