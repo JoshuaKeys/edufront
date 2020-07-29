@@ -16,6 +16,7 @@ import { ImgUploadComponent } from './img-upload/img-upload.component';
 import { ValidatorModule } from './validator/validator.module';
 import { datePickerModule } from './datepicker/datepicker.module';
 import { Datepicker2Module } from './datepicker2/datepicker2.module';
+import { Datepicker3Module } from './datepicker3/datepicker3.module';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { PhonePrefixComponent } from './phone-prefix/phone-prefix.component';
 import { PopoverModule } from './popover/popover.module';
@@ -44,6 +45,7 @@ let customModules = [
   ValidatorModule,
   datePickerModule,
   Datepicker2Module,
+  Datepicker3Module,
   PopoverModule,
   SelectModuleV2
 ];
