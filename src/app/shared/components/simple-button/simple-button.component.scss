@@ -1,0 +1,40 @@
+:host {
+  display: inline-block;
+  max-width: 100%;
+  font-family: Raleway;
+
+  ::ng-deep img {
+    margin-left: -10px;
+    vertical-align: middle;
+  }
+}
+button {
+  font-size: 12px;
+  font-family: Raleway;
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  min-width: 85px;
+  cursor: pointer;
+  padding: 6px 15px;
+  border-radius: 100px;
+  background: #fff;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:disabled {
+    background-color: #c7ccdb !important;
+    border-color: #c7ccdb !important;
+  }
+  &:focus {
+    outline: none;
+  }
+  &.stroked:not(.hover) {
+    background: #fff !important;
+  }
+  &.flat {
+    color: #fff !important;
+    font-weight: bold;
+  }
+}

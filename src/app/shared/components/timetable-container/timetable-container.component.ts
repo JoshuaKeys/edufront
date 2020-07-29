@@ -4,11 +4,13 @@ import {
   ChangeDetectionStrategy,
   Input,
   Renderer2,
-  ChangeDetectorRef,
   ViewChildren,
   QueryList,
   ElementRef,
-  ComponentRef
+  ComponentRef,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   CalendarModel,
@@ -21,11 +23,9 @@ import {
   CdkDrag,
   CdkDropList,
   CdkDragDrop,
-  moveItemInArray,
   transferArrayItem,
   copyArrayItem
 } from '@angular/cdk/drag-drop';
-import { take, delay } from 'rxjs/operators';
 import {
   Overlay,
   OverlayPositionBuilder,
@@ -33,15 +33,14 @@ import {
 } from '@angular/cdk/overlay';
 import { SharedTooltipComponent } from 'src/app/shared/components/tooltip/tooltip.component';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
 
 @Component({
-  selector: 'edu-custom-timetable',
-  templateUrl: './timetable.component.html',
-  styleUrls: ['./timetable.component.scss'],
+  selector: 'edu-custom-timetable-container',
+  templateUrl: './timetable-container.component.html',
+  styleUrls: ['./timetable-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimetableComponent implements OnInit {
+export class TimetableContainerComponent implements OnInit {
   periodDurationDefined = false;
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
   specialPeriodIDarr = [];
@@ -50,7 +49,27 @@ export class TimetableComponent implements OnInit {
   time = [];
   specialPeriods: any = [];
   model: any = {};
-  private timetableData;
+
+  // Timetable data, usually comes from Store
+  @Input()
+  get timetableData() {
+    return this._timetableData;
+  }
+  set timetableData(data: any) {
+    if (!data) {
+      return;
+    }
+    this._timetableData = { ...data };
+
+    const dataKeysFromStore = Object.keys(data);
+    dataKeysFromStore.forEach(key => {
+      const d = data[key].data;
+      this.periodsDataRef[key] = [...d];
+    });
+    // this.cdr.markForCheck();
+  }
+  private _timetableData;
+
   @ViewChildren(CdkDropList) droplists: QueryList<CdkDropList>;
   @Input() periodsDataRef: any;
   @Input() selectedClass: string;
@@ -58,6 +77,7 @@ export class TimetableComponent implements OnInit {
     // Update periodsDataRef with data from Store
     this.updateDataRefFromStore();
   }
+  @Output() updateTimetableData = new EventEmitter();
   // tslint:disable-next-line: no-input-rename
   @Input('edu-title') titleText = '';
   @Input('edu-value') set elValue(val: CalendarModel[]) {
@@ -79,15 +99,16 @@ export class TimetableComponent implements OnInit {
     // this.logStuff();
   }
 
+  localData = {};
+
   days = [];
   periodDurationIsSet = false;
   private overlayRef: OverlayRef;
   constructor(
     private render: Renderer2,
-    private timetableFacade: TimetableFacadeService,
-    private cdr: ChangeDetectorRef,
     private overlay: Overlay,
-    private overlayPositionBuilder: OverlayPositionBuilder
+    private overlayPositionBuilder: OverlayPositionBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -97,17 +118,17 @@ export class TimetableComponent implements OnInit {
 
   updateDataRefFromStore() {
     // Update periodsDataRef with data from Store
-    this.timetableFacade.timetableData$
-      .pipe(delay(100), take(1))
-      .subscribe(data => {
-        this.timetableData = data;
-        const dataKeysFromStore = Object.keys(data);
-        dataKeysFromStore.forEach(key => {
-          const d = data[key].data;
-          this.periodsDataRef[key] = [...d];
-        });
-        this.cdr.markForCheck();
-      });
+    // this.timetableFacade.timetableData$
+    //   .pipe(delay(100), take(1))
+    //   .subscribe(data => {
+    //     this.timetableData = data;
+    //     const dataKeysFromStore = Object.keys(data);
+    //     dataKeysFromStore.forEach(key => {
+    //       const d = data[key].data;
+    //       this.periodsDataRef[key] = [...d];
+    //     });
+    //     this.cdr.markForCheck();
+    //   });
   }
 
   removeDaysWithEmptyPeriod(val: CalendarModel[]) {
@@ -608,7 +629,7 @@ export class TimetableComponent implements OnInit {
       periodData
     );
 
-    this.timetableFacade.updateTimetableData(updatePeriodData);
+    this.updateTimetableData.emit(updatePeriodData);
 
     if (event.item.data.sourcePeriod) {
       const updatePreviousPeriodData = this.getUpdatePeriodData(
@@ -616,7 +637,7 @@ export class TimetableComponent implements OnInit {
         event.item.data.sourcePeriod
       );
 
-      this.timetableFacade.updateTimetableData(updatePreviousPeriodData);
+      this.updateTimetableData.emit(updatePreviousPeriodData);
     }
 
     this.updateDataRefFromStore();
@@ -717,7 +738,7 @@ export class TimetableComponent implements OnInit {
     items.splice(index, 1);
     const updatePeriodData = this.getUpdatePeriodData(items, periodData);
 
-    this.timetableFacade.updateTimetableData(updatePeriodData);
+    this.updateTimetableData.emit(updatePeriodData);
     this.droplists.forEach(droplist => {
       this.render.removeClass(droplist.element.nativeElement, `has-teacher`);
       this.render.removeClass(droplist.element.nativeElement, `has-subject`);

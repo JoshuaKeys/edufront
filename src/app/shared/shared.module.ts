@@ -41,6 +41,10 @@ import { SectionDropBoxComponent } from './components/section-drop-box/section-d
 import { OptionsComponent } from './components/options/options.component';
 import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
 import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.component';
+import { TimetableContainerComponent } from './components/timetable-container/timetable-container.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SimpleButtonComponent } from './components/simple-button/simple-button.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -73,7 +77,9 @@ import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.com
     SectionDropBoxComponent,
     OptionsComponent,
     SubjectsListComponent,
-    SubjectsBoxComponent
+    SubjectsBoxComponent,
+    TimetableContainerComponent,
+    SimpleButtonComponent
   ],
   imports: [
     ImageSliderModule,
@@ -85,7 +91,9 @@ import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.com
     SelectModule,
     TimetableModule,
     TimetableModule2,
-    RouterModule
+    DragDropModule,
+    RouterModule,
+    OverlayModule
   ],
   exports: [
     ImageSliderModule,
@@ -121,9 +129,11 @@ import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.com
     SectionDropBoxComponent,
     OptionsComponent,
     SubjectsListComponent,
-    SubjectsBoxComponent
+    SubjectsBoxComponent,
+    TimetableContainerComponent,
+    SimpleButtonComponent
   ],
   entryComponents: [SharedTooltipComponent],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule { }
+export class SharedModule {}

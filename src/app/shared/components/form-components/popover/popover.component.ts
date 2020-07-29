@@ -127,10 +127,12 @@ export class PopoverComponent
         this.el.nativeElement.classList,
         this.el.nativeElement
       );
+      this.renderer.removeClass(this.el.nativeElement.parentElement, 'opened');
       this.onClose.emit();
       this.closeEvent.emit();
     } else {
       this.renderer.addClass(this.el.nativeElement, 'active');
+      this.renderer.addClass(this.el.nativeElement.parentElement, 'opened');
       console.log(
         'ACTIVE',
         this.el.nativeElement.classList,

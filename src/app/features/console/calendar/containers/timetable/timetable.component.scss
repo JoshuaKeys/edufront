@@ -1,0 +1,274 @@
+:host {
+  display: block;
+  height: 100vh;
+  width: 100%;
+}
+
+* {
+  transition: none;
+}
+
+.layout-container,
+.right-col,
+.left-col {
+  height: 100%;
+}
+
+.layout-container {
+  &::after {
+    clear: both;
+    display: table;
+    content: '';
+  }
+}
+
+.right-col {
+  float: right;
+  width: 240px;
+  border-left: 1px solid #e6e9f3;
+}
+.left-col {
+  float: left;
+  width: 114px;
+  border-right: 1px solid #e6e9f3;
+}
+
+.timetable-container {
+  overflow: auto;
+  padding: 0 25px;
+  height: 100%;
+  padding-bottom: 80px;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.5;
+}
+.cdk-drag-preview {
+  box-sizing: border-box;
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.empty-timetable {
+  min-height: 400px;
+  width: 100%;
+  padding-top: 100px;
+  text-align: center;
+}
+
+.timetable__classes {
+  padding-top: 17px;
+}
+
+.selected-class-sections {
+  padding-top: 7px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #e6e9f3;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-family: Roboto;
+  color: #ffffff;
+
+  .class-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    background: #69a9f2;
+  }
+}
+
+.section-list {
+  padding-left: 14px;
+}
+
+.section-button {
+  cursor: pointer;
+  display: block;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 30px;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  margin-bottom: 10px;
+  border: 2px solid #e6e9f3;
+  color: #c7ccdb;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:focus {
+    outline: none;
+  }
+  &.active {
+    color: #ffffff;
+    background: #69a9f2;
+    border: 2px solid #69a9f2;
+    box-shadow: none;
+  }
+}
+
+.empty-timetable {
+  min-height: 400px;
+  width: 100%;
+  padding-top: 100px;
+  text-align: center;
+}
+
+edu-console-calendar-search {
+  &:first-child {
+    margin-bottom: 100px;
+  }
+}
+
+edu-shared-staff-chip {
+  display: inline-block;
+  max-width: 100%;
+}
+
+edu-simple-button {
+  margin: 5px;
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: rgba(#fff, 0.5);
+  text-align: center;
+  padding-top: 100px;
+}
+
+.calendar-top-bar {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e9f3;
+  & > div {
+    display: flex;
+  }
+}
+
+.academic-year,
+.academic-year-terms {
+  position: relative;
+  padding: 2px 8px;
+  color: #212121;
+  border: 1px solid transparent;
+  font: 500 20px/1 Quicksand;
+  cursor: pointer;
+  &:hover,
+  &.active,
+  &.opened {
+    background: #f8f9fa;
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+  }
+  &.opened,
+  &.active {
+    color: #69a9f2;
+  }
+}
+
+.submit-term-btn {
+  outline: none;
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 50%;
+  transform: translate(50%, 50%);
+  cursor: pointer;
+  svg {
+    width: 44px;
+    height: 44px;
+    vertical-align: top;
+  }
+}
+
+.terms-wrapper {
+  display: flex;
+  align-items: center;
+  &:hover {
+    .icon-btn {
+      opacity: 1;
+    }
+  }
+}
+
+.icon-btn {
+  opacity: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  outline: none;
+}
+
+.edit-btn {
+  background: url('/assets/icon-edit-grey.svg') 0 0 no-repeat;
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  &:hover {
+    background: url('/assets/icon-edit-blue.svg') 0 0 no-repeat;
+    background-size: cover;
+  }
+}
+
+.delete-btn {
+  background: url('/assets/icon-delete-grey.svg') 0 0 no-repeat;
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  &:hover {
+    background: url('/assets/icon-delete-red.svg') 0 0 no-repeat;
+    background-size: cover;
+  }
+}
+
+.popover-button {
+  background: none;
+  outline: none;
+  display: block;
+  min-width: 100px;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: #212121;
+  font: normal 14px/40px Raleway;
+  &:hover {
+    color: #69a9f2;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.last-button {
+  margin: 0 -16px;
+  padding: 0 16px;
+  border-top: 1px solid #e6e9f3;
+  padding-top: 16px;
+}

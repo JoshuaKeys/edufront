@@ -2,7 +2,8 @@ import { createAction, props } from '@ngrx/store';
 import {
   TimetableSkeleton,
   IClassSectionPeriodModel,
-  ITimetableSavingModel
+  ITimetableSavingModel,
+  IPeriodSavedData
 } from 'src/app/core/models/timetable';
 import { GetClassesResponseModel } from 'src/app/shared/models/get-classes-response.model';
 import {
@@ -10,7 +11,6 @@ import {
   ISubjectWithTeachers,
   ITeacher
 } from 'src/app/shared/models/subject.model';
-import { GetStaffResponseModel } from '../../staffs/models/get-staff-response.model';
 
 export enum ActionTypes {
   INIT_TIMETABLE = '[TIMETABLE] INIT TIMETABLE',
@@ -35,10 +35,16 @@ export enum ActionTypes {
   GET_TEACHERS_FAILURE = '[TIMETABLE] Get teachers failure',
 
   UPDATE_TIMETABLE_PERIOD = '[TIMETABLE] Update timetable period',
+  UPDATE_TIMETABLE_API_DATA_WITH_SUBJECTS_TEACHERS = '[TIMETABLE] Update timetable API data with subjects and teachers',
+  UPDATE_TIMETABLE_API_DATA_WITH_SUBJECTS_TEACHERS_SUCCESS = '[TIMETABLE] Update timetable API data with subjects and teachers success',
 
   SUBMIT_TIMETABLE = '[TIMETABLE] Submit timetable',
   SUBMIT_TIMETABLE_SUCCESS = '[TIMETABLE] Submit timetable success',
-  SUBMIT_TIMETABLE_FAILURE = '[TIMETABLE] Submit timetable failure'
+  SUBMIT_TIMETABLE_FAILURE = '[TIMETABLE] Submit timetable failure',
+
+  GET_TIMETABLE_PERIODS_DATA = '[TIMETABLE] Get Timetable periods data',
+  GET_TIMETABLE_PERIODS_DATA_SUCCESS = '[TIMETABLE] Get Timetable periods data success',
+  GET_TIMETABLE_PERIODS_DATA_FAILURE = '[TIMETABLE] Get Timetable periods data failure'
 }
 
 export const initTimetableAction = createAction(ActionTypes.INIT_TIMETABLE);
@@ -112,6 +118,14 @@ export const updateTimetablePeriodAction = createAction(
   }>()
 );
 
+export const updateTimetableAPIDataWithSubjectsTeachersAction = createAction(
+  ActionTypes.UPDATE_TIMETABLE_API_DATA_WITH_SUBJECTS_TEACHERS
+);
+export const updateTimetableAPIDataWithSubjectsTeachersSuccessAction = createAction(
+  ActionTypes.UPDATE_TIMETABLE_API_DATA_WITH_SUBJECTS_TEACHERS_SUCCESS,
+  props<any>()
+);
+
 export const submitTimetableAction = createAction(
   ActionTypes.SUBMIT_TIMETABLE,
   props<{ timetable: ITimetableSavingModel[] }>()
@@ -122,5 +136,17 @@ export const submitTimetableSuccessAction = createAction(
 );
 export const submitTimetableFailureAction = createAction(
   ActionTypes.SUBMIT_TIMETABLE_FAILURE,
+  props<{ error: any }>()
+);
+
+export const getTimetableDataAction = createAction(
+  ActionTypes.GET_TIMETABLE_PERIODS_DATA
+);
+export const getTimetableDataSuccessAction = createAction(
+  ActionTypes.GET_TIMETABLE_PERIODS_DATA_SUCCESS,
+  props<{ data: IPeriodSavedData[] }>()
+);
+export const getTimetableDataFailureAction = createAction(
+  ActionTypes.GET_TIMETABLE_PERIODS_DATA_FAILURE,
   props<{ error: any }>()
 );

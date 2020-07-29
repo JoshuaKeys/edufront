@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { TimetableFacadeService } from '../../services/timetable-facade.service';
+import { TimetableFacadeService } from 'src/app/services/timetable/timetable-facade.service';
 import { CreateSubjModel } from 'src/app/shared/models/create-subject.model';
 import { DialogRef } from 'src/app/shared/components/generic-dialog/dialog-ref';
 import { take } from 'rxjs/operators';

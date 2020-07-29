@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { TimetableFeatureState } from './state';
-import { map, switchMap, catchError, flatMap } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  catchError,
+  flatMap,
+  withLatestFrom
+} from 'rxjs/operators';
 import {
   getDayPlannerAction,
   getDayPlannerSuccessAction,
@@ -13,11 +19,22 @@ import {
   getTeachersSuccessAction,
   submitTimetableAction,
   submitTimetableSuccessAction,
-  submitTimetableFailureAction
+  submitTimetableFailureAction,
+  getTimetableDataAction,
+  getTimetableDataSuccessAction,
+  getTimetableDataFailureAction,
+  updateTimetablePeriodAction,
+  updateTimetableAPIDataWithSubjectsTeachersSuccessAction,
+  updateTimetableAPIDataWithSubjectsTeachersAction
 } from './actions';
-import { of } from 'rxjs';
-import { TimetableService } from '../services/timetable.service';
+import { of, combineLatest } from 'rxjs';
+import { TimetableService } from 'src/app/services/timetable/timetable.service';
 import { ITeacher } from 'src/app/shared/models/subject.model';
+import {
+  selectTeachers,
+  selectSubjects,
+  selectTimetableAPIData
+} from './selectors';
 
 @Injectable()
 export class TimetableEffects {
@@ -76,7 +93,8 @@ export class TimetableEffects {
             }));
             return [
               getSubjectsSuccessAction({ subjects: subjectsWithTeachers }),
-              getTeachersSuccessAction({ teachers: teachers as ITeacher[] })
+              getTeachersSuccessAction({ teachers: teachers as ITeacher[] }),
+              updateTimetableAPIDataWithSubjectsTeachersAction()
             ];
           }),
           catchError(({ error }) =>
@@ -91,6 +109,36 @@ export class TimetableEffects {
     )
   );
 
+  updateTimetableAPIDataEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTimetableAPIDataWithSubjectsTeachersAction),
+      switchMap(() => {
+        return combineLatest([
+          this.store.pipe(select(selectTimetableAPIData)),
+          this.store.pipe(select(selectSubjects)),
+          this.store.pipe(select(selectTeachers))
+        ]);
+      }),
+      map(([apiData, subjects, teachers]) => {
+        const res = apiData.reduce((acc, item) => {
+          const teacher = teachers.find(t => t.profileId === item.teacherId);
+          const subj = subjects.find(s => s.id === item.subjectId);
+          return {
+            ...acc,
+            [`${item.classId}--${item.sectionId}--${item.periodId}`]: {
+              periodId: item.periodId,
+              period: {
+                periodId: item.periodId
+              },
+              data: [subj, teacher]
+            }
+          };
+        }, {});
+        return updateTimetableAPIDataWithSubjectsTeachersSuccessAction(res);
+      })
+    )
+  );
+
   submitTimetableEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(submitTimetableAction),
@@ -98,6 +146,20 @@ export class TimetableEffects {
         this.timetableService.submitTimetable(action.timetable).pipe(
           map(timetable => submitTimetableSuccessAction({ timetable })),
           catchError(error => of(submitTimetableFailureAction({ error })))
+        )
+      )
+    )
+  );
+
+  getTimetableDataEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getTimetableDataAction),
+      switchMap(() =>
+        this.timetableService.getAllPeriodsData().pipe(
+          flatMap(data => {
+            return [getTimetableDataSuccessAction({ data })];
+          }),
+          catchError(error => of(getTimetableDataFailureAction({ error })))
         )
       )
     )

@@ -78,7 +78,7 @@
               <ng-container
                 *ngIf="periodsList$ | async as periodsList; else emptyTable"
               >
-                <edu-custom-timetable
+                <edu-custom-timetable-container
                   *ngIf="
                     !(refreshTimetable$ | async) &&
                     (selectedSectionId$ | async) &&
@@ -86,12 +86,14 @@
                     periodsList.length > 0
                   "
                   [periodsDataRef]="periodsData"
+                  [timetableData]="timetableData$ | async"
                   [selectedClass]="selectedClassId$ | async"
                   [selectedSection]="selectedSectionId$ | async"
                   [edu-title]="'class'"
                   [edu-value]="periodsList$ | async"
+                  (updateTimetableData)="onTimetableDataUpdate($event)"
                 >
-                </edu-custom-timetable>
+                </edu-custom-timetable-container>
                 <div *ngIf="!(selectedSectionId$ | async)">
                   Please select a Class and a Section
                 </div>
