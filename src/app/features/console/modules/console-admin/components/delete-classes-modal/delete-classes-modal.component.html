@@ -1,0 +1,24 @@
+<div class="delete-classes-modal">
+  <div class="delete-classes-modal__backdrop"></div>
+  <div class="delete-classes-modal__body">
+    <div class="delete-popover__text">
+      Are you sure you want to delete classes {{ getText() }}?
+    </div>
+    <div class="delete-popover__buttons">
+      <button
+        class="delete-popover__button delete-popover__button--cancel"
+        ButtonType="basic"
+        (click)="cancel()"
+      >
+        cancel
+      </button>
+      <button
+        class="delete-popover__button delete-popover__button--delete"
+        ButtonType="outline"
+        (click)="delete()"
+      >
+        delete
+      </button>
+    </div>
+  </div>
+</div>

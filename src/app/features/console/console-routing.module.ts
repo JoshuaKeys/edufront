@@ -15,52 +15,58 @@ import { ConsoleSectionViewComponent } from './containers/console-section-view/c
 
 const routes: Routes = [
   {
+    path: 'admin',
+    loadChildren: () => import('./modules/console-admin/console-admin.module').then(m => m.ConsoleAdminModule)
+  },
+  {
     path: '',
-    component: ConsoleShellComponent,
-    children: [
-      {
-        path: 'classes',
-        component: ClassesShellComponent,
-        children: [
-          {
-            path: 'classes-and-groups',
-            component: ConsoleClassesAndGroupsComponent
-          },
-          {
-            path: 'sections',
-            component: ConsoleSectionsComponent,
-            children: [
-              {
-                path: 'sections-view',
-                component: ConsoleSectionViewComponent
-              },
-              {
-                path: 'sections-edit',
-                component: ConsoleSectionEditComponent
-              },
-              {
-                path: '',
-                redirectTo: 'sections-view',
-                pathMatch: 'full'
-              }
-            ]
-          },
-          {
-            path: 'subjects',
-            component: ConsoleSubjectsComponent
-          }
-        ]
-      },
-      {
-        path: 'calendar',
-        loadChildren: () =>
-          import('./calendar/calendar.module').then(m => m.CalendarModule)
-      }
-    ]
+    redirectTo: '/console/admin/classes/classes-and-groups'
   }
+
+  // {
+  //   path: '',
+  //   component: ConsoleShellComponent,
+  //   children: [
+  //     // {
+  //     //   path: 'classes',
+  //     //   component: ClassesShellComponent,
+  //     //   children: [
+  //     //     {
+  //     //       path: 'classes-and-groups',
+  //     //       component: ConsoleClassesAndGroupsComponent
+  //     //     },
+  //     //     {
+  //     //       path: 'sections',
+  //     //       component: ConsoleSectionsComponent,
+  //     //       children: [
+  //     //         {
+  //     //           path: 'sections-view',
+  //     //           component: ConsoleSectionViewComponent
+  //     //         },
+  //     //         {
+  //     //           path: 'sections-edit',
+  //     //           component: ConsoleSectionEditComponent
+  //     //         },
+  //     //         {
+  //     //           path: '',
+  //     //           redirectTo: 'sections-view',
+  //     //           pathMatch: 'full'
+  //     //         }
+  //     //       ]
+  //     //     },
+  //     //     {
+  //     //       path: 'subjects',
+  //     //       component: ConsoleSubjectsComponent
+  //     //     }
+  //     //   ]
+  //     // },
+
+  //
+  //   ]
+  // }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConsoleRoutingModule {}
+export class ConsoleRoutingModule { }

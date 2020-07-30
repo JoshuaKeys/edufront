@@ -8,7 +8,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class ClassesShellComponent implements OnInit {
   sideMenuOptions = [
+    // { value: 'home', text: 'Home', route: '/admin/home' },
     { value: 'classes', text: 'Classes', route: '/console/admin/classes' },
+    // { value: 'users', text: 'Users', route: '/admin/users' },
+    // { value: 'assessment', text: 'Assessment', route: '/admin/assessment' },
+    // { value: 'course', text: 'Course', route: '/admin/course' },
+    // { value: 'files', text: 'My Files', route: '/admin/files' },
+    // { value: 'results', text: 'Results', route: '/admin/results' }
   ];
   activeSideMenuOption = { value: 'users', text: 'Users' };
   constructor() { }

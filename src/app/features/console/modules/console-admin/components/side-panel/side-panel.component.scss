@@ -1,0 +1,152 @@
+@import 'src/app/features/dashboard-class/dashboard-class-shared';
+
+:host {
+  @include displayFlex(flex-start, stretch);
+  max-height: $maxHeight;
+}
+
+.side-panel {
+  border-left: 1px solid $grey;
+  background: white;
+  position: fixed;
+  //   transform: translateX(100%);
+  right: 0;
+  overflow: hidden;
+  opacity: 0;
+  width: 0px;
+  height: 100%;
+  &.active {
+    opacity: 1;
+    width: 480px;
+    transform: unset;
+  }
+}
+
+.side-panel {
+  &__header {
+    height: 40px;
+    border-bottom: 1px solid $grey;
+    button {
+      line-height: 40px;
+      position: absolute;
+      right: 20px;
+      font: 500 32px/32px Quicksand;
+      color: $grey;
+    }
+    button:hover {
+      color: $red;
+    }
+  }
+
+  &__body {
+    padding: 30px;
+    height: 100%;
+  }
+  &__title {
+    @include displayFlex(flex-start, center);
+    height: 58px !important;
+    font: 600 16px/50px Quicksand;
+    width: 100%;
+    margin-bottom: 10px;
+    .icon--large {
+      width: 50px;
+      height: 50px;
+      img {
+        width: unset;
+      }
+    }
+  }
+  &__subjects,
+  &__activities {
+    width: 49%;
+    @include displayFlex(flex-start, flex-start, column);
+    height: 100%;
+    overflow: scroll;
+    padding-bottom: 50px;
+  }
+  &__subjects {
+    // background: red;
+  }
+  &__activities {
+    // background: green;
+  }
+  &__input {
+    border: 0;
+    outline: none;
+    background: transparent;
+    display: block;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+  &__title,
+  &__subject,
+  &__activity {
+    margin: 10px 0;
+    padding: 0 8px;
+    width: 100%;
+    cursor: pointer;
+    font: 400 14px/16px Raleway;
+    height: 42px;
+    @include displayFlex(space-between, center);
+    border: 1px solid transparent;
+    .delete-btn {
+      transition: none;
+      opacity: 0;
+    }
+
+    &:hover {
+      border: 1px solid $grey;
+      border-radius: 8px;
+      background: #f8f9fa;
+      .delete-btn {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__activity-icon,
+  &__subject-icon {
+    border: 1px dashed $grey;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+    position: relative;
+
+    img {
+      @include absoluteCenter();
+    }
+  }
+  &__subject-icon {
+    border-color: $blue;
+    background: $blue;
+    img {
+      width: 17px;
+    }
+  }
+  &__create.roundbtn.outline {
+    margin-left: 9px;
+    width: 32px;
+    height: 32px;
+    border: 1px dashed $black;
+    position: relative;
+    color: $black;
+    img {
+      @include absoluteCenter();
+    }
+
+    &:hover,
+    &:active {
+      background: white;
+      border-color: $black;
+    }
+  }
+}
+.subject-activities__wrapper {
+  @include displayFlex(space-between);
+  align-items: flex-start;
+  // height: 100%;
+}

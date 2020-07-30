@@ -1,0 +1,68 @@
+<!-- <aside class="aside"> -->
+<div class="search">
+  <div class="search__wrapper">
+    <img class="search__icon" src="../../../assets/search.svg" alt="" />
+    <input
+      class="search__input"
+      (input)="onTextChange($event)"
+      type="text"
+      placeholder="Search"
+    />
+  </div>
+  <button class="search__btn" (click)="openAddModal()"><span>+</span></button>
+</div>
+
+<div
+  class="group group--scrollable"
+  #dropzone
+  (drop)="onDrop($event)"
+  (dragleave)="onDragLeave($event)"
+  (dragover)="onDragOver($event)"
+>
+  <div class="chips flex-wrap" *ngIf="fileredStudents | async as students">
+    <div
+      class="chip"
+      *ngFor="let student of students"
+      draggable="true"
+      [appDraggable]="{
+        data: computeDragObj(student.classId, student)
+      }"
+      [ngClass]="{
+        'chip--blue': student.gender.toLocaleLowerCase() === 'male',
+        'chip--pink': student.gender.toLocaleLowerCase() === 'female'
+      }"
+    >
+      {{ student.firstName }} {{ student.lastName }}
+    </div>
+  </div>
+  <div
+    class="all-assigned"
+    *ngIf="
+      (areAllStudentsAssigned() | async) &&
+      (fileredStudents | async).length === 0
+    "
+  >
+    All Students in this<br />Class have been
+    <b class="orangeColor">Assigned</b>
+  </div>
+  <div
+    class="not-found"
+    *ngIf="
+      (fileredStudents | async).length === 0 &&
+      !(areAllStudentsAssigned() | async)
+    "
+  >
+    No Students Found
+  </div>
+</div>
+
+<div class="aside__btn-wrapper opacity">
+  <button
+    [disabled]="(fileredStudents | async).length === 0"
+    ButtonType="basic"
+    class="aside__btn"
+    (click)="assign()"
+  >
+    assign all
+  </button>
+</div>

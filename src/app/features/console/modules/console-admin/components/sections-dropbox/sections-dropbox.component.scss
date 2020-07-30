@@ -1,0 +1,225 @@
+// ---------------- FOR DROP ZONE STYLING PAGE 60 62  63 START ----------------
+@import 'src/assets/scss/mixins/components';
+@import 'src/assets/scss/colors';
+@import 'src/assets/scss/modules/students';
+@include studentChips();
+@include dropZone();
+@import '../../../../../../shared/scss/scss-fixes.scss';
+
+.main-wrapper {
+  align-items: stretch !important;
+}
+.drop-zones__wrapper {
+  flex-grow: 1;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
+  max-height: calc(100vh - 295px);
+  .drop-zone {
+    min-width: 250px;
+    margin: 5px;
+    min-height: 150px;
+    position: relative;
+    padding-top: 81px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+  .drop-zone__title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.drop-zone--create {
+  margin: 5px 0;
+  max-height: calc(100vh - 310px);
+}
+
+.groups--split-layout,
+.groups--row-layout {
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  display: flex;
+}
+.content__body {
+  align-items: stretch;
+  height: 100%;
+}
+.content__title {
+  margin-bottom: 20px;
+  padding-right: 130px;
+  // transform: translateX(-67.5px);
+}
+.badges {
+  width: 100%;
+  max-width: 105px;
+  align-content: center;
+  margin-right: 30px;
+}
+.group--row-layout {
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+}
+.group {
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+}
+.flex-wrap {
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+}
+.badge {
+  width: 44px;
+  height: 44px;
+}
+.badge--inactive {
+  color: #c7ccdb;
+  background: white;
+  border: 2px solid #e6e9f3;
+}
+.badge {
+  border-radius: 50%;
+  margin: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0px 2px 6px #3c4b9b14;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+}
+.placeholder {
+  padding-right: 130px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+  position: relative;
+  font: 400 16px/24px Raleway;
+  color: #a5aec7;
+  text-align: center;
+  // max-width: 80%;
+}
+.relative {
+  position: relative;
+}
+.content > * {
+  margin-bottom: 30px;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.groups--column-layout {
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+}
+// Drop zones
+:host {
+  width: 100%;
+}
+.drop-zones {
+  @include displayFlex(flex-start, stretch);
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  & > *:not(:first-child) {
+    margin-left: 20px;
+  }
+}
+.drop-zone {
+  @include displayFlex(flex-start, center, column);
+  padding: 0 20px 10px 20px;
+  &--is-dragged {
+    border-color: $blue;
+  }
+  &__title {
+    font: 400 14px/44px Raleway;
+    letter-spacing: 0.42px;
+    color: $black;
+    max-width: 250px;
+    width: 100%;
+    border-bottom: 1px solid $grey;
+    padding-bottom: 0;
+    margin-bottom: 20px;
+    line-height: 5px;
+    margin-top: 30px;
+    input {
+      border: none;
+      width: 100%;
+      text-align: center;
+      height: 30px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  &__group {
+    max-width: 500px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: space-between;
+  }
+  &--create {
+    cursor: pointer;
+    padding: 0 12px;
+    min-width: unset;
+    max-width: 50px;
+    position: relative;
+    .drop-zone__icon {
+      @include absoluteCenter;
+    }
+    img {
+      width: 24px;
+      height: 24px;
+    }
+    &:hover {
+      border-color: $blue;
+    }
+  }
+  &--small {
+    max-width: 200px;
+    align-self: flex-start;
+    height: 30%;
+  }
+  .chips {
+    justify-content: center;
+    overflow-y: auto;
+  }
+}
+
+$pink: #fd7fc2;
+$blue: #69a9f2;
+.chip:hover {
+  background-color: unset;
+}
+.chip.chip--pink:hover .chip__desc {
+  color: $pink;
+}
+.chip.chip--blue:hover .chip__desc {
+  color: $blue;
+}
+.content__btn {
+  width: 200px;
+  margin: 10px 10px 40px 10px;
+}

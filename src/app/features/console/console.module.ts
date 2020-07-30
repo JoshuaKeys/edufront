@@ -49,4 +49,4 @@ import { ConsoleComponentsModule } from './components/console-components.module'
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
-export class ConsoleModule {}
+export class ConsoleModule { }
