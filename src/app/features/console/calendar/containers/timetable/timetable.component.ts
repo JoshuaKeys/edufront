@@ -1,6 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { map, switchMap, filter, take } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Observable, merge } from 'rxjs';
+import {
+  map,
+  switchMap,
+  filter,
+  take,
+  delay,
+  withLatestFrom
+} from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, merge, of } from 'rxjs';
 import { CalendarModel } from 'src/app/features/calender/models/calendar.model';
 import {
   IAcademicYear,
@@ -19,6 +26,7 @@ import { PopoverComponent } from 'src/app/shared/components/form-components/popo
 import { DeleteTermDialogComponent } from '../../components/delete-term-dialog/delete-term-dialog.component';
 import { DatepickerOptions } from 'src/app/shared/components/form-components/datepicker3';
 import { FormBuilder } from '@angular/forms';
+import isEmpty from 'lodash/isEmpty';
 
 const DEFAULT_START_IME = '08:00';
 
@@ -48,19 +56,6 @@ export class TimetableComponent implements OnInit {
   ]).pipe(
     map(([selectedClassId, entityMap]) => {
       return entityMap[selectedClassId];
-    })
-  );
-
-  timetableAPIDataByClass$ = this.selectedClassId$.pipe(
-    switchMap(classId => this.timetableFacade.timetableAPIDataByClass$(classId))
-  );
-
-  timetableData$ = combineLatest([
-    this.timetableFacade.timetableData$,
-    this.timetableAPIDataByClass$
-  ]).pipe(
-    map(([timetableData, timetableAPIDataByClass]) => {
-      return timetableData;
     })
   );
 
@@ -145,6 +140,70 @@ export class TimetableComponent implements OnInit {
   );
   subjectsLoaded$ = this.timetableFacade.subjectsUI$.pipe(map(ui => ui.loaded));
   periodsList$: Observable<CalendarModel[]>;
+
+  timetableAPIDataByClass$ = this.selectedClassId$.pipe(
+    switchMap(classId => {
+      return this.timetableFacade.timetableAPIDataByClass$(classId);
+    }),
+    switchMap(timetableAPIdata =>
+      combineLatest([of(timetableAPIdata), this.subjects, this.teachers])
+    ),
+    map(([timetableAPIDataByClass, subjects, teachers]) => {
+      return timetableAPIDataByClass.map(data => {
+        const subject = subjects.find(s => s.id === data.subjectId);
+        const teacher = teachers.find(t => t.profileId === data.teacherId);
+        return {
+          ...data,
+          subject,
+          teacher
+        };
+      });
+    })
+  );
+
+  timetableData$ = combineLatest([
+    this.timetableFacade.timetableData$.pipe(delay(100)),
+    this.timetableAPIDataByClass$
+  ]).pipe(
+    map(([timetableData, timetableAPIDataByClass]) => {
+      if (isEmpty(timetableData) && timetableAPIDataByClass.length > 0) {
+        return timetableAPIDataByClass.reduce((res, data) => {
+          return {
+            ...res,
+            [`${data.classId}--${data.sectionId}--${data.periodId}`]: {
+              periodId: data.periodId,
+              period: {
+                id: data.periodId
+              },
+              data: [data.subject, data.teacher]
+            }
+          };
+        }, {});
+      }
+      const dataFromAPI = timetableAPIDataByClass.reduce((res, data) => {
+        if (
+          timetableData[`${data.classId}--${data.sectionId}--${data.periodId}`]
+        ) {
+          return res;
+        }
+        return {
+          ...res,
+          [`${data.classId}--${data.sectionId}--${data.periodId}`]: {
+            periodId: data.periodId,
+            period: {
+              id: data.periodId
+            },
+            data: [data.subject, data.teacher]
+          }
+        };
+      }, {});
+      return {
+        ...timetableData,
+        ...dataFromAPI
+      };
+    })
+  );
+
   tt = [];
   periodsData = {};
   WEEKDAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -532,7 +591,7 @@ export class TimetableComponent implements OnInit {
         });
         this.academiYearService.update({
           ...res,
-          noOfTerm: res.noOfTerm + 1,
+          noOfTerm: res.noOfTerm,
           termDetailsDtos: newTerms
         });
       });
