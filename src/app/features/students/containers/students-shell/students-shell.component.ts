@@ -1,7 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StudentsStateModel } from '../../models/students-state.model';
-import { initClassesAndStudentsRequest } from '../../ngrx/actions/class-students.actions';
+import {
+  initClassesAndStudentsRequest,
+  uploadStudentsViaExcel
+} from '../../ngrx/actions/class-students.actions';
 
 @Component({
   selector: 'edu-students-shell',
@@ -10,10 +13,14 @@ import { initClassesAndStudentsRequest } from '../../ngrx/actions/class-students
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentsShellComponent implements OnInit {
-
   ngOnInit(): void {
-    this.store.dispatch(initClassesAndStudentsRequest())
+    this.store.dispatch(initClassesAndStudentsRequest());
   }
 
-  constructor(private store: Store<StudentsStateModel>) { }
+  constructor(private store: Store<StudentsStateModel>) {}
+
+  newExcelFileUpload(excelFile: File) {
+    this.store.dispatch(uploadStudentsViaExcel({ file: excelFile }));
+    console.log(excelFile);
+  }
 }
