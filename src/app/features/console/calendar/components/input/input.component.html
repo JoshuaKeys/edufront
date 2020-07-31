@@ -8,7 +8,7 @@
 </ng-container>
 
 <ng-container *ngIf="type === 'datepicker'">
-  <div>
+  <div (click)="onEdit()">
     <label>
       <img src="/assets/icon-calendar.svg" width="16" alt="" />
       <input type="text" [formControl]="ctrl" placeholder="Select date range" />

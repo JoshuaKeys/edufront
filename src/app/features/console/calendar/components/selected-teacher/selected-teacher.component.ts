@@ -2,7 +2,9 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { ITeacher } from 'src/app/shared/models/subject.model';
 
@@ -14,11 +16,12 @@ import { ITeacher } from 'src/app/shared/models/subject.model';
 })
 export class SelectedTeacherComponent implements OnInit {
   @Input() teacher: ITeacher = null;
+  @Output() editTeacher = new EventEmitter();
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(' SelectedTeacherComponenton init');
+  ngOnInit(): void {}
 
-    console.log('SelectedTeacherComponent', this.teacher);
+  onEditTeacher() {
+    this.editTeacher.emit(this.teacher);
   }
 }

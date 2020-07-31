@@ -14,6 +14,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectedTeacherComponent } from '../../components/selected-teacher/selected-teacher.component';
+import { ExtendedDatepickerComponent } from '../../components/extended-datepicker/extended-datepicker.component';
+import { TeacherService } from 'src/app/root-store/teacher.service';
+import { AcademicYearService } from 'src/app/root-store/academicYear.service';
+import { ITeacher } from 'src/app/shared/models/subject.model';
 
 @Component({
   selector: 'edu-substitute-teacher',
@@ -24,15 +28,7 @@ import { SelectedTeacherComponent } from '../../components/selected-teacher/sele
 export class SubstituteTeacherComponent implements OnInit {
   searchTeacher$ = new BehaviorSubject(null);
   teachers$ = combineLatest([
-    this.timetableFacade.teachers$.pipe(
-      map(r => {
-        return [
-          { firstName: 'Cecil', lastName: 'Doe' },
-          { firstName: 'Jane', lastName: 'J' },
-          { firstName: 'Jack', lastName: 'Jones' }
-        ];
-      })
-    ),
+    this.teacherService.entities$,
     this.searchTeacher$
   ]).pipe(
     map(([teachers, query]) => {
@@ -41,8 +37,8 @@ export class SubstituteTeacherComponent implements OnInit {
       }
       return teachers.filter(
         s =>
-          s.firstName.toLowerCase().includes(query) ||
-          s.lastName.toLowerCase().includes(query)
+          s.firstName.toLowerCase().includes(query.toLowerCase()) ||
+          s.lastName.toLowerCase().includes(query.toLowerCase())
       );
     })
   );
@@ -63,9 +59,12 @@ export class SubstituteTeacherComponent implements OnInit {
 
   constructor(
     private timetableFacade: TimetableFacadeService,
+    private teacherService: TeacherService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    this.teacherService.getAll();
+  }
 
   ngOnInit(): void {
     this.displayArr = [
@@ -90,60 +89,100 @@ export class SubstituteTeacherComponent implements OnInit {
       this.searchTeacher$.next(param.value);
     }
     if (param && param.id === 'targetTeacherPicker') {
-      //my work around is to just hide the components when you need
-
-      // let selectedTeacherComp = this.displayArr.find(
-      //   displayComponent => displayComponent.id === 'selectedTeacher'
-      // );
-      // selectedTeacherComp.param = { teacher: param.value };
-      // selectedTeacherComp.hide = false;
-      // let datepickerComp = this.displayArr.find(
-      //   displayComponent => displayComponent.id === 'datepicker'
-      // );
-      // datepickerComp.hide = false;
-      // let targetTeacherComp = this.displayArr.find(
-      //   displayComponent => displayComponent.id === 'targetTeacher'
-      // );
-      // let targetTeacherPickerComp = this.displayArr.find(
-      //   displayComponent => displayComponent.id === 'targetTeacherPicker'
-      // );
-      // targetTeacherComp.hide = true;
-      // targetTeacherPickerComp.hide = true;
-      // this.displayArr = [...this.displayArr];
-      // this.form.get('targetTeacher').patchValue(param.value.profileId);
-      this.displayArr = [
-        {
-          component: SelectedTeacherComponent,
-          param: { teacher: param.value },
-          output: [],
-          id: 'selectedTeacher'
-        },
-        {
-          component: InputComponent,
-          param: { type: 'datepicker' },
-          output: ['update'],
-          id: 'datepicker'
-        }
-      ];
-      this.displayArr = [...this.displayArr];
+      this.onTargetTeacherSelected(param.value);
+    }
+    if (param && param.id === 'datepicker') {
+      this.onDateChanged(param.value);
+    }
+    if (param && param.id === 'selectedTeacher') {
+      this.reset();
+    }
+    if (param && param.id === 'datepickerInput1' && param.event === 'edit') {
+      this.onEditDaterange();
     }
     this.cd.markForCheck();
   }
 
+  onEditDaterange() {
+    this.displayArr = [
+      {
+        component: SelectedTeacherComponent,
+        param: { teacher: this.form.get('targetTeacher').value },
+        output: ['editTeacher'],
+        id: 'selectedTeacher'
+      },
+      {
+        component: InputComponent,
+        param: { type: 'datepicker', value: this.form.get('dateRange').value },
+        output: ['update'],
+        id: 'datepickerInput'
+      },
+      {
+        component: ExtendedDatepickerComponent,
+        param: {},
+        output: ['dateChange'],
+        id: 'datepicker'
+      }
+    ];
+  }
+
+  onDateChanged(dateRange: string) {
+    console.log('Should show Subject and Teachers picker to replace');
+    this.form.get('dateRange').patchValue(dateRange);
+    this.displayArr = [
+      {
+        component: SelectedTeacherComponent,
+        param: { teacher: this.form.get('targetTeacher').value },
+        output: ['editTeacher'],
+        id: 'selectedTeacher'
+      },
+      {
+        component: InputComponent,
+        param: { type: 'datepicker', value: dateRange },
+        output: ['update', 'edit'],
+        id: 'datepickerInput1'
+      }
+    ];
+  }
+
+  onTargetTeacherSelected(teacher: ITeacher) {
+    this.form.get('targetTeacher').patchValue(teacher);
+    this.displayArr = [
+      {
+        component: SelectedTeacherComponent,
+        param: { teacher },
+        output: ['editTeacher'],
+        id: 'selectedTeacher'
+      },
+      {
+        component: InputComponent,
+        param: { type: 'datepicker' },
+        output: ['update'],
+        id: 'datepickerInput'
+      },
+      {
+        component: ExtendedDatepickerComponent,
+        param: {},
+        output: ['dateChange'],
+        id: 'datepicker'
+      }
+    ];
+  }
+
   reset() {
-    // this.displayArr = [
-    //   {
-    //     component: InputComponent,
-    //     param: { type: 'teacher' },
-    //     output: ['update'],
-    //     id: 'targetTeacher'
-    //   },
-    //   {
-    //     component: TeachersListComponent,
-    //     param: { teachers: this.teachers$ },
-    //     output: ['teacherSelect'],
-    //     id: 'targetTeacherPicker'
-    //   }
-    // ];
+    this.displayArr = [
+      {
+        component: InputComponent,
+        param: { type: 'teacher' },
+        output: ['update'],
+        id: 'targetTeacher'
+      },
+      {
+        component: TeachersListComponent,
+        param: { teachers: this.teachers$ },
+        output: ['teacherSelect'],
+        id: 'targetTeacherPicker'
+      }
+    ];
   }
 }
