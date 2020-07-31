@@ -18,13 +18,8 @@ export class UtilsService {
     }[],
     subjects: { gender: string }[]
   ) {
-    let sectionIdsArr = sections.map(section => section.sectionIdx);
-    sectionIdsArr.sort();
-    let results = {};
+    let results = JSON.parse(JSON.stringify(sections));
 
-    sectionIdsArr.forEach(sectionId => {
-      results[sectionId] = [];
-    });
     let maleSubjects = [];
     let femaleSubjects = [];
 
@@ -38,17 +33,24 @@ export class UtilsService {
     });
 
     while (maleSubjects.length > 0 || femaleSubjects.length > 0) {
-      sectionIdsArr.forEach(sectionId => {
+      results.forEach((sectionId, idx) => {
         if (maleSubjects.length > 0) {
-          results[sectionId] = [...results[sectionId], maleSubjects.pop()];
+          results[idx].subjects = [
+            ...results[idx].subjects,
+            maleSubjects.pop()
+          ];
         }
         if (femaleSubjects.length > 0) {
-          results[sectionId] = [...results[sectionId], femaleSubjects.pop()];
+          results[idx].subjects = [
+            ...results[idx].subjects,
+            femaleSubjects.pop()
+          ];
         }
       });
     }
 
     console.log(subjects, results);
+    return results;
     //create baskets
   }
 }

@@ -1,66 +1,113 @@
 import { createReducer, on } from '@ngrx/store';
 import { SectionModel } from '../../models/section.model';
-import { initFirstSection, addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, changeSectionNameRequest } from '../actions/sections.actions';
+import {
+  initFirstSection,
+  addStudentToSection,
+  removeStudentFromSection,
+  addNewSection,
+  assignStudentsRandomly,
+  changeSectionNameRequest,
+  setSection
+} from '../actions/sections.actions';
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { mapAlphaToNumeric } from './utilities';
+import { act } from '@ngrx/effects';
 
 const initialState: SectionModel[] = [];
 
-export const sectionsReducer = createReducer(initialState,
+export const sectionsReducer = createReducer(
+  initialState,
   on(initFirstSection, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
-    const sectionIsPresent = stateCopy.findIndex(section => action.classId === section.classId);
+    const sectionIsPresent = stateCopy.findIndex(
+      section => action.classId === section.classId
+    );
     if (sectionIsPresent === -1) {
       const sectionIdx = 1;
       stateCopy.push({
         classId: action.classId,
-        sections: [{ sectionIdx, sectionName: mapAlphaToNumeric()[sectionIdx].toUpperCase(), subjects: [] }]
-      })
+        sections: [
+          {
+            sectionIdx,
+            sectionName: mapAlphaToNumeric()[sectionIdx].toUpperCase(),
+            subjects: []
+          }
+        ]
+      });
       return stateCopy;
     }
     return state;
   }),
   // on(),
+  on(setSection, (state, action) => {
+    const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
+    const sectionIndex = stateCopy.findIndex(
+      section => section.classId === action.classId
+    );
+
+    stateCopy[sectionIndex].sections = action.sections;
+    console.log(stateCopy[sectionIndex]);
+    return stateCopy;
+  }),
   on(addStudentToSection, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
-    const sectionIndex = stateCopy.findIndex(section => section.classId === action.classId);
+    const sectionIndex = stateCopy.findIndex(
+      section => section.classId === action.classId
+    );
 
     const sectionNameIndex = stateCopy[sectionIndex].sections.findIndex(
       sessionName => sessionName.sectionName === action.sectionName
-    )
-    stateCopy[sectionIndex].sections[sectionNameIndex].subjects.push(action.student)
+    );
+    stateCopy[sectionIndex].sections[sectionNameIndex].subjects.push(
+      action.student
+    );
     return stateCopy;
   }),
   on(removeStudentFromSection, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
-    const sectionIndex = stateCopy.findIndex(section => section.classId === action.classId);
+    const sectionIndex = stateCopy.findIndex(
+      section => section.classId === action.classId
+    );
     const sectionNameIndex = stateCopy[sectionIndex].sections.findIndex(
       sessionName => sessionName.sectionName === action.sectionName
-    )
-    const studentIdx = stateCopy[sectionIndex].sections[sectionNameIndex].subjects.findIndex(sub => sub.id === action.student.id)
-    stateCopy[sectionIndex].sections[sectionNameIndex].subjects.splice(studentIdx, 1)
+    );
+    const studentIdx = stateCopy[sectionIndex].sections[
+      sectionNameIndex
+    ].subjects.findIndex(sub => sub.id === action.student.id);
+    stateCopy[sectionIndex].sections[sectionNameIndex].subjects.splice(
+      studentIdx,
+      1
+    );
     return stateCopy;
   }),
   on(addNewSection, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
     // get section by id
 
-    const sectionId = stateCopy.findIndex(section => section.classId === action.classId);
+    const sectionId = stateCopy.findIndex(
+      section => section.classId === action.classId
+    );
     // get last section
-    const sectionName = mapAlphaToNumeric()[stateCopy[sectionId].sections.length + 1].toUpperCase();
+    const sectionName = mapAlphaToNumeric()[
+      stateCopy[sectionId].sections.length + 1
+    ].toUpperCase();
 
-    stateCopy[sectionId].sections.push({ sectionName, subjects: [] })
+    stateCopy[sectionId].sections.push({ sectionName, subjects: [] });
 
     return stateCopy;
   }),
   on(changeSectionNameRequest, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
 
-    const classIdx = stateCopy.findIndex(section => section.classId === action.classId);
-    const sectionIdx = stateCopy[classIdx].sections.findIndex(section => section.sectionName === action.sectionName);
-    stateCopy[classIdx].sections[sectionIdx].sectionName = action.sectionNewName;
+    const classIdx = stateCopy.findIndex(
+      section => section.classId === action.classId
+    );
+    const sectionIdx = stateCopy[classIdx].sections.findIndex(
+      section => section.sectionName === action.sectionName
+    );
+    stateCopy[classIdx].sections[sectionIdx].sectionName =
+      action.sectionNewName;
     return stateCopy;
-
   }),
   on(assignStudentsRandomly, (state, action) => {
     const stateCopy: SectionModel[] = JSON.parse(JSON.stringify(state));
@@ -69,14 +116,15 @@ export const sectionsReducer = createReducer(initialState,
     }
     // const studentsAmount = 1
     // console.log('hahahahaha', stateCopy);
-    const sectionIndex = stateCopy.findIndex(section => section.classId === action.classId);
+    const sectionIndex = stateCopy.findIndex(
+      section => section.classId === action.classId
+    );
     const sections = stateCopy[sectionIndex].sections;
     const sectionsLength = sections.length;
     for (let i = 0; i < action.students.length; i++) {
-      const randomLocation = Math.floor(Math.random() * (sectionsLength))
-      sections[randomLocation].subjects.push(action.students[i])
+      const randomLocation = Math.floor(Math.random() * sectionsLength);
+      sections[randomLocation].subjects.push(action.students[i]);
     }
     return stateCopy;
   })
 );
-
