@@ -11,6 +11,11 @@ import { DeleteTermDialogComponent } from './components/delete-term-dialog/delet
 import { DialogModule } from 'src/app/shared/components/generic-dialog/dialog.module';
 import { ConsoleComponentsModule } from '../components/console-components.module';
 import { TimetableComponent } from './containers/timetable/timetable.component';
+import { SubstituteTeacherComponent } from './containers/substitute-teacher/substitute-teacher.component';
+import { TeachersListComponent } from './components/teachers-list/teachers-list.component';
+import { SelectedTeacherComponent } from './components/selected-teacher/selected-teacher.component';
+import { InputComponent } from './components/input/input.component';
+import { ExtendedDatepickerComponent } from './components/extended-datepicker/extended-datepicker.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,12 @@ import { TimetableComponent } from './containers/timetable/timetable.component';
     ConsoleSearchComponent,
     ConsoleCalendarOptionsComponent,
     DeleteTermDialogComponent,
-    TimetableComponent
+    TimetableComponent,
+    SubstituteTeacherComponent,
+    TeachersListComponent,
+    SelectedTeacherComponent,
+    InputComponent,
+    ExtendedDatepickerComponent
   ],
   imports: [
     CommonModule,

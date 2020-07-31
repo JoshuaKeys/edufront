@@ -1,0 +1,7 @@
+<div
+  class="list-item"
+  *ngFor="let teacher of teachers | async"
+  (click)="onSelect(teacher)"
+>
+  {{ teacher.firstName }} {{ teacher.lastName }}
+</div>

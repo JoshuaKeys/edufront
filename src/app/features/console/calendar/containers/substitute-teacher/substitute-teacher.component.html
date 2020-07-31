@@ -1,0 +1,9 @@
+<button ButtonType="basic" class="big-btn">
+  Substitute Teacher
+  <edu-multi-popover
+    pointerAlignment="right"
+    (close)="reset()"
+    (edu-change)="onChange($event)"
+    [edu-components]="displayArr"
+  ></edu-multi-popover>
+</button>

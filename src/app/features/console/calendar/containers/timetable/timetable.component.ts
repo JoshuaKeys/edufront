@@ -251,6 +251,7 @@ export class TimetableComponent implements OnInit {
   dateRangeValue = null;
   dateRangeCtrl = this.fb.control(null);
   private termToEdit: TermDetailsDto = null;
+
   constructor(
     private fb: FormBuilder,
     private dialog: DialogService,

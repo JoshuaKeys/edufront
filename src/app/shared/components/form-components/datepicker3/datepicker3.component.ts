@@ -198,7 +198,7 @@ export class Datepicker3Component implements OnInit, ControlValueAccessor {
   viewDateRange = { start: null, end: null };
   displayValue = '';
   dateSingle = '';
-  _value;
+  _value = null;
   set value(param) {
     this._value = param;
     if (this.configOptions.isRange) {
