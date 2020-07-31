@@ -55,6 +55,7 @@
       class="content__button"
       [routerLink]="['../', 'sections-edit']"
       ButtonType="basic"
+      [disabled]="!(aggregatedSectionsData | async).length"
     >
       Edit Sections
     </button>

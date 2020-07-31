@@ -141,7 +141,6 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
     this.isOpen = false;
   }
   callAPI() {
-    // this.router.navigateByUrl('/console/admin/classes/classes-and-groups', { relativeTo: this.activatedRoute })
     this.store.dispatch(sendGroupsWithClasses())
 
   }
