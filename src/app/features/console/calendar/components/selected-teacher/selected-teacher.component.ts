@@ -17,6 +17,8 @@ export class SelectedTeacherComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.teacher);
+    console.log(' SelectedTeacherComponenton init');
+
+    console.log('SelectedTeacherComponent', this.teacher);
   }
 }

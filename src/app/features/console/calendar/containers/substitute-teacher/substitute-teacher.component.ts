@@ -80,6 +80,20 @@ export class SubstituteTeacherComponent implements OnInit {
         param: { teachers: this.teachers$ },
         output: ['teacherSelect'],
         id: 'targetTeacherPicker'
+      },
+      {
+        component: SelectedTeacherComponent,
+        param: { teacher: '' },
+        output: [],
+        id: 'selectedTeacher',
+        hide: true
+      },
+      {
+        component: InputComponent,
+        param: { type: 'datepicker' },
+        output: ['update'],
+        id: 'datepicker',
+        hide: true
       }
     ];
   }
@@ -90,22 +104,42 @@ export class SubstituteTeacherComponent implements OnInit {
       this.searchTeacher$.next(param.value);
     }
     if (param && param.id === 'targetTeacherPicker') {
-      this.form.get('targetTeacher').patchValue(param.value.profileId);
-      this.displayArr = [
-        {
-          component: SelectedTeacherComponent,
-          param: { teacher: param.value },
-          output: [],
-          id: 'selectedTeacher'
-        },
-        {
-          component: InputComponent,
-          param: { type: 'datepicker' },
-          output: ['update'],
-          id: 'datepicker'
-        }
-      ];
+      //my work around is to just hide the components when you need
+
+      let selectedTeacherComp = this.displayArr.find(
+        displayComponent => displayComponent.id === 'selectedTeacher'
+      );
+      selectedTeacherComp.param = { teacher: param.value };
+      selectedTeacherComp.hide = false;
+      let datepickerComp = this.displayArr.find(
+        displayComponent => displayComponent.id === 'datepicker'
+      );
+      datepickerComp.hide = false;
+      let targetTeacherComp = this.displayArr.find(
+        displayComponent => displayComponent.id === 'targetTeacher'
+      );
+      let targetTeacherPickerComp = this.displayArr.find(
+        displayComponent => displayComponent.id === 'targetTeacherPicker'
+      );
+      targetTeacherComp.hide = true;
+      targetTeacherPickerComp.hide = true;
       this.displayArr = [...this.displayArr];
+      // this.form.get('targetTeacher').patchValue(param.value.profileId);
+      // this.displayArr = [
+      //   {
+      //     component: SelectedTeacherComponent,
+      //     param: { teacher: param.value },
+      //     output: [],
+      //     id: 'selectedTeacher'
+      //   },
+      //   {
+      //     component: InputComponent,
+      //     param: { type: 'datepicker' },
+      //     output: ['update'],
+      //     id: 'datepicker'
+      //   }
+      // ];
+      // this.displayArr = [...this.displayArr];
     }
     this.cd.markForCheck();
   }
