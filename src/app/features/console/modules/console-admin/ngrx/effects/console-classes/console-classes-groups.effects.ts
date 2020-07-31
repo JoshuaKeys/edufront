@@ -87,7 +87,7 @@ export class ConsoleClassesEffects {
   ))
   fetchAllClassesForSections$ = createEffect(() => this.actions$.pipe(
     ofType(fetchAllClassesForSections),
-    withLatestFrom(this.store.select(selectConsoleClasses)),
+    withLatestFrom(this.store.select(selectConsoleAssignedClasses)),
     mergeMap(([action, classes]) => {
       if (classes.length) {
         return of(fetchAllClassesForSectionsSuccess({ classes }));
