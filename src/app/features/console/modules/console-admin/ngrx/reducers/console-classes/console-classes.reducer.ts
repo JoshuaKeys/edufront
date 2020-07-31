@@ -71,6 +71,7 @@ export const consoleClassesReducer = createReducer(initialState,
     return {
       ...state,
       classesAndGroups: {
+        ...state.classesAndGroups,
         groups: updatedClassesAndGroups
       }
     }
@@ -130,7 +131,8 @@ export const consoleClassesReducer = createReducer(initialState,
     const classIdx = stateCopy.classes.findIndex(classItem => classItem.id === action.droppedClass.id);
     stateCopy.classes[classIdx].selected = true;
     stateCopy.classes[classIdx].dragged = true;
-    stateCopy.classesAndGroups.groups[groupIdx].classes.push({ ...action.droppedClass })
+    stateCopy.classes[classIdx].classGroupId = stateCopy.classesAndGroups.groups[groupIdx].id;
+    stateCopy.classesAndGroups.groups[groupIdx].classes.push({ ...stateCopy.classes[classIdx] })
     return stateCopy;
   }),
   on(removeClassFromGroup, (state, action) => {
@@ -166,49 +168,37 @@ export const consoleClassesReducer = createReducer(initialState,
   on(fetchSectionDataSuccess, (state, action) => {
     return {
       ...state,
-      classesAndGroups: {
-        ...state.classesAndGroups,
-        sections: {
-          ...state.sections,
-          aggregate: action.sections,
-          unalteredAggregate: action.sections
-        }
+      sections: {
+        ...state.sections,
+        aggregate: action.sections,
+        unalteredAggregate: action.sections
       }
     }
   }),
   on(fetchAllStudentsSuccess, (state, action) => {
     return {
       ...state,
-      classesAndGroups: {
-        ...state.classesAndGroups,
-        sections: {
-          ...state.sections,
-          students: action.students
-        }
+      sections: {
+        ...state.sections,
+        students: action.students
       }
     }
   }),
   on(fetchAllClassesForSectionsSuccess, (state, action) => {
     return {
       ...state,
-      classesAndGroups: {
-        ...state.classesAndGroups,
-        sections: {
-          ...state.sections,
-          classes: action.classes
-        }
+      sections: {
+        ...state.sections,
+        classes: action.classes
       }
     }
   }),
   on(fetchAllClassesForSubjectsSuccess, (state, action) => {
     return {
       ...state,
-      classesAndGroups: {
-        ...state.classesAndGroups,
-        subjects: {
-          ...state.subjects,
-          classes: action.classes
-        }
+      subjects: {
+        ...state.subjects,
+        classes: action.classes
       }
     }
   }),
@@ -300,8 +290,10 @@ export const consoleClassesReducer = createReducer(initialState,
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
     const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.draggedData.student.classId == aggregate.classItem.id);
     const newSectionId = action.draggedData.newSectionId;
+    console.log(aggregateIdx);
     const newSectionIdx = stateCopy.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === newSectionId);
     const student: StaffModel = JSON.parse(JSON.stringify(action.draggedData.student));
+    console.log(newSectionIdx);
     student['sectionId'] = stateCopy.sections.aggregate[aggregateIdx].sections[newSectionIdx].id;
     stateCopy.sections.aggregate[aggregateIdx].sections[newSectionIdx].students.push(student);
     return stateCopy;

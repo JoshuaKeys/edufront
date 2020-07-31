@@ -55,7 +55,7 @@ export class ConsoleClassesEffects {
   getSectionData$ = createEffect(() => this.actions$.pipe(
     ofType(fetchSectionData),
     mergeMap(action => {
-      return forkJoin(this.consoleClassesService.getSectionData(), this.consoleClassesService.getClasses()).pipe(
+      return forkJoin(this.consoleClassesService.getSectionData(), this.consoleClassesService.getAssignedClasses()).pipe(
         map(([sections, classes]) => {
           return aggregateSectionDataRequest({ sections, classes })
         })

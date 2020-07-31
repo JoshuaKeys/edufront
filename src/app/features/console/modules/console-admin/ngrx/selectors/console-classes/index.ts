@@ -47,15 +47,16 @@ export const selectConsoleSelectedClasses = createSelector(selectConsoleAssigned
   const classesCopy = JSON.parse(JSON.stringify(classes))
   for (let i = 0; i < classesCopy.length; i++) {
     const isSelected = groupedClasses.find(classItem => classItem.grade === classesCopy[i].grade);
-    console.log(isSelected);
     if (isSelected) {
       classesCopy[i].dragged = true;
       classesCopy[i].selected = true;
+      console.log(classesCopy[i])
     }
   }
   return classesCopy;
 })
 export const selectAggregatedSectionsData = createSelector(consoleFeature, feat => {
+  console.log(feat);
   return feat.consoleClasses.classesAndGroups && feat.consoleClasses.sections ? feat.consoleClasses.sections.aggregate : [];
 });
 export const selectAggregateByClassId = createSelector(consoleFeature, feat => {
@@ -104,12 +105,21 @@ export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
   const selectedClass = feat.consoleClasses.sections.classes.find(classItem => classItem.selected);
   const liveAggregate = feat.consoleClasses.sections.aggregate;
   const liveAggregateItem = liveAggregate.find(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
+
+  const defaultAggregate = feat.consoleClasses.sections.unalteredAggregate;
+  const defaultAggregateItem = defaultAggregate.find(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
+
   const currentStudents: StaffModel[] = [];
   liveAggregateItem.sections.forEach(sectionItem => {
     currentStudents.push(...sectionItem.students);
   })
+  const defaultStudents: StaffModel[] = [];
+  defaultAggregateItem.sections.forEach(sectionItem => {
+    defaultStudents.push(...sectionItem.students);
+  })
   const notDraggedStudents: StaffModel[] = [];
-  const defaultStudents = feat.consoleClasses.sections.students;
+
+  // const defaultStudents = feat.consoleClasses.sections.students;
   for (let i = 0; i < defaultStudents.length; i++) {
     let isNotDeleted = currentStudents.find(studentItem => studentItem.id === defaultStudents[i].id);
     if (isNotDeleted) {

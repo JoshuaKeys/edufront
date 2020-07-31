@@ -16,6 +16,7 @@ export class ConsoleSectionViewComponent implements OnInit {
   aggregatedSectionsData: Observable<AggregatedResult[]>;
   ngOnInit(): void {
     this.aggregatedSectionsData = this.store.select(selectAggregatedSectionsData);
+    this.aggregatedSectionsData.subscribe(console.log)
     this.store.dispatch(fetchSectionData())
     this.classArr = this.classArr.map(val => {
       let randomClassArr = this.getRandomClassArr();

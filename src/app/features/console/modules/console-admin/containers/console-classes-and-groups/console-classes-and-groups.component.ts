@@ -33,7 +33,6 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
     this.store.dispatch(sendGroupsWithClasses())
   }
   ngOnInit(): void {
-    alert('hello')
     this.store.dispatch(fetchAllClasses())
     this.store.dispatch(fetchAssignedClasses())
     this.store.dispatch(fetchGeneratedGroups())
