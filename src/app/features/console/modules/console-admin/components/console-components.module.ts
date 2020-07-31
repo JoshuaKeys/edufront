@@ -24,4 +24,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   entryComponents: [],
   providers: []
 })
-export class ConsoleComponentsModule {}
+export class ConsoleComponentsModule { }
