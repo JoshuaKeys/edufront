@@ -199,6 +199,7 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
     );
   }
   injectComponentByCompId(componentId) {
+    console.log('injectComponentByCompId');
     let compIndex = this.componentArr.findIndex(
       component => component.id === componentId
     );
@@ -230,6 +231,7 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
         });
       });
     }
+    this.cd.markForCheck();
   }
 
   injectComponent(idxes) {
