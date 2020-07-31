@@ -1,0 +1,62 @@
+<main class="main">
+  <div class="main__container">
+    <div class="main__left-side-bar">
+      <div class="class-items">
+        <div class="badges">
+          <edu-class-item
+            [active]="true"
+            *ngFor="let classItem of values"
+            [style]="{ width: '40px', height: '40px' }"
+          >
+            {{ classItem }}
+          </edu-class-item>
+        </div>
+      </div>
+
+      <div class="sections">
+        <edu-section-item
+          *ngFor="let section of sections"
+          [style]="{ width: '36px', height: '36px' }"
+        >
+          {{ section }}
+        </edu-section-item>
+      </div>
+    </div>
+    <div class="main__content">
+      <h1 class="main__content-header">
+        Showing <span class="orange-color">common</span> subjects to your
+        selected classes/sections
+      </h1>
+      <div class="main__content-container">
+        <div class="main__content-left-border"></div>
+        <ul class="main__content-weighted-items">
+          <li class="main__content-weighted-item-container">
+            <edu-weighted-item
+              [withIcon]="true"
+              [weight]="weights[0]"
+            ></edu-weighted-item>
+            <edu-sub-weighted-item
+              [subWeights]="weights"
+            ></edu-sub-weighted-item>
+          </li>
+          <li class="main__content-weighted-item-container">
+            <edu-weighted-item
+              [withIcon]="true"
+              [weight]="weights[0]"
+              [subWeights]="weights"
+            ></edu-weighted-item>
+          </li>
+          <li
+            class="main__content-weighted-item-container"
+            *ngFor="let weight of weights; let index = i"
+          >
+            <edu-weighted-item
+              [withIcon]="true"
+              [weight]="weight"
+            ></edu-weighted-item>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>

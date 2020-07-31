@@ -1,0 +1,42 @@
+.weighted-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.weighted-item {
+  display: flex;
+  &__weight {
+    width: 54px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid #e6e9f3;
+    text-align: center;
+  }
+  &__subject-container {
+    border: 1px solid #e6e9f3;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 12px;
+    margin-left: 20px;
+    background-color: #fff;
+  }
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+  &__subject-field {
+    border: none;
+    text-align: center;
+  }
+}
+.sub-weighted-items {
+  width: 140px;
+  border-top: 1px dashed #c3c3c3;
+  height: 100px;
+  margin-left: 20px;
+  position: absolute;
+  right: -140px;
+  top: 50%;
+}

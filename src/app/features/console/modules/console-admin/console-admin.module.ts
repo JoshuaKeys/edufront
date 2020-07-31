@@ -22,6 +22,11 @@ import { CommonModule } from '@angular/common';
 import { ConsoleClassesService } from './services/console-classes/console-classes.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
+import { SubjectWeightsComponent } from './containers/subject-weights/subject-weights.component';
+import { ClassItemComponent } from './components/class-item/class-item.component'
+import { SectionItemComponent } from './components/section-item/section-item.component';
+import { WeightedItemComponent } from './components/weighted-item/weighted-item.component';
+import { SubWeightedItemComponent } from './components/sub-weighted-item/sub-weighted-item.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,12 @@ import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
     DeleteClassesModalComponent,
     SectionsDropboxComponent,
     SectionsSubjectsBoxComponent,
-    SidePanelComponent
+    SidePanelComponent,
+    SubjectWeightsComponent,
+    ClassItemComponent,
+    SectionItemComponent,
+    WeightedItemComponent,
+    SubWeightedItemComponent,
   ],
   imports: [
     CommonModule,

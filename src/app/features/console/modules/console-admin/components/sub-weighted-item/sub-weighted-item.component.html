@@ -1,0 +1,8 @@
+<div class="sub-weighted">
+  <div class="sub-weighted__left-border" *ngIf="subWeights"></div>
+  <ul class="sub-weighted__items">
+    <li class="sub-weighted__item-container" *ngFor="let weight of subWeights">
+      <edu-weighted-item [weight]="weight"></edu-weighted-item>
+    </li>
+  </ul>
+</div>

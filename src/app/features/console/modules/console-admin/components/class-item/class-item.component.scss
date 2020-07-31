@@ -1,0 +1,12 @@
+.class-item {
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &--active {
+    background-color: #69a9f2;
+    color: #fff;
+    border: none;
+  }
+}

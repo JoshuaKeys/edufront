@@ -7,6 +7,7 @@ import { ConsoleSectionsComponent } from './containers/console-sections/console-
 import { ConsoleSubjectsComponent } from './containers/console-subjects/console-subjects.component';
 import { ConsoleSectionEditComponent } from './containers/console-section-edit/console-section-edit.component';
 import { ConsoleSectionViewComponent } from './containers/console-section-view/console-section-view.component';
+import { SubjectWeightsComponent } from './containers/subject-weights/subject-weights.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
           {
             path: 'subjects',
             component: ConsoleSubjectsComponent
+          },
+          {
+            path: 'subject-weights',
+            component: SubjectWeightsComponent
           },
           {
             path: '',

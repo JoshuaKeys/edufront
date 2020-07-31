@@ -10,7 +10,7 @@ export class ConsoleShellComponent implements OnInit {
   sideMenuOptions = [
     // { value: 'home', text: 'Home', route: '/admin/home' },
     { value: 'calendar', text: 'Calendar', route: '/console/admin/calendar' },
-    { value: 'classes', text: 'Classes', route: '/console/admin/classes' }
+    { value: 'classes', text: 'Classes', route: '/console/admin/classes' },
     // { value: 'users', text: 'Users', route: '/admin/users' },
     // { value: 'assessment', text: 'Assessment', route: '/admin/assessment' },
     // { value: 'course', text: 'Course', route: '/admin/course' },

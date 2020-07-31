@@ -1,0 +1,13 @@
+<div class="weighted-container">
+  <div class="weighted-item">
+    <input class="weighted-item__weight" [value]="weight.weight" />
+    <div class="weighted-item__subject-container">
+      <img
+        class="weighted-item__icon"
+        *ngIf="withIcon"
+        src="assets/subject_icon-active.svg"
+      />
+      <input class="weighted-item__subject-field" [value]="weight.subject" />
+    </div>
+  </div>
+</div>
