@@ -8,7 +8,21 @@
   justify-content: center;
   // overflow: scroll;
 }
-
+.content__btn-container {
+  margin-top: 40px;
+}
+.content__btn {
+  border-radius: 100px;
+  font: 700 12px/20px Raleway;
+  box-shadow: 0px 4px 8px #3c4b9b26;
+  color: white;
+  background: #69a9f2;
+  text-transform: uppercase;
+  position: relative;
+  width: 300px;
+  height: 50px;
+  border: none;
+}
 .delete-popover {
   right: -8px !important;
   max-width: 377px;

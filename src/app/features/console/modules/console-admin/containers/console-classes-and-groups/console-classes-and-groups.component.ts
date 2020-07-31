@@ -6,6 +6,7 @@ import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, delete
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { selectConsoleGroups, selectConsoleSelectedClasses, selectConsoleAssignedClasses, selectAssignedClassesIntersection } from '../../ngrx/selectors/console-classes';
 import { GeneratedGroupsModel } from '../../models/generated-groups.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -41,19 +42,16 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
     this.classIntersection$ = this.store.select(selectAssignedClassesIntersection);
     this.assignedClasses$ = this.store.select(selectConsoleAssignedClasses);
     this.classesAndGroups$.subscribe(groups => {
-      console.log(groups);
       this.groupsCopy = JSON.parse(JSON.stringify(groups)) as GeneratedGroupsModel[];
     })
     this.classIntersection$.subscribe(classes => {
       this.cancelationFallback = JSON.parse(JSON.stringify(classes));
       this.localCopy = JSON.parse(JSON.stringify(classes));
     });
-    this.classService.getAll()
     this.badgeMultiSelect = this.badgeArr.map(badge => ({
       value: badge,
       display: badge
     }));
-    console.log(this.badgeMultiSelect);
     this.classIntersection$.subscribe(x => console.log('hoooooo', x))
   }
 
@@ -125,10 +123,11 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
   }
   toggleOption(value: ExtendedClassModel) {
     value.selected = !value.selected;
-    this.toBeDeleted.push(value);
+    // this.toBeDeleted.push(value);
   }
   onCancel() {
     this.isOpen = false;
+    this.toBeDeleted = [];
     this.localCopy = this.cancelationFallback;
   }
   onDelete() {
@@ -138,10 +137,13 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
     const added = this.classesAdded(itemA, itemB);
     console.log(this.cancelationFallback, this.localCopy)
     console.log(added, deleted);
-    // if (deleted.length) {
-    deleted.forEach(classItem => this.store.dispatch(deleteClass({ class: classItem })))
-    // }
+    this.toBeDeleted.forEach(classItem => this.store.dispatch(deleteClass({ class: classItem })))
     this.isOpen = false;
+  }
+  callAPI() {
+    // this.router.navigateByUrl('/console/admin/classes/classes-and-groups', { relativeTo: this.activatedRoute })
+    this.store.dispatch(sendGroupsWithClasses())
+
   }
   classesAdded(fallback: ExtendedClassModel[], localCopy: ExtendedClassModel[]) {
     const addedClasses: ExtendedClassModel[] = [];
@@ -170,19 +172,21 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
 
   }
   onCloseMultiSelect() {
-    // this.localCopy = this.cancelationFallback;
+    this.localCopy = this.cancelationFallback;
   }
   eduTickClick() {
-    this.multiselectPopoverState = !this.multiselectPopoverState;
-    this.toBeDeleted.sort((classItemA, classItemB) => classItemA.grade - classItemB.grade)
-    // this.isOpen = true;
-
     const itemA = this.cancelationFallback;
     const itemB = this.localCopy;
-    const deleted = this.classesDeleted(itemA, itemB)
+    this.multiselectPopoverState = !this.multiselectPopoverState;
+    // this.toBeDeleted.sort((classItemA, classItemB) => classItemA.grade - classItemB.grade)
+    this.toBeDeleted = this.classesDeleted(itemA, itemB)
+    // this.isOpen = true;
+    console.log(this.toBeDeleted)
+
+
     const added = this.classesAdded(itemA, itemB);
-    console.log(deleted, added)
-    if (deleted.length > 0) {
+    // console.log(deleted, added)
+    if (this.toBeDeleted.length > 0) {
       this.isOpen = true;
     }
     if (added.length > 0) {
@@ -190,6 +194,12 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private classService: ClassesService, private renderer: Renderer2, private store: Store) {
+  constructor(
+    private classService: ClassesService,
+    private router: Router,
+    private renderer: Renderer2,
+    private store: Store,
+    private activatedRoute: ActivatedRoute
+  ) {
   }
 }

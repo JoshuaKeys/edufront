@@ -108,6 +108,15 @@
         </div>
       </div>
     </div>
+    <div class="content__btn-container">
+      <button
+        (click)="callAPI()"
+        class="content__btn"
+        [routerLink]="['../', 'sections']"
+      >
+        Send
+      </button>
+    </div>
   </div>
 </div>
 <edu-delete-classes-modal
