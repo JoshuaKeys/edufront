@@ -36,7 +36,7 @@ export class SubstituteTeacherComponent implements OnInit {
     this.searchTeacher$
   ]).pipe(
     map(([teachers, query]) => {
-      if (query && query.length === 0) {
+      if (!query || (query && query.length === 0)) {
         return teachers;
       }
       return teachers.filter(
