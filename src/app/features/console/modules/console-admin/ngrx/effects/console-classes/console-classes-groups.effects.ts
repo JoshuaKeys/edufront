@@ -5,7 +5,7 @@ import { ConsoleClassesService } from '../../../services/console-classes/console
 import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { ConsoleClassesStateModel } from '../../../models/console-classes-state.model';
-import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses, selectAggregatedSectionsData, selectSelectedClassForSections, selectConsoleGroups } from '../../selectors/console-classes';
+import { selectConsoleClasses, selectConsoleSubjectsSelectedClasses, selectAggregatedSectionsData, selectSelectedClassForSections, selectConsoleGroups, selectConsoleAssignedClasses } from '../../selectors/console-classes';
 import { of, forkJoin } from 'rxjs';
 import { aggregateSectionData } from '../../../utilities';
 import { fetchSectionData, aggregateSectionDataRequest, fetchSectionDataSuccess, aggregateSectionStudentsDataRequest } from '../../actions/console-classes/console-sections.actions';
@@ -127,7 +127,7 @@ export class ConsoleClassesEffects {
   ))
   fetchAllClassesForSubjects$ = createEffect(() => this.actions$.pipe(
     ofType(fetchAllClassesForSubjects),
-    withLatestFrom(this.store.select(selectConsoleClasses)),
+    withLatestFrom(this.store.select(selectConsoleAssignedClasses)),
     mergeMap(([action, classes]) => {
       if (classes.length) {
         return of(fetchAllClassesWithSubjects({ classes }))

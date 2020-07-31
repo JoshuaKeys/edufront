@@ -39,7 +39,6 @@ export const selectAssignedClassesIntersection = createSelector(selectConsoleCla
   }
 )
 export const selectConsoleSelectedClasses = createSelector(selectConsoleAssignedClasses, selectConsoleGroups, (classes, groups) => {
-  console.log(classes)
   const groupedClasses: ExtendedClassModel[] = [];
   groups.forEach(group => {
     groupedClasses.push(...group.classes);
@@ -56,9 +55,11 @@ export const selectConsoleSelectedClasses = createSelector(selectConsoleAssigned
   return classesCopy;
 })
 export const selectAggregatedSectionsData = createSelector(consoleFeature, feat => {
-  console.log(feat);
-  let result = feat.consoleClasses.classesAndGroups && Object.keys(feat.consoleClasses.sections).length > 0 ? feat.consoleClasses.sections.aggregate : [];
-  console.log(feat.consoleClasses.sections);
+  let allKeys = Object.keys(feat.consoleClasses.sections);
+  let hasKey = allKeys.find(key => key === 'aggregate');
+  console.log(hasKey, allKeys)
+  let result = feat.consoleClasses.classesAndGroups && hasKey ? feat.consoleClasses.sections.aggregate : [];
+  console.log(feat.consoleClasses.sections.aggregate);
   return result.filter(aggregateItem => aggregateItem.students.length)
 });
 export const selectAggregateByClassId = createSelector(consoleFeature, feat => {
@@ -116,11 +117,6 @@ export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
   liveAggregateItem.sections.forEach(sectionItem => {
     currentStudents.push(...sectionItem.students);
   })
-  // const defaultStudents: StaffModel[] = [];
-
-  // defaultAggregateItem.students.forEach(sectionItem => {
-  //   defaultStudents.push(...sectionItem.students);
-  // })
   const notDraggedStudents: StaffModel[] = [];
   console.log(defaultAggregateItem);
   for (let i = 0; i < defaultStudents.length; i++) {
