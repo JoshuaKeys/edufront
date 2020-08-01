@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { GeneratedGroupsModel } from '../../../models/generated-groups.model';
-import { fetchGeneratedGroupsSuccess, fetchAllClassesSuccess, deleteGroupSuccess, performDrop, createGroup, deleteLocalGroup, performInitialDrop, toggleSelectedState, fetchAllStudentsSuccess, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjectsSuccess, fetchAllSubjectsSuccess, toggleConsoleSubjectsClassSelectedState, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, createSubjectFromConsoleSuccess, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentSuccess, removeClassFromGroup, fetchAssignedClassesSuccess, deleteClassSuccess, addClassesSuccess } from '../../actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroupsSuccess, fetchAllClassesSuccess, deleteGroupSuccess, performDrop, createGroup, deleteLocalGroup, performInitialDrop, toggleSelectedState, fetchAllStudentsSuccess, fetchAllClassesForSectionsSuccess, fetchAllClassesForSubjectsSuccess, fetchAllSubjectsSuccess, toggleConsoleSubjectsClassSelectedState, removeFromSelectedConsoleSubjectsClasses, assignToSelectedConsoleSubjectsClasses, createSubjectFromConsoleSuccess, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentSuccess, removeClassFromGroup, fetchAssignedClassesSuccess, deleteClassSuccess, addClassesSuccess, updateGroupName, updateSectionName } from '../../actions/console-classes/console-classes-groups.actions';
 import { ConsoleClassesStateModel } from '../../../models/console-classes-state.model';
 import { fetchSectionDataSuccess } from '../../actions/console-classes/console-sections.actions';
 import { StaffModel } from 'src/app/shared/models/staff.model';
@@ -143,16 +143,30 @@ export const consoleClassesReducer = createReducer(initialState,
         return true
       }
     })
-    const classIdx = stateCopy.classesAndGroups.groups[groupIdx].classes.findIndex(classItem => classItem.id === action.class.id);
-    stateCopy.classesAndGroups.groups[groupIdx].classes.splice(classIdx, 1);
+    if (stateCopy.classesAndGroups.groups[groupIdx]) {
+      const classIdx = stateCopy.classesAndGroups.groups[groupIdx].classes.findIndex(classItem => classItem.id === action.class.id);
+      stateCopy.classesAndGroups.groups[groupIdx].classes.splice(classIdx, 1);
 
-    const classItemIdx = stateCopy.classes.findIndex(classItem => action.class.id === classItem.id);
-    stateCopy.classes[classItemIdx].selected = false;
-    stateCopy.classes[classItemIdx].dragged = false;
-
-
-
+      const classItemIdx = stateCopy.classes.findIndex(classItem => action.class.id === classItem.id);
+      stateCopy.classes[classItemIdx].selected = false;
+      stateCopy.classes[classItemIdx].dragged = false;
+      return stateCopy;
+    }
     return stateCopy;
+
+  }),
+  on(updateSectionName, (state, action) => {
+    const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
+    const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregateItem => aggregateItem.classItem.id === action.classId);
+    const sectionIdx = stateCopy.sections.aggregate[aggregateIdx].sections.findIndex(section => section.id === action.section.id);
+    stateCopy.sections.aggregate[aggregateIdx].sections[sectionIdx].sectionName = action.newName;
+    return stateCopy;
+  }),
+  on(updateGroupName, (state, action) => {
+    const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
+    const groupIdx = stateCopy.classesAndGroups.groups.findIndex(group => group.id === action.group.id);
+    stateCopy.classesAndGroups.groups[groupIdx].groupName = action.newGroupName;
+    return stateCopy
   }),
   on(createGroup, (state, action) => {
     const stateCopy: ConsoleClassesStateModel = JSON.parse(JSON.stringify(state));
@@ -303,7 +317,7 @@ export const consoleClassesReducer = createReducer(initialState,
     const aggregateIdx = stateCopy.sections.aggregate.findIndex(aggregate => action.section.classId === aggregate.classItem.id);
     // const sectionName = mapAlphaToNumeric()[stateCopy.classesAndGroups.sections.aggregate[aggregateIdx].sections.length + 1].toUpperCase();
     // const id = uuid44();
-    stateCopy.sections.aggregate[aggregateIdx].sections.push({ ...action.section })
+    stateCopy.sections.aggregate[aggregateIdx].sections.push({ ...action.section, students: [] })
     return stateCopy;
   }),
   on(createConsoleStudentSuccess, (state, action) => {

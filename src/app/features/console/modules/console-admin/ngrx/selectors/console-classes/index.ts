@@ -104,6 +104,10 @@ export const selectAllSubjectsForConsole = createSelector(consoleFeature, feat =
     feat.consoleClasses.subjects.subjects : [];
   return result;
 })
+export const selectAggregate = createSelector(consoleFeature, feat => {
+  let result = feat.consoleClasses.sections ? feat.consoleClasses.sections.aggregate : [];
+  return result;
+})
 export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
   const selectedClass = feat.consoleClasses.sections.classes.find(classItem => classItem.selected);
   const liveAggregate = feat.consoleClasses.sections.aggregate;
@@ -118,7 +122,6 @@ export const selectNotDraggedStudents = createSelector(consoleFeature, feat => {
     currentStudents.push(...sectionItem.students);
   })
   const notDraggedStudents: StaffModel[] = [];
-  console.log(defaultAggregateItem);
   for (let i = 0; i < defaultStudents.length; i++) {
     let isNotDeleted = currentStudents.find(studentItem => studentItem.id === defaultStudents[i].id);
     if (isNotDeleted) {

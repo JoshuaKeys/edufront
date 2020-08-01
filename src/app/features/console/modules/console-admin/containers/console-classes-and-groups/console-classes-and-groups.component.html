@@ -59,7 +59,12 @@
           *ngFor="let groupItem of groupsCopy"
         >
           <div class="dropzone__title-wrapper">
-            <h5 class="dropzone__title">{{ groupItem.groupName }}</h5>
+            <!-- <h5 class="dropzone__title">{{ groupItem.groupName }}</h5> -->
+            <input
+              class="dropzone__title"
+              value="{{ groupItem.groupName }}"
+              (change)="updateGroupName($event, groupItem)"
+            />
             <button ButtonType="icon" class="dropzone__delete-btn">
               <img src="assets/admin/buttons/delete.svg" />
               <edu-popover

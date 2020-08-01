@@ -1,4 +1,4 @@
-<main>
+<main *ngIf="(aggregate | async) && (aggregate | async).length">
   <section class="section">
     <div class="content">
       <div class="content-wrapper">
@@ -15,27 +15,12 @@
               fontSize: '12px'
             }"
           ></edu-classes>
-          <!-- <edu-section-drop-box
-            (onDropped)="processDroppedStudent($event)"
-            (onRemove)="processStudentRemoval($event)"
-            (onAddSection)="processAddSection($event)"
-            (onChangeSectionName)="onChangeGroupName($event)"
-          >
-          </edu-section-drop-box> -->
-          <!-- <edu-section-drop-box
-            [selectedClass]="selectedClass"
-            (onDropped)="processDroppedStudent($event)"
-            (onRemove)="processStudentRemoval($event)"
-            (onAddSection)="processAddSection($event)"
-            [sections]="selectedSections"
-            (onChangeSectionName)="onChangeGroupName($event)"
-          >
-          </edu-section-drop-box> -->
           <edu-sections-dropbox
             [selectedClass]="selectedClass"
             [aggregatedResult]="aggregatedData"
             (onDropped)="handleDropped($event)"
             (onAddSection)="processAddSection($event)"
+            (onChangeSectionName)="changeSectionName($event)"
           >
           </edu-sections-dropbox>
         </div>
@@ -52,8 +37,6 @@
       (droppedData)="removeStudent($event)"
       (onOpenAddModal)="toggleAddModal()"
     ></edu-console-section-aside>
-    <!-- (onAssign)="onAssign($event)"
-    (onOpenAddModal)="openAddModal()" -->
   </aside>
 </main>
 <edu-students-form

@@ -2,11 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Rend
 import { ClassesService } from 'src/app/root-store/classes.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup, fetchAssignedClasses, createGroupRequest, sendGroupsWithClasses } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
+import { fetchGeneratedGroups, fetchAllClasses, deleteGroup, performDrop, deleteClass, addClasses, createGroup, deleteLocalGroup, performInitialDrop, removeClassFromGroup, fetchAssignedClasses, createGroupRequest, sendGroupsWithClasses, updateGroupName } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { selectConsoleGroups, selectConsoleSelectedClasses, selectConsoleAssignedClasses, selectAssignedClassesIntersection } from '../../ngrx/selectors/console-classes';
 import { GeneratedGroupsModel } from '../../models/generated-groups.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ClassGroupModel } from 'src/app/features/calender/models/class-group.model';
 
 
 @Component({
@@ -77,6 +78,10 @@ export class ConsoleClassesAndGroupsComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(this.badges.nativeElement, 'badges--dragged-over');
     console.log(data);
     this.store.dispatch(removeClassFromGroup({ class: data }))
+  }
+  updateGroupName(event, groupItem: ClassGroupModel) {
+    console.log(event.target.value)
+    this.store.dispatch(updateGroupName({ group: groupItem, newGroupName: event.target.value }));
   }
   deletePopoverState = false;
   deleteGroupItem(group: GeneratedGroupsModel) {

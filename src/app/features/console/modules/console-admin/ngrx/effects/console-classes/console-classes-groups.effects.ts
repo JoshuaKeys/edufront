@@ -115,7 +115,13 @@ export class ConsoleClassesEffects {
     withLatestFrom(this.store.select(selectAggregatedSectionsData), this.store.select(selectSelectedClassForSections)),
     mergeMap(([action, aggregateData, selectedClass]) => {
       const selectedAggregate = aggregateData.findIndex(aggregateItem => aggregateItem.classItem.id === selectedClass.id);
-      const sectionName: string = mapAlphaToNumeric()[aggregateData[selectedAggregate].sections.length + 1].toUpperCase();
+      let sectionName;
+      if (aggregateData[selectedAggregate]) {
+        sectionName = mapAlphaToNumeric()[aggregateData[selectedAggregate].sections.length + 1].toUpperCase();
+      } else {
+        sectionName = 'A'
+      }
+
       const sectionObj = {
         classId: selectedClass.id,
         sectionName

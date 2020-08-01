@@ -9,6 +9,7 @@ import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { ClassGroupModel } from 'src/app/features/calender/models/class-group.model';
 import { GroupWithClasses } from '../../../models/group-with-classes.model';
+import { SectionModel, ISectionModel } from 'src/app/shared/models/section.model';
 
 export const fetchGeneratedGroups = createAction(
   '[ConsoleClassesAndGroupsComponent] fetchGeneratedGroups'
@@ -181,4 +182,12 @@ export const sendGroupsWithClasses = createAction(
 export const sendGroupsWithClassesSuccess = createAction(
   '[ConsoleClassesEffects] sendGroupsWithClassesSuccess',
   props<{ groups: ClassGroupModel[] }>()
+);
+export const updateGroupName = createAction(
+  '[ConsoleClassesAndGroupsComponent] updateGroupName',
+  props<{ group: ClassGroupModel, newGroupName: string }>()
+)
+export const updateSectionName = createAction(
+  '[ConsoleSectionEditComponent] updateSectionName',
+  props<{ section: ISectionModel, classId: string, newName: string }>()
 )

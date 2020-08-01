@@ -4,13 +4,14 @@ import { Store } from '@ngrx/store';
 import { ConsoleClassesStateModel } from '../../models/console-classes-state.model';
 import { Observable } from 'rxjs';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-import { selectAllClassesForSections, selectSelectedClassForSections, selectAggregatedSectionsData, selectAllStudentsForSections, selectAggregateByClassId, selectNotDraggedStudents, selectConsoleClasses } from '../../ngrx/selectors/console-classes';
-import { toggleSelectedState, fetchAllStudents, fetchAllClassesForSections, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentRequest, addNewSectionToAggregateRequest } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
+import { selectAllClassesForSections, selectSelectedClassForSections, selectAggregatedSectionsData, selectAllStudentsForSections, selectAggregateByClassId, selectNotDraggedStudents, selectConsoleClasses, selectAggregate } from '../../ngrx/selectors/console-classes';
+import { toggleSelectedState, fetchAllStudents, fetchAllClassesForSections, performSectionDrop, removeStudentsFromSection, addStudentToConsoleSection, addNewSectionToAggregate, createConsoleStudentRequest, addNewSectionToAggregateRequest, updateSectionName } from '../../ngrx/actions/console-classes/console-classes-groups.actions';
 import { StaffModel } from 'src/app/shared/models/staff.model';
 import { AggregatedResult } from '../../models/aggregated-result.model';
 import { DraggedSectionModel } from 'src/app/shared/models/dragged-section.model';
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { fetchSectionData } from '../../ngrx/actions/console-classes/console-sections.actions';
+import { ISectionModel } from 'src/app/shared/models/section.model';
 
 @Component({
   selector: 'edu-console-section-edit',
@@ -26,6 +27,7 @@ export class ConsoleSectionEditComponent implements OnInit {
   allClasses: Observable<ExtendedClassModel[]>;
   selectedClass: Observable<ExtendedClassModel> | null;
   aggregatedData: Observable<AggregatedResult>;
+  aggregate: Observable<AggregatedResult[]>;
   ngOnInit(): void {
     this.store.dispatch(fetchSectionData())
     this.store.dispatch(fetchAllStudents())
@@ -37,20 +39,15 @@ export class ConsoleSectionEditComponent implements OnInit {
     this.selectedClass = this.store.select(selectSelectedClassForSections);
     this.aggregatedData = this.store.select(selectAggregateByClassId)
     this.allClasses = this.store.select(selectAllClassesForSections);
+    this.aggregate = this.store.select(selectAggregate);
+    this.aggregate.subscribe(data => {
+      console.log('hoooool', data);
+    })
   }
-  // processSubmit(student: StudentModel) {
-  //   this.store.dispatch(createStudentRequest({ student }))
-  // }
-  // openAddModal() {
-  //   this.store.dispatch(toggleModal({ modal: 'addModal' }))
-  // }
   processAddSection(classId: string) {
     console.log(classId)
     this.store.dispatch(addNewSectionToAggregateRequest({ classId }))
   }
-  // onAssign(classId: string) {
-  //   this.store.dispatch(assignStudentsRequest({ classId }))
-  // }
   toggleAddModal() {
     this.isAddModalOpened = !this.isAddModalOpened;
   }
@@ -73,6 +70,10 @@ export class ConsoleSectionEditComponent implements OnInit {
   }
   processClassClick(classGrade: string) {
     this.store.dispatch(toggleSelectedState({ classGrade }))
+  }
+  changeSectionName(event) {
+    console.log(event);
+    this.store.dispatch(updateSectionName({ section: event.section, classId: event.classId, newName: event.newName }))
   }
   removeStudent(draggedData: DraggedSectionModel) {
     this.store.dispatch(removeStudentsFromSection({ draggedData }))

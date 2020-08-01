@@ -18,11 +18,7 @@
           <input
             [value]="section.sectionName"
             (change)="
-              changeSectionName(
-                $event,
-                section.sectionName,
-                aggregatedResult.classItem.id
-              )
+              changeSectionName($event, section, aggregatedResult.classItem.id)
             "
           />
         </h4>
