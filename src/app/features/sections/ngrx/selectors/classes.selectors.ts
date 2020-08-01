@@ -95,7 +95,7 @@ export const selectCreateSectionData = createSelector(
         let sectionName = section.sectionName;
         const _studentIds = section.subjects.map(student => student.id);
         studentIds = _studentIds;
-        finalResult.push({studentIds, sectionName, classId})
+        finalResult.push({ studentIds, sectionName, classId });
       });
     });
     return finalResult;
@@ -106,6 +106,16 @@ export const selectAggregate = createSelector(featureSelector, feat => {
   const subResult = [];
   const aggregateData = feat.aggregate ? feat.aggregate : [];
   return aggregateData.filter(aggregateItem => {
-    return aggregateItem.sections.filter(section => section.subjects.length).length;
+    return aggregateItem.sections.filter(section => section.subjects.length)
+      .length;
   });
 });
+
+export const selectUnassignedStudents = createSelector(
+  selectNotDraggedStudents,
+  selectSections,
+  (students, activeSelection) => {
+    console.log(students, activeSelection);
+    return null;
+  }
+);
