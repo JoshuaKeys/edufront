@@ -60,7 +60,7 @@ export const selectAggregatedSectionsData = createSelector(consoleFeature, feat 
   console.log(hasKey, allKeys)
   let result = feat.consoleClasses.classesAndGroups && hasKey ? feat.consoleClasses.sections.aggregate : [];
   console.log(feat.consoleClasses.sections.aggregate);
-  return result.filter(aggregateItem => aggregateItem.students.length)
+  return result.filter(aggregateItem => aggregateItem.students.length).sort((itemA, itemB) => itemA.classItem.grade - itemB.classItem.grade)
 });
 export const selectAggregateByClassId = createSelector(consoleFeature, feat => {
   const selectedClass = feat.consoleClasses.sections.classes ?

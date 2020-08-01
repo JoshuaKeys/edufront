@@ -48,9 +48,13 @@ export class ConsoleClassesEffects {
   ))
   deleteClassRequest$ = createEffect(() => this.actions$.pipe(
     ofType(deleteClass),
-    mergeMap(action => this.consoleClassesService.deleteClass(action.class).pipe(
-      map(resp => deleteClassSuccess({ classItem: action.class }))
-    ))
+    withLatestFrom(this.store.select(selectConsoleAssignedClasses)),
+    mergeMap(([action, assignedClasses]) => {
+      const assignedMatch = assignedClasses.findIndex(classItem => classItem.grade === action.class.grade);
+      return this.consoleClassesService.deleteClass(action.class).pipe(
+        map(resp => deleteClassSuccess({ classItem: assignedClasses[assignedMatch] }))
+      )
+    })
   ));
   getSectionData$ = createEffect(() => this.actions$.pipe(
     ofType(fetchSectionData),
