@@ -46,9 +46,11 @@ import { StopEventBubbleDirective } from './directives/stop-event-bubble.directi
 import { ImageSliderModule } from './components/image-slider/image-slider.module';
 import { SharedTooltipComponent } from './components/tooltip/tooltip.component';
 import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.component';
+import { ExcelUploadComponent } from './components/excel-upload/excel-upload.component';
 
 @NgModule({
   declarations: [
+    ExcelUploadComponent,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
@@ -91,6 +93,7 @@ import { SharedStaffChipComponent } from './components/staff-chip/staff-chip.com
     RouterModule
   ],
   exports: [
+    ExcelUploadComponent,
     ImageSliderModule,
     PreviewAnimateDirective,
     FormComponentsModule,
