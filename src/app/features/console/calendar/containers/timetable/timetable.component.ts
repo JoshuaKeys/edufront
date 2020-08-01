@@ -1,3 +1,5 @@
+import { TestDrawerComponent } from './../../components/test-drawer/test-drawer.component';
+import { DrawerService } from './../../../../../shared/components/drawer/drawer.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   map,
@@ -258,7 +260,8 @@ export class TimetableComponent implements OnInit {
     private timetableFacade: TimetableFacadeService,
     private classService: ClassesService,
     private sectionService: ClassSectionService,
-    private academiYearService: AcademicYearService
+    private academiYearService: AcademicYearService,
+    private drawer: DrawerService,
   ) {
     this.timetableFacade.resetTimetable();
     this.classService.getAll();
@@ -620,6 +623,7 @@ export class TimetableComponent implements OnInit {
     this.dateRangeValue = null;
   }
 
+
   onRemoveTerm(
     term: TermDetailsDto,
     indexToRemove: number,
@@ -627,6 +631,7 @@ export class TimetableComponent implements OnInit {
   ) {
     console.log(term);
     const termsWithoutDeleted = terms.filter((t, i) => i !== indexToRemove);
+
     const dialogRef = this.dialog.open(DeleteTermDialogComponent, {
       data: {
         term,
@@ -755,3 +760,19 @@ export class TimetableComponent implements OnInit {
     }
   }
 }
+
+
+/** Invoke this when you wish to test the drawer */
+
+// testDrawer() {
+//   debugger;
+//   const dialogRef = this.drawer.open(TestDrawerComponent, {
+//     data: {
+//       name: 'Bruce-wayne'
+//     }
+//   });
+//   dialogRef.afterClosed().subscribe((termToExtendID: string | null) => {
+//     debugger;
+
+//   });
+// }

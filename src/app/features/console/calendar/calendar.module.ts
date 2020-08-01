@@ -1,3 +1,5 @@
+import { TestDrawerComponent } from './components/test-drawer/test-drawer.component';
+import { DrawerModule } from './../../../shared/components/drawer/drawer.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarRoutingModule } from './calendar-routing.module';
@@ -38,8 +40,9 @@ import { ExtendedDatepickerComponent } from './components/extended-datepicker/ex
     SharedModule,
     DragDropModule,
     DialogModule,
+    DrawerModule,
     ConsoleComponentsModule
   ],
-  entryComponents: [DeleteTermDialogComponent]
+  entryComponents: [DeleteTermDialogComponent, TestDrawerComponent]
 })
 export class CalendarModule { }

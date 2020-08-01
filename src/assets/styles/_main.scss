@@ -58,3 +58,12 @@ footer {
 .none {
   display: none;
 }
+
+edu-drawer-container {
+  position: fixed;
+    background: white;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 300px;
+}
