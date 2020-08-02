@@ -181,6 +181,9 @@ export class UpdateTimetableComponent implements OnInit {
   computeModifications() {
     this.store.dispatch(computeModifications());
   }
+  showConsequences() {
+    this.modalIsActive = true;
+  }
   goBack() {
     this.location.back();
   }
