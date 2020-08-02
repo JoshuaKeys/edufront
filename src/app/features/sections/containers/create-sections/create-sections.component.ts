@@ -16,14 +16,6 @@ import {
   createStudentRequest
 } from '../../ngrx/actions/classes.actions';
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
-<<<<<<< HEAD
-import { selectSortedClasses, selectSelectedClass, selectNotDraggedStudents, selectSections, selectAllClasses, selectAllStudents } from '../../ngrx/selectors/classes.selectors';
-import { ClassesModel } from '../../../../shared/models/classes-model';
-import { map } from 'rxjs/operators';
-import { ClassModel } from 'src/app/shared/models/class.model';
-import { SectionModel } from '../../../../shared/models/section.model';
-import { addStudentToSection, removeStudentFromSection, addNewSection, assignStudentsRandomly, assignStudentsRequest, getAggregatedResult, changeSectionNameRequest } from '../../ngrx/actions/sections.actions';
-=======
 import {
   selectSortedClasses,
   selectSelectedClass,
@@ -32,11 +24,11 @@ import {
   selectAllClasses,
   selectAllStudents
 } from '../../ngrx/selectors/classes.selectors';
-import { ClassesModel } from '../../models/classes-model';
+// import { ClassesModel } from '../../models/classes-model';
 import { map } from 'rxjs/operators';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
-import { SectionModel } from '../../models/section.model';
+// import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
+// import { SectionModel } from '../../models/section.model';
 import {
   addStudentToSection,
   removeStudentFromSection,
@@ -46,9 +38,10 @@ import {
   getAggregatedResult,
   changeSectionNameRequest
 } from '../../ngrx/actions/sections.actions';
->>>>>>> ab376d06138639705807b85cee2c202050c96d57
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
+import { ClassesModel } from 'src/app/shared/models/classes-model';
+import { SectionModel } from 'src/app/shared/models/section.model';
 
 @Component({
   selector: 'edu-create-sections',
@@ -162,5 +155,5 @@ export class CreateSectionsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<SectionsStateModel>
-  ) {}
+  ) { }
 }

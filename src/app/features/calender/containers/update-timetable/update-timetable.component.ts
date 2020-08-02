@@ -1,49 +1,23 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ClassModel } from 'src/app/shared/models/class.model';
-import {
-  selectAllClasses,
-  selectTeachingDays,
-  selectTeaching
-} from '../../ngrx/selectors';
+import { selectAllClasses, selectTeachingDays, selectTeaching } from '../../ngrx/selectors';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../../models/teaching-day.model';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
-import {
-  selectTeachingDay,
-  editCalendar,
-  toggleEditClassActive,
-  setEditAssemblyData,
-  toggleEditTeachingActive,
-  updateCalendarPeriodData,
-  addEditSameBreak,
-  updateEditBreakData,
-  removeEditBreak,
-  setAssemblyEnabledMode,
-  computeModifications,
-  updateEditStartTime,
-  updateTeachingPeriod
-} from '../../ngrx/actions/calendar.actions';
+import { selectTeachingDay, editCalendar, toggleEditClassActive, setEditAssemblyData, toggleEditTeachingActive, updateCalendarPeriodData, addEditSameBreak, updateEditBreakData, removeEditBreak, setAssemblyEnabledMode, computeModifications, updateEditStartTime, updateTeachingPeriod } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { defineDays, definePeriods } from '../../utilities';
-import { PeriodModel } from '../../models/period.model';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'edu-update-timetable',
   templateUrl: './update-timetable.component.html',
-  styleUrls: ['./update-timetable.component.scss']
-  // changeDetection: ChangeDetectiofnStrategy.OnPush
+  styleUrls: ['./update-timetable.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateTimetableComponent implements OnInit {
   allClasses: Observable<ClassModel[]>;
@@ -51,7 +25,7 @@ export class UpdateTimetableComponent implements OnInit {
   intervals: { duration: number; text: string }[] = [];
   timeArr = Array(60);
   modalIsActive = false;
-  durations: { duration: number; text: string }[] = [];
+  durations: { duration: number; text: string }[] = []
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
   periodDurations = [
     { duration: 10, text: '10 minutes' },
@@ -80,90 +54,59 @@ export class UpdateTimetableComponent implements OnInit {
     { value: 'Sat', display: 'Sat' },
     { value: 'Sun', display: 'Sun' }
   ];
-  constructor(
-    private store: Store<CalendarStateModel>,
-    private location: Location,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private store: Store<CalendarStateModel>, private location: Location, private router: Router, private activatedRoute: ActivatedRoute) { }
   activeBadge = 8;
   emptyArr = new Array(100);
   updateStartTime(event) {
-    console.log(event);
-    // this.updateAssemblyData('startingAt', { duration: event, text: event });
-    this.updateAssemblyData('startingAt', `${event}`);
-  }
-
-  updateAssemblyDuration(event) {
-    console.log(event);
-    // this.updateAssemblyData('startingAt', { duration: event, text: event });
-    this.updateAssemblyData('duration', `${event}`);
+    this.updateAssemblyData('startingAt', { duration: event, text: event });
   }
   ngOnInit(): void {
     for (let i = 0; i < this.timeArr.length; i++) {
-      this.durations.push({ duration: i + 1, text: `${i + 1} mins` });
+      this.durations.push({ duration: i + 1, text: `${i + 1} mins` })
     }
     for (let i = 0; i < this.timeArr.length; i++) {
       this.intervals.push({ duration: i + 1, text: `${i + 1} mins` });
     }
-    console.log(this.intervals);
     this.teachingState = this.store.select(selectTeaching);
     // this.teachingState.subscribe(x => console.log(x, 'yaaaaaaaaaaaaaaaaay'))
     this.allClasses = this.store.select(selectAllClasses).pipe(
       map(unsortedClasses => {
-        const unsortedClassesCopy: ClassModel[] = JSON.parse(
-          JSON.stringify(unsortedClasses)
-        );
-        return unsortedClassesCopy.sort(
-          (itemA, itemB) => itemA.grade - itemB.grade
-        );
+        const unsortedClassesCopy: ClassModel[] = JSON.parse(JSON.stringify(unsortedClasses))
+        return unsortedClassesCopy.sort((itemA, itemB) => itemA.grade - itemB.grade)
       })
-    );
+    )
   }
-  updateInterval(interval) {}
-  onSetPeriodDuration(duration) {}
+  updateInterval(interval) {
+
+  }
+  onSetPeriodDuration(duration) {
+
+  }
   toggleClassActive(event) {
-    this.store.dispatch(toggleEditClassActive({ name: event }));
+    this.store.dispatch(toggleEditClassActive({ name: event }))
   }
   toggleActive(event) {
-    this.store.dispatch(toggleEditTeachingActive(event));
+    this.store.dispatch(toggleEditTeachingActive(event))
   }
-  setStartTime(event, idx) {}
-  loadAssemblyStartTime(time) {
-    if (time.duration) {
-      return time.duration;
-    } else {
-      return time;
-    }
+  setStartTime(event, idx) {
+
   }
+
   updateAssemblyData(data, duration) {
-    this.store.dispatch(setEditAssemblyData({ field: data, value: duration }));
+    this.store.dispatch(setEditAssemblyData({ field: data, value: duration }))
   }
   onUpdatePeriodDuration(duration) {
-    console.log('duration updatoing', duration);
-    this.store.dispatch(
-      updateCalendarPeriodData({
-        field: 'periodDuration',
-        value: duration
-      })
-    );
+    this.store.dispatch(updateCalendarPeriodData({ field: 'periodDuration', value: duration.duration.duration }))
   }
   onUpdateInterval(interval) {
-    this.store.dispatch(
-      updateCalendarPeriodData({
-        field: 'intervaBtwPeriods',
-        value: interval
-      })
-    );
+    this.store.dispatch(updateCalendarPeriodData({ field: 'intervaBtwPeriods', value: interval.duration.duration }))
   }
   updateAssemblyName(data) {
-    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data }));
+    console.log(data);
+    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data.target.value }))
   }
   getGroup(groups: ClassGroupModel[]) {
-    return of(
-      groups.find(
-        group => group.id === this.activatedRoute.snapshot.queryParams.groupId
-      )
-    );
+    return of(groups.find(group => group.id === this.activatedRoute.snapshot.queryParams.groupId));
   }
   selectPeriod($event: SelectedPeriodModel) {
     // this.store.dispatch(selectTeachingDay($event))
@@ -175,14 +118,17 @@ export class UpdateTimetableComponent implements OnInit {
     this.store.dispatch(updateEditStartTime(event));
   }
   updateTeachingPeriod(event) {
-    console.log(event);
-    this.store.dispatch(updateTeachingPeriod(event));
+    console.log(event)
+    this.store.dispatch(updateTeachingPeriod(event))
   }
   computeModifications() {
     this.store.dispatch(computeModifications());
   }
+  closeModal() {
+
+  }
   goBack() {
-    this.location.back();
+    this.location.back()
   }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
@@ -198,12 +144,6 @@ export class UpdateTimetableComponent implements OnInit {
     let res = scrollableHeight >= maxHeight - 10;
     return res;
   }
-  getDaysOptions(days: TeachingDay[]) {
-    return defineDays(of(days));
-  }
-  getPeriodOptions(periods: PeriodModel[]) {
-    return definePeriods(of(periods));
-  }
   parsePeriodValue(arr) {
     if (arr.length == 0) {
       return '';
@@ -215,13 +155,11 @@ export class UpdateTimetableComponent implements OnInit {
         if (typeof number === 'string' && number.toLowerCase() === 'all') {
           return `${number}`;
         }
-        number = `${number}`.replace('P', '');
-
-        if (number === 1 || number === '1') {
+        if (number == 1) {
           suffix = 'st';
-        } else if (number === 2 || number === '2') {
+        } else if (number == 2) {
           suffix = 'nd';
-        } else if (number === 3 || number === '3') {
+        } else if (number == 3) {
           suffix = 'rd';
         } else {
           suffix = 'th';
@@ -237,34 +175,25 @@ export class UpdateTimetableComponent implements OnInit {
     return displayValue;
   }
   updateTitle(item, idx) {
-    this.store.dispatch(
-      updateEditBreakData({ index: idx, field: 'title', value: item })
-    );
+    this.store.dispatch(updateEditBreakData({ index: idx, field: 'title', value: item }));
   }
   removeBreak(item, idx) {
-    this.store.dispatch(removeEditBreak({ breakIndex: idx }));
+    this.store.dispatch(removeEditBreak({ breakIndex: idx }))
   }
   updateAfter(item, idx) {
-    this.store.dispatch(
-      // updateEditBreakData({ index: idx, field: 'after', value: 'P' + item })
-      updateEditBreakData({ index: idx, field: 'after', value: item })
-    );
+    this.store.dispatch(updateEditBreakData({ index: idx, field: 'after', value: 'P' + item }));
   }
   updateDuration(item, idx) {
-    this.store.dispatch(
-      updateEditBreakData({ index: idx, field: 'duration', value: item })
-    );
+    this.store.dispatch(updateEditBreakData({ index: idx, field: 'duration', value: item }));
   }
   updateDay(item, idx) {
-    this.store.dispatch(
-      updateEditBreakData({ index: idx, field: 'day', value: item })
-    );
+    this.store.dispatch(updateEditBreakData({ index: idx, field: 'day', value: item }));
   }
   addSameBreaks() {
     this.store.dispatch(addEditSameBreak());
   }
   setAssemblyDisplay(isEnabled) {
-    this.store.dispatch(setAssemblyEnabledMode({ isEnabled }));
+    this.store.dispatch(setAssemblyEnabledMode({ isEnabled }))
   }
   computeName(name: string, idx: number) {
     return `name-${idx}`;

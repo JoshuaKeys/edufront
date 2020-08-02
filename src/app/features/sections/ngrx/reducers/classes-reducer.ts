@@ -10,16 +10,12 @@ import {
 } from '../actions/classes.actions';
 import { removePreviouslySelectedState } from './utilities';
 import { StaffModel } from 'src/app/shared/models/staff.model';
-<<<<<<< HEAD
-import { ClassesModel } from '../../../../shared/models/classes-model';
-import { assignStudentsRandomly } from '../actions/sections.actions';
-=======
-import { ClassesModel } from '../../models/classes-model';
+
 import {
   assignStudentsRandomly,
   setAllStudentDraggedState
 } from '../actions/sections.actions';
->>>>>>> ab376d06138639705807b85cee2c202050c96d57
+import { ClassesModel } from 'src/app/shared/models/classes-model';
 
 const classesAdapter = createEntityAdapter<ClassesModel>({
   selectId: classModel => {
