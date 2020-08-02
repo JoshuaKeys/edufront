@@ -6,7 +6,13 @@ import { map, filter, mapTo, withLatestFrom } from 'rxjs/operators';
 import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import { ClassesModel } from '../../models/classes-model';
 import { DraggedSectionModel } from '../../models/dragged-section.model';
+import { Store } from '@ngrx/store';
+import { SectionsStateModel } from 'src/app/features/sections/models/sections-state.model';
+import { autoAssignStudentsToSections } from 'src/app/features/sections/ngrx/actions/sections.actions';
 
+// import { Store } from '@ngrx/store';
+// import { SectionsStateModel } from '../../models/sections-state.model';
+// import { autoAssignStudentsToSections } from '../../ngrx/actions/sections.actions';
 @Component({
   selector: 'edu-section-aside',
   templateUrl: './section-aside.component.html',
@@ -20,9 +26,9 @@ export class SectionAsideComponent implements OnInit {
   classId: string;
   filter = '';
   fileredStudents: Observable<ExtendedProfileDTOModel[]>;
-  @Input() students: Observable<ExtendedProfileDTOModel[]>
-  @Input() allStudents: Observable<ExtendedProfileDTOModel[]>
-  @Output() onAssign = new EventEmitter<string>()
+  @Input() students: Observable<ExtendedProfileDTOModel[]>;
+  @Input() allStudents: Observable<ExtendedProfileDTOModel[]>;
+  @Output() onAssign = new EventEmitter<string>();
   @Output() onOpenAddModal = new EventEmitter<string>();
   @ViewChild('dropzone') dropZone: ElementRef<HTMLDivElement>;
 
@@ -46,7 +52,7 @@ export class SectionAsideComponent implements OnInit {
   }
 
   openAddModal() {
-    this.onOpenAddModal.emit()
+    this.onOpenAddModal.emit();
   }
   areAllStudentsAssigned() {
     return this.fileredStudents.pipe(
@@ -54,8 +60,11 @@ export class SectionAsideComponent implements OnInit {
       map(([students, allStudents]) => {
         const isDraggedPresent = allStudents && allStudents.find(student => student.dragged);
         return allStudents && isDraggedPresent
+        // const isDraggedPresent =
+        //   allStudents && allStudents.find(student => student.dragged);
+        // return allStudents && isDraggedPresent;
       })
-    )
+    );
   }
   ngOnInit(): void {
     this.filterItems(this.filter);
@@ -67,6 +76,9 @@ export class SectionAsideComponent implements OnInit {
       }
 
     })
+    // this.selectedClass.subscribe(
+    //   classItem => (this.classId = classItem.class.id)
+    // );
   }
   setDataTransfer(event: DragEvent, student: ProfileDTOModel) {
     event.dataTransfer.setData('text', JSON.stringify(student));
@@ -75,21 +87,28 @@ export class SectionAsideComponent implements OnInit {
     return JSON.stringify(obj);
   }
   assign() {
-    this.onAssign.emit(this.classId);
+    this.store.dispatch(autoAssignStudentsToSections());
+
+    // this.onAssign.emit(this.classId);
   }
-  filterItems(_filter: string) {  // Sorting bug over here
-    console.log(_filter)
+  filterItems(_filter: string) {
+    // Sorting bug over here
+    console.log(_filter);
     const filter = _filter.toLowerCase();
     this.fileredStudents = this.students.pipe(
       map(students => {
-        return students ? students.filter(
-          student => student.firstName && student.firstName.toLowerCase().match(filter) || student.lastName &&
-            student.lastName.toLowerCase().match(filter)
-          //|| `${student.firstName.toLowerCase()} ${student.lastName.toLowerCase()}`.match(filter)
-        ) : []
+        return students
+          ? students.filter(
+            student =>
+              (student.firstName &&
+                student.firstName.toLowerCase().match(filter)) ||
+              (student.lastName &&
+                student.lastName.toLowerCase().match(filter))
+            //|| `${student.firstName.toLowerCase()} ${student.lastName.toLowerCase()}`.match(filter)
+          )
+          : [];
       })
-
-    )
+    );
   }
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2, private store: Store<SectionsStateModel>) { }
 }

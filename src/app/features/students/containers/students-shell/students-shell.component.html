@@ -18,6 +18,9 @@
       <!-- <edu-preview></edu-preview> -->
       <!-- <edu-total-staff [numOfStaffs]="allStaffs"></edu-total-staff> -->
       <edu-total-students></edu-total-students>
+      <edu-excel-upload
+        (edu-change)="newExcelFileUpload($event)"
+      ></edu-excel-upload>
     </aside>
   </main>
 </div>

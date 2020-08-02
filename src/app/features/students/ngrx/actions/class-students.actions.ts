@@ -4,6 +4,34 @@ import { StudentModel } from '../../../../shared/models/student.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { ProfileDTOModel } from '../../../../shared/models/profile-dto.model';
 
+export const uploadStudentsViaExcel = createAction(
+  '[StudentsShellComponent] upload students via excel',
+  props<{ file: File }>()
+);
+
+export const uploadStudentsViaExcelSuccess = createAction(
+  '[StudentsShellComponent] succeeded upload students via excel',
+  props<{ students: any }>()
+);
+
+export const refreshStudentXClass = createAction(
+  '[StudentsShellComponent] refreshStudentXClass'
+);
+
+export const insertStudents = createAction(
+  '[StudentsShellComponent] insertStudents',
+  props<{ students: any }>()
+);
+export const updateStudents = createAction(
+  '[StudentsShellComponent] updateStudents',
+  props<{ students: any }>()
+);
+
+export const uploadStudentsViaExcelError = createAction(
+  '[StudentsShellComponent] error in upload students via excel',
+  props<{ error: any }>()
+);
+
 export const initClassesAndStudentsRequest = createAction(
   '[StudentsShellComponent] initClassesAndStudentsRequest'
 );

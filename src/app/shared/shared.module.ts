@@ -41,9 +41,11 @@ import { SectionDropBoxComponent } from './components/section-drop-box/section-d
 import { OptionsComponent } from './components/options/options.component';
 import { SubjectsListComponent } from './components/subjects-list/subjects-list.component';
 import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.component';
+import { ExcelUploadComponent } from './components/excel-upload/excel-upload.component';
 
 @NgModule({
   declarations: [
+    ExcelUploadComponent,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
@@ -88,6 +90,7 @@ import { SubjectsBoxComponent } from './components/subjects-box/subjects-box.com
     RouterModule
   ],
   exports: [
+    ExcelUploadComponent,
     ImageSliderModule,
     PreviewAnimateDirective,
     FormComponentsModule,

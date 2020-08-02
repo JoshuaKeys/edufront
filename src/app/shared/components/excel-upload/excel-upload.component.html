@@ -1,0 +1,13 @@
+<div class="profile-select-preview drad_document_here {{ elementState }}">
+  <p>
+    <input
+      type="file"
+      accept=".xlsx, .xls, .csv"
+      id="file"
+      placeholder="Drag and drop excel files here"
+      (change)="onFileChange($event)"
+      #fileInput
+    />
+    <label for="file">Drag and drop excel files here</label>
+  </p>
+</div>
