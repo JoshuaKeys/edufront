@@ -13,6 +13,9 @@
       <!-- <h1 class="side-bar__heading">Preview</h1> -->
       <!-- <edu-preview></edu-preview> -->
       <edu-total-staff [numOfStaffs]="allStaffs"></edu-total-staff>
+      <edu-excel-upload
+        (edu-change)="newExcelFileUpload($event)"
+      ></edu-excel-upload>
     </aside>
   </main>
 </div>

@@ -45,9 +45,11 @@ import { TimetableContainerComponent } from './components/timetable-container/ti
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SimpleButtonComponent } from './components/simple-button/simple-button.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ExcelUploadComponent } from './components/excel-upload/excel-upload.component';
 
 @NgModule({
   declarations: [
+    ExcelUploadComponent,
     ModalComponent,
     ModalComponentV2,
     CustomSelectComponent,
@@ -96,6 +98,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     OverlayModule
   ],
   exports: [
+    ExcelUploadComponent,
     ImageSliderModule,
     PreviewAnimateDirective,
     FormComponentsModule,
@@ -136,4 +139,4 @@ import { OverlayModule } from '@angular/cdk/overlay';
   entryComponents: [SharedTooltipComponent],
   providers: [ClassesService, SubjectsService]
 })
-export class SharedModule {}
+export class SharedModule { }
