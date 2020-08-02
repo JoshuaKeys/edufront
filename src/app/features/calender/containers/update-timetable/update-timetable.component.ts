@@ -12,6 +12,8 @@ import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { Location } from '@angular/common';
+import { definePeriods, defineDays } from '../../utilities';
+import { PeriodModel } from '../../models/period.model';
 
 @Component({
   selector: 'edu-update-timetable',
@@ -130,6 +132,9 @@ export class UpdateTimetableComponent implements OnInit {
   goBack() {
     this.location.back()
   }
+  getPeriodOptions(periods: PeriodModel[]) {
+    return definePeriods(of(periods));
+  }
   startScroll(el) {
     if (typeof this.scrollableEl === 'undefined') {
       return true;
@@ -198,6 +203,9 @@ export class UpdateTimetableComponent implements OnInit {
   computeName(name: string, idx: number) {
     return `name-${idx}`;
   }
+  getDaysOptions(days: TeachingDay[]) {
+    return defineDays(of(days));
+  }
   parseDayValue(arr) {
     let displayValue = '';
     if (arr.length == 0) {
@@ -208,4 +216,206 @@ export class UpdateTimetableComponent implements OnInit {
     // }
     return arr.reduce((a, b) => `${a},${b}`);
   }
+  updateAssemblyDuration(event) {
+    console.log(event);
+    // this.updateAssemblyData('startingAt', { duration: event, text: event });
+    this.updateAssemblyData('duration', `${event}`);
+  }
+  loadAssemblyStartTime(time) {
+    if (time.duration) {
+      return time.duration;
+    } else {
+      return time;
+    }
+  }
 }
+
+/*
+
+updateStartTime(event) {
+    console.log(event);
+    // this.updateAssemblyData('startingAt', { duration: event, text: event });
+    this.updateAssemblyData('startingAt', `${event}`);
+  }
+
+
+  ngOnInit(): void {
+    for (let i = 0; i < this.timeArr.length; i++) {
+      this.durations.push({ duration: i + 1, text: `${i + 1} mins` });
+    }
+    for (let i = 0; i < this.timeArr.length; i++) {
+      this.intervals.push({ duration: i + 1, text: `${i + 1} mins` });
+    }
+    console.log(this.intervals);
+    this.teachingState = this.store.select(selectTeaching);
+    // this.teachingState.subscribe(x => console.log(x, 'yaaaaaaaaaaaaaaaaay'))
+    this.allClasses = this.store.select(selectAllClasses).pipe(
+      map(unsortedClasses => {
+        const unsortedClassesCopy: ClassModel[] = JSON.parse(
+          JSON.stringify(unsortedClasses)
+        );
+        return unsortedClassesCopy.sort(
+          (itemA, itemB) => itemA.grade - itemB.grade
+        );
+      })
+    );
+  }
+  updateInterval(interval) {}
+  onSetPeriodDuration(duration) {}
+  toggleClassActive(event) {
+    this.store.dispatch(toggleEditClassActive({ name: event }));
+  }
+  toggleActive(event) {
+    this.store.dispatch(toggleEditTeachingActive(event));
+  }
+  setStartTime(event, idx) {}
+  loadAssemblyStartTime(time) {
+    if (time.duration) {
+      return time.duration;
+    } else {
+      return time;
+    }
+  }
+  updateAssemblyData(data, duration) {
+    this.store.dispatch(setEditAssemblyData({ field: data, value: duration }));
+  }
+  onUpdatePeriodDuration(duration) {
+    console.log('duration updatoing', duration);
+    this.store.dispatch(
+      updateCalendarPeriodData({
+        field: 'periodDuration',
+        value: duration
+      })
+    );
+  }
+  onUpdateInterval(interval) {
+    this.store.dispatch(
+      updateCalendarPeriodData({
+        field: 'intervaBtwPeriods',
+        value: interval
+      })
+    );
+  }
+  updateAssemblyName(data) {
+    this.store.dispatch(setEditAssemblyData({ field: 'name', value: data }));
+  }
+  getGroup(groups: ClassGroupModel[]) {
+    return of(
+      groups.find(
+        group => group.id === this.activatedRoute.snapshot.queryParams.groupId
+      )
+    );
+  }
+  selectPeriod($event: SelectedPeriodModel) {
+    // this.store.dispatch(selectTeachingDay($event))
+  }
+  asObservable(item) {
+    return of(item);
+  }
+  selectStartTime(event) {
+    this.store.dispatch(updateEditStartTime(event));
+  }
+  updateTeachingPeriod(event) {
+    console.log(event);
+    this.store.dispatch(updateTeachingPeriod(event));
+  }
+  computeModifications() {
+    this.store.dispatch(computeModifications());
+  }
+  goBack() {
+    this.location.back();
+  }
+  startScroll(el) {
+    if (typeof this.scrollableEl === 'undefined') {
+      return true;
+    }
+    var vh = Math.max(
+      document.documentElement.clientHeight,
+      window.innerHeight || 0
+    );
+    var scrollableHeight = this.scrollableEl.nativeElement.offsetHeight;
+    var maxHeight = vh - 360;
+
+    let res = scrollableHeight >= maxHeight - 10;
+    return res;
+  }
+
+  getPeriodOptions(periods: PeriodModel[]) {
+    return definePeriods(of(periods));
+  }
+  parsePeriodValue(arr) {
+    if (arr.length == 0) {
+      return '';
+    }
+    let displayValue = '';
+    let temp = arr
+      .map(number => {
+        let suffix;
+        if (typeof number === 'string' && number.toLowerCase() === 'all') {
+          return `${number}`;
+        }
+        number = `${number}`.replace('P', '');
+
+        if (number === 1 || number === '1') {
+          suffix = 'st';
+        } else if (number === 2 || number === '2') {
+          suffix = 'nd';
+        } else if (number === 3 || number === '3') {
+          suffix = 'rd';
+        } else {
+          suffix = 'th';
+        }
+        return `${number}${suffix}`;
+      })
+      .reduce((a, b) => `${a},${b}`);
+    if (arr.length == 1 && arr[0] == '') {
+      displayValue = '';
+    } else {
+      displayValue = `${temp} period`;
+    }
+    return displayValue;
+  }
+  updateTitle(item, idx) {
+    this.store.dispatch(
+      updateEditBreakData({ index: idx, field: 'title', value: item })
+    );
+  }
+  removeBreak(item, idx) {
+    this.store.dispatch(removeEditBreak({ breakIndex: idx }));
+  }
+  updateAfter(item, idx) {
+    this.store.dispatch(
+      // updateEditBreakData({ index: idx, field: 'after', value: 'P' + item })
+      updateEditBreakData({ index: idx, field: 'after', value: item })
+    );
+  }
+  updateDuration(item, idx) {
+    this.store.dispatch(
+      updateEditBreakData({ index: idx, field: 'duration', value: item })
+    );
+  }
+  updateDay(item, idx) {
+    this.store.dispatch(
+      updateEditBreakData({ index: idx, field: 'day', value: item })
+    );
+  }
+  addSameBreaks() {
+    this.store.dispatch(addEditSameBreak());
+  }
+  setAssemblyDisplay(isEnabled) {
+    this.store.dispatch(setAssemblyEnabledMode({ isEnabled }));
+  }
+  computeName(name: string, idx: number) {
+    return `name-${idx}`;
+  }
+  parseDayValue(arr) {
+    let displayValue = '';
+    if (arr.length == 0) {
+      return '';
+    }
+    let temp = arr.reduce((a, b) => `${a},${b}`);
+    displayValue = `${temp} period`;
+    // }
+    return arr.reduce((a, b) => `${a},${b}`);
+  }
+*/
