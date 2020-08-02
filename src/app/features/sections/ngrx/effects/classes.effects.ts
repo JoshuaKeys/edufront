@@ -11,42 +11,31 @@ import {
 } from '../actions/classes.actions';
 import { mergeMap, map, withLatestFrom, tap } from 'rxjs/operators';
 import { SectionsService } from '../../services/sections.service';
-<<<<<<< HEAD
-import { ClassesModel } from '../../../../shared/models/classes-model';
-import { selectSelectedClass, selectAllClasses } from '../selectors/classes.selectors';
-=======
-import { ClassesModel } from '../../models/classes-model';
+// import { ClassesModel } from '../../models/classes-model';
 import {
   selectSelectedClass,
   selectAllClasses,
   selectNotDraggedStudents,
   selectSections
 } from '../selectors/classes.selectors';
->>>>>>> ab376d06138639705807b85cee2c202050c96d57
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { SectionsStateModel } from '../../models/sections-state.model';
 import { ProfileDTOModel } from 'src/app/shared/models/profile-dto.model';
-<<<<<<< HEAD
-import { initFirstSection } from '../actions/sections.actions';
-=======
-import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
+// import { ExtendedProfileDTOModel } from '../../models/extended-profiledto.model';
 import {
   initFirstSection,
   autoAssignStudentsToSections,
   setSection,
   setAllStudentDraggedState
 } from '../actions/sections.actions';
->>>>>>> ab376d06138639705807b85cee2c202050c96d57
 import { ExtendedClassModel } from 'src/app/features/subjects/models/extend-class.model';
 import { StudentsService } from 'src/app/features/students/services/students.service';
 import { StudentModel } from 'src/app/shared/models/student.model';
 import { toggleModal } from '../actions/sections-modal.actions';
-<<<<<<< HEAD
-import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
-=======
 import { UtilsService } from 'src/app/shared/services/utils.service';
->>>>>>> ab376d06138639705807b85cee2c202050c96d57
+import { ClassesModel } from 'src/app/shared/models/classes-model';
+import { ExtendedProfileDTOModel } from 'src/app/shared/models/extended-profiledto.model';
 @Injectable()
 export class ClassesEffects {
   // initStudentsXClasses$ = createEffect(() => this.actions$.pipe(
@@ -286,5 +275,5 @@ export class ClassesEffects {
     private actions$: Actions,
     private studentsService: StudentsService,
     private utils: UtilsService
-  ) {}
+  ) { }
 }
