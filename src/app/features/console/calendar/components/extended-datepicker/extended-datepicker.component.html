@@ -1,0 +1,20 @@
+<edu-datepicker3
+  [formControl]="dateRangeCtrl"
+  (edu-change)="onDateRangeChange($event)"
+  [options]="datepickerOption"
+></edu-datepicker3>
+<div class="datepicker-controls">
+  <select [formControl]="yearCtrl">
+    <option value="">Select Year</option>
+    <option *ngFor="let year of academicYears$ | async" [value]="year.id">{{
+      getAcademicYearTitle(year)
+    }}</option>
+  </select>
+  <select [formControl]="termCtrl">
+    <option value="">Select Term</option>
+    <option *ngFor="let term of terms" [value]="term.termId">{{
+      term.termTitle || customTermTitle(term)
+    }}</option>
+  </select>
+</div>
+<edu-tick-button (click)="saveDateRange()"></edu-tick-button>

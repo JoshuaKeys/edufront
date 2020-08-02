@@ -1,0 +1,17 @@
+<ng-container *ngIf="type === 'teacher'">
+  <div>
+    <label>
+      <img src="/assets/icon-teacher.svg" width="16" alt="" />
+      <input type="text" [formControl]="ctrl" placeholder="Search teacher" />
+    </label>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type === 'datepicker'">
+  <div (click)="onEdit()">
+    <label>
+      <img src="/assets/icon-calendar.svg" width="16" alt="" />
+      <input type="text" [formControl]="ctrl" placeholder="Select date range" />
+    </label>
+  </div>
+</ng-container>

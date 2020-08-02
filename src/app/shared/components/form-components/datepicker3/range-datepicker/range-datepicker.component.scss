@@ -1,0 +1,282 @@
+$notThisMonth: grey;
+$blue: #69a9f2;
+$ash: #a5aec7;
+$black: #212121;
+$orange: #f2b269;
+$rangeBackground: #dbeaff;
+$highlightContainerPadding: 4px;
+$inRangeHeight: $highlightContainerPadding * 2;
+//partials
+
+@mixin afterPesudoClass($borderradius: 50%) {
+  padding: $highlightContainerPadding;
+  &::after {
+    display: block;
+    position: relative;
+    // margin-top: 10%;
+    // margin-left: 10%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: $borderradius;
+    content: '';
+  }
+}
+@mixin beforePesudoClass() {
+  padding: $highlightContainerPadding;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 4px;
+    height: calc(100% - 8px);
+    z-index: -2;
+  }
+}
+@mixin onHover($color, $bg) {
+  transition: all 0.3s, color 0s;
+  color: $color !important;
+  &:not(.dpDay--disabled)::after {
+    background: $bg;
+  }
+}
+@mixin onSelect($color, $bg) {
+  transition: all 0.3s, color 0s;
+  color: $color !important;
+  &::after {
+    background: $bg;
+  }
+}
+
+//generic
+.hidden {
+  user-select: none;
+  opacity: 0;
+}
+
+//dp
+.dp {
+  padding: 2%;
+  width: 280px;
+}
+
+.dp__header {
+  display: flex;
+  justify-content: space-between;
+  &--center {
+    font: 500 14px/16px Raleway;
+  }
+  &--left,
+  &--right {
+    width: 20px;
+    height: 20px;
+  }
+  &--month,
+  &--year {
+    margin: 0 2px;
+    &:hover {
+      color: $blue;
+    }
+  }
+  &--left {
+    &::before {
+      content: url('/assets/date-picker_arrow-left.svg');
+    }
+    &:hover::before {
+      content: url('/assets/date-picker_arrow-left-blue.svg');
+    }
+  }
+  &--right {
+    &::before {
+      content: url('/assets/date-picker_arrow-right.svg');
+    }
+    &:hover::before {
+      content: url('/assets/date-picker_arrow-right-blue.svg');
+    }
+  }
+}
+
+//dayView Code
+.dayView__body,
+.monthView__body,
+.yearView__body {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+.day,
+.dpDay,
+.dpMonth,
+.dpYear {
+  // li {
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  height: 37px;
+  text-align: center;
+  font: 400 12px/14px Roboto;
+  color: $black;
+  // }
+}
+.day {
+  position: relative;
+  width: 14%;
+  font: 600 12px/14px Raleway;
+  color: $ash;
+  cursor: default;
+}
+.dpDay {
+  position: relative;
+  width: 14%;
+  transition: all 0.3s, color 0s;
+  @include afterPesudoClass();
+  &:hover {
+    @include onHover(white, $orange);
+    // color: white;
+    // &::after {
+    //   background: $orange;
+    // }
+  }
+  &--selected {
+    @include onSelect(white, $blue);
+    // color: white;
+    // &::after {
+    //   background: $blue;
+    // }
+  }
+  &--previous,
+  &--next {
+    color: $ash;
+  }
+}
+
+//mothViewCode{
+
+.dpMonth {
+  position: relative;
+  width: 45%;
+
+  @include afterPesudoClass(18px);
+  &:hover {
+    @include onHover(white, $orange);
+  }
+  &--selected {
+    @include onSelect(white, $blue);
+  }
+}
+//year{
+
+.dpYear {
+  position: relative;
+  width: 30%;
+  @include afterPesudoClass(18px);
+  &:hover {
+    @include onHover(white, $orange);
+  }
+  &--selected {
+    @include onSelect(white, $blue);
+  }
+}
+
+//
+.dpDay__value,
+.dpMonth__value,
+.dpYear__value,
+.day__value {
+  transition: none;
+  background: transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+//button
+
+.button--reset {
+  cursor: pointer;
+  border: 0px;
+  padding: 0;
+  background: none;
+  outline: none;
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+/// range overwrite , anything related to range should be written here
+
+.dpDay {
+  &--disabled {
+    cursor: default !important;
+    &:not(.dpDay--selected) {
+      color: $ash !important;
+
+      &:hover {
+        &::after {
+          background: transparent !important;
+        }
+        color: $ash !important;
+      }
+    }
+  }
+
+  &--inRange {
+    &::before {
+      background: $rangeBackground;
+    }
+    @include beforePesudoClass();
+
+    &:nth-child(7n + 1) {
+      &::before {
+        border-radius: 20px 0 0 20px;
+      }
+    }
+    &:nth-child(7n)::before {
+      border-radius: 0px 20px 20px 0px;
+    }
+
+    &:not(.dpDay--selected) {
+      color: $blue;
+    }
+  }
+
+  //extending first .--inRange child
+  &--selected + .dpDay--inRange:not(:nth-child(7n + 1))::before {
+    width: 150%;
+    left: unset;
+    right: 0;
+  }
+  //extending last .--inRange child
+
+  &--inRange:not(:nth-child(7n)) + .dpDay--selected {
+    @include beforePesudoClass();
+    &::before {
+      width: 50%;
+      background: $rangeBackground;
+    }
+  }
+
+  //setting range for adjacent range selected
+  &--selected + &--selected:not(:nth-child(7n + 1)) {
+    @include beforePesudoClass();
+    &::before {
+      width: 100%;
+      left: unset;
+      right: 50%;
+      background: $rangeBackground;
+    }
+  }
+
+  //extedning range when
+  &--selected {
+    color: white !important;
+  }
+}

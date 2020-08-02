@@ -1,0 +1,91 @@
+<!-- INLINE IMPLEMENTATION -->
+<ng-container *ngIf="configOptions.inline; else nonInline">
+  <!-- SINGLE INLINE DATEPIKCER IMPLEMENTATION -->
+  <ng-container *ngIf="!configOptions.isRange; else rangeDatepicker">
+    <edu-base-datepicker
+      [ngModel]="dateSingle"
+      (edu-change)="datepickerSingleChange($event)"
+    ></edu-base-datepicker>
+  </ng-container>
+
+  <!-- RANGE INLINE DATEPIKCER IMPLEMENTATION -->
+
+  <ng-template #rangeDatepicker>
+    <div class="dp--range">
+      <edu-range-datepicker
+        #startDp
+        name="startdate"
+        [viewDate]="rangeViewDate.start"
+        [disabledValues]="{ type: 'after', isodate: viewDateRange.end }"
+        [ngModel]="dateRange.start"
+        [tempEndDateOnHover]="tempEndDate"
+        (edu-mousechange)="mousechangeSetDateRange($event)"
+        (edu-daterangechange)="dateRangeChange($event)"
+        (edu-updatesiblingdate)="setRangeViewDate('end', $event)"
+      ></edu-range-datepicker>
+      <edu-range-datepicker
+        name="enddate"
+        [viewDate]="rangeViewDate.end"
+        [disabledValues]="{ type: 'before', isodate: viewDateRange.start }"
+        [ngModel]="dateRange.end"
+        [tempEndDateOnHover]="tempEndDate"
+        (edu-mousechange)="mousechangeSetDateRange($event)"
+        (edu-daterangechange)="dateRangeChange($event)"
+        (edu-updatesiblingdate)="setRangeViewDate('start', $event)"
+      ></edu-range-datepicker>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #nonInline>
+  <h2>
+    {{ displayValue }}
+    <edu-popover (edu-open)="setTempValue()" (edu-close)="resetValue()">
+      <!-- SINGLE INLINE DATEPIKCER IMPLEMENTATION -->
+      <ng-container *ngIf="popoverIsOpen">
+        <ng-container *ngIf="!configOptions.isRange; else rangeDatepicker">
+          <edu-base-datepicker
+            [ngModel]="tempValue"
+            (edu-change)="datepickerSingleChange($event)"
+          ></edu-base-datepicker>
+        </ng-container>
+
+        <!-- RANGE INLINE DATEPIKCER IMPLEMENTATION -->
+
+        <ng-template #rangeDatepicker>
+          <div class="dp--range">
+            <edu-range-datepicker
+              #startDp
+              name="startdate"
+              [viewDate]="rangeViewDate.start"
+              [disabledValues]="{ type: 'after', isodate: viewDateRange.end }"
+              [ngModel]="dateRange.start"
+              [tempEndDateOnHover]="tempEndDate"
+              (edu-mousechange)="mousechangeSetDateRange($event)"
+              (edu-daterangechange)="dateRangeChange($event)"
+              (edu-updatesiblingdate)="setRangeViewDate('end', $event)"
+            ></edu-range-datepicker>
+            <edu-range-datepicker
+              name="enddate"
+              [viewDate]="rangeViewDate.end"
+              [disabledValues]="{
+                type: 'before',
+                isodate: viewDateRange.start
+              }"
+              [tempEndDateOnHover]="tempEndDate"
+              [ngModel]="dateRange.end"
+              (edu-mousechange)="mousechangeSetDateRange($event)"
+              (edu-daterangechange)="dateRangeChange($event)"
+              (edu-updatesiblingdate)="setRangeViewDate('start', $event)"
+            ></edu-range-datepicker>
+          </div>
+        </ng-template>
+      </ng-container>
+
+      <edu-tick-button
+        [ClosePopover]="popoverState"
+        (click)="setValue()"
+      ></edu-tick-button>
+    </edu-popover>
+  </h2>
+</ng-template>

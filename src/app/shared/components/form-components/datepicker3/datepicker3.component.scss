@@ -1,0 +1,17 @@
+.dp {
+  &--range {
+    display: flex;
+  }
+}
+
+:host {
+  display: block;
+  position: relative;
+}
+
+h2 {
+  border: 1px solid black;
+  min-height: 42px;
+  min-width: 200px;
+  position: relative;
+}

@@ -1,0 +1,96 @@
+<div class="dp ">
+  <div class="dp__header dayView__header">
+    <button
+      (click)="editViewValue('subtract')"
+      ButtonType="icon"
+      class="button--reset  dp__header--left"
+      [ngClass]="{ hidden: isMonthView }"
+    ></button>
+    <div class="dp__header--center">
+      <button
+        *ngIf="!isYearView"
+        (click)="toggleMonthView()"
+        class="button--reset dp__header--month"
+        ButtonType="icon"
+      >
+        {{ activeViewMonth }}
+      </button>
+      <button
+        *ngIf="!isYearView"
+        (click)="displayYearView()"
+        class="button--reset dp__header--year"
+        ButtonType="icon"
+      >
+        {{ activeViewYear }}
+      </button>
+      <button
+        *ngIf="isYearView"
+        (click)="displayDayView()"
+        class="button--reset dp__header--year"
+        ButtonType="icon"
+      >
+        {{ yearViewData[0] }} - {{ yearViewData[17] }}
+      </button>
+    </div>
+
+    <button
+      (click)="editViewValue('add')"
+      ButtonType="icon"
+      [ngClass]="{ hidden: isMonthView }"
+      class="button--reset dp__header--right"
+    ></button>
+  </div>
+
+  <ul class="yearView__body" *ngIf="isYearView">
+    <li
+      (click)="setYear(year)"
+      class="dpYear"
+      *ngFor="let year of yearViewData"
+      [ngClass]="{ 'dpYear--selected': isSelectedYear(year) }"
+    >
+      <span class="dpYear__value">{{ year }}</span>
+    </li>
+  </ul>
+
+  <ul class="monthView__body" *ngIf="isMonthView">
+    <li
+      (click)="setMonth(idx)"
+      class="dpMonth"
+      *ngFor="let month of months; let idx = index"
+      [ngClass]="{ 'dpMonth--selected': isSelectedMonth(idx) }"
+    >
+      <span class="dpMonth__value">{{ month }}</span>
+    </li>
+  </ul>
+
+  <ul class="dayView__body" *ngIf="isDayView">
+    <li class="day" *ngFor="let day of days">
+      <span class="day__value">{{ day }}</span>
+    </li>
+
+    <li
+      (click)="onDayClick(dpDay)"
+      class="dpDay dpDay--previous"
+      *ngFor="let dpDay of dayViewData.previousMonth"
+      [ngClass]="{ 'dpDay--selected': isSelectedDay(dpDay) }"
+    >
+      <span class="dpDay__value">{{ dpDay | dayPipe }}</span>
+    </li>
+    <li
+      (click)="onDayClick(dpDay)"
+      class="dpDay dpDay--current"
+      [ngClass]="{ 'dpDay--selected': isSelectedDay(dpDay) }"
+      *ngFor="let dpDay of dayViewData.currentMonth"
+    >
+      <span class="dpDay__value">{{ dpDay | dayPipe }}</span>
+    </li>
+    <li
+      (click)="onDayClick(dpDay)"
+      class="dpDay dpDay--next"
+      *ngFor="let dpDay of dayViewData.nextMonth"
+      [ngClass]="{ 'dpDay--selected': isSelectedDay(dpDay) }"
+    >
+      <span class="dpDay__value">{{ dpDay | dayPipe }}</span>
+    </li>
+  </ul>
+</div>

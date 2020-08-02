@@ -1,0 +1,8 @@
+<div
+  class="list-item"
+  *ngFor="let teacher of teachers | async"
+  (click)="onSelect(teacher)"
+>
+  <img src="https://via.placeholder.com/50x50" class="teacher-avatar" alt="" />
+  {{ teacher.firstName }} {{ teacher.lastName }}
+</div>

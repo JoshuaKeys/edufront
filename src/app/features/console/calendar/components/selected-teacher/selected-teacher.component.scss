@@ -1,0 +1,25 @@
+@import 'src/assets/styles/colors';
+
+:host {
+  font: normal 14px/28px Raleway;
+  display: block;
+  width: 304px;
+}
+
+.teacher-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  vertical-align: top;
+  margin-right: 8px;
+}
+
+.selected-item {
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover {
+    color: $blue;
+  }
+}

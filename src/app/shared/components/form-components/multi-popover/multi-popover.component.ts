@@ -21,6 +21,7 @@ import { ChildIdentifierDirective } from './child-identifier.directive';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { SampleDataTestComponent } from 'src/app/features/ui-test/sample-data-test/sample-data-test.component';
 import { map, filter, delay, skip } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'edu-multi-popover',
   templateUrl: './multi-popover.component.html',
@@ -39,10 +40,6 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.addClassBasedOnPointerValues();
     let currentIdxes = [];
-    // this.service.componentIdArr$.pipe(delay(100)).subscribe(idx => {
-    //   console.log('idx', idx);
-    //   this.injectComponent(idx);
-    // });
 
     this.service.newMultiPopoverId$
       .pipe(skip(1), delay(100))
@@ -50,7 +47,6 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.registerClickOnParent();
-    // console.log('multi popover', this.componentArr, this.componentContainers);
   }
   @ViewChildren(ChildIdentifierDirective) identifierDirectives: QueryList<
     ChildIdentifierDirective
@@ -60,11 +56,39 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
   @Output('close') onClose = new EventEmitter();
   @Output('edu-open') openEvent = new EventEmitter();
   @Output('edu-close') closeEvent = new EventEmitter();
+  @Output('edu-change') componentArrEvent = new EventEmitter();
   @Input('alignment') alignment = 'bottom';
   //possible values [left, center, right] and it only works for top and bottom
   @Input('pointerAlignment') pointerAlignment = 'center';
+  viewrefObj = {};
 
-  @Input('edu-components') componentArr = [];
+  testSubject = new Subject();
+  componentArrWithoutComponent = [];
+  _componentArr: injectedComponent[] = [];
+  @Input('edu-components') set componentArr(
+    compponentArr: injectedComponent[]
+  ) {
+    console.log(compponentArr);
+
+    compponentArr.forEach(component => {
+      console.log(
+        'param',
+        component,
+        (this.componentArrWithoutComponent[0] || {}).param
+      );
+      if (this.paramHasChanged(component)) {
+        this.injectComponentByCompId(component.id);
+      }
+    });
+    this._componentArr = [...compponentArr];
+    this.componentArrWithoutComponent = this._componentArr.map(value => ({
+      id: value.id,
+      param: value.param
+    }));
+  }
+  get componentArr() {
+    return this._componentArr;
+  }
 
   @HostListener('document:click', ['$event']) clickedOutside($event) {
     //close element when click is from outside
@@ -85,6 +109,29 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
 
   trackByFn(index, item) {
     return item.id;
+  }
+
+  paramHasChanged(component: injectedComponent) {
+    if (!Boolean(this.componentArr)) {
+      return false;
+    }
+
+    let indexInArr = this.componentArrWithoutComponent.findIndex(
+      comp => comp.id === component.id
+    );
+
+    if (indexInArr !== -1) {
+      console.log(
+        indexInArr,
+        JSON.stringify(this.componentArrWithoutComponent[indexInArr].param),
+        JSON.stringify(component.param)
+      );
+      return (
+        JSON.stringify(this.componentArrWithoutComponent[indexInArr].param) !==
+        JSON.stringify(component.param)
+      );
+    }
+    return false;
   }
 
   isFirstVisible(id) {
@@ -139,26 +186,56 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
     }
     this.cd.markForCheck();
   }
-
-  injectComponentByCompId(componentId) {
+  deleteComponentByCompId(componentId) {
     let compIndex = this.componentArr.findIndex(
       component => component.id === componentId
     );
+    this.componentContainers.toArray()[compIndex].clear();
+  }
+
+  resetComponentByCompId(componentId) {
+    let compIndex = this.componentArr.findIndex(
+      component => component.id === componentId
+    );
+  }
+  injectComponentByCompId(componentId) {
+    console.log('injectComponentByCompId');
+    let compIndex = this.componentArr.findIndex(
+      component => component.id === componentId
+    );
+    if (!Boolean(this.componentContainers)) {
+      return;
+    }
     let compObj = this.componentArr[compIndex];
     let paramKeys = Object.keys(compObj.param);
 
     let compFactory = this.resolver.resolveComponentFactory(compObj.component);
-    this.componentContainers.toArray()[compIndex].clear;
+    this.componentContainers.toArray()[compIndex].clear();
     let componentRef: ComponentRef<any> = this.componentContainers
       .toArray()
       [compIndex].createComponent(compFactory);
+
+    this.viewrefObj[componentId] = componentRef;
     paramKeys.forEach(key => {
       componentRef.instance[key] = compObj.param[key];
     });
+
+    let outputs = this.componentArr[compIndex].output;
+    if (outputs && outputs.length > 0) {
+      let id = componentId;
+      outputs.forEach(eventName => {
+        let event = eventName;
+        componentRef.instance[eventName].subscribe(value => {
+          this.componentArrEvent.emit({ event, id, value });
+          this.testSubject.next({ event, id, value });
+        });
+      });
+    }
+    this.cd.markForCheck();
   }
 
   injectComponent(idxes) {
-    //delete soon
+    //delete soon no longer in use
     console.log(this.componentContainers.toArray());
     console.log(this.componentArr);
     console.log(idxes);
@@ -176,6 +253,7 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
         .toArray()
         [idx].createComponent(compFactory);
 
+      console.log('this.viewrefObj:', this.viewrefObj, idxes);
       if (hasParams && componentObjKeys.indexOf('param') !== -1) {
         let paramKeys = Object.keys(this.componentArr[idx].param);
         paramKeys.forEach(key => {
@@ -185,4 +263,12 @@ export class MultiPopoverComponent implements OnInit, AfterViewInit {
       this.cd.markForCheck();
     });
   }
+}
+
+export interface injectedComponent {
+  component: any;
+  param: { [key: string]: any };
+  id: string;
+  hide?: boolean;
+  output?: string[];
 }

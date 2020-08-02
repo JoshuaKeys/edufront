@@ -57,20 +57,20 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'calendar',
+        loadChildren: () =>
+          import('./../../calendar/calendar.module').then(m => m.CalendarModule)
+      },
+      {
         path: '',
         redirectTo: '/console/admin/classes/classes-and-groups',
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: 'calendar',
-    loadChildren: () =>
-      import('./../../calendar/calendar.module').then(m => m.CalendarModule)
   }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConsoleAdminRoutingModule { }
+export class ConsoleAdminRoutingModule {}

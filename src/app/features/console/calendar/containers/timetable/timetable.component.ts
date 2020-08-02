@@ -1,6 +1,15 @@
+import { TestDrawerComponent } from './../../components/test-drawer/test-drawer.component';
+import { DrawerService } from './../../../../../shared/components/drawer/drawer.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { map, switchMap, filter, take } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Observable, merge } from 'rxjs';
+import {
+  map,
+  switchMap,
+  filter,
+  take,
+  delay,
+  withLatestFrom
+} from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, merge, of } from 'rxjs';
 import { CalendarModel } from 'src/app/features/calender/models/calendar.model';
 import {
   IAcademicYear,
@@ -17,6 +26,9 @@ import * as moment from 'moment';
 import { ISectionModel } from 'src/app/shared/models/section.model';
 import { PopoverComponent } from 'src/app/shared/components/form-components/popover/popover.component';
 import { DeleteTermDialogComponent } from '../../components/delete-term-dialog/delete-term-dialog.component';
+import { DatepickerOptions } from 'src/app/shared/components/form-components/datepicker3';
+import { FormBuilder } from '@angular/forms';
+import isEmpty from 'lodash/isEmpty';
 
 const DEFAULT_START_IME = '08:00';
 
@@ -46,19 +58,6 @@ export class TimetableComponent implements OnInit {
   ]).pipe(
     map(([selectedClassId, entityMap]) => {
       return entityMap[selectedClassId];
-    })
-  );
-
-  timetableAPIDataByClass$ = this.selectedClassId$.pipe(
-    switchMap(classId => this.timetableFacade.timetableAPIDataByClass$(classId))
-  );
-
-  timetableData$ = combineLatest([
-    this.timetableFacade.timetableData$,
-    this.timetableAPIDataByClass$
-  ]).pipe(
-    map(([timetableData, timetableAPIDataByClass]) => {
-      return timetableData;
     })
   );
 
@@ -143,6 +142,70 @@ export class TimetableComponent implements OnInit {
   );
   subjectsLoaded$ = this.timetableFacade.subjectsUI$.pipe(map(ui => ui.loaded));
   periodsList$: Observable<CalendarModel[]>;
+
+  timetableAPIDataByClass$ = this.selectedClassId$.pipe(
+    switchMap(classId => {
+      return this.timetableFacade.timetableAPIDataByClass$(classId);
+    }),
+    switchMap(timetableAPIdata =>
+      combineLatest([of(timetableAPIdata), this.subjects, this.teachers])
+    ),
+    map(([timetableAPIDataByClass, subjects, teachers]) => {
+      return timetableAPIDataByClass.map(data => {
+        const subject = subjects.find(s => s.id === data.subjectId);
+        const teacher = teachers.find(t => t.profileId === data.teacherId);
+        return {
+          ...data,
+          subject,
+          teacher
+        };
+      });
+    })
+  );
+
+  timetableData$ = combineLatest([
+    this.timetableFacade.timetableData$.pipe(delay(100)),
+    this.timetableAPIDataByClass$
+  ]).pipe(
+    map(([timetableData, timetableAPIDataByClass]) => {
+      if (isEmpty(timetableData) && timetableAPIDataByClass.length > 0) {
+        return timetableAPIDataByClass.reduce((res, data) => {
+          return {
+            ...res,
+            [`${data.classId}--${data.sectionId}--${data.periodId}`]: {
+              periodId: data.periodId,
+              period: {
+                id: data.periodId
+              },
+              data: [data.subject, data.teacher]
+            }
+          };
+        }, {});
+      }
+      const dataFromAPI = timetableAPIDataByClass.reduce((res, data) => {
+        if (
+          timetableData[`${data.classId}--${data.sectionId}--${data.periodId}`]
+        ) {
+          return res;
+        }
+        return {
+          ...res,
+          [`${data.classId}--${data.sectionId}--${data.periodId}`]: {
+            periodId: data.periodId,
+            period: {
+              id: data.periodId
+            },
+            data: [data.subject, data.teacher]
+          }
+        };
+      }, {});
+      return {
+        ...timetableData,
+        ...dataFromAPI
+      };
+    })
+  );
+
   tt = [];
   periodsData = {};
   WEEKDAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -181,17 +244,24 @@ export class TimetableComponent implements OnInit {
     })
   );
 
-  optionWithRange = {
-    dateRange: true
+  datepickerOption: DatepickerOptions = {
+    isRange: true,
+    inline: false,
+    displayFormat: 'DD-MM-YY'
   };
   showAddTerm = false;
   dateRangeValue = null;
+  dateRangeCtrl = this.fb.control(null);
+  private termToEdit: TermDetailsDto = null;
+
   constructor(
+    private fb: FormBuilder,
     private dialog: DialogService,
     private timetableFacade: TimetableFacadeService,
     private classService: ClassesService,
     private sectionService: ClassSectionService,
-    private academiYearService: AcademicYearService
+    private academiYearService: AcademicYearService,
+    private drawer: DrawerService,
   ) {
     this.timetableFacade.resetTimetable();
     this.classService.getAll();
@@ -498,7 +568,6 @@ export class TimetableComponent implements OnInit {
   }
 
   onDateRangeChange(data) {
-    console.log(data);
     this.dateRangeValue = data;
   }
 
@@ -506,29 +575,54 @@ export class TimetableComponent implements OnInit {
     console.log('closed');
     this.showAddTerm = false;
     this.dateRangeValue = null;
+    this.dateRangeCtrl.patchValue(null);
   }
 
   onSaveTermDates() {
     console.log('save term');
     const [start, end] = this.dateRangeValue.split(' - ');
-    this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
-      const newTerm = {
-        academicYearId: res.id,
-        priority: 0,
-        termEnd: end,
-        termStart: start,
-        termTitle: null
-      };
-      this.academiYearService.update({
-        ...res,
-        noOfTerm: res.noOfTerm + 1,
-        termDetailsDtos: res.termDetailsDtos.concat(newTerm)
+    if (this.termToEdit) {
+      this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+        const newTerms = res.termDetailsDtos.map(term => {
+          if (term.termId === this.termToEdit.termId) {
+            return {
+              ...this.termToEdit,
+              termEnd: end,
+              termStart: start
+            };
+          }
+          return term;
+        });
+        this.academiYearService.update({
+          ...res,
+          noOfTerm: res.noOfTerm,
+          termDetailsDtos: newTerms
+        });
       });
-    });
+    } else {
+      this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
+        const newTerm = {
+          academicYearId: res.id,
+          priority: 0,
+          termEnd: end,
+          termStart: start,
+          termTitle: null
+        };
+        this.academiYearService.update({
+          ...res,
+          noOfTerm: res.noOfTerm + 1,
+          termDetailsDtos: res.termDetailsDtos.concat(newTerm)
+        });
+      });
+    }
 
+    // Resettnig data after save
+    this.dateRangeCtrl.markAsPristine();
+    this.termToEdit = null;
     this.showAddTerm = false;
     this.dateRangeValue = null;
   }
+
 
   onRemoveTerm(
     term: TermDetailsDto,
@@ -537,6 +631,7 @@ export class TimetableComponent implements OnInit {
   ) {
     console.log(term);
     const termsWithoutDeleted = terms.filter((t, i) => i !== indexToRemove);
+
     const dialogRef = this.dialog.open(DeleteTermDialogComponent, {
       data: {
         term,
@@ -552,19 +647,27 @@ export class TimetableComponent implements OnInit {
           termToExtendID,
           indexToRemove
         );
-        console.log(termDetailsDtos);
+
         this.selectedAcademicYear$.pipe(take(1)).subscribe(res => {
-          this.academiYearService.update({
-            ...res,
-            noOfTerm: termDetailsDtos.length,
-            termDetailsDtos
-          });
+          this.academiYearService
+            .update({
+              ...res,
+              noOfTerm: termDetailsDtos.length,
+              termDetailsDtos
+            })
+            .pipe(take(1))
+            .subscribe(res => {
+              this.selectedTerm$.next('All terms');
+            });
         });
       }
     });
   }
   onEditTerm(term: TermDetailsDto, index: number, terms: TermDetailsDto[]) {
-    console.log(term);
+    this.termToEdit = term;
+    this.dateRangeCtrl.patchValue(`${term.termStart} - ${term.termEnd}`);
+    this.showAddTerm = true;
+    this.dateRangeValue = `${term.termStart} - ${term.termEnd}`;
   }
 
   prepareTermsToSave(
@@ -657,3 +760,19 @@ export class TimetableComponent implements OnInit {
     }
   }
 }
+
+
+/** Invoke this when you wish to test the drawer */
+
+// testDrawer() {
+//   debugger;
+//   const dialogRef = this.drawer.open(TestDrawerComponent, {
+//     data: {
+//       name: 'Bruce-wayne'
+//     }
+//   });
+//   dialogRef.afterClosed().subscribe((termToExtendID: string | null) => {
+//     debugger;
+
+//   });
+// }
