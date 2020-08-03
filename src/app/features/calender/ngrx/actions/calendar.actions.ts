@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { HolidayListModel } from '../../models/holiday-list.model';
 import { HolidayModel } from '../../models/holiday.model';
 import { TeachingDay } from '../../models/teaching-day.model';
-import { ClassGroupModel } from '../../models/class-group.model'
+import { ClassGroupModel } from '../../models/class-group.model';
 import { ClassModel } from 'src/app/shared/models/class.model';
 import { Day } from 'src/app/shared/components/timetable/timetable.interface';
 import { SelectedPeriodModel } from '../../models/selected-period.model';
@@ -40,15 +40,15 @@ export const initializeTermsAndDates = createAction(
 );
 export const setTermName = createAction(
   '[TermNamesAndDatesComponent] setTermName',
-  props<{ idx: number, termName: string }>()
+  props<{ idx: number; termName: string }>()
 );
 export const setTermStartDate = createAction(
   '[TermNamesAndDatesComponent] setTermStartDate',
-  props<{ idx: number, startDate: string }>()
+  props<{ idx: number; startDate: string }>()
 );
 export const setTermEndDate = createAction(
   '[TermNamesAndDatesComponent] setTermEndDate',
-  props<{ idx: number, endDate: string }>()
+  props<{ idx: number; endDate: string }>()
 );
 export const initializeVacations = createAction(
   '[SchoolTermsQuestionComponent] initializeVacations'
@@ -58,15 +58,15 @@ export const addVacation = createAction(
 );
 export const setVacationName = createAction(
   '[VacationNamesAndDatesComponent] setVacationName',
-  props<{ idx: number, vacationName: string }>()
+  props<{ idx: number; vacationName: string }>()
 );
 export const setVacationStartDate = createAction(
   '[VacationNamesAndDatesComponent] setVacationStartDate',
-  props<{ idx: number, startDate: string }>()
+  props<{ idx: number; startDate: string }>()
 );
 export const setVacationEndDate = createAction(
   '[VacationNamesAndDatesComponent] setVacationEndDate',
-  props<{ idx: number, endDate: string }>()
+  props<{ idx: number; endDate: string }>()
 );
 export const fetchHolidaysRequest = createAction(
   '[HolidayListComponent] fetchHolidaysRequest'
@@ -82,7 +82,7 @@ export const deleteHoliday = createAction(
 export const deleteHolidaySuccess = createAction(
   '[CalendarEffects] deleteHolidaySuccess',
   props<{ holiday: HolidayModel }>()
-)
+);
 export const editHoliday = createAction(
   '[HolidayListComponent] editHoliday',
   props<{ holiday: HolidayModel }>()
@@ -90,7 +90,7 @@ export const editHoliday = createAction(
 export const editHolidaySuccess = createAction(
   '[CalendarEffects] editHolidaySuccess',
   props<{ holiday: HolidayModel }>()
-)
+);
 export const editHolidayRequest = createAction(
   '[HolidayListComponent] editHolidayRequest',
   props<{ holiday: HolidayModel }>()
@@ -115,8 +115,8 @@ export const setDefaultTeachingDays = createAction(
 );
 export const toggleClassesGroupActive = createAction(
   '[TeachingDayForClassQuestion] toggleClassGroupActive',
-  props<{ day: TeachingDay, classesGroup: ClassGroupModel }>()
-)
+  props<{ day: TeachingDay; classesGroup: ClassGroupModel }>()
+);
 export const getAllClassesRequest = createAction(
   '[TeachingDayForClassQuestion] getAllClassesRequest'
 );
@@ -126,7 +126,11 @@ export const getAllClassesResponse = createAction(
 );
 export const reassignClass = createAction(
   '[TeachingDayForClassQuestion] reassignClass',
-  props<{ class: ClassModel, classesGroup?: ClassGroupModel, groupId?: string }>()
+  props<{
+    class: ClassModel;
+    classesGroup?: ClassGroupModel;
+    groupId?: string;
+  }>()
 );
 export const addClassesGroup = createAction(
   '[TeachingDayForClassQuestion] addClassesGroup',
@@ -147,10 +151,10 @@ export const selectTeachingDay = createAction(
 export const updateSelectedTeachingDaysRequest = createAction(
   '[TeachingPeriodsPerDayComponent] updateSelectedTeachingDaysRequest',
   props<{ updateTo: number }>()
-)
+);
 export const updateSelectedPeriods = createAction(
   '[TeachingPeriodsPerDayComponent] updateSelectedTeachingDays',
-  props<{ updateTo: number, selectedPeriods: SelectedPeriods[] }>()
+  props<{ updateTo: number; selectedPeriods: SelectedPeriods[] }>()
 );
 export const addPeriodsToGroup = createAction(
   '[TeachingPeriodsPerDayComponent] addPeriodsToGroup',
@@ -170,7 +174,7 @@ export const createCalendarSuccess = createAction(
 export const setAllStartTime = createAction(
   '[StartTimeOfFirstPeriodComponent] setAllStartTime',
   props<{ startTime: string }>()
-)
+);
 export const setStartTime = createAction(
   '[StartTimeOfFirstPeriodComponent] setStartTime',
   props<{ startTime: string }>()
@@ -189,7 +193,7 @@ export const setPeriodInterval = createAction(
 );
 export const setAssemblyData = createAction(
   '[AssemblyDetailsComponent] setAssemblyData',
-  props<{ field: 'startingAt' | 'duration' | 'name', value: number | string }>()
+  props<{ field: 'startingAt' | 'duration' | 'name'; value: number | string }>()
 );
 export const setGroupTeachingDays = createAction(
   '[TeachingDayForClassQuestionComponent] setGroupTeachingDays',
@@ -205,18 +209,27 @@ export const setGroupStartTime = createAction(
 );
 export const initializeBreaks = createAction(
   '[DefineYourBreakComponent] initializeBreaks'
-)
+);
 export const addBreak = createAction(
   '[DefineYourBreakComponent] addBreak',
   props<{ groupId: string }>()
 );
 export const removeBreak = createAction(
   '[DefineYourBreakComponent] removeBreak',
-  props<{ groupId: string, breakIndex: number }>()
+  props<{ groupId: string; breakIndex: number }>()
 );
 export const updateBreakData = createAction(
   '[DefineYourBreakComponent] updateBreakData',
-  props<{ groupId: string, index: number, field: 'title' | 'day' | 'after' | 'duration', value: string }>()
+  props<{
+    groupId: string;
+    index: number;
+    field: 'title' | 'day' | 'after' | 'duration';
+    value: string;
+  }>()
+);
+export const updateBreakData2 = createAction(
+  '[DefineYourBreakComponent] updateBreakData2',
+  props<{ groupId: string; break: BreakModel2[] }>()
 );
 export const initializeSameBreaks = createAction(
   '[BreakScheduleQuestion] initializeSameBreaks'
@@ -226,7 +239,18 @@ export const addSameBreak = createAction(
 );
 export const updateSameBreakData = createAction(
   '[DefineSameBreakComponent] updateSameBreakData',
-  props<{ index: number, field: 'name' | 'day' | 'after' | 'duration', value: string }>()
+  props<{
+    index: number;
+    field: 'name' | 'day' | 'after' | 'duration';
+    value: string;
+  }>()
+);
+
+export const updateSameBreakData2 = createAction(
+  '[DefineSameBreakComponent] updateSameBreakData2',
+  props<{
+    break: BreakModel2[];
+  }>()
 );
 export const removeSameBreak = createAction(
   '[DefineSameBreakSomponent] removeSameBreak',
@@ -253,7 +277,11 @@ export const addEditSameBreak = createAction(
 );
 export const updateEditBreakData = createAction(
   '[UpdateTimetableComponent] updateEditBreakData',
-  props<{ index: number, field: 'title' | 'day' | 'after' | 'duration', value: string }>()
+  props<{
+    index: number;
+    field: 'title' | 'day' | 'after' | 'duration';
+    value: string;
+  }>()
 );
 export const removeEditBreak = createAction(
   '[DefineSameBreakSomponent] removeEditBreak',
@@ -262,14 +290,14 @@ export const removeEditBreak = createAction(
 export const setAssemblyEnabledMode = createAction(
   '[DefineSameBreakComponent] setAssemblyEnabledMode',
   props<{ isEnabled: boolean }>()
-)
+);
 export const setTeachingDaysStatus = createAction(
   '[SameTeachingDaysQuestion] setTeachingDaysStatus',
   props<{ value: boolean }>()
-)
+);
 export const setEditAssemblyData = createAction(
   '[AssemblyDetailsComponent] setEditAssemblyData',
-  props<{ field: 'startingAt' | 'duration' | 'name', value: number | string }>()
+  props<{ field: 'startingAt' | 'duration' | 'name'; value: number | string }>()
 );
 export const computeModifications = createAction(
   '[AssemblyDetailsComponent] computeModifications'
@@ -283,7 +311,7 @@ export const computeNewGroup = createAction(
   props<{ newGroup: ClassGroupModel }>()
 );
 export const sendCalendarData = createAction(
-  '[CalendarConfirmationComponent] sendCalendarData',
+  '[CalendarConfirmationComponent] sendCalendarData'
   // props<{}>()
 );
 export const updateEditStartTime = createAction(
@@ -315,7 +343,7 @@ export const setGovernmentHolidaysStatus = createAction(
   props<{ value: boolean }>()
 );
 export const clearAllHolidays = createAction(
-  '[GovernmentHolidaysObservedQuestionComponent] clearAllHolidays',
+  '[GovernmentHolidaysObservedQuestionComponent] clearAllHolidays'
 );
 export const clearEditState = createAction(
   '[HolidayAddComponent] clearEditState'
@@ -324,3 +352,6 @@ export const defineSameBreakData = createAction(
   '[DefineSameBreakComponent] defineSameBreakData',
   props<{ day: string; break: BreakModel2[] }>()
 )
+// export const updateDayBreakData = createAction(
+//   ''
+// )

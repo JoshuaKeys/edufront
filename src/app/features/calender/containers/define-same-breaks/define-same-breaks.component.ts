@@ -9,15 +9,20 @@ import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { Observable, of } from 'rxjs';
 import { TeachingStateModel } from '../../models/teaching-state.model';
-import { selectTeaching } from '../../ngrx/selectors';
+import {
+  selectTeaching,
+  getTeachingDaysWithValidPeriod
+} from '../../ngrx/selectors';
 import {
   addSameBreak,
-  updateSameBreakData
+  updateSameBreakData,
+  updateSameBreakData2
 } from '../../ngrx/actions/calendar.actions';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { defineDays, definePeriods } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
+import { BreakModel2 } from '../../models/break.model';
 
 @Component({
   selector: 'edu-define-same-breaks',
@@ -51,16 +56,42 @@ export class DefineSameBreaksComponent implements OnInit {
 
   ngOnInit(): void {
     this.teachingData = this.store.select(selectTeaching);
+    // .pipe
+    // tap(teaching => {
+    //   console.log(`TAP 0 `, teaching.periods);
+    //   if (teaching.periods[0]) {
+    //     console.log(`TAP 1 `, teaching.periods[0].breaks);
+    //     console.log('GETTING TEACHING DAYS', this.teachingDays);
+    //     this.getBreakArr(teaching.periods[0].breaks);
+    //   }
+    //   // getBreakArr
+    // })
+    // ();
+
+    // this.store.select(getTeachingDaysWithValidPeriod).subscribe(periods => {
+    //   let finalBreakArr = [];
+
+    //   periods.map(period => {
+    //     finalBreakArr = [...finalBreakArr, ...period.breaks];
+    //   });
+
+    //   this.getBreakArr(finalBreakArr);
+    //   console.log('PERIODS breaksArr', finalBreakArr);
+    // });
   }
   getDaysOptions(item: TeachingStateModel) {
-    return defineDays(of(item.teachingDays));
+    return defineDays(of(item.teachingDays)).pipe(
+      tap(teachingDays => {
+        this.teachingDays = [...teachingDays];
+      })
+    );
   }
   getPeriodOptions(item: TeachingStateModel) {
     return definePeriods(of(item.periods));
   }
   timeArr = Array(60).fill('');
   formArr = [0];
-
+  teachingDays = [];
   getMinInString(val) {
     return `${val}`;
   }
@@ -170,4 +201,159 @@ export class DefineSameBreaksComponent implements OnInit {
     { value: 5, display: 'P5' },
     { value: 6, display: 'P6' }
   ];
+
+  //edits
+
+  // tempBreak = {
+  //   name: 'Break 01',
+  //   firstBreak: '',
+  //   day: [],
+  //   after: '',
+  //   duration: '',
+  //   dayOptions: []
+  // };
+  tempBreakArr = [];
+  getBreakArr(breakArrFromStore) {
+    console.log(breakArrFromStore);
+    if (breakArrFromStore.length === 0) {
+      let tempBreak = {
+        name: 'Break 01',
+        firstBreak: '',
+        day: [],
+        after: '',
+        duration: '',
+        dayOptions: []
+      };
+      this.tempBreakArr.push(tempBreak);
+    } else {
+      this.tempBreakArr = [];
+      console.log('BREAK FRO MSTORE', breakArrFromStore);
+      breakArrFromStore.forEach(_break => {
+        let tempBreak = JSON.parse(JSON.stringify(_break));
+        let dayOptions = [];
+        tempBreak = { ...tempBreak, dayOptions };
+        this.tempBreakArr = [...this.tempBreakArr, tempBreak];
+      });
+
+      this.tempBreakArr = this.combineTempBreaks(this.tempBreakArr);
+    }
+
+    console.log(`tempBreakArr`, this.tempBreakArr);
+  }
+
+  combineTempBreaks(breakArrFromStore) {
+    // let identifierArr = [] ;
+    let results = [];
+    let getIdentifier = _break =>
+      `${_break.after}-${_break.duration}-${_break.name}`;
+    //     breakArrFromStore.forEach((_break)=>{
+    //       let newIdentifier = getIdentifier(_break);
+    //       if(identifierArr.indexOf(newIdentifier) !== -1){
+    //         identifierArr.push(newIdentifier);
+    //       }
+
+    //     })
+    // console.log(identifierArr);
+    breakArrFromStore.forEach(_break => {
+      let identifier = getIdentifier(_break);
+      let resultsIdentifierArr = results.map(res => getIdentifier(res));
+
+      if (resultsIdentifierArr.indexOf(identifier) !== -1) {
+        let indexInResults = resultsIdentifierArr.indexOf(identifier);
+        let existingResults = results[indexInResults];
+        let newBreak = {
+          ...existingResults,
+          ...{ day: [...existingResults.day, _break.day] }
+        };
+
+        results[indexInResults] = newBreak;
+      } else {
+        let newBreak = { ..._break, ...{ day: [_break.day] } };
+        results = [...results, newBreak];
+      }
+
+      console.log(results);
+    });
+    console.log('FINAL ', results);
+    return results;
+  }
+
+  updateTitle2(title, index) {
+    console.log(this.tempBreakArr);
+    this.tempBreakArr[index].name = title;
+    console.log(this.tempBreakArr);
+    this.parseBreakObj();
+  }
+  updateDay2(day, dayOptions, index) {
+    console.log('DAY', this.tempBreakArr, dayOptions);
+    this.tempBreakArr[index].day = day;
+    this.tempBreakArr[index].dayOptions = dayOptions;
+    console.log('DAY', this.tempBreakArr);
+    this.parseBreakObj();
+  }
+  updateAfter2(after, index) {
+    console.log(`AFTER`, this.tempBreakArr);
+    this.tempBreakArr[index].after = after;
+    console.log(`AFTER`, this.tempBreakArr);
+    this.parseBreakObj();
+  }
+  updateDuration2(duration, index) {
+    console.log(this.tempBreakArr);
+    this.tempBreakArr[index].duration = duration;
+    console.log(this.tempBreakArr);
+    this.parseBreakObj();
+  }
+
+  addNewBreak() {
+    let tempBreak = {
+      name: 'Break 01',
+      firstBreak: '',
+      day: [],
+      after: '',
+      duration: '',
+      dayOptions: []
+    };
+    this.tempBreakArr.push(tempBreak);
+  }
+  parseBreakObj() {
+    let breaks: BreakModel2[] = [];
+    this.tempBreakArr.forEach(tempBreak => {
+      let isValidBreakObj =
+        tempBreak.duration &&
+        tempBreak.day &&
+        tempBreak.after &&
+        tempBreak.name;
+
+      if (isValidBreakObj) {
+        let days = tempBreak.dayOptions
+          .map(day => day.value)
+          .filter(dayValue => {
+            console.log(dayValue, tempBreak.day);
+            if (tempBreak.day[0] === 'All') {
+              return dayValue !== 'All';
+            } else {
+              return tempBreak.day.map(day => day).indexOf(dayValue) !== -1;
+            }
+          });
+
+        console.log(days);
+        days.forEach(day => {
+          let breakData = {
+            name: tempBreak.name,
+            firstBreak: '',
+            day,
+            after: tempBreak.after,
+            duration: tempBreak.duration
+          };
+          breaks.push(breakData);
+        });
+
+        //ned to push to store later
+        this.store.dispatch(updateSameBreakData2({ break: breaks }));
+        console.log('BREAKS', breaks);
+      }
+    });
+  }
+
+  popoverToggleVar = false;
 }

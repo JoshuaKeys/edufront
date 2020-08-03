@@ -3,7 +3,10 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input
+  Input,
+  Renderer2,
+  ElementRef,
+  AfterViewInit
 } from '@angular/core';
 
 import {
@@ -22,10 +25,25 @@ import { Output, EventEmitter, HostListener } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetableCardComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {}
 
+  color = `#69A9F2`;
+  _indexInParent = 0;
+  @Input('indexInParent') set indexInParent(param) {
+    let colorArr = ['#69A9F2', '#8787F6', '#00DCE8'];
+    this.color = colorArr[param % colorArr.length];
+    this.renderer.setStyle(this.el.nativeElement, 'border-color', this.color);
+    this._indexInParent = param;
+  }
+  get indexInParent() {
+    return this._indexInParent;
+  }
   periodDurationDefined = false;
   tempSpecialPeriod: tempSpecialPeriodModel[] = [];
   tempTimeArr = [];
@@ -37,22 +55,22 @@ export class TimetableCardComponent implements OnInit {
   @Output('edu-tick') tickClickEvent = new EventEmitter();
   @Input('edu-title') eduTitle;
   @Input('edu-id') eduId;
+  _elValue;
   @Input('edu-value') set elValue(val: CalendarModel[]) {
     // console.log('SETTING EL VALUE');
-    this.resetMainValues();
-    let cleanValues = this.removeDaysWithEmptyPeriod(val);
-    this.parseElValue(cleanValues);
-    this.setTime();
-    this.addBlankToStartOfClass(cleanValues);
-    // this.addBlanks(val);
-    this.setSpecialPeriod();
-
+    this._elValue = val;
+    this.setValue(val);
     // this.logStuff();
 
     // this.cd.markForCheck();
 
     // this.logStuff();
   }
+  get elValue() {
+    return this._elValue;
+  }
+
+  isAfterViewInit = false;
 
   removeDaysWithEmptyPeriod(val: CalendarModel[]) {
     return val.filter(_val => _val.periods.length > 0);
@@ -83,6 +101,15 @@ export class TimetableCardComponent implements OnInit {
     console.log(this.tempSpecialPeriod);
     console.log('this.specialPeriod');
     console.log(this.specialPeriods);
+  }
+
+  setValue(val) {
+    this.resetMainValues();
+    let cleanValues = this.removeDaysWithEmptyPeriod(val);
+    this.parseElValue(cleanValues);
+    this.setTime();
+    this.addBlankToStartOfClass(cleanValues);
+    this.setSpecialPeriod();
   }
 
   addToTempTimeArr(time: number) {
@@ -423,7 +450,8 @@ export class TimetableCardComponent implements OnInit {
           this.periodDurationIsSet =
             this.parseTimeToInt(dayData.periodDuration) > 0;
           if (this.periodDurationIsSet) {
-            this.checkForAssembly(dayData.assembly, dayData.day, '#69A9F2');
+            console.log(`asscolor`, this.indexInParent, this.color);
+            this.checkForAssembly(dayData.assembly, dayData.day, this.color);
 
             let breakDuration = this.checkForBreaks(
               period,

@@ -441,7 +441,6 @@ export function definePeriods(teachingData: Observable<PeriodModel[]>) {
         // result.push({ value: +period.substr(1), display: period });
         result.push({ value: <any>period, display: period });
       });
-
       return result;
     })
   );
