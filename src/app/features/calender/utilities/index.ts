@@ -12,6 +12,8 @@ import { TeachingStateModel } from '../models/teaching-state.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TeachingDay } from '../models/teaching-day.model';
+import { ExtendedClassModel } from '../../subjects/models/extend-class.model';
+import { BreakModel2 } from '../models/break.model';
 
 export function clearClassOffGroups(
   classItem: ClassModel,
@@ -460,4 +462,166 @@ export function defineDays(teachingData: Observable<TeachingDay[]>) {
       return result;
     })
   );
+}
+export function isSameClassesScenario(unedited: ExtendedClassModel[], edited: ExtendedClassModel[]) {
+  if (unedited.length === edited.length) {
+    for (let i = 0; i < unedited.length; i++) {
+      const isPresentInEdited = edited.find(classItem => classItem.id === unedited[i].id);
+      if (!isPresentInEdited) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+export function isAddedClassesScenario(unedited: ExtendedClassModel[], edited: ExtendedClassModel[]) {
+  // if (unedited.length === edited.length) {
+  //   return false;
+  // }
+  // if (unedited.length > edited.length) {
+  //   return false;
+  // }
+  // return edited.filter(classItem => unedited.)
+  let added: ExtendedClassModel[] = [];
+  for (let i = 0; i < edited.length; i++) {
+    const isPresent = unedited.find(classItem => edited[i].id === classItem.id);
+    if (!isPresent) {
+      added.push(edited[i])
+    }
+  }
+  return added;
+}
+export function isDeletedClassesScenario(unedited: ExtendedClassModel[], edited: ExtendedClassModel[]) {
+  // if (unedited.length === edited.length) {
+  //   return false;
+  // }
+  // if (unedited.length < edited.length) {
+  //   return false;
+  // }
+  let deleted: ExtendedClassModel[] = [];
+  for (let i = 0; i < unedited.length; i++) {
+    const isPresent = edited.find(classItem => unedited[i].id === classItem.id);
+    if (!isPresent) {
+      deleted.push(unedited[i])
+    }
+  }
+  return deleted;
+}
+export function isAddedAndDeleted(unedited: ExtendedClassModel[], edited: ExtendedClassModel[]) {
+  let deleted: ExtendedClassModel[] = [];
+  let added: ExtendedClassModel[] = [];
+  if (isSameClassesScenario(unedited, edited)) {
+    return null;
+  }
+  if (isAddedClassesScenario(unedited, edited)) {
+    return null;
+  }
+  if (isDeletedClassesScenario(unedited, edited)) {
+    return null;
+  }
+  for (let i = 0; i < unedited.length; i++) {
+    const isPresent = edited.find(classItem => classItem.id === unedited[i].id);
+    if (!isPresent) {
+      deleted.push(unedited[i])
+    }
+  }
+
+  for (let i = 0; i < edited.length; i++) {
+    const isPresent = unedited.find(classItem => edited[i].id === classItem.id);
+    if (!isPresent) {
+      added.push(edited[i])
+    }
+  }
+  return {
+    deleted,
+    added
+  }
+}
+function getEditedTeachingDays(teaching: TeachingStateModel) {
+  return teaching.calendarEdit.teachingDays.filter(teachingDay => teachingDay.selected).map(
+    selectedTeachingDay => selectedTeachingDay.day
+  )
+}
+interface EditedTeachingPeriods {
+  day: any;
+  numOfPeriods: number;
+  startingTime: string;
+  periodDuration: string;
+  intervalDuration: string;
+  breaks: BreakModel2[];
+  assembly: {
+    name: string;
+    startingAt: string;
+    duration: string;
+  };
+}
+function getEditedPeriodsData(teaching: TeachingStateModel): EditedTeachingPeriods[] {
+  return teaching.calendarEdit.teachingPeriods.filter(teachingPeriod => teachingPeriod.periods.length)
+    .map(teachingPeriod => {
+      const numOfPeriods = teachingPeriod.periods.length;
+      const day = teachingPeriod.day;
+      const startingTime = teachingPeriod.startTime;
+      const periodDuration = teachingPeriod.periodDuration;
+      const intervalDuration = teachingPeriod.intervaBtwPeriods;
+      const breaks = teachingPeriod.breaks;
+      const assembly = teachingPeriod.assembly;
+      return {
+        day,
+        numOfPeriods,
+        startingTime,
+        periodDuration,
+        intervalDuration,
+        breaks,
+        assembly
+      };
+    })
+}
+
+export function getSameClassesConsequences(teaching: TeachingStateModel, classes: ExtendedClassModel[], periodData: EditedTeachingPeriods[], teachingDays: string[]) {
+  const classGrades = classes.map(classItem => classItem.grade).sort((itemA, itemB) => itemA - itemB);
+  const classesPipe = buildRangePipe(classGrades);
+  const consequences: string[] = [];
+  consequences.push(`<span>${classesPipe}</span> will have teaching days (${teachingDays.join(', ')})`);
+  const periodNumStrs = periodData.map(periodItem => {
+    return `${periodItem.numOfPeriods} period(s) on ${periodItem.day}`
+  })
+  consequences.push(`<span>${classesPipe}</span> will have ${periodNumStrs.join(', ')}`)
+  const periodStartTimeStrs = periodData.map(periodItem => {
+    return `${periodItem.startingTime} on ${periodItem.day}`;
+  });
+
+  consequences.push(`<span>${classesPipe}</span> will have starting time at ${periodStartTimeStrs.join(', ')}`)
+  consequences.push(`<span>${classesPipe}</span> will have period duration of ${periodData[0].periodDuration}min on (${teachingDays.join(', ')})`);
+  consequences.push(`<span>${classesPipe}</span> will have interval duration of ${periodData[0].intervalDuration}min on (${teachingDays.join(', ')})`);
+  // consequences.push(`original classes ${classesPipe} will have assembly duration of ${periodData[0].periodDuration} on (${teachingDays.join(', ')})`);
+  if (teaching.calendarEdit.isAssemblyIncluded && periodData[0].assembly.name && periodData[0].assembly.duration && periodData[0].assembly.startingAt) {
+    consequences.push(`<span>${classesPipe}</span> will have assembly: ${periodData[0].assembly.name} at ${periodData[0].assembly.startingAt} for ${periodData[0].assembly.duration} mins`)
+  }
+  return consequences;
+}
+export function computeScenarios(teaching: TeachingStateModel) {
+  const calendarEdit = teaching.calendarEdit;
+  const classGroupId = teaching.calendarEdit.group.id;
+  const uneditedGroupIdx = teaching.classesAndGroups.findIndex(group => group.id === classGroupId);
+
+  const unEditedClasses = teaching.classesAndGroups[uneditedGroupIdx].classes;
+  const editedClasses = teaching.calendarEdit.classes.filter(classItem => classItem.selected);
+  if (isSameClassesScenario(unEditedClasses, editedClasses)) {
+    console.log('same', getEditedPeriodsData(teaching));
+    return getSameClassesConsequences(teaching, editedClasses, getEditedPeriodsData(teaching), getEditedTeachingDays(teaching));
+  } else {
+    let added = isAddedClassesScenario(unEditedClasses, editedClasses);
+    let deleted = isDeletedClassesScenario(unEditedClasses, editedClasses);
+    if (added.length && deleted.length) {
+      console.log('added and deleted', getEditedPeriodsData(teaching));
+      return;
+    }
+    if (added.length && !deleted.length) {
+      console.log('added', getEditedPeriodsData(teaching));
+    }
+    if (!added.length && deleted.length) {
+      console.log('deleted', getEditedPeriodsData(teaching));
+    }
+  }
 }

@@ -50,7 +50,9 @@ import {
   setHasAssemblyStatus,
   setSameBreakScheduleStatus,
   updateBreakData2,
-  updateSameBreakData2
+  updateSameBreakData2,
+  fetchConsequencesSuccess,
+  clearConsequences
 } from '../actions/calendar.actions';
 import { TeachingStateModel } from '../../models/teaching-state.model';
 import { ClassGroupModel } from '../../models/class-group.model';
@@ -893,6 +895,16 @@ export const teachingReducer = createReducer(
       }
     );
     stateCopy.classesAndGroups = updatedClassesAndGroups;
+    return stateCopy;
+  }),
+  on(fetchConsequencesSuccess, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.consequences = action.consequences
+    return stateCopy;
+  }),
+  on(clearConsequences, (state, action) => {
+    const stateCopy: TeachingStateModel = JSON.parse(JSON.stringify(state));
+    stateCopy.consequences = null;
     return stateCopy;
   }),
   on(updateSelectedPeriods, (state, action) => {

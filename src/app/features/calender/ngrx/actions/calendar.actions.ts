@@ -347,7 +347,14 @@ export const clearAllHolidays = createAction(
 );
 export const clearEditState = createAction(
   '[HolidayAddComponent] clearEditState'
+);
+export const fetchConsequences = createAction(
+  '[UpdateTimetableComponent] fetchConsequences'
+);
+export const fetchConsequencesSuccess = createAction(
+  '[CalendarEffects] fetchConsequencesSuccess',
+  props<{ consequences: string[] }>()
+);
+export const clearConsequences = createAction(
+  '[CalendarEffects] clearConsequences'
 )
-// export const updateDayBreakData = createAction(
-//   ''
-// )

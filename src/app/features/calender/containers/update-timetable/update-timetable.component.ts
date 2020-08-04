@@ -10,7 +10,8 @@ import { ClassModel } from 'src/app/shared/models/class.model';
 import {
   selectAllClasses,
   selectTeachingDays,
-  selectTeaching
+  selectTeaching,
+  selectConsequences
 } from '../../ngrx/selectors';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
@@ -30,7 +31,9 @@ import {
   setAssemblyEnabledMode,
   computeModifications,
   updateEditStartTime,
-  updateTeachingPeriod
+  updateTeachingPeriod,
+  fetchConsequences,
+  clearConsequences
 } from '../../ngrx/actions/calendar.actions';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { ActivatedRoute } from '@angular/router';
@@ -50,6 +53,7 @@ export class UpdateTimetableComponent implements OnInit {
   teachingState: Observable<TeachingStateModel>;
   intervals: { duration: number; text: string }[] = [];
   timeArr = Array(60);
+  consequences: Observable<string[]>
   modalIsActive = false;
   durations: { duration: number; text: string }[] = [];
   @ViewChild('scrollableEl') scrollableEl: ElementRef;
@@ -98,7 +102,11 @@ export class UpdateTimetableComponent implements OnInit {
     // this.updateAssemblyData('startingAt', { duration: event, text: event });
     this.updateAssemblyData('duration', `${event}`);
   }
+  clearConsequences() {
+    this.store.dispatch(clearConsequences())
+  }
   ngOnInit(): void {
+    this.consequences = this.store.select(selectConsequences);
     for (let i = 0; i < this.timeArr.length; i++) {
       this.durations.push({ duration: i + 1, text: `${i + 1} mins` });
     }
@@ -166,7 +174,7 @@ export class UpdateTimetableComponent implements OnInit {
     );
   }
   selectPeriod($event: SelectedPeriodModel) {
-    // this.store.dispatch(selectTeachingDay($event))
+
   }
   asObservable(item) {
     return of(item);
@@ -179,10 +187,12 @@ export class UpdateTimetableComponent implements OnInit {
     this.store.dispatch(updateTeachingPeriod(event));
   }
   computeModifications() {
+    this.store.dispatch(clearConsequences());
     this.store.dispatch(computeModifications());
   }
   showConsequences() {
-    this.modalIsActive = true;
+    this.store.dispatch(fetchConsequences())
+    // this.modalIsActive = true;
   }
   goBack() {
     this.location.back();

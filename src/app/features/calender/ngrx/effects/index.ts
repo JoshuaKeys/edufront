@@ -5,14 +5,14 @@ import {
   fetchHolidaysResponse, fetchClassesAndGroups,
   fetchClassesAndGroupsSuccess, getAllClassesRequest, getAllClassesResponse,
   updateSelectedTeachingDaysRequest,
-  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData, editCalendar, setAssemblyEnabledMode
+  updateSelectedPeriods, createCalendarRequest, createCalendarSuccess, addClassesGroup, computeModifications, computedModifications, computeNewGroup, editHoliday, editHolidaySuccess, deleteHoliday, deleteHolidaySuccess, sendCalendarData, editCalendar, setAssemblyEnabledMode, fetchConsequences, fetchConsequencesSuccess
 } from '../actions/calendar.actions';
 import { mergeMap, map, withLatestFrom, tap, switchMap } from 'rxjs/operators';
 import { CalendarService } from '../../services/calendar.service';
 import { Store } from '@ngrx/store';
 import { CalendarStateModel } from '../../models/calender-state.model';
 import { selectTeachingDays, getAllSelectedClassPeriods, selectCreateCalendarData, selectTeaching, selectCalendar } from '../selectors';
-import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly, extractTimetableData } from '../../utilities';
+import { areBothClassesEqual, findModifiedClassesFromGroups, computeChanges, getSubtractedClasses, removeAssembly, extractTimetableData, computeScenarios } from '../../utilities';
 import { ClassGroupModel } from '../../models/class-group.model';
 import { PeriodModel } from '../../models/period.model';
 import { v4 as uuid44 } from 'uuid';
@@ -167,6 +167,16 @@ export class CalendarEffects {
         return setAssemblyEnabledMode({ isEnabled: true })
       }
       return setAssemblyEnabledMode({ isEnabled: false })
+    })
+  ))
+  fetchConsequences$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchConsequences),
+    withLatestFrom(this.store.select(selectTeaching)),
+    map(([action, teaching]) => {
+      const edited = teaching.calendarEdit;
+      const defaultState = teaching.classes;
+      // return ;
+      return fetchConsequencesSuccess({ consequences: computeScenarios(teaching) })
     })
   ))
   constructor(private actions$: Actions,

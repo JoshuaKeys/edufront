@@ -13,6 +13,7 @@ export interface TeachingStateModel {
   selection?: SelectionModel;
   startTime?: string;
   calendarEdit?: CalendarUpdateModel;
+  consequences?: string[];
   sameNoOfPeriods?: boolean;
   sameTeachingDays?: boolean;
   sameStartTime?: boolean;

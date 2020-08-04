@@ -269,41 +269,32 @@
     </button>
   </div>
 </div>
-<edu-modal [(ngModel)]="modalIsActive">
-  <div class="modal__content">
-    <h3>These are the consequences:</h3>
-    <div class="consequences">
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
+<ng-container *ngIf="consequences | async as consequences">
+  <edu-modal [(ngModel)]="consequences && consequences.length">
+    <div class="modal__content">
+      <h3>These are the consequences:</h3>
+      <div class="consequences">
+        <div class="consequence" *ngFor="let consequence of consequences">
+          <span>{{ consequence }}</span>
+        </div>
       </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
-      </div>
-      <div class="consequence">
-        <span>All <b>XXX</b> students currently assigned to this class</span>
+      <h3>Are you sure you wish to continue?</h3>
+      <div class="button__wrapper">
+        <button
+          class="button button--cancel"
+          ButtonType="outline"
+          (click)="clearConsequences()"
+        >
+          cancel
+        </button>
+        <button
+          class="button button--update"
+          ButtonType="basic"
+          (click)="computeModifications()"
+        >
+          update
+        </button>
       </div>
     </div>
-    <h3>Are you sure you wish to continue?</h3>
-    <div class="button__wrapper">
-      <button
-        class="button button--cancel"
-        ButtonType="outline"
-        (click)="goBack()"
-      >
-        cancel
-      </button>
-      <button class="button button--update" ButtonType="basic">
-        update
-      </button>
-    </div>
-  </div>
-</edu-modal>
+  </edu-modal>
+</ng-container>

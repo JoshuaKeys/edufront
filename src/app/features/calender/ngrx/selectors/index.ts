@@ -108,10 +108,10 @@ export const selectCreateCalendarData = createSelector(
 
       const vacations: VacationCreateModel[] = feat.calendarData.vacations
         ? feat.calendarData.vacations.map(vacation => ({
-            vacationStart: vacation.startDate,
-            vacationEnd: vacation.endDate,
-            vacationName: vacation.vacationName
-          }))
+          vacationStart: vacation.startDate,
+          vacationEnd: vacation.endDate,
+          vacationName: vacation.vacationName
+        }))
         : [];
 
       const termDetailsDto: TermDetailsDtoModel[] = feat.calendarData.termsAndDates.map(
@@ -211,7 +211,10 @@ export const getTeachingDaysWithValidPeriod = createSelector(
     return teachingState.periods.filter(period => period.periods.length > 0);
   }
 );
-
+export const selectConsequences = createSelector(
+  selectTeaching,
+  teachingState => teachingState.consequences
+)
 function convertTimeToInt(time: string): number {
   if (time.length !== 5) {
     return 1000000;
